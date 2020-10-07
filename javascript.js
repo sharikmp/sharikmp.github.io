@@ -1,6 +1,6 @@
 function prettyPrintJson() {
 	try {
-		var json = document.getElementById("menu");
+		var json = document.getElementById("tarea");
 		var jsonPretty = JSON.stringify(JSON.parse(json.value), null, 2);
 		json.value = jsonPretty;
 	} catch (e) {
@@ -9,7 +9,7 @@ function prettyPrintJson() {
 }
 
 function getItemDetails() {
-	var x = document.getElementById("menu");
+	var x = document.getElementById("tarea");
 	obj = JSON.parse(x.value);
 	var text = "<hr>Menu details<br/><br/><br/>";
 	var itemCount = 0;
@@ -60,7 +60,7 @@ function generateSingleItemPayloads() {
 	} else {
 		order_id = ele_orderId.value;
 	}
-	var x = document.getElementById("menu");
+	var x = document.getElementById("tarea");
 	obj = JSON.parse(x.value);
 	var text = "<hr>Single Item payloads<br/><br/><br/>";
 	var itemCount = 0;
