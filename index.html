@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> Payload Creator </title>
+</head>
+
+<body>
+	<style>
+	#tarea {
+		font-size: 11px;
+		color: #ffa;
+		font-family: monospace;
+		background-color: #222;
+		line-height: 15px;
+	}
+	
+	body {
+		font-family: monospace;
+		background-color: #68d9cd;
+	}
+	</style> Enter Menu JSON:
+	<br/>
+	<br/>
+	<textarea id="tarea" name="menu" rows="20" cols="100" onchange="prettyPrintJson()" /></textarea>
+	<br>
+	<br>
+	<label for="orderId">Order Id:</label>
+	<input type="text" id="orderId" name="orderId" onchange="validateOrderId()" />
+	<br/>
+	<br/>
+	<br/>
+	<button type="button" onclick="getItemDetails()">Item Details</button>
+	<button type="button" onclick="generateSingleItemPayloads()">Single Item Payload</button>
+	<p id="details"></p>
+	<script src="./javascript.js"></script>
+</body>
+
+</html>
