@@ -167,7 +167,8 @@ body {
 #outer-board {
 	margin: auto;
 	max-width: 40%;
-	min-width: 400px !important;
+	min-width: 300px !important;
+	position: relative;
 }
 
 #inner-board {
@@ -176,7 +177,7 @@ body {
 }
 
 td {
-	width: 11.11%;
+	width: 10%;
 	font-size: 25px;
 	text-align: center;
 	margin: auto;
