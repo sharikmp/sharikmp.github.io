@@ -117,7 +117,8 @@ background: linear-gradient(to right, #6792EF, #22A890);
 }
 
 .header-section {
-	width: 100%;
+	width: 100%!important;
+	min-width: 300px;
 	height: inherit;
 	color: black;
 	text-align: center;
@@ -168,8 +169,8 @@ body {
 
 #outer-board {
 	margin: auto;
-	max-width: 40%;
-	min-width: 300px !important;
+	max-width: 400px;
+	min-width: 50%
 	position: relative;
 }
 
@@ -180,7 +181,7 @@ body {
 
 td {
 	width: 10%;
-	font-size: 25px;
+	font-size: 15px;
 	text-align: center;
 	margin: auto;
 }
@@ -222,6 +223,7 @@ a.btn:hover {
    left: 0;
    bottom: 0;
    width: 100%!important;
+	min-width: 300px;
    	background: #6792EF;
 	background: -webkit-linear-gradient(left, #6792EF, #22A890);
 	background: -moz-linear-gradient(left, #6792EF, #22A890);
