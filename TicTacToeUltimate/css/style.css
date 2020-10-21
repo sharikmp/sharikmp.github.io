@@ -221,7 +221,7 @@ a.btn:hover {
 .footer {
    left: 0;
    bottom: 0;
-   width: 100%;
+   width: 100%!important;
    	background: #6792EF;
 	background: -webkit-linear-gradient(left, #6792EF, #22A890);
 	background: -moz-linear-gradient(left, #6792EF, #22A890);
