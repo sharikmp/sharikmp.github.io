@@ -8,9 +8,9 @@ function onCellClick(cellId){
 
 	if(isXOSet){									//If valid click
 		
-		var outerBoard = getOuterBoard();			console.log('Outer Board: ' + outerBoard);
+		var outerBoard = getOuterBoard();			//console.log('Outer Board: ' + outerBoard);
 			
-		gameStatus = boardStatus(outerBoard);		console.log('Game Status: ' + gameStatus);
+		gameStatus = boardStatus(outerBoard);		//console.log('Game Status: ' + gameStatus);
 		
 		if(gameStatus === '&nbsp;'){
 				
@@ -247,10 +247,10 @@ function highlightCells(){
 			highlightWonCell(i, "rgba(255, 255, 0, 0.5)");
 		}
 		else if(outerBoardStatus[i-1] === 'O'){
-			highlightWonCell(i, "rgba(255, 0, 255, 0.5)");
+			highlightWonCell(i, "rgba(255, 0, 255, 0.4)");
 		}
 		else if(outerBoardStatus[i-1] === 'X'){
-			highlightWonCell(i, "rgba(0, 0, 255, 0.5)");
+			highlightWonCell(i, "rgba(0, 0, 255, 0.4)");
 		}
 	}
 }
