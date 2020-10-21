@@ -22,23 +22,23 @@ function onCellClick(cellId){
 		else if(gameStatus === 'X'){
 				
 			//X won
-			document.getElementById("demo").innerHTML = 'X Won!';
+			document.getElementById("next-turn").innerHTML = 'X Won!';
 			
 		}
 		else if(gameStatus === 'O'){
 				
 			//O won
-			document.getElementById("demo").innerHTML = 'O Won!';
+			document.getElementById("next-turn").innerHTML = 'O Won!';
 			
 		}
 		else if(gameStatus === 'XO'){
 				
 			//Game Draw
-			document.getElementById("demo").innerHTML = 'X & O both Won!';
+			document.getElementById("next-turn").innerHTML = 'X & O both Won!';
 		}
 	}
 	
-	
+	highlightCells();
 	
 }
 
@@ -140,14 +140,14 @@ function boardStatus(b){
 function setXO(cellId){
 	var cell = document.getElementById(cellId);
 	if( cell.innerHTML === '&nbsp;' && gameStatus === '&nbsp;' ){
-		var player = document.getElementById("demo").innerHTML;
+		var player = document.getElementById("next-turn").innerHTML;
 		if( player === 'X'){
 			cell.innerHTML = player;
-			document.getElementById("demo").innerHTML = 'O';
+			document.getElementById("next-turn").innerHTML = 'O';
 		}
 		else {
 			cell.innerHTML = player;
-			document.getElementById("demo").innerHTML = 'X';
+			document.getElementById("next-turn").innerHTML = 'X';
 		}
 		return true;
 	}
@@ -206,7 +206,7 @@ function disableCell(cellNum){
 	for(i=start; i<end; i++){
 		var cell = document.getElementById(i+'');
 		cell.style.pointerEvents = 'none';
-		cell.style.backgroundColor = "rgb(255, 0, 0, 0.3)";
+		cell.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
 	}
 }
 
@@ -216,10 +216,41 @@ function enableCell(cellNum){
 	//Enable given cells
 	var start = cellNum * 10 + 1;
 	var end = start + 9;
-	for(i=start; i<end; i++){
+	for(var i=start; i<end; i++){
 		var cell = document.getElementById(i+'');
 		cell.style.pointerEvents = 'auto';
-		cell.style.backgroundColor = "rgb(0, 100, 0, 0.5)";
+		cell.style.backgroundColor = "rgba(0, 100, 0, 0.5)";
 	}
 }
 
+
+
+
+/*********************************** function to highlight won board  ********************************/
+function highlightWonCell(cellNum, color){
+	
+	//Enable given cells
+	var start = cellNum * 10 + 1;
+	var end = start + 9;
+	for(var i=start; i<end; i++){
+		var cell = document.getElementById(i+'');
+		cell.style.pointerEvents = 'none';
+		cell.style.backgroundColor = color;
+	}
+}
+
+
+function highlightCells(){
+	
+	for(var i=1; i<10; i++){
+		if(outerBoardStatus[i-1] === 'XO'){
+			highlightWonCell(i, "rgba(255, 255, 0, 0.5)");
+		}
+		else if(outerBoardStatus[i-1] === 'O'){
+			highlightWonCell(i, "rgba(255, 0, 255, 0.5)");
+		}
+		else if(outerBoardStatus[i-1] === 'X'){
+			highlightWonCell(i, "rgba(0, 0, 255, 0.5)");
+		}
+	}
+}

@@ -32,7 +32,7 @@
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" >Login</a>
+                        <a class="nav-link" onclick="document.getElementById('login_modal').style.display='block'">Login</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link" href="rules.html">Rules</a>
@@ -57,6 +57,7 @@
          <! -- ****** Welcome section starts here ****** -->
          <section class="header-section">
             <div class="center-div">
+				<br/><br/><br/><br/><br/>
                <h1 class="font-weight-bold">Tic Tac Toe Ultimate</h1>
 			   <br/>
                <div class="header-buttons">
@@ -64,7 +65,7 @@
 				  <br/><br/><br/>
                   <a href="#tictactoe-board">Two Player</a>
 				  <br/><br/><br/>
-				  <a href="rules.html" onclick="alert('Under development, coming soon...')">How to play?</a>
+				  <a href="rules.html" >How to play?</a>
                </div> 
             </div>
          </section>
@@ -76,7 +77,9 @@
 	<div>
       <table id="outer-board" >
          <tr>
-            <th colspan="3" style="text-align:center;" >Player - <span id="demo">X</span></th>
+            <th style="text-align:center;color: rgb(0, 0, 255);"><span id="player-X"></span></th>
+            <th style="text-align:center;color: black;">Player - <span id="next-turn">X</span></th>
+            <th style="text-align:center;color: rgb(255, 0, 255);"><span id="player-O"></span></th>
          </tr>
          <tr>
             <!-- Inner Board 1 -->
@@ -84,35 +87,35 @@
                <table id="inner-board">
                   <tr>
                      <td>
-                        <a  id="11" onclick="onCellClick(11)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="11" onclick="onCellClick(11)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="12" onclick="onCellClick(12)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="12" onclick="onCellClick(12)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="13" onclick="onCellClick(13)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <a  id="14" onclick="onCellClick(14)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="15" onclick="onCellClick(15)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="16" onclick="onCellClick(16)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="13" onclick="onCellClick(13)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <a  id="17" onclick="onCellClick(17)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="14" onclick="onCellClick(14)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="18" onclick="onCellClick(18)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="15" onclick="onCellClick(15)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="19" onclick="onCellClick(19)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="16" onclick="onCellClick(16)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a  id="17" onclick="onCellClick(17)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="18" onclick="onCellClick(18)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="19" onclick="onCellClick(19)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                </table>
@@ -122,35 +125,35 @@
                <table id="inner-board">
                   <tr>
                      <td>
-                        <a  id="21" onclick="onCellClick(21)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="21" onclick="onCellClick(21)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="22" onclick="onCellClick(22)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="22" onclick="onCellClick(22)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="23" onclick="onCellClick(23)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <a  id="24" onclick="onCellClick(24)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="25" onclick="onCellClick(25)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="26" onclick="onCellClick(26)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="23" onclick="onCellClick(23)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <a  id="27" onclick="onCellClick(27)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="24" onclick="onCellClick(24)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="28" onclick="onCellClick(28)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="25" onclick="onCellClick(25)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="29" onclick="onCellClick(29)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="26" onclick="onCellClick(26)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a  id="27" onclick="onCellClick(27)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="28" onclick="onCellClick(28)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="29" onclick="onCellClick(29)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                </table>
@@ -160,35 +163,35 @@
                <table id="inner-board">
                   <tr>
                      <td>
-                        <a  id="31" onclick="onCellClick(31)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="31" onclick="onCellClick(31)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="32" onclick="onCellClick(32)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="32" onclick="onCellClick(32)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="33" onclick="onCellClick(33)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <a  id="34" onclick="onCellClick(34)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="35" onclick="onCellClick(35)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="36" onclick="onCellClick(36)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="33" onclick="onCellClick(33)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <a  id="37" onclick="onCellClick(37)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="34" onclick="onCellClick(34)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="38" onclick="onCellClick(38)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="35" onclick="onCellClick(35)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="39" onclick="onCellClick(39)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="36" onclick="onCellClick(36)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a  id="37" onclick="onCellClick(37)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="38" onclick="onCellClick(38)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="39" onclick="onCellClick(39)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                </table>
@@ -201,35 +204,35 @@
                <table id="inner-board">
                   <tr>
                      <td>
-                        <a  id="41" onclick="onCellClick(41)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="41" onclick="onCellClick(41)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="42" onclick="onCellClick(42)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="42" onclick="onCellClick(42)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="43" onclick="onCellClick(43)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <a  id="44" onclick="onCellClick(44)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="45" onclick="onCellClick(45)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="46" onclick="onCellClick(46)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="43" onclick="onCellClick(43)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <a  id="47" onclick="onCellClick(47)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="44" onclick="onCellClick(44)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="48" onclick="onCellClick(48)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="45" onclick="onCellClick(45)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="49" onclick="onCellClick(49)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="46" onclick="onCellClick(46)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a  id="47" onclick="onCellClick(47)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="48" onclick="onCellClick(48)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="49" onclick="onCellClick(49)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                </table>
@@ -277,35 +280,35 @@
                <table id="inner-board">
                   <tr>
                      <td>
-                        <a  id="61" onclick="onCellClick(61)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="61" onclick="onCellClick(61)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="62" onclick="onCellClick(62)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="62" onclick="onCellClick(62)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="63" onclick="onCellClick(63)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <a  id="64" onclick="onCellClick(64)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="65" onclick="onCellClick(65)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="66" onclick="onCellClick(66)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="63" onclick="onCellClick(63)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <a  id="67" onclick="onCellClick(67)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="64" onclick="onCellClick(64)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="68" onclick="onCellClick(68)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="65" onclick="onCellClick(65)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="69" onclick="onCellClick(69)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="66" onclick="onCellClick(66)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a  id="67" onclick="onCellClick(67)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="68" onclick="onCellClick(68)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="69" onclick="onCellClick(69)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                </table>
@@ -318,35 +321,35 @@
                <table id="inner-board">
                   <tr>
                      <td>
-                        <a  id="71" onclick="onCellClick(71)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="71" onclick="onCellClick(71)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="72" onclick="onCellClick(72)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="72" onclick="onCellClick(72)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="73" onclick="onCellClick(73)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <a  id="74" onclick="onCellClick(74)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="75" onclick="onCellClick(75)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="76" onclick="onCellClick(76)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="73" onclick="onCellClick(73)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <a  id="77" onclick="onCellClick(77)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="74" onclick="onCellClick(74)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="78" onclick="onCellClick(78)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="75" onclick="onCellClick(75)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="79" onclick="onCellClick(79)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="76" onclick="onCellClick(76)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a  id="77" onclick="onCellClick(77)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="78" onclick="onCellClick(78)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="79" onclick="onCellClick(79)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                </table>
@@ -356,35 +359,35 @@
                <table id="inner-board">
                   <tr>
                      <td>
-                        <a  id="81" onclick="onCellClick(81)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="81" onclick="onCellClick(81)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="82" onclick="onCellClick(82)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="82" onclick="onCellClick(82)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="83" onclick="onCellClick(83)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <a  id="84" onclick="onCellClick(84)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="85" onclick="onCellClick(85)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="86" onclick="onCellClick(86)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="83" onclick="onCellClick(83)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <a  id="87" onclick="onCellClick(87)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="84" onclick="onCellClick(84)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="88" onclick="onCellClick(88)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="85" onclick="onCellClick(85)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="89" onclick="onCellClick(89)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="86" onclick="onCellClick(86)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a  id="87" onclick="onCellClick(87)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="88" onclick="onCellClick(88)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="89" onclick="onCellClick(89)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                </table>
@@ -394,35 +397,35 @@
                <table id="inner-board">
                   <tr>
                      <td>
-                        <a  id="91" onclick="onCellClick(91)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="91" onclick="onCellClick(91)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="92" onclick="onCellClick(92)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="92" onclick="onCellClick(92)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="93" onclick="onCellClick(93)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <a  id="94" onclick="onCellClick(94)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="95" onclick="onCellClick(95)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
-                     </td>
-                     <td>
-                        <a  id="96" onclick="onCellClick(96)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="93" onclick="onCellClick(93)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <a  id="97" onclick="onCellClick(97)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="94" onclick="onCellClick(94)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="98" onclick="onCellClick(98)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="95" onclick="onCellClick(95)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                      <td>
-                        <a  id="99" onclick="onCellClick(99)" class="btn btn-primary" style="pointer-events: auto; background-color: rgba(0, 100, 0, 0.5);" >&nbsp;</a>
+                        <a  id="96" onclick="onCellClick(96)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a  id="97" onclick="onCellClick(97)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="98" onclick="onCellClick(98)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
+                     </td>
+                     <td>
+                        <a  id="99" onclick="onCellClick(99)" class="btn btn-primary" style="pointer-events: none; background-color: rgba(255, 0, 0, 0.3);" >&nbsp;</a>
                      </td>
                   </tr>
                </table>
@@ -430,6 +433,63 @@
          </tr>
       </table>
 	  </div>
+	  
+	  
+	  
+		<!-- *********** Login Modal start ********* -->
+		<!-- The Login Modal -->
+		<div id="login_modal" class="modal">
+		   <form class="modal-content animate" action="action_page" method="post" onclick="alert('Under Development, coming soon...')">
+			  <!-- Modal Heading -->
+			  <div class="container" style="background-color:#f1f1f1">
+				 <p style="font-weight: bold;">
+					Enter Credentials...
+				 </p>
+			  </div>
+			  <!-- Modal Body -->
+			  <div class="container">
+				 <div class="login-inputs">
+					<label for="uname">
+					<b>Username</b>
+					</label>
+					<input type="text" placeholder="Enter Username" name="uname" required>
+					<label for="psw">
+					<b>Password</b>
+					</label>
+					<input type="password" placeholder="Enter Password" name="psw" required>
+				 </div>
+				 <div class="login-submit-button">
+					<button type="submit">Login</button>
+				 </div>
+				 <label>
+				 <input type="checkbox" checked="checked" name="remember"> Remember me
+				 </label>
+			  </div>
+			  <!-- Modal Footer -->
+			  <div class="container" style="background-color:#f1f1f1">
+				 <button type="button" onclick="document.getElementById('login_modal').style.display='none'" class="cancelbtn">Cancel</button>
+				 <span class="psw">Forgot 
+				 <a href="#">
+				 <b>password?</b>
+				 </a>
+				 </span>
+			  </div>
+		   </form>
+		</div>
+		<!-- *********** Login Modal end ********* -->
+   
+
+      
+
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	  <div class="footer">
 			<address>
 				Coded by <a id="developer" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a>.<br> 
