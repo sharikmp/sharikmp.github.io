@@ -7,6 +7,7 @@ var isSinglePlayer = false;
 
 /********* function to set game mode **********/
 function setGameMode(mode){
+	gameStatus = '&nbsp;';
 	resetAllElements();
 	if( mode == 1){
 		isSinglePlayer = true;
@@ -21,7 +22,7 @@ function setGameMode(mode){
 }
 
 
-
+/******** function executed when a click is done ****************/
 function onCellClick(cellId){
 	
 	var isXOSet = setXO(cellId); 					//Set X or O for current move
@@ -42,19 +43,19 @@ function onCellClick(cellId){
 		else if(gameStatus === 'X'){
 				
 			//X won
-			document.getElementById("next-turn").innerHTML = 'X Won!';
+			document.getElementById("next-turn").innerHTML = '"X" Won!';
 			
 		}
 		else if(gameStatus === 'O'){
 				
 			//O won
-			document.getElementById("next-turn").innerHTML = 'O Won!';
+			document.getElementById("next-turn").innerHTML = '"O" Won!';
 			
 		}
 		else if(gameStatus === 'XO'){
 				
 			//Game Draw
-			document.getElementById("next-turn").innerHTML = 'X & O both Won!';
+			document.getElementById("next-turn").innerHTML = 'Game Draw!';
 		}
 	}
 	
@@ -167,15 +168,15 @@ function boardStatus(b){
 function setXO(cellId){
 	var cell = document.getElementById(cellId);
 	if( cell.innerHTML === '&nbsp;' && gameStatus === '&nbsp;' ){
-		var player = document.getElementById("next-turn").innerHTML;
+		var player = currentPlayer;
 		if( player === 'X'){
 			cell.innerHTML = player;
-			document.getElementById("next-turn").innerHTML = 'O';
+			document.getElementById("next-turn").innerHTML = 'Next turn: O';
 			currentPlayer = 'O';
 		}
 		else {
 			cell.innerHTML = player;
-			document.getElementById("next-turn").innerHTML = 'X';
+			document.getElementById("next-turn").innerHTML = 'Next turn: X';
 			currentPlayer = 'X';
 		}
 		
@@ -298,6 +299,8 @@ function resetAllElements(){
 		disableCell(i);
 	}
 	enableCell(5);
+	document.getElementById("next-turn").innerHTML = 'Next turn: X';
+	currentPlayer = 'X';
 	return mainBoard;
 }
 
