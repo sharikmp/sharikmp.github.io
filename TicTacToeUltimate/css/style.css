@@ -181,7 +181,7 @@ body {
 
 td {
 	width: 10%;
-	font-size: 15px;
+	font-size: 10px;
 	text-align: center;
 	margin: auto;
 }
@@ -210,13 +210,13 @@ h1 {
 a.btn {
 	border-radius: .25rem;
 	border: 1px solid lightblue;
-	padding: .5rem 1rem;
 	color: #000;
 	font-weight: bold;
 }
 
 a.btn:hover {
 	border-radius: .25rem;
+	border: 1px solid blue;
 }
 
 .footer {

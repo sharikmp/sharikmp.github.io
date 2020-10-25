@@ -1,13 +1,33 @@
 var outerBoardStatus = ['&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'];
 var gameStatus = '&nbsp;';
+var currentPlayer = 'X';
+var lastMove;
+
+var isSinglePlayer = false;
+
+/********* function to set game mode **********/
+function setGameMode(mode){
+	resetAllElements();
+	if( mode == 1){
+		isSinglePlayer = true;
+		document.getElementById("player-X").innerHTML = 'You - "X"';
+		document.getElementById("player-O").innerHTML = 'Computer - "O"';
+	}
+	else{
+		isSinglePlayer = false;
+		document.getElementById("player-X").innerHTML = 'Player - "X"';
+		document.getElementById("player-O").innerHTML = 'Player - "O"';
+	}
+}
+
+
+
 function onCellClick(cellId){
 	
-	
-		
 	var isXOSet = setXO(cellId); 					//Set X or O for current move
 
 	if(isXOSet){									//If valid click
-		
+		lastMove = cellId;
 		var outerBoard = getOuterBoard();			//console.log('Outer Board: ' + outerBoard);
 			
 		gameStatus = boardStatus(outerBoard);		//console.log('Game Status: ' + gameStatus);
@@ -39,6 +59,13 @@ function onCellClick(cellId){
 	}
 	
 	highlightCells();
+	
+	if(isSinglePlayer && currentPlayer === 'O'){	//If it's Single player game, select a random move 
+		var cell = getRandomEmptyCell(cellId);		//Get a random cell which is empty
+		onCellClick(cell);
+	}
+	
+	highlightLastMove(cellId);
 	
 }
 
@@ -144,11 +171,14 @@ function setXO(cellId){
 		if( player === 'X'){
 			cell.innerHTML = player;
 			document.getElementById("next-turn").innerHTML = 'O';
+			currentPlayer = 'O';
 		}
 		else {
 			cell.innerHTML = player;
 			document.getElementById("next-turn").innerHTML = 'X';
+			currentPlayer = 'X';
 		}
+		
 		return true;
 	}
 	return false;
@@ -247,10 +277,88 @@ function highlightCells(){
 			highlightWonCell(i, "rgba(255, 255, 0, 0.5)");
 		}
 		else if(outerBoardStatus[i-1] === 'O'){
-			highlightWonCell(i, "rgba(255, 0, 255, 0.4)");
-		}
-		else if(outerBoardStatus[i-1] === 'X'){
 			highlightWonCell(i, "rgba(0, 0, 255, 0.4)");
 		}
+		else if(outerBoardStatus[i-1] === 'X'){
+			highlightWonCell(i, "rgba(255, 0, 255, 0.4)");
+		}
 	}
+}
+
+
+function resetAllElements(){
+	var mainBoard = [];
+	for(var i = 11; i <= 99; i++){
+		if(i%10 != 0){
+			document.getElementById(i+'').innerHTML = '&nbsp;';
+		}
+	}
+	outerBoardStatus = ['&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'];
+	for(var i = 1; i <= 9; i++){
+		disableCell(i);
+	}
+	enableCell(5);
+	return mainBoard;
+}
+
+
+
+
+/*********************  Computer's Move  **************************************************************/
+function getAllElements(){
+	var mainBoard = [];
+	for(var i = 11; i <= 99; i++){
+		if(i%10 != 0){
+			mainBoard.push(document.getElementById(i+'').innerHTML);
+		}
+	}
+	return mainBoard;
+}
+
+
+
+
+function getRandomEmptyCell(cellId){
+	var cellNum = getCellNum(cellId);
+	var start = cellNum * 10 + 1;
+	var end = start + 9;
+	
+	if(outerBoardStatus[cellNum-1] != '&nbsp;'){
+		start = 11;
+		end = 99;
+	}
+	
+	var r = randomNumber(start, end);	console.log('Random No.: ' + r);
+	while( r%10 == 0 || document.getElementById(r+'').innerHTML != '&nbsp;' ){
+		r = randomNumber(start, end);
+	}
+	
+	return r;
+}
+
+
+
+
+function setComputersMove(cell, player){
+	document.getElementById(cell+'').innerHTML = 'O';
+}
+
+
+
+
+function randomNumber(min, max) {  
+    return Math.round(Math.random() * (max - min) + min); 
+} 
+
+
+
+function highlightLastMove(cellId){
+	for(var i = 11; i <= 99; i++){
+		if(i%10 != 0){
+			var cell = document.getElementById(i+'');
+			cell.style.color = "rgb(0, 0, 0)";
+		}
+	}
+	var cell = document.getElementById(lastMove+'');
+	cell.style.color = "rgb(0, 0, 255)";
 }
