@@ -76,7 +76,8 @@ function onCellClick(cellId) {
 		lastMove = cellId; //STORE CELL ID AS LAST MOVE
 		setOuterBoardStatus(); //SET OUTER BOARD STATUS IN GLOBAL VARIABLE "outerBoardStatus"
 		setGameStatus(); //SET GAME STATUS IN GLOBAL VARIABLE "gameStatus"
-
+		setNextPlayer();
+		
 		if (gameStatus === '&nbsp;') {
 			enableCellForNextMove(cellId); //ENABLE ONE BOARD FOR NEXT PLAYER
 			highlightCells(); //HIGHLIGHT CELLS OF WINNER'S BOARD 
@@ -104,11 +105,11 @@ function setXO(cellId) {
 		if (player === 'X') {
 			cell.innerHTML = player;
 			document.getElementById("next-turn").innerHTML = 'Next turn: O';
-			currentPlayer = 'O';
+			//currentPlayer = 'O';
 		} else {
 			cell.innerHTML = player;
 			document.getElementById("next-turn").innerHTML = 'Next turn: X';
-			currentPlayer = 'X';
+			//currentPlayer = 'X';
 		}
 
 		return true;
@@ -231,9 +232,9 @@ function highlightCells() {
 		if (outerBoardStatus[i - 1] === 'XO') {
 			highlightWonCell(i, "rgba(255, 255, 0, 0.5)");
 		} else if (outerBoardStatus[i - 1] === 'O') {
-			highlightWonCell(i, "rgba(0, 0, 255, 0.4)");
+			highlightWonCell(i, "rgba(255, 0, 0, 0.5)");
 		} else if (outerBoardStatus[i - 1] === 'X') {
-			highlightWonCell(i, "rgba(255, 0, 255, 0.4)");
+			highlightWonCell(i, "rgba(0, 0, 255, 0.4)");
 		}
 	}
 }
@@ -348,31 +349,27 @@ function setWinner(cellId){
 
 /*********************************** function to check if current player has won ********************************/
 function boardStatus(b){
+	
 	var possibleWin = [ [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6] ];
 	
 	for( var i = 0; i < possibleWin.length; i++) {
-		
-		var win = isCross(b[possibleWin[i][0]], b[possibleWin[i][1]], b[possibleWin[i][2]], 'X');
-		
-		if( win != '&nbsp;' ){
-			return win;
-		}
-		
-		win = isCross( b[possibleWin[i][0]], b[possibleWin[i][1]], b[possibleWin[i][2]], 'O');
-		
-		if( win != '&nbsp;' ){
-			return win;
-		}
 
+		var win = isCross(possibleWin[i][0], possibleWin[i][1], possibleWin[i][2], currentPlayer, b);	
+		if( win != '&nbsp;' ){
+			return win;
+		}
+		
 	}
 	
 	return '&nbsp;';
 	
-	function isCross(a, b, c, p){
-		var crossedCell = [a, b, c, p];
-		if( a === p && b === p && c === p ){
-			crossedCell = [a, b, c, p];
-			crossedCells.push(crossedCell);					console.log("crosed: " + crossedCell);
+	
+	function isCross(c1, c2, c3, p, b){
+		
+		var crossedCell = [c1, c2, c3];
+		if( b[c1++] === p && b[c2++] === p && b[c3++] === p ){
+			crossedCell = [currentMiniBoardNum + '' + c1, currentMiniBoardNum + '' + c2, currentMiniBoardNum + '' + c3];
+			crossedCells.push(crossedCell);					console.log("crosed: " + crossedCells);
 			return p;
 		}
 		
@@ -382,4 +379,12 @@ function boardStatus(b){
 }
 
 
+function setNextPlayer(){
 
+	if (currentPlayer === 'X') {
+		currentPlayer = 'O';
+	} 
+	else {
+		currentPlayer = 'X';
+	}
+}
