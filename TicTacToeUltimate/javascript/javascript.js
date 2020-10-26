@@ -91,7 +91,7 @@ function onCellClick(cellId) {
 		var cell = getRandomEmptyCell(cellId); //GET A RANDOM CELL WHICH IS EMPTY
 		onCellClick(cell); //PERFORM ALL FUNCTION AFTER A CLICK IS MADE BY COMPUTER
 	}
-	console.log(outerBoardStatus);
+	//console.log(outerBoardStatus);
 }
 /******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
 
@@ -149,7 +149,7 @@ function enableCellForNextMove(cellId) {
 			} else {
 				disableCell(i);
 			}
-			//console.log(i);
+			////console.log(i);
 		}
 
 	}
@@ -160,7 +160,7 @@ function enableCellForNextMove(cellId) {
 /*********************************** FUNCTION TO GET BOARD ELEMENT *****************************************************/
 function getBoardElement() {
 
-	var start = currentMiniBoardNum * 10 + 1;					console.log('Mini Board Num: ' + currentMiniBoardNum);
+	var start = currentMiniBoardNum * 10 + 1;					//console.log('Mini Board Num: ' + currentMiniBoardNum);
 	var end = start + 9;
 	var board = [];
 
@@ -168,7 +168,7 @@ function getBoardElement() {
 		var cell = document.getElementById(i + '');
 		board.push(cell.innerHTML);
 	}
-														console.log('Mini Board: ' + board);
+														//console.log('Mini Board: ' + board);
 	return board;
 }
 /******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
@@ -210,7 +210,7 @@ function enableCell(boardNum) {
 
 /*********************************** FUNCTION TO GET MINI BOARD NUMBER (1-9) BASED ON CLICKED CELL ID ******************/
 function getCurrentMiniBoardNum(cellId) {
-	var CELL_ID = cellId + '';					console.log('Current Mini board: ' + CELL_ID.charAt(1));
+	var CELL_ID = cellId + '';					//console.log('Current Mini board: ' + CELL_ID.charAt(1));
 	return CELL_ID.charAt(0);
 }
 /******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
@@ -218,8 +218,8 @@ function getCurrentMiniBoardNum(cellId) {
 
 /*********************************** FUNCTION TO GET MINI BOARD NUMBER (1-9) BASED ON CLICKED CELL ID ******************/
 function getNextMiniBoardNum(cellId) {
-	var CELL_ID = cellId + '';					console.log('cellId: ' + cellId);
-	return CELL_ID.charAt(1);					console.log('Next Mini board: ' + CELL_ID.charAt(1));
+	var CELL_ID = cellId + '';					//console.log('cellId: ' + cellId);
+	return CELL_ID.charAt(1);					//console.log('Next Mini board: ' + CELL_ID.charAt(1));
 }
 /******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
 
@@ -283,7 +283,7 @@ function getRandomEmptyCell(cellId) {
 	}
 
 	var r = randomNumber(start, end);
-	console.log('Random No.: ' + r);
+	//console.log('Random No.: ' + r);
 	while (r % 10 == 0 || document.getElementById(r + '').innerHTML != '&nbsp;') {
 		r = randomNumber(start, end);
 	}
@@ -348,62 +348,37 @@ function setWinner(cellId){
 
 /*********************************** function to check if current player has won ********************************/
 function boardStatus(b){
-
-	/**** Check for 'X' ****/ 
-	//ROW CROSSED
-	if( ( (b[0] === 'X' && b[0] === b[1] && b[1] == b[2])
-			|| (b[3] === 'X' && b[3] === b[4] && b[4] == b[5])
-			|| (b[6] === 'X' && b[6] === b[7] && b[7] == b[8]) ) ){
-		console.log('ROW CROSSED');
-		return 'X';
-	}
-	//COLUMN CROSSED
-	if( ( (b[0] === 'X' && b[0] === b[3] && b[3] == b[6])
-			|| (b[1] === 'X' && b[1] === b[4] && b[4] == b[7])
-			|| (b[2] === 'X' && b[2] === b[5] && b[5] == b[8]) ) ){
-		console.log('COLUMN CROSSED');
-		return 'X';
-	}
-	//DIAGONAL CROSSED
-	if( (b[4] === 'X')
-			&& ( (b[0] === b[4] && b[4] == b[8]) || (b[2] === b[4] && b[4] == b[6]) ) ){
-		console.log('DIAGONAL CROSSED');
-		return 'X';
-	}
+	var possibleWin = [ [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6] ];
 	
-	/**** Check for 'O' ****/ 
-	
-	//ROW CROSSED
-	if( ( (b[0] ===  'O' && b[0] === b[1] && b[1] == b[2])
-			|| (b[3] ===  'O' && b[3] === b[4] && b[4] == b[5])
-			|| (b[6] ===  'O' && b[6] === b[7] && b[7] == b[8]) ) ){
-		console.log('ROW CROSSED');
-		return  'O';
-	}
-	//COLUMN CROSSED
-	if( ( (b[0] ===  'O' && b[0] === b[3] && b[3] == b[6])
-			|| (b[1] ===  'O' && b[1] === b[4] && b[4] == b[7])
-			|| (b[2] ===  'O' && b[2] === b[5] && b[5] == b[8]) ) ){
-		console.log('COLUMN CROSSED');
-		return  'O';
-	}
-	//DIAGONAL CROSSED
-	if( (b[4] ===  'O')
-			&& ( (b[0] === b[4] && b[4] == b[8]) || (b[2] === b[4] && b[4] == b[6]) ) ){
-		console.log('DIAGONAL CROSSED');
-		return  'O';
-	}
-	
-	/*** Check for empty cell ***/
-	
-	for(i = 0; i < 10; i++){
-		if( b[i] === '&nbsp;'){
-			//console.log('Board is not yet Draw, so return status empty');
-			return '&nbsp;';	//if any cell is empty that mean board is not yet Draw, so return status empty
+	for( var i = 0; i < possibleWin.length; i++) {
+		
+		var win = isCross(b[possibleWin[i][0]], b[possibleWin[i][1]], b[possibleWin[i][2]], 'X');
+		
+		if( win != '&nbsp;' ){
+			return win;
 		}
+		
+		win = isCross( b[possibleWin[i][0]], b[possibleWin[i][1]], b[possibleWin[i][2]], 'O');
+		
+		if( win != '&nbsp;' ){
+			return win;
+		}
+
 	}
 	
-	return 'XO'; 			//Since board is not yet won and is also not empty then it's draw (XO)
+	return '&nbsp;';
+	
+	function isCross(a, b, c, p){
+		var crossedCell = [a, b, c, p];
+		if( a === p && b === p && c === p ){
+			crossedCell = [a, b, c, p];
+			crossedCells.push(crossedCell);					console.log("crosed: " + crossedCell);
+			return p;
+		}
+		
+		return '&nbsp;';
+	}
+
 }
 
 
