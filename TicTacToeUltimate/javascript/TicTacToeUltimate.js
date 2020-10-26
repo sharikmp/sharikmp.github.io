@@ -35,7 +35,7 @@ function initializeGame() {
 
 	//SET GAME STATUS TO NOT DECIDED
 	gameStatus = '&nbsp;';
-
+	crossedCells = [];
 
 	//SET ALL MINI BOARD STATUS TO NOT DECIDED
 	outerBoardStatus = ['&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'];
@@ -92,7 +92,7 @@ function onCellClick(cellId) {
 		var cell = getRandomEmptyCell(cellId); //GET A RANDOM CELL WHICH IS EMPTY
 		onCellClick(cell); //PERFORM ALL FUNCTION AFTER A CLICK IS MADE BY COMPUTER
 	}
-	//console.log(outerBoardStatus);
+	//console.log(outerBoardStatus + "");
 }
 /******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
 
@@ -177,7 +177,7 @@ function getBoardElement() {
 
 /*********************************** FUNCTION TO GAME STATUS ***********************************************************/
 function setGameStatus() {
-	gameStatus = boardStatus(outerBoardStatus);
+	gameStatus = mainBoardStatus(outerBoardStatus);
 }
 /******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
 
@@ -227,33 +227,33 @@ function getNextMiniBoardNum(cellId) {
 
 /*********************************** FUNCTION TO HIGHLIGHT MINI BOARD BASED ON WINNING STATUS *************************/
 function highlightCells() {
-
-	for (var i = 1; i < 10; i++) {
-		if (outerBoardStatus[i - 1] === 'XO') {
-			highlightWonCell(i, "rgba(255, 255, 0, 0.5)");
-		} else if (outerBoardStatus[i - 1] === 'O') {
-			highlightWonCell(i, "rgba(255, 0, 0, 0.5)");
-		} else if (outerBoardStatus[i - 1] === 'X') {
-			highlightWonCell(i, "rgba(0, 0, 255, 0.4)");
+	
+		for (var i = 0; i < crossedCells.length; i++) {
+			var player = crossedCells[i][crossedCells[i].length-1]; 
+			
+			var colour = "rgba(255, 0, 0, 0.5";
+			if( player === 'X'){
+				colour = "rgba(0, 0, 255, 0.4)";
+			}
+			else if ( player === 'O'){
+				colour = "rgba(255, 0, 0, 0.5)";
+			}
+			else if ( player === 'XO'){
+				colour = "rgba(255, 255, 0, 0.5)";
+			}
+			
+			for( var j = 0; j < crossedCells[i].length - 1; j++){
+				//console.log('crossedCells[' + i + '][' + j + ']: ' + crossedCells[i][j]);
+				document.getElementById(crossedCells[i][j] + '').style.backgroundColor = colour;
+			}
+			
 		}
-	}
+	
 }
 /******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
 
 
-/*********************************** function to highlight won board  *************************************************/
-function highlightWonCell(cellNum, color) {
 
-	//Enable given cells
-	var start = cellNum * 10 + 1;
-	var end = start + 9;
-	for (var i = start; i < end; i++) {
-		var cell = document.getElementById(i + '');
-		cell.style.pointerEvents = 'none';
-		cell.style.backgroundColor = color;
-	}
-}
-/******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
 
 
 /*********************************** FUNCTION TO HIGHLIGHT LAST MOVE ***************************************************/
@@ -266,7 +266,13 @@ function highlightLastMove() {
 		}
 	}
 	cell = document.getElementById(lastMove + '');
-	cell.style.color = "rgb(0, 0, 255)";
+	if(currentPlayer === 'O'){
+		cell.style.color = "rgb(0, 0, 255)";
+	}
+	else{
+		cell.style.color = "rgb(255, 0, 0)";
+	}
+	
 }
 /******************* X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  ****************************************/
 
@@ -347,7 +353,7 @@ function setWinner(cellId){
 
 
 
-/*********************************** function to check if current player has won ********************************/
+/*********************************** function to check if current player has won the current mini board ********************************/
 function boardStatus(b){
 	
 	var possibleWin = [ [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6] ];
@@ -361,15 +367,63 @@ function boardStatus(b){
 		
 	}
 	
-	return '&nbsp;';
+	var drawCell = [];
+	//if the board is not yet won, so if there is any empty cell then it means the mini board in not yet decided
+	for(i = 0; i < 9; i++){
+		if( b[i] === '&nbsp;'){
+			return '&nbsp;';	//if any cell is empty that mean board is not yet Draw, so return status empty
+		}
+		drawCell.push(currentMiniBoardNum + '' + (i+1));
+	}
+	drawCell.push('XO');
+	crossedCells.push(drawCell);
+	return 'XO'; 			//Since board is not yet won and is also not empty then it's draw (XO)
 	
 	
 	function isCross(c1, c2, c3, p, b){
 		
-		var crossedCell = [c1, c2, c3];
+		var crossedCell = [];
 		if( b[c1++] === p && b[c2++] === p && b[c3++] === p ){
-			crossedCell = [currentMiniBoardNum + '' + c1, currentMiniBoardNum + '' + c2, currentMiniBoardNum + '' + c3];
-			crossedCells.push(crossedCell);					console.log("crosed: " + crossedCells);
+			crossedCell = [currentMiniBoardNum + '' + c1, currentMiniBoardNum + '' + c2, currentMiniBoardNum + '' + c3, p];
+			crossedCells.push(crossedCell);					//console.log("crosed: " + crossedCells);
+			return p;
+		}
+		
+		return '&nbsp;';
+	}
+
+}
+
+
+
+
+/*********************************** function to check if current player has won the game ********************************/
+function mainBoardStatus(b){
+	
+	var possibleWin = [ [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6] ];
+	
+	for( var i = 0; i < possibleWin.length; i++) {
+
+		var win = isCross(possibleWin[i][0], possibleWin[i][1], possibleWin[i][2], currentPlayer, b);	
+		if( win != '&nbsp;' ){
+			return win;
+		}
+		
+	}
+	
+	//if the board is not yet won, so if there is any empty cell then it means the mini board in not yet decided
+	for(i = 0; i < 10; i++){
+		if( b[i] === '&nbsp;'){
+			return '&nbsp;';	//if any cell is empty that mean board is not yet Draw, so return status empty
+		}
+	}
+	
+	return 'XO'; 			//Since board is not yet won and is also not empty then it's draw (XO)
+	
+	
+	function isCross(c1, c2, c3, p, b){
+		
+		if( b[c1++] === p && b[c2++] === p && b[c3++] === p ){
 			return p;
 		}
 		
