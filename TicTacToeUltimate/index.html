@@ -9,71 +9,50 @@
       <link rel="stylesheet" href="css/style.css">
    </head>
    <body>
-      <div class="header" id="topHeader">
-         
-         <! -- ****** Navigation bar section starts here ****** -->
-         <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container text-uppercase p-2">
-
-               <! -- ***** Brand name ***** -->
-               <a class="navbar-brand font-weight-bold" href="#">Tic Tac Toe Ultimate</a>
-
-               <! -- ****** Navigation bar togger button for mobile view ****** -->
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-               </button>
-               
-
-               <div class="topnav-right">
-               <! -- ****** Headers starts here ****** -->
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" onclick="document.getElementById('login_modal').style.display='block'">Login</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="rules.html">Rules</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#developer">Contact</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#">More...</a>
-                     </li>
-                  </ul>
-               </div>
-               </div>
-               <! -- ****** Headers ends here ****** -->
-
-            </div>
-         </nav>
+      
+      <! -- ****** Navigation bar section starts here ****** -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+         <a class="navbar-brand" href="#">XnO Ultimate</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+               <a class="nav-link" onclick="window.location='#'" data-toggle="collapse" data-target=".navbar-collapse.show" >Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" onclick="document.getElementById('login_modal').style.display='block'" data-toggle="collapse" data-target=".navbar-collapse.show" >Login</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="rules.html" >Rules</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" onclick="window.location='#developer'" data-toggle="collapse" data-target=".navbar-collapse.show" >Contact</a>
+            </li>
+         </div>
+      </nav>
+      <!-- ****** Navigation bar section ends here ****** -->
+	  
+	
          <! -- ****** Navigation bar section ends here ****** -->
 
 
-
-         <! -- ****** Welcome section starts here ****** -->
-         <section class="header-section">
-            <div class="center-div">
+	
 				<br/><br/><br/><br/><br/>
-               <h1 class="font-weight-bold">Tic Tac Toe Ultimate</h1>
-			   <br/>
-               <div class="header-buttons">
-                  <a href="#tictactoe-board" onclick="setGameMode(1)" >Single Player</a>
-				  <br/><br/><br/>
-                  <a href="#tictactoe-board" onclick="setGameMode(2)">Two Player</a>
-				  <br/><br/><br/>
-				  <a href="rules.html" >How to play?</a>
-               </div> 
-            </div>
-         </section>
-         <! -- ****** Welcome section ends here ****** -->
-      </div>
+         <! -- ****** Welcome section starts here ****** -->
+	<br/><br/><br/><br/><br/><br/><br/><br/>	 
+	<div style="text-align: center;">
+      <button type="button" class="btn btn-primary btn-lg" onclick="setGameMode(1)" >Single Player</button>
+      <button type="button" class="btn btn-primary btn-lg" onclick="setGameMode(2)" >Two Player</button>
+      <button type="button" class="btn btn-primary btn-lg" onclick="alert('Under development, coming soon...')" >Play With Friends</button>
+      <button type="button" class="btn btn-primary btn-lg" onclick="window.location='rules.html'">How to play</button>
+    </div>
+         
+    <! -- ****** Welcome section ends here ****** -->
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>  
    <! -- ****** Ends here ****** -->
 	<h1 id="tictactoe-board"></h1>
-	<br/><br/><br/><br/><br/>
 	<div>
       <table id="outer-board" >
          <tr>
@@ -489,7 +468,7 @@
 	  
 	  
 	  
-	  
+	  <br/><br/><br/>
 	  <div class="footer">
 			<address>
 				Coded by <a id="developer" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a>.<br> 

@@ -11,7 +11,8 @@ var currentMiniBoardNum = 5; //FIRST MINI BOARD, RANGE 1 TO 9
 
 /*************************** FUNCTION TO SET GAME MODE  ***************************************************************/
 function setGameMode(mode) {
-
+	
+	window.location='#tictactoe-board';
 	initializeGame();
 	if (mode == 1) { //SINGLE PLAYER
 		gameMode = 1;

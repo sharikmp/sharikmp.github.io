@@ -8,94 +8,116 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
       <link rel="stylesheet" href="css/style.css">
    </head>
+   
+   
    <body>
+   
       <! -- ****** Navigation bar section starts here ****** -->
-         <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container text-uppercase p-2">
-
-               <! -- ***** Brand name ***** -->
-               <a class="navbar-brand font-weight-bold" href="index.html">Tic Tac Toe Ultimate</a>
-
-               <! -- ****** Navigation bar togger button for mobile view ****** -->
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-               </button>
-               
-
-               <div class="topnav-right">
-               <! -- ****** Headers starts here ****** -->
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" >Login</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#">Rules</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#developer">Contact</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#">More...</a>
-                     </li>
-                  </ul>
-               </div>
-               </div>
-               <! -- ****** Headers ends here ****** -->
-
+      <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+         <a class="navbar-brand" href="index.html">XnO Ultimate</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+               <a class="nav-link" href="index.html" >Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" data-toggle="collapse" data-target=".navbar-collapse.show" onclick="document.getElementById('login_modal').style.display='block'">Login</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" onclick="window.location='#'" data-toggle="collapse" data-target=".navbar-collapse.show">Rules</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" onclick="window.location='#developer'" data-toggle="collapse" data-target=".navbar-collapse.show" >Contact</a>
+            </li>
+         </div>
+      </nav>
+      <!-- ****** Navigation bar section ends here ****** -->
+	  
+	  
+      <br/><br/><br/><br/><br/>
+      <h1 id="game-rules">Game Rules</h1>
+      <section >
+         <ul style="text-align: left;margin-left: 15%;margin-right: 15%; font-weight:bold; font-size:15px;">
+            <br/>
+            <li>Only one mini board can be active at a time</li>
+            <br/>
+            <li>If player 1 plays a move in upper right corner of mini board, then player 2 is bound to play in upper right corner mini board only</li>
+            <br/>
+            <li>In this way, the players need to play move keeping in mind opponet's next move as well</li>
+            <br/>
+            <li>Wooo!, this makes the tradition Tic Tac Toe game interesting, and also decreases the chances of game draw.</li>
+            <br/>
+            <li>In case, a mini board is draw, it's consider as won by both players.</li>
+            <br/>
+            <li>Player won the game if there is a cross in bigger board with mini board,</li>
+            <br/>
+         </ul>
+      </section>
+      <div style="text-align: center;">
+         <button type="button" class="btn btn-primary btn-lg" onclick="window.location='index.html'" >Let's Play</button>
+      </div>
+	  
+	  
+      <br/><br/><br/><br/><br/><br/>
+	  
+	  
+      <!-- *********** Login Modal start ********* -->
+      <!-- The Login Modal -->
+      <div id="login_modal" class="modal">
+         <form class="modal-content animate" action="action_page" method="post" onclick="alert('Under Development, coming soon...')">
+            <!-- Modal Heading -->
+            <div class="container" style="background-color:#f1f1f1">
+               <p style="font-weight: bold;">
+                  Enter Credentials...
+               </p>
             </div>
-         </nav>
-         <! -- ****** Navigation bar section ends here ****** -->
-   <! -- ****** Ends here ****** -->
-   
-   
-   
-	
-	<br/><br/><br/><br/><br/><br/><br/>
-	
-	<h1 id="game-rules">Game Rules</h1>
-	<section >
-		<ul style="text-align: left;margin-left: 15%;margin-right: 15%; font-weight:bold; font-size:15px;">
-			<br/>
-		  <li>Only one mini board can be active at a time</li><br/>
-		  <li>If player 1 plays a move in upper right corner of mini board, then player 2 is bound to play in upper right corner mini board only</li><br/>
-		  <li>In this way, the players need to play move keeping in mind opponet's next move as well</li><br/>
-		  <li>Wooo!, this makes the tradition Tic Tac Toe game interesting, and also decreases the chances of game draw.</li><br/>
-		  <li>In case, a mini board is draw, it's consider as won by both players.</li><br/>
-		  <li>Player won the game if there is a cross in bigger board with mini board,</li><br/>
-		</ul> 
-	</section>
-	
-	<div style="text-align: center;">
-				<div class="header-buttons">
-                  <a href="#" onclick="alert('Under development, coming soon...')">Single Player</a>
-				  <br/><br/><br/>
-                  <a href="index.html#tictactoe-board">Two Player</a>
-				  <br/><br/><br/>
-               </div> 
-	
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="footer">
-			<address>
-				Coded by <a id="developer" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a>.<br> 
-				The City Of Joy, West Bengal,<br>
-				With Love From India
-			</address>
-	  </div>
-		
+            <!-- Modal Body -->
+            <div class="container">
+               <div class="login-inputs">
+                  <label for="uname">
+                  <b>Username</b>
+                  </label>
+                  <input type="text" placeholder="Enter Username" name="uname" required>
+                  <label for="psw">
+                  <b>Password</b>
+                  </label>
+                  <input type="password" placeholder="Enter Password" name="psw" required>
+               </div>
+               <div class="login-submit-button">
+                  <button type="submit">Login</button>
+               </div>
+               <label>
+               <input type="checkbox" checked="checked" name="remember"> Remember me
+               </label>
+            </div>
+            <!-- Modal Footer -->
+            <div class="container" style="background-color:#f1f1f1">
+               <button type="button" onclick="document.getElementById('login_modal').style.display='none'" class="cancelbtn">Cancel</button>
+               <span class="psw">Forgot 
+               <a href="#">
+               <b>password?</b>
+               </a>
+               </span>
+            </div>
+         </form>
+      </div>
+      <!-- *********** Login Modal end ********* -->
+	  
+	  
+      <div class="footer">
+         <address>
+            Coded by <a id="developer" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a>.<br> 
+            The City Of Joy, West Bengal,<br>
+            With Love From India
+         </address>
+      </div>
+	  
+	  
       <script type="text/javascript" src="javascript/TicTacToeUltimate.js"></script>
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
    </body>
