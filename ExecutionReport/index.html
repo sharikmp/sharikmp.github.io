@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Execution Report</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/style.css">
+   </head>
+   <body onload="refreshExecutionTable()">
+   
+      
+	<br/>
+	<table class="mainTable">
+         <tr>
+            <th colspan = "6">
+               <h2 align="center">
+                  <font id = "reportName">Excecution Summary</font>
+               </h2>
+            </th>
+         <tr>
+	</table>
+	
+	<table class="mainTable" id="SummaryTable">
+         
+         <tr>
+            <th>Excecution Tool</th>
+            <th>Time stamp</th>
+            <th>Environment</th>
+            <th>Total TestCases</th>
+            <th>Passed</th>
+            <th>Failed</th>
+            <th>No Run</th>
+         </tr>
+      </table>
+	  
+	  <table class="mainTable">
+         <tr>
+            <th colspan = "6">
+               <h2 align="center">
+					<div id="piechart" align="center"></div>
+               </h2>
+            </th>
+         <tr>
+	</table>
+	  
+	  <br/><br/><br/><br/><br/><br/>
+	  
+      
+      <button onclick="refreshExecutionTable()">Refresh</button>
+	  <button onclick="sortTable('exeTable', 0)">Sort By Test Case Id</button>
+	  <button onclick="sortTable('exeTable', 2)">Sort By Status</button>
+      <input type="text" class="searchBox" id="searchBox" onkeyup="searchInTable('exeTable', 'searchBox')" placeholder="Search">
+      
+	  <table class="mainTable">
+         <tr>
+            <th colspan = "6">
+               <h2 align="center">
+                  <font>Excecution Details</font>
+               </h2>
+            </th>
+         <tr>
+	</table>
+	  
+	  <div>
+         <table class="mainTable" id="exeTable">
+            <tr style="height:50px">
+               <th>TC_ID</th>
+               <th>TC_DESCRIPTION</th>
+               <th>STATUS</th>
+               <th>REASON</th>
+               <th>TEST LOG</th>
+            </tr>
+         </table>
+      </div>
+	  
+	  
+      <br/><br/><br/>
+      <br/><br/><br/>
+	  
+	  
+      <div class="footer">
+         <address>
+            Execution Performed by <a id="developer" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a>.<br> 
+            The City Of Joy, West Bengal,<br>
+            With Love From India
+         </address>
+      </div>
+	  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="./data/jsonDataJavaScript.json"></script>
+      <script type="text/javascript" src="javascript/javascript.js"></script>
+	  
+   </body>
+</html>
