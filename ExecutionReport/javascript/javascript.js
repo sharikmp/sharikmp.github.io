@@ -183,7 +183,7 @@ function drawChart() {
 ]);
 
   var options = {
-  width: w*0.9,
+  width: w*0.6,
   height: 300,
   title: 'Execution Analysis',
   colors: ['green', 'red', 'blue']
