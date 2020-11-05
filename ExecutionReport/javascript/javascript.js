@@ -170,7 +170,9 @@ function pieChart(){
 // Load google charts
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
-
+var w = window.innerWidth
+|| document.documentElement.clientWidth
+|| document.body.clientWidth;
 // Draw the chart and set the chart values
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
@@ -181,7 +183,7 @@ function drawChart() {
 ]);
 
   var options = {
-  width: 640,
+  width: w*0.9,
   height: 300,
   title: 'Execution Analysis',
   colors: ['green', 'red', 'blue']
