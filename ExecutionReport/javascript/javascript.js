@@ -26,13 +26,13 @@ function refreshExecutionTable() {
     var cell5 = row.insertCell(4);
 
     // Add some text to the new cells:
-    cell1.innerHTML = jsonObj.testcases[i].TC_ID;
-    cell2.innerHTML = jsonObj.testcases[i].TC_Desc;
+    cell1.innerHTML = jsonObj.testcases[i].id;
+    cell2.innerHTML = jsonObj.testcases[i].desc;
     cell3.innerHTML = colorText(jsonObj.testcases[i].status);
-    cell4.innerHTML = jsonObj.testcases[i].reason;
-    cell5.innerHTML = jsonObj.testcases[i].ReqResFile;
-
-
+    //cell4.innerHTML = jsonObj.testcases[i].steps;
+	addHyperlinkForStepsModal(cell4, 'View Steps', '#myModal', i);
+    //addHyperlink(cell5, 'Screenshot', jsonObj.testcases[i].logs);
+	addHyperlinkForScreenshotModal(cell5, 'screenshot', '#myImageModal', jsonObj.testcases[i].desc, jsonObj.testcases[i].logs);
   } // end of for loop
 
   loadExecutionSummary();
@@ -41,7 +41,7 @@ function refreshExecutionTable() {
 
 
 function loadExecutionSummary() {
-	
+
   var jsonObj = JSON.parse(data);
   
   var table = document.getElementById("SummaryTable");
@@ -66,13 +66,14 @@ function loadExecutionSummary() {
 
     // Add some text to the new cells:
     cell1.innerHTML = jsonObj.executiontool;
-    cell2.innerHTML = jsonObj.timestamp
+    cell2.innerHTML = new Date().toLocaleString();//jsonObj.timestamp
     cell3.innerHTML = jsonObj.environment
     cell4.innerHTML = jsonObj.testcases.length;
     cell5.innerHTML = passedTCs_count;
     cell6.innerHTML = failedTCs_count;
     cell7.innerHTML = noRunTCsCount;
 
+	document.getElementById('reportName').innerHTML = 'Excecution Summary - ' + jsonObj.testingmodulename;
 }
 
 
@@ -193,3 +194,107 @@ function drawChart() {
   chart.draw(data, options);
 }
 }
+
+
+
+
+function addHyperlink(cell, linkName, actualLink){
+  var x = document.createElement("A");
+  var t = document.createTextNode(linkName);
+  x.setAttribute("href", actualLink);
+  x.appendChild(t);
+  cell.appendChild(x);
+}
+
+
+function addHyperlinkForStepsModal(cell, linkName, modalId, i){
+  var x = document.createElement("A");
+  var t = document.createTextNode(linkName);
+  x.setAttribute("href", modalId);
+  x.setAttribute("data-toggle", 'modal');
+  //x.setAttribute("data-target", modalId);
+  x.setAttribute("onclick", 'setStepsModal('+i+')');
+  x.appendChild(t);
+  cell.appendChild(x);
+}
+
+function setStepsModal(num){
+	var jsonObj = JSON.parse(data);
+	
+	var header = document.getElementById('stepsModalHeader');
+	header.innerHTML = jsonObj.testcases[num].desc;
+	
+	var modalBody = document.getElementById('stepsModalBody');
+	createTestStepsTable(modalBody, jsonObj.testcases[num].steps);
+	
+}
+
+function createTestStepsTable(modalBody, steps) {
+	
+	modalBody.innerHTML = '';
+	var tbl = document.createElement('table');
+	tbl.style.width = '90%';
+	tbl.setAttribute('class', 'mainTable');
+	modalBody.appendChild(tbl);
+	
+	var row = tbl.insertRow(0);
+	var header = document.createElement('th');
+	header.innerHTML = 'TEST STEPS';
+	row.appendChild(header);
+	header = document.createElement('th');
+	header.innerHTML = 'STATUS';
+	row.appendChild(header);
+	header = document.createElement('th');
+	header.innerHTML = 'SCREENSHOT';
+	row.appendChild(header);
+	
+	//Remove if any row is present
+	var rowCount = tbl.rows.length;
+	for (var r = 1; r < rowCount; r++) {
+		tbl.deleteRow(-1);
+	}
+
+
+	for (var i = 0; i < steps.length; i++) { 
+		var row = tbl.insertRow(-1); //Adding a new row
+
+		// Insert new cells in the "new" row :
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+
+		// Add some text to the new cells:
+		cell1.innerHTML = steps[i].step;
+		cell2.innerHTML = colorText(steps[i].status);
+		addHyperlinkForScreenshotModal(cell3, 'screenshot', '#myImageModal', steps[i].step, steps[i].screenshot);
+	}
+}
+
+
+
+
+
+
+function addHyperlinkForScreenshotModal(cell, linkName, modalId, title, imagePath){
+  var x = document.createElement("A");
+  var t = document.createTextNode(linkName);
+  x.setAttribute("href", modalId);
+  x.setAttribute("data-toggle", 'modal');
+  //x.setAttribute("data-target", modalId);
+  x.setAttribute("onclick", 'setImageModal("'+title+'", "' + imagePath +'")');
+  x.appendChild(t);
+  cell.appendChild(x);
+}
+
+function setImageModal(title, imagePath){
+	var header = document.getElementById('screenshotModalHeader');
+	header.innerHTML = title;
+	
+	var modalBody = document.getElementById('screenshotModalBody');
+	modalBody.innerHTML = '';
+	var img = document.createElement('img');
+	img.setAttribute('src', imagePath);
+	modalBody.appendChild(img);
+}
+
+
