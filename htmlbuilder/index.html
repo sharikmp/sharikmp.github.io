@@ -1,0 +1,55 @@
+<html>
+
+   <head>
+      <title>HTML Builder</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="css/style.css">
+	  <link rel="icon" href="images/mynotebooklogo.png" type="image/gif" sizes="16x16">
+   </head>
+   
+   <body>
+      <div id="maincontainer">
+         <div>
+			<img src="images/mynotebooklogo.png" alt="Html Builder">
+            <span class="pagetitle">HTML Builder</span>
+         </div>
+         <div class="sample-toolbar">
+            <a href = "#" onclick="format('bold')"><span ></span><b>B</b>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a href = "#" onclick="format('italic')"><span ><i>I</i>&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+            <a href = "#" onclick="format('insertunorderedlist')"><span ><b>&#8226;</b>&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+            <a href = "#" onclick="format('underline')"><span ><u><b>U</b></u>&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+            <a href = "#" onclick="setUrl()"><span><u>H</u></span>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <span style="font-family: monospace;">URL: <input id="txtFormatUrl" placeholder="url"></span>&nbsp;&nbsp;
+            <a href = "#" onclick="insertImage()"><span>Image</span></a>
+            <span style="font-family: monospace;width:50px;">Width: <input id="imgwidth" style="width:40px;" value="400"></span>&nbsp;&nbsp;
+            <span style="font-family: monospace;">Justify:&nbsp;</span>
+            <a href = "#" onclick="format('justifyLeft')"><span>L</span>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a href = "#" onclick="format('justifyCenter')"><span>C</span>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a href = "#" onclick="format('justifyRight')"><span>R</span>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+         </div>
+		 
+         <div class="editor" id="sampleeditor"  onchange="getHTML()"></div>
+         <br/><br/>
+		 
+         <div>
+            <button onclick="getHTML()" class="buttonhtml"><span>Generate Html</span></button>
+         </div>
+         <br/><br/><br/><br/>
+		 
+         <div id="test"></div>
+         <br/><br/><br/><br/>
+		 
+         <div>      
+            <button id="copyButton" style="display:none;" onclick="copyToClipboard('htmlcode')" class="buttonhtml"><span>Copy Source Code</span></button>
+			<div id="copiedMessage"></div>
+		 </div>
+         <br/><br/>
+         <textarea style="display:none;" class="menu" id="htmlcode" name="menu" rows="20" cols="200"></textarea>
+		 
+      </div>
+	  
+	  
+      <script type="text/javascript" src="javascript/htmlbuilderjavascript.js"></script>
+   </body>
+</html>
