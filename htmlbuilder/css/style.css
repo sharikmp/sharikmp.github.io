@@ -5,6 +5,14 @@ body {
 	
 }
 
+#posttitle {
+	width: 100%;
+	border: solid 1px #6792EF;
+	font-size: 15px;
+	font-family: monospace;
+	line-height: 20px;
+}
+
 .pagetitle{
 	
 	font-size: 24px;
@@ -32,7 +40,7 @@ body {
 	min-height: 300px;
 	font-size: 15px;
 	font-family: monospace;
-	line-height: 20px;
+	line-height: 15px;
 }
 
 .menu {

@@ -28,7 +28,7 @@ function setUrl() {
 
 
 function getHTML() {
-	var title = "POST TITLE";
+	var title = document.getElementById('posttitle').value;
 	var htmlsourcecode = document.getElementById('sampleeditor').innerHTML;
 	if (htmlsourcecode != '' && htmlsourcecode != null) {
 		htmlsourcecode = '<!DOCTYPE html><html><head><title>'+title+'</title><style>#postcontenttitle{background:#6792EF;background:-webkit-linear-gradient(left, #6792EF, #22A890);background:-moz-linear-gradient(left, #6792EF, #22A890);background:linear-gradient(to right,#6792EF,#22A890)}#postcontent{background:rgb(255, 255, 255);background:linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(132, 189, 255, 0.804359243697479) 100%);border:1px solid black;padding:20px;font-family:monospace;font-size:15px}#maincontainer{padding-right:20px;padding-bottom:50px;padding-left:20px}.footer{left:0;bottom:0;width:100%!important;min-width:300px;background:#6792EF;background:-webkit-linear-gradient(left, #6792EF, #22A890);background:-moz-linear-gradient(left, #6792EF, #22A890);background:linear-gradient(to right, #6792EF, #22A890);color:black;text-align:center;padding-top:20px;padding-bottom:1px}.footer a{color:black;text-decoration:underline;font-weight:bold}</style></head><body><div id="postcontent"><br/><div id="postcontenttitle" style="text-align: center;"><h1>' + title + '</h1></div>' + htmlsourcecode;
