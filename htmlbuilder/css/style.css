@@ -6,8 +6,7 @@ body {
 }
 
 #posttitle {
-	padding: 20px;
-	width: 100%;
+	width: 95%;
 	border: solid 1px #6792EF;
 	font-size: 15px;
 	font-family: monospace;
