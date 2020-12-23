@@ -6,6 +6,7 @@ body {
 }
 
 #posttitle {
+	padding: 20px;
 	border: solid 1px #6792EF;
 	font-size: 15px;
 	font-family: monospace;
