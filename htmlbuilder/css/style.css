@@ -6,11 +6,11 @@ body {
 }
 
 #posttitle {
-	width: 95%;
+	width: 100%;
 	border: solid 1px #6792EF;
 	font-size: 15px;
 	font-family: monospace;
-	line-height: 15px;
+	line-height: 20px;
 }
 
 .pagetitle{
