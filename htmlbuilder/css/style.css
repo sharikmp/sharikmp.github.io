@@ -65,7 +65,6 @@ body {
 
 #postcontent {
 	background: rgb(255, 255, 255);
-	background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(132, 189, 255, 0.804359243697479) 100%);
 	border: 1px solid black;
 	padding: 20px;
 	font-family: monospace;
