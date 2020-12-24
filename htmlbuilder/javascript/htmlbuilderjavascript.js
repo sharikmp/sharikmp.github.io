@@ -38,7 +38,6 @@ function getHTML() {
 		var elmnt = document.getElementById("htmlcode");
 		elmnt.value = htmlsourcecode;
 		elmnt.style.display = "inline";
-		document.getElementById('test').scrollIntoView();
 		document.getElementById('copyButton').style.display = "inline";
 	}
 
