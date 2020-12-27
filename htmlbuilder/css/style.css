@@ -9,7 +9,7 @@ ul {
 	width: 100%;
 	border: solid 1px #6792EF;
 	font-size: 15px;
-	font-family: monospace;
+	font-family: arial;
 	line-height: 20px;
 }
 
@@ -43,7 +43,7 @@ ul {
 	padding: 20px;
 	min-height: 300px;
 	font-size: 15px;
-	font-family: monospace;
+	font-family: arial;
 	line-height: 25px;
 }
 
@@ -63,6 +63,7 @@ ul {
 	background: -webkit-linear-gradient(left, #6792EF, #22A890);
 	background: -moz-linear-gradient(left, #6792EF, #22A890);
 	background: linear-gradient(to right, #6792EF, #22A890);
+	font-family: arial;
 }
 
 
@@ -71,8 +72,9 @@ ul {
 	background: rgb(255, 255, 255);
 	border: 1px solid black;
 	padding: 20px;
-	font-family: monospace;
+	font-family: arial;
 	font-size: 15px;
+	line-height: 25px;
 }
 
 .buttonhtml {
@@ -122,7 +124,7 @@ textarea {
 #copiedMessage {
 	
 	font-size: 11px;
-	color: #ffa;
+	color: red;
 	font-family: monospace;
 }
 
@@ -139,6 +141,7 @@ textarea {
         text-align: center;
         padding-top:20px;
         padding-bottom:1px;
+	font-family: arial;
       }
 
       .footer a{
