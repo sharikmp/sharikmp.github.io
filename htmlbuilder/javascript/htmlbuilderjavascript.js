@@ -4,18 +4,16 @@ window.addEventListener('load', function () {
 
 function format(command, value) {
 	document.execCommand(command, false, value);
-	getHTML();
 }
 
 function insertImage() {
 	var url = document.getElementById('txtFormatUrl').value;
 	var w = document.getElementById('imgwidth').value;
 	if (w == '' || w == null) {
-		w = "500";
+		w = "400";
 	}
-	document.execCommand('insertHTML', false, '<img src="' + url + '"  width="' + w + '" height="auto" style="border: 1px solid #ddd; float:right;" ></img>');
+	document.execCommand('insertHTML', false, '<img src="' + url + '"  width="' + w + '" height="auto" style="border: 1px solid #6792EF; float:right;" ></img>');
 	document.getElementById('txtFormatUrl').value = '';
-	getHTML();
 }
 
 function setUrl() {
@@ -23,7 +21,6 @@ function setUrl() {
 	var sText = document.getSelection();
 	document.execCommand('insertHTML', false, '<a href="' + url + '">' + sText + '</a>');
 	document.getElementById('txtFormatUrl').value = '';
-	getHTML();
 }
 
 
@@ -50,6 +47,8 @@ function copyToClipboard(id) {
   document.execCommand("copy");
   document.getElementById('copiedMessage').innerHTML = 'Copied!';
 }
+
+
 
 function cssstyle(){ return `a {
         color: black;
