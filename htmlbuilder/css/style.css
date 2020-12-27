@@ -2,8 +2,8 @@ a{color:black;text-decoration: none;}
 a:hover { color: #fff; text-decoration: none; }
 
 ul {
-	padding: 5px;
-	margin: 5px;
+	padding: 20px;
+	margin: 20px;
   list-style-image: url('../images/listarrow.png');
 }
 
