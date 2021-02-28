@@ -12,7 +12,7 @@ function insertImage() {
 	if (w == '' || w == null) {
 		w = "400";
 	}
-	document.execCommand('insertHTML', false, '<img src="' + url + '"  width="' + w + '" height="auto" style="border: 1px solid #6792EF; float:right;" ></img>');
+	document.execCommand('insertHTML', false, '<img src="' + url + '"  width="' + w + '" height="auto" style="border: 1px solid #6792EF; " ></img>');
 	document.getElementById('txtFormatUrl').value = '';
 }
 
