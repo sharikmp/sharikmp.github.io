@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
    <head>
       <title>Sharik Madhyapradeshi</title>
-      <style>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://sharikmp.github.io/XnO/css/style.css">
+   </head>
+   <style>
 		  
 		a {
          color: black;
@@ -11,7 +17,8 @@
          color: #00f;
          }
          ul {
-         //list-style-image: url("https://sharikmp.github.io/htmlbuilder/images/listarrow.png");
+         padding-left:3%;
+         list-style-image: url("https://sharikmp.github.io/htmlbuilder/images/listarrow.png");
          }
          #postcontenttitle {
          border: 1px solid blue; 
@@ -21,10 +28,7 @@
          font-family: arial;
          }
          #postcontent {
-         //background:rgb(0, 0, 255, 100);
-         //background:linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(132, 189, 255, 0.804359243697479) 100%);
-         border:1px solid blue;
-         padding:20px;
+         padding:20px!important;
          font-family: arial;
          font-size:16px;
          color:black;
@@ -63,14 +67,37 @@
 			font-size:16px;
 			}
       </style>
-   </head>
    <body>
-      <div id="postcontent">
-         <br/>
-         <div id="postcontenttitle" style="text-align: center;">
-            <h3>Projects</h3>
+      
+      <! -- ****** Navigation bar section starts here ****** -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+         <a class="navbar-brand" href="#">Projects</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+               <a class="nav-link" onclick="window.location='#'" data-toggle="collapse" data-target=".navbar-collapse.show" >Home <span class="sr-only">(current)</span></a>
+            </li>
+    
+            <li class="nav-item">
+               <a class="nav-link" href="mailto:sharik.madhyapradeshi@gmail.com" data-toggle="collapse" data-target=".navbar-collapse.show" >Contact</a>
+            </li>
          </div>
-         <br/><br/>
+      </nav>
+      <!-- ****** Navigation bar section ends here ****** -->
+	  
+	
+         <!-- ****** Navigation bar section ends here ****** -->
+
+
+	
+				<br/><br/>
+         <!-- ****** Welcome section starts here ****** -->
+	 
+	<div id="postcontent">
+         
          <div>
             <ul>
                <li><b><a href="https://sharikmp.github.io/testreport/">Automation Custom Test Report</a></b></li>
@@ -92,15 +119,23 @@
             </ul>
 			
             <ul>
-               <li><a href="https://sharikmp.github.io/qasnipper/"><b>QA Snip </a> (Snipping tool to speed up manual test execution)</b></li>
+               <li><a href="https://sharikmp.github.io/qasnipper/"><b>QA Snip (Snipping tool to speed up manual test execution)</b> </a></li>
             </ul>
          </div>
          <br/>
          <div class="footer">
-            <address><br/>Contact: <a id="developer" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a></address>
-			<br/>
+            <address>Contact: <a id="developer" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a></address>
          </div>
       </div>
       <br/>
+         
+    <! -- ****** Welcome section ends here ****** -->
+    
+	  
+		
+      <script type="text/javascript" src="javascript/TicTacToeUltimate.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
    </body>
 </html>
