@@ -59,3 +59,12 @@ body {
   color: #FEF2BF;
 }
 
+
+.result {
+  color: #FEF2BF;
+  font-family: cursive;
+}
+
+#actual {
+  color: red;
+}

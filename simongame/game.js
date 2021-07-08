@@ -125,14 +125,14 @@ function resetGame() {
 }
 
 function gameOverScreen() {
-	console.log("Expected: " + gamePattern);
-	console.log("Actual: " + userClickedPattern);
+	var result = "Expected: " + gamePattern + '<br><p id="actual">' + "Actual: " + userClickedPattern + "</p>";
+	$("#result").html(result);
 
 	$(".container").css("display", "none");
 	$("#startButton").css("display", "inline");
 	$("#level-title").css("font-size", "2rem");
 	$("#level-title").css("color", "red");
-	$("#level-title").html("Game Over! <br>Click Start to play again!");
+	$("#level-title").html("Game Over!");
 	flash("#level-title", 3);
 	var audio = new Audio("sounds/wrong.mp3");
 	audio.play();
