@@ -33,7 +33,7 @@ function startGame(startButton) {
 
 	$('.how-to-play').fadeOut(3000);
 
-	$('.youtube-link').fadeOut(100);
+	$('.youtube-link').fadeOut(3000);
 
 	//Animate Start Button
 	animatePress("startButton");
@@ -143,12 +143,12 @@ function resetGame() {
 	level = 0;
 	patterCurrentCount = 0;
 
-	var H = window.screen.availHeight;
-	var W = window.screen.availWidth;
-	$(".center").css("width", W+"");
-	$(".center").css("height", H+"");
-	$(".center").css("margin-left", W/2+"");
-	$(".center").css("margin-top", H/2+"");
+	// var H = window.screen.availHeight;
+	// var W = window.screen.availWidth;
+	// $(".center").css("width", W+"");
+	// $(".center").css("height", H+"");
+	// $(".center").css("margin-left", W/2+"");
+	// $(".center").css("margin-top", H/2+"");
 
 }
 
