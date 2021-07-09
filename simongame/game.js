@@ -31,9 +31,9 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 
 function startGame(startButton) {
 
-	$('.how-to-play').fadeOut(3000);
+	$('.how-to-play').fadeOut(100);
 
-	$('.youtube-link').fadeOut(3000);
+	$('.youtube-link').fadeOut(100);
 
 	//Animate Start Button
 	animatePress("startButton");
@@ -143,13 +143,6 @@ function resetGame() {
 	level = 0;
 	patterCurrentCount = 0;
 
-	// var H = window.screen.availHeight;
-	// var W = window.screen.availWidth;
-	// $(".center").css("width", W+"");
-	// $(".center").css("height", H+"");
-	// $(".center").css("margin-left", W/2+"");
-	// $(".center").css("margin-top", H/2+"");
-
 }
 
 function gameOverScreen() {
@@ -160,7 +153,7 @@ function gameOverScreen() {
 	$("#startButton").css("display", "inline");
 	$("#level-title").css("font-size", "2rem");
 	$("#level-title").css("color", "rgb(255, 125, 125)");
-	$("#level-title").html("Game Over!");
+	$("#level-title").html('Game Over!<br><span style="color:#000; font-size: 1rem;">Level Completed - ' + (level-1) + "</span>");
 	flash("#level-title", 3);
 	var audio = new Audio("sounds/wrong.mp3");
 	audio.play();
