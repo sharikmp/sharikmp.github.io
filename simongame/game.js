@@ -12,7 +12,27 @@ for (var i = buttonColours.length - 1; i >= 0; i--) {
 
 flash("#level-title", 3);
 
+//To adjust scaling in mobile devices
+$(function(){
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+  var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
+  var mw = 640; // min width of site
+  var ratio =  ww / mw; //calculate ratio
+  if( ww < mw){ //smaller than minimum size
+   $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
+  }else{ //regular size
+   $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+  }
+}
+});
+
+
+
+
 function startGame(startButton) {
+
+	$('.how-to-play').fadeOut(1000);
+
 	//Animate Start Button
 	animatePress("startButton");
 	//Wait for 200 milli sec display all 4 buttons

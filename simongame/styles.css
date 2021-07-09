@@ -7,7 +7,7 @@ body {
 #level-title {
   font-family: 'Press Start 2P', cursive;
   font-size: 2rem;
-  margin:  5%;
+  margin:  2%;
   color: #000;
   line-height: 3.5rem;
   background-color: lightblue;
@@ -21,13 +21,21 @@ body {
 }
 
 .btn {
-  margin: 25px;
+  margin: 10px;
   display: inline-block;
   height: 150px;
   width: 150px;
   border: 10px solid black;
   border-radius: 20%;
 }
+
+
+.btn:hover {
+  border: 10px solid black;
+  box-shadow: 0 0 20px black;
+  cursor: pointer;
+}
+
 
 .game-over {
   background-color: red;
@@ -85,6 +93,27 @@ body {
   width: 20px;
   border: 2px solid black;
   border-radius: 20%;
+  margin-right: 2px;
 }
 
 
+.how-to-play {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  margin: 10%;
+  color: #000;
+  line-height: 3.5rem;
+  background-color: lightblue;
+  border: 1px solid rgb(100, 150, 250);
+  padding: 2px;
+}
+
+a {
+  text-decoration: none;
+  color: #000!important;
+}
+
+.how-to-play:hover {
+  border: 1px solid blue;
+  color: blue;
+}
