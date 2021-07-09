@@ -73,6 +73,8 @@ function nextSequence() {
 
 	animatePress(color);
 
+	//flash("#"+currentColour, 2);
+
 	playSound(color);
 
 	userClickedPattern = [];
@@ -94,7 +96,7 @@ function animatePress(currentColour) {
 	$("#"+currentColour).addClass("pressed");
 	setTimeout(function () {
 		$("#"+currentColour).removeClass("pressed");
-	}, 100)
+	}, 300);
 }
 
 
@@ -109,7 +111,7 @@ function resetGame() {
 	gameOver = false;
 
 	$("#level-title").css("font-size", "3rem");
-	$("#level-title").css("color", "#FEF2BF");
+	$("#level-title").css("color", "blue");
 
 	$(".container").css("display", "block");
 	$(startButton).css("display", "none");
