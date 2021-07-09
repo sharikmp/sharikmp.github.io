@@ -31,7 +31,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 
 function startGame(startButton) {
 
-	$('.how-to-play').fadeOut(1000);
+	$('.how-to-play').fadeOut(3000);
 
 	//Animate Start Button
 	animatePress("startButton");
