@@ -110,8 +110,8 @@ function checkAnswer() {
 function resetGame() {
 	gameOver = false;
 
-	$("#level-title").css("font-size", "3rem");
-	$("#level-title").css("color", "blue");
+	$("#level-title").css("font-size", "2rem");
+	$("#level-title").css("color", "#000");
 
 	$(".container").css("display", "block");
 	$(startButton).css("display", "none");
@@ -137,7 +137,7 @@ function gameOverScreen() {
 	$(".container").css("display", "none");
 	$("#startButton").css("display", "inline");
 	$("#level-title").css("font-size", "2rem");
-	$("#level-title").css("color", "red");
+	$("#level-title").css("color", "rgb(255, 125, 125)");
 	$("#level-title").html("Game Over!");
 	flash("#level-title", 3);
 	var audio = new Audio("sounds/wrong.mp3");
@@ -155,7 +155,9 @@ function flash(arg, num) {
 function showPatterns() {
 	$('.result-patterns').remove();
 	$('.result').append('<div class="result-patterns"></div>');
+
 	if(userClickedPattern.length > 0) {
+		$('.result-patterns').css('border', '1px solid rgb(100, 150, 250)');
 		$('.result-patterns').append('<h2 id="user-pattern">Your Pattern: </h2>');
 		for (var i = 0; i < userClickedPattern.length; i++) {
 			var color = userClickedPattern[i];
