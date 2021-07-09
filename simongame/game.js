@@ -33,6 +33,8 @@ function startGame(startButton) {
 
 	$('.how-to-play').fadeOut(3000);
 
+	$('.youtube-link').fadeOut(100);
+
 	//Animate Start Button
 	animatePress("startButton");
 	//Wait for 200 milli sec display all 4 buttons
