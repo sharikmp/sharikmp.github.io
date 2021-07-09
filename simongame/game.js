@@ -55,6 +55,8 @@ function userClickHandle() {
 	}
 
 	patterCurrentCount++;
+
+	showPatterns();
 }
 
 function nextSequence() {
@@ -78,6 +80,8 @@ function nextSequence() {
 	patterCurrentCount = 0;
 
 	flash("#level-title", 1);
+
+	showPatterns();
 }
 
 
@@ -125,7 +129,7 @@ function resetGame() {
 }
 
 function gameOverScreen() {
-	var result = "Expected: " + gamePattern + '<br><p id="actual">' + "Actual: " + userClickedPattern + "</p>";
+	var result = "Expected: " + gamePattern + '<br><p id="actual">' + "But found: " + userClickedPattern + "</p>";
 	$("#result").html(result);
 
 	$(".container").css("display", "none");
@@ -142,5 +146,26 @@ function gameOverScreen() {
 function flash(arg, num) {
 	for (var i = num - 1; i >= 0; i--) {
 		$(arg).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+	}
+}
+
+
+function showPatterns() {
+	$('.result-patterns').remove();
+	$('.result').append('<div class="result-patterns"></div>');
+	if(userClickedPattern.length > 0) {
+		$('.result-patterns').append('<h2 id="user-pattern">Your Pattern: </h2>');
+		for (var i = 0; i < userClickedPattern.length; i++) {
+			var color = userClickedPattern[i];
+			$("#user-pattern").append('<div type="button" class="sml-btn ' + color + '"></div>');
+		}
+	}
+
+	if(gameOver) {
+		$('.result-patterns').append('<h2 id="expected-pattern">Expected Pattern: </h2>');
+		for (var i = 0; i < gamePattern.length; i++) {
+			var color = gamePattern[i];
+			$("#expected-pattern").append('<div type="button" class="sml-btn ' + color + '"></div>');
+		}
 	}
 }

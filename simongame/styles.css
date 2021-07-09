@@ -5,7 +5,7 @@ body {
 
 #level-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin:  5%;
   color: #FEF2BF;
   line-height: 3.5rem;
@@ -55,7 +55,7 @@ body {
   background-color: green;
   font-family: 'Press Start 2P', cursive;
   font-size: 1.5rem;
-  margin:  5%;
+  margin:  1%;
   color: #FEF2BF;
 }
 
@@ -67,4 +67,12 @@ body {
 
 #actual {
   color: red;
+}
+
+.sml-btn {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border: 2px solid black;
+  border-radius: 20%;
 }
