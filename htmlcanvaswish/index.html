@@ -14,7 +14,6 @@
 		.block {
 			position: relative;
 			margin: 10px auto 0;
-			width: 1000px;
 			background: linear-gradient(0deg, #000, #272727);
 		}
 
@@ -54,36 +53,50 @@
                 overflow:hidden;
             }
 			h1,h2{
-				font-size: 100px;
+				font-size: 350%;
 				color: RED;
 				font-family: 'Courgette', cursive;
 			}
 			h2 {
-				font-size: 50px;
+				font-size: 150%;
 				color: RED;
+			}
+			.center {
+			  padding: 10px 0;
+			  border: 3px solid green;
+			  text-align: center;
 			}
         </style>
     </head>
     <body>
-	<div class="block" id="msg">
-		<h1><center>Ramazan Mubarak</center></h1>
-		<h2><center>From <br/>Sharik Madhyapradeshi<br/>(02/04/2022)</center></h2>
+	<div class="block center" id="msg">
+		<h1><span style="color:white;">☪</span> <span style="color:GREEN;">Ramazan Mubarak</span>  <span style="color:white;">☪</span> </h1>
+		<h2>From <br/>Sharik Madhyapradeshi<br/>(02/04/2022)</h2>
 	</div>
 	
-	
-	<div class="block">
+	<br/>
+	<div class="block" id="canva">
 		<canvas></canvas>
 	</div>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
     <script type ="text/javascript">
-	var msgWidth = document.querySelector("#msg").offsetWidth; 
-	var msgHeight = document.querySelector("#msg").offsetHeight ; 
+	var H = window.innerHeight;
+	var W = window.innerWidth;
+	//alert(H);
+	document.querySelector("#msg").style.width = W*0.8+"px"; 
+	
+	var canvaWidth = W*0.8;
+	var canvaHeight = (H - document.querySelector("#msg").offsetHeight ) * 0.8;
+	document.querySelector("#canva").style.width = canvaWidth+"px";
+	document.querySelector("#canva").style.height = canvaHeight +"px";
+	
+		
         $(function () {
   var c = document.querySelector("canvas"),
     ctx = c.getContext("2d"),
-    width = (c.width = msgWidth),
-    height = (c.height = msgHeight),
+    width = (c.width = canvaWidth),
+    height = (c.height = canvaHeight),
     n_stars = 1,
     stars = [],
     twinkleFactor = 0.6,
