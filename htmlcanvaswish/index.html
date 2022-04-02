@@ -65,7 +65,7 @@
         </style>
     </head>
     <body>
-	<div class="block">
+	<div class="block" id="msg">
 		<h1><center>Ramazan Mubarak</center></h1>
 		<h2><center>From <br/>Sharik Madhyapradeshi<br/>(02/04/2022)</center></h2>
 	</div>
@@ -77,11 +77,13 @@
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
     <script type ="text/javascript">
+	var msgWidth = document.querySelector("#msg").offsetWidth; 
+	var msgHeight = document.querySelector("#msg").offsetHeight ; 
         $(function () {
   var c = document.querySelector("canvas"),
     ctx = c.getContext("2d"),
-    width = (c.width = window.innerWidth - 200),
-    height = (c.height = window.innerHeight - 500),
+    width = (c.width = msgWidth),
+    height = (c.height = msgHeight),
     n_stars = 1,
     stars = [],
     twinkleFactor = 0.6,
@@ -190,7 +192,7 @@
   };
   Star.prototype.draw = function () {
     this.b += twinkleFactor * (Math.random() - 0.5);
-	var randomColor = getRandomInt(100,255) + "," + getRandomInt(100,255) + "," + getRandomInt(100,255);
+	var randomColor = "226,88,34";//getRandomInt(100,255) + "," + getRandomInt(100,255) + "," + getRandomInt(100,255);
     ctx.fillStyle = "rgba(" + randomColor + "," + this.b + ")";
     ctx.beginPath();
     ctx.arc(~this.x, ~this.y, this.r, 0, Math.PI * 2);
