@@ -60,7 +60,7 @@ function setTime() {
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
-  document.getElementById("time").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+  document.getElementById("time").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s (" + (100-percent) + "%)";
     
   // If the count down is over, write some text 
   if (distance < 0) {
