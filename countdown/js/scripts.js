@@ -12,20 +12,13 @@ $(document).ready( () => {
     countDownStartDate = new Date(startDate).getTime();
     countDownEndDate = new Date(endDate).getTime();
 
-    percent = Math.ceil(100-((countDownEndDate - now)*100)/(countDownEndDate - countDownStartDate));
-    if(percent > 100){
-        percent = 100;
-    }
-    else if(percent < 0){
-        percent = 0;
-    }
-
-
+    
     $("#start-date").text(startDate);
     $("#end-date").text(endDate);
 
 
     setTime();
+    percent = Math.ceil(percent);
     move();
     interval = setInterval(setTime, 1000);
 
@@ -50,6 +43,15 @@ function move() {
 }
 
 function setTime() {
+    
+    percent = 100-((countDownEndDate - now)*100)/(countDownEndDate - countDownStartDate);
+    if(percent > 100){
+        percent = 100;
+    }
+    else if(percent < 0){
+        percent = 0;
+    }
+   
   now = new Date().getTime();
   // Find the distance between now and the count down date
   var distance = countDownEndDate - now;
