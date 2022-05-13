@@ -1,4 +1,4 @@
-const startDate = "Dec 6, 2020 23:00:00";
+const startDate = "Dec 13, 2020 23:00:00";
 const endDate = "Dec 4, 2022 23:00:00";
 var now;
 var countDownStartDate;
