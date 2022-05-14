@@ -26,7 +26,7 @@ $(document).ready( () => {
     if(window.innerWidth < window.innerHeight) {
         console.log("window.innerWidth: "+window.innerWidth)
         console.log("window.innerHeight: "+window.innerHeight)
-        setTimeout(rotateScreen, 5000);
+        //setTimeout(rotateScreen, 5000);
     }
     
 
@@ -92,5 +92,5 @@ function timeElapsed(from) {
 
 
 function rotateScreen() {
-   alert("Rotate Screen and relaod for better view!");
+   alert("Rotate Screen and reload for better view!");
 }
