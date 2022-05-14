@@ -5,6 +5,7 @@ var countDownStartDate;
 var countDownEndDate;
 var interval;
 var percent;
+var rem;
 var animationTime = 2000;
 
 $(document).ready( () => {
@@ -51,7 +52,8 @@ function setTime() {
     else if(percent < 0){
         percent = 0;
     }
-   
+   rem = 100 - percent;
+    rem = Math.round(rem*1000000)/1000000;
   now = new Date().getTime();
   // Find the distance between now and the count down date
   var distance = countDownEndDate - now;
@@ -62,7 +64,7 @@ function setTime() {
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
-  document.getElementById("time").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s (" + (100-percent) + "%)";
+  document.getElementById("time").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s (" + rem + "%)";
     
   // If the count down is over, write some text 
   if (distance < 0) {
