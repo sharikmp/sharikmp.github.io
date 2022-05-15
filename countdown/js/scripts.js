@@ -101,5 +101,6 @@ function rotateScreen() {
 
 function play() {
   var audio = new Audio('https://sharikmp.github.io/countdown/images/joTumNaHo.mp3');
+  audio.muted = true;
   audio.play();
 }
