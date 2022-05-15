@@ -9,6 +9,7 @@ var rem;
 var animationTime = 2000;
 
 $(document).ready( () => {
+    play();
     now = new Date().getTime();
     countDownStartDate = new Date(startDate).getTime();
     countDownEndDate = new Date(endDate).getTime();
@@ -95,4 +96,9 @@ function timeElapsed(from) {
 
 function rotateScreen() {
    alert("Rotate Screen and reload for better view!");
+}
+
+function play() {
+  var audio = new Audio('https://sharikmp.github.io/countdown/images/joTumNaHo.mp3');
+  audio.play();
 }
