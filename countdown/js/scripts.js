@@ -8,8 +8,6 @@ var percent;
 var rem;
 var animationTime = 2000;
 
-play();
-
 $(document).ready( () => {
     now = new Date().getTime();
     countDownStartDate = new Date(startDate).getTime();
