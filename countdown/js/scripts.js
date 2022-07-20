@@ -70,12 +70,12 @@ function setTime() {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
   
-    $("#time") = days + "d " + hours + "h " + minutes + "m " + seconds + "s (" + rem + "%)";
+    $("#time").text(days + "d " + hours + "h " + minutes + "m " + seconds + "s (" + rem + "%)");
     
     // If the count down is over, write some text
     if (distance < 0) {
         clearInterval(interval);
-        $("#time") = "Happily Married: " + timeElapsed(countDownEndDate);
+        $("#time").text("Happily Married: " + timeElapsed(countDownEndDate));
     }
 
 }
