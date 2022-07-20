@@ -1,5 +1,7 @@
 const startDate = "Dec 13, 2020 20:00:00";
 const endDate = "Dec 4, 2022 23:00:00";
+const startDateMasked = "Dec XX, 2020";
+const endDateMasked = "Dec XX, 2022";
 var now;
 var countDownStartDate;
 var countDownEndDate;
@@ -14,8 +16,8 @@ $(document).ready( () => {
     countDownEndDate = new Date(endDate).getTime();
 
     
-    $("#start-date").text(startDate);
-    $("#end-date").text(endDate);
+    $("#start-date").text(startDateMasked);
+    $("#end-date").text(endDateMasked);
 
 
     setTime();
@@ -52,53 +54,48 @@ function setTime() {
     else if(percent < 0){
         percent = 0;
     }
-   rem = 100 - percent;
+    rem = 100 - percent;
     rem = Math.round(rem*1000000)/1000000;
-  now = new Date().getTime();
-  // Find the distance between now and the count down date
-  var distance = countDownEndDate - now;
+    now = new Date().getTime();
     
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
-  document.getElementById("time").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s (" + rem + "%)";
+    // Find the distance between now and the count down date
+    var distance = countDownEndDate - now;
     
-  // If the count down is over, write some text 
-  if (distance < 0) {
-    clearInterval(interval);
-    document.getElementById("time").innerHTML = "Happily Married: " + timeElapsed(countDownEndDate);
-  }
+    
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  
+    $("#time") = days + "d " + hours + "h " + minutes + "m " + seconds + "s (" + rem + "%)";
+    
+    // If the count down is over, write some text
+    if (distance < 0) {
+        clearInterval(interval);
+        $("#time") = "Happily Married: " + timeElapsed(countDownEndDate);
+    }
+
 }
 
 
 
 function timeElapsed(from) {
-  // Find the distance between now and the count down date
-  var distance = from - new Date().getTime();
+    // Find the distance between now and the count down date
+    var distance = from - new Date().getTime();
 
-  if(distance < 0) {
-    distance = distance * -1;
-  }
+  
+    if(distance < 0) {
+        distance = distance * -1;
+    }
     
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  return days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-}
-
-
-function rotateScreen() {
-   alert("Rotate Screen and reload for better view!");
-}
-
-function play() {
-  var audio = new Audio('https://sharikmp.github.io/countdown/images/joTumNaHo.mp3');
-  audio.muted = true;
-  audio.play();
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    return days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 }
