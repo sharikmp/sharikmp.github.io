@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Differences</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        .missing-key {
+            color: red;
+        }
+
+        .data-type-difference {
+            color: blue;
+        }
+
+        .data-difference {
+            color: green;
+        }
+
+        .container {
+            max-width: 98%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+
+        .col {
+            flex-basis: 0;
+            flex-grow: 1;
+            max-width: 100%;
+            padding: 0 10px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80vh;
+            background-color: #1e1e1e;
+            color: #ddd;
+            border: none;
+            padding: 10px;
+            font-size: 11px;
+            font-family: monospace;
+            line-height: 1.5;
+            border-radius: 5px;
+            box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
+            resize: none;
+            position: relative;
+            padding-left: 2.5em;
+        }
+
+        textarea:focus {
+            outline: none;
+            box-shadow: inset 0px 0px 5px rgba(0, 0, 255, 0.5);
+        }
+
+        textarea::before {
+            content: counter(lineno);
+            counter-increment: lineno;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2em;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            border-right: 1px solid #aaa;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #666;
+            border-radius: 10px;
+            border: 2px solid #1e1e1e;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #aaa;
+        }
+
+
+        .hide {
+            display: none;
+        }
+
+        .double-width {
+            width: 200%;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .col {
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+
+            .double-width {
+                width: 100%;
+            }
+        }
+
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            div {
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+
+        .navbar-brand,
+        .nav-link,
+        .action-btn {
+            font-family: cursive;
+            background-color: #1e1e1e;
+            color: #ddd !important;
+            padding: 5px 20px;
+            border-radius: 1rem;
+        }
+
+        .nav-link {
+            width: 150px;
+            text-align: center;
+            font-size: 13px;
+            margin-right: 10px;
+        }
+
+        .action-btn {
+            width: 200px;
+            font-size: 15px;
+            margin: 0 auto;
+            border: none;
+        }
+
+        .action-btn:hover {
+            width: 200px;
+            font-size: 15px;
+            margin: 0 auto;
+            background-color: #1e1e1e;
+            color: #ddd !important;
+        }
+
+
+
+        /* Footer styles */
+        .footer {
+            background-color: #999;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 0;
+        }
+
+
+        div.center-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .json-display {
+            border: 1px solid #ddd;
+            font-family: monospace;
+            white-space: pre-wrap;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light container" style="background-color: #f8f9fa;">
+        <a class="navbar-brand" href="#">
+            &#x2699; {"JSON": "Tools"}
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{ Formatter }</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">{ POJO }</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">{ Comparator }</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">{ Path }</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col" id="textarea1-col">
+                <div class="form-group">
+                    <textarea id="textarea1" rows="8"></textarea>
+                </div>
+            </div>
+            <div class="col" id="textarea2-col">
+                <div class="form-group">
+                    <textarea id="textarea2" rows="8"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="toggle-textarea" name="option1" value="something"
+                checked>
+            <label class="form-check-label">Hide/Show</label>
+            <div class="center-div">
+                <button class="action-btn" id="compare">Compare</button>
+                <button class="action-btn" id="print-div-btn" onclick="printDiv();" style="display: none;"> Print
+                    Table</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="print-div">
+        <div id="comparisonTable" class="container"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="container json-display" id="textarea1-json-div">
+                        <pre id="textarea1-json"></pre>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container json-display" id="textarea2-json-div">
+                        <pre id="textarea2-json"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer section -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&#x2699; {"JSON": "Tools"} &copy; 2023. All rights reserved.</p>
+            <!-- <p class="mb-0">Privacy Policy | Terms of Service</p> -->
+        </div>
+    </footer>
+
+
+
+    <!-- Scripts -->
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+
+        const toggleTextareaButton = document.querySelector('#toggle-textarea');
+        const textarea1 = document.querySelector('#textarea1-col');
+        const textarea2 = document.querySelector('#textarea2-col');
+
+        toggleTextareaButton.addEventListener('click', () => {
+            textarea2.classList.toggle('hide');
+            textarea1.classList.toggle('double-width');
+        });
+
+        const compareButton = document.querySelector('#compare');
+        compareButton.addEventListener('click', () => {
+            const txtarea1 = document.querySelector('#textarea1');
+            const txtarea2 = document.querySelector('#textarea2');
+
+            const formattedJson1 = validateAndFormatJSON(txtarea1.value);
+            const formattedJson2 = validateAndFormatJSON(txtarea2.value);
+
+            if (!formattedJson1) { alert("JSON 1 is invalid"); return; }
+            txtarea1.value = formattedJson1;
+
+            if (!formattedJson2) { alert("JSON 2 is invalid"); return; }
+            txtarea2.value = formattedJson2;
+
+            const jsonObj1 = JSON.parse(formattedJson1);
+            const jsonObj2 = JSON.parse(formattedJson2);
+
+            const differences = compareJSONSchemas(jsonObj1, jsonObj2);
+            console.log("Missing Keys:", differences.missingKeys);
+            console.log("Data Type Differences:", differences.dataTypeDifferences);
+            console.log("Data Differences:", differences.dataDifferences);
+
+            const html = createHTMLPageForDifferences(differences);
+
+            const comparisonTable = document.getElementById("comparisonTable");
+            comparisonTable.innerHTML = html;
+            document.getElementById("print-div-btn").style.display = 'block';
+            comparisonTable.scrollIntoView({ block: 'end', behavior: 'smooth' });
+
+            document.getElementById("textarea1-json").innerHTML = formattedJson1;
+            document.getElementById("textarea2-json").innerHTML = formattedJson2;
+
+            //Set height of divs
+            const div1 = document.getElementById("textarea1-json-div");
+            const div2 = document.getElementById("textarea2-json-div");
+            const maxHeight = Math.max(div1.offsetHeight, div2.offsetHeight);
+            div1.style.height = maxHeight + "px";
+            div2.style.height = maxHeight + "px";
+
+
+        });
+
+
+
+
+
+        function validateAndFormatJSON(jsonStr) {
+            try {
+                const obj = JSON.parse(jsonStr);
+                return JSON.stringify(obj, null, 2); // returns beautified JSON string with 2 space indentation
+            } catch (error) {
+                console.error(error);
+                return false;
+            }
+        }
+
+        function getDataType(value) {
+            if (value === null) {
+                return "null";
+            } else if (value instanceof Object) {
+                return "object";
+            } else if (value instanceof Array) {
+                return "array";
+            } else {
+                return typeof value;
+            }
+        }
+
+        
+        function compareJSONSchemas(schema1, schema2, path = "$") {
+            // Initialize arrays to store missing keys, data type differences, and data differences
+            const missingKeys = [];
+            const dataTypeDifferences = [];
+            const dataDifferences = [];
+
+            // Iterate over the keys in schema1
+            for (let key in schema1) {
+                // Check if the key exists in schema2
+                if (!(key in schema2)) {
+                    let keyPath = `${path}${Array.isArray(schema1) ? `[${key}]` : `.${key}`}`;
+                    missingKeys.push({ differenceType: 'Missing Key', path: keyPath, schema1: keyPath, schema2: 'missing' });
+                    continue;
+                }
+
+                // Get the values and data types for the current key in schema1 and schema2
+                const value1 = schema1[key];
+                const value2 = schema2[key];
+                const dataType1 = getDataType(value1);//value1 === null ? "null" : typeof value1;
+                const dataType2 = getDataType(value2);//value2 === null ? "null" : typeof value2;
+
+                // Compare the data types
+                if (dataType1 !== dataType2) {
+                    let keyPath = `${path}${Array.isArray(schema1) ? `[${key}]` : `.${key}`}`;
+                    dataTypeDifferences.push({ differenceType: 'Data Type Difference', path: keyPath, schema1: dataType1, schema2: dataType2 });
+                    continue;
+                }
+
+                // Check if the values are objects
+                if (dataType1 === "object" && dataType2 === "object") {
+                    // Recursively compare nested objects
+                    const nestedDifferences = compareJSONSchemas(value1, value2, `${path}${Array.isArray(schema1) ? `[${key}]` : `.${key}`}`);
+                    missingKeys.push(...nestedDifferences.missingKeys);
+                    dataTypeDifferences.push(...nestedDifferences.dataTypeDifferences);
+                    dataDifferences.push(...nestedDifferences.dataDifferences);
+                } else {
+                    // Compare the values
+                    if (value1 !== value2) {
+                        let keyPath = `${path}${Array.isArray(schema1) ? `[${key}]` : `.${key}`}`;
+                        dataDifferences.push({ differenceType: 'Data Difference', path: keyPath, schema1: value1, schema2: value2 });
+                    }
+                }
+            }
+
+            // Iterate over the keys in schema2
+            for (let key in schema2) {
+                // Check if the key exists in schema1
+                if (!(key in schema1)) {
+                    let keyPath = `${path}${Array.isArray(schema1) ? `[${key}]` : `.${key}`}`;
+                    missingKeys.push({ differenceType: 'Missing Key', path: keyPath, schema1: 'missing', schema2: keyPath });
+                }
+            }
+
+            // Return an object with missingKeys, dataTypeDifferences, and dataDifferences arrays
+            return { missingKeys, dataTypeDifferences, dataDifferences };
+        }
+
+
+        function createHTMLPageForDifferences(differences) {
+            // Create an HTML string to store the page content
+            let html = `
+    <div>      
+      <table>
+        <tr>
+          <th>Difference Type</th>
+          <th>Path</th>
+          <th>Schema 1</th>
+          <th>Schema 2</th>
+        </tr>
+  `;
+
+            // Add missing keys to the HTML table
+            if (differences.missingKeys.length > 0) {
+                for (let diff of differences.missingKeys) {
+                    html += `<tr class="missing-key">
+        <td>${diff.differenceType}</td>
+        <td>${diff.path}</td>
+        <td>${diff.schema1}</td>
+        <td>${diff.schema2}</td>
+      </tr>`;
+                }
+            }
+
+            // Add data type differences to the HTML table
+            if (differences.dataTypeDifferences.length > 0) {
+                for (let diff of differences.dataTypeDifferences) {
+                    html += `<tr class="data-type-difference">
+        <td>${diff.differenceType}</td>
+        <td>${diff.path}</td>
+        <td>${diff.schema1}</td>
+        <td>${diff.schema2}</td>
+      </tr>`;
+                }
+            }
+
+            // Add data differences to the HTML table 
+            if (differences.dataDifferences.length > 0) {
+                for (let diff of differences.dataDifferences) {
+                    html += `<tr class="data-difference">
+        <td>${diff.differenceType}</td>
+        <td>${diff.path}</td>
+        <td>${diff.schema1}</td>
+        <td>${diff.schema2}</td>
+      </tr>`;
+                }
+            }
+
+            // Close the HTML table and page
+            html += `</table></div>`;
+
+            // Create a new window with the generated HTML content
+            console.log(html);
+            return html;
+        }
+
+
+        function printDiv() {
+            // Get the HTML content of the div
+            var printContents = document.getElementById("print-div").innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+
+
+
+        (
+            function setDemoData() {
+                const jsonStr1 = `{
+  "person": {
+    "name": "John Doe",
+    "age": 28,
+    "address": {
+      "street": "123 Main St",
+      "city": "Anytown",
+      "state": "CA",
+      "zip": 12345
+    },
+    "phoneNumbers": [
+      {
+        "type": "home",
+        "number": "555-1234"
+      },
+      {
+        "type": "work",
+        "number": "555-5678"
+      }
+    ],
+    "email": "john.doe@example.com"
+  }
+}`;
+
+                const jsonStr2 = `{
+  "person": {
+    "name": "Jane Smith",
+    "age": 35,
+    "address": {
+      "street": "456 Elm St",
+      "city": "Anytown",
+      "state": "NY"
+    },
+    "phoneNumbers": [
+      {
+        "type": "mobile",
+        "number": "555-7890"
+      }
+    ]
+  }
+}
+`;
+
+                document.querySelector('#textarea1').value = jsonStr1;
+                document.querySelector('#textarea2').value = jsonStr2;
+
+
+            })();
+
+
+    </script>
+
+</body>
+
+</html>
