@@ -165,7 +165,7 @@
         @media print {
             div {
                 border: none !important;
-                box-shadow: none !important;    
+                box-shadow: none !important;
             }
         }
 
@@ -389,7 +389,19 @@
             }
         }
 
+        function getDataType(value) {
+            if (value === null) {
+                return "null";
+            } else if (value instanceof Object) {
+                return "object";
+            } else if (value instanceof Array) {
+                return "array";
+            } else {
+                return typeof value;
+            }
+        }
 
+        
         function compareJSONSchemas(schema1, schema2, path = "$") {
             // Initialize arrays to store missing keys, data type differences, and data differences
             const missingKeys = [];
@@ -408,8 +420,8 @@
                 // Get the values and data types for the current key in schema1 and schema2
                 const value1 = schema1[key];
                 const value2 = schema2[key];
-                const dataType1 = typeof value1;
-                const dataType2 = typeof value2;
+                const dataType1 = getDataType(value1);//value1 === null ? "null" : typeof value1;
+                const dataType2 = getDataType(value2);//value2 === null ? "null" : typeof value2;
 
                 // Compare the data types
                 if (dataType1 !== dataType2) {
