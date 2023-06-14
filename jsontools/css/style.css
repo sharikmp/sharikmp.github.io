@@ -1,0 +1,276 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 1rem;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td {
+    font-family: monospace;
+    font-size: 13px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+.missing-key {
+    color: red;
+}
+
+.data-type-difference {
+    color: blue;
+}
+
+.data-difference {
+    color: green;
+}
+
+.container {
+    max-width: 98%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 0 10px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    height: 80vh;
+    background-color: #1e1e1e;
+    color: #ddd;
+    border: none;
+    padding: 10px;
+    font-size: 11px;
+    font-family: monospace;
+    line-height: 1.5;
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
+    resize: none;
+    position: relative;
+    padding-left: 2.5em;
+}
+
+textarea:focus {
+    outline: none;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 255, 0.5);
+}
+
+textarea::before {
+    content: counter(lineno);
+    counter-increment: lineno;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2em;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+    border-right: 1px solid #aaa;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #666;
+    border-radius: 10px;
+    border: 2px solid #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+
+.hide {
+    display: none;
+}
+
+.double-width {
+    width: 200%;
+}
+
+@media only screen and (max-width: 768px) {
+    .col {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    .double-width {
+        width: 100%;
+    }
+}
+
+@page {
+    margin: 0;
+}
+
+@media print {
+    div {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+
+
+.navbar-brand,
+.nav-link,
+.action-btn {
+    font-family: cursive;
+    background-color: #1e1e1e;
+    color: #ddd !important;
+    padding: 5px 20px;
+    border-radius: 1rem;
+}
+
+.nav-link {
+    width: 150px;
+    text-align: center;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.action-btn {
+    width: 200px;
+    font-size: 15px;
+    margin: 0 auto;
+    border: none;
+}
+
+.action-btn:hover {
+    width: 200px;
+    font-size: 15px;
+    margin: 0 auto;
+    background-color: #1e1e1e;
+    color: #ddd !important;
+}
+
+
+
+/* Footer styles */
+.footer {
+    background-color: #999;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer p {
+    margin-bottom: 0;
+}
+
+
+div.center-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.json-display {
+    border: 1px solid #ddd;
+    font-family: monospace;
+    white-space: pre-wrap;
+    font-size: 13px;
+}
+
+
+
+
+/* JSON Formatter/Viewer CSS */
+.json-key {
+    color: #06c;
+}
+
+.json-value-string {
+    color: #c00;
+}
+
+.json-value-number {
+    color: #0c0;
+}
+
+.json-value-boolean {
+    color: #00c;
+}
+
+.json-value-null {
+    color: #999;
+}
+
+.json-collapser {
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.json-collapser.collapsed:after {
+    content: '+';
+}
+
+.json-collapser:not(.collapsed):after {
+    content: '-';
+}
+
+.border {
+    border: 1px solid #1e1e1e !important;
+    background-color: #eee;
+    border-radius: 0.75rem;
+}
+
+#json-viewer {
+    height: 75vh;
+    overflow-y: scroll;
+    font-family: monospace;
+    font-size: 11px;
+    /* border: 1px solid red; */
+}
