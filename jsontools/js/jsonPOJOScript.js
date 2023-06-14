@@ -48,7 +48,7 @@ var json = {
 };
 
 window.onload = function () {
-    $('#textarea').val(JSON.stringify(json));
+    $('#textarea').val(validateAndFormatJSON(JSON.stringify(json)));
 }
 
 
@@ -58,16 +58,6 @@ function createPojo() {
     $('#textarea').val(code);
 }
 
-function validateAndFormatJSON(jsonStr) {
-    try {
-        const obj = JSON.parse(jsonStr);
-        return JSON.stringify(obj, null, 4); // returns beautified JSON string with  space indentation
-    } catch (error) {
-        alert(error);
-        console.error(error);
-        return false;
-    }
-}
 
 function generatePOJOClasses(jsonObj, addGetter = true, addSetter = true) {
     let pojoString = '';
