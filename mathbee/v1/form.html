@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Contact MATHBEE</title>
+      <meta charset="UTF-8">
+      <meta name="description" content="Free Math tutorials">
+      <meta name="keywords" content="maths, mathematics">
+      <meta name="author" content="Wiliss Tako">
+	  <link rel="stylesheet" type="text/css" href="css/style.css">
+   </head>
+   <body>
+
+      <ul class="navbar">
+         <li class="navbar"><a href="index.html">Home</a></li>
+         <li class="navbar"><a href="table.html">Courses</a></li>
+         <li class="navbar"><a href="form.html">Contact</a></li>
+         <li class="navbar"><a href="about.html">About</a></li>
+      </ul>
+      
+      <h2>Please provide us the following details, our team will contact you!</h2>
+
+      <form class="queryform" method="post" action="http://ss1.ciwcertified.com/cgi-bin/process.pl">
+        <label for="name">Your name:</label>
+        <input type="text" id="name" name="name" placeholder="Your name">
+        <br/>
+        <br/>
+        <label for="contact">Contact number:</label>
+        <input type="text" id="contact" name="contact" placeholder="Your contact number">
+        <br/>
+        <br/>
+        <label>Please select your course:</label>
+        <br/>
+        <input type="radio" id="highschool" name="highschool" value="highschool">
+        <label for="highschool">High School</label>
+        <br>
+        <input type="radio" id="middleschool" name="middleschool" value="middleschool">
+        <label for="middleschool">Middle School</label>
+        <br>  
+        <input type="radio" id="elementaryschool" name="elementaryschool" value="elementaryschool">
+        <label for="elementaryschool">Elementary School</label>
+        <br/>
+        <br/>
+        <label for="querytype">Choose query type(multi-select):</label>
+        <br/>
+        <select name="querytype" id="querytype" multiple>
+           <option value="admission">Admission</option>
+           <option value="fees">Fees</option>
+           <option value="scholarship">Scholarship</option>
+        </select>
+        <br/>
+        <br/>
+        <label for="yourquery">Your Query:</label>
+        <br/>
+        <textarea id="yourquery" name="yourquery" rows="4" cols="50"></textarea>
+        <br/>
+        <br/>
+        <input type="checkbox" id="callbackRadio" name="callbackRadio">
+        <label for="callbackRadio">Request callback</label>
+        <br/>
+        <br/>
+        <input type="reset" value="Reset">
+        <input type="submit" value="Submit">
+      </form>
+      
+      
+        <br/>
+        <br/>
+      <h2>Contact Via Email</h2>
+      <p>
+         Email: contact@mathbee.com
+      </p>
+
+   </body>
+</html>

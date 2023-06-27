@@ -1,0 +1,151 @@
+body {
+	background-color: #ff4c68;
+	color: #fff;
+}
+
+
+/*** NAV BAR ***/
+ul.navbar, .secretmessage {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #000;
+  position: relative;
+  top: 0;
+  width: 100%;
+}
+
+li.navbar {
+  float: left;
+}
+
+li.navbar a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+
+
+p, a {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5rem;
+}
+
+span.boldtext {
+	font-weight: bold;
+}
+
+span.italictext {
+	font-style: italic;
+}
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+a:hover {
+	color: blue;
+}
+
+h1, h2, h3, h4, h5, h6, caption {
+	font-weight: bold;
+	font-family: 'Courgette', cursive;
+	color: black;
+}
+
+h1, h3 {
+	text-align: center;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+
+.course-table {
+	border-collapse: collapse;
+	width: 100%;
+	background-color: #fff;
+	text-align: center;
+	vertical-align: middle;
+	font-family: 'Courgette', cursive;
+	color: black;
+}
+
+.course-table td, th {
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	padding: 5px;
+}
+
+.course-table th {
+	color: white;
+	background-color: #000;
+}
+
+.course-table a {
+	color: blue;
+}
+
+.course-table caption {
+	font-weight: bold;
+	font-family: 'Courgette', cursive;
+	color: black;
+	padding-bottom: 10px;
+}
+
+
+.queryform {
+	font-weight: bold;
+	font-family: 'Courgette', cursive;
+	color: black;	
+}
+
+.queryform input[type="submit"], input[type="reset"]  {
+  background-color: #000;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.time-button {
+  background-color: #000;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+.secretmessage {
+	font-weight: bold;
+	font-family: 'Courgette', cursive;
+	background-color:#000;
+	color: white;
+	height: 60px;
+	width: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
