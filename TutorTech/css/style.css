@@ -96,22 +96,24 @@ h1 {
     margin-top: 2px;
 }
 
+section h2 {
+    padding: 30px 0;
+}
 
 #services {
     background-color: #f8f8f8;
-    padding: 80px 0;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
+    background-color: #f8f9fa;
 }
 
 .section-title {
     text-align: center;
     font-size: 32px;
-    margin-bottom: 60px;
 }
 
 .services-wrapper {
