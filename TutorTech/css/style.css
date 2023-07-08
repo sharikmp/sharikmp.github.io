@@ -165,6 +165,11 @@ a>i:hover {
         padding: 30px;
         margin: 30px;
     }
+
+    .container {
+        width: 95%;
+        max-width: 95%;
+    }
 }
 
 
@@ -342,15 +347,10 @@ pre {
 }
 
 /* Global styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f2f2f2;
-}
 
 .container {
-    max-width: 80%;
+    width: 90%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
