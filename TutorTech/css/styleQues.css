@@ -22,9 +22,14 @@ body {
 
 @media (min-width: 768px) {
 
-    .container {
-        width: 95%;
-        max-width: 95%;
+    /* Style for the answer section */
+    .answer {
+        padding: 10px;
+        font-size: 11px;
+        font-family: monospace;
+        line-height: 2;
+        display: none;
+        color: #333;
     }
 }
 
@@ -61,7 +66,6 @@ body {
     border: 1px solid #ddd;
     font-size: 0.8rem;
 }
-
 
 
 /* Style for the question section */
@@ -128,7 +132,7 @@ body {
 
 .answer ol {
     /* 10px for .answer div + 10px for .answer-div div + 10px more */
-    padding-left: 30px !important; 
+    padding-left: 30px !important;
 }
 
 
