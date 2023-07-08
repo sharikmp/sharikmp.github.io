@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/fevicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/fevicon.png" type="image/x-icon">
+    <title>Tech Tutor</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f8f9fa;">
+        <a class="navbar-brand" href="#">
+            <img src="img/logo.png" alt="Tech Tutor" width="300" height="70">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#course-section">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Solutions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/interviewqueshome.html">Interview Prep</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Carousel -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        </ol>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+
+            <div class="news-headline">
+                <h2 id="news-text" class="enrollnow">New Batches starting for topic "XYZ" from date XX/XX/XX</h2>
+            </div>
+            <div class="carousel-item active">
+                <img src="img/1.jpg" alt="Image 1">
+                <div class="carousel-caption">
+                    <h3>Unlock Your Academic Potential with Expert Help, Tutoring, and Solutions.</h3>
+                    <p>Welcome to our website, where you can get reliable and professional assistance with your
+                        assignments, tutoring for various subjects, and access to a vast database of solved solutions.
+                        We are here to help you achieve academic success and excel in your studies.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br>
+
+    <!-- Services Section -->
+    <section id="services" class="container">
+        <h2 class="section-title">Our Services</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="service">
+                    <a href="#course-section" class="service">
+                        <i class="fa fa-laptop fa-3x mb-3"></i>
+                    </a>
+                    <h3 class="service-title">Tutoring</h3>
+                    <p class="service-description">Struggling to grasp a tricky concept? <br> Our expert tutors offer
+                        personalized, one-on-one sessions to help you excel in any subject. With tailored teaching
+                        styles and varied expertise, we aim to boost your understanding and academic success.</p>
+                    <div class="text-center mt-auto">
+                        <button class="btn btn-primary btn200" id="start-learning-btn"><i class="fa fa-laptop"></i>
+                            Start learning!</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service">
+                    <a href="#contact" class="service">
+                        <i class="fas fa-hands-helping fa-3x mb-3"></i>
+                    </a>
+                    <h3 class="service-title">Assignment Help</h3>
+                    <p class="service-description">Stuck with a challenging assignment? <br> Our skilled experts are
+                        here to
+                        help! We offer custom solutions for research papers, essays, and more, covering a variety of
+                        subjects. Get top-notch, original work that will impress your professors and elevate your
+                        grades.</p>
+                    <div class="text-center mt-auto">
+                        <button class="btn btn-primary btn200" id="get-help-btn"><i class="fas fa-hands-helping"></i>
+                            Get help!</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service">
+                    <a href="#contact" class="service">
+                        <i class="fa fa-file-text-o fa-3x mb-3"></i>
+                    </a>
+                    <h3 class="service-title">Solved Solutions</h3>
+                    <p class="service-description">Need assignment inspiration? <br> Our database of solved solutions
+                        has got
+                        you covered! From essays to problem-solving, we offer a vast range of references to elevate your
+                        work and help you understand different structures, formats, and approaches.</p>
+                    <div class="text-center mt-auto">
+                        <button class="btn btn-primary btn200" id="feeling-interested-btn"><i
+                                class="fa fa-file-text-o"></i> Feeling Lucky!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br>
+
+    <div class="container">
+        <section class="course" id="course-section">
+            <h2 style="margin: 30px;" class="center">Courses Offered </h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="course-card">
+                        <div class="center">
+                            <i class="fas fa-laptop-code fa-3x"></i>
+                            <h3>Python Programming</h3>
+                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                                Now</button>
+                        </div>
+                        <br>
+                        <div class="coursedetails">
+                            <ul>
+                                <li>
+                                    <p><b>Learningh: </b>~80h</p>
+                                </li>
+                                <li>
+                                    <p><b>100%</b> Hands-on practice</p>
+                                </li>
+                                <li>
+                                    <p><b>250+</b> Coding questions</p>
+                                </li>
+                                <li>
+                                    <p><b>5</b>Capstone Projects</p>
+                                </li>
+                                <li>
+                                    <div class="expandable">
+                                        <div class="title"><b>Course content</b> <a href="javascript:void(0);">(view
+                                                details...)</a></div>
+                                        <div class="description">
+                                            <ol>
+                                                <li>Introduction to Python (2h)</li>
+                                                <li>Installing Python (1h)</li>
+                                                <li>Python Development Environments (1h)</li>
+                                                <li>Python Syntax and Variables (2h)</li>
+                                                <li>Data Types and Operators (3h)</li>
+                                                <li>Strings and String Manipulation (3h)</li>
+                                                <li>Conditional Statements (2h)</li>
+                                                <li>Loops (3h)</li>
+                                                <li>Lists (3h)</li>
+                                                <li>Tuples (2h)</li>
+                                                <li>Dictionaries (2h)</li>
+                                                <li>Sets (2h)</li>
+                                                <li>Functions (4h)</li>
+                                                <li>File Handling (3h)</li>
+                                                <li>Exception Handling (2h)</li>
+                                                <li>Modules and Packages (2h)</li>
+                                                <li>Object-Oriented Programming (4h)</li>
+                                                <li>Classes and Objects (3h)</li>
+                                                <li>Inheritance (3h)</li>
+                                                <li>Polymorphism (2h)</li>
+                                                <li>Working with Files (2h)</li>
+                                                <li>Regular Expressions (3h)</li>
+                                                <li>Error and Exception Handling (2h)</li>
+                                                <li>Debugging and Testing (3h)</li>
+                                                <li>Working with JSON and CSV (2h)</li>
+                                                <li>Working with Dates and Times (2h)</li>
+                                                <li>Intro to GUI Programming (3h)</li>
+                                                <li>Web Scraping Basics (3h)</li>
+                                                <li>Intro to Database Programming (2h)</li>
+                                                <li>Final Project (4h)</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="course-card">
+                        <div class="center">
+                            <i class="fas fa-laptop-code fa-3x"></i>
+                            <h3>Java Programming</h3>
+                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                                Now</button>
+                        </div>
+                        <br>
+                        <div class="coursedetails">
+                            <ul>
+                                <li>
+                                    <p><b>Learningh: </b>~80h</p>
+                                </li>
+                                <li>
+                                    <p><b>100%</b> Hands-on practice</p>
+                                </li>
+                                <li>
+                                    <p><b>250+</b> Coding questions</p>
+                                </li>
+                                <li>
+                                    <p><b>5</b>Capstone Projects</p>
+                                </li>
+                                <li>
+                                    <div class="expandable">
+                                        <div class="title"><b>Course content</b> <a href="javascript:void(0);">(view
+                                                details...)</a></div>
+                                        <div class="description">
+                                            <ol>
+                                                <li>Introduction to Java (2h)</li>
+                                                <li>Installing and Setting Up JDK (1h)</li>
+                                                <li>Variables, Data Types, and Operators (3h)</li>
+                                                <li>Control Structures (2h)</li>
+                                                <li>Arrays (2h)</li>
+                                                <li>OOP Concepts (4h)</li>
+                                                <li>Classes and Objects (4h)</li>
+                                                <li>Encapsulation (2h)</li>
+                                                <li>Inheritance (3h)</li>
+                                                <li>Polymorphism (2h)</li>
+                                                <li>Abstract Classes and Interfaces (3h)</li>
+                                                <li>Exception Handling (3h)</li>
+                                                <li>Multithreading (3h)</li>
+                                                <li>Synchronization (2h)</li>
+                                                <li>File Input and Output (3h)</li>
+                                                <li>Java Collections Framework (4h)</li>
+                                                <li>Lists (2h)</li>
+                                                <li>Sets (2h)</li>
+                                                <li>Maps (2h)</li>
+                                                <li>Generics (2h)</li>
+                                                <li>Java Streams API (3h)</li>
+                                                <li>Java Network Programming (3h)</li>
+                                                <li>Socket Programming (3h)</li>
+                                                <li>Java Database Connectivity (JDBC) (3h)</li>
+                                                <li>Java Servlets (4h)</li>
+                                                <li>Java Server Pages (JSP) (4h)</li>
+                                                <li>Java Persistence API (JPA) (4h)</li>
+                                                <li>Java Enterprise Edition (Java EE) (4h)</li>
+                                                <li>Unit Testing in Java (2h)</li>
+                                                <li>Final Project (4h)</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="course-card">
+                        <div class="center">
+                            <i class="fas fa-laptop-code fa-3x"></i>
+                            <h3>Web Development</h3>
+                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                                Now</button>
+                        </div>
+                        <br>
+                        <div class="coursedetails">
+                            <ul>
+                                <li>
+                                    <p><b>Learningh: </b>~80h</p>
+                                </li>
+                                <li>
+                                    <p><b>100%</b> Hands-on practice</p>
+                                </li>
+                                <li>
+                                    <p><b>5 Projects</b> Live Website Projects</p>
+                                </li>
+                                <li>
+                                    <div class="expandable">
+                                        <div class="title"><b>Course content</b> <a href="javascript:void(0);">(view
+                                                details...)</a></div>
+                                        <div class="description">
+                                            <ol>
+                                                <li>Introduction to Web Development (2h)</li>
+                                                <li>Setting Up Your Development Environment (1h)</li>
+                                                <li>HTML Basics (3h)</li>
+                                                <li>HTML Forms and Input Validation (2h)</li>
+                                                <li>Introduction to CSS (3h)</li>
+                                                <li>Styling HTML Elements with CSS (3h)</li>
+                                                <li>CSS Box Model and Layout (2h)</li>
+                                                <li>CSS Flexbox and Grid (3h)</li>
+                                                <li>Introduction to JavaScript (2h)</li>
+                                                <li>JavaScript Variables and Data Types (2h)</li>
+                                                <li>JavaScript Functions and Control Flow (3h)</li>
+                                                <li>JavaScript DOM Manipulation (3h)</li>
+                                                <li>JavaScript Events and Event Handling (3h)</li>
+                                                <li>JavaScript Form Validation (2h)</li>
+                                                <li>JavaScript Arrays and Loops (2h)</li>
+                                                <li>Introduction to Responsive Web Design (2h)</li>
+                                                <li>Media Queries and Responsive Layouts (3h)</li>
+                                                <li>CSS Transitions and Animations (2h)</li>
+                                                <li>Introduction to Bootstrap Framework (2h)</li>
+                                                <li>Building a Responsive Web Page with Bootstrap (3h)</li>
+                                                <li>Introduction to JavaScript Libraries (2h)</li>
+                                                <li>Working with jQuery Library (3h)</li>
+                                                <li>Introduction to AJAX (2h)</li>
+                                                <li>Asynchronous JavaScript with AJAX (3h)</li>
+                                                <li>Introduction to JSON and APIs (2h)</li>
+                                                <li>Consuming Web APIs with JavaScript (3h)</li>
+                                                <li>Introduction to Browser Storage (2h)</li>
+                                                <li>Local Storage and Session Storage (2h)</li>
+                                                <li>Introduction to Version Control with Git (2h)</li>
+                                                <li>Deploying Your Web Project (1h)</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="course-card">
+                        <div class="center">
+                            <i class="fas fa-laptop-code fa-3x"></i>
+                            <h3>Software Testing Basics</h3>
+                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                                Now</button>
+                        </div>
+                        <br>
+                        <div class="coursedetails">
+                            <ul>
+                                <li>
+                                    <p><b>Learningh: </b>~20h</p>
+                                </li>
+                                <li>
+                                    <p><b>100%</b> Hands-on practice</p>
+                                </li>
+                                <li>
+                                    <p><b>50+</b> Test Deisgn practice</p>
+                                </li>
+                                <li>
+                                    <div class="expandable">
+                                        <div class="title"><b>Course content</b> <a href="javascript:void(0);">(view
+                                                details...)</a></div>
+                                        <div class="description">
+                                            <ol>
+                                                <li>Introduction to Software Testing (1h)</li>
+                                                <li>Software Development Life Cycle (SDLC) (1h)</li>
+                                                <li>Testing Life Cycle (1h)</li>
+                                                <li>Types of Software Testing (1h)</li>
+                                                <li>Test Case Design Techniques (2h)</li>
+                                                <li>Test Planning and Documentation (2h)</li>
+                                                <li>Test Execution and Defect Tracking (1h)</li>
+                                                <li>Test Reporting and Metrics (1h)</li>
+                                                <li>Introduction to Test Automation (1h)</li>
+                                                <li>Test Automation Tools (1h)</li>
+                                                <li>Test Automation Frameworks (1h)</li>
+                                                <li>Introduction to Selenium WebDriver (1h)</li>
+                                                <li>Introduction to API Testing (1h)</li>
+                                                <li>Performance Testing Basics (1h)</li>
+                                                <li>Test Management tools: JIRA (1h)</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="course-card">
+                        <div class="center">
+                            <i class="fas fa-laptop-code fa-3x"></i>
+                            <h3>Software Automation Testing with Selenium</h3>
+                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                                Now</button>
+                        </div>
+                        <br>
+                        <div class="coursedetails">
+                            <ul>
+                                <li>
+                                    <p><b>Learningh: </b>~50h</p>
+                                </li>
+                                <li>
+                                    <p><b>100%</b> Hands-on practice</p>
+                                </li>
+                                <li>
+                                    <p><b>End to End</b> Website Automation</p>
+                                </li>
+                                <li>
+                                    <div class="expandable">
+                                        <div class="title"><b>Course content</b> <a href="javascript:void(0);">(view
+                                                details...)</a></div>
+                                        <div class="description">
+                                            <ol>
+                                                <li>Introduction to Software Automation Testing (1h)</li>
+                                                <li>Overview of Selenium (1h)</li>
+                                                <li>Setting up Selenium WebDriver (1h)</li>
+                                                <li>Locating Elements with Selenium (2h)</li>
+                                                <li>Working with Web Elements (2h)</li>
+                                                <li>Interacting with Dropdowns and Select Elements (1.5h)</li>
+                                                <li>Handling Alerts and Pop-ups (1.5h)</li>
+                                                <li>Managing Frames and Windows (1.5h)</li>
+                                                <li>Working with Cookies (1h)</li>
+                                                <li>Handling JavaScript Execution (1h)</li>
+                                                <li>Introduction to TestNG (1h)</li>
+                                                <li>Configuring TestNG Test Suites (1.5h)</li>
+                                                <li>Writing Test Cases with TestNG Annotations (2h)</li>
+                                                <li>Grouping and Prioritizing Test Cases (1.5h)</li>
+                                                <li>Data-Driven Testing with TestNG (2h)</li>
+                                                <li>Parameterization and Data Providers in TestNG (1.5h)</li>
+                                                <li>Handling Test Dependencies with TestNG (1.5h)</li>
+                                                <li>Introduction to Page Object Model (POM) (1h)</li>
+                                                <li>Implementing POM in Selenium Tests (2h)</li>
+                                                <li>Handling Synchronization Issues (1.5h)</li>
+                                                <li>Working with Waits in Selenium (1.5h)</li>
+                                                <li>Test Reporting and Logging with Selenium (1h)</li>
+                                                <li>Working with Screenshots and Video Recording (1h)</li>
+                                                <li>Handling Multiple Browsers and Cross-Browser Testing (2h)</li>
+                                                <li>Handling Mouse and Keyboard Actions (1.5h)</li>
+                                                <li>Working with File Uploads and Downloads (1h)</li>
+                                                <li>Working with Headless Browsers (1h)</li>
+                                                <li>Introduction to Continuous Integration and Jenkins (1h)</li>
+                                                <li>Configuring Selenium Tests in Jenkins (1h)</li>
+                                                <li>Running Selenium Tests in a CI/CD Pipeline (1.5h)</li>
+                                                <li>Best Practices and Tips for Selenium Testing (1h)</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="course-card">
+                        <div class="center">
+                            <i class="fas fa-laptop-code fa-3x"></i>
+                            <h3>API Automation Testing with Rest Assured</h3>
+                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                                Now</button>
+                        </div>
+                        <br>
+                        <div class="coursedetails">
+                            <ul>
+                                <li>
+                                    <p><b>Learningh: </b>~52h</p>
+                                </li>
+                                <li>
+                                    <p><b>100%</b> Hands-on practice</p>
+                                </li>
+                                <li>
+                                    <p><b>20+</b> APIs automation live</p>
+                                </li>
+                                <li>
+                                    <div class="expandable">
+                                        <div class="title"><b>Course content</b> <a href="javascript:void(0);">(view
+                                                details...)</a></div>
+                                        <div class="description">
+                                            <ol>
+                                                <li>Introduction to API Automation Testing (1h)</li>
+                                                <li>Setting up the Rest Assured environment (1h)</li>
+                                                <li>Basic HTTP methods with Rest Assured (2h)</li>
+                                                <li>Handling request parameters and headers (2h)</li>
+                                                <li>Working with JSON request and response (2h)</li>
+                                                <li>Validating response status codes and headers (2h)</li>
+                                                <li>Extracting data from JSON responses (2h)</li>
+                                                <li>Working with XML request and response (2h)</li>
+                                                <li>Handling authentication and authorization (2h)</li>
+                                                <li>Working with query parameters (2h)</li>
+                                                <li>Handling cookies and sessions (2h)</li>
+                                                <li>Writing test cases for API endpoints (2h)</li>
+                                                <li>Handling response time and performance (2h)</li>
+                                                <li>Response serialization and deserialization (2h)
+                                                </li>
+                                                <li>Error handling and exception testing (2h)</li>
+                                                <li>Logging and reporting in Rest Assured (1h)</li>
+                                                <li>Working with dynamic data and randomization (2h)</li>
+                                                <li>Working with file uploads and downloads (2h)</li>
+                                                <li>Mocking API responses for testing (2h)</li>
+                                                <li>Integration testing with API dependencies (2h)</li>
+                                                <li>Continuous integration and automation frameworks (2h)</li>
+                                                <li>Best practices and code organization (1h)</li>
+                                                <li>Debugging and troubleshooting (1h)</li>
+                                                <li>Advanced topics and advanced use cases (2h)</li>
+                                                <li>Security testing with Rest Assured (2h)</li>
+                                                <li>Performance optimization techniques (1h)</li>
+                                                <li>Real-world project examples and case studies (2h)</li>
+                                                <li>Future trends in API automation testing (1h)</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+    </div>
+
+
+    <!-- Page content -->
+    <div id="about" class="container mt-5">
+
+        <div class="container mt-5">
+            <h1>Empowering Success: Partnering with Students on their Journey to Achievement</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fa fa-graduation-cap fa-3x mb-3"></i>
+                            <h5 class="card-title">Comprehensive Solutions</h5>
+                            <p class="card-text">At our Assignment Solutions, we take pride in providing comprehensive
+                                solutions for all your assignment needs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fa fa-check-square-o fa-3x mb-3"></i>
+                            <h5 class="card-title">Expert Writers</h5>
+                            <p class="card-text">Our team of expert writers is dedicated to helping you achieve academic
+                                success with years of experience in the field.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fa fa-file-text-o fa-3x mb-3"></i>
+                            <h5 class="card-title">Wide Range of Assignments</h5>
+                            <p class="card-text">Whether you need help with essays, research papers, case studies, or
+                                any other type of assignment, we have you covered.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fa fa-cogs fa-3x mb-3"></i>
+                            <h5 class="card-title">Holistic Approach</h5>
+                            <p class="card-text">Our approach to assignment solutions is holistic, taking into
+                                consideration all aspects of the assignment, including research, analysis, writing,
+                                formatting, and referencing.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fa fa-clock-o fa-3x mb-3"></i>
+                            <h5 class="card-title">Timely Delivery</h5>
+                            <p class="card-text">We understand the importance of deadlines in academic assignments, and
+                                we are committed to delivering your solutions on time, every time.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-lightbulb fa-3x mb-3"></i>
+                            <h5 class="card-title">Academic and Professional Solutions</h5>
+                            <p class="card-text">Whether you are a student struggling with a complex assignment or a
+                                professional seeking assistance with a work-related task, our comprehensive assignment
+                                solutions are designed to meet your needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+
+
+    <section id="quickquery" style="background-color: #f8f9fa;" class="container">
+        <div class="center">
+            <h1>Have a question or need assistance?</h1>
+            <p>Get in touch with our experts now and experience our exceptional service.</p>
+            <a class="btn btn-primary" href="#contact" class="btn">Quick Query</a>
+        </div>
+    </section>
+
+    <br>
+
+    <!-- Contact form section -->
+    <section id="contact" style="background-color: #f8f9fa; padding: 20px;" class="container">
+        <div class="container mt-5">
+            <h2>Contact Us</h2>
+            <form action="contact.php" method="post" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="whatsapp">WhatsApp:</label>
+                    <input type="text" class="form-control" id="whatsapp" placeholder="Enter your WhatsApp number"
+                        name="whatsapp" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact Number:</label>
+                    <input type="text" class="form-control" id="contact" placeholder="Enter your contact number"
+                        name="contact" required>
+                </div>
+                <div class="form-group">
+                    <label for="query">Query:</label>
+                    <textarea class="form-control" id="query" rows="4" placeholder="Enter your query" name="query"
+                        required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div id="response" class="mt-3"></div> <!-- Response message container -->
+            </form>
+        </div>
+
+    </section>
+
+    <br>
+
+    <!-- Footer section -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">Tech Tutor &copy; 2023. All rights reserved.</p>
+            <!-- <p class="mb-0">Powered by <a href="https://www.example.com" target="_blank">Example Company</a></p> -->
+            <p class="mb-0">Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+
+
+
+        // JavaScript to show/hide scroll-to-top button
+        $(document).ready(function () {
+
+            document.querySelectorAll('.expandable .title').forEach(title => {
+                title.addEventListener('click', event => {
+                    event.currentTarget.parentNode.classList.toggle('expanded');
+                });
+            });
+
+
+            // Show/hide the scroll-to-top button based on scroll position
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#scrollToTop').fadeIn();
+                } else {
+                    $('#scrollToTop').fadeOut();
+                }
+            });
+
+            // Scroll to top when the scroll-to-top button is clicked
+            $('#scrollToTop').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                return false;
+            });
+        });
+
+
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                // Check if the cards are visible in the viewport
+                $(".card").each(function () {
+                    var cardPosition = $(this).offset().top;
+                    var cardHeight = $(this).outerHeight();
+                    var windowHeight = $(window).height();
+                    var scrollPosition = $(window).scrollTop();
+                    if (cardPosition < scrollPosition + windowHeight - cardHeight / 2) {
+                        // Add animation classes when the card is in the viewport
+                        $(this).addClass("animated slideInLeft");
+                        $(this).css("opacity", "1");
+                        $(this).css("transform", "translateX(0)");
+                    }
+                });
+            });
+        });
+
+
+
+        $(document).ready(function () {
+            // Add event listener for form submission
+            document.getElementById("contactForm").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent form submission
+
+                // Fetch form data
+                var formData = new FormData(event.target);
+
+                // Send form data to PHP script
+                fetch(event.target.action, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(function (response) {
+                        return response.text();
+                    })
+                    .then(function (response) {
+                        displayResponseMessage(response); // Display response message
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            });
+        });
+
+
+        $(document).ready(function () {
+            const services = $('.service'); // Get all elements with class 'service'
+            let maxHeight = 0; // Initialize maxHeight variable to 0
+
+            // Loop through each 'service' element
+            services.each(function () {
+                const height = $(this).height(); // Get height of element
+                if (height > maxHeight) { // If height is greater than maxHeight, update maxHeight
+                    maxHeight = height;
+                }
+            });
+
+            // Set the height of all 'service' elements to the maxHeight value
+            services.height(maxHeight);
+        });
+
+        //Set Buttons on Click
+        $(document).ready(function () {
+            const buttonOnlickScoll = [
+                { selector: "#start-learning-btn", target: "#course-section" },
+                { selector: "#get-help-btn", target: "#contact" },
+                { selector: "#feeling-interested-btn", target: "#contact" },
+                { selector: ".enrollnow", target: "#contact" }
+            ];
+
+            buttonOnlickScoll.forEach(btn => {
+                $(btn.selector).click(function () {
+                    $('html, body').animate({ scrollTop: $(btn.target).offset().top }, 1000);
+                });
+            });
+
+        });
+
+
+        //Set News headline
+
+        $(document).ready(function () {
+            const courses = ['Java programming', 'Python programming', 'Web Development', 'Selenium Test Automation', "API Automation"];
+            const selectedCourse = selectElementFromArray(courses);
+            const date = getNextMondayDate();
+            const newsText = '<span style="color: red;">' + `New Batches starting for "${selectedCourse}" from <b>${date}</b>` + '</span>';
+            $('#news-text').html(newsText);
+
+
+
+        });
+
+
+        // Function to display response message on the form
+        function displayResponseMessage(response) {
+            var responseContainer = document.getElementById("response");
+            responseContainer.innerHTML = ""; // Clear previous response message
+
+            var alertClass = "alert-danger"; // Default alert class for error
+            if (response.includes("Thank you")) {
+                alertClass = "alert-success"; // Use success alert class for successful submission
+            }
+
+            // Create alert element
+            var alertElement = document.createElement("div");
+            alertElement.classList.add("alert", alertClass);
+            alertElement.textContent = response;
+
+            responseContainer.appendChild(alertElement); // Add alert element to response container
+        }
+
+        function selectElementFromArray(array) {
+            if (array.length === 0) {
+                return null; // Return null if the array is empty
+            }
+
+            const randomIndex = Math.floor(Math.random() * array.length);
+            return array[randomIndex];
+        }
+
+        function getNextMondayDate() {
+            const today = new Date();
+            const currentDay = today.getDay(); // Get the current day (0-6, where 0 is Sunday)
+            const daysUntilMonday = (currentDay === 0) ? 1 : (8 - currentDay); // Calculate the number of days until the next Monday
+            const nextMonday = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysUntilMonday);
+            return nextMonday.toDateString();
+        }
+
+    </script>
+</body>
+
+</html>

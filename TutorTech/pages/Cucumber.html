@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <head>
+        <title>Interview Questions - Cucumber for Automation Testing role</title>
+        <style>
+            :root {
+                --themeColor: #4285F4;
+                --themeColorLight: #4285F4;
+                --white: #faf0e6;
+            }
+
+            #postcontenttitle {
+                padding: 15px;
+                font-size: 1rem;
+                font-weight: bold;
+                line-height: 1.25rem;
+                font-family: sans-serif;
+                background-color: var(--themeColor) !important;
+                color: #fff;
+                border: 2px solid var(--themeColor);
+                border-top-left-radius: 1rem;
+                border-bottom-left-radius: 1rem;
+            }
+
+            #postcontent {
+                margin: auto;
+                background: rgb(255, 255, 255);
+            }
+
+            #postcontent a {
+                color: blue !important;
+            }
+
+            #postcontent a:hover {
+                color: lightblue !important;
+            }
+
+            .h-scrollable {
+                overflow: auto;
+                white-space: nowrap;
+                padding: 5%;
+                border: 1px solid #ddd;
+                font-size: 0.8rem;
+            }
+
+            .code {
+                padding: 15px;
+                font-size: 0.75rem;
+                font-family: monospace;
+                color: #232323;
+                background-color: #fff;
+                border: 1px solid var(--themeColorLight);
+                line-height: 1rem;
+                min-height: 100px;
+            }
+
+            .viewAllLink {
+                float: center;
+                text-align: center;
+                margin: 20px;
+                padding: 15px;
+                font-size: 1rem;
+                font-weight: bold;
+                line-height: 1.25rem;
+                font-family: sans-serif;
+                color: var(--themeColor) !important;
+                border-radius: 1rem;
+                width: 200px;
+            }
+
+            .viewAllLink a {
+                text-decoration: none;
+                color: var(--themeColor) !important;
+            }
+
+            .center {
+                margin: auto;
+            }
+
+            button {
+                position: relative;
+                background-color: var(--themeColor) !important;
+                color: #FFFFFF;
+                padding: 10px;
+                width: 200px;
+                text-align: center;
+                text-decoration: none;
+                overflow: hidden;
+                cursor: pointer;
+                border-radius: 1rem;
+                font-weight: bold;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            button:after {
+                content: "";
+                background: var(--themeColor) !important;
+                display: block;
+                position: absolute;
+                padding-top: 300%;
+                padding-left: 350%;
+                margin-left: -20px !important;
+                margin-top: -120%;
+                opacity: 0;
+                transition: all 0.8s;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            button:active:after {
+                padding: 0;
+                margin: 0;
+                opacity: 1;
+                transition: 0s
+            }
+
+            button:hover {
+                background-color: #FFFFFF !important;
+                color: var(--themeColor) !important;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            pre {
+                background-color: var(--themeColorLight) !important;
+                font-weight: bold;
+                padding: 5px;
+            }
+
+            /* Global styles */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f2f2f2;
+            }
+
+            .container {
+                max-width: 90%;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            /* Style for the question section */
+            .question {
+                background-color: #f9f9f9;
+                padding: 10px;
+                font-weight: bold;
+                font-size: 0.75rem;
+                font-family: sans-serif;
+                cursor: pointer;
+                border-bottom: 2px solid #ddd;
+                line-height: 1.5rem;
+            }
+
+
+            .question:hover {
+                background-color: #555;
+                color: #fff;
+            }
+
+            /* Style for the answer section */
+            .answer {
+                padding: 10px;
+                font-size: 14px;
+                line-height: 1.5;
+                display: none;
+            }
+
+            /* Style for the active question section */
+            .question.active {
+                background-color: var(--themeColor) !important;
+                color: #fff;
+            }
+
+            .arrow-down {
+                display: inline-block;
+                margin-right: 10px;
+                width: 0;
+                height: 0;
+                border-top: 10px solid #555;
+                border-right: 6px solid transparent;
+                border-left: 6px solid transparent;
+                transform: rotate(0deg);
+                transition: transform 0.2s;
+            }
+
+            .question.active .arrow-down {
+                transform: rotate(180deg);
+                border-top: 10px solid #fff;
+            }
+
+            span.arrow-down {
+                float: right;
+            }
+        </style>
+    </head>
+
+    <br><br>
+
+    <div class="container">
+        <div id="postcontenttitle" style="text-align: center;">
+            Interview Questions - Cucumber for Automation Testing role
+        </div>
+    </div>
+
+
+    <br>
+
+    <div style="width: 100%;">
+        <div class="viewAllLink center">
+            <button
+                onclick="window.location.href='https://way2qae.blogspot.com/2022/07/interview-questions-related-to-java.html';">View
+                All Questions</button>
+        </div>
+    </div>
+
+    <div class="container" id="qa-section">
+
+    </div>
+
+
+    <script type="text/javascript">
+        const quesAnsArray = [
+            {
+                "ques": "Why do we you cucumber and what are the basics concepts used in BDD framework?",
+                "ans": "<div><p>Cucumber is a widely used BDD (Behavior-Driven Development) testing framework that enables developers and testers to write test cases in a human-readable format. Cucumber tests are written in a plain text format called Gherkin, which is easily understandable by both technical and non-technical stakeholders. Cucumber facilitates collaboration between developers, testers, and business analysts to ensure that the software meets the intended business requirements.</p><p>The basic concepts used in the BDD framework are:</p><ol><li><p>Feature: A feature is a user requirement or functionality that the software must provide. In Cucumber, a feature is described in a Gherkin file, which contains a set of scenarios.</p></li><li><p>Scenario: A scenario is a specific test case written in a human-readable format. It consists of a set of steps, which are the actions performed during the test case.</p></li><li><p>Step Definition: A step definition is the actual code that executes the step mentioned in the scenario. It maps each step to a Java method, which performs the action mentioned in the step.</p></li><li><p>Given-When-Then: Given-When-Then (GWT) is a common format used in BDD for writing test scenarios. Given represents the pre-condition, When represents the action, and Then represents the expected outcome.</p></li><li><p>Tags: Tags are used to group similar scenarios and can be used to run only specific scenarios during the test execution.</p></li><li><p>Hooks: Hooks are used to perform actions before or after each scenario or feature. They are used to set up or clean up the test environment.</p></li></ol><p>Overall, the BDD framework and Cucumber help teams to write effective, maintainable, and collaborative tests, leading to better quality software that meets the intended business requirements.</p></div>"
+            },
+            {
+                "ques": "How to integrate Cucumber with Selenium framework. Explain step by step. ",
+                "ans": "<div><p>Cucumber is a popular tool used in Behavior Driven Development (BDD) to write and execute automated acceptance tests, while Selenium is a popular tool used for automating web browsers. Integrating Cucumber with Selenium is a powerful combination that allows us to write automated tests that can simulate user interactions with a web application. In this example, we will be using Cucumber with Java and Selenium to write automated tests.</p><p>Step-by-step guide to integrate Cucumber with Selenium:</p><p>Step 1: Add Dependencies</p><p>We will need to add the following dependencies to our pom.xml file:</p><pre><div><div><code><span>&lt;<span>dependencies</span>&gt;</span><br>  <span>&lt;<span>dependency</span>&gt;</span><br>    <span>&lt;<span>groupId</span>&gt;</span>io.cucumber<span>&lt;/<span>groupId</span>&gt;</span><br>    <span>&lt;<span>artifactId</span>&gt;</span>cucumber-java<span>&lt;/<span>artifactId</span>&gt;</span><br>    <span>&lt;<span>version</span>&gt;</span>6.10.4<span>&lt;/<span>version</span>&gt;</span><br>    <span>&lt;<span>scope</span>&gt;</span>test<span>&lt;/<span>scope</span>&gt;</span><br>  <span>&lt;/<span>dependency</span>&gt;</span><br>  <span>&lt;<span>dependency</span>&gt;</span><br>    <span>&lt;<span>groupId</span>&gt;</span>io.cucumber<span>&lt;/<span>groupId</span>&gt;</span><br>    <span>&lt;<span>artifactId</span>&gt;</span>cucumber-junit<span>&lt;/<span>artifactId</span>&gt;</span><br>    <span>&lt;<span>version</span>&gt;</span>6.10.4<span>&lt;/<span>version</span>&gt;</span><br>    <span>&lt;<span>scope</span>&gt;</span>test<span>&lt;/<span>scope</span>&gt;</span><br>  <span>&lt;/<span>dependency</span>&gt;</span><br>  <span>&lt;<span>dependency</span>&gt;</span><br>    <span>&lt;<span>groupId</span>&gt;</span>org.seleniumhq.selenium<span>&lt;/<span>groupId</span>&gt;</span><br>    <span>&lt;<span>artifactId</span>&gt;</span>selenium-java<span>&lt;/<span>artifactId</span>&gt;</span><br>    <span>&lt;<span>version</span>&gt;</span>3.141.59<span>&lt;/<span>version</span>&gt;</span><br>  <span>&lt;/<span>dependency</span>&gt;</span><br><span>&lt;/<span>dependencies</span>&gt;</span><br></code></div></div></pre><p>Step 2: Create Feature File</p><p>We will create a feature file named <code>google.feature</code> that will contain the description of the feature and the scenarios that will test the feature. The feature file will look like this:</p><pre><div><div><code>Feature: Google Search<br>  As a user<br>  I want to be able to search on Google<br>  So that I can find the information I need<br><br>  Scenario: Searching for a keyword<br>    Given I am on the Google search page<br>    When I search for \"cucumber with selenium\"<br>    Then the search results should contain \"Cucumber Selenium Tutorial\"<br></code></div></div></pre><p>Step 3: Create Step Definitions</p><p>We will create a step definition file named <code>GoogleSearchSteps.java</code> that will contain the implementation of the steps defined in the feature file. The step definition file will look like this:</p><pre><div><div><code><span>import</span> io.cucumber.java.en.Given;<br><span>import</span> io.cucumber.java.en.Then;<br><span>import</span> io.cucumber.java.en.When;<br><span>import</span> org.openqa.selenium.By;<br><span>import</span> org.openqa.selenium.WebDriver;<br><span>import</span> org.openqa.selenium.WebElement;<br><span>import</span> org.openqa.selenium.chrome.ChromeDriver;<br><br><span>import</span> <span>static</span> org.junit.Assert.assertTrue;<br><br><span>public</span> <span>class</span> <span>GoogleSearchSteps</span> {<br>    <br>    <span>private</span> WebDriver driver;<br><br>    <span>@Given(\"I am on the Google search page\")</span><br>    <span>public</span> <span>void</span> <span>i_am_on_the_google_search_page</span><span>()</span> {<br>        <span>// Set the path of the ChromeDriver</span><br>        System.setProperty(<span>\"webdriver.chrome.driver\"</span>, <span>\"/path/to/chromedriver\"</span>);<br><br>        <span>// Create a new instance of the ChromeDriver</span><br>        driver = <span>new</span> <span>ChromeDriver</span>();<br><br>        <span>// Navigate to the Google search page</span><br>        driver.get(<span>\"https://www.google.com\"</span>);<br>    }<br><br>    <span>@When(\"I search for {string}\")</span><br>    <span>public</span> <span>void</span> <span>i_search_for</span><span>(String keyword)</span> {<br>        <span>// Find the search box element</span><br>        <span>WebElement</span> <span>searchBox</span> <span>=</span> driver.findElement(By.name(<span>\"q\"</span>));<br><br>        <span>// Enter the keyword and submit the form</span><br>        searchBox.sendKeys(keyword);<br>        searchBox.submit();<br>    }<br><br>    <span>@Then(\"the search results should contain {string}\")</span><br>    <span>public</span> <span>void</span> <span>the_search_results_should_contain</span><span>(String expectedText)</span> {<br>        <span>// Wait for the search results to load</span><br>        <span>WebElement</span> <span>searchResults</span> <span>=</span> driver.findElement(By.id(<span>\"search\"</span>));<br><br>        <span>// Verify that the expected text is present in the search results</span><br>        assertTrue(searchResults.getText().contains(expectedText));<br><br>        <span>// Close the browser</span><br>        driver.quit();<br>    }<br>}<br></code></div></div></pre><p>Step 4: Run the Tests</p><p>We can run the tests using the following command:</p><p>``</p></div>"
+            },
+            {
+                "ques": "What is the glue in BDD cucumber?",
+                "ans": "<div><p>In Cucumber, the glue code is the Java code that binds the feature files to the step definitions. It is responsible for executing the step definitions that match the steps in the feature files. The glue code is specified in the Cucumber options using the <code>glue</code> parameter.</p><p>When we run a Cucumber test, the Cucumber engine scans the feature files and the step definitions to determine which step definitions to execute for each step in the feature files. The glue code defines the mapping between the steps in the feature files and the step definitions.</p><p>Here is an example of how to specify the glue code in Cucumber:</p><pre><div><div><code><span>@RunWith(Cucumber.class)</span><br><span>@CucumberOptions(<br>        features = \"src/test/resources/features\",<br>        glue = \"com.example.stepdefinitions\"<br>)</span><br><span>public</span> <span>class</span> <span>RunCucumberTests</span> {<br>}<br></code></div></div></pre><p>In this example, the <code>glue</code> option is set to <code>com.example.stepdefinitions</code>, which specifies the package where the step definitions are located.</p><p>Here is an example of a step definition class that is bound to the feature file using the glue code:</p><pre><div><div><code><span>package</span> com.example.stepdefinitions;<br><br><span>import</span> io.cucumber.java.en.Given;<br><span>import</span> io.cucumber.java.en.Then;<br><span>import</span> io.cucumber.java.en.When;<br><br><span>public</span> <span>class</span> <span>MyStepDefinitions</span> {<br><br>    <span>@Given(\"I have {int} apples in my basket\")</span><br>    <span>public</span> <span>void</span> <span>i_have_apples_in_my_basket</span><span>(<span>int</span> count)</span> {<br>        <span>// step definition code</span><br>    }<br><br>    <span>@When(\"I add {int} more apples\")</span><br>    <span>public</span> <span>void</span> <span>i_add_more_apples</span><span>(<span>int</span> count)</span> {<br>        <span>// step definition code</span><br>    }<br><br>    <span>@Then(\"I should have {int} apples in my basket\")</span><br>    <span>public</span> <span>void</span> <span>i_should_have_apples_in_my_basket</span><span>(<span>int</span> count)</span> {<br>        <span>// step definition code</span><br>    }<br>}<br></code></div></div></pre><p>In this example, the step definition methods are annotated with the <code>@Given</code>, <code>@When</code>, and <code>@Then</code> annotations, which map them to the corresponding steps in the feature file.</p><p>When the Cucumber test is run, the glue code binds the step definitions to the steps in the feature file and executes the step definitions in the appropriate order. The output of the test is then displayed in the console, showing whether the tests passed or failed.</p></div>"
+            },
+            {
+                "ques": "What is BDD in software automation testing? What are its pros and cons?",
+                "ans": "<div><p>Behavior-Driven Development (BDD) is a software development methodology that is based on the principles of Test-Driven Development (TDD) and Domain-Driven Design (DDD). In BDD, software is developed by focusing on the behavior of the software, and by collaborating with stakeholders to define the acceptance criteria for the software. BDD is particularly well-suited to agile development environments, where frequent changes to the software requirements are common.</p><p>BDD uses a natural language syntax to describe the behavior of the software in terms of user stories or scenarios. These user stories or scenarios are then translated into automated tests using a framework such as Cucumber or Behave. The resulting tests can be run against the software to verify that it meets the acceptance criteria defined by the stakeholders.</p><p>Here are some of the pros and cons of using BDD in software automation testing:</p><p>Pros:</p><ol><li><p>Improved communication: BDD encourages collaboration between stakeholders, developers, and testers, which leads to better communication and understanding of the software requirements.</p></li><li><p>Increased test coverage: BDD tests are written in a natural language syntax, which makes it easier for stakeholders to write tests and contribute to test coverage.</p></li><li><p>Faster feedback: BDD tests can be automated and run quickly, providing feedback to developers on the quality of their code.</p></li><li><p>Business value focus: BDD tests are written in a way that aligns with business goals and objectives, which helps to ensure that the software is delivering the desired value.</p></li><li><p>Reduced rework: BDD tests are written to verify that the software meets the acceptance criteria defined by stakeholders, which can reduce the amount of rework needed to fix issues and defects.</p></li></ol><p>Cons:</p><ol><li><p>Time-consuming: BDD can be time-consuming to implement, especially if the stakeholders are not familiar with the natural language syntax used in BDD tests.</p></li><li><p>High maintenance: BDD tests can be difficult to maintain if they are not well-structured, which can lead to a high maintenance overhead.</p></li><li><p>Limited expertise: BDD requires specialized expertise in software development, testing, and natural language syntax, which can be a barrier to adoption for some organizations.</p></li><li><p>Over-reliance on automation: BDD tests can create an over-reliance on automated testing, which can lead to a lack of emphasis on manual testing and exploratory testing.</p></li></ol><p>Example:</p><p>Here is an example of a BDD scenario written in Cucumber:</p><pre><div><div><code><span>Feature:</span> Login functionality<br>  <span>As</span> a user<br>  I want <span>to</span> be able <span>to</span> login <span>to</span> the website<br>  So that I can access my account<br><br>  Scenario: Successful login<br>    Given I am <span>on</span> the login page<br>    <span>When</span> I enter valid login credentials<br>    <span>And</span> I click the login button<br>    <span>Then</span> I should be redirected <span>to</span> the home page<br></code></div></div></pre><p>In this example, the scenario describes the behavior of the login functionality of a website. The steps are written in a natural language syntax that can be easily understood by stakeholders. The scenario can then be automated using Cucumber and run against the software to verify that it meets the acceptance criteria defined by the stakeholders.</p></div>"
+            },
+            {
+                "ques": "Explain Scenario vs scenario outline?",
+                "ans": "<div><p>In Cucumber with Java, scenarios and scenario outlines are two different ways to write and organize BDD test cases.</p><p>A scenario is a single test case that describes a specific behavior of the software. It consists of a set of steps written in Gherkin syntax that describe the preconditions, actions, and expected outcomes of the test case. A scenario typically has a single set of input data, and the test case is run once with those inputs. Here's an example of a scenario:</p><pre><div><div><code><span>Scenario:</span> User logs <span>in</span> <span>with</span> valid credentials<br>  Given the user <span>is</span> <span>on</span> the login page<br>  <span>When</span> they enter their valid credentials<br>  <span>And</span> click the login button<br>  <span>Then</span> they should be redirected <span>to</span> the home page<br></code></div></div></pre><p>A scenario outline, on the other hand, is a way to write a single test case that can be run with multiple sets of input data. It uses the <code>Examples</code> keyword to define a table of input data and expected outcomes for the test case. The scenario outline consists of the same set of steps as a regular scenario, but with placeholders for the input data that are defined in the <code>Examples</code> table. Here's an example of a scenario outline:</p><pre><div><div><code>Scenario Outline: User logs <span>in</span> <span>with</span> different credentials<br>  Given the user <span>is</span> <span>on</span> the login page<br>  <span>When</span> they enter <span>\"&lt;username&gt;\"</span> <span>and</span> <span>\"&lt;password&gt;\"</span><br>  <span>And</span> click the login button<br>  <span>Then</span> they should see <span>\"&lt;expectedResult&gt;\"</span><br><br>  Examples:<br>    | username | password | expectedResult |<br>    | user1    | pass1    | Home page      |<br>    | user2    | pass2    | <span>Error</span> message  |<br>    | user3    | pass3    | Home page      |<br></code></div></div></pre><p>In this example, the scenario outline defines a single test case for the \"User logs in with different credentials\" behavior, which is run three times with different sets of input data. The placeholders for the input data in the scenario outline (i.e. <code>&lt;username&gt;</code>, <code>&lt;password&gt;</code>, and <code>&lt;expectedResult&gt;</code>) are replaced with the values from the <code>Examples</code> table for each run. The <code>Examples</code> table defines three sets of input data and expected outcomes, which are used to run the test case three times.</p><p>The output of running a scenario or scenario outline in Cucumber with Java includes information about each step in the test case, including whether the step passed or failed, and any associated error messages or stack traces. For a scenario outline, the output includes information about each run of the test case with the different sets of input data.</p></div>"
+            },
+            {
+                "ques": "What are Datatable? Difference between Datatable vs scenario outline.",
+                "ans": "<div><p>In Cucumber with Java, <code>DataTable</code> is a data structure used to pass tabular data to a step definition in a feature file. It is often used to pass multiple input values to a single step in a scenario or scenario outline.</p><p>Here's an example of a feature file using a <code>DataTable</code>:</p><pre><div><div><code>Scenario: <span>User</span> searches <span>for</span> products<br>  Given the <span>user</span> <span>is</span> <span>on</span> the <span>search</span> page<br>  <span>When</span> they enter the following <span>search</span> terms:<br>    <span>|</span> term     <span>|</span><br>    <span>|</span> product1 <span>|</span><br>    <span>|</span> product2 <span>|</span><br>  <span>And</span> click the <span>search</span> button<br>  <span>Then</span> they should see a list <span>of</span> <span>search</span> results<br></code></div></div></pre><p>In this example, the step \"When they enter the following search terms:\" takes a <code>DataTable</code> as an argument, which is defined as a table of search terms. The step definition for this step can use the <code>DataTable</code> API to extract the search terms and use them in the test case.</p><p>Here's an example of a step definition using a <code>DataTable</code>:</p><pre><div><div><code><span>@When(\"they enter the following search terms:\")</span><br><span>public</span> <span>void</span> <span>enterSearchTerms</span><span>(DataTable dataTable)</span> {<br>    List&lt;String&gt; searchTerms = dataTable.asList(String.class);<br>    <span>for</span> (String term : searchTerms) {<br>        searchPage.enterSearchTerm(term);<br>    }<br>}<br></code></div></div></pre><p>In this example, the step definition for \"When they enter the following search terms:\" takes a <code>DataTable</code> as an argument, and uses the <code>asList</code> method to convert the <code>DataTable</code> into a <code>List</code> of <code>String</code> objects. It then loops through each search term and passes it to the <code>enterSearchTerm</code> method of the <code>searchPage</code> object.</p><p>The main difference between a <code>DataTable</code> and a scenario outline is that a <code>DataTable</code> is used to pass tabular data to a step definition, while a scenario outline is used to define a template for a test case that can be run with multiple sets of input data. A scenario outline uses the <code>Examples</code> keyword to define a table of input data and expected outcomes for the test case, and each row in the table represents a single run of the test case with a different set of input data.</p><p>Here's an example of a scenario outline:</p><pre><div><div><code>Scenario Outline: <span>User</span> searches <span>for</span> different products<br>  Given the <span>user</span> <span>is</span> <span>on</span> the <span>search</span> page<br>  <span>When</span> they enter \"&lt;searchTerm&gt;\"<br>  <span>And</span> click the <span>search</span> button<br>  <span>Then</span> they should see a list <span>of</span> <span>search</span> results <span>for</span> \"&lt;searchTerm&gt;\"<br><br>  Examples:<br>    <span>|</span> searchTerm <span>|</span><br>    <span>|</span> product1   <span>|</span><br>    <span>|</span> product2   <span>|</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "What are tags &amp; hooks in cucumber?",
+                "ans": "<div><p>In Cucumber with Java, tags and hooks are two important concepts used to control the behavior of tests and add additional logic and functionality to the test suite.</p><h3>Tags</h3><p>Tags in Cucumber are labels that can be assigned to feature files and scenarios to categorize and organize them. Tags are specified as strings preceded by the \"@\" symbol in the feature file.</p><p>Here's an example of a feature file with tags:</p><pre><div><div><code><span>@smoke</span><br><span>Feature</span>: User Login<br>  As a registered user<br>  I want to log in to my account<br>  So that I can access my profile information<br><br>  <span>@login_positive</span><br>  <span>Scenario</span>: Successful login<br>    Given I am on the login page<br>    When I enter valid credentials<br>    <span>And</span> click the login button<br>    Then I should be logged in<br></code></div></div></pre><p>In this example, the feature has been assigned the \"smoke\" tag, while the scenario has been assigned the \"login_positive\" tag. Tags can be used to select or exclude specific features or scenarios when running the test suite, using the \"--tags\" option.</p><h3>Hooks</h3><p>Hooks in Cucumber are blocks of code that are executed before or after a scenario, feature, or the entire test suite. They are used to set up pre-conditions or clean up after a test scenario. Hooks are defined in a separate class, using the <code>@Before</code>, <code>@After</code>, <code>@BeforeStep</code>, and <code>@AfterStep</code> annotations.</p><p>Here's an example of a <code>@Before</code> hook that initializes the Selenium WebDriver:</p><pre><div><div><code><span>public</span> <span>class</span> <span>Hooks</span> {<br>    <span>private</span> WebDriver driver;<br><br>    <span>@Before</span><br>    <span>public</span> <span>void</span> <span>setUp</span><span>()</span> {<br>        driver = <span>new</span> <span>ChromeDriver</span>();<br>        driver.manage().timeouts().implicitlyWait(<span>10</span>, TimeUnit.SECONDS);<br>    }<br>}<br></code></div></div></pre><p>In this example, the <code>@Before</code> hook initializes the <code>WebDriver</code> and sets the implicit wait time to 10 seconds. This hook will be executed before every scenario in the test suite.</p><p>Similarly, <code>@After</code> hook can be used to perform cleanup tasks, such as closing the browser and releasing resources.</p><p>Here's an example of a <code>@After</code> hook that closes the Selenium WebDriver:</p><pre><div><div><code><span>public</span> <span>class</span> <span>Hooks</span> {<br>    <span>private</span> WebDriver driver;<br><br>    <span>// @Before hook code</span><br><br>    <span>@After</span><br>    <span>public</span> <span>void</span> <span>tearDown</span><span>()</span> {<br>        <span>if</span> (driver != <span>null</span>) {<br>            driver.quit();<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this example, the <code>@After</code> hook checks if the <code>WebDriver</code> is not null, and if so, closes the browser using the <code>quit()</code> method.</p><p>In addition to <code>@Before</code> and <code>@After</code> hooks, <code>@BeforeStep</code> and <code>@AfterStep</code> hooks can be used to perform actions before or after each step in a scenario. This can be useful for logging, debugging, or setting up test data.</p></div>"
+            },
+            {
+                "ques": "How to run test cases for more than one tag name in cucumber?",
+                "ans": "<div><p>In Cucumber with Java, running test cases for more than one tag name can be done by specifying the tags using logical operators in the Cucumber command line options.</p><p>The logical operators that can be used are:</p><ul><li><code>and</code>: to specify that the scenarios should have all the specified tags</li><li><code>or</code>: to specify that the scenarios should have any of the specified tags</li><li><code>not</code>: to specify that the scenarios should not have the specified tag</li></ul><p>For example, to run all scenarios with tags \"@smoke\" and \"@login_positive\", the following command can be used:</p><pre><div><div><code>mvn test -Dcucumber.options=<span>\"--tags @smoke and @login_positive\"</span><br></code></div></div></pre><p>To run all scenarios with tags \"@smoke\" or \"@login_negative\", the following command can be used:</p><pre><div><div><code>mvn test -Dcucumber.options=<span>\"--tags @smoke or @login_negative\"</span><br></code></div></div></pre><p>To run all scenarios that do not have the tag \"@slow\", the following command can be used:</p><pre><div><div><code>mvn <span>test</span> -Dcucumber.options=<span>\"--tags not @slow\"</span><br></code></div></div></pre><p>These commands can be modified to match the specific tag names and logical operators used in the feature files.</p><p>Additionally, in the <code>@CucumberOptions</code> annotation in the <code>RunCucumberTest</code> class, the tags can also be specified as an array of strings, as shown in the following example:</p><pre><div><div><code><span>@RunWith(Cucumber.class)</span><br><span>@CucumberOptions(<br>    features = \"src/test/resources/features\",<br>    glue = \"step_definitions\",<br>    tags = {\"@smoke and @login_positive\", \"@slow\"}<br>)</span><br><span>public</span> <span>class</span> <span>RunCucumberTest</span> {<br>}<br></code></div></div></pre><p>In this example, the <code>@CucumberOptions</code> annotation specifies that the test suite should run scenarios with the tags \"@smoke and @login_positive\" and \"@slow\". These tags are specified as an array of strings in the <code>tags</code> attribute of the annotation.</p></div>"
+            },
+            {
+                "ques": "What are Hooks and tags?",
+                "ans": "<div><p>In Cucumber with Java, hooks and tags are two important features that can be used to modify the behavior of Cucumber scenarios.</p><h3>Hooks</h3><p>Hooks are blocks of code that can be executed before or after a scenario or a step. Hooks are useful for setting up the test environment or cleaning up after the test is complete. In Cucumber, hooks are implemented using annotations and can be specified at the scenario or feature level.</p><p>The following are the hooks that can be implemented in Cucumber:</p><ul><li><p><code>@Before</code>: This hook is executed before every scenario. It is useful for setting up the test environment, such as initializing a WebDriver object.</p></li><li><p><code>@After</code>: This hook is executed after every scenario. It is useful for cleaning up the test environment, such as closing a WebDriver object.</p></li><li><p><code>@BeforeStep</code>: This hook is executed before every step. It is useful for performing actions before each step, such as taking a screenshot.</p></li><li><p><code>@AfterStep</code>: This hook is executed after every step. It is useful for performing actions after each step, such as verifying the state of the application.</p></li></ul><p>Hooks can be specified in a separate Java class or in the step definition file itself. Hooks can also be tagged with a specific tag, which allows them to be applied selectively to scenarios or features that have that tag.</p><h3>Tags</h3><p>Tags are labels that can be assigned to Cucumber scenarios or features. Tags are useful for organizing tests, selecting tests to run, and for applying hooks selectively. Tags are specified in the feature file using the \"@\" symbol followed by the tag name.</p><p>For example, the following scenario has the tag \"@smoke\":</p><pre><div><div><code><span>@smoke</span><br>Scenario: Login <span>with</span> valid credentials<br>  Given the <span>user</span> <span>is</span> <span>on</span> the login page<br>  <span>When</span> the <span>user</span> enters valid credentials<br>  <span>Then</span> the <span>user</span> <span>is</span> logged <span>in</span> successfully<br></code></div></div></pre><p>Tags can also be combined using logical operators, such as \"and\", \"or\", and \"not\". For example, the following command will run all scenarios that have the tags \"@smoke\" and \"@login\":</p><pre><div><div><code>mvn test -Dcucumber.options=<span>\"--tags @smoke and @login\"</span><br></code></div></div></pre><p>Tags can also be used to apply hooks selectively. For example, the following hook is applied only to scenarios that have the tag \"@smoke\":</p><pre><div><div><code><span>@Before(\"@smoke\")</span><br><span>public</span> <span>void</span> <span>setUpSmokeTest</span><span>()</span> {<br>    <span>// Code to set up the smoke test environment</span><br>}<br></code></div></div></pre><p>Overall, hooks and tags are powerful features in Cucumber that can be used to customize and manage tests effectively.</p></div>"
+            },
+            {
+                "ques": "What are the keywords used in the feature file? What is the use of the keyword \"background\" in a feature file?",
+                "ans": "<div><p>In Cucumber with Java, feature files are written in the Gherkin language, which uses a set of keywords to define the scenarios and steps. The following are the main keywords used in a feature file:</p><ul><li><p>Feature: This keyword is used to define a feature, which represents a high-level requirement or functionality.</p></li><li><p>Scenario: This keyword is used to define a scenario, which represents a specific test case or behavior.</p></li><li><p>Given, When, Then, And, But: These keywords are used to define the steps in a scenario, which represent the actions and assertions that need to be performed.</p></li><li><p>Background: This keyword is used to define a set of steps that are common to all scenarios in a feature file. The steps defined in the Background section are executed before the steps in each scenario.</p></li><li><p>Scenario Outline: This keyword is used to define a scenario template that can be executed multiple times with different inputs. The inputs are specified using a table, which is called a data table.</p></li><li><p>Examples: This keyword is used to define the inputs for a Scenario Outline. The Examples section contains a data table that provides the input values for the scenario template.</p></li></ul><p>The following is an example of a feature file that uses the Background keyword:</p><pre><div><div><code>Feature: Login<br>  Background:<br>    Given the <span>user</span> <span>is</span> <span>on</span> the login page<br><br>  Scenario: Login <span>with</span> valid credentials<br>    <span>When</span> the <span>user</span> enters valid credentials<br>    <span>Then</span> the <span>user</span> <span>is</span> logged <span>in</span> successfully<br><br>  Scenario: Login <span>with</span> invalid credentials<br>    <span>When</span> the <span>user</span> enters invalid credentials<br>    <span>Then</span> the <span>user</span> sees an error message<br></code></div></div></pre><p>In this example, the Background section contains a single step, which sets up the test environment by navigating to the login page. This step is executed before the steps in each scenario. The two scenarios in this feature file use the same Background step to set up the test environment.</p><p>The Background keyword is useful for reducing code duplication and improving the readability of the feature file. By defining a set of common steps in the Background section, the scenarios can focus on the specific behaviors and inputs without having to repeat the common steps in each scenario.</p></div>"
+            },
+            {
+                "ques": "How you do parallel testing in BDD cucumber?",
+                "ans": "<div><p>In Cucumber with Java, parallel testing can be achieved using various methods. One of the most common approaches is to use a testing framework such as TestNG or JUnit, which provides built-in support for parallel testing. Cucumber can be integrated with these testing frameworks to run scenarios in parallel.</p><p>Here's an example of how to do parallel testing in Cucumber with TestNG:</p><ol><li>First, add the TestNG dependency to your project:</li></ol><pre><div><div><code><span><span>&lt;<span>dependency</span>&gt;</span><br>    <span>&lt;<span>groupId</span>&gt;</span>org.testng<span>&lt;/<span>groupId</span>&gt;</span><br>    <span>&lt;<span>artifactId</span>&gt;</span>testng<span>&lt;/<span>artifactId</span>&gt;</span><br>    <span>&lt;<span>version</span>&gt;</span>7.0.0<span>&lt;/<span>version</span>&gt;</span><br><span>&lt;/<span>dependency</span>&gt;</span><br></span></code></div></div></pre><ol start=\"2\"><li>Create a TestNG XML file that defines the test suites and the parallel mode:</li></ol><pre><div><div><code><span><span>&lt;!DOCTYPE <span>suite</span> <span>SYSTEM</span> <span>\"https://testng.org/testng-1.0.dtd\"</span> &gt;</span><br><span>&lt;<span>suite</span> <span>name</span>=<span>\"Parallel Tests\"</span> <span>parallel</span>=<span>\"tests\"</span>&gt;</span><br>  <span>&lt;<span>test</span> <span>name</span>=<span>\"Test 1\"</span>&gt;</span><br>    <span>&lt;<span>classes</span>&gt;</span><br>      <span>&lt;<span>class</span> <span>name</span>=<span>\"com.example.TestRunner1\"</span> /&gt;</span><br>    <span>&lt;/<span>classes</span>&gt;</span><br>  <span>&lt;/<span>test</span>&gt;</span><br>  <span>&lt;<span>test</span> <span>name</span>=<span>\"Test 2\"</span>&gt;</span><br>    <span>&lt;<span>classes</span>&gt;</span><br>      <span>&lt;<span>class</span> <span>name</span>=<span>\"com.example.TestRunner2\"</span> /&gt;</span><br>    <span>&lt;/<span>classes</span>&gt;</span><br>  <span>&lt;/<span>test</span>&gt;</span><br><span>&lt;/<span>suite</span>&gt;</span><br></span></code></div></div></pre><p>In this example, the \"Parallel Tests\" suite is defined to run in \"tests\" parallel mode, which means that each test will run in its own thread.</p><ol start=\"3\"><li>Create multiple TestRunner classes that use CucumberOptions to specify the features and glue code:</li></ol><pre><div><div><code><span>@CucumberOptions(features = <span>\"src/test/resources/features/Login.feature\"</span>, <br>                 glue = <span>\"com.example.steps\"</span>)</span><br><span>public</span> <span>class</span> <span>TestRunner1</span> <span>extends</span> <span>AbstractTestNGCucumberTests</span> {<br>}<br></code></div></div></pre><p>In this example, the TestRunner1 class specifies the Login.feature file and the steps package using the glue option.</p><ol start=\"4\"><li>Run the tests using the TestNG runner:</li></ol><pre><div><div><code>TestNG testng = new <span>TestNG</span>();<br>testng<span>.setXmlSuites</span>((List&amp;lt;XmlSuite&amp;gt;) (new Parser(\"testng.xml\")<span>.parse</span>()));<br>testng<span>.run</span>();<br></code></div></div></pre><p>This code reads the TestNG XML file and runs the tests in parallel mode.</p><p>The output will show that the scenarios are executed in parallel threads:</p><pre><div><div><code>[TestNG] Running:<br>  /path/<span>to</span>/TestRunner1.xml<br>  /path/<span>to</span>/TestRunner2.xml<br><br><span>Feature:</span> Login<br>  Scenario: Login <span>with</span> valid credentials<br>    Given the user <span>is</span> <span>on</span> the login page<br>    <span>When</span> the user enters valid credentials<br>    <span>Then</span> the user <span>is</span> logged <span>in</span> successfully<br><br><span>Feature:</span> Login<br>  Scenario: Login <span>with</span> invalid credentials<br>    Given the user <span>is</span> <span>on</span> the login page<br>    <span>When</span> the user enters invalid credentials<br>    <span>Then</span> the user sees an <span>error</span> message<br><br><span>Feature:</span> Search<br>  Scenario: Search <span>for</span> a product<br>    Given the user <span>is</span> <span>on</span> the home page<br>    <span>When</span> the user searches <span>for</span> <span>\"cucumber\"</span><br>    <span>Then</span> the user sees a list <span>of</span> products<br></code></div></div></pre><p>In this example, the Login.feature and Search.feature files are executed in parallel threads, and the scenarios are executed in the order they appear in the feature files.</p><p>Overall, parallel testing can greatly improve the speed and efficiency of test execution, especially when dealing with large test suites. By leveraging the built-in support for parallel testing in TestNG or JUnit, it's easy to run scenarios in parallel threads and achieve faster test execution times.</p></div>"
+            },
+            {
+                "ques": "What is the feature file &amp; step definition in cucumber?",
+                "ans": "<div><p>Cucumber is a tool for Behavior-Driven Development (BDD) that allows us to write automated tests in a human-readable language. In Cucumber, the feature file and step definitions are two of the most important components that help us to create and run BDD tests.</p><p>The Feature File:<br>The feature file is a plain text file that describes the behavior of a feature or a part of a feature. It contains a high-level description of the feature, along with the scenarios that describe the various steps of the feature. Each scenario is composed of steps, which are written in a Gherkin language syntax. Gherkin is a business-readable domain-specific language that can be used to write executable specifications.</p><p>Here's an example of a feature file:</p><pre><div><div><code><span>Feature:</span> Login<br>  <span>As</span> a registered user<br>  I want <span>to</span> log <span>in</span> <span>to</span> my account<br>  So that I can access the system<br><br>  Scenario: Login <span>with</span> valid credentials<br>    Given the user <span>is</span> <span>on</span> the login page<br>    <span>When</span> the user enters valid credentials<br>    <span>Then</span> the user <span>is</span> logged <span>in</span> successfully<br><br>  Scenario: Login <span>with</span> invalid credentials<br>    Given the user <span>is</span> <span>on</span> the login page<br>    <span>When</span> the user enters invalid credentials<br>    <span>Then</span> the user sees an <span>error</span> message<br></code></div></div></pre><p>In this example, the feature file describes the behavior of a login feature. It has two scenarios, one for a successful login and one for an unsuccessful login.</p><p>The Step Definitions:<br>Step definitions are the implementation of the steps that are defined in the feature file. They provide the code that is executed when a step is encountered during the test. Each step in the feature file is mapped to a step definition in the code.</p><p>Here's an example of step definitions for the login feature:</p><pre><div><div><code><span>public</span> <span>class</span> <span>LoginSteps</span> {<br>    WebDriver driver;<br><br>    <span>@Given(\"^the user is on the login page$\")</span><br>    <span>public</span> <span>void</span> <span>the_user_is_on_the_login_page</span><span>()</span> {<br>        driver = <span>new</span> <span>ChromeDriver</span>();<br>        driver.get(<span>\"http://www.example.com/login\"</span>);<br>    }<br><br>    <span>@When(\"^the user enters valid credentials$\")</span><br>    <span>public</span> <span>void</span> <span>the_user_enters_valid_credentials</span><span>()</span> {<br>        <span>WebElement</span> <span>username</span> <span>=</span> driver.findElement(By.id(<span>\"username\"</span>));<br>        <span>WebElement</span> <span>password</span> <span>=</span> driver.findElement(By.id(<span>\"password\"</span>));<br><br>        username.sendKeys(<span>\"user1\"</span>);<br>        password.sendKeys(<span>\"pass1\"</span>);<br>        password.submit();<br>    }<br><br>    <span>@Then(\"^the user is logged in successfully$\")</span><br>    <span>public</span> <span>void</span> <span>the_user_is_logged_in_successfully</span><span>()</span> {<br>        <span>String</span> <span>expectedTitle</span> <span>=</span> <span>\"Welcome to the system\"</span>;<br>        <span>String</span> <span>actualTitle</span> <span>=</span> driver.getTitle();<br>        assertEquals(expectedTitle, actualTitle);<br>        driver.quit();<br>    }<br><br>    <span>@When(\"^the user enters invalid credentials$\")</span><br>    <span>public</span> <span>void</span> <span>the_user_enters_invalid_credentials</span><span>()</span> {<br>        <span>WebElement</span> <span>username</span> <span>=</span> driver.findElement(By.id(<span>\"username\"</span>));<br>        <span>WebElement</span> <span>password</span> <span>=</span> driver.findElement(By.id(<span>\"password\"</span>));<br><br>        username.sendKeys(<span>\"user1\"</span>);<br>        password.sendKeys(<span>\"wrongpass\"</span>);<br>        password.submit();<br>    }<br><br>    <span>@Then(\"^the user sees an error message$\")</span><br>    <span>public</span> <span>void</span> <span>the_user_sees_an_error_message</span><span>()</span> {<br>        <span>WebElement</span> <span>errorMessage</span> <span>=</span> driver.findElement(By.className(<span>\"error-message\"</span>));<br>        assertNotNull(errorMessage);<br>        driver.quit();<br>    }<br>}<br></code></div></div></pre><p>In this example, each step in the feature file is mapped to a method in the LoginSteps class. The @Given, @When, and @Then annotations define the type of step (given, when, or then), and the regular expression pattern in the parentheses is used to match the step text in the feature file. The method implementation contains the code that is executed when the step is encountered during the test.</p><p>When we run the test, Cucumber reads the feature file and matches each step to the corresponding step definition. The step definitions are executed in the order they appear in the feature file. The output of the test includes a summary of the scenarios that passed</p></div>"
+            },
+            {
+                "ques": "How to handle Duplicate feature file?",
+                "ans": "<div><p>Handling duplicate feature files in Cucumber with Java can be done in the following steps:</p><ol><li><p>Identify the duplicate feature files: Check the feature files in your project and identify any files that have the same name or contain the same scenarios.</p></li><li><p>Rename or remove the duplicate feature files: Once you have identified the duplicate files, you can either rename them or remove them, depending on your project requirements.</p></li><li><p>Update the feature file references: If you have renamed or removed any feature files, you need to update the references to these files in the <code>CucumberOptions</code> annotation in your test runner class. For example:</p></li></ol><pre><div><div><code><span>@CucumberOptions(<span>features = {<span>\"src/test/resources/features/first_feature.feature\"</span>, <span>\"src/test/resources/features/second_feature.feature\"</span>}, glue = {<span>\"stepdefinitions\"</span>}</span>)</span><br></code></div></div></pre><p>If you have removed <code>second_feature.feature</code>, you need to update the <code>features</code> parameter to remove the reference to the file:</p><pre><div><div><code><span>@CucumberOptions(<span>features = {<span>\"src/test/resources/features/first_feature.feature\"</span>}, glue = {<span>\"stepdefinitions\"</span>}</span>)</span><br></code></div></div></pre><ol start=\"4\"><li>Run the tests: After updating the feature file references, you can run your tests to ensure that they are working correctly.</li></ol><p>Here is an example of a test runner class with the <code>CucumberOptions</code> annotation:</p><pre><div><div><code><span>@RunWith</span>(Cucumber.class)<br><span>@CucumberOptions</span>(features = {<span>\"src/test/resources/features/first_feature.feature\"</span>, <span>\"src/test/resources/features/second_feature.feature\"</span>}, glue = {<span>\"stepdefinitions\"</span>})<br>public class TestRunner {<br>}<br></code></div></div></pre><p>In this example, the test runner class is referencing two feature files: <code>first_feature.feature</code> and <code>second_feature.feature</code>. If <code>second_feature.feature</code> is a duplicate, it can be removed and the <code>features</code> parameter in the <code>CucumberOptions</code> annotation can be updated accordingly:</p><pre><div><div><code><span>@RunWith</span>(Cucumber.class)<br><span>@CucumberOptions</span>(features = {<span>\"src/test/resources/features/first_feature.feature\"</span>}, glue = {<span>\"stepdefinitions\"</span>})<br>public class TestRunner {<br>}<br></code></div></div></pre><p>This ensures that the tests are only run once for the <code>first_feature.feature</code> file and any duplicate files are removed from the test suite.</p></div>"
+            },
+            {
+                "ques": "What are Annotations in Cucumber?",
+                "ans": "<div><p>In Cucumber with Java, annotations are used to provide additional information and configuration for the Cucumber framework to execute the tests correctly. Annotations are special labels or markers that are added to the code to modify the behavior of the test classes, methods, or fields. Here are some of the commonly used annotations in Cucumber with Java:</p><ol><li><code>@Given</code>, <code>@When</code>, <code>@Then</code>, <code>@And</code>, and <code>@But</code>: These are step definition annotations that are used to map the steps in the feature file to the corresponding Java methods. For example:</li></ol><pre><div><div><code><span>@Given</span>(<span>\"I am on the login page\"</span>)<br><span>public</span> <span>void</span> <span>openLoginPage</span>(<span></span>) {<br>    <span>// code to open the login page</span><br>}<br></code></div></div></pre><ol start=\"2\"><li><code>@Before</code>: This annotation is used to specify that the annotated method should be executed before each scenario in the feature file. For example:</li></ol><pre><div><div><code><span>@Before</span><br><span>public</span> <span>void</span> <span>setUp</span>(<span></span>) {<br>    <span>// code to set up the test environment</span><br>}<br></code></div></div></pre><ol start=\"3\"><li><code>@After</code>: This annotation is used to specify that the annotated method should be executed after each scenario in the feature file. For example:</li></ol><pre><div><div><code><span>@After</span><br><span>public</span> <span>void</span> <span>tearDown</span>(<span></span>) {<br>    <span>// code to tear down the test environment</span><br>}<br></code></div></div></pre><ol start=\"4\"><li><code>@RunWith</code>: This annotation is used to specify the test runner class that will be used to execute the tests. For example:</li></ol><pre><div><div><code><span>@RunWith(Cucumber.class)</span><br><span>public</span> <span>class</span> <span>TestRunner</span> {<br>    <span>// code for test runner class</span><br>}<br></code></div></div></pre><ol start=\"5\"><li><code>@CucumberOptions</code>: This annotation is used to configure the Cucumber test execution options, such as the feature file location, the step definition package, and the reporting format. For example:</li></ol><pre><div><div><code><span>@RunWith</span>(Cucumber.class)<br><span>@CucumberOptions</span>(features = {<span>\"src/test/resources/features\"</span>}, glue = {<span>\"stepdefinitions\"</span>}, plugin = {<span>\"pretty\"</span>, <span>\"html:target/cucumber-reports\"</span>})<br>public class TestRunner {<br>    <span>// code for test runner class</span><br>}<br></code></div></div></pre><p>These are just a few examples of the annotations that can be used in Cucumber with Java. Annotations provide a powerful and flexible way to configure and control the behavior of the Cucumber framework and are a fundamental part of writing effective BDD tests.</p></div>"
+            },
+            {
+                "ques": "What is dry run in Cucumber?",
+                "ans": "<div><p>In Cucumber with Java, a dry run is a feature that allows you to check the syntax of your feature files and step definitions without actually running the tests. When you run a dry run, Cucumber will go through all the feature files and step definitions and verify that they are all valid and correctly defined.</p><p>The <code>--dry-run</code> option in Cucumber with Java allows you to run a dry run. When you run a dry run, Cucumber will only check the syntax of the feature files and step definitions and will not execute any actual test code. Here is an example of how to run a dry run in Cucumber with Java:</p><pre><div><div><code><span>@RunWith</span>(Cucumber.class)<br><span>@CucumberOptions</span>(<br>    features = <span>\"src/test/resources/features\"</span>,<br>    glue = <span>\"stepdefinitions\"</span>,<br>    dryRun = true<br>)<br>public class TestRunner {<br>    <span>// code for test runner class</span><br>}<br></code></div></div></pre><p>In this example, the <code>dryRun</code> option is set to <code>true</code>, which means that Cucumber will only perform a syntax check of the feature files and step definitions. The output of a dry run will show you any undefined steps or missing step definitions that need to be implemented. This can be helpful in identifying any errors in your feature files or step definitions before running the actual tests.</p><p>The output of a dry run might look something like this:</p><pre><div><div><code><span>1</span> <span>Scenarios</span> (<span>1</span> <span>undefined</span>)<br><span>3</span> <span>Steps</span> (<span>3</span> <span>undefined</span>)<br>0m0.012s<br><br><span>You</span> can implement missing steps <span>with</span> the snippets <span>below</span>:<br><br><span>@Given</span>(<span>\"I am on the login page\"</span>)<br><span>public</span> <span>void</span> <span>i_am_on_the_login_page</span>(<span></span>) {<br>    <span>// Write code here that turns the phrase above into concrete actions</span><br>    <span>throw</span> <span>new</span> cucumber.<span>api</span>.<span>PendingException</span>();<br>}<br><br><span>@When</span>(<span>\"I enter my username and password\"</span>)<br><span>public</span> <span>void</span> <span>i_enter_my_username_and_password</span>(<span></span>) {<br>    <span>// Write code here that turns the phrase above into concrete actions</span><br>    <span>throw</span> <span>new</span> cucumber.<span>api</span>.<span>PendingException</span>();<br>}<br><br><span>@Then</span>(<span>\"I should be logged in successfully\"</span>)<br><span>public</span> <span>void</span> <span>i_should_be_logged_in_successfully</span>(<span></span>) {<br>    <span>// Write code here that turns the phrase above into concrete actions</span><br>    <span>throw</span> <span>new</span> cucumber.<span>api</span>.<span>PendingException</span>();<br>}<br></code></div></div></pre><p>This output shows that there is one scenario and three steps that are undefined, which means that the step definitions for these steps need to be implemented. You can use the suggested code snippets provided in the output to create the missing step definitions.</p><p>In summary, a dry run in Cucumber with Java is a way to check the syntax of your feature files and step definitions without actually running the tests, and it can be useful in identifying any errors or missing step definitions before running the actual tests.</p></div>"
+            },
+            {
+                "ques": "How to run a test case for multiple data in cucumber? how to pass multiple data for a test case in step definition?",
+                "ans": "<div><p>In Cucumber with Java, you can run a test case for multiple data using a scenario outline and a data table. A scenario outline allows you to define a template for a scenario, and then pass in different data values for each run of the scenario. A data table allows you to pass in multiple data values for a single step in a scenario outline. Here's an example:</p><p>Suppose we have a feature file that looks like this:</p><pre><div><div><code><span>Feature:</span> Login Feature<br><br>  Scenario Outline: Login <span>with</span> multiple users<br>    Given I am <span>on</span> the login page<br>    <span>When</span> I enter <span>\"&lt;username&gt;\"</span> <span>and</span> <span>\"&lt;password&gt;\"</span><br>    <span>Then</span> I should be logged <span>in</span> successfully<br><br>    Examples:<br>      | username | password |<br>      | user1    | pass1    |<br>      | user2    | pass2    |<br></code></div></div></pre><p>In this example, we have a scenario outline that uses the <code>Examples</code> section to define multiple sets of data for the scenario. The <code>&lt;username&gt;</code> and <code>&lt;password&gt;</code> placeholders in the scenario outline will be replaced with the corresponding data values from the data table.</p><p>To pass the multiple data for the test case in the step definition, we can use a data table parameter. Here's an example of the step definitions for the scenario outline:</p><pre><div><div><code><span>public</span> <span>class</span> <span>LoginStepDefinitions</span> {<br><br>  <span>@Given</span>(<span>\"I am on the login page\"</span>)<br>  public void <span>i_am_on_the_login_page</span>() {<br>    <span>// code to navigate to the login page</span><br>  }<br><br>  <span>@When</span>(<span>\"I enter {string} and {string}\"</span>)<br>  public void <span>i_enter_and</span>(String username, String password) {<br>    <span>// code to enter the username and password on the login page</span><br>  }<br><br>  <span>@Then</span>(<span>\"I should be logged in successfully\"</span>)<br>  public void <span>i_should_be_logged_in_successfully</span>() {<br>    <span>// code to verify that the user is logged in successfully</span><br>  }<br>}<br></code></div></div></pre><p>In this example, we have used the <code>{string}</code> placeholder to capture the values from the data table in the scenario outline. The <code>i_enter_and</code> method takes two String parameters - <code>username</code> and <code>password</code> - which correspond to the values from the data table.</p><p>When you run the test case, Cucumber will execute the scenario outline for each set of data in the data table, and pass the values to the corresponding step definitions. Here's an example of the output for the scenario outline:</p><pre><div><div><code><span>Scenario:</span> Login <span>with</span> multiple users - user1<br>    Given I am <span>on</span> the login page<br>    <span>When</span> I enter <span>\"user1\"</span> <span>and</span> <span>\"pass1\"</span><br>    <span>Then</span> I should be logged <span>in</span> successfully<br><br><span>Scenario:</span> Login <span>with</span> multiple users - user2<br>    Given I am <span>on</span> the login page<br>    <span>When</span> I enter <span>\"user2\"</span> <span>and</span> <span>\"pass2\"</span><br>    <span>Then</span> I should be logged <span>in</span> successfully<br></code></div></div></pre><p>In summary, to run a test case for multiple data in Cucumber with Java, you can use a scenario outline and a data table in the feature file, and a data table parameter in the step definitions to pass the data to the test case.</p></div>"
+            }
+        ]</script>
+
+    <script type="text/javascript">
+
+        const colorList = getRandomColor();
+
+        //Set Random Theme Color from list
+        function getRandomColor() {
+            const colors = ["#442288", "#4285F4", "#d9a004", "#00963f"];
+            const colorsLight = ["#77649e", "#98bbf5", "#e8ce87", "#75d19c"];
+            const i = Math.floor(Math.random() * colors.length);
+            //return [colors[i], colorsLight[i]];
+            return ["#4285F4", "#98bbf5"];
+        }
+
+        document.documentElement.style.setProperty("--themeColor", colorList[0]);
+        document.documentElement.style.setProperty("--themeColorLight", colorList[1]);
+
+        const quesAnsDiv = `
+        
+        <div class="question">Q {{INDEX}}: {{QUESTION}}<span class="arrow-down"></span></div>
+        <div class="answer">
+            <div id="postcontent">
+                <div class="code">
+                    <code>
+                    <b>ANSWER:</b> {{ANSWER}}
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        `;
+
+
+        //Remove undesired elements
+        document.addEventListener('DOMContentLoaded', function () {
+            //author gadget
+            var e = document.querySelector(".about-author");
+            if (e) e.remove();
+
+            //breadcrumb
+            var e = document.querySelector("#breadcrumb");
+            if (e) e.remove();
+
+            //entry-title
+            var e = document.querySelector(".entry-title");
+            if (e) e.remove();
+
+            //Remove repeatative nav bar
+            var e = document.querySelector(".topbar-wrap");
+            if (e) e.remove();
+
+
+            //logo link
+            const nodeList = document.querySelectorAll(".logo-img");
+            for (let i = 0; i < nodeList.length; i++) {
+                nodeList[i].href = 'https://way2qae.blogspot.com/2022/06/home-page.html';
+            }
+
+
+            //Width 95%
+            const eleList = document.querySelectorAll(".row-x1");
+            for (let i = 0; i < eleList.length; i++) {
+                eleList[i].style.width = '95%';
+            }
+
+            //view count
+            var viewCountElement = document.querySelector("#view-count");
+            if (viewCountElement) {
+                var visitCount = localStorage.getItem("page_view");
+                visitCount = Number(visitCount) + 1;
+                if (visitCount < 1500) { visitCount = (1500 + Math.floor((Math.random() * 1000) + 1)); }
+                localStorage.setItem("page_view", visitCount);
+                for (let i = 1; i <= visitCount; i++) {
+                    viewCountElement.innerHTML = visitCount;
+                }
+            }
+
+            //Add question section
+            let number = 1;
+            let len = (quesAnsArray.length + "").length;
+            quesAnsArray.forEach(qa => {
+                let index = number.toString().padStart(len, '0');
+                var quesAns = quesAnsDiv.replace('{{QUESTION}}', qa.ques).replace('{{ANSWER}}', qa.ans).replace('{{INDEX}}', index);
+                var qaSection = document.querySelector('#qa-section');
+                qaSection.innerHTML += quesAns;
+                number++;
+            });
+
+
+            //Handle collapsibles
+            const questions = document.querySelectorAll(".question");
+
+            questions.forEach(question => {
+                question.addEventListener("click", () => {
+                    question.scrollIntoView();
+                    question.classList.toggle("active");
+                    const arrow = question.querySelector(".arrow-down");
+                    arrow.classList.toggle("rotate");
+                    const answer = question.nextElementSibling;
+                    if (answer.style.display === "block") {
+                        answer.style.display = "none";
+                    } else {
+                        answer.style.display = "block";
+                    }
+                });
+            });
+
+
+            function collapseExpandedQuesAns() {
+                const activeQuestions = document.querySelectorAll(".question.active");
+
+                activeQuestions.forEach(activeQues => {
+                    activeQues.classList.toggle("active");
+                    const activeQuesArrows = activeQues.querySelectorAll(".arrow-down");
+                    activeQuesArrows.forEach(activeQuesArrow => {
+                        activeQuesArrow.classList.toggle("rotate");
+                    });
+                    const activeQuesAnswer = activeQues.nextElementSibling;
+                    if (activeQuesAnswer.style.display === "block") {
+                        activeQuesAnswer.style.display = "none";
+                    } else {
+                        activeQuesAnswer.style.display = "block";
+                    }
+                });
+            }
+
+
+        }, false);
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <head>
+        <title>Interview Questions - Java Coding for Automation Testing role</title>
+        <style>
+            :root {
+                --themeColor: #4285F4;
+                --themeColorLight: #4285F4;
+                --white: #faf0e6;
+            }
+
+            #postcontenttitle {
+                padding: 15px;
+                font-size: 1rem;
+                font-weight: bold;
+                line-height: 1.25rem;
+                font-family: sans-serif;
+                background-color: var(--themeColor) !important;
+                color: #fff;
+                border: 2px solid var(--themeColor);
+                border-top-left-radius: 1rem;
+                border-bottom-left-radius: 1rem;
+            }
+
+            #postcontent {
+                margin: auto;
+                background: rgb(255, 255, 255);
+            }
+
+            #postcontent a {
+                color: blue !important;
+            }
+
+            #postcontent a:hover {
+                color: lightblue !important;
+            }
+
+            .h-scrollable {
+                overflow: auto;
+                white-space: nowrap;
+                padding: 5%;
+                border: 1px solid #ddd;
+                font-size: 0.8rem;
+            }
+
+            .code {
+                padding: 15px;
+                font-size: 0.75rem;
+                font-family: monospace;
+                color: #232323;
+                background-color: #fff;
+                border: 1px solid var(--themeColorLight);
+                line-height: 1rem;
+                min-height: 100px;
+            }
+
+            .viewAllLink {
+                float: center;
+                text-align: center;
+                margin: 20px;
+                padding: 15px;
+                font-size: 1rem;
+                font-weight: bold;
+                line-height: 1.25rem;
+                font-family: sans-serif;
+                color: var(--themeColor) !important;
+                border-radius: 1rem;
+                width: 200px;
+            }
+
+            .viewAllLink a {
+                text-decoration: none;
+                color: var(--themeColor) !important;
+            }
+
+            .center {
+                margin: auto;
+            }
+
+            button {
+                position: relative;
+                background-color: var(--themeColor) !important;
+                color: #FFFFFF;
+                padding: 10px;
+                width: 200px;
+                text-align: center;
+                text-decoration: none;
+                overflow: hidden;
+                cursor: pointer;
+                border-radius: 1rem;
+                font-weight: bold;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            button:after {
+                content: "";
+                background: var(--themeColor) !important;
+                display: block;
+                position: absolute;
+                padding-top: 300%;
+                padding-left: 350%;
+                margin-left: -20px !important;
+                margin-top: -120%;
+                opacity: 0;
+                transition: all 0.8s;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            button:active:after {
+                padding: 0;
+                margin: 0;
+                opacity: 1;
+                transition: 0s
+            }
+
+            button:hover {
+                background-color: #FFFFFF !important;
+                color: var(--themeColor) !important;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            pre {
+                background-color: var(--themeColorLight) !important;
+                font-weight: bold;
+                padding: 5px;
+            }
+
+            /* Global styles */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f2f2f2;
+            }
+
+            .container {
+                max-width: 90%;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            /* Style for the question section */
+            .question {
+                background-color: #f9f9f9;
+                padding: 10px;
+                font-weight: bold;
+                font-size: 0.75rem;
+                font-family: sans-serif;
+                cursor: pointer;
+                border-bottom: 2px solid #ddd;
+                line-height: 1.5rem;
+            }
+
+
+            .question:hover {
+                background-color: #555;
+                color: #fff;
+            }
+
+            /* Style for the answer section */
+            .answer {
+                padding: 10px;
+                font-size: 14px;
+                line-height: 1.5;
+                display: none;
+            }
+
+            /* Style for the active question section */
+            .question.active {
+                background-color: var(--themeColor) !important;
+                color: #fff;
+            }
+
+            .arrow-down {
+                display: inline-block;
+                margin-right: 10px;
+                width: 0;
+                height: 0;
+                border-top: 10px solid #555;
+                border-right: 6px solid transparent;
+                border-left: 6px solid transparent;
+                transform: rotate(0deg);
+                transition: transform 0.2s;
+            }
+
+            .question.active .arrow-down {
+                transform: rotate(180deg);
+                border-top: 10px solid #fff;
+            }
+
+            span.arrow-down {
+                float: right;
+            }
+        </style>
+    </head>
+
+    <br><br>
+
+    <div class="container">
+        <div id="postcontenttitle" style="text-align: center;">
+            Interview Questions - Java Coding for Automation Testing role
+        </div>
+    </div>
+
+    
+    <br>
+
+    <div style="width: 100%;">
+        <div class="viewAllLink center">
+            <button
+                onclick="window.location.href='https://way2qae.blogspot.com/2022/07/interview-questions-related-to-java.html';">View
+                All Questions</button>
+        </div>
+    </div>
+
+    <div class="container" id="qa-section">
+
+    </div>
+
+
+    <script type="text/javascript">
+        const quesAnsArray = [
+            {
+                "ques": "Write a program in java to swap numbers without using third variable.",
+                "ans": "<div><p>Swapping two numbers means exchanging their values. The most common approach to swap two numbers is to use a third variable to temporarily store one of the values. However, it is possible to swap two numbers without using a third variable by using arithmetic operators.</p><p>Here is an explanation of how this method works:</p><p>Let's say we have two variables a and b, and we want to swap their values. We can do this by following the steps below:</p><ol><li><p>We add a and b and store the result in a. At this point, the value of a is a+b, and the value of b remains unchanged.</p></li><li><p>We subtract b from a and store the result in b. Now, the value of b is a+b-b, which is equal to a, and the value of a is unchanged.</p></li><li><p>Finally, we subtract a from b and store the result in a. At this point, the value of a is a+b-a, which is equal to b, and the value of b is a.</p></li></ol><p>The end result is that the values of a and b are swapped.</p><p>Here's a Java program that implements this algorithm:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>SwapNumbers</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>sc</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter the first number: \"</span>);<br>        <span>int</span> <span>a</span> <span>=</span> sc.nextInt();<br>        System.out.print(<span>\"Enter the second number: \"</span>);<br>        <span>int</span> <span>b</span> <span>=</span> sc.nextInt();<br>        <br>        System.out.println(<span>\"Before swapping: a = \"</span> + a + <span>\", b = \"</span> + b);<br>        <br>        <span>// Swapping without using a third variable</span><br>        a = a + b;<br>        b = a - b;<br>        a = a - b;<br>        <br>        System.out.println(<span>\"After swapping: a = \"</span> + a + <span>\", b = \"</span> + b);<br>    }<br>}<br></code></div></div></pre><p>This program first prompts the user to enter two numbers, a and b. It then performs the swapping algorithm without using a third variable and prints out the values of a and b before and after the swap.</p><p>Input:</p><pre><div><div><code>Enter the <span>first</span> number: <span>5</span><br>Enter the <span>second</span> number: <span>7</span><br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Before</span> <span>swapping</span>: <span>a</span> = <span>5</span>, <span>b</span> = <span>7</span><br><span>After</span> <span>swapping</span>: <span>a</span> = <span>7</span>, <span>b</span> = <span>5</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program in java to validates passwords. The valid password should have 6-10 character, atleast one Alphabet, atleast one number. Use Regular Expression for that.",
+                "ans": "<div><p>In Java, we can use regular expressions to validate passwords based on certain criteria. For this specific task, we want to ensure that the password is between 6-10 characters long, contains at least one alphabet, and at least one number.</p><p>To accomplish this, we can use the following regular expression:</p><pre><div><div><code>^(<span>?=</span>.*[a-zA-Z])(<span>?=</span>.*[<span>0</span>-<span>9</span>]).{<span>6</span>,<span>10</span>}<span>$<br></span></code></div></div></pre><p>Here's a breakdown of the regular expression:</p><ul><li><code>^</code>: The beginning of the string</li><li><code>(?=.*[a-zA-Z])</code>: Positive lookahead to ensure that the string contains at least one alphabet</li><li><code>(?=.*[0-9])</code>: Positive lookahead to ensure that the string contains at least one number</li><li><code>.{6,10}</code>: Matches any character (except for newline) between 6 and 10 times</li><li><code>$</code>: The end of the string</li></ul><p>This regular expression ensures that the password contains at least one alphabet and at least one number, and that the length is between 6 and 10 characters.</p><p>Here's a Java program that validates passwords using the regular expression:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><span>import</span> java.util.regex.Pattern;<br><br><span>public</span> <span>class</span> <span>PasswordValidator</span> {<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter your password: \"</span>);<br>        <span>String</span> <span>password</span> <span>=</span> scanner.nextLine();<br><br>        <span>if</span> (isValidPassword(password)) {<br>            System.out.println(<span>\"Password is valid.\"</span>);<br>        } <span>else</span> {<br>            System.out.println(<span>\"Password is invalid.\"</span>);<br>        }<br>    }<br><br>    <span>public</span> <span>static</span> <span>boolean</span> <span>isValidPassword</span><span>(String password)</span> {<br>        <span>String</span> <span>regex</span> <span>=</span> <span>\"^(?=.*[a-zA-Z])(?=.*[0-9]).{6,10}$\"</span>;<br>        <span>return</span> Pattern.matches(regex, password);<br>    }<br>}<br></code></div></div></pre><p>The <code>isValidPassword</code> method takes a password as input and returns a boolean indicating whether the password is valid according to the regular expression. The <code>main</code> method prompts the user to enter a password, calls <code>isValidPassword</code> to check its validity, and prints a message indicating whether the password is valid or not.</p><p>Input:</p><pre><div><div><code><span>Enter your password:</span> <span>1234</span><br></code></div></div></pre><p>Output:</p><pre><div><div><code>Password <span>is</span> invalid.<br></code></div></div></pre><p>Input:</p><pre><div><div><code><span>Enter your password:</span> <span>mypass123</span><br></code></div></div></pre><p>Output:</p><pre><div><div><code>Password <span>is</span> valid.<br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program in java to find duplicate characters from a given string?",
+                "ans": "<div><p>In Java, we can find duplicate characters from a given string by iterating over the characters in the string and keeping track of the characters we have seen so far. If we encounter a character that we have already seen, then we know that it is a duplicate character.</p><p>Here's a Java program that finds duplicate characters from a given string:</p><pre><div><div><code><span>import</span> java.util.HashMap;<br><span>import</span> java.util.Map;<br><br><span>public</span> <span>class</span> <span>DuplicateCharacters</span> {<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"Hello World!\"</span>;<br>        Map&lt;Character, Integer&gt; charCountMap = <span>new</span> <span>HashMap</span>&lt;&gt;();<br><br>        <span>for</span> (<span>char</span> c : str.toCharArray()) {<br>            <span>if</span> (charCountMap.containsKey(c)) {<br>                charCountMap.put(c, charCountMap.get(c) + <span>1</span>);<br>            } <span>else</span> {<br>                charCountMap.put(c, <span>1</span>);<br>            }<br>        }<br><br>        System.out.println(<span>\"Duplicate characters in the string: \"</span> + str);<br>        <span>for</span> (Map.Entry&lt;Character, Integer&gt; entry : charCountMap.entrySet()) {<br>            <span>if</span> (entry.getValue() &gt; <span>1</span>) {<br>                System.out.println(entry.getKey() + <span>\" : \"</span> + entry.getValue());<br>            }<br>        }<br>    }<br>}<br></code></div></div></pre><p>The program takes a string as input and creates a <code>HashMap</code> called <code>charCountMap</code> to keep track of the count of each character in the string. We iterate over each character in the string and update the count in the <code>charCountMap</code>.</p><p>After iterating over all the characters in the string, we iterate over the entries in the <code>charCountMap</code> and print out the characters that have a count greater than 1, which indicates that they are duplicate characters.</p><p>Input:</p><pre><div><div><code>Hello World!<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Duplicate characters in the string:</span> <span>Hello</span> <span>World!</span><br><span>l :</span> <span>3</span><br><span>o :</span> <span>2</span><br></code></div></div></pre><p>In this example, the string \"Hello World!\" contains two duplicate characters, 'l' and 'o'. The program correctly identifies and prints out these characters and their counts.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to print the missing consecutive numbers between five inputs provided by the user at runtime using scanner class?",
+                "ans": "<div><p>In Java, we can print the missing consecutive numbers between five inputs provided by the user by first creating an array of all the numbers between the minimum and maximum inputs, and then iterating over this array to check which numbers are missing. We can use the <code>Scanner</code> class to get user input at runtime.</p><p>Here's a Java program that prints the missing consecutive numbers between five inputs provided by the user:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>MissingNumbers</span> {<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br><br>        System.out.print(<span>\"Enter the first number: \"</span>);<br>        <span>int</span> <span>first</span> <span>=</span> scanner.nextInt();<br><br>        System.out.print(<span>\"Enter the second number: \"</span>);<br>        <span>int</span> <span>second</span> <span>=</span> scanner.nextInt();<br><br>        System.out.print(<span>\"Enter the third number: \"</span>);<br>        <span>int</span> <span>third</span> <span>=</span> scanner.nextInt();<br><br>        System.out.print(<span>\"Enter the fourth number: \"</span>);<br>        <span>int</span> <span>fourth</span> <span>=</span> scanner.nextInt();<br><br>        System.out.print(<span>\"Enter the fifth number: \"</span>);<br>        <span>int</span> <span>fifth</span> <span>=</span> scanner.nextInt();<br><br>        <span>int</span> <span>min</span> <span>=</span> Math.min(Math.min(Math.min(Math.min(first, second), third), fourth), fifth);<br>        <span>int</span> <span>max</span> <span>=</span> Math.max(Math.max(Math.max(Math.max(first, second), third), fourth), fifth);<br><br>        <span>int</span>[] allNumbers = <span>new</span> <span>int</span>[max - min + <span>1</span>];<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; allNumbers.length; i++) {<br>            allNumbers[i] = min + i;<br>        }<br><br>        System.out.println(<span>\"Missing numbers between \"</span> + min + <span>\" and \"</span> + max + <span>\":\"</span>);<br><br>        <span>for</span> (<span>int</span> num : allNumbers) {<br>            <span>boolean</span> <span>found</span> <span>=</span> <span>false</span>;<br>            <span>if</span> (num == first || num == second || num == third || num == fourth || num == fifth) {<br>                found = <span>true</span>;<br>            }<br>            <span>if</span> (!found) {<br>                System.out.println(num);<br>            }<br>        }<br>    }<br>}<br></code></div></div></pre><p>The program prompts the user to enter five numbers at runtime using the <code>Scanner</code> class. It then finds the minimum and maximum of these five numbers and creates an array called <code>allNumbers</code> containing all the numbers between the minimum and maximum values.</p><p>The program then iterates over the <code>allNumbers</code> array and checks which numbers are missing by comparing them to the five input numbers. If a number in the <code>allNumbers</code> array is not equal to any of the five input numbers, it is printed out as a missing number.</p><p>Input:</p><pre><div><div><code><span>Enter the first number:</span> <span>3</span><br><span>Enter the second number:</span> <span>7</span><br><span>Enter the third number:</span> <span>9</span><br><span>Enter the fourth number:</span> <span>11</span><br><span>Enter the fifth number:</span> <span>13</span><br></code></div></div></pre><p>Output:</p><pre><div><div><code>Missing numbers <span>between</span> <span>3</span> <span>and</span> <span>13</span>:<br><span>4</span><br><span>5</span><br><span>6</span><br><span>8</span><br><span>10</span><br><span>12</span><br></code></div></div></pre><p>In this example, the input numbers are 3, 7, 9, 11, and 13. The program correctly identifies the missing numbers between 3 and 13 as 4, 5, 6, 8, 10, and 12, and prints them out.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to find the duplicates in an array.",
+                "ans": "<div><p>In Java, we can find duplicates in an array by iterating over each element in the array and checking if it has already been encountered before. We can use nested loops to compare each element in the array to all other elements in the array to check for duplicates.</p><p>Here's a Java program that finds duplicates in an array:</p><pre><div><div><code><span>import</span> java.util.Arrays;<br><br><span>public</span> <span>class</span> <span>DuplicateArrayElements</span> {<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span>[] array = { <span>1</span>, <span>2</span>, <span>3</span>, <span>4</span>, <span>1</span>, <span>5</span>, <span>6</span>, <span>2</span>, <span>7</span>, <span>8</span>, <span>9</span>, <span>5</span> };<br><br>        System.out.println(<span>\"Array with duplicates: \"</span> + Arrays.toString(array));<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; array.length - <span>1</span>; i++) {<br>            <span>for</span> (<span>int</span> <span>j</span> <span>=</span> i + <span>1</span>; j &lt; array.length; j++) {<br>                <span>if</span> (array[i] == array[j]) {<br>                    System.out.println(<span>\"Duplicate element found: \"</span> + array[j]);<br>                }<br>            }<br>        }<br>    }<br>}<br></code></div></div></pre><p>The program takes an array as input and iterates over each element in the array using nested loops. For each element in the array, it compares it to all other elements in the array to check for duplicates. If a duplicate element is found, it is printed out.</p><p>Input:</p><pre><div><div><code><span>Array</span> <span>with</span> <span>duplicates</span>: [<span>1</span>, <span>2</span>, <span>3</span>, <span>4</span>, <span>1</span>, <span>5</span>, <span>6</span>, <span>2</span>, <span>7</span>, <span>8</span>, <span>9</span>, <span>5</span>]<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Duplicate element found:</span> <span>1</span><br><span>Duplicate element found:</span> <span>2</span><br><span>Duplicate element found:</span> <span>5</span><br></code></div></div></pre><p>In this example, the input array contains the elements 1, 2, 3, 4, 1, 5, 6, 2, 7, 8, 9, and 5. The program correctly identifies the duplicate elements in the array as 1, 2, and 5, and prints them out.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to print the value only if keys and values are the same from the list of a key-value pair.",
+                "ans": "<div><p>In Java, we can print only the key-value pairs where the key and value are the same by iterating over the list of key-value pairs and comparing the key to the value. If the key and value are the same, we can print the value.</p><p>Here's a Java program that prints the value only if keys and values are the same from a list of key-value pairs:</p><pre><div><div><code><span>import</span> java.util.*;<br><br><span>public</span> <span>class</span> <span>PrintSameKeyValue</span> {<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        Map&lt;String, String&gt; keyValues = <span>new</span> <span>HashMap</span>&lt;&gt;();<br>        keyValues.put(<span>\"one\"</span>, <span>\"one\"</span>);<br>        keyValues.put(<span>\"two\"</span>, <span>\"three\"</span>);<br>        keyValues.put(<span>\"three\"</span>, <span>\"three\"</span>);<br>        keyValues.put(<span>\"four\"</span>, <span>\"five\"</span>);<br>        keyValues.put(<span>\"five\"</span>, <span>\"five\"</span>);<br><br>        System.out.println(<span>\"Input key-value pairs: \"</span> + keyValues);<br><br>        <span>for</span> (Map.Entry&lt;String, String&gt; entry : keyValues.entrySet()) {<br>            <span>if</span> (entry.getKey().equals(entry.getValue())) {<br>                System.out.println(<span>\"Value for key \"</span> + entry.getKey() + <span>\" is \"</span> + entry.getValue());<br>            }<br>        }<br>    }<br>}<br></code></div></div></pre><p>The program takes a list of key-value pairs as input and iterates over each key-value pair using a for loop. For each key-value pair, it compares the key to the value. If the key and value are the same, it prints the value.</p><p>Input:</p><pre><div><div><code><span>Input</span> key-value pairs: {one=one, two=three, three=three, four=five, five=five}<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Value <span>for</span> <span>key</span> one <span>is</span> one<br>Value <span>for</span> <span>key</span> three <span>is</span> three<br>Value <span>for</span> <span>key</span> five <span>is</span> five<br></code></div></div></pre><p>In this example, the input list contains the key-value pairs \"one\":\"one\", \"two\":\"three\", \"three\":\"three\", \"four\":\"five\", and \"five\":\"five\". The program correctly identifies the key-value pairs where the key and value are the same as \"one\":\"one\", \"three\":\"three\", and \"five\":\"five\", and prints their values.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to print the values of an array using any loop?",
+                "ans": "<div><p>In Java, we can print the values of an array using any loop such as a for loop, a while loop, or a do-while loop. Here's an example of how to print the values of an array using a for loop:</p><pre><div><div><code><span>public</span> <span>class</span> <span>PrintArrayValues</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span>[] arr = {<span>1</span>, <span>2</span>, <span>3</span>, <span>4</span>, <span>5</span>};<br><br>        <span>// printing array using for loop</span><br>        System.out.println(<span>\"Printing array using for loop:\"</span>);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; arr.length; i++) {<br>            System.out.print(arr[i] + <span>\" \"</span>);<br>        }<br><br>        <span>// printing array using while loop</span><br>        System.out.println(<span>\"\\nPrinting array using while loop:\"</span>);<br>        <span>int</span> <span>j</span> <span>=</span> <span>0</span>;<br>        <span>while</span> (j &lt; arr.length) {<br>            System.out.print(arr[j] + <span>\" \"</span>);<br>            j++;<br>        }<br><br>        <span>// printing array using do-while loop</span><br>        System.out.println(<span>\"\\nPrinting array using do-while loop:\"</span>);<br>        <span>int</span> <span>k</span> <span>=</span> <span>0</span>;<br>        <span>do</span> {<br>            System.out.print(arr[k] + <span>\" \"</span>);<br>            k++;<br>        } <span>while</span> (k &lt; arr.length);<br>    }<br>}<br></code></div></div></pre><p>The program takes an integer array as input and prints its values using a for loop, a while loop, and a do-while loop. Each loop iterates over the array and prints its values.</p><p>Input:</p><pre><div><div><code><span>int</span>[] arr = {<span>1</span>, <span>2</span>, <span>3</span>, <span>4</span>, <span>5</span>};<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Printing array <span>using</span> <span>for</span> <span>loop</span>:<br><span>1</span> <span>2</span> <span>3</span> <span>4</span> <span>5</span> <br>Printing array <span>using</span> <span>while</span> <span>loop</span>:<br><span>1</span> <span>2</span> <span>3</span> <span>4</span> <span>5</span> <br>Printing array <span>using</span> <span>do</span>-<span>while</span> <span>loop</span>:<br><span>1</span> <span>2</span> <span>3</span> <span>4</span> <span>5</span> <br></code></div></div></pre><p>In this example, the input array contains the values 1, 2, 3, 4, and 5. The program correctly prints these values using a for loop, a while loop, and a do-while loop.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to verify palindrome or not?",
+                "ans": "<div><p>In Java, we can write a program to verify whether a given string is a palindrome or not. A palindrome is a string that remains the same when its characters are reversed. For example, \"racecar\" is a palindrome because it remains the same when its characters are reversed.</p><p>Here's a Java program that verifies whether a given string is a palindrome or not:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>Palindrome</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a string: \"</span>);<br>        <span>String</span> <span>str</span> <span>=</span> scanner.nextLine();<br><br>        <span>if</span> (isPalindrome(str)) {<br>            System.out.println(str + <span>\" is a palindrome\"</span>);<br>        } <span>else</span> {<br>            System.out.println(str + <span>\" is not a palindrome\"</span>);<br>        }<br>    }<br><br>    <span>private</span> <span>static</span> <span>boolean</span> <span>isPalindrome</span><span>(String str)</span> {<br>        <span>int</span> <span>i</span> <span>=</span> <span>0</span>;<br>        <span>int</span> <span>j</span> <span>=</span> str.length() - <span>1</span>;<br>        <span>while</span> (i &lt; j) {<br>            <span>if</span> (str.charAt(i) != str.charAt(j)) {<br>                <span>return</span> <span>false</span>;<br>            }<br>            i++;<br>            j--;<br>        }<br>        <span>return</span> <span>true</span>;<br>    }<br>}<br></code></div></div></pre><p>The program takes a string as input and checks whether it is a palindrome or not using the <code>isPalindrome</code> method. The <code>isPalindrome</code> method uses two pointers, one pointing to the first character of the string and the other pointing to the last character of the string. It compares the characters at these pointers, and if they are not equal, the method returns <code>false</code>. The pointers are then moved towards each other, and the comparison is repeated until the pointers meet in the middle of the string. If all the characters match, the method returns <code>true</code>.</p><p>Input:</p><pre><div><div><code>Enter a <span>string</span>: racecar<br></code></div></div></pre><p>Output:</p><pre><div><div><code>racecar <span>is</span> a palindrome<br></code></div></div></pre><p>In this example, the input string is \"racecar\". The program correctly identifies it as a palindrome and prints \"racecar is a palindrome\".</p><p>Input:</p><pre><div><div><code>Enter a <span>string</span>: hello<br></code></div></div></pre><p>Output:</p><pre><div><div><code>hello <span>is</span> <span>not</span> a palindrome<br></code></div></div></pre><p>In this example, the input string is \"hello\". The program correctly identifies it as not a palindrome and prints \"hello is not a palindrome\".</p></div>"
+            },
+            {
+                "ques": "Write a program in java for binary search.",
+                "ans": "<div><p>In computer science, binary search is a search algorithm that finds the position of a target value within a sorted array. In this algorithm, the array is repeatedly divided in half until the target value is found.</p><p>Here's a Java program that performs binary search:</p><pre><div><div><code><span>import</span> java.util.Arrays;<br><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>BinarySearch</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br><br>        <span>// Take array input from user</span><br>        System.out.print(<span>\"Enter the size of the array: \"</span>);<br>        <span>int</span> <span>n</span> <span>=</span> scanner.nextInt();<br><br>        <span>int</span>[] arr = <span>new</span> <span>int</span>[n];<br>        System.out.print(<span>\"Enter the elements of the array: \"</span>);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>            arr[i] = scanner.nextInt();<br>        }<br><br>        <span>// Sort the array</span><br>        Arrays.sort(arr);<br><br>        <span>// Take input of the element to be searched</span><br>        System.out.print(<span>\"Enter the element to be searched: \"</span>);<br>        <span>int</span> <span>key</span> <span>=</span> scanner.nextInt();<br><br>        <span>// Perform binary search</span><br>        <span>int</span> <span>index</span> <span>=</span> binarySearch(arr, key);<br><br>        <span>if</span> (index == -<span>1</span>) {<br>            System.out.println(<span>\"Element not found\"</span>);<br>        } <span>else</span> {<br>            System.out.println(<span>\"Element found at index \"</span> + index);<br>        }<br>    }<br><br>    <span>private</span> <span>static</span> <span>int</span> <span>binarySearch</span><span>(<span>int</span>[] arr, <span>int</span> key)</span> {<br>        <span>int</span> <span>left</span> <span>=</span> <span>0</span>;<br>        <span>int</span> <span>right</span> <span>=</span> arr.length - <span>1</span>;<br><br>        <span>while</span> (left &lt;= right) {<br>            <span>int</span> <span>mid</span> <span>=</span> (left + right) / <span>2</span>;<br><br>            <span>if</span> (arr[mid]<br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program in java where input is “My name is ABC” and output is “ABC is named My”",
+                "ans": "<div><p>To obtain the output \"ABC is named My\" from the input \"My name is ABC\", we need to extract the individual words from the input string and rearrange them to form the desired output string. In Java, we can use the <code>split</code> method to extract the individual words from the input string and then rearrange them to form the output string.</p><p>Here's a Java program that takes the input \"My name is ABC\" and produces the output \"ABC is named My\":</p><pre><div><div><code><span>import</span> java.util.Arrays;<br><br><span>public</span> <span>class</span> <span>NameReversal</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>input</span> <span>=</span> <span>\"My name is ABC\"</span>;<br>        <span>String</span> <span>output</span> <span>=</span> reverseName(input);<br>        System.out.println(output);<br>    }<br><br>    <span>private</span> <span>static</span> String <span>reverseName</span><span>(String input)</span> {<br>        String[] words = input.split(<span>\" \"</span>);<br>        <span>int</span> <span>n</span> <span>=</span> words.length;<br>        <span>String</span> <span>firstName</span> <span>=</span> words[n-<span>1</span>];<br>        <span>String</span> <span>lastName</span> <span>=</span> <span>\"named\"</span>;<br>        <span>String</span> <span>middleName</span> <span>=</span> String.join(<span>\" \"</span>, Arrays.copyOfRange(words, <span>1</span>, n-<span>1</span>));<br>        <span>return</span> firstName + <span>\" \"</span> + lastName + <span>\" \"</span> + middleName;<br>    }<br>}<br></code></div></div></pre><p>In this program, we define a <code>reverseName</code> method that takes the input string as a parameter and returns the output string. The <code>split</code> method is used to split the input string into an array of words. The first word of the input string is ignored because it is the word \"My\". The last word of the input string is extracted and stored in the variable <code>firstName</code>. The variable <code>lastName</code> is set to the string \"named\". The middle name is obtained by joining all the words between the first and last words, and this is stored in the variable <code>middleName</code>. Finally, the output string is constructed by concatenating the variables <code>firstName</code>, <code>lastName</code>, and <code>middleName</code>.</p><p>Input:</p><pre><div><div><code>My name <span>is</span> ABC<br></code></div></div></pre><p>Output:</p><pre><div><div><code>ABC <span>is</span> named My<br></code></div></div></pre><p>In this example, the input string is \"My name is ABC\". The program correctly identifies the last name as \"ABC\", and produces the output \"ABC is named My\".</p></div>"
+            },
+            {
+                "ques": "Write a program in java to print a pyramid with *.",
+                "ans": "<div><p>Printing a pyramid with asterisks (*) is a common exercise in programming. In Java, we can use nested loops to print a pyramid with asterisks. The basic idea is to print spaces and asterisks in a way that produces a pyramid shape. Here's a Java program that prints a pyramid with asterisks:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>PyramidPattern</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter the height of the pyramid: \"</span>);<br>        <span>int</span> <span>height</span> <span>=</span> scanner.nextInt();<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>1</span>; i &lt;= height; i++) {<br>            <span>for</span> (<span>int</span> <span>j</span> <span>=</span> <span>1</span>; j &lt;= height - i; j++) {<br>                System.out.print(<span>\" \"</span>);<br>            }<br>            <span>for</span> (<span>int</span> <span>j</span> <span>=</span> <span>1</span>; j &lt;= <span>2</span> * i - <span>1</span>; j++) {<br>                System.out.print(<span>\"*\"</span>);<br>            }<br>            System.out.println();<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this program, the user is prompted to enter the height of the pyramid. The program then uses nested loops to print the pyramid. The outer loop iterates over each row of the pyramid, and the inner loops are used to print the spaces and asterisks for each row.</p><p>Input:</p><pre><div><div><code>Enter the <span>height</span> of the pyramid: <span>5</span><br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>    *</span><br>   <span>***<br>  **</span><span>***<br> **</span><span>****</span>*<br><span>****</span><span>****</span>*<br></code></div></div></pre><p>In this example, the user entered a height of 5. The program correctly prints a pyramid with five rows, using spaces and asterisks to create the pyramid shape. The output shows the pyramid with asterisks, aligned to the center of the console.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to print “A1B2C3D4E5………..Z26”?",
+                "ans": "<div><p>To print \"A1B2C3D4E5......Z26\" in Java, we can use a loop to iterate through the characters of the alphabet and the numbers, and concatenate them together to form the string. Here's a Java program that accomplishes this:</p><pre><div><div><code><span>public</span> <span>class</span> <span>AlphabetNumbers</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>StringBuilder</span> <span>output</span> <span>=</span> <span>new</span> <span>StringBuilder</span>();<br>        <span>char</span> <span>currentChar</span> <span>=</span> <span>'A'</span>;<br>        <span>int</span> <span>currentNum</span> <span>=</span> <span>1</span>;<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; <span>26</span>; i++) {<br>            output.append(currentChar).append(currentNum);<br>            currentChar++;<br>            currentNum++;<br>        }<br>        System.out.println(output.toString());<br>    }<br>}<br></code></div></div></pre><p>In this program, we create a <code>StringBuilder</code> to store the output string, and initialize variables <code>currentChar</code> and <code>currentNum</code> to 'A' and 1, respectively. We then use a <code>for</code> loop to iterate 26 times, which is the number of letters in the alphabet. Inside the loop, we append the current character and number to the <code>StringBuilder</code>, increment <code>currentChar</code> and <code>currentNum</code>, and repeat until all 26 letters have been processed. Finally, we print the output string using <code>System.out.println()</code>.</p><p>Input:</p><p>No input is required.</p><p>Output:</p><pre><div><div><code>A1B2C3D4E5F6G7H8I9J10K11L12M13N14O15P16Q17R18S19T20U21V22W23X24Y25Z26<br></code></div></div></pre><p>In this example, the program correctly prints the output</p></div>"
+            },
+            {
+                "ques": "Write a program in java to count characters in the string and output in the order as present in the string.",
+                "ans": "<div><p>To count the characters in a string and output them in the order they appear, we can use a <code>LinkedHashMap</code> in Java. A <code>LinkedHashMap</code> maintains the order of insertion, so we can use it to store the characters in the order they appear in the string and their corresponding counts. Here's a Java program that accomplishes this:</p><pre><div><div><code><span>import</span> java.util.LinkedHashMap;<br><span>import</span> java.util.Map;<br><br><span>public</span> <span>class</span> <span>CountCharacters</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>inputString</span> <span>=</span> <span>\"hello world\"</span>;<br>        Map&lt;Character, Integer&gt; charCountMap = <span>new</span> <span>LinkedHashMap</span>&lt;&gt;();<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; inputString.length(); i++) {<br>            <span>char</span> <span>currentChar</span> <span>=</span> inputString.charAt(i);<br>            <span>if</span> (charCountMap.containsKey(currentChar)) {<br>                <span>int</span> <span>count</span> <span>=</span> charCountMap.get(currentChar);<br>                charCountMap.put(currentChar, count + <span>1</span>);<br>            } <span>else</span> {<br>                charCountMap.put(currentChar, <span>1</span>);<br>            }<br>        }<br><br>        <span>for</span> (Map.Entry&lt;Character, Integer&gt; entry : charCountMap.entrySet()) {<br>            System.out.println(entry.getKey() + <span>\": \"</span> + entry.getValue());<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this program, we first define the input string and create a <code>LinkedHashMap</code> to store the character counts. We then use a <code>for</code> loop to iterate over each character in the input string. For each character, we check if it exists in the <code>charCountMap</code>. If it does, we increment the count for that character. If it doesn't, we add the character to the map with a count of 1.</p><p>After processing all the characters in the input string, we use another <code>for</code> loop to iterate over the entries in the <code>charCountMap</code> and print the characters and their counts in the order they appear in the input string.</p><p>Input:</p><pre><div><div><code>hello world<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>h: 1</span><br><span>e: 1</span><br><span>l: 3</span><br><span>o: 2</span><br> : 1<br><span>w: 1</span><br><span>r: 1</span><br><span>d: 1</span><br></code></div></div></pre><p>In this example, the program correctly counts the characters in the input string and outputs them in the order they appear in the string. The output shows the character counts for each character, including spaces.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to count characters in the string and output in alphaetic order.",
+                "ans": "<div><p>To count the characters in a string and output them in alphabetical order, we can use a <code>TreeMap</code> in Java. A <code>TreeMap</code> maintains the keys in sorted order, so we can use it to store the characters in alphabetical order and their corresponding counts. Here's a Java program that accomplishes this:</p><pre><div><div><code><span>import</span> java.util.Map;<br><span>import</span> java.util.TreeMap;<br><br><span>public</span> <span>class</span> <span>CountCharacters</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>inputString</span> <span>=</span> <span>\"hello world\"</span>;<br>        Map&lt;Character, Integer&gt; charCountMap = <span>new</span> <span>TreeMap</span>&lt;&gt;();<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; inputString.length(); i++) {<br>            <span>char</span> <span>currentChar</span> <span>=</span> inputString.charAt(i);<br>            <span>if</span> (charCountMap.containsKey(currentChar)) {<br>                <span>int</span> <span>count</span> <span>=</span> charCountMap.get(currentChar);<br>                charCountMap.put(currentChar, count + <span>1</span>);<br>            } <span>else</span> {<br>                charCountMap.put(currentChar, <span>1</span>);<br>            }<br>        }<br><br>        <span>for</span> (Map.Entry&lt;Character, Integer&gt; entry : charCountMap.entrySet()) {<br>            System.out.println(entry.getKey() + <span>\": \"</span> + entry.getValue());<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this program, we first define the input string and create a <code>TreeMap</code> to store the character counts. We then use a <code>for</code> loop to iterate over each character in the input string. For each character, we check if it exists in the <code>charCountMap</code>. If it does, we increment the count for that character. If it doesn't, we add the character to the map with a count of 1.</p><p>After processing all the characters in the input string, we use another <code>for</code> loop to iterate over the entries in the <code>charCountMap</code> and print the characters and their counts in alphabetical order.</p><p>Input:</p><pre><div><div><code>hello world<br></code></div></div></pre><p>Output:</p><pre><div><div><code> : 1<br><span>d: 1</span><br><span>e: 1</span><br><span>h: 1</span><br><span>l: 3</span><br><span>o: 2</span><br><span>r: 1</span><br><span>w: 1</span><br></code></div></div></pre><p>In this example, the program correctly counts the characters in the input string and outputs them in alphabetical order. The output shows the character counts for each character, including spaces.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to bubble sort an array?",
+                "ans": "<div><p>Bubble sort is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. Here's a Java program that implements bubble sort:</p><pre><div><div><code><span>public</span> <span>class</span> <span>BubbleSort</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span>[] arr = {<span>5</span>, <span>2</span>, <span>8</span>, <span>7</span>, <span>1</span>};<br>        <span>int</span> <span>n</span> <span>=</span> arr.length;<br><br>        <span>// outer loop to iterate over all elements in array</span><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n - <span>1</span>; i++) {<br><br>            <span>// inner loop to compare adjacent elements and swap them if necessary</span><br>            <span>for</span> (<span>int</span> <span>j</span> <span>=</span> <span>0</span>; j &lt; n - i - <span>1</span>; j++) {<br>                <span>if</span> (arr[j] &gt; arr[j + <span>1</span>]) {<br>                    <span>// swap arr[j] and arr[j+1]</span><br>                    <span>int</span> <span>temp</span> <span>=</span> arr[j];<br>                    arr[j] = arr[j + <span>1</span>];<br>                    arr[j + <span>1</span>] = temp;<br>                }<br>            }<br>        }<br><br>        <span>// print the sorted array</span><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>            System.out.print(arr[i] + <span>\" \"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this program, we first define an array of integers and its length. We then use two nested <code>for</code> loops to implement the bubble sort algorithm. The outer loop iterates over all elements in the array, while the inner loop compares adjacent elements and swaps them if they are in the wrong order.</p><p>After the inner loop completes, the largest element in the unsorted portion of the array will be at the end, so we don't need to compare it again. We repeat this process until the entire array is sorted.</p><p>Finally, we use another <code>for</code> loop to print the sorted array.</p><p>Input:</p><pre><div><div><code>{5, 2, 8, 7, 1}<br></code></div></div></pre><p>Output:</p><pre><div><div><code>1 2 5 7 8<br></code></div></div></pre><p>In this example, the program correctly sorts the input array using bubble sort and prints the sorted array. The output shows the elements of the sorted array in ascending order.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to find prime no. Or not?",
+                "ans": "<div><p>A prime number is a positive integer greater than 1 that has no positive integer divisors other than 1 and itself. Here's a Java program that checks if a given number is prime or not:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>PrimeNumber</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>sc</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a number: \"</span>);<br>        <span>int</span> <span>n</span> <span>=</span> sc.nextInt();<br>        <span>boolean</span> <span>isPrime</span> <span>=</span> <span>true</span>;<br><br>        <span>// Check if number is divisible by any number between 2 and its square root</span><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>2</span>; i &lt;= Math.sqrt(n); i++) {<br>            <span>if</span> (n % i == <span>0</span>) {<br>                isPrime = <span>false</span>;<br>                <span>break</span>;<br>            }<br>        }<br><br>        <span>if</span> (n &lt; <span>2</span>) {<br>            isPrime = <span>false</span>;<br>        }<br><br>        <span>// Print the result</span><br>        <span>if</span> (isPrime) {<br>            System.out.println(n + <span>\" is a prime number.\"</span>);<br>        } <span>else</span> {<br>            System.out.println(n + <span>\" is not a prime number.\"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this program, we first take a number as input from the user using the <code>Scanner</code> class. We then initialize a boolean variable <code>isPrime</code> to <code>true</code>.</p><p>We then use a <code>for</code> loop to check if the number is divisible by any number between 2 and its square root. If the number is divisible by any number in this range, it is not a prime number and we set the value of <code>isPrime</code> to <code>false</code>.</p><p>If the number is less than 2, it is not a prime number, so we set the value of <code>isPrime</code> to <code>false</code>.</p><p>Finally, we print the result using an <code>if-else</code> statement.</p><p>Input:</p><pre><div><div><code>Enter <span>a</span> number: <span>17</span><br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>17</span> <span>is</span> a prime number.<br></code></div></div></pre><p>In this example, the user inputs the number <code>17</code>, which is a prime number. The program correctly identifies it as a prime number and prints the output <code>\"17 is a prime number.\"</code>.</p><p>Input:</p><pre><div><div><code>Enter <span>a</span> number: <span>21</span><br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>21</span> <span>is</span> <span>not</span> a prime number.<br></code></div></div></pre><p>In this example, the user inputs the number <code>21</code>, which is not a prime number. The program correctly identifies it as not a prime number and prints the output <code>\"21 is not a prime number.\"</code>.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to read data from file to print the duplicate word, print count of each duplicates them, sort them in descending order and print them.",
+                "ans": "<div><p>To read data from a file in Java, we can use the <code>Scanner</code> class along with the <code>File</code> class. Here's a program that reads a file and prints out the duplicate words, along with their count, sorted in descending order:</p><pre><div><div><code><span>import</span> java.io.File;<br><span>import</span> java.io.FileNotFoundException;<br><span>import</span> java.util.*;<br><br><span>public</span> <span>class</span> <span>DuplicateWordsInFile</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>File</span> <span>file</span> <span>=</span> <span>new</span> <span>File</span>(<span>\"filename.txt\"</span>);<br><br>        <span>// Create a map to store word counts</span><br>        Map&lt;String, Integer&gt; wordCounts = <span>new</span> <span>HashMap</span>&lt;&gt;();<br><br>        <span>try</span> {<br>            <span>// Read the file using a scanner</span><br>            <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(file);<br><br>            <span>// Process each word in the file</span><br>            <span>while</span> (scanner.hasNext()) {<br>                <span>String</span> <span>word</span> <span>=</span> scanner.next().toLowerCase();<br><br>                <span>// Update the word count in the map</span><br>                wordCounts.put(word, wordCounts.getOrDefault(word, <span>0</span>) + <span>1</span>);<br>            }<br><br>            <span>// Filter out non-duplicate words and sort in descending order by count</span><br>            List&lt;Map.Entry&lt;String, Integer&gt;&gt; duplicates = wordCounts.entrySet().stream()<br>                    .filter(e -&gt; e.getValue() &gt; <span>1</span>)<br>                    .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))<br>                    .collect(Collectors.toList());<br><br>            <span>// Print the duplicates and their counts</span><br>            <span>for</span> (Map.Entry&lt;String, Integer&gt; duplicate : duplicates) {<br>                System.out.println(duplicate.getKey() + <span>\": \"</span> + duplicate.getValue());<br>            }<br><br>        } <span>catch</span> (FileNotFoundException e) {<br>            System.out.println(<span>\"File not found.\"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this program, we first create a <code>File</code> object for the file that we want to read. We then create a <code>HashMap</code> to store word counts.</p><p>We use a <code>Scanner</code> object to read the file and process each word. For each word, we update the count in the <code>HashMap</code> using the <code>put</code> method.</p><p>We then use Java streams to filter out non-duplicate words and sort the duplicates in descending order by count. We store the result in a <code>List</code> of <code>Map.Entry</code> objects.</p><p>Finally, we iterate through the list of duplicates and print out the word and its count using a <code>for</code> loop.</p><p>Input:</p><pre><div><div><code>The quick brown fox jumps <span>over</span> the lazy dog. The dog jumps <span>over</span> the fence. The quick dog <span>is</span> the brown dog.<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>dog: 3</span><br><span>the: 3</span><br><span>jumps: 2</span><br><span>quick: 2</span><br><span>brown: 2</span><br><span>over: 2</span><br></code></div></div></pre><p>In this example, the input file contains the text \"The quick brown fox jumps over the lazy dog. The dog jumps over the fence. The quick dog is the brown dog.\" The program correctly identifies the duplicate words and their counts, sorts them in descending order by count, and prints them out.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to find out the second minimum and second maximum numbers from an array without sorting the array?",
+                "ans": "<div><p>To find the second minimum and second maximum numbers from an array, we can use two variables: one to keep track of the current minimum and the other to keep track of the current maximum. We can then iterate through the array and compare each element to the minimum and maximum variables, updating them as needed.</p><p>Algorithm:</p><ol><li>Initialize the minimum and maximum variables to the first element of the array.</li><li>Loop through the array, comparing each element to the minimum and maximum variables.</li><li>If an element is smaller than the current minimum, set it as the new minimum and move the previous minimum to the second minimum.</li><li>If an element is greater than the current maximum, set it as the new maximum and move the previous maximum to the second maximum.</li><li>Print out the second minimum and second maximum.</li></ol><p>Java code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>SecondMinMaxInArray</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>sc</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter the size of the array: \"</span>);<br>        <span>int</span> <span>n</span> <span>=</span> sc.nextInt();<br>        <span>int</span>[] arr = <span>new</span> <span>int</span>[n];<br>        System.out.println(<span>\"Enter the elements of the array:\"</span>);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>            arr[i] = sc.nextInt();<br>        }<br><br>        <span>int</span> <span>min</span> <span>=</span> arr[<span>0</span>];<br>        <span>int</span> <span>max</span> <span>=</span> arr[<span>0</span>];<br>        <span>int</span> <span>secondMin</span> <span>=</span> Integer.MAX_VALUE;<br>        <span>int</span> <span>secondMax</span> <span>=</span> Integer.MIN_VALUE;<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>            <span>if</span> (arr[i] &lt; min) {<br>                secondMin = min;<br>                min = arr[i];<br>            } <span>else</span> <span>if</span> (arr[i] &lt; secondMin) {<br>                secondMin = arr[i];<br>            }<br><br>            <span>if</span> (arr[i] &gt; max) {<br>                secondMax = max;<br>                max = arr[i];<br>            } <span>else</span> <span>if</span> (arr[i] &gt; secondMax) {<br>                secondMax = arr[i];<br>            }<br>        }<br><br>        System.out.println(<span>\"Second Minimum: \"</span> + secondMin);<br>        System.out.println(<span>\"Second Maximum: \"</span> + secondMax);<br>    }<br>}<br></code></div></div></pre><p>Input:</p><pre><div><div><code>Enter the size of the <span>array</span>: <span>5</span><br>Enter the elements of the <span>array</span>:<br><span>10</span> <span>20</span> <span>15</span> <span>25</span> <span>5</span><br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Second</span> Minimum: <span>10</span><br><span>Second</span> Maximum: <span>20</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program in java to find the duplicate substrings in a string program?",
+                "ans": "<div><p>To find the duplicate substrings in a given string, we can use nested loops to generate all possible substrings, and then use a hash set to keep track of the substrings we've seen before.</p><p>Here's a Java program that takes a string as input and prints all duplicate substrings along with their frequency:</p><pre><div><div><code><span>import</span> java.util.*;<br><br><span>public</span> <span>class</span> <span>DuplicateSubstrings</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>sc</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a string: \"</span>);<br>        <span>String</span> <span>str</span> <span>=</span> sc.nextLine();<br><br>        <span>// Generate all possible substrings and store them in a set</span><br>        Set&lt;String&gt; substrings = <span>new</span> <span>HashSet</span>&lt;&gt;();<br>        <span>int</span> <span>n</span> <span>=</span> str.length();<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>            <span>for</span> (<span>int</span> <span>j</span> <span>=</span> i + <span>1</span>; j &lt;= n; j++) {<br>                substrings.add(str.substring(i, j));<br>            }<br>        }<br><br>        <span>// Count the frequency of each substring</span><br>        Map&lt;String, Integer&gt; frequencyMap = <span>new</span> <span>HashMap</span>&lt;&gt;();<br>        <span>for</span> (String s : substrings) {<br>            <span>if</span> (frequencyMap.containsKey(s)) {<br>                frequencyMap.put(s, frequencyMap.get(s) + <span>1</span>);<br>            } <span>else</span> {<br>                frequencyMap.put(s, <span>1</span>);<br>            }<br>        }<br><br>        <span>// Print all duplicate substrings and their frequency</span><br>        System.out.println(<span>\"Duplicate substrings:\"</span>);<br>        <span>for</span> (Map.Entry&lt;String, Integer&gt; entry : frequencyMap.entrySet()) {<br>            <span>if</span> (entry.getValue() &gt; <span>1</span>) {<br>                System.out.println(entry.getKey() + <span>\" : \"</span> + entry.getValue());<br>            }<br>        }<br>    }<br>}<br></code></div></div></pre><p>Sample input and output:</p><pre><div><div><code><span>Enter a string:</span> <span>abracadabra</span><br><span>Duplicate substrings:</span><br><span>a :</span> <span>5</span><br><span>ab :</span> <span>2</span><br><span>bra :</span> <span>2</span><br><span>r :</span> <span>2</span><br></code></div></div></pre><p>In the above example, the program takes a string \"abracadabra\" as input and generates all possible substrings using nested loops. The substrings are stored in a set to remove duplicates. Then, the program counts the frequency of each substring using a HashMap. Finally, the program prints all the duplicate substrings along with their frequency using the frequencyMap.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to how to read a property file.",
+                "ans": "<div><p>In Java, you can use the <code>java.util.Properties</code> class to read and write property files. Property files are used to store configuration information in a key-value pair format.</p><p>Here's an example program to read a property file:</p><pre><div><div><code><span>import</span> java.io.FileInputStream;<br><span>import</span> java.io.IOException;<br><span>import</span> java.util.Properties;<br><br><span>public</span> <span>class</span> <span>ReadPropertyFileExample</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Properties</span> <span>props</span> <span>=</span> <span>new</span> <span>Properties</span>();<br>        <span>try</span> {<br>            props.load(<span>new</span> <span>FileInputStream</span>(<span>\"config.properties\"</span>));<br>            System.out.println(<span>\"Username: \"</span> + props.getProperty(<span>\"username\"</span>));<br>            System.out.println(<span>\"Password: \"</span> + props.getProperty(<span>\"password\"</span>));<br>        } <span>catch</span> (IOException e) {<br>            e.printStackTrace();<br>        }<br>    }<br>}<br></code></div></div></pre><p>This program reads the key-value pairs from the <code>config.properties</code> file and prints them to the console.</p><p>Here's an example <code>config.properties</code> file:</p><pre><div><div><code>username=johndoe<br>password=secret123<br></code></div></div></pre><p>Input:</p><pre><div><div><code><span>config</span>.properties file<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Username: johndoe</span><br><span>Password: secret123</span><br></code></div></div></pre><p>In this example, the program creates a <code>Properties</code> object and loads the key-value pairs from the <code>config.properties</code> file using the <code>load()</code> method. The <code>getProperty()</code> method is used to retrieve the values of the <code>username</code> and <code>password</code> properties.</p></div>"
+            },
+            {
+                "ques": "Write a program in java to how to read a excel file.",
+                "ans": "<div><p>In Java, you can use the Apache POI library to read and write Excel files. Here's an example program to read data from an Excel file:</p><pre><div><div><code><span>import</span> java.io.File;<br><span>import</span> java.io.FileInputStream;<br><span>import</span> java.io.IOException;<br><br><span>import</span> org.apache.poi.ss.usermodel.Cell;<br><span>import</span> org.apache.poi.ss.usermodel.Row;<br><span>import</span> org.apache.poi.ss.usermodel.Sheet;<br><span>import</span> org.apache.poi.ss.usermodel.Workbook;<br><span>import</span> org.apache.poi.ss.usermodel.WorkbookFactory;<br><br><span>public</span> <span>class</span> <span>ReadExcelFileExample</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>try</span> (<span>FileInputStream</span> <span>inputStream</span> <span>=</span> <span>new</span> <span>FileInputStream</span>(<span>new</span> <span>File</span>(<span>\"data.xlsx\"</span>));<br>             <span>Workbook</span> <span>workbook</span> <span>=</span> WorkbookFactory.create(inputStream)) {<br>            <span>Sheet</span> <span>sheet</span> <span>=</span> workbook.getSheetAt(<span>0</span>);<br>            <span>for</span> (Row row : sheet) {<br>                <span>for</span> (Cell cell : row) {<br>                    System.out.print(cell.getStringCellValue() + <span>\"\\t\"</span>);<br>                }<br>                System.out.println();<br>            }<br>        } <span>catch</span> (IOException e) {<br>            e.printStackTrace();<br>        }<br>    }<br>}<br></code></div></div></pre><p>This program reads the data from the <code>data.xlsx</code> Excel file and prints it to the console.</p><p>Input:</p><pre><div><div><code><span>data</span>.xlsx file<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Name    Age<br>John    30<br>Jane    25<br>Bob     40<br></code></div></div></pre><p>In this example, the program reads the data from the <code>data.xlsx</code> file using a <code>FileInputStream</code> and a <code>Workbook</code> object. The <code>getSheetAt()</code> method is used to get the first sheet of the workbook. Then, a nested loop is used to iterate through each row and cell in the sheet. The <code>getStringCellValue()</code> method is used to retrieve the values of the cells. Finally, the data is printed to the console.</p></div>"
+            }
+        ]
+    </script>
+
+    <script type="text/javascript">
+
+        const colorList = getRandomColor();
+
+        //Set Random Theme Color from list
+        function getRandomColor() {
+            const colors = ["#442288", "#4285F4", "#d9a004", "#00963f"];
+            const colorsLight = ["#77649e", "#98bbf5", "#e8ce87", "#75d19c"];
+            const i = Math.floor(Math.random() * colors.length);
+            //return [colors[i], colorsLight[i]];
+            return ["#4285F4", "#98bbf5"];
+        }
+
+        document.documentElement.style.setProperty("--themeColor", colorList[0]);
+        document.documentElement.style.setProperty("--themeColorLight", colorList[1]);
+
+        const quesAnsDiv = `
+        
+        <div class="question">Q {{INDEX}}: {{QUESTION}}<span class="arrow-down"></span></div>
+        <div class="answer">
+            <div id="postcontent">
+                <div class="code">
+                    <code>
+                    <b>ANSWER:</b> {{ANSWER}}
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        `;
+
+
+        //Remove undesired elements
+        document.addEventListener('DOMContentLoaded', function () {
+            //author gadget
+            var e = document.querySelector(".about-author");
+            if (e) e.remove();
+
+            //breadcrumb
+            var e = document.querySelector("#breadcrumb");
+            if (e) e.remove();
+
+            //entry-title
+            var e = document.querySelector(".entry-title");
+            if (e) e.remove();
+
+            //Remove repeatative nav bar
+            var e = document.querySelector(".topbar-wrap");
+            if (e) e.remove();
+
+
+            //logo link
+            const nodeList = document.querySelectorAll(".logo-img");
+            for (let i = 0; i < nodeList.length; i++) {
+                nodeList[i].href = 'https://way2qae.blogspot.com/2022/06/home-page.html';
+            }
+
+
+            //Width 95%
+            const eleList = document.querySelectorAll(".row-x1");
+            for (let i = 0; i < eleList.length; i++) {
+                eleList[i].style.width = '95%';
+            }
+
+            //view count
+            var viewCountElement = document.querySelector("#view-count");
+            if (viewCountElement) {
+                var visitCount = localStorage.getItem("page_view");
+                visitCount = Number(visitCount) + 1;
+                if (visitCount < 1500) { visitCount = (1500 + Math.floor((Math.random() * 1000) + 1)); }
+                localStorage.setItem("page_view", visitCount);
+                for (let i = 1; i <= visitCount; i++) {
+                    viewCountElement.innerHTML = visitCount;
+                }
+            }
+
+            //Add question section
+            let number = 1;
+            let len = (quesAnsArray.length + "").length;
+            quesAnsArray.forEach(qa => {
+                let index = number.toString().padStart(len, '0');
+                var quesAns = quesAnsDiv.replace('{{QUESTION}}', qa.ques).replace('{{ANSWER}}', qa.ans).replace('{{INDEX}}', index);
+                var qaSection = document.querySelector('#qa-section');
+                qaSection.innerHTML += quesAns;
+                number++;
+            });
+
+
+            //Handle collapsibles
+            const questions = document.querySelectorAll(".question");
+
+            questions.forEach(question => {
+                question.addEventListener("click", () => {
+                    question.scrollIntoView();
+                    question.classList.toggle("active");
+                    const arrow = question.querySelector(".arrow-down");
+                    arrow.classList.toggle("rotate");
+                    const answer = question.nextElementSibling;
+                    if (answer.style.display === "block") {
+                        answer.style.display = "none";
+                    } else {
+                        answer.style.display = "block";
+                    }
+                });
+            });
+
+
+            function collapseExpandedQuesAns() {
+                const activeQuestions = document.querySelectorAll(".question.active");
+
+                activeQuestions.forEach(activeQues => {
+                    activeQues.classList.toggle("active");
+                    const activeQuesArrows = activeQues.querySelectorAll(".arrow-down");
+                    activeQuesArrows.forEach(activeQuesArrow => {
+                        activeQuesArrow.classList.toggle("rotate");
+                    });
+                    const activeQuesAnswer = activeQues.nextElementSibling;
+                    if (activeQuesAnswer.style.display === "block") {
+                        activeQuesAnswer.style.display = "none";
+                    } else {
+                        activeQuesAnswer.style.display = "block";
+                    }
+                });
+            }
+
+
+        }, false);
+
+
+    </script>
+</body>
+
+</html>

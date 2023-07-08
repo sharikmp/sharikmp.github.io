@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <head>
+        <title>Java Coding - Interview Questions for Automation Testing role</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --themeColor: #4285F4;
+                --themeColorLight: #98bbf5;
+                --white: #fff;
+            }
+
+
+            #postcontenttitle {
+                padding: 15px;
+                font-size: 30px;
+                font-weight: bold;
+                line-height: 1.25rem;
+                font-family: sans-serif;
+                background-color: var(--themeColor) !important;
+                color: #fff;
+                border: 2px solid var(--themeColor);
+                border-top-left-radius: 1rem;
+                border-bottom-left-radius: 1rem;
+            }
+
+            #postcontent {
+                margin: auto;
+                background: #fff;
+            }
+
+            #postcontent a {
+                color: blue !important;
+            }
+
+            #postcontent a:hover {
+                color: lightblue !important;
+            }
+
+            .code {
+                padding: 15px;
+                font-size: 24px;
+                font-family: monospace;
+                line-height: 36px;
+                min-height: 100px;
+                background: #fff;
+            }
+
+            .viewAllLink {
+                float: center;
+                text-align: center;
+                margin: 20px;
+                padding: 15px;
+                font-size: 1rem;
+                font-weight: bold;
+                line-height: 1.25rem;
+                font-family: sans-serif;
+                color: var(--themeColor) !important;
+                border-radius: 1rem;
+                width: 200px;
+            }
+
+            .viewAllLink a {
+                text-decoration: none;
+                color: var(--themeColor) !important;
+            }
+
+            .center {
+                margin: auto;
+            }
+
+            button {
+                position: relative;
+                background-color: var(--themeColor) !important;
+                color: #FFFFFF;
+                padding: 10px;
+                width: 200px;
+                text-align: center;
+                text-decoration: none;
+                overflow: hidden;
+                cursor: pointer;
+                border-radius: 1rem;
+                font-weight: bold;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            button:after {
+                content: "";
+                background: var(--themeColor) !important;
+                display: block;
+                position: absolute;
+                padding-top: 300%;
+                padding-left: 350%;
+                margin-left: -20px !important;
+                margin-top: -120%;
+                opacity: 0;
+                transition: all 0.8s;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            button:active:after {
+                padding: 0;
+                margin: 0;
+                opacity: 1;
+                transition: 0s
+            }
+
+            button:hover {
+                background-color: #FFFFFF !important;
+                color: var(--themeColor) !important;
+                border: 2px solid var(--themeColor) !important;
+            }
+
+            /* Global styles */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f2f2f2;
+            }
+
+            .container {
+                max-width: 90%;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            /* Style for the question section */
+            .question {
+                background-color: #f9f9f9;
+                padding: 15px;
+                font-weight: bold;
+                font-size: 18px;
+                font-family: sans-serif;
+                line-height: 30px;
+                cursor: pointer;
+                border-bottom: 2px solid #ddd;
+                margin-top: 10px;
+            }
+
+
+            .question:hover {
+                background-color: #999;
+                color: #fff;
+            }
+
+            /* Style for the answer section */
+            .answer {
+                padding: 10px;
+                font-size: 18px;
+                line-height: 1.5;
+                display: none;
+                margin-bottom: 1000px;
+            }
+
+            /* Style for the active question section */
+            .question.active {
+                background-color: var(--themeColor) !important;
+                color: #fff;
+                font-size: 18px;
+                line-height: 48px;
+                margin-top: 1000px;
+            }
+
+            .xxl {
+                font-size: 48px !important;
+                line-height: 72px !important;
+                margin-bottom: 1000px;
+            }
+
+            .arrow-down {
+                display: inline-block;
+                margin-right: 10px;
+                width: 0;
+                height: 0;
+                border-top: 10px solid #555;
+                border-right: 6px solid transparent;
+                border-left: 6px solid transparent;
+                transform: rotate(0deg);
+                transition: transform 0.2s;
+            }
+
+            .question.active .arrow-down {
+                transform: rotate(180deg);
+                border-top: 10px solid #fff;
+            }
+
+            span.arrow-down {
+                float: right;
+            }
+
+            pre {
+                background-color: #ddd;
+                color: #780046;
+                padding: 10px;
+                font-weight: bold;
+                overflow: auto;
+                word-break: break-word;
+                white-space: pre-wrap;
+            }
+
+            pre span.comment {
+                color: #006600;
+                font-weight: bold;
+            }
+
+            .java-keyword {
+                color: #780046;
+                font-weight: bold;
+            }
+
+
+
+            ul,
+            ol {
+                list-style: none;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            div.sticky {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 0;
+            }
+
+            /* CSS FOR OVERLAY */
+            .overlay h1 {
+                color: #fff;
+                font-family: 'Righteous', cursive;
+                font-size: 48px;
+                font-weight: 100;
+            }
+
+            .overlay .ques {
+                color: black;
+                background-color: #fff;
+                border: #555;
+                border-radius: 1rem;
+                margin-left: 150px;
+                margin-right: 150px;
+                margin-top: 30px;
+                margin-bottom: 30px;
+                font-family: monospace;
+                font-size: 36px;
+            }
+
+            .overlay {
+                height: 0%;
+                width: 100%;
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background-color: #4285F4;
+                overflow-y: hidden;
+                transition: 0.5s;
+            }
+
+            .overlay-content {
+                position: relative;
+                top: 10%;
+                width: 100%;
+                text-align: center;
+                margin-top: 30px;
+            }
+
+            .overlay a {
+                padding: 8px;
+                text-decoration: none;
+                font-size: 36px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+            .overlay a:hover,
+            .overlay a:focus {
+                color: #f1f1f1;
+            }
+
+            .overlay .closebtn {
+                position: absolute;
+                top: 20px;
+                right: 45px;
+                font-size: 60px;
+            }
+
+            @media screen and (max-height: 450px) {
+                .overlay {
+                    overflow-y: auto;
+                }
+
+                .overlay a {
+                    font-size: 20px
+                }
+
+                .overlay .closebtn {
+                    font-size: 40px;
+                    top: 15px;
+                    right: 35px;
+                }
+            }
+
+            .vertical-center {
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+            }
+        </style>
+    </head>
+
+    <br><br>
+
+    <div class="container">
+        <button onclick="this.style.display = 'none';clickQuestionOneByOne();">Start</button>
+    </div>
+
+    <br><br>
+
+    <div class="container">
+        <div id="postcontenttitle" style="text-align: center;">
+            Java Coding - Interview Questions for Automation Testing role
+        </div>
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div style="width: 100%; display: none;">
+        <div class="viewAllLink center">
+            <button
+                onclick="window.location.href='https://way2qae.blogspot.com/2022/07/interview-questions-related-to-java.html';">View
+                All Questions</button>
+        </div>
+    </div>
+
+    <div class="container" id="qa-section">
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="myNav" class="overlay">
+        <div class="overlay-content vertical-center">
+            <h1 id='msg'>
+                Welcome <br><br>
+                To<br><br>
+                WAY@QAE
+            </h1>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+        const quesAnsArray = [
+            {
+                "ques": "Write a program to print \"Hello, to your WAY2QAE!\" to the console.",
+                "ans": "<div><p>Approach:<br>To print the given message to the console, we will create a Java class with a main method. In the main method, we will use the <code>System.out.println()</code> method to print the message to the console.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>HelloWorld</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        System.out.println(<span>\"Hello, to your WAY2QAE!\"</span>);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public</code> is an access modifier that allows the class to be accessed from anywhere.</li><li><code>class</code> is a keyword used to define a class.</li><li><code>HelloWorld</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program. It is declared as <code>public</code> so that it can be accessed from outside the class, <code>static</code> so that it can be called without creating an object of the class, <code>void</code> as it does not return any value, and <code>String[] args</code> is an array of strings that can be passed as arguments to the main method.</li><li><code>System.out.println(\"Hello, to your WAY2QAE!\");</code> is a statement that uses the <code>System.out.println()</code> method to print the given message to the console.</li></ul><p>When we run the above program, we will see the output \"Hello, to your WAY2QAE!\" printed to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to convert a string to a number.",
+                "ans": "<div><p>Approach:<br>To convert a string to a number in Java, we can use the <code>parseInt()</code> or <code>parseDouble()</code> method of the <code>Integer</code> and <code>Double</code> classes respectively. These methods take a string as input and return the parsed integer or double value. We will use the <code>parseInt()</code> method to convert the string to an integer.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>StringToNumber</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"12345\"</span>;<br>        <span>int</span> <span>num</span> <span>=</span> Integer.parseInt(str);<br>        System.out.println(<span>\"The converted number is: \"</span> + num);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public</code> is an access modifier that allows the class to be accessed from anywhere.</li><li><code>class</code> is a keyword used to define a class.</li><li><code>StringToNumber</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program. It is declared as <code>public</code> so that it can be accessed from outside the class, <code>static</code> so that it can be called without creating an object of the class, <code>void</code> as it does not return any value, and <code>String[] args</code> is an array of strings that can be passed as arguments to the main method.</li><li><code>String str = \"12345\";</code> declares a string variable <code>str</code> and initializes it with the string \"12345\".</li><li><code>int num = Integer.parseInt(str);</code> uses the <code>parseInt()</code> method of the <code>Integer</code> class to convert the string <code>str</code> to an integer value and assigns it to the variable <code>num</code>.</li><li><code>System.out.println(\"The converted number is: \" + num);</code> prints the converted number to the console.</li></ul><p>When we run the above program, we will see the output \"The converted number is: 12345\" printed to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to swap two numbers using a temporary variable.",
+                "ans": "<div><p>Approach:<br>To swap two numbers using a temporary variable in Java, we will need to create two integer variables to hold the values of the numbers we want to swap. Then, we will create a third variable to act as a temporary variable, which will temporarily hold the value of one of the variables. We will then swap the values of the two variables using the temporary variable.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>SwapNumbers</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span> <span>num1</span> <span>=</span> <span>10</span>;<br>        <span>int</span> <span>num2</span> <span>=</span> <span>20</span>;<br>        <span>int</span> temp;<br>        System.out.println(<span>\"Before swapping: num1 = \"</span> + num1 + <span>\", num2 = \"</span> + num2);<br>        temp = num1;<br>        num1 = num2;<br>        num2 = temp;<br>        System.out.println(<span>\"After swapping: num1 = \"</span> + num1 + <span>\", num2 = \"</span> + num2);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public</code> is an access modifier that allows the class to be accessed from anywhere.</li><li><code>class</code> is a keyword used to define a class.</li><li><code>SwapNumbers</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program. It is declared as <code>public</code> so that it can be accessed from outside the class, <code>static</code> so that it can be called without creating an object of the class, <code>void</code> as it does not return any value, and <code>String[] args</code> is an array of strings that can be passed as arguments to the main method.</li><li><code>int num1 = 10;</code> declares an integer variable <code>num1</code> and initializes it with the value 10.</li><li><code>int num2 = 20;</code> declares an integer variable <code>num2</code> and initializes it with the value 20.</li><li><code>int temp;</code> declares an integer variable <code>temp</code>.</li><li><code>System.out.println(\"Before swapping: num1 = \" + num1 + \", num2 = \" + num2);</code> prints the values of <code>num1</code> and <code>num2</code> before swapping to the console.</li><li><code>temp = num1;</code> assigns the value of <code>num1</code> to the variable <code>temp</code>.</li><li><code>num1 = num2;</code> assigns the value of <code>num2</code> to the variable <code>num1</code>.</li><li><code>num2 = temp;</code> assigns the value of <code>temp</code> (which was originally the value of <code>num1</code>) to the variable <code>num2</code>.</li><li><code>System.out.println(\"After swapping: num1 = \" + num1 + \", num2 = \" + num2);</code> prints the values of <code>num1</code> and <code>num2</code> after swapping to the console.</li></ul><p>When we run the above program, we will see the output \"Before swapping: num1 = 10, num2 = 20\" and \"After swapping: num1 = 20, num2 = 10\" printed to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to swap two numbers without using a temporary variable.",
+                "ans": "<div><p>Approach:<br>To swap two numbers without using a temporary variable in Java, we will use the arithmetic operations of addition and subtraction to swap the values of the two variables. We will add the values of the two variables and assign the result to the first variable. Then, we will subtract the original value of the second variable from the sum of the two variables, and assign the result to the second variable. This will effectively swap the values of the two variables without using a temporary variable.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>SwapNumbersWithoutTemp</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span> <span>num1</span> <span>=</span> <span>10</span>;<br>        <span>int</span> <span>num2</span> <span>=</span> <span>20</span>;<br>        System.out.println(<span>\"Before swapping: num1 = \"</span> + num1 + <span>\", num2 = \"</span> + num2);<br>        num1 = num1 + num2;<br>        num2 = num1 - num2;<br>        num1 = num1 - num2;<br>        System.out.println(<span>\"After swapping: num1 = \"</span> + num1 + <span>\", num2 = \"</span> + num2);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public</code> is an access modifier that allows the class to be accessed from anywhere.</li><li><code>class</code> is a keyword used to define a class.</li><li><code>SwapNumbersWithoutTemp</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program. It is declared as <code>public</code> so that it can be accessed from outside the class, <code>static</code> so that it can be called without creating an object of the class, <code>void</code> as it does not return any value, and <code>String[] args</code> is an array of strings that can be passed as arguments to the main method.</li><li><code>int num1 = 10;</code> declares an integer variable <code>num1</code> and initializes it with the value 10.</li><li><code>int num2 = 20;</code> declares an integer variable <code>num2</code> and initializes it with the value 20.</li><li><code>System.out.println(\"Before swapping: num1 = \" + num1 + \", num2 = \" + num2);</code> prints the values of <code>num1</code> and <code>num2</code> before swapping to the console.</li><li><code>num1 = num1 + num2;</code> adds the value of <code>num2</code> to the value of <code>num1</code>, and assigns the result to <code>num1</code>.</li><li><code>num2 = num1 - num2;</code> subtracts the original value of <code>num2</code> from the new value of <code>num1</code>, and assigns the result to <code>num2</code>.</li><li><code>num1 = num1 - num2;</code> subtracts the new value of <code>num2</code> from the new value of <code>num1</code>, and assigns the result to <code>num1</code>.</li><li><code>System.out.println(\"After swapping: num1 = \" + num1 + \", num2 = \" + num2);</code> prints the values of <code>num1</code> and <code>num2</code> after swapping to the console.</li></ul><p>When we run the above program, we will see the output \"Before swapping: num1 = 10, num2 = 20\" and \"After swapping: num1 = 20, num2 = 10\" printed to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to find the factorial of a given number without recursion.",
+                "ans": "<div><p>Approach:<br>To find the factorial of a given number without recursion, we can use a loop to multiply the number by all the integers less than it. We start by initializing a variable <code>fact</code> to 1 and then use a for loop to iterate from 1 to the given number, multiplying <code>fact</code> by the loop variable at each iteration.</p><p>Java Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>Factorial</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a number: \"</span>);<br>        <span>int</span> <span>n</span> <span>=</span> scanner.nextInt();<br>        scanner.close();<br><br>        <span>int</span> <span>fact</span> <span>=</span> <span>1</span>;<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>1</span>; i &lt;= n; i++) {<br>            fact *= i;<br>        }<br>        System.out.println(<span>\"Factorial of \"</span> + n + <span>\" is \"</span> + fact);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>import java.util.Scanner;</code> imports the <code>Scanner</code> class from the <code>java.util</code> package, which allows us to read user input from the console.</li><li><code>public class Factorial</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program. It is declared as <code>public</code> so that it can be accessed from outside the class, <code>static</code> so that it can be called without creating an object of the class, <code>void</code> as it does not return any value, and <code>String[] args</code> is an array of strings that can be passed as arguments to the main method.</li><li><code>Scanner scanner = new Scanner(System.in);</code> creates a new <code>Scanner</code> object to read input from the console.</li><li><code>System.out.print(\"Enter a number: \");</code> prints the message \"Enter a number: \" to the console.</li><li><code>int n = scanner.nextInt();</code> reads an integer input from the console and assigns it to the variable <code>n</code>.</li><li><code>scanner.close();</code> closes the <code>Scanner</code> object to prevent resource leaks.</li><li><code>int fact = 1;</code> declares an integer variable <code>fact</code> and initializes it with the value <code>1</code>.</li><li><code>for (int i = 1; i &lt;= n; i++) { fact *= i; }</code> uses a for loop to iterate from 1 to <code>n</code>, multiplying <code>fact</code> by the loop variable <code>i</code> at each iteration.</li><li><code>System.out.println(\"Factorial of \" + n + \" is \" + fact);</code> prints the factorial of the given number to the console.</li></ul><p>When we run the above program and enter a number, it will print the factorial of that number to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to find the factorial of a given number with recursion.",
+                "ans": "<div><p>Approach:</p><p>We can find the factorial of a given number using recursion. The factorial of a number n is the product of all positive integers from 1 to n. The base case for the recursive function will be when n is 0 or 1, in which case the factorial is 1. For all other values of n, the factorial can be calculated by multiplying n with the factorial of n-1.</p><p>Algorithm:</p><ol><li>Define a function factorial(n)</li><li>Check if n is 0 or 1, if yes then return 1</li><li>For all other values of n, return n * factorial(n-1)</li><li>Call the function with the input number n</li></ol><p>Java code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>Factorial</span> {<br>    <span>public</span> <span>static</span> <span>int</span> <span>factorial</span><span>(<span>int</span> n)</span> {<br>        <span>if</span>(n == <span>0</span> || n == <span>1</span>) {<br>            <span>return</span> <span>1</span>;<br>        }<br>        <span>else</span> {<br>            <span>return</span> n * factorial(n-<span>1</span>);<br>        }<br>    }<br>    <br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span> <span>num</span> <span>=</span> <span>5</span>;<br>        <span>int</span> <span>fact</span> <span>=</span> factorial(num);<br>        System.out.println(<span>\"Factorial of \"</span> + num + <span>\" is \"</span> + fact);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Factorial of <span>5</span> <span>is</span> <span>120</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to check if a given number is prime.",
+                "ans": "<div><p>Approach:<br>To check if a given number is prime in Java, we need to iterate from 2 to the square root of the number, and check if the number is divisible by any number within that range. If the number is divisible by any number, it is not a prime number. Otherwise, it is a prime number.</p><p>Java Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>CheckPrimeNumber</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a number: \"</span>);<br>        <span>int</span> <span>num</span> <span>=</span> scanner.nextInt();<br>        scanner.close();<br><br>        <span>boolean</span> <span>isPrime</span> <span>=</span> <span>true</span>;<br>        <span>if</span> (num &lt;= <span>1</span>) {<br>            isPrime = <span>false</span>;<br>        } <span>else</span> {<br>            <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>2</span>; i &lt;= Math.sqrt(num); i++) {<br>                <span>if</span> (num % i == <span>0</span>) {<br>                    isPrime = <span>false</span>;<br>                    <span>break</span>;<br>                }<br>            }<br>        }<br>        <span>if</span> (isPrime) {<br>            System.out.println(num + <span>\" is a prime number.\"</span>);<br>        } <span>else</span> {<br>            System.out.println(num + <span>\" is not a prime number.\"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>import java.util.Scanner;</code> imports the <code>Scanner</code> class from the <code>java.util</code> package, which allows us to read user input from the console.</li><li><code>public class CheckPrimeNumber</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program. It is declared as <code>public</code> so that it can be accessed from outside the class, <code>static</code> so that it can be called without creating an object of the class, <code>void</code> as it does not return any value, and <code>String[] args</code> is an array of strings that can be passed as arguments to the main method.</li><li><code>Scanner scanner = new Scanner(System.in);</code> creates a new <code>Scanner</code> object to read input from the console.</li><li><code>System.out.print(\"Enter a number: \");</code> prints the message \"Enter a number: \" to the console.</li><li><code>int num = scanner.nextInt();</code> reads an integer input from the console and assigns it to the variable <code>num</code>.</li><li><code>scanner.close();</code> closes the <code>Scanner</code> object to prevent resource leaks.</li><li><code>boolean isPrime = true;</code> declares a boolean variable <code>isPrime</code> and initializes it with the value <code>true</code>.</li><li><code>if (num &lt;= 1) { isPrime = false; }</code> checks if the number is less than or equal to 1, which is not a prime number, and sets <code>isPrime</code> to <code>false</code>.</li><li><code>for (int i = 2; i &lt;= Math.sqrt(num); i++) { if (num % i == 0) { isPrime = false; break; } }</code> iterates from 2 to the square root of the number, and checks if the number is divisible by any number within that range. If the number is divisible by any number, it sets <code>isPrime</code> to <code>false</code> and breaks out of the loop.</li><li><code>if (isPrime) { System.out.println(num + \" is a prime number.\"); } else { System.out.println(num + \" is not a prime number.\"); }</code> prints the result to the console, depending on whether the number is a prime number or not.</li></ul><p>When we run the above program and enter a number, it will print whether the number is a prime number or not.</p></div>"
+            },
+            {
+                "ques": "Write a program to find the largest palindrome number from the product of two three-digit numbers.",
+                "ans": "<div><p>Approach:<br>To find the largest palindrome number from the product of two three-digit numbers, we need to multiply all pairs of three-digit numbers and check if the product is a palindrome number. We will use two nested for loops to iterate over all pairs of three-digit numbers, and check if their product is a palindrome number. We will keep track of the largest palindrome number we find and print it at the end.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>LargestPalindrome</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span> <span>largestPalindrome</span> <span>=</span> <span>0</span>;<br>        <span>int</span> <span>num1</span> <span>=</span> <span>0</span>, num2 = <span>0</span>;<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>100</span>; i &lt; <span>1000</span>; i++) {<br>            <span>for</span> (<span>int</span> <span>j</span> <span>=</span> <span>100</span>; j &lt; <span>1000</span>; j++) {<br>                <span>int</span> <span>product</span> <span>=</span> i * j;<br>                <span>if</span> (isPalindrome(product) &amp;&amp; product &gt; largestPalindrome) {<br>                    largestPalindrome = product;<br>                    num1 = i;<br>                    num2 = j;<br>                }<br>            }<br>        }<br><br>        System.out.println(<span>\"The largest palindrome number from the product of two three-digit numbers is \"</span> <br>            + largestPalindrome + <span>\" = \"</span> + num1 + <span>\" x \"</span> + num2);<br>    }<br><br>    <span>public</span> <span>static</span> <span>boolean</span> <span>isPalindrome</span><span>(<span>int</span> n)</span> {<br>        <span>String</span> <span>num</span> <span>=</span> String.valueOf(n);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; num.length() / <span>2</span>; i++) {<br>            <span>if</span> (num.charAt(i) != num.charAt(num.length() - i - <span>1</span>)) {<br>                <span>return</span> <span>false</span>;<br>            }<br>        }<br>        <span>return</span> <span>true</span>;<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public class LargestPalindrome</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program. It is declared as <code>public</code> so that it can be accessed from outside the class, <code>static</code> so that it can be called without creating an object of the class, <code>void</code> as it does not return any value, and <code>String[] args</code> is an array of strings that can be passed as arguments to the main method.</li><li><code>int largestPalindrome = 0;</code> declares an integer variable <code>largestPalindrome</code> and initializes it with the value <code>0</code>. This variable will store the largest palindrome number we find.</li><li><code>int num1 = 0, num2 = 0;</code> declares two integer variables <code>num1</code> and <code>num2</code> and initializes them with the value <code>0</code>. These variables will store the two three-digit numbers whose product is the largest palindrome number.</li><li>The two nested for loops <code>for (int i = 100; i &lt; 1000; i++)</code> and <code>for (int j = 100; j &lt; 1000; j++)</code> iterate over all pairs of three-digit numbers.</li><li><code>int product = i * j;</code> calculates the product of the two three-digit numbers.</li><li><code>if (isPalindrome(product) &amp;&amp; product &gt; largestPalindrome) { largestPalindrome = product; num1 = i; num2 = j; }</code> checks if the product is a palindrome number and greater than the largest palindrome number we have found so far. If it is, it updates the value of <code>largestPalindrome</code> and stores the two three-digit numbers in <code>num1</code> and <code>num2</code>.</li><li><code>public static boolean isPalindrome(int n)</code> is a method that takes an integer <code>n</code> as input and returns true if <code>n</code> is a palindrome number, false otherwise.</li><li><code>String num = String.valueOf(n);</code> converts the integer <code>n</code> to a string so that we can check if it is a palindrome.</li><li>The for loop `for (int i = 0;</li></ul></div>"
+            },
+            {
+                "ques": "Write a program to check if a given string is a palindrome.",
+                "ans": "<div><p>Approach:<br>A palindrome is a word, phrase, number, or other sequence of characters that reads the same forward and backward. To check if a given string is a palindrome, we need to compare the characters from the beginning and end of the string. We can use two pointers, one starting from the beginning of the string and the other starting from the end of the string, and compare the characters at each position. If all the characters match, then the string is a palindrome.</p><p>Java Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>CheckPalindrome</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a string: \"</span>);<br>        <span>String</span> <span>str</span> <span>=</span> scanner.nextLine();<br>        scanner.close();<br><br>        <span>boolean</span> <span>isPalindrome</span> <span>=</span> <span>true</span>;<br>        <span>int</span> <span>i</span> <span>=</span> <span>0</span>, j = str.length() - <span>1</span>;<br>        <span>while</span> (i &lt; j) {<br>            <span>if</span> (str.charAt(i) != str.charAt(j)) {<br>                isPalindrome = <span>false</span>;<br>                <span>break</span>;<br>            }<br>            i++;<br>            j--;<br>        }<br>        <span>if</span> (isPalindrome) {<br>            System.out.println(str + <span>\" is a palindrome.\"</span>);<br>        } <span>else</span> {<br>            System.out.println(str + <span>\" is not a palindrome.\"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>import java.util.Scanner;</code> imports the <code>Scanner</code> class from the <code>java.util</code> package, which allows us to read user input from the console.</li><li><code>public class CheckPalindrome</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program. It is declared as <code>public</code> so that it can be accessed from outside the class, <code>static</code> so that it can be called without creating an object of the class, <code>void</code> as it does not return any value, and <code>String[] args</code> is an array of strings that can be passed as arguments to the main method.</li><li><code>Scanner scanner = new Scanner(System.in);</code> creates a new <code>Scanner</code> object to read input from the console.</li><li><code>System.out.print(\"Enter a string: \");</code> prints the message \"Enter a string: \" to the console.</li><li><code>String str = scanner.nextLine();</code> reads a string input from the console and assigns it to the variable <code>str</code>.</li><li><code>scanner.close();</code> closes the <code>Scanner</code> object to prevent resource leaks.</li><li><code>boolean isPalindrome = true;</code> declares a boolean variable <code>isPalindrome</code> and initializes it with the value <code>true</code>.</li><li><code>int i = 0, j = str.length() - 1;</code> initializes two integer variables <code>i</code> and <code>j</code>, with <code>i</code> starting from 0 and <code>j</code> starting from the last index of the string.</li><li><code>while (i &lt; j) { if (str.charAt(i) != str.charAt(j)) { isPalindrome = false; break; } i++; j--; }</code> iterates through the string with two pointers <code>i</code> and <code>j</code>, comparing the characters at each position. If the characters do not match, it sets <code>isPalindrome</code> to <code>false</code> and breaks out of the loop.</li><li><code>if (isPalindrome) { System.out.println(str + \" is a palindrome.\"); } else { System.out.println(str + \" is not a palindrome.\"); }</code> prints the result to the console, depending on whether the string is a palindrome or not.</li></ul><p>When we run the above program and enter a string, it will print whether the string is a palindrome or not.</p></div>"
+            },
+            {
+                "ques": "Write a program to check if a given number is an Armstrong number.",
+                "ans": "<div><p>Approach:<br>An Armstrong number is a number that is equal to the sum of its own digits each raised to the power of the number of digits. For example, 153 is an Armstrong number because 1^3 + 5^3 + 3^3 = 153. To check if a given number is an Armstrong number, we need to calculate the sum of its digits each raised to the power of the number of digits and compare it with the given number.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>ArmstrongNumber</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span> <span>number</span> <span>=</span> <span>153</span>;<br>        <span>if</span> (isArmstrong(number)) {<br>            System.out.println(number + <span>\" is an Armstrong number.\"</span>);<br>        } <span>else</span> {<br>            System.out.println(number + <span>\" is not an Armstrong number.\"</span>);<br>        }<br>    }<br><br>    <span>public</span> <span>static</span> <span>boolean</span> <span>isArmstrong</span><span>(<span>int</span> n)</span> {<br>        <span>int</span> <span>sum</span> <span>=</span> <span>0</span>;<br>        <span>int</span> <span>originalNumber</span> <span>=</span> n;<br>        <span>int</span> <span>numberOfDigits</span> <span>=</span> String.valueOf(n).length();<br><br>        <span>while</span> (n &gt; <span>0</span>) {<br>            <span>int</span> <span>digit</span> <span>=</span> n % <span>10</span>;<br>            sum += Math.pow(digit, numberOfDigits);<br>            n /= <span>10</span>;<br>        }<br><br>        <span>return</span> sum == originalNumber;<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public class ArmstrongNumber</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program.</li><li><code>int number = 153;</code> declares an integer variable <code>number</code> and initializes it with the value <code>153</code>. This is the number we will check for being an Armstrong number.</li><li><code>if (isArmstrong(number)) { System.out.println(number + \" is an Armstrong number.\"); } else { System.out.println(number + \" is not an Armstrong number.\"); }</code> checks if <code>number</code> is an Armstrong number by calling the <code>isArmstrong</code> method and prints the result.</li><li><code>public static boolean isArmstrong(int n)</code> is a method that takes an integer <code>n</code> as input and returns true if <code>n</code> is an Armstrong number, false otherwise.</li><li><code>int sum = 0;</code> declares an integer variable <code>sum</code> and initializes it with the value <code>0</code>. This variable will store the sum of digits each raised to the power of the number of digits.</li><li><code>int originalNumber = n;</code> stores the original value of <code>n</code> so that we can compare it with the calculated sum later.</li><li><code>int numberOfDigits = String.valueOf(n).length();</code> calculates the number of digits in <code>n</code>.</li><li>The while loop <code>while (n &gt; 0) { int digit = n % 10; sum += Math.pow(digit, numberOfDigits); n /= 10; }</code> calculates the sum of digits each raised to the power of the number of digits.<ul><li><code>int digit = n % 10;</code> calculates the last digit of <code>n</code>.</li><li><code>sum += Math.pow(digit, numberOfDigits);</code> raises <code>digit</code> to the power of <code>numberOfDigits</code> and adds it to <code>sum</code>.</li><li><code>n /= 10;</code> removes the last digit from <code>n</code>.</li></ul></li><li><code>return sum == originalNumber;</code> compares the calculated sum with the original number and returns true if they are equal, false otherwise.</li></ul></div>"
+            },
+            {
+                "ques": "Write a program to check if a given year is a leap year.",
+                "ans": "<div><p>Approach:<br>A year is a leap year if it is divisible by 4 but not divisible by 100. However, if a year is divisible by both 4 and 100, it is not a leap year unless it is also divisible by 400. Therefore, we need to check these conditions to determine if a year is a leap year or not.</p><p>Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>LeapYear</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>input</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br><br>        System.out.print(<span>\"Enter a year: \"</span>);<br>        <span>int</span> <span>year</span> <span>=</span> input.nextInt();<br><br>        <span>boolean</span> <span>isLeapYear</span> <span>=</span> <span>false</span>;<br><br>        <span>// Check if the year is divisible by 4 but not divisible by 100</span><br>        <span>if</span> (year % <span>4</span> == <span>0</span> &amp;&amp; year % <span>100</span> != <span>0</span>) {<br>            isLeapYear = <span>true</span>;<br>        }<br><br>        <span>// Check if the year is divisible by 400</span><br>        <span>if</span> (year % <span>400</span> == <span>0</span>) {<br>            isLeapYear = <span>true</span>;<br>        }<br><br>        <span>if</span> (isLeapYear) {<br>            System.out.println(year + <span>\" is a leap year.\"</span>);<br>        } <span>else</span> {<br>            System.out.println(year + <span>\" is not a leap year.\"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this program, we first take input from the user for the year to be checked. Then we use two if statements to check if the year is a leap year or not. If the year is a leap year, we set the <code>isLeapYear</code> variable to true. Finally, we print the result based on the value of <code>isLeapYear</code>.</p></div>"
+            },
+            {
+                "ques": "Write a program to print the Fibonacci series up to a given number.",
+                "ans": "<div><p>Approach:<br>The Fibonacci series is a sequence of numbers where each number is the sum of the two preceding ones, starting from 0 and 1. For example, the first ten terms of the Fibonacci series are 0, 1, 1, 2, 3, 5, 8, 13, 21, and 34. To print the Fibonacci series up to a given number, we need to generate the series up to that number and print each term.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>FibonacciSeries</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span> <span>limit</span> <span>=</span> <span>50</span>; <span>// the limit up to which we want to print the Fibonacci series</span><br>        <span>int</span> <span>previousTerm</span> <span>=</span> <span>0</span>, currentTerm = <span>1</span>;<br><br>        System.out.print(previousTerm + <span>\" \"</span> + currentTerm); <span>// print the first two terms</span><br><br>        <span>while</span> (currentTerm &lt; limit) {<br>            <span>int</span> <span>nextTerm</span> <span>=</span> previousTerm + currentTerm;<br>            System.out.print(<span>\" \"</span> + nextTerm);<br>            previousTerm = currentTerm;<br>            currentTerm = nextTerm;<br>        }<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public class FibonacciSeries</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program.</li><li><code>int limit = 50;</code> declares an integer variable <code>limit</code> and initializes it with the value <code>50</code>. This is the maximum value up to which we want to print the Fibonacci series.</li><li><code>int previousTerm = 0, currentTerm = 1;</code> declare integer variables <code>previousTerm</code> and <code>currentTerm</code> and initialize them with the values 0 and 1, respectively. These variables will store the last two terms of the Fibonacci series.</li><li><code>System.out.print(previousTerm + \" \" + currentTerm);</code> prints the first two terms of the Fibonacci series, which are 0 and 1.</li><li>The while loop <code>while (currentTerm &lt; limit) { int nextTerm = previousTerm + currentTerm; System.out.print(\" \" + nextTerm); previousTerm = currentTerm; currentTerm = nextTerm; }</code> generates and prints the rest of the Fibonacci series up to the limit.<ul><li><code>int nextTerm = previousTerm + currentTerm;</code> calculates the next term in the Fibonacci series by adding the previous two terms.</li><li><code>System.out.print(\" \" + nextTerm);</code> prints the next term.</li><li><code>previousTerm = currentTerm;</code> assigns the value of <code>currentTerm</code> to <code>previousTerm</code>.</li><li><code>currentTerm = nextTerm;</code> assigns the value of <code>nextTerm</code> to <code>currentTerm</code>.</li></ul></li></ul></div>"
+            },
+            {
+                "ques": "Write a program to check if two strings are anagrams.",
+                "ans": "<div><p>Approach:<br>Anagrams are words or phrases formed by rearranging the letters of another word or phrase. To check if two strings are anagrams, we can compare the frequency of occurrence of each character in both strings. If the frequency of occurrence of each character is the same in both strings, then the strings are anagrams.</p><p>Java Code:</p><pre><div><div><code><span>import</span> java.util.Arrays;<br><br><span>public</span> <span>class</span> <span>AnagramChecker</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str1</span> <span>=</span> <span>\"silent\"</span>;<br>        <span>String</span> <span>str2</span> <span>=</span> <span>\"listen\"</span>;<br><br>        <span>if</span> (areAnagrams(str1, str2)) {<br>            System.out.println(str1 + <span>\" and \"</span> + str2 + <span>\" are anagrams\"</span>);<br>        } <span>else</span> {<br>            System.out.println(str1 + <span>\" and \"</span> + str2 + <span>\" are not anagrams\"</span>);<br>        }<br>    }<br><br>    <span>public</span> <span>static</span> <span>boolean</span> <span>areAnagrams</span><span>(String str1, String str2)</span> {<br>        <span>if</span> (str1.length() != str2.length()) {<br>            <span>return</span> <span>false</span>;<br>        }<br><br>        <span>char</span>[] str1Array = str1.toCharArray();<br>        <span>char</span>[] str2Array = str2.toCharArray();<br><br>        Arrays.sort(str1Array);<br>        Arrays.sort(str2Array);<br><br>        <span>return</span> Arrays.equals(str1Array, str2Array);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>import java.util.Arrays;</code> imports the <code>Arrays</code> class from the <code>java.util</code> package, which provides methods for working with arrays.</li><li><code>public class AnagramChecker</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program.</li><li><code>String str1 = \"silent\";</code> declares a string variable <code>str1</code> and initializes it with the value <code>\"silent\"</code>.</li><li><code>String str2 = \"listen\";</code> declares a string variable <code>str2</code> and initializes it with the value <code>\"listen\"</code>.</li><li><code>if (areAnagrams(str1, str2)) { System.out.println(str1 + \" and \" + str2 + \" are anagrams\"); } else { System.out.println(str1 + \" and \" + str2 + \" are not anagrams\"); }</code> calls the <code>areAnagrams</code> method to check if <code>str1</code> and <code>str2</code> are anagrams, and prints the appropriate message based on the result.</li><li><code>public static boolean areAnagrams(String str1, String str2)</code> is a method that takes two string arguments and returns a boolean value indicating whether they are anagrams.</li><li><code>if (str1.length() != str2.length()) { return false; }</code> checks if the lengths of the two strings are equal. If they are not equal, the method returns <code>false</code>.</li><li><code>char[] str1Array = str1.toCharArray();</code> converts <code>str1</code> to a character array and assigns it to <code>str1Array</code>.</li><li><code>char[] str2Array = str2.toCharArray();</code> converts <code>str2</code> to a character array and assigns it to <code>str2Array</code>.</li><li><code>Arrays.sort(str1Array);</code> sorts <code>str1Array</code> in ascending order.</li><li><code>Arrays.sort(str2Array);</code> sorts <code>str2Array</code> in ascending order.</li><li><code>return Arrays.equals(str1Array, str2Array);</code> compares the sorted character arrays <code>str1Array</code> and <code>str2Array</code> and returns <code>true</code> if they are equal, indicating that <code>str1</code> and <code>str2</code> are anagrams. Otherwise, the method returns <code>false</code>.</li></ul></div>"
+            },
+            {
+                "ques": "Write a program to find the GCD of two numbers.",
+                "ans": "<div><p>Approach:<br>The GCD (Greatest Common Divisor) of two numbers is the largest positive integer that divides both numbers without leaving a remainder. To find the GCD of two numbers, we can use the Euclidean algorithm, which involves recursively finding the remainder of dividing the larger number by the smaller number until the remainder is 0. The last non-zero remainder is the GCD of the two numbers.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>GCD</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span> <span>num1</span> <span>=</span> <span>36</span>;<br>        <span>int</span> <span>num2</span> <span>=</span> <span>24</span>;<br><br>        <span>int</span> <span>gcd</span> <span>=</span> findGCD(num1, num2);<br><br>        System.out.println(<span>\"The GCD of \"</span> + num1 + <span>\" and \"</span> + num2 + <span>\" is \"</span> + gcd);<br>    }<br><br>    <span>public</span> <span>static</span> <span>int</span> <span>findGCD</span><span>(<span>int</span> num1, <span>int</span> num2)</span> {<br>        <span>if</span> (num2 == <span>0</span>) {<br>            <span>return</span> num1;<br>        }<br><br>        <span>return</span> findGCD(num2, num1 % num2);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public class GCD</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program.</li><li><code>int num1 = 36;</code> declares an integer variable <code>num1</code> and initializes it with the value <code>36</code>.</li><li><code>int num2 = 24;</code> declares an integer variable <code>num2</code> and initializes it with the value <code>24</code>.</li><li><code>int gcd = findGCD(num1, num2);</code> calls the <code>findGCD</code> method to find the GCD of <code>num1</code> and <code>num2</code>, and assigns the result to the <code>gcd</code> variable.</li><li><code>System.out.println(\"The GCD of \" + num1 + \" and \" + num2 + \" is \" + gcd);</code> prints the GCD of <code>num1</code> and <code>num2</code>.</li><li><code>public static int findGCD(int num1, int num2)</code> is a method that takes two integer arguments and returns an integer value indicating their GCD.</li><li><code>if (num2 == 0) { return num1; }</code> checks if <code>num2</code> is equal to 0. If it is, the method returns <code>num1</code>, which is the last non-zero remainder and hence the GCD of <code>num1</code> and <code>num2</code>.</li><li><code>return findGCD(num2, num1 % num2);</code> recursively calls the <code>findGCD</code> method with <code>num2</code> and the remainder of <code>num1</code> divided by <code>num2</code>. The remainder becomes the new <code>num1</code>, and <code>num2</code> becomes the new <code>num2</code>. This process continues until <code>num2</code> is 0.</li></ul></div>"
+            },
+            {
+                "ques": "Write a program to find the LCM of two numbers.",
+                "ans": "<div><p>Approach:<br>The LCM (Least Common Multiple) of two numbers is the smallest positive integer that is divisible by both numbers. One approach to finding the LCM of two numbers is to first find their GCD (Greatest Common Divisor), and then use the formula LCM = (num1 * num2) / GCD.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>LCM</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span> <span>num1</span> <span>=</span> <span>24</span>;<br>        <span>int</span> <span>num2</span> <span>=</span> <span>36</span>;<br><br>        <span>int</span> <span>lcm</span> <span>=</span> findLCM(num1, num2);<br><br>        System.out.println(<span>\"The LCM of \"</span> + num1 + <span>\" and \"</span> + num2 + <span>\" is \"</span> + lcm);<br>    }<br><br>    <span>public</span> <span>static</span> <span>int</span> <span>findLCM</span><span>(<span>int</span> num1, <span>int</span> num2)</span> {<br>        <span>int</span> <span>gcd</span> <span>=</span> findGCD(num1, num2);<br>        <span>return</span> (num1 * num2) / gcd;<br>    }<br><br>    <span>public</span> <span>static</span> <span>int</span> <span>findGCD</span><span>(<span>int</span> num1, <span>int</span> num2)</span> {<br>        <span>if</span> (num2 == <span>0</span>) {<br>            <span>return</span> num1;<br>        }<br><br>        <span>return</span> findGCD(num2, num1 % num2);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public class LCM</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program.</li><li><code>int num1 = 24;</code> declares an integer variable <code>num1</code> and initializes it with the value <code>24</code>.</li><li><code>int num2 = 36;</code> declares an integer variable <code>num2</code> and initializes it with the value <code>36</code>.</li><li><code>int lcm = findLCM(num1, num2);</code> calls the <code>findLCM</code> method to find the LCM of <code>num1</code> and <code>num2</code>, and assigns the result to the <code>lcm</code> variable.</li><li><code>System.out.println(\"The LCM of \" + num1 + \" and \" + num2 + \" is \" + lcm);</code> prints the LCM of <code>num1</code> and <code>num2</code>.</li><li><code>public static int findLCM(int num1, int num2)</code> is a method that takes two integer arguments and returns an integer value indicating their LCM.</li><li><code>int gcd = findGCD(num1, num2);</code> calls the <code>findGCD</code> method to find the GCD of <code>num1</code> and <code>num2</code>, and assigns the result to the <code>gcd</code> variable.</li><li><code>return (num1 * num2) / gcd;</code> returns the LCM of <code>num1</code> and <code>num2</code> using the formula LCM = (num1 * num2) / GCD.</li><li><code>public static int findGCD(int num1, int num2)</code> is a method that takes two integer arguments and returns an integer value indicating their GCD. This method is the same as the <code>findGCD</code> method used in the previous example.</li></ul></div>"
+            },
+            {
+                "ques": "Write a program to reverse a given string (without using inbuilt functions).",
+                "ans": "<div><p>Approach:<br>To reverse a given string (without using inbuilt functions), we can iterate through the string from the end to the beginning and append each character to a new string.</p><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>StringReverse</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"Hello World!\"</span>;<br>        <span>String</span> <span>reversed</span> <span>=</span> reverseString(str);<br><br>        System.out.println(<span>\"Original string: \"</span> + str);<br>        System.out.println(<span>\"Reversed string: \"</span> + reversed);<br>    }<br><br>    <span>public</span> <span>static</span> String <span>reverseString</span><span>(String str)</span> {<br>        <span>String</span> <span>reversed</span> <span>=</span> <span>\"\"</span>;<br>        <span>int</span> <span>len</span> <span>=</span> str.length();<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> len - <span>1</span>; i &gt;= <span>0</span>; i--) {<br>            reversed += str.charAt(i);<br>        }<br><br>        <span>return</span> reversed;<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ul><li><code>public class StringReverse</code> is the name of the class we are defining.</li><li><code>public static void main(String[] args)</code> is the main method, which is the entry point of the Java program.</li><li><code>String str = \"Hello World!\";</code> declares a string variable <code>str</code> and initializes it with the value <code>\"Hello World!\"</code>.</li><li><code>String reversed = reverseString(str);</code> calls the <code>reverseString</code> method to reverse the string <code>str</code>, and assigns the result to the <code>reversed</code> variable.</li><li><code>System.out.println(\"Original string: \" + str);</code> prints the original string <code>str</code>.</li><li><code>System.out.println(\"Reversed string: \" + reversed);</code> prints the reversed string <code>reversed</code>.</li><li><code>public static String reverseString(String str)</code> is a method that takes a string argument and returns a string value representing the reversed string.</li><li><code>String reversed = \"\";</code> declares an empty string variable <code>reversed</code>.</li><li><code>int len = str.length();</code> gets the length of the input string <code>str</code>.</li><li><code>for (int i = len - 1; i &gt;= 0; i--)</code> is a for loop that iterates through the string from the end to the beginning.</li><li><code>reversed += str.charAt(i);</code> appends each character of the input string <code>str</code> to the <code>reversed</code> string variable. The <code>charAt()</code> method is used to get the character at a specified index. The <code>+=</code> operator is used to concatenate the characters to the <code>reversed</code> variable.</li><li><code>return reversed;</code> returns the reversed string.</li></ul></div>"
+            },
+            {
+                "ques": "Write a program to reverse a given string without changing the position of special characters (without using inbuilt functions).",
+                "ans": "<div><p>Approach:</p><ol><li>Create a function that accepts a string as an argument.</li><li>Convert the string to a character array.</li><li>Initialize two pointers, one at the beginning of the array and one at the end of the array.</li><li>While the two pointers have not met:<br>a. If the character at the left pointer is not a letter, move the pointer to the right.<br>b. If the character at the right pointer is not a letter, move the pointer to the left.<br>c. If both characters at the left and right pointers are letters, swap them.<br>d. Increment the left pointer and decrement the right pointer.</li><li>Convert the character array back to a string.</li><li>Return the reversed string.</li></ol><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>ReverseStringWithSpecialChars</span> {<br><br>    <span>public</span> <span>static</span> String <span>reverseString</span><span>(String str)</span> {<br>        <span>char</span>[] chars = str.toCharArray();<br>        <span>int</span> <span>left</span> <span>=</span> <span>0</span>;<br>        <span>int</span> <span>right</span> <span>=</span> chars.length - <span>1</span>;<br>        <span>while</span> (left &lt; right) {<br>            <span>if</span> (!Character.isLetter(chars[left])) {<br>                left++;<br>            } <span>else</span> <span>if</span> (!Character.isLetter(chars[right])) {<br>                right--;<br>            } <span>else</span> {<br>                <span>char</span> <span>temp</span> <span>=</span> chars[left];<br>                chars[left] = chars[right];<br>                chars[right] = temp;<br>                left++;<br>                right--;<br>            }<br>        }<br>        <span>return</span> <span>new</span> <span>String</span>(chars);<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"a,b$c\"</span>;<br>        <span>String</span> <span>reversedStr</span> <span>=</span> reverseString(str);<br>        System.out.println(<span>\"Reversed string: \"</span> + reversedStr);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Reversed</span> <span>string</span>: <span>c</span>,<span>b</span>$<span>a</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to reverse a given string without changing the position of number characters (without using inbuilt functions).",
+                "ans": "<div><p>Approach:</p><ol><li>Create a function that accepts a string as an argument.</li><li>Convert the string to a character array.</li><li>Initialize two pointers, one at the beginning of the array and one at the end of the array.</li><li>While the two pointers have not met:<br>a. If the character at the left pointer is not a number, move the pointer to the right.<br>b. If the character at the right pointer is not a number, move the pointer to the left.<br>c. If both characters at the left and right pointers are numbers, swap them.<br>d. Increment the left pointer and decrement the right pointer.</li><li>Convert the character array back to a string.</li><li>Return the reversed string.</li></ol><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>ReverseStringWithNumberChars</span> {<br><br>    <span>public</span> <span>static</span> String <span>reverseString</span><span>(String str)</span> {<br>        <span>char</span>[] chars = str.toCharArray();<br>        <span>int</span> <span>left</span> <span>=</span> <span>0</span>;<br>        <span>int</span> <span>right</span> <span>=</span> chars.length - <span>1</span>;<br>        <span>while</span> (left &lt; right) {<br>            <span>if</span> (!Character.isDigit(chars[left])) {<br>                left++;<br>            } <span>else</span> <span>if</span> (!Character.isDigit(chars[right])) {<br>                right--;<br>            } <span>else</span> {<br>                <span>char</span> <span>temp</span> <span>=</span> chars[left];<br>                chars[left] = chars[right];<br>                chars[right] = temp;<br>                left++;<br>                right--;<br>            }<br>        }<br>        <span>return</span> <span>new</span> <span>String</span>(chars);<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"a1b2c3d4\"</span>;<br>        <span>String</span> <span>reversedStr</span> <span>=</span> reverseString(str);<br>        System.out.println(<span>\"Reversed string: \"</span> + reversedStr);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Reversed <span>string</span>: d1c2b3a4<br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to reverse each word in a given sentence as string (without using inbuilt functions).",
+                "ans": "<div><p>Approach:</p><ol><li>Take a string as input.</li><li>Declare a temporary variable to store each word as it is reversed.</li><li>Declare another variable to store the final result.</li><li>Iterate over each character in the input string.</li><li>Check if the current character is a space. If it is, reverse the temporary variable and append it to the final result, along with a space.</li><li>If the current character is not a space, append it to the temporary variable.</li><li>Repeat steps 4 to 6 until all characters in the string have been processed.</li><li>Reverse the last temporary variable and append it to the final result.</li></ol><p>Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>ReverseWordsInSentence</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>input</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a sentence: \"</span>);<br>        <span>String</span> <span>sentence</span> <span>=</span> input.nextLine();<br>        input.close();<br><br>        <span>String</span> <span>temp</span> <span>=</span> <span>\"\"</span>;<br>        <span>String</span> <span>result</span> <span>=</span> <span>\"\"</span>;<br><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; sentence.length(); i++) {<br>            <span>if</span> (sentence.charAt(i) == <span>' '</span>) {<br>                result += reverse(temp) + <span>\" \"</span>;<br>                temp = <span>\"\"</span>;<br>            } <span>else</span> {<br>                temp += sentence.charAt(i);<br>            }<br>        }<br><br>        result += reverse(temp);<br>        System.out.println(<span>\"Reversed Sentence: \"</span> + result);<br>    }<br><br>    <span>public</span> <span>static</span> String <span>reverse</span><span>(String str)</span> {<br>        <span>String</span> <span>result</span> <span>=</span> <span>\"\"</span>;<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> str.length() - <span>1</span>; i &gt;= <span>0</span>; i--) {<br>            result += str.charAt(i);<br>        }<br>        <span>return</span> result;<br>    }<br>}<br></code></div></div></pre><p>In this program, we take a sentence as input and iterate over each character in the sentence. If the current character is a space, we reverse the temporary variable and append it to the final result, along with a space. If the current character is not a space, we append it to the temporary variable. We repeat these steps until all characters in the sentence have been processed. Finally, we reverse the last temporary variable and append it to the final result.</p><p>To reverse a string, we declare a separate method called <code>reverse()</code> that takes a string as input and returns the reversed string. This method simply iterates over each character in the string in reverse order and appends it to a new string.</p></div>"
+            },
+            {
+                "ques": "Write a program to reverse a number without converting to String.",
+                "ans": "<div><p>Approach:</p><ol><li>Extract the last digit of the given number using modulo operator.</li><li>Multiply the reverse number by 10 and add the extracted digit to it.</li><li>Divide the given number by 10 to remove the extracted digit from the number.</li><li>Repeat steps 1 to 3 until the given number becomes 0.</li></ol><p>Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>ReverseNumber</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>input</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a number: \"</span>);<br>        <span>int</span> <span>num</span> <span>=</span> input.nextInt();<br>        <span>int</span> <span>reverse</span> <span>=</span> <span>0</span>;<br>        <span>while</span> (num != <span>0</span>) {<br>            <span>int</span> <span>digit</span> <span>=</span> num % <span>10</span>;<br>            reverse = reverse * <span>10</span> + digit;<br>            num /= <span>10</span>;<br>        }<br>        System.out.println(<span>\"The reversed number is: \"</span> + reverse);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ol><li>We first take input from the user using Scanner class and store it in a variable called <code>num</code>.</li><li>Then we initialize a variable called <code>reverse</code> to 0 to store the reversed number.</li><li>We use a while loop to iterate until the <code>num</code> becomes 0.</li><li>Inside the while loop, we extract the last digit of <code>num</code> using the modulo operator and store it in a variable called <code>digit</code>.</li><li>We multiply the <code>reverse</code> by 10 and add the <code>digit</code> to it to get the reversed number.</li><li>We divide the <code>num</code> by 10 to remove the extracted digit from the number.</li><li>We repeat steps 4 to 6 until the <code>num</code> becomes 0.</li><li>Finally, we print the reversed number using the <code>System.out.println()</code> statement.</li></ol></div>"
+            },
+            {
+                "ques": "Write a program to count the number of occurrences of a given character in a string.",
+                "ans": "<div><p>Approach:</p><ol><li>Create a function that accepts two arguments - a string and a character to be searched.</li><li>Initialize a counter variable to 0.</li><li>Loop through each character in the string.</li><li>If the current character matches the character to be searched, increment the counter.</li><li>Return the counter variable.</li></ol><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>CountCharacter</span> {<br><br>    <span>public</span> <span>static</span> <span>int</span> <span>countOccurrences</span><span>(String str, <span>char</span> ch)</span> {<br>        <span>int</span> <span>count</span> <span>=</span> <span>0</span>;<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; str.length(); i++) {<br>            <span>if</span> (str.charAt(i) == ch) {<br>                count++;<br>            }<br>        }<br>        <span>return</span> count;<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"Hello, World!\"</span>;<br>        <span>char</span> <span>ch</span> <span>=</span> <span>'o'</span>;<br>        <span>int</span> <span>count</span> <span>=</span> countOccurrences(str, ch);<br>        System.out.println(<span>\"The character '\"</span> + ch + <span>\"' occurs \"</span> + count + <span>\" times in the string '\"</span> + str + <span>\"'\"</span>);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code>The character <span>'o'</span> occurs <span>2</span> times in the <span>string</span> <span>'Hello, World!'</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to count characters in a string. Print output in alphabetic order",
+                "ans": "<div><p>Approach:</p><ol><li>Create a function that accepts a string as an argument.</li><li>Initialize a hash map to store the character count.</li><li>Loop through each character in the string.</li><li>If the current character is already present in the hash map, increment its count.</li><li>If the current character is not present in the hash map, add it with a count of 1.</li><li>Sort the hash map by key (character) in alphabetical order.</li><li>Print the character count in alphabetical order.</li></ol><p>Java Code:</p><pre><div><div><code><span>import</span> java.util.*;<br><br><span>public</span> <span>class</span> <span>CountCharacters</span> {<br><br>    <span>public</span> <span>static</span> Map&lt;Character, Integer&gt; <span>countCharacters</span><span>(String str)</span> {<br>        Map&lt;Character, Integer&gt; charCount = <span>new</span> <span>TreeMap</span>&lt;&gt;();<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; str.length(); i++) {<br>            <span>char</span> <span>ch</span> <span>=</span> str.charAt(i);<br>            <span>if</span> (charCount.containsKey(ch)) {<br>                <span>int</span> <span>count</span> <span>=</span> charCount.get(ch);<br>                charCount.put(ch, count + <span>1</span>);<br>            } <span>else</span> {<br>                charCount.put(ch, <span>1</span>);<br>            }<br>        }<br>        <span>return</span> charCount;<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"Hello, World!\"</span>;<br>        Map&lt;Character, Integer&gt; charCount = countCharacters(str);<br>        <span>for</span> (Map.Entry&lt;Character, Integer&gt; entry : charCount.entrySet()) {<br>            System.out.println(<span>\"'\"</span> + entry.getKey() + <span>\"' : \"</span> + entry.getValue());<br>        }<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>' '</span> : <span>1</span><br><span>','</span> : <span>1</span><br><span>'!'</span> : <span>1</span><br><span>'H'</span> : <span>1</span><br><span>'W'</span> : <span>1</span><br><span>'d'</span> : <span>1</span><br><span>'e'</span> : <span>1</span><br><span>'l'</span> : <span>3</span><br><span>'o'</span> : <span>2</span><br><span>'r'</span> : <span>1</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to count characters in a string. Print output in same order as present in String.",
+                "ans": "<div><p>Approach:</p><ol><li>Create a function that accepts a string as an argument.</li><li>Initialize a hash map to store the character count.</li><li>Loop through each character in the string.</li><li>If the current character is already present in the hash map, increment its count.</li><li>If the current character is not present in the hash map, add it with a count of 1.</li><li>Loop through each character in the string again and print its count from the hash map.</li></ol><p>Java Code:</p><pre><div><div><code><span>import</span> java.util.*;<br><br><span>public</span> <span>class</span> <span>CountCharacters</span> {<br><br>    <span>public</span> <span>static</span> Map&lt;Character, Integer&gt; <span>countCharacters</span><span>(String str)</span> {<br>        Map&lt;Character, Integer&gt; charCount = <span>new</span> <span>LinkedHashMap</span>&lt;&gt;();<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; str.length(); i++) {<br>            <span>char</span> <span>ch</span> <span>=</span> str.charAt(i);<br>            <span>if</span> (charCount.containsKey(ch)) {<br>                <span>int</span> <span>count</span> <span>=</span> charCount.get(ch);<br>                charCount.put(ch, count + <span>1</span>);<br>            } <span>else</span> {<br>                charCount.put(ch, <span>1</span>);<br>            }<br>        }<br>        <span>return</span> charCount;<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"Hello, World!\"</span>;<br>        Map&lt;Character, Integer&gt; charCount = countCharacters(str);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; str.length(); i++) {<br>            <span>char</span> <span>ch</span> <span>=</span> str.charAt(i);<br>            <span>if</span> (charCount.containsKey(ch)) {<br>                System.out.println(<span>\"'\"</span> + ch + <span>\"' : \"</span> + charCount.get(ch));<br>                charCount.remove(ch);<br>            }<br>        }<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>'H'</span> : <span>1</span><br><span>'e'</span> : <span>1</span><br><span>'l'</span> : <span>3</span><br><span>'l'</span> : <span>3</span><br><span>'o'</span> : <span>2</span><br><span>','</span> : <span>1</span><br><span>' '</span> : <span>1</span><br><span>'W'</span> : <span>1</span><br><span>'o'</span> : <span>2</span><br><span>'r'</span> : <span>1</span><br><span>'l'</span> : <span>3</span><br><span>'d'</span> : <span>1</span><br><span>'!'</span> : <span>1</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to count vowels characters in a string.",
+                "ans": "<div><p>Approach:</p><ol><li>Create a function that accepts a string as an argument.</li><li>Initialize a vowel count variable to 0.</li><li>Loop through each character in the string.</li><li>If the current character is a vowel, increment the vowel count.</li><li>Return the vowel count.</li></ol><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>CountVowels</span> {<br><br>    <span>public</span> <span>static</span> <span>int</span> <span>countVowels</span><span>(String str)</span> {<br>        <span>int</span> <span>vowelCount</span> <span>=</span> <span>0</span>;<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; str.length(); i++) {<br>            <span>char</span> <span>ch</span> <span>=</span> str.charAt(i);<br>            <span>if</span> (ch == <span>'a'</span> || ch == <span>'e'</span> || ch == <span>'i'</span> || ch == <span>'o'</span> || ch == <span>'u'</span> ||<br>                ch == <span>'A'</span> || ch == <span>'E'</span> || ch == <span>'I'</span> || ch == <span>'O'</span> || ch == <span>'U'</span>) {<br>                vowelCount++;<br>            }<br>        }<br>        <span>return</span> vowelCount;<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"Hello, World!\"</span>;<br>        <span>int</span> <span>vowelCount</span> <span>=</span> countVowels(str);<br>        System.out.println(<span>\"Number of vowels in the string: \"</span> + vowelCount);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Number</span> <span>of</span> vowels <span>in</span> the <span>string</span>: <span>3</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to count number of special characters in String",
+                "ans": "<div><p>Approach:</p><ol><li>Create a function that accepts a string as an argument.</li><li>Initialize a special character count variable to 0.</li><li>Loop through each character in the string.</li><li>If the current character is not a digit, letter or whitespace, increment the special character count.</li><li>Return the special character count.</li></ol><p>Java Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>CountSpecialChars</span> {<br><br>    <span>public</span> <span>static</span> <span>int</span> <span>countSpecialChars</span><span>(String str)</span> {<br>        <span>int</span> <span>specialCharCount</span> <span>=</span> <span>0</span>;<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; str.length(); i++) {<br>            <span>char</span> <span>ch</span> <span>=</span> str.charAt(i);<br>            <span>if</span> (!Character.isLetterOrDigit(ch) &amp;&amp; !Character.isWhitespace(ch)) {<br>                specialCharCount++;<br>            }<br>        }<br>        <span>return</span> specialCharCount;<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"Hello, World! How are you?\"</span>;<br>        <span>int</span> <span>specialCharCount</span> <span>=</span> countSpecialChars(str);<br>        System.out.println(<span>\"Number of special characters in the string: \"</span> + specialCharCount);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Number</span> <span>of</span> special characters <span>in</span> the <span>string</span>: <span>3</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to extract numbers from String. Numbers can be of more than one digit.",
+                "ans": "<div><p>Approach:</p><ol><li>Create a function that accepts a string as an argument.</li><li>Initialize a string builder to store the digits.</li><li>Loop through each character in the string.</li><li>If the current character is a digit, append it to the string builder.</li><li>If the current character is not a digit, check if the string builder is non-empty.</li><li>If the string builder is non-empty, convert the digits to an integer and add it to a list of numbers.</li><li>Clear the string builder.</li><li>Return the list of numbers.</li></ol><p>Java Code:</p><pre><div><div><code><span>import</span> java.util.*;<br><br><span>public</span> <span>class</span> <span>ExtractNumbers</span> {<br><br>    <span>public</span> <span>static</span> List&lt;Integer&gt; <span>extractNumbers</span><span>(String str)</span> {<br>        List&lt;Integer&gt; numbers = <span>new</span> <span>ArrayList</span>&lt;&gt;();<br>        <span>StringBuilder</span> <span>sb</span> <span>=</span> <span>new</span> <span>StringBuilder</span>();<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; str.length(); i++) {<br>            <span>char</span> <span>ch</span> <span>=</span> str.charAt(i);<br>            <span>if</span> (Character.isDigit(ch)) {<br>                sb.append(ch);<br>            } <span>else</span> <span>if</span> (sb.length() &gt; <span>0</span>) {<br>                <span>int</span> <span>num</span> <span>=</span> Integer.parseInt(sb.toString());<br>                numbers.add(num);<br>                sb.setLength(<span>0</span>);<br>            }<br>        }<br>        <span>if</span> (sb.length() &gt; <span>0</span>) {<br>            <span>int</span> <span>num</span> <span>=</span> Integer.parseInt(sb.toString());<br>            numbers.add(num);<br>        }<br>        <span>return</span> numbers;<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>String</span> <span>str</span> <span>=</span> <span>\"The price of the product is 123.45 dollars.\"</span>;<br>        List&lt;Integer&gt; numbers = extractNumbers(str);<br>        System.out.println(<span>\"Numbers found in the string: \"</span> + numbers);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Numbers found in the <span>string</span>: [<span>123</span>, <span>45</span>]<br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to find the maximum and minimum value in an array (without using inbuilt functions).",
+                "ans": "<div><p>Approach:</p><ol><li>Initialize variables <code>max</code> and <code>min</code> with the first element of the array.</li><li>Traverse the array using a loop and compare each element with <code>max</code> and <code>min</code>.</li><li>If an element is greater than <code>max</code>, update <code>max</code> to that element.</li><li>If an element is smaller than <code>min</code>, update <code>min</code> to that element.</li><li>After the loop completes, <code>max</code> and <code>min</code> will contain the maximum and minimum values respectively.</li></ol><p>Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br>public <span>class</span> <span>MaxMinArray</span> {<br>    public static void main(String[] args) {<br>        Scanner <span>input</span> = new Scanner(System.<span>in</span>);<br>        System.out.<span>print</span>(<span>\"Enter the size of the array: \"</span>);<br>        <span>int</span> size = <span>input</span>.nextInt();<br>        <span>int</span>[] arr = new <span>int</span>[size];<br>        System.out.println(<span>\"Enter the elements of the array:\"</span>);<br>        <span>for</span> (<span>int</span> i = <span>0</span>; i &lt; size; i++) {<br>            arr[i] = <span>input</span>.nextInt();<br>        }<br>        <span>int</span> <span>max</span> = arr[<span>0</span>];<br>        <span>int</span> <span>min</span> = arr[<span>0</span>];<br>        <span>for</span> (<span>int</span> i = <span>1</span>; i &lt; size; i++) {<br>            <span>if</span> (arr[i] &gt; <span>max</span>) {<br>                <span>max</span> = arr[i];<br>            }<br>            <span>if</span> (arr[i] &lt; <span>min</span>) {<br>                <span>min</span> = arr[i];<br>            }<br>        }<br>        System.out.println(<span>\"Maximum value in the array: \"</span> + <span>max</span>);<br>        System.out.println(<span>\"Minimum value in the array: \"</span> + <span>min</span>);<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ol><li>We take input from the user using Scanner class to get the size and elements of the array.</li><li>We initialize two variables <code>max</code> and <code>min</code> with the first element of the array.</li><li>We use a loop to traverse the array from the second element to the last element.</li><li>Inside the loop, we compare the current element with <code>max</code> and <code>min</code>.</li><li>If the current element is greater than <code>max</code>, we update <code>max</code> to that element.</li><li>If the current element is smaller than <code>min</code>, we update <code>min</code> to that element.</li><li>After the loop completes, <code>max</code> and <code>min</code> will contain the maximum and minimum values respectively.</li><li>Finally, we print the maximum and minimum values using the <code>System.out.println()</code> statement.</li></ol></div>"
+            },
+            {
+                "ques": "Write a program to find the 2nd maximum and 2nd minimum value in an array (without using inbuilt functions).",
+                "ans": "<div><p>Approach:<br>To find the 2nd maximum and 2nd minimum value in an array (without using inbuilt functions), we can traverse through the array twice. In the first traversal, we can find the maximum and minimum values. In the second traversal, we can exclude the maximum and minimum values that we found in the first traversal and find the maximum and minimum values in the remaining elements.</p><p>Java code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>SecondMinMax</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br><br>        System.out.print(<span>\"Enter the number of elements in the array: \"</span>);<br>        <span>int</span> <span>n</span> <span>=</span> scanner.nextInt();<br><br>        <span>int</span>[] arr = <span>new</span> <span>int</span>[n];<br><br>        System.out.println(<span>\"Enter the elements of the array: \"</span>);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>            arr[i] = scanner.nextInt();<br>        }<br><br>        <span>int</span> <span>max</span> <span>=</span> Integer.MIN_VALUE;<br>        <span>int</span> <span>min</span> <span>=</span> Integer.MAX_VALUE;<br><br>        <span>// First traversal to find maximum and minimum values</span><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>            <span>if</span> (arr[i] &gt; max) {<br>                max = arr[i];<br>            }<br><br>            <span>if</span> (arr[i] &lt; min) {<br>                min = arr[i];<br>            }<br>        }<br><br>        <span>int</span> <span>secondMax</span> <span>=</span> Integer.MIN_VALUE;<br>        <span>int</span> <span>secondMin</span> <span>=</span> Integer.MAX_VALUE;<br><br>        <span>// Second traversal to find 2nd maximum and 2nd minimum values</span><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>            <span>if</span> (arr[i] != max &amp;&amp; arr[i] &gt; secondMax) {<br>                secondMax = arr[i];<br>            }<br><br>            <span>if</span> (arr[i] != min &amp;&amp; arr[i] &lt; secondMin) {<br>                secondMin = arr[i];<br>            }<br>        }<br><br>        System.out.println(<span>\"Maximum value: \"</span> + max);<br>        System.out.println(<span>\"Minimum value: \"</span> + min);<br>        System.out.println(<span>\"2nd Maximum value: \"</span> + secondMax);<br>        System.out.println(<span>\"2nd Minimum value: \"</span> + secondMin);<br>    }<br>}<br></code></div></div></pre><p>In this code, we first take the number of elements in the array and the elements as input from the user. Then, we traverse through the array twice. In the first traversal, we find the maximum and minimum values. In the second traversal, we exclude the maximum and minimum values and find the 2nd maximum and 2nd minimum values in the remaining elements. Finally, we print the maximum, minimum, 2nd maximum, and 2nd minimum values to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to remove duplicates from an array (without using inbuilt functions).",
+                "ans": "<div><p>Approach:</p><ol><li>Create a new array without duplicates.</li><li>Iterate through the original array and add each unique element to the new array.</li><li>Return the new array.</li></ol><p>Code:</p><pre><div><div><code><span>public</span> <span>static</span> <span>int</span>[] removeDuplicates(<span>int</span>[] arr) {<br>    <span>int</span> <span>n</span> <span>=</span> arr.length;<br>    <span>int</span>[] temp = <span>new</span> <span>int</span>[n];<br>    <span>int</span> <span>j</span> <span>=</span> <span>0</span>;<br><br>    <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; n; i++) {<br>        <span>boolean</span> <span>isDuplicate</span> <span>=</span> <span>false</span>;<br>        <span>for</span> (<span>int</span> <span>k</span> <span>=</span> <span>0</span>; k &lt; j; k++) {<br>            <span>if</span> (arr[i] == temp[k]) {<br>                isDuplicate = <span>true</span>;<br>                <span>break</span>;<br>            }<br>        }<br>        <span>if</span> (!isDuplicate) {<br>            temp[j++] = arr[i];<br>        }<br>    }<br><br>    <span>int</span>[] result = <span>new</span> <span>int</span>[j];<br>    System.arraycopy(temp, <span>0</span>, result, <span>0</span>, j);<br><br>    <span>return</span> result;<br>}<br></code></div></div></pre><p>Explanation:</p><p>We create a new array called <code>temp</code> with the same size as the original array <code>arr</code>. We also initialize a variable <code>j</code> to 0 to keep track of the number of unique elements we have added to the <code>temp</code> array.</p><p>We iterate through the <code>arr</code> array and for each element, we check if it is a duplicate by iterating through the <code>temp</code> array. If it is a duplicate, we set the <code>isDuplicate</code> flag to <code>true</code>. If it is not a duplicate, we add it to the <code>temp</code> array and increment <code>j</code>.</p><p>Finally, we create a new array called <code>result</code> with the size of <code>j</code> and copy the unique elements from <code>temp</code> to <code>result</code>. We return the <code>result</code> array which contains the original array without duplicates.</p></div>"
+            },
+            {
+                "ques": "Write a program to sort an array in ascending order (without using inbuilt functions).",
+                "ans": "<div><p>Approach:<br>We can implement the bubble sort algorithm to sort the array in ascending order. In bubble sort, we compare adjacent elements in the array and swap them if they are not in the correct order. We repeat this process until the array is sorted.</p><p>Algorithm:</p><ol><li>Take input an array of n elements.</li><li>Repeat steps 3 through 6 n-1 times.</li><li>Compare each element of the array with the adjacent element.</li><li>If the adjacent element is smaller, swap them.</li><li>Continue until all adjacent elements have been compared.</li><li>Repeat the process until no more swaps are required.</li></ol><p>Java code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>BubbleSort</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>input</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br><br>        <span>// take input array</span><br>        System.out.print(<span>\"Enter the size of the array: \"</span>);<br>        <span>int</span> <span>size</span> <span>=</span> input.nextInt();<br>        <span>int</span>[] arr = <span>new</span> <span>int</span>[size];<br><br>        System.out.println(<span>\"Enter \"</span> + size + <span>\" elements: \"</span>);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; size; i++) {<br>            arr[i] = input.nextInt();<br>        }<br><br>        <span>// perform bubble sort</span><br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; size - <span>1</span>; i++) {<br>            <span>for</span> (<span>int</span> <span>j</span> <span>=</span> <span>0</span>; j &lt; size - i - <span>1</span>; j++) {<br>                <span>if</span> (arr[j] &gt; arr[j + <span>1</span>]) {<br>                    <span>// swap arr[j] and arr[j+1]</span><br>                    <span>int</span> <span>temp</span> <span>=</span> arr[j];<br>                    arr[j] = arr[j + <span>1</span>];<br>                    arr[j + <span>1</span>] = temp;<br>                }<br>            }<br>        }<br><br>        <span>// print sorted array</span><br>        System.out.println(<span>\"Sorted array in ascending order:\"</span>);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; size; i++) {<br>            System.out.print(arr[i] + <span>\" \"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this code, we first take input an array of n elements. We then perform the bubble sort algorithm on this array to sort it in ascending order. Finally, we print the sorted array.</p></div>"
+            },
+            {
+                "ques": "Write a program to find the sum of all even numbers in an array.",
+                "ans": "<div><p>Approach:</p><ol><li>Initialize a variable sum to 0.</li><li>Traverse the array using a loop.</li><li>For each element, check if it is even.</li><li>If the element is even, add it to the sum.</li><li>After the loop, the sum will contain the total sum of even numbers in the array.</li></ol><p>Java code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>SumOfEvenNumbersInArray</span> {<br>    <span><span>public</span> <span>static</span> <span>void</span> <span>main</span>(<span>String[] args</span>)</span> {<br>        <span>int</span>[] arr = {<span>2</span>, <span>4</span>, <span>5</span>, <span>7</span>, <span>8</span>, <span>10</span>};<br>        <span>int</span> sum = <span>0</span>;<br>        <span>for</span>(<span>int</span> i=<span>0</span>; i&lt;arr.length; i++) {<br>            <span>if</span>(arr[i] % <span>2</span> == <span>0</span>) {<br>                sum += arr[i];<br>            }<br>        }<br>        System.<span>out</span>.println(<span>\"Sum of even numbers in the array: \"</span> + sum);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Sum of even numbers in the <span>array</span>: <span>24</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to find the sum of all odd numbers in an array.",
+                "ans": "<div><p>Approach:</p><ol><li>Initialize a variable sum to 0.</li><li>Traverse the array using a loop.</li><li>For each element, check if it is odd.</li><li>If the element is odd, add it to the sum.</li><li>After the loop, the sum will contain the total sum of odd numbers in the array.</li></ol><p>Java code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>SumOfOddNumbersInArray</span> {<br>    <span><span>public</span> <span>static</span> <span>void</span> <span>main</span>(<span>String[] args</span>)</span> {<br>        <span>int</span>[] arr = {<span>2</span>, <span>4</span>, <span>5</span>, <span>7</span>, <span>8</span>, <span>10</span>};<br>        <span>int</span> sum = <span>0</span>;<br>        <span>for</span>(<span>int</span> i=<span>0</span>; i&lt;arr.length; i++) {<br>            <span>if</span>(arr[i] % <span>2</span> != <span>0</span>) {<br>                sum += arr[i];<br>            }<br>        }<br>        System.<span>out</span>.println(<span>\"Sum of odd numbers in the array: \"</span> + sum);<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Sum of odd numbers in the <span>array</span>: <span>12</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to calculate the average of an array of numbers.",
+                "ans": "<div><p>Approach:<br>To calculate the average of an array of numbers, we need to sum up all the numbers in the array and then divide it by the total number of elements in the array.</p><p>Here are the steps to calculate the average:</p><ol><li>Initialize a variable to hold the sum of all the elements in the array.</li><li>Iterate through the array and add each element to the sum variable.</li><li>Divide the sum variable by the total number of elements in the array to get the average.</li></ol><p>Java code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>AverageOfArray</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span>[] arr = {<span>5</span>, <span>10</span>, <span>15</span>, <span>20</span>, <span>25</span>};  <span>// Sample array</span><br>        <span>int</span> <span>sum</span> <span>=</span> <span>0</span>;<br>        <br>        <span>// Iterate through the array and add each element to sum</span><br>        <span>for</span>(<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; arr.length; i++) {<br>            sum += arr[i];<br>        }<br>        <br>        <span>// Calculate the average</span><br>        <span>double</span> <span>average</span> <span>=</span> (<span>double</span>) sum / arr.length;<br>        <br>        <span>// Print the average</span><br>        System.out.println(<span>\"Average of array elements: \"</span> + average);<br>    }<br>}<br></code></div></div></pre><p>In the above code, we have a sample array <code>arr</code> containing 5 elements. We have initialized the sum variable to 0 and then iterated through the array and added each element to the sum variable. Finally, we have divided the sum by the length of the array to get the average. We have then printed the average to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to find the intersection of two arrays.",
+                "ans": "<div><p>Approach:</p><ol><li>Create two arrays of any length and fill them with some values.</li><li>Create a new empty array to store the common elements.</li><li>Use a nested loop to iterate through both arrays and compare each element.</li><li>If the elements are the same, add it to the new array.</li><li>Print the new array as the intersection of the two arrays.</li></ol><p>Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>IntersectionOfArrays</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span>[] arr1 = {<span>1</span>, <span>2</span>, <span>3</span>, <span>4</span>, <span>5</span>};<br>        <span>int</span>[] arr2 = {<span>3</span>, <span>4</span>, <span>5</span>, <span>6</span>, <span>7</span>};<br>        <span>int</span>[] intersection = <span>new</span> <span>int</span>[arr1.length];<br>        <span>int</span> <span>k</span> <span>=</span> <span>0</span>;<br>        <br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; arr1.length; i++) {<br>            <span>for</span> (<span>int</span> <span>j</span> <span>=</span> <span>0</span>; j &lt; arr2.length; j++) {<br>                <span>if</span> (arr1[i] == arr2[j]) {<br>                    intersection[k] = arr1[i];<br>                    k++;<br>                }<br>            }<br>        }<br>        <br>        System.out.print(<span>\"Intersection of the two arrays: \"</span>);<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; k; i++) {<br>            System.out.print(intersection[i] + <span>\" \"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>Intersection</span> <span>of</span> the two arrays: <span>3</span> <span>4</span> <span>5</span> <br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to find the union of two arrays.",
+                "ans": "<div><p>Approach:<br>To find the union of two arrays, we need to merge both arrays into a single array and remove the duplicates. We can achieve this by iterating over both arrays and adding their elements to a new array only if they haven't been added before.</p><p>Code:</p><pre><div><div><code>import java<span>.util</span><span>.Arrays</span>;<br><br>public class ArrayUnion {<br>    public static void <span>main</span>(String[] args) {<br>        int<span>[]</span> arr1 = {<span>1</span>, <span>2</span>, <span>3</span>, <span>4</span>, <span>5</span>};<br>        int<span>[]</span> arr2 = {<span>4</span>, <span>5</span>, <span>6</span>, <span>7</span>, <span>8</span>};<br>        int<span>[]</span> union = <span>getUnion</span>(arr1, arr2);<br>        System<span>.out</span><span>.println</span>(Arrays.toString(union));<br>    }<br><br>    public static int<span>[]</span> <span>getUnion</span>(int[] arr1, int[] arr2) {<br>        int n1 = arr1<span>.length</span>;<br>        int n2 = arr2<span>.length</span>;<br>        int<span>[]</span> union = new int<span>[n1 + n2]</span>;<br>        int <span>i</span> = <span>0</span>, j = <span>0</span>, k = <span>0</span>;<br><br>        while (i &lt; n1 &amp;&amp; j &lt; n2) {<br>            if (arr1[i] &lt; arr2[j]) {<br>                union<span>[k++]</span> = arr1<span>[i++]</span>;<br>            } else if (arr1[i] &gt; arr2[j]) {<br>                union<span>[k++]</span> = arr2<span>[j++]</span>;<br>            } else {<br>                union<span>[k++]</span> = arr1<span>[i++]</span>;<br>                j++;<br>            }<br>        }<br><br>        while (i &lt; n1) {<br>            union<span>[k++]</span> = arr1<span>[i++]</span>;<br>        }<br><br>        while (j &lt; n2) {<br>            union<span>[k++]</span> = arr2<span>[j++]</span>;<br>        }<br><br>        int<span>[]</span> result = new int<span>[k]</span>;<br>        System<span>.arraycopy</span>(union, <span>0</span>, result, <span>0</span>, k);<br>        return result;<br>    }<br>}<br></code></div></div></pre><p>In this code, we first declare two arrays <code>arr1</code> and <code>arr2</code> which contain the elements we want to find the union of. We then call the <code>getUnion</code> function which returns the union of both arrays.</p><p>In the <code>getUnion</code> function, we first declare an array <code>union</code> of size <code>n1 + n2</code> where <code>n1</code> and <code>n2</code> are the lengths of <code>arr1</code> and <code>arr2</code> respectively. We then use three variables <code>i</code>, <code>j</code>, and <code>k</code> to keep track of the current position in <code>arr1</code>, <code>arr2</code>, and <code>union</code> respectively.</p><p>We then iterate over both arrays using a while loop and compare their elements. If the element in <code>arr1</code> is smaller than the element in <code>arr2</code>, we add it to <code>union</code> and increment <code>i</code>. If the element in <code>arr2</code> is smaller than the element in <code>arr1</code>, we add it to <code>union</code> and increment <code>j</code>. If the elements are equal, we add the element to <code>union</code> and increment both <code>i</code> and <code>j</code>.</p><p>Finally, we add any remaining elements in <code>arr1</code> and <code>arr2</code> to <code>union</code>, and create a new array <code>result</code> of size <code>k</code> which contains the union of <code>arr1</code> and <code>arr2</code>.</p></div>"
+            },
+            {
+                "ques": "Write a program to calculate the area of a triangle.",
+                "ans": "<div><p>To calculate the area of a triangle, we need to know the base and height of the triangle. Once we have the base and height, we can use the formula:</p><p>Area = (base * height) / 2</p><p>We can get the values of the base and height from the user and then calculate the area of the triangle using the formula mentioned above. Here's the Java code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>TriangleArea</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>sc</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter the base of the triangle: \"</span>);<br>        <span>double</span> <span>base</span> <span>=</span> sc.nextDouble();<br>        System.out.print(<span>\"Enter the height of the triangle: \"</span>);<br>        <span>double</span> <span>height</span> <span>=</span> sc.nextDouble();<br><br>        <span>double</span> <span>area</span> <span>=</span> (base * height) / <span>2</span>;<br><br>        System.out.println(<span>\"The area of the triangle is: \"</span> + area);<br>    }<br>}<br></code></div></div></pre><p>In the code above, we first import the Scanner class from the <code>java.util</code> package to take user input. We then prompt the user to enter the base and height of the triangle. We store the values of the base and height in variables <code>base</code> and <code>height</code> respectively. We then calculate the area of the triangle using the formula and store it in the variable <code>area</code>. Finally, we print the area of the triangle using the <code>System.out.println()</code> method.</p></div>"
+            },
+            {
+                "ques": "Write a program to calculate the perimeter of a rectangle.",
+                "ans": "<div><p>To calculate the perimeter of a rectangle, we need to add the length and width of the rectangle and then multiply it by 2. The formula for calculating the perimeter of a rectangle is:</p><p>Perimeter = 2 * (length + width)</p><p>We can take the input for length and width from the user and use the formula to calculate the perimeter.</p><p>Here's the Java code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>RectanglePerimeter</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>input</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        <br>        System.out.print(<span>\"Enter the length of the rectangle: \"</span>);<br>        <span>double</span> <span>length</span> <span>=</span> input.nextDouble();<br>        <br>        System.out.print(<span>\"Enter the width of the rectangle: \"</span>);<br>        <span>double</span> <span>width</span> <span>=</span> input.nextDouble();<br>        <br>        <span>double</span> <span>perimeter</span> <span>=</span> <span>2</span> * (length + width);<br>        <br>        System.out.println(<span>\"The perimeter of the rectangle is: \"</span> + perimeter);<br>    }<br>}<br></code></div></div></pre><p>In this code, we first import the Scanner class from the java.util package to take input from the user. We then prompt the user to enter the length and width of the rectangle and store the inputs in variables. We then calculate the perimeter using the formula and store it in a variable called perimeter. Finally, we print the value of the perimeter to the console using System.out.println().</p></div>"
+            },
+            {
+                "ques": "Write a program to convert a decimal number to binary.",
+                "ans": "<div><p>Approach:<br>To convert a decimal number to binary, we need to repeatedly divide the decimal number by 2 and keep track of the remainder. We will add each remainder to a string in reverse order to get the binary representation of the decimal number.</p><p>Java Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>DecimalToBinary</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>sc</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a decimal number: \"</span>);<br>        <span>int</span> <span>decimal</span> <span>=</span> sc.nextInt();<br><br>        <span>StringBuilder</span> <span>binary</span> <span>=</span> <span>new</span> <span>StringBuilder</span>(); <span>// using StringBuilder to append remainders</span><br><br>        <span>while</span> (decimal &gt; <span>0</span>) {<br>            <span>int</span> <span>remainder</span> <span>=</span> decimal % <span>2</span>;<br>            binary.append(remainder);<br>            decimal = decimal / <span>2</span>;<br>        }<br><br>        System.out.println(<span>\"Binary equivalent: \"</span> + binary.reverse()); <span>// reversing to get the correct binary representation</span><br>    }<br>}<br></code></div></div></pre><p>In this program, we take a decimal number from the user and initialize an empty StringBuilder object to store the binary representation. We then use a while loop to repeatedly divide the decimal number by 2 and add the remainder to the StringBuilder object. Finally, we reverse the StringBuilder object and print the binary representation to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to convert a binary number to decimal.",
+                "ans": "<div><p>Approach:<br>To convert a binary number to decimal, we need to multiply each digit of the binary number with powers of 2 and then add the resulting values to get the decimal equivalent. We start with the rightmost digit of the binary number and move towards the left, doubling the power of 2 for each position. If the binary digit is 1, we add the corresponding power of 2 to the decimal equivalent, and if it is 0, we skip that position.</p><p>Algorithm:</p><ol><li>Take an input binary number as a string.</li><li>Initialize a variable \"decimal\" to 0.</li><li>Traverse the binary string from right to left.</li><li>If the current binary digit is 1, add the corresponding power of 2 to the \"decimal\" variable.</li><li>Double the power of 2 for the next position.</li><li>Repeat steps 4-5 for all the positions.</li><li>Return the decimal equivalent.</li></ol><p>Java code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>BinaryToDecimal</span> {<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>scanner</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter a binary number: \"</span>);<br>        <span>String</span> <span>binary</span> <span>=</span> scanner.nextLine();<br>        <span>int</span> <span>decimal</span> <span>=</span> <span>0</span>;<br>        <span>int</span> <span>powerOfTwo</span> <span>=</span> <span>1</span>;<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> binary.length() - <span>1</span>; i &gt;= <span>0</span>; i--) {<br>            <span>if</span> (binary.charAt(i) == <span>'1'</span>) {<br>                decimal += powerOfTwo;<br>            }<br>            powerOfTwo *= <span>2</span>;<br>        }<br>        System.out.println(<span>\"Decimal equivalent of \"</span> + binary + <span>\" is \"</span> + decimal);<br>    }<br>}<br></code></div></div></pre><p>In this program, we take the binary number as a string input from the user and convert it to its decimal equivalent using the algorithm described above. We use a for loop to traverse the binary string from right to left and calculate the decimal equivalent. Finally, we print the decimal equivalent using the println statement.</p></div>"
+            },
+            {
+                "ques": "Write a program to find the sum of two numbers using bitwise operators.",
+                "ans": "<div><p>To find the sum of two numbers using bitwise operators, we can use the bitwise XOR operator to perform the addition without carrying and the bitwise AND operator to determine where the carries occur.</p><p>Here's the approach:</p><ol><li>Perform a bitwise XOR operation on the two numbers to get the sum without carrying.</li><li>Perform a bitwise AND operation on the two numbers, then shift the result one bit to the left to get the carries.</li><li>Add the carries to the sum obtained in step 1.</li><li>Repeat steps 1-3 until there are no more carries.</li></ol><p>Here's the code:</p><pre><div><div><code><span>public</span> <span>static</span> <span>int</span> <span>add</span><span>(<span>int</span> a, <span>int</span> b)</span> {<br>    <span>while</span> (b != <span>0</span>) {<br>        <span>// calculate sum without carrying</span><br>        <span>int</span> <span>sum</span> <span>=</span> a ^ b;<br><br>        <span>// calculate carries</span><br>        <span>int</span> <span>carries</span> <span>=</span> (a &amp; b) &lt;&lt; <span>1</span>;<br><br>        <span>// add carries to sum</span><br>        a = sum;<br>        b = carries;<br>    }<br>    <span>return</span> a;<br>}<br></code></div></div></pre><p>In this code, we keep adding the carries until there are no more left, then we return the sum. Note that this code will only work for integers within the range of the int data type in Java.</p></div>"
+            },
+            {
+                "ques": "Write a program to find the sum of two matrices.",
+                "ans": "<div><p>Approach:<br>To find the sum of two matrices, we need to perform element-wise addition between the corresponding elements of the matrices. To do this, we need to iterate over each element of the matrices and add them.</p><p>We will create a method that takes two matrices as input, and returns the sum of the matrices.</p><p>Here's the code implementation in Java:</p><pre><div><div><code><span>public</span> <span>class</span> <span>MatrixAddition</span> {<br>   <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>      <span>int</span> <span>rows</span> <span>=</span> <span>3</span>, columns = <span>3</span>;<br>      <span>int</span>[][] matrix1 = { {<span>1</span>, <span>2</span>, <span>3</span>}, {<span>4</span>, <span>5</span>, <span>6</span>}, {<span>7</span>, <span>8</span>, <span>9</span>} };<br>      <span>int</span>[][] matrix2 = { {<span>9</span>, <span>8</span>, <span>7</span>}, {<span>6</span>, <span>5</span>, <span>4</span>}, {<span>3</span>, <span>2</span>, <span>1</span>} };<br><br>      <span>// call the method to get the sum of matrices</span><br>      <span>int</span>[][] sum = addMatrices(matrix1, matrix2);<br><br>      <span>// display the sum of matrices</span><br>      <span>for</span>(<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; rows; i++) {<br>         <span>for</span>(<span>int</span> <span>j</span> <span>=</span> <span>0</span>; j &lt; columns; j++) {<br>            System.out.print(sum[i][j] + <span>\" \"</span>);<br>         }<br>         System.out.println();<br>      }<br>   }<br><br>   <span>public</span> <span>static</span> <span>int</span>[][] addMatrices(<span>int</span>[][] matrix1, <span>int</span>[][] matrix2) {<br>      <span>int</span> <span>rows</span> <span>=</span> matrix1.length;<br>      <span>int</span> <span>columns</span> <span>=</span> matrix1[<span>0</span>].length;<br>      <span>int</span>[][] sum = <span>new</span> <span>int</span>[rows][columns];<br><br>      <span>for</span>(<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; rows; i++) {<br>         <span>for</span>(<span>int</span> <span>j</span> <span>=</span> <span>0</span>; j &lt; columns; j++) {<br>            sum[i][j] = matrix1[i][j] + matrix2[i][j];<br>         }<br>      }<br><br>      <span>return</span> sum;<br>   }<br>}<br></code></div></div></pre><p>In this code, we have created a <code>MatrixAddition</code> class that contains the <code>main</code> method and the <code>addMatrices</code> method. In the <code>main</code> method, we have defined two matrices <code>matrix1</code> and <code>matrix2</code> and called the <code>addMatrices</code> method to get the sum of the matrices. Then we have displayed the sum of the matrices using nested for loops.</p><p>In the <code>addMatrices</code> method, we have taken two matrices <code>matrix1</code> and <code>matrix2</code> as input and initialized the <code>sum</code> matrix with the same number of rows and columns as the input matrices. Then we have used nested for loops to iterate over each element of the matrices and add them element-wise to get the sum. Finally, we have returned the <code>sum</code> matrix.</p></div>"
+            },
+            {
+                "ques": "Write a program to find the transpose of a matrix.",
+                "ans": "<div><p>Approach:<br>To find the transpose of a matrix, we need to swap the rows and columns of the matrix. We can achieve this by iterating through the matrix and swapping the values at each position with the corresponding value in the transpose position. To swap the values, we can use a temporary variable.</p><p>Code:</p><pre><div><div><code><span>import</span> java.util.Scanner;<br><br><span>public</span> <span>class</span> <span>TransposeMatrix</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>Scanner</span> <span>sc</span> <span>=</span> <span>new</span> <span>Scanner</span>(System.in);<br>        System.out.print(<span>\"Enter the number of rows: \"</span>);<br>        <span>int</span> <span>rows</span> <span>=</span> sc.nextInt();<br>        System.out.print(<span>\"Enter the number of columns: \"</span>);<br>        <span>int</span> <span>cols</span> <span>=</span> sc.nextInt();<br><br>        <span>int</span>[][] matrix = <span>new</span> <span>int</span>[rows][cols];<br>        System.out.println(<span>\"Enter the matrix elements:\"</span>);<br><br>        <span>for</span>(<span>int</span> i=<span>0</span>; i&lt;rows; i++) {<br>            <span>for</span>(<span>int</span> j=<span>0</span>; j&lt;cols; j++) {<br>                matrix[i][j] = sc.nextInt();<br>            }<br>        }<br><br>        <span>int</span>[][] transpose = <span>new</span> <span>int</span>[cols][rows];<br>        <span>for</span>(<span>int</span> i=<span>0</span>; i&lt;cols; i++) {<br>            <span>for</span>(<span>int</span> j=<span>0</span>; j&lt;rows; j++) {<br>                transpose[i][j] = matrix[j][i];<br>            }<br>        }<br><br>        System.out.println(<span>\"Transpose of the matrix:\"</span>);<br><br>        <span>for</span>(<span>int</span> i=<span>0</span>; i&lt;cols; i++) {<br>            <span>for</span>(<span>int</span> j=<span>0</span>; j&lt;rows; j++) {<br>                System.out.print(transpose[i][j] + <span>\" \"</span>);<br>            }<br>            System.out.println();<br>        }<br>    }<br>}<br></code></div></div></pre><p>Explanation:</p><ol><li>We first take the number of rows and columns of the matrix as input from the user.</li><li>We then create a matrix of the given size and take input from the user for each element of the matrix.</li><li>We create a new matrix for the transpose and iterate through the original matrix to swap the rows and columns.</li><li>We print the transpose of the matrix by iterating through the transpose matrix.</li></ol></div>"
+            },
+            {
+                "ques": "Write a program to implement a linear search algorithm.",
+                "ans": "<div><p>Linear search algorithm is a simple search algorithm that sequentially checks each element in an array until a match is found or the end of the array is reached.</p><p>The approach for implementing a linear search algorithm in Java is as follows:</p><ol><li>Create a function that takes an array and a key to search for as parameters.</li><li>Loop through each element in the array, starting from the first element.</li><li>Compare the current element with the key.</li><li>If a match is found, return the index of the element.</li><li>If the end of the array is reached and no match is found, return -1.</li></ol><p>Here's the Java code for implementing a linear search algorithm:</p><pre><div><div><code><span>public</span> <span>class</span> <span>LinearSearch</span> {<br>    <span>public</span> <span>static</span> <span>int</span> <span>search</span><span>(<span>int</span>[] arr, <span>int</span> key)</span> {<br>        <span>for</span> (<span>int</span> <span>i</span> <span>=</span> <span>0</span>; i &lt; arr.length; i++) {<br>            <span>if</span> (arr[i] == key) {<br>                <span>return</span> i;<br>            }<br>        }<br>        <span>return</span> -<span>1</span>;<br>    }<br>    <br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span>[] arr = {<span>1</span>, <span>3</span>, <span>5</span>, <span>7</span>, <span>9</span>};<br>        <span>int</span> <span>key</span> <span>=</span> <span>5</span>;<br>        <span>int</span> <span>index</span> <span>=</span> search(arr, key);<br>        <span>if</span> (index != -<span>1</span>) {<br>            System.out.println(<span>\"Element found at index \"</span> + index);<br>        } <span>else</span> {<br>            System.out.println(<span>\"Element not found\"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this example, the <code>search</code> method takes an array <code>arr</code> and a key <code>key</code> to search for. The method loops through each element in the array and compares it with the key. If a match is found, the index of the element is returned. If the end of the array is reached and no match is found, -1 is returned.</p><p>In the <code>main</code> method, an array is initialized with some values and a key is set to search for. The <code>search</code> method is called with the array and key as parameters. If the index returned by the <code>search</code> method is not -1, it means that the element was found and the index is printed. If the index is -1, it means that the element was not found and a message is printed.</p></div>"
+            },
+            {
+                "ques": "Write a program to implement a binary search algorithm.",
+                "ans": "<div><p>Approach:</p><p>Binary search is a commonly used search algorithm that works by repeatedly dividing the sorted input array into two equal halves and narrowing down the search to the half that may contain the target value.</p><ol><li>First, we need to sort the array.</li><li>Then, we take the middle element of the array and compare it with the target value.</li><li>If the middle element is equal to the target value, we return its index.</li><li>If the middle element is greater than the target value, we perform the binary search on the left half of the array.</li><li>If the middle element is less than the target value, we perform the binary search on the right half of the array.</li><li>We repeat the above steps until the target value is found or the search is exhausted.</li></ol><p>Java code:</p><p>Here is the Java implementation of binary search:</p><pre><div><div><code><span>public</span> <span>class</span> <span>BinarySearch</span> {<br>    <span>public</span> <span>static</span> <span>int</span> <span>binarySearch</span><span>(<span>int</span>[] arr, <span>int</span> target)</span> {<br>        <span>int</span> <span>left</span> <span>=</span> <span>0</span>;<br>        <span>int</span> <span>right</span> <span>=</span> arr.length - <span>1</span>;<br>        <span>while</span> (left &lt;= right) {<br>            <span>int</span> <span>mid</span> <span>=</span> left + (right - left) / <span>2</span>;<br>            <span>if</span> (arr[mid] == target) {<br>                <span>return</span> mid;<br>            } <span>else</span> <span>if</span> (arr[mid] &lt; target) {<br>                left = mid + <span>1</span>;<br>            } <span>else</span> {<br>                right = mid - <span>1</span>;<br>            }<br>        }<br>        <span>return</span> -<span>1</span>;<br>    }<br><br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>int</span>[] arr = {<span>2</span>, <span>3</span>, <span>5</span>, <span>7</span>, <span>9</span>, <span>11</span>};<br>        <span>int</span> <span>target</span> <span>=</span> <span>7</span>;<br>        <span>int</span> <span>index</span> <span>=</span> binarySearch(arr, target);<br>        <span>if</span> (index != -<span>1</span>) {<br>            System.out.println(<span>\"Target value found at index: \"</span> + index);<br>        } <span>else</span> {<br>            System.out.println(<span>\"Target value not found in the array.\"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this program, we first define a method called <code>binarySearch</code> that takes an array and a target value as input arguments. The method returns the index of the target value in the array if it is present, otherwise, it returns -1.</p><p>Inside the <code>binarySearch</code> method, we define two pointers, <code>left</code> and <code>right</code>, that represent the left and right ends of the array, respectively. We also define a <code>mid</code> variable that stores the middle index of the array.</p><p>We then use a while loop to perform the binary search. In each iteration of the loop, we compare the middle element of the array with the target value. If they are equal, we return the index of the middle element. If the middle element is less than the target value, we move the <code>left</code> pointer to the right half of the array. If the middle element is greater than the target value, we move the <code>right</code> pointer to the left half of the array.</p><p>Finally, if the target value is not found in the array, we return -1.</p><p>In the <code>main</code> method, we define an array of integers and a target value. We then call the <code>binarySearch</code> method with these arguments and print the result. In this example, the output would be:</p><pre><div><div><code>Target value found at <span>index</span>: <span>3</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to implement bubble sort algorithm.",
+                "ans": "<div><p>Approach:<br>Bubble sort algorithm works by repeatedly swapping adjacent elements in an array if they are in the wrong order. We keep swapping elements until the array is sorted. We need two loops to perform this task. The outer loop is to traverse the entire array n-1 times, and the inner loop is to compare and swap adjacent elements.</p><p>Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>BubbleSort</span> {<br>    <span><span>public</span> <span>static</span> <span>void</span> <span>main</span>(<span>String[] args</span>)</span> {<br>        <span>int</span>[] arr = { <span>64</span>, <span>34</span>, <span>25</span>, <span>12</span>, <span>22</span>, <span>11</span>, <span>90</span> };<br>        <span>int</span> n = arr.length;<br>        <span>for</span> (<span>int</span> i = <span>0</span>; i &lt; n - <span>1</span>; i++) {<br>            <span>for</span> (<span>int</span> j = <span>0</span>; j &lt; n - i - <span>1</span>; j++) {<br>                <span>if</span> (arr[j] &gt; arr[j + <span>1</span>]) {<br>                    <span>// swap arr[j] and arr[j+1]</span><br>                    <span>int</span> temp = arr[j];<br>                    arr[j] = arr[j + <span>1</span>];<br>                    arr[j + <span>1</span>] = temp;<br>                }<br>            }<br>        }<br>        <span>// Print the sorted array</span><br>        System.<span>out</span>.println(<span>\"Sorted array:\"</span>);<br>        <span>for</span> (<span>int</span> i = <span>0</span>; i &lt; n; ++i) {<br>            System.<span>out</span>.print(arr[i] + <span>\" \"</span>);<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this example, we are sorting an array of integers using bubble sort. We traverse the array n-1 times in the outer loop and compare adjacent elements in the inner loop. If they are in the wrong order, we swap them. After n-1 iterations, the array will be sorted.</p></div>"
+            },
+            {
+                "ques": "Write a program to implement insertion sort algorithm.",
+                "ans": "<div><p>Approach:<br>Insertion sort algorithm involves iterating over an array, selecting an element at a given position and inserting it into the correct position in the sorted subarray. We start with the second element in the array and compare it with the first element. If the second element is smaller than the first, we swap them. We then compare the third element with the first and second elements and insert it into the correct position in the sorted subarray. We continue this process until the entire array is sorted.</p><p>Java code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>InsertionSort</span> {<br>   <span><span>public</span> <span>static</span> <span>void</span> <span>main</span>(<span>String[] args</span>)</span> {<br>      <span>int</span>[] arr = { <span>5</span>, <span>2</span>, <span>8</span>, <span>4</span>, <span>9</span>, <span>1</span> };<br>      System.<span>out</span>.println(<span>\"Original array: \"</span> + Arrays.toString(arr));<br>      insertionSort(arr);<br>      System.<span>out</span>.println(<span>\"Sorted array: \"</span> + Arrays.toString(arr));<br>   }<br><br>   <span><span>public</span> <span>static</span> <span>void</span> <span>insertionSort</span>(<span><span>int</span>[] arr</span>)</span> {<br>      <span>int</span> n = arr.length;<br>      <span>for</span> (<span>int</span> i = <span>1</span>; i &lt; n; i++) {<br>         <span>int</span> key = arr[i];<br>         <span>int</span> j = i - <span>1</span>;<br>         <span>while</span> (j &gt;= <span>0</span> &amp;&amp; arr[j] &gt; key) {<br>            arr[j + <span>1</span>] = arr[j];<br>            j = j - <span>1</span>;<br>         }<br>         arr[j + <span>1</span>] = key;<br>      }<br>   }<br>}<br></code></div></div></pre><p>In the code above, we first define an array of integers and print the original array. We then call the insertionSort method which takes the array as input and sorts it using the insertion sort algorithm. The sorted array is then printed.</p><p>The insertionSort method iterates over the array from index 1 to the end. For each iteration, it selects the key value which is the current element being sorted. It then compares the key with the elements to its left and moves them to the right until it finds the correct position to insert the key value. Finally, the key value is inserted into the correct position in the sorted subarray.</p></div>"
+            },
+            {
+                "ques": "Write a program to implement selection sort algorithm.",
+                "ans": "<div><p>Approach:<br>Selection sort is an in-place comparison sorting algorithm. It works by dividing the input array into two parts, sorted and unsorted, and repeatedly finding the smallest element from the unsorted part and moving it to the beginning of the sorted part. We repeat this process until the entire array is sorted.</p><p>Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>SelectionSort</span> {<br>    <span><span>public</span> <span>static</span> <span>void</span> <span>main</span>(<span>String[] args</span>)</span> {<br>        <span>int</span>[] arr = { <span>64</span>, <span>25</span>, <span>12</span>, <span>22</span>, <span>11</span> };<br>        selectionSort(arr);<br>        System.<span>out</span>.println(<span>\"Sorted array:\"</span>);<br>        <span>for</span> (<span>int</span> i = <span>0</span>; i &lt; arr.length; i++) {<br>            System.<span>out</span>.print(arr[i] + <span>\" \"</span>);<br>        }<br>    }<br>    <span><span>public</span> <span>static</span> <span>void</span> <span>selectionSort</span>(<span><span>int</span>[] arr</span>)</span> {<br>        <span>int</span> n = arr.length;<br>        <span>for</span> (<span>int</span> i = <span>0</span>; i &lt; n - <span>1</span>; i++) {<br>            <span>int</span> minIndex = i;<br>            <span>for</span> (<span>int</span> j = i + <span>1</span>; j &lt; n; j++) {<br>                <span>if</span> (arr[j] &lt; arr[minIndex]) {<br>                    minIndex = j;<br>                }<br>            }<br>            <span>int</span> temp = arr[minIndex];<br>            arr[minIndex] = arr[i];<br>            arr[i] = temp;<br>        }<br>    }<br>}<br></code></div></div></pre><p>In this example, we have an array of integers with five elements. The selectionSort() function is called to sort the array in ascending order. It uses two nested loops, the outer loop iterates over each element of the array, and the inner loop finds the minimum element in the unsorted part of the array. The minimum element is swapped with the first element of the unsorted part of the array, and the process is repeated until the entire array is sorted. Finally, the sorted array is printed to the console.</p></div>"
+            },
+            {
+                "ques": "Write a program to implement a stack using an array.",
+                "ans": "<div><p>Approach:<br>To implement a stack using an array, we can declare an array to store the elements of the stack and keep track of the top element. We can perform push and pop operations by adding or removing elements from the top of the stack, respectively.</p><p>Steps:</p><ol><li>Declare an array and a variable to keep track of the top element of the stack.</li><li>Implement push() method to add an element to the top of the stack by incrementing the top index and assigning the element to the array at the top index.</li><li>Implement pop() method to remove and return the top element of the stack by assigning the element at the top index to a variable, decrementing the top index, and returning the variable.</li><li>Implement peek() method to return the top element of the stack without removing it.</li><li>Implement isEmpty() method to check if the stack is empty by checking if the top index is -1.</li></ol><p>Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>Stack</span> {<br>    <span>private</span> <span>int</span>[] stackArray;<br>    <span>private</span> <span>int</span> top;<br>    <span>private</span> <span>int</span> maxSize;<br><br>    <span><span>public</span> <span>Stack</span>(<span><span>int</span> maxSize</span>)</span> {<br>        <span>this</span>.maxSize = maxSize;<br>        <span>this</span>.stackArray = <span>new</span> <span>int</span>[maxSize];<br>        <span>this</span>.top = <span>-1</span>;<br>    }<br><br>    <span><span>public</span> <span>void</span> <span>push</span>(<span><span>int</span> element</span>)</span> {<br>        <span>if</span> (top == maxSize - <span>1</span>) {<br>            System.<span>out</span>.println(<span>\"Stack overflow\"</span>);<br>        } <span>else</span> {<br>            top++;<br>            stackArray[top] = element;<br>        }<br>    }<br><br>    <span><span>public</span> <span>int</span> <span>pop</span>()</span> {<br>        <span>if</span> (top == <span>-1</span>) {<br>            System.<span>out</span>.println(<span>\"Stack underflow\"</span>);<br>            <span>return</span> <span>-1</span>;<br>        } <span>else</span> {<br>            <span>int</span> element = stackArray[top];<br>            top--;<br>            <span>return</span> element;<br>        }<br>    }<br><br>    <span><span>public</span> <span>int</span> <span>peek</span>()</span> {<br>        <span>if</span> (top == <span>-1</span>) {<br>            System.<span>out</span>.println(<span>\"Stack is empty\"</span>);<br>            <span>return</span> <span>-1</span>;<br>        } <span>else</span> {<br>            <span>return</span> stackArray[top];<br>        }<br>    }<br><br>    <span><span>public</span> boolean <span>isEmpty</span>()</span> {<br>        <span>return</span> top == <span>-1</span>;<br>    }<br>}<br></code></div></div></pre><p>Note: This is a basic implementation of a stack using an array. In a production-level application, we might want to consider additional features such as resizing the array dynamically to accommodate for more elements.</p></div>"
+            },
+            {
+                "ques": "Write a program to implement a queue using an array.",
+                "ans": "<div><p>Approach:<br>To implement a queue using an array in Java, we can create an array of fixed size and use two pointers: <code>front</code> and <code>rear</code>. We initialize the <code>front</code> pointer to -1 and the <code>rear</code> pointer to 0. When we insert an element into the queue, we increment the <code>rear</code> pointer and add the element at that position. When we remove an element from the queue, we increment the <code>front</code> pointer and return the element at that position. To check if the queue is empty, we can check if <code>front</code> is equal to <code>rear</code>.</p><p>Code:</p><pre><div><div><code><span>public</span> <span>class</span> <span>ArrayQueue</span> {<br>    <span>private</span> <span>int</span>[] queue;<br>    <span>private</span> <span>int</span> front;<br>    <span>private</span> <span>int</span> rear;<br>    <span>private</span> <span>int</span> size;<br>    <br>    <span><span>public</span> <span>ArrayQueue</span>(<span><span>int</span> size</span>)</span> {<br>        <span>this</span>.size = size;<br>        queue = <span>new</span> <span>int</span>[size];<br>        front = <span>-1</span>;<br>        rear = <span>0</span>;<br>    }<br>    <br>    <span><span>public</span> <span>void</span> <span>enqueue</span>(<span><span>int</span> <span>value</span></span>)</span> {<br>        <span>if</span> (rear == size) {<br>            System.<span>out</span>.println(<span>\"Queue is full\"</span>);<br>        } <span>else</span> {<br>            queue[rear] = <span>value</span>;<br>            rear++;<br>        }<br>    }<br>    <br>    <span><span>public</span> <span>int</span> <span>dequeue</span>()</span> {<br>        <span>if</span> (front == rear) {<br>            System.<span>out</span>.println(<span>\"Queue is empty\"</span>);<br>            <span>return</span> <span>-1</span>;<br>        } <span>else</span> {<br>            front++;<br>            <span>return</span> queue[front<span>-1</span>];<br>        }<br>    }<br>    <br>    <span><span>public</span> boolean <span>isEmpty</span>()</span> {<br>        <span>return</span> front == rear;<br>    }<br>    <br>    <span><span>public</span> <span>static</span> <span>void</span> <span>main</span>(<span>String[] args</span>)</span> {<br>        ArrayQueue queue = <span>new</span> ArrayQueue(<span>5</span>);<br>        queue.enqueue(<span>10</span>);<br>        queue.enqueue(<span>20</span>);<br>        queue.enqueue(<span>30</span>);<br>        System.<span>out</span>.println(queue.dequeue());<br>        queue.enqueue(<span>40</span>);<br>        queue.enqueue(<span>50</span>);<br>        System.<span>out</span>.println(queue.dequeue());<br>        System.<span>out</span>.println(queue.dequeue());<br>        System.<span>out</span>.println(queue.dequeue());<br>        System.<span>out</span>.println(queue.dequeue());<br>        System.<span>out</span>.println(queue.isEmpty());<br>    }<br>}<br></code></div></div></pre><p>Output:</p><pre><div><div><code><span>10</span><br><span>20</span><br><span>30</span><br><span>40</span><br><span>50</span><br>Queue <span>is</span> empty<br><span>true</span><br></code></div></div></pre></div>"
+            },
+            {
+                "ques": "Write a program to reverse a linked list.",
+                "ans": "<div><p>Approach:<br>To reverse a linked list, we need to change the direction of the links between the nodes. We can do this by iterating through the linked list and changing the next pointer of each node to point to the previous node. To do this, we need to keep track of the previous node and the current node. Initially, the previous node is null and the current node is the head of the linked list. We traverse through the linked list until the current node is null. At each iteration, we change the next pointer of the current node to point to the previous node, then update the previous node to be the current node and move the current node to the next node in the linked list. Finally, we set the head of the linked list to be the last node we visited, which is the new first node after the reversal.</p><p>Code:</p><pre><div><div><code><span>class</span> <span>ListNode</span> {<br>    int <span>val</span>;<br>    ListNode next;<br>    ListNode(int <span>val</span>) {<br>        <span>this</span>.<span>val</span> = <span>val</span>;<br>    }<br>}<br><br><span>class</span> <span>Solution</span> {<br>    <span>public</span> ListNode reverseList(ListNode head) {<br>        ListNode prev = <span>null</span>;<br>        ListNode curr = head;<br>        <span>while</span> (curr != <span>null</span>) {<br>            ListNode nextNode = curr.next;<br>            curr.next = prev;<br>            prev = curr;<br>            curr = nextNode;<br>        }<br>        <span>return</span> prev;<br>    }<br>}<br></code></div></div></pre><p>Here, we define a <code>ListNode</code> class to represent each node in the linked list. The <code>reverseList</code> method takes the head of the linked list as input and returns the head of the reversed linked list. We initialize <code>prev</code> to null and <code>curr</code> to <code>head</code>. We then iterate through the linked list using a while loop until <code>curr</code> is null. At each iteration, we store the next node in the linked list in a variable called <code>nextNode</code>, then update <code>curr.next</code> to point to <code>prev</code>, update <code>prev</code> to be <code>curr</code>, and update <code>curr</code> to be <code>nextNode</code>. Once we have finished iterating through the linked list, <code>prev</code> will be the new head of the reversed linked list, so we return it.</p></div>"
+            }
+        ]
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        const quesAnsDiv = `
+        
+        <div class="question">Q {{INDEX}}: {{QUESTION}}<span class="arrow-down"></span></div>
+        <div class="answer">
+            <div id="postcontent">
+                <div class="code">
+                    <code>
+                    <b>ANSWER:</b> {{ANSWER}}
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        `;
+
+        var typingQuestion = -1;
+
+        const typingEffectOn = false;
+
+        //Remove undesired elements
+        document.addEventListener('DOMContentLoaded', function () {
+            removeUndesiredElementFromBlog();
+
+            //Add question section
+            addQuestions();
+
+            //Handle collapsibles
+            handleQuestionClick();
+
+            addCommentsColorInCodeTag();
+
+            addHandEmoji('div.code ul li', '&#9997;');
+            addHandEmoji('div.code ol li', '&#9997;');
+
+            //clickQuestionOneByOne();
+
+            //animateEntry();
+
+        }, false);
+
+        function delayMillis(ms) {
+            return new Promise((res) => {
+                console.log("Wait " + ms / 1000 + "secs");
+                setTimeout(res, ms);
+            });
+        }
+
+
+        async function clickQuestionOneByOne() {
+            var audio = new Audio('..\\audio\\notification.wav');
+            audio.play();
+            const questions = document.querySelectorAll('.question');
+            const len = questions.length;
+            console.log("Questions: " + len);
+            await delayMillis(2000);
+
+            for (let i = 0; i < 10; i++) {
+                let question = questions[i];
+                if (typingQuestion == -1) {
+                    welcome();
+                    await delayMillis(3500);
+                    showQuestion(question.textContent);
+                    await delayMillis(5000);
+                    question.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+                    // await delayMillis(1000);
+                    question.click();
+                    await delayMillis(10000);
+                    console.log('10s wait completed!')
+                }
+                //Wait while previous question is getting typed
+                while (typingQuestion != -1) {
+                    await delayMillis(5000);
+                }
+                //Play audio and close ques
+                audio.play();
+                question.click();
+                thankYou();
+                await delayMillis(3000);
+            }
+
+            audio.play();
+            await delayMillis(2000);
+            audio.play();
+            await delayMillis(2000);
+            audio.play();
+        }
+
+
+        function animateEntry() {
+            $(document).ready(function () {
+                $('html, body').scrollTop(0);
+            });
+
+            var scrollInterval = setInterval(function () {
+                $('html, body').animate({
+                    scrollTop: '+=' + 210 + 'px'
+                }, 200);
+
+                // Check if the user has scrolled to the bottom of the page
+                if ($(window).scrollTop() + $(window).height() - $(document).height() >= 10) {
+                    clearInterval(scrollInterval);
+                }
+            }, 2000);
+
+
+        }
+
+
+        function collapseExpandedQuesAns() {
+            const activeQuestions = document.querySelectorAll(".question.active");
+
+            activeQuestions.forEach(activeQues => {
+                activeQues.classList.toggle("active");
+                const activeQuesArrows = activeQues.querySelectorAll(".arrow-down");
+                activeQuesArrows.forEach(activeQuesArrow => {
+                    activeQuesArrow.classList.toggle("rotate");
+                });
+                const activeQuesAnswer = activeQues.nextElementSibling;
+                if (activeQuesAnswer.style.display === "block") {
+                    activeQuesAnswer.style.display = "none";
+                } else {
+                    activeQuesAnswer.style.display = "block";
+                }
+            });
+        }
+
+
+        function removeUndesiredElementFromBlog() {
+            //author gadget
+            var e = document.querySelector(".about-author");
+            if (e) e.remove();
+
+            //breadcrumb
+            var e = document.querySelector("#breadcrumb");
+            if (e) e.remove();
+
+            //entry-title
+            var e = document.querySelector(".entry-title");
+            if (e) e.remove();
+
+            //Remove repeatative nav bar
+            var e = document.querySelector(".topbar-wrap");
+            if (e) e.remove();
+
+
+            //logo link
+            const nodeList = document.querySelectorAll(".logo-img");
+            for (let i = 0; i < nodeList.length; i++) {
+                nodeList[i].href = 'https://way2qae.blogspot.com/2022/06/home-page.html';
+            }
+
+
+            //Width 95%
+            const eleList = document.querySelectorAll(".row-x1");
+            for (let i = 0; i < eleList.length; i++) {
+                eleList[i].style.width = '95%';
+            }
+
+            //view count
+            var viewCountElement = document.querySelector("#view-count");
+            if (viewCountElement) {
+                var visitCount = localStorage.getItem("page_view");
+                visitCount = Number(visitCount) + 1;
+                if (visitCount < 1500) { visitCount = (1500 + Math.floor((Math.random() * 1000) + 1)); }
+                localStorage.setItem("page_view", visitCount);
+                for (let i = 1; i <= visitCount; i++) {
+                    viewCountElement.innerHTML = visitCount;
+                }
+            }
+        }
+
+
+        function addCommentsColorInCodeTag() {
+            var preElements = document.querySelectorAll('pre span');
+            preElements.forEach(span => {
+                var str = span.innerHTML;
+                if (str.trim().startsWith('//')) {
+                    span.classList.add("comment");
+                }
+            });
+        }
+
+
+        function addHandEmoji(selector, emojiCode) {
+            document.querySelectorAll(selector).forEach(li => {
+                let str = "<span style='font-size:20px;'>" + emojiCode + "</span>" + li.innerHTML;
+                li.innerHTML = str;
+            });
+        }
+
+
+        function addQuestions() {
+            let number = 1;
+            let len = (quesAnsArray.length + "").length;
+            quesAnsArray.forEach(qa => {
+                let index = number.toString().padStart(len, '0');
+                var quesAns = quesAnsDiv.replace('{{QUESTION}}', qa.ques).replace('{{ANSWER}}', qa.ans).replace('{{INDEX}}', index);
+                var qaSection = document.querySelector('#qa-section');
+                qaSection.innerHTML += quesAns;
+                number++;
+            });
+        }
+
+
+        function handleQuestionClick() {
+            const questions = document.querySelectorAll(".question");
+
+            questions.forEach((question, questionNumber) => {
+                question.addEventListener("click", () => {
+
+                    question.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+                    question.classList.toggle("active");
+                    const arrow = question.querySelector(".arrow-down");
+                    arrow.classList.toggle("rotate");
+                    const answer = question.nextElementSibling;
+
+                    if (answer.style.display === "block") {
+                        answer.style.display = "none";
+                        question.classList.remove("sticky");
+                    } else {
+                        question.classList.add("sticky");
+                        // question.classList.add("xxl");
+                        question.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+                        if (typingEffectOn) {
+                            setTimeout(() => {
+                                // question.classList.remove("xxl");
+                                answer.style.display = "block";
+                                typingQuestion = questionNumber;    //set ques typing
+                                showTypingEffect(answer);
+                            }, 20);
+                        }
+                        else {
+                            // question.classList.remove("xxl");
+                            answer.style.display = "block";
+                        }
+                    }
+                });
+            });
+        }
+
+
+        function showTypingEffect(element) {
+            encapsulateText(element);   //Encapsulate within span tag and hide
+            animateTyping(element);
+        }
+
+
+        function encapsulateText(element) {
+            // Get all child nodes of the element
+            const childNodes = element.childNodes;
+
+            // Iterate over each child node
+            childNodes.forEach((node) => {
+                // If the node is a text node, encapsulate its text content in a span tag with class "hidden"
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const words = node.textContent.split(/\s+/);
+                    const span = document.createElement("span");
+                    span.classList.add("hidden");
+                    node.parentNode.replaceChild(span, node);
+
+                    const textNode = document.createTextNode(node.textContent);
+                    span.appendChild(textNode);
+                }
+                // If the node is an element node, recursively call the function on the child nodes
+                else if (node.nodeType === Node.ELEMENT_NODE) {
+                    encapsulateText(node);
+                }
+            });
+        }
+
+        function animateTyping(element) {
+            // Get all child nodes of the element
+            const spans = element.querySelectorAll('span');
+            typeSpanElements(spans);
+        }
+
+        function typeSpanElements(spans) {
+            let index = 0;
+            function typeNextSpan() {
+                if (index < spans.length) {
+                    typeSpan(spans[index], typeNextSpan);
+                    index++;
+                }
+                else {
+                    typingQuestion = -1;
+                }
+                // console.log("Typing question: " + typingQuestion);
+            }
+            typeNextSpan();
+        }
+
+        function typeSpan(span, callback) {
+            span.classList.remove("hidden");
+            span.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+            const text = span.textContent;
+            span.textContent = "";
+            let len = text.length;
+            let i = 0;
+            function type() {
+                if (i < len) {
+                    const char = text.charAt(i);
+                    // const nextChar = text.charAt(i + 1);
+                    span.textContent += char;
+                    // if (char == " ") setTimeout(type, 100);
+                    // else setTimeout(type, 40);
+                    setTimeout(type, 40);
+                    i++;
+                } else {
+                    if (callback) callback();
+                }
+            }
+            type();
+        }
+
+
+
+        function showOverlay(msg, closeInSec) {
+            let e = document.getElementById("myNav");
+            let h1 = document.getElementById("msg");
+            msg = msg.replaceAll('\n', '<br><br>');
+            h1.innerHTML = msg;
+            e.style.height = "100%";
+            setTimeout(() => { e.style.height = "0%"; }, closeInSec);
+        }
+
+        function welcome() {
+            showOverlay('Welcome \n  To \n WAY2QAE !!!', 3000);
+        }
+
+        function thankYou() {
+            showOverlay("Thank you!!! \n  See you in next video \n\n Support us! \n\nLike, comment, subscribe @WAY2QAE !!!", 3000);
+        }
+
+        function showQuestion(ques) {
+            let img = '<img src="C:\Users\\shari\\Desktop\\Projects\\Chrome Extension\\Gsheet2chatGPT\\WAY2QAE-WEBSITE\\images\\interview.png" alt="" width="200px"><br><br>'
+            ques = ques.split(':')[1];
+            ques = '<div class="ques">Interviewer</div>' + img + '<div class="ques">' + ques + '</div>'
+            showOverlay(ques, 5000);
+        }
+
+
+    </script>
+</body>
+
+</html>
