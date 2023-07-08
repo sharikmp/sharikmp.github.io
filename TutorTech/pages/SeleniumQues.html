@@ -1,33 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/fevicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/fevicon.png" type="image/x-icon">
+    <title>{{TITLE}}-Tech Tutor</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styleQues.css">
+</head>
 
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f8f9fa;">
+        <a class="navbar-brand" href="#">
+            <img src="../img/logo.png" alt="Tech Tutor" width="300" height="70">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#course-section">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#contact">Solutions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Interview Prep</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#contact">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <head>
-        <title>Selenium - Interview Questions for Automation Testing role</title>
-        <link rel="stylesheet" href="../css/styleQues.css">
-    </head>
-
-    <br><br>
-
-    <div class="container"  style="text-align: center;">
-        <img src="wa2qae.png" alt="">
-    </div>
+    <br>
 
     <div class="container">
         <div id="postcontenttitle" style="text-align: center;">
-            Selenium - Interview Questions for Automation Testing role
+
         </div>
     </div>
 
 
     <br>
 
-    <div style="width: 100%; display: none;">
+    <div style="width: 100%;">
         <div class="viewAllLink center">
-            <button
-                onclick="window.location.href='https://way2qae.blogspot.com/2022/07/interview-questions-related-to-java.html';">View
-                All Questions</button>
+            <button onclick="window.location.href='interviewqueshome.html';">All Questions</button>
         </div>
     </div>
 
@@ -36,7 +76,9 @@
     </div>
 
 
+    <!-- QUESTIONS -->
     <script type="text/javascript">
+        const topic = "Selenium - Interview Questions for Automation Testing role";
         const quesAnsArray = [
             {
                 "ques": "As a software automation tester. How to select an automation testing tool for software testing. ",
@@ -351,20 +393,17 @@
                 "ans": "<div><p>In this scenario, an explicit wait of 10 seconds has been set for an element that will appear after 20 seconds, and an implicit wait of 20 seconds has been set for the entire class.</p><p>When we use an explicit wait, it applies only to the specific element that we are waiting for, whereas the implicit wait applies to all elements in the class. Therefore, the explicit wait of 10 seconds will be used for the element in question, and the implicit wait of 20 seconds will be used for all other elements.</p><p>If the element does not appear within the explicit wait time of 10 seconds, and the implicit wait of 20 seconds is still in effect, then a <code>TimeoutException</code> will be thrown.</p><p>Here is an example code snippet that demonstrates this scenario:</p><pre><div><div><code><span>// Set implicit wait for the entire class</span><br>driver<span>.manage</span>()<span>.timeouts</span>()<span>.implicitlyWait</span>(<span>20</span>, TimeUnit.SECONDS);<br><br><span>// Use explicit wait for a specific element</span><br>WebDriverWait wait = new <span>WebDriverWait</span>(driver, <span>10</span>);<br>WebElement element = wait<span>.until</span>(ExpectedConditions.visibilityOfElementLocated(By.id(\"myElement\")));<br><br><span>// Perform some action on the element</span><br>element<span>.click</span>();<br></code></div></div></pre><p>In this example, the implicit wait of 20 seconds will be used for all elements except the one identified by <code>By.id(\"myElement\")</code>, for which the explicit wait of 10 seconds will be used. If the element does not appear within the explicit wait time, a <code>TimeoutException</code> will be thrown.</p></div>"
             }
         ];
-
     </script>
 
-    <script type="text/javascript">
-
-    const quesAnsDiv = `
+    <!-- Constant JS -->
+    <script>
+        const quesAnsDiv = `
         
         <div class="question">Q {{INDEX}}: {{QUESTION}}<span class="arrow-down"></span></div>
         <div class="answer">
             <div id="postcontent">
-                <div class="code">
-                    <code>
+                <div class="answer-div">
                     <b>ANSWER:</b> {{ANSWER}}
-                    </code>
                 </div>
             </div>
         </div>
@@ -372,49 +411,9 @@
         `;
 
 
-        //Remove undesired elements
-        document.addEventListener('DOMContentLoaded', function () {
-            //author gadget
-            var e = document.querySelector(".about-author");
-            if (e) e.remove();
+        function addQuestions() {
+            //setTitle()
 
-            //breadcrumb
-            var e = document.querySelector("#breadcrumb");
-            if (e) e.remove();
-
-            //entry-title
-            var e = document.querySelector(".entry-title");
-            if (e) e.remove();
-
-            //Remove repeatative nav bar
-            var e = document.querySelector(".topbar-wrap");
-            if (e) e.remove();
-
-
-            //logo link
-            const nodeList = document.querySelectorAll(".logo-img");
-            for (let i = 0; i < nodeList.length; i++) {
-                nodeList[i].href = 'https://way2qae.blogspot.com/2022/06/home-page.html';
-            }
-
-
-            //Width 95%
-            const eleList = document.querySelectorAll(".row-x1");
-            for (let i = 0; i < eleList.length; i++) {
-                eleList[i].style.width = '95%';
-            }
-
-            //view count
-            var viewCountElement = document.querySelector("#view-count");
-            if (viewCountElement) {
-                var visitCount = localStorage.getItem("page_view");
-                visitCount = Number(visitCount) + 1;
-                if (visitCount < 1500) { visitCount = (1500 + Math.floor((Math.random() * 1000) + 1)); }
-                localStorage.setItem("page_view", visitCount);
-                for (let i = 1; i <= visitCount; i++) {
-                    viewCountElement.innerHTML = visitCount;
-                }
-            }
 
             //Add question section
             let number = 1;
@@ -456,11 +455,7 @@
             });
 
 
-
-
-
-
-        }, false);
+        }
 
 
         function collapseExpandedQuesAns() {
@@ -481,7 +476,18 @@
             });
         }
 
+        function setTitle() {
+            if (topic) {
+                document.querySelector("#postcontenttitle").innerHTML = topic;
+                document.querySelector("title").innerHTML = topic + " - TutorTech"
+            }
+        }
+    </script>
 
+    <!-- This page JS -->
+    <script type="text/javascript">
+        setTitle();
+        document.addEventListener('DOMContentLoaded', addQuestions, false);
     </script>
 </body>
 
