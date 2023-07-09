@@ -8,6 +8,7 @@ const quesAnsDiv = `
                 </div>
             </div>
         </div>
+        <br>
 
         `;
 

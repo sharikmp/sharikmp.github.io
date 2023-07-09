@@ -58,12 +58,14 @@ body {
 .question {
     background-color: #f9f9f9;
     padding: 10px;
+    padding-bottom: 20px;
     font-weight: bold;
-    font-size: 0.75rem;
+    font-size: 11px;
     font-family: sans-serif;
     cursor: pointer;
-    border-bottom: 2px solid #ddd;
-    line-height: 1.5rem;
+    border-top: 1px solid #ddd;
+    border-bottom: 5px solid #ddd;
+    line-height: 2rem;
 }
 
 
