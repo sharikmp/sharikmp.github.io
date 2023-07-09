@@ -1,227 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/fevicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/fevicon.png" type="image/x-icon">
+    <title>{{TITLE}}-Tech Tutor</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styleQues.css">
+</head>
 
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="../img/logo.png" alt="Tech Tutor" width="300" height="70">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#course-section">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#contact">Solutions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Interview Prep</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#contact">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <head>
-        <title>Interview Questions - Java Coding for Automation Testing role</title>
-        <style>
-            :root {
-                --themeColor: #4285F4;
-                --themeColorLight: #4285F4;
-                --white: #faf0e6;
-            }
-
-            #postcontenttitle {
-                padding: 15px;
-                font-size: 1rem;
-                font-weight: bold;
-                line-height: 1.25rem;
-                font-family: sans-serif;
-                background-color: var(--themeColor) !important;
-                color: #fff;
-                border: 2px solid var(--themeColor);
-                border-top-left-radius: 1rem;
-                border-bottom-left-radius: 1rem;
-            }
-
-            #postcontent {
-                margin: auto;
-                background: rgb(255, 255, 255);
-            }
-
-            #postcontent a {
-                color: blue !important;
-            }
-
-            #postcontent a:hover {
-                color: lightblue !important;
-            }
-
-            .h-scrollable {
-                overflow: auto;
-                white-space: nowrap;
-                padding: 5%;
-                border: 1px solid #ddd;
-                font-size: 0.8rem;
-            }
-
-            .code {
-                padding: 15px;
-                font-size: 0.75rem;
-                font-family: monospace;
-                color: #232323;
-                background-color: #fff;
-                border: 1px solid var(--themeColorLight);
-                line-height: 1rem;
-                min-height: 100px;
-            }
-
-            .viewAllLink {
-                float: center;
-                text-align: center;
-                margin: 20px;
-                padding: 15px;
-                font-size: 1rem;
-                font-weight: bold;
-                line-height: 1.25rem;
-                font-family: sans-serif;
-                color: var(--themeColor) !important;
-                border-radius: 1rem;
-                width: 200px;
-            }
-
-            .viewAllLink a {
-                text-decoration: none;
-                color: var(--themeColor) !important;
-            }
-
-            .center {
-                margin: auto;
-            }
-
-            button {
-                position: relative;
-                background-color: var(--themeColor) !important;
-                color: #FFFFFF;
-                padding: 10px;
-                width: 200px;
-                text-align: center;
-                text-decoration: none;
-                overflow: hidden;
-                cursor: pointer;
-                border-radius: 1rem;
-                font-weight: bold;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            button:after {
-                content: "";
-                background: var(--themeColor) !important;
-                display: block;
-                position: absolute;
-                padding-top: 300%;
-                padding-left: 350%;
-                margin-left: -20px !important;
-                margin-top: -120%;
-                opacity: 0;
-                transition: all 0.8s;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            button:active:after {
-                padding: 0;
-                margin: 0;
-                opacity: 1;
-                transition: 0s
-            }
-
-            button:hover {
-                background-color: #FFFFFF !important;
-                color: var(--themeColor) !important;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            pre {
-                background-color: var(--themeColorLight) !important;
-                font-weight: bold;
-                padding: 5px;
-            }
-
-            /* Global styles */
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f2f2f2;
-            }
-
-            .container {
-                max-width: 90%;
-                margin: 0 auto;
-                padding: 20px;
-            }
-
-            /* Style for the question section */
-            .question {
-                background-color: #f9f9f9;
-                padding: 10px;
-                font-weight: bold;
-                font-size: 0.75rem;
-                font-family: sans-serif;
-                cursor: pointer;
-                border-bottom: 2px solid #ddd;
-                line-height: 1.5rem;
-            }
-
-
-            .question:hover {
-                background-color: #555;
-                color: #fff;
-            }
-
-            /* Style for the answer section */
-            .answer {
-                padding: 10px;
-                font-size: 14px;
-                line-height: 1.5;
-                display: none;
-            }
-
-            /* Style for the active question section */
-            .question.active {
-                background-color: var(--themeColor) !important;
-                color: #fff;
-            }
-
-            .arrow-down {
-                display: inline-block;
-                margin-right: 10px;
-                width: 0;
-                height: 0;
-                border-top: 10px solid #555;
-                border-right: 6px solid transparent;
-                border-left: 6px solid transparent;
-                transform: rotate(0deg);
-                transition: transform 0.2s;
-            }
-
-            .question.active .arrow-down {
-                transform: rotate(180deg);
-                border-top: 10px solid #fff;
-            }
-
-            span.arrow-down {
-                float: right;
-            }
-        </style>
-    </head>
-
-    <br><br>
+    <br>
 
     <div class="container">
         <div id="postcontenttitle" style="text-align: center;">
-            Interview Questions - Java Coding for Automation Testing role
+
         </div>
     </div>
 
-    
-    <br>
 
-    <div style="width: 100%;">
-        <div class="viewAllLink center">
-            <button
-                onclick="window.location.href='https://way2qae.blogspot.com/2022/07/interview-questions-related-to-java.html';">View
-                All Questions</button>
-        </div>
+    <div class="container" onclick="window.location.href='interviewqueshome.html';">
+        <a href="#" class="center"> View All Questions</a>
     </div>
 
     <div class="container" id="qa-section">
 
     </div>
 
+    <br><br>
 
+    <!-- Footer section -->
+    <footer class="footer">
+        <div>
+            <p class="mb-0">Tech Tutor &copy; 2023. All rights reserved.</p>
+            <!-- <p class="mb-0">Powered by <a href="https://www.example.com" target="_blank">Example Company</a></p> -->
+            <p class="mb-0">Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- QUESTIONS -->
     <script type="text/javascript">
+        const topic = "Agile - Interview Questions for Automation Testing role";
         const quesAnsArray = [
             {
                 "ques": "Write a program in java to swap numbers without using third variable.",
@@ -307,139 +183,35 @@
                 "ques": "Write a program in java to how to read a excel file.",
                 "ans": "<div><p>In Java, you can use the Apache POI library to read and write Excel files. Here's an example program to read data from an Excel file:</p><pre><div><div><code><span>import</span> java.io.File;<br><span>import</span> java.io.FileInputStream;<br><span>import</span> java.io.IOException;<br><br><span>import</span> org.apache.poi.ss.usermodel.Cell;<br><span>import</span> org.apache.poi.ss.usermodel.Row;<br><span>import</span> org.apache.poi.ss.usermodel.Sheet;<br><span>import</span> org.apache.poi.ss.usermodel.Workbook;<br><span>import</span> org.apache.poi.ss.usermodel.WorkbookFactory;<br><br><span>public</span> <span>class</span> <span>ReadExcelFileExample</span> {<br>    <span>public</span> <span>static</span> <span>void</span> <span>main</span><span>(String[] args)</span> {<br>        <span>try</span> (<span>FileInputStream</span> <span>inputStream</span> <span>=</span> <span>new</span> <span>FileInputStream</span>(<span>new</span> <span>File</span>(<span>\"data.xlsx\"</span>));<br>             <span>Workbook</span> <span>workbook</span> <span>=</span> WorkbookFactory.create(inputStream)) {<br>            <span>Sheet</span> <span>sheet</span> <span>=</span> workbook.getSheetAt(<span>0</span>);<br>            <span>for</span> (Row row : sheet) {<br>                <span>for</span> (Cell cell : row) {<br>                    System.out.print(cell.getStringCellValue() + <span>\"\\t\"</span>);<br>                }<br>                System.out.println();<br>            }<br>        } <span>catch</span> (IOException e) {<br>            e.printStackTrace();<br>        }<br>    }<br>}<br></code></div></div></pre><p>This program reads the data from the <code>data.xlsx</code> Excel file and prints it to the console.</p><p>Input:</p><pre><div><div><code><span>data</span>.xlsx file<br></code></div></div></pre><p>Output:</p><pre><div><div><code>Name    Age<br>John    30<br>Jane    25<br>Bob     40<br></code></div></div></pre><p>In this example, the program reads the data from the <code>data.xlsx</code> file using a <code>FileInputStream</code> and a <code>Workbook</code> object. The <code>getSheetAt()</code> method is used to get the first sheet of the workbook. Then, a nested loop is used to iterate through each row and cell in the sheet. The <code>getStringCellValue()</code> method is used to retrieve the values of the cells. Finally, the data is printed to the console.</p></div>"
             }
-        ]
-    </script>
+        ];
+        </script>
 
+    <!-- Constant JS -->
+    <script src="../js/script.js"></script>
+
+    <!-- This page JS -->
     <script type="text/javascript">
-
-        const colorList = getRandomColor();
-
-        //Set Random Theme Color from list
-        function getRandomColor() {
-            const colors = ["#442288", "#4285F4", "#d9a004", "#00963f"];
-            const colorsLight = ["#77649e", "#98bbf5", "#e8ce87", "#75d19c"];
-            const i = Math.floor(Math.random() * colors.length);
-            //return [colors[i], colorsLight[i]];
-            return ["#4285F4", "#98bbf5"];
-        }
-
-        document.documentElement.style.setProperty("--themeColor", colorList[0]);
-        document.documentElement.style.setProperty("--themeColorLight", colorList[1]);
-
-        const quesAnsDiv = `
-        
-        <div class="question">Q {{INDEX}}: {{QUESTION}}<span class="arrow-down"></span></div>
-        <div class="answer">
-            <div id="postcontent">
-                <div class="code">
-                    <code>
-                    <b>ANSWER:</b> {{ANSWER}}
-                    </code>
-                </div>
-            </div>
-        </div>
-
-        `;
-
-
-        //Remove undesired elements
-        document.addEventListener('DOMContentLoaded', function () {
-            //author gadget
-            var e = document.querySelector(".about-author");
-            if (e) e.remove();
-
-            //breadcrumb
-            var e = document.querySelector("#breadcrumb");
-            if (e) e.remove();
-
-            //entry-title
-            var e = document.querySelector(".entry-title");
-            if (e) e.remove();
-
-            //Remove repeatative nav bar
-            var e = document.querySelector(".topbar-wrap");
-            if (e) e.remove();
-
-
-            //logo link
-            const nodeList = document.querySelectorAll(".logo-img");
-            for (let i = 0; i < nodeList.length; i++) {
-                nodeList[i].href = 'https://way2qae.blogspot.com/2022/06/home-page.html';
-            }
-
-
-            //Width 95%
-            const eleList = document.querySelectorAll(".row-x1");
-            for (let i = 0; i < eleList.length; i++) {
-                eleList[i].style.width = '95%';
-            }
-
-            //view count
-            var viewCountElement = document.querySelector("#view-count");
-            if (viewCountElement) {
-                var visitCount = localStorage.getItem("page_view");
-                visitCount = Number(visitCount) + 1;
-                if (visitCount < 1500) { visitCount = (1500 + Math.floor((Math.random() * 1000) + 1)); }
-                localStorage.setItem("page_view", visitCount);
-                for (let i = 1; i <= visitCount; i++) {
-                    viewCountElement.innerHTML = visitCount;
-                }
-            }
-
-            //Add question section
-            let number = 1;
-            let len = (quesAnsArray.length + "").length;
-            quesAnsArray.forEach(qa => {
-                let index = number.toString().padStart(len, '0');
-                var quesAns = quesAnsDiv.replace('{{QUESTION}}', qa.ques).replace('{{ANSWER}}', qa.ans).replace('{{INDEX}}', index);
-                var qaSection = document.querySelector('#qa-section');
-                qaSection.innerHTML += quesAns;
-                number++;
-            });
-
-
-            //Handle collapsibles
-            const questions = document.querySelectorAll(".question");
-
-            questions.forEach(question => {
-                question.addEventListener("click", () => {
-                    question.scrollIntoView();
-                    question.classList.toggle("active");
-                    const arrow = question.querySelector(".arrow-down");
-                    arrow.classList.toggle("rotate");
-                    const answer = question.nextElementSibling;
-                    if (answer.style.display === "block") {
-                        answer.style.display = "none";
-                    } else {
-                        answer.style.display = "block";
-                    }
-                });
-            });
-
-
-            function collapseExpandedQuesAns() {
-                const activeQuestions = document.querySelectorAll(".question.active");
-
-                activeQuestions.forEach(activeQues => {
-                    activeQues.classList.toggle("active");
-                    const activeQuesArrows = activeQues.querySelectorAll(".arrow-down");
-                    activeQuesArrows.forEach(activeQuesArrow => {
-                        activeQuesArrow.classList.toggle("rotate");
-                    });
-                    const activeQuesAnswer = activeQues.nextElementSibling;
-                    if (activeQuesAnswer.style.display === "block") {
-                        activeQuesAnswer.style.display = "none";
-                    } else {
-                        activeQuesAnswer.style.display = "block";
-                    }
-                });
-            }
-
-
-        }, false);
-
-
+        setTitle();
+        document.addEventListener('DOMContentLoaded', addQuestions, false);
     </script>
 </body>
 
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

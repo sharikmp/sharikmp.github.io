@@ -83,3 +83,29 @@ function setTitle() {
         document.querySelector("title").innerHTML = topic + " - TutorTech"
     }
 }
+
+// JavaScript to show/hide scroll-to-top button
+$(document).ready(function () {
+
+    document.querySelectorAll('.expandable .title').forEach(title => {
+        title.addEventListener('click', event => {
+            event.currentTarget.parentNode.classList.toggle('expanded');
+        });
+    });
+
+
+    // Show/hide the scroll-to-top button based on scroll position
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('#scrollToTop').fadeIn();
+        } else {
+            $('#scrollToTop').fadeOut();
+        }
+    });
+
+    // Scroll to top when the scroll-to-top button is clicked
+    $('#scrollToTop').click(function () {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        return false;
+    });
+});

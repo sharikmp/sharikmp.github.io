@@ -1,450 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/fevicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/fevicon.png" type="image/x-icon">
+    <title>{{TITLE}}-Tech Tutor</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styleQues.css">
+</head>
 
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="../img/logo.png" alt="Tech Tutor" width="300" height="70">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#course-section">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#contact">Solutions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Interview Prep</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#contact">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <head>
-        <title>Java Coding 2 - Interview Questions for Automation Testing role</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-        <style>
-            :root {
-                --themeColor: #4285F4;
-                --themeColorLight: #98bbf5;
-                --white: #fff;
-            }
-
-
-            #postcontenttitle {
-                padding: 15px;
-                font-size: 30px;
-                font-weight: bold;
-                line-height: 1.25rem;
-                font-family: sans-serif;
-                background-color: var(--themeColor) !important;
-                color: #fff;
-                border: 2px solid var(--themeColor);
-                border-top-left-radius: 1rem;
-                border-bottom-left-radius: 1rem;
-            }
-
-            #postcontent {
-                margin: auto;
-                background: #fff;
-            }
-
-            #postcontent a {
-                color: blue !important;
-            }
-
-            #postcontent a:hover {
-                color: lightblue !important;
-            }
-
-            .code {
-                padding: 15px;
-                font-size: 24px;
-                font-family: monospace;
-                line-height: 36px;
-                min-height: 100px;
-                background: #fff;
-            }
-
-            .viewAllLink {
-                float: center;
-                text-align: center;
-                margin: 20px;
-                padding: 15px;
-                font-size: 1rem;
-                font-weight: bold;
-                line-height: 1.25rem;
-                font-family: sans-serif;
-                color: var(--themeColor) !important;
-                border-radius: 1rem;
-                width: 200px;
-            }
-
-            .viewAllLink a {
-                text-decoration: none;
-                color: var(--themeColor) !important;
-            }
-
-            .center {
-                margin: auto;
-            }
-
-            button {
-                position: relative;
-                background-color: var(--themeColor) !important;
-                color: #FFFFFF;
-                padding: 10px;
-                width: 200px;
-                text-align: center;
-                text-decoration: none;
-                overflow: hidden;
-                cursor: pointer;
-                border-radius: 1rem;
-                font-weight: bold;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            button:after {
-                content: "";
-                background: var(--themeColor) !important;
-                display: block;
-                position: absolute;
-                padding-top: 300%;
-                padding-left: 350%;
-                margin-left: -20px !important;
-                margin-top: -120%;
-                opacity: 0;
-                transition: all 0.8s;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            button:active:after {
-                padding: 0;
-                margin: 0;
-                opacity: 1;
-                transition: 0s
-            }
-
-            button:hover {
-                background-color: #FFFFFF !important;
-                color: var(--themeColor) !important;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            /* Global styles */
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f2f2f2;
-            }
-
-            .container {
-                max-width: 90%;
-                margin: 0 auto;
-                padding: 20px;
-            }
-
-            /* Style for the question section */
-            .question {
-                background-color: #f9f9f9;
-                padding: 15px;
-                font-weight: bold;
-                font-size: 18px;
-                font-family: sans-serif;
-                line-height: 30px;
-                cursor: pointer;
-                border-bottom: 2px solid #ddd;
-                margin-top: 10px;
-            }
-
-
-            .question:hover {
-                background-color: #999;
-                color: #fff;
-            }
-
-            /* Style for the answer section */
-            .answer {
-                padding: 10px;
-                font-size: 18px;
-                line-height: 1.5;
-                display: none;
-                margin-bottom: 1000px;
-            }
-
-            /* Style for the active question section */
-            .question.active {
-                background-color: var(--themeColor) !important;
-                color: #fff;
-                font-size: 18px;
-                line-height: 48px;
-                margin-top: 1000px;
-            }
-
-            .xxl {
-                font-size: 48px !important;
-                line-height: 72px !important;
-                margin-bottom: 1000px;
-            }
-
-            .arrow-down {
-                display: inline-block;
-                margin-right: 10px;
-                width: 0;
-                height: 0;
-                border-top: 10px solid #555;
-                border-right: 6px solid transparent;
-                border-left: 6px solid transparent;
-                transform: rotate(0deg);
-                transition: transform 0.2s;
-            }
-
-            .question.active .arrow-down {
-                transform: rotate(180deg);
-                border-top: 10px solid #fff;
-            }
-
-            span.arrow-down {
-                float: right;
-            }
-
-            pre {
-                background-color: #ddd;
-                color: #780046;
-                padding: 10px;
-                font-weight: bold;
-                overflow: auto;
-                word-break: break-word;
-                white-space: pre-wrap;
-            }
-
-            pre span.comment {
-                color: #006600;
-                font-weight: bold;
-            }
-
-            .java-keyword {
-                color: #780046;
-                font-weight: bold;
-            }
-
-
-
-            ul,
-            ol {
-                list-style: none;
-            }
-
-            .hidden {
-                display: none;
-            }
-
-            div.sticky {
-                position: -webkit-sticky;
-                position: sticky;
-                top: 0;
-            }
-
-            /* CSS FOR OVERLAY */
-            .overlay h1 {
-                color: #fff;
-                font-family: 'Righteous', cursive;
-                font-size: 48px;
-                font-weight: 100;
-            }
-
-            .overlay .ques {
-                color: black;
-                background-color: #fff;
-                border: #555;
-                border-radius: 1rem;
-                margin-left: 150px;
-                margin-right: 150px;
-                margin-top: 30px;
-                margin-bottom: 30px;
-                font-family: monospace;
-                font-size: 36px;
-            }
-
-            .overlay {
-                height: 0%;
-                width: 100%;
-                position: fixed;
-                z-index: 1;
-                top: 0;
-                left: 0;
-                background-color: #4285F4;
-                overflow-y: hidden;
-                transition: 0.5s;
-            }
-
-            .overlay-content {
-                position: relative;
-                top: 10%;
-                width: 100%;
-                text-align: center;
-                margin-top: 30px;
-            }
-
-            .overlay a {
-                padding: 8px;
-                text-decoration: none;
-                font-size: 36px;
-                color: #818181;
-                display: block;
-                transition: 0.3s;
-            }
-
-            .overlay a:hover,
-            .overlay a:focus {
-                color: #f1f1f1;
-            }
-
-            .overlay .closebtn {
-                position: absolute;
-                top: 20px;
-                right: 45px;
-                font-size: 60px;
-            }
-
-            @media screen and (max-height: 450px) {
-                .overlay {
-                    overflow-y: auto;
-                }
-
-                .overlay a {
-                    font-size: 20px
-                }
-
-                .overlay .closebtn {
-                    font-size: 40px;
-                    top: 15px;
-                    right: 35px;
-                }
-            }
-
-            .vertical-center {
-                margin: 0;
-                position: absolute;
-                top: 50%;
-                -ms-transform: translateY(-50%);
-                transform: translateY(-50%);
-            }
-        </style>
-    </head>
-
-    <br><br>
-
-    <div class="container">
-        <button onclick="this.style.display = 'none';clickQuestionOneByOne();">Start</button>
-    </div>
-
-    <br><br>
+    <br>
 
     <div class="container">
         <div id="postcontenttitle" style="text-align: center;">
-            Java Coding - Interview Questions for Automation Testing role
+
         </div>
     </div>
 
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div style="width: 100%; display: none;">
-        <div class="viewAllLink center">
-            <button
-                onclick="window.location.href='https://way2qae.blogspot.com/2022/07/interview-questions-related-to-java.html';">View
-                All Questions</button>
-        </div>
+    <div class="container" onclick="window.location.href='interviewqueshome.html';">
+        <a href="#" class="center"> View All Questions</a>
     </div>
 
     <div class="container" id="qa-section">
 
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div id="myNav" class="overlay">
-        <div class="overlay-content vertical-center">
-            <h1 id='msg'>
-                Welcome <br><br>
-                To<br><br>
-                WAY@QAE
-            </h1>
+
+    <br><br>
+
+    <!-- Footer section -->
+    <footer class="footer">
+        <div>
+            <p class="mb-0">Tech Tutor &copy; 2023. All rights reserved.</p>
+            <!-- <p class="mb-0">Powered by <a href="https://www.example.com" target="_blank">Example Company</a></p> -->
+            <p class="mb-0">Privacy Policy | Terms of Service</p>
         </div>
+    </footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fa fa-arrow-up"></i>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
+    <!-- QUESTIONS -->
     <script type="text/javascript">
+        const topic = "Java Coding 2 - Interview Questions for Automation Testing role";//Title String
         const quesAnsArray = [
             {
                 "ques": "Write a program to print \"Hello, to your WAY2QAE!\" to the console.",
@@ -646,354 +299,17 @@
                 "ques": "Write a program to reverse a linked list.",
                 "ans": "<div><p>Approach:<br>To reverse a linked list, we need to change the direction of the links between the nodes. We can do this by iterating through the linked list and changing the next pointer of each node to point to the previous node. To do this, we need to keep track of the previous node and the current node. Initially, the previous node is null and the current node is the head of the linked list. We traverse through the linked list until the current node is null. At each iteration, we change the next pointer of the current node to point to the previous node, then update the previous node to be the current node and move the current node to the next node in the linked list. Finally, we set the head of the linked list to be the last node we visited, which is the new first node after the reversal.</p><p>Code:</p><pre><div><div><code><span>class</span> <span>ListNode</span> {<br>    int <span>val</span>;<br>    ListNode next;<br>    ListNode(int <span>val</span>) {<br>        <span>this</span>.<span>val</span> = <span>val</span>;<br>    }<br>}<br><br><span>class</span> <span>Solution</span> {<br>    <span>public</span> ListNode reverseList(ListNode head) {<br>        ListNode prev = <span>null</span>;<br>        ListNode curr = head;<br>        <span>while</span> (curr != <span>null</span>) {<br>            ListNode nextNode = curr.next;<br>            curr.next = prev;<br>            prev = curr;<br>            curr = nextNode;<br>        }<br>        <span>return</span> prev;<br>    }<br>}<br></code></div></div></pre><p>Here, we define a <code>ListNode</code> class to represent each node in the linked list. The <code>reverseList</code> method takes the head of the linked list as input and returns the head of the reversed linked list. We initialize <code>prev</code> to null and <code>curr</code> to <code>head</code>. We then iterate through the linked list using a while loop until <code>curr</code> is null. At each iteration, we store the next node in the linked list in a variable called <code>nextNode</code>, then update <code>curr.next</code> to point to <code>prev</code>, update <code>prev</code> to be <code>curr</code>, and update <code>curr</code> to be <code>nextNode</code>. Once we have finished iterating through the linked list, <code>prev</code> will be the new head of the reversed linked list, so we return it.</p></div>"
             }
-        ]
-
+        ];//Add Q/A array here
 
     </script>
 
+    <!-- Constant JS -->
+    <script src="../js/script.js"></script>
+
+    <!-- This page JS -->
     <script type="text/javascript">
-
-        const quesAnsDiv = `
-        
-        <div class="question">Q {{INDEX}}: {{QUESTION}}<span class="arrow-down"></span></div>
-        <div class="answer">
-            <div id="postcontent">
-                <div class="code">
-                    <code>
-                    <b>ANSWER:</b> {{ANSWER}}
-                    </code>
-                </div>
-            </div>
-        </div>
-
-        `;
-
-        var typingQuestion = -1;
-
-        const typingEffectOn = false;
-
-        //Remove undesired elements
-        document.addEventListener('DOMContentLoaded', function () {
-            removeUndesiredElementFromBlog();
-
-            //Add question section
-            addQuestions();
-
-            //Handle collapsibles
-            handleQuestionClick();
-
-            addCommentsColorInCodeTag();
-
-            addHandEmoji('div.code ul li', '&#9997;');
-            addHandEmoji('div.code ol li', '&#9997;');
-
-            //clickQuestionOneByOne();
-
-            //animateEntry();
-
-        }, false);
-
-        function delayMillis(ms) {
-            return new Promise((res) => {
-                console.log("Wait " + ms / 1000 + "secs");
-                setTimeout(res, ms);
-            });
-        }
-
-
-        async function clickQuestionOneByOne() {
-            var audio = new Audio('..\\audio\\notification.wav');
-            audio.play();
-            const questions = document.querySelectorAll('.question');
-            const len = questions.length;
-            console.log("Questions: " + len);
-            await delayMillis(2000);
-
-            for (let i = 0; i < 10; i++) {
-                let question = questions[i];
-                if (typingQuestion == -1) {
-                    welcome();
-                    await delayMillis(3500);
-                    showQuestion(question.textContent);
-                    await delayMillis(5000);
-                    question.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-                    // await delayMillis(1000);
-                    question.click();
-                    await delayMillis(10000);
-                    console.log('10s wait completed!')
-                }
-                //Wait while previous question is getting typed
-                while (typingQuestion != -1) {
-                    await delayMillis(5000);
-                }
-                //Play audio and close ques
-                audio.play();
-                question.click();
-                thankYou();
-                await delayMillis(3000);
-            }
-
-            audio.play();
-            await delayMillis(2000);
-            audio.play();
-            await delayMillis(2000);
-            audio.play();
-        }
-
-
-        function animateEntry() {
-            $(document).ready(function () {
-                $('html, body').scrollTop(0);
-            });
-
-            var scrollInterval = setInterval(function () {
-                $('html, body').animate({
-                    scrollTop: '+=' + 210 + 'px'
-                }, 200);
-
-                // Check if the user has scrolled to the bottom of the page
-                if ($(window).scrollTop() + $(window).height() - $(document).height() >= 10) {
-                    clearInterval(scrollInterval);
-                }
-            }, 2000);
-
-
-        }
-
-
-        function collapseExpandedQuesAns() {
-            const activeQuestions = document.querySelectorAll(".question.active");
-
-            activeQuestions.forEach(activeQues => {
-                activeQues.classList.toggle("active");
-                const activeQuesArrows = activeQues.querySelectorAll(".arrow-down");
-                activeQuesArrows.forEach(activeQuesArrow => {
-                    activeQuesArrow.classList.toggle("rotate");
-                });
-                const activeQuesAnswer = activeQues.nextElementSibling;
-                if (activeQuesAnswer.style.display === "block") {
-                    activeQuesAnswer.style.display = "none";
-                } else {
-                    activeQuesAnswer.style.display = "block";
-                }
-            });
-        }
-
-
-        function removeUndesiredElementFromBlog() {
-            //author gadget
-            var e = document.querySelector(".about-author");
-            if (e) e.remove();
-
-            //breadcrumb
-            var e = document.querySelector("#breadcrumb");
-            if (e) e.remove();
-
-            //entry-title
-            var e = document.querySelector(".entry-title");
-            if (e) e.remove();
-
-            //Remove repeatative nav bar
-            var e = document.querySelector(".topbar-wrap");
-            if (e) e.remove();
-
-
-            //logo link
-            const nodeList = document.querySelectorAll(".logo-img");
-            for (let i = 0; i < nodeList.length; i++) {
-                nodeList[i].href = 'https://way2qae.blogspot.com/2022/06/home-page.html';
-            }
-
-
-            //Width 95%
-            const eleList = document.querySelectorAll(".row-x1");
-            for (let i = 0; i < eleList.length; i++) {
-                eleList[i].style.width = '95%';
-            }
-
-            //view count
-            var viewCountElement = document.querySelector("#view-count");
-            if (viewCountElement) {
-                var visitCount = localStorage.getItem("page_view");
-                visitCount = Number(visitCount) + 1;
-                if (visitCount < 1500) { visitCount = (1500 + Math.floor((Math.random() * 1000) + 1)); }
-                localStorage.setItem("page_view", visitCount);
-                for (let i = 1; i <= visitCount; i++) {
-                    viewCountElement.innerHTML = visitCount;
-                }
-            }
-        }
-
-
-        function addCommentsColorInCodeTag() {
-            var preElements = document.querySelectorAll('pre span');
-            preElements.forEach(span => {
-                var str = span.innerHTML;
-                if (str.trim().startsWith('//')) {
-                    span.classList.add("comment");
-                }
-            });
-        }
-
-
-        function addHandEmoji(selector, emojiCode) {
-            document.querySelectorAll(selector).forEach(li => {
-                let str = "<span style='font-size:20px;'>" + emojiCode + "</span>" + li.innerHTML;
-                li.innerHTML = str;
-            });
-        }
-
-
-        function addQuestions() {
-            let number = 1;
-            let len = (quesAnsArray.length + "").length;
-            quesAnsArray.forEach(qa => {
-                let index = number.toString().padStart(len, '0');
-                var quesAns = quesAnsDiv.replace('{{QUESTION}}', qa.ques).replace('{{ANSWER}}', qa.ans).replace('{{INDEX}}', index);
-                var qaSection = document.querySelector('#qa-section');
-                qaSection.innerHTML += quesAns;
-                number++;
-            });
-        }
-
-
-        function handleQuestionClick() {
-            const questions = document.querySelectorAll(".question");
-
-            questions.forEach((question, questionNumber) => {
-                question.addEventListener("click", () => {
-
-                    question.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-                    question.classList.toggle("active");
-                    const arrow = question.querySelector(".arrow-down");
-                    arrow.classList.toggle("rotate");
-                    const answer = question.nextElementSibling;
-
-                    if (answer.style.display === "block") {
-                        answer.style.display = "none";
-                        question.classList.remove("sticky");
-                    } else {
-                        question.classList.add("sticky");
-                        // question.classList.add("xxl");
-                        question.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-                        if (typingEffectOn) {
-                            setTimeout(() => {
-                                // question.classList.remove("xxl");
-                                answer.style.display = "block";
-                                typingQuestion = questionNumber;    //set ques typing
-                                showTypingEffect(answer);
-                            }, 20);
-                        }
-                        else {
-                            // question.classList.remove("xxl");
-                            answer.style.display = "block";
-                        }
-                    }
-                });
-            });
-        }
-
-
-        function showTypingEffect(element) {
-            encapsulateText(element);   //Encapsulate within span tag and hide
-            animateTyping(element);
-        }
-
-
-        function encapsulateText(element) {
-            // Get all child nodes of the element
-            const childNodes = element.childNodes;
-
-            // Iterate over each child node
-            childNodes.forEach((node) => {
-                // If the node is a text node, encapsulate its text content in a span tag with class "hidden"
-                if (node.nodeType === Node.TEXT_NODE) {
-                    const words = node.textContent.split(/\s+/);
-                    const span = document.createElement("span");
-                    span.classList.add("hidden");
-                    node.parentNode.replaceChild(span, node);
-
-                    const textNode = document.createTextNode(node.textContent);
-                    span.appendChild(textNode);
-                }
-                // If the node is an element node, recursively call the function on the child nodes
-                else if (node.nodeType === Node.ELEMENT_NODE) {
-                    encapsulateText(node);
-                }
-            });
-        }
-
-        function animateTyping(element) {
-            // Get all child nodes of the element
-            const spans = element.querySelectorAll('span');
-            typeSpanElements(spans);
-        }
-
-        function typeSpanElements(spans) {
-            let index = 0;
-            function typeNextSpan() {
-                if (index < spans.length) {
-                    typeSpan(spans[index], typeNextSpan);
-                    index++;
-                }
-                else {
-                    typingQuestion = -1;
-                }
-                // console.log("Typing question: " + typingQuestion);
-            }
-            typeNextSpan();
-        }
-
-        function typeSpan(span, callback) {
-            span.classList.remove("hidden");
-            span.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-            const text = span.textContent;
-            span.textContent = "";
-            let len = text.length;
-            let i = 0;
-            function type() {
-                if (i < len) {
-                    const char = text.charAt(i);
-                    // const nextChar = text.charAt(i + 1);
-                    span.textContent += char;
-                    // if (char == " ") setTimeout(type, 100);
-                    // else setTimeout(type, 40);
-                    setTimeout(type, 40);
-                    i++;
-                } else {
-                    if (callback) callback();
-                }
-            }
-            type();
-        }
-
-
-
-        function showOverlay(msg, closeInSec) {
-            let e = document.getElementById("myNav");
-            let h1 = document.getElementById("msg");
-            msg = msg.replaceAll('\n', '<br><br>');
-            h1.innerHTML = msg;
-            e.style.height = "100%";
-            setTimeout(() => { e.style.height = "0%"; }, closeInSec);
-        }
-
-        function welcome() {
-            showOverlay('Welcome \n  To \n WAY2QAE !!!', 3000);
-        }
-
-        function thankYou() {
-            showOverlay("Thank you!!! \n  See you in next video \n\n Support us! \n\nLike, comment, subscribe @WAY2QAE !!!", 3000);
-        }
-
-        function showQuestion(ques) {
-            let img = '<img src="C:\Users\\shari\\Desktop\\Projects\\Chrome Extension\\Gsheet2chatGPT\\WAY2QAE-WEBSITE\\images\\interview.png" alt="" width="200px"><br><br>'
-            ques = ques.split(':')[1];
-            ques = '<div class="ques">Interviewer</div>' + img + '<div class="ques">' + ques + '</div>'
-            showOverlay(ques, 5000);
-        }
-
-
+        setTitle();
+        document.addEventListener('DOMContentLoaded', addQuestions, false);
     </script>
 </body>
 

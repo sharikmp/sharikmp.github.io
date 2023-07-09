@@ -1,407 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/fevicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/fevicon.png" type="image/x-icon">
+    <title>{{TITLE}}-Tech Tutor</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styleQues.css">
+</head>
 
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="../img/logo.png" alt="Tech Tutor" width="300" height="70">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#course-section">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#contact">Solutions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Interview Prep</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html#contact">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <head>
-        <title>Agile - Interview Questions for Automation Testing role</title>
-        <style>
-            :root {
-                --themeColor: #4285F4;
-                --themeColorLight: #4285F4;
-                --white: #faf0e6;
-            }
-
-            #postcontenttitle {
-                padding: 15px;
-                font-size: 1rem;
-                font-weight: bold;
-                line-height: 1.25rem;
-                font-family: sans-serif;
-                background-color: var(--themeColor) !important;
-                color: #fff;
-                border: 2px solid var(--themeColor);
-                border-top-left-radius: 1rem;
-                border-bottom-left-radius: 1rem;
-            }
-
-            #postcontent {
-                margin: auto;
-                background: rgb(255, 255, 255);
-            }
-
-            #postcontent a {
-                color: blue !important;
-            }
-
-            #postcontent a:hover {
-                color: lightblue !important;
-            }
-
-            .h-scrollable {
-                overflow: auto;
-                white-space: nowrap;
-                padding: 5%;
-                border: 1px solid #ddd;
-                font-size: 0.8rem;
-            }
-
-            .code {
-                padding: 15px;
-                font-size: 0.75rem;
-                font-family: monospace;
-                color: #232323;
-                background-color: #fff;
-                border: 1px solid var(--themeColorLight);
-                line-height: 1rem;
-                min-height: 100px;
-            }
-
-            .viewAllLink {
-                float: center;
-                text-align: center;
-                margin: 20px;
-                padding: 15px;
-                font-size: 1rem;
-                font-weight: bold;
-                line-height: 1.25rem;
-                font-family: sans-serif;
-                color: var(--themeColor) !important;
-                border-radius: 1rem;
-                width: 200px;
-            }
-
-            .viewAllLink a {
-                text-decoration: none;
-                color: var(--themeColor) !important;
-            }
-
-            .center {
-                margin: auto;
-            }
-
-            button {
-                position: relative;
-                background-color: var(--themeColor) !important;
-                color: #FFFFFF;
-                padding: 10px;
-                width: 200px;
-                text-align: center;
-                text-decoration: none;
-                overflow: hidden;
-                cursor: pointer;
-                border-radius: 1rem;
-                font-weight: bold;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            button:after {
-                content: "";
-                background: var(--themeColor) !important;
-                display: block;
-                position: absolute;
-                padding-top: 300%;
-                padding-left: 350%;
-                margin-left: -20px !important;
-                margin-top: -120%;
-                opacity: 0;
-                transition: all 0.8s;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            button:active:after {
-                padding: 0;
-                margin: 0;
-                opacity: 1;
-                transition: 0s
-            }
-
-            button:hover {
-                background-color: #FFFFFF !important;
-                color: var(--themeColor) !important;
-                border: 2px solid var(--themeColor) !important;
-            }
-
-            pre {
-                background-color: var(--themeColorLight) !important;
-                font-weight: bold;
-                padding: 5px;
-            }
-
-            /* Global styles */
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f2f2f2;
-            }
-
-            .container {
-                max-width: 90%;
-                margin: 0 auto;
-                padding: 20px;
-            }
-
-            /* Style for the question section */
-            .question {
-                background-color: #f9f9f9;
-                padding: 10px;
-                font-weight: bold;
-                font-size: 0.75rem;
-                font-family: sans-serif;
-                cursor: pointer;
-                border-bottom: 2px solid #ddd;
-                line-height: 1.5rem;
-            }
-
-
-            .question:hover {
-                background-color: #555;
-                color: #fff;
-            }
-
-            /* Style for the answer section */
-            .answer {
-                padding: 10px;
-                font-size: 14px;
-                line-height: 1.5;
-                display: none;
-            }
-
-            /* Style for the active question section */
-            .question.active {
-                background-color: var(--themeColor) !important;
-                color: #fff;
-            }
-
-            .arrow-down {
-                display: inline-block;
-                margin-right: 10px;
-                width: 0;
-                height: 0;
-                border-top: 10px solid #555;
-                border-right: 6px solid transparent;
-                border-left: 6px solid transparent;
-                transform: rotate(0deg);
-                transition: transform 0.2s;
-            }
-
-            .question.active .arrow-down {
-                transform: rotate(180deg);
-                border-top: 10px solid #fff;
-            }
-
-            span.arrow-down {
-                float: right;
-            }
-        </style>
-    </head>
-
-    <br><br>
+    <br>
 
     <div class="container">
         <div id="postcontenttitle" style="text-align: center;">
-            Agile - Interview Questions for Automation Testing role
+
         </div>
     </div>
 
 
-    <br>
-
-    <div style="width: 100%;">
-        <div class="viewAllLink center">
-            <button
-                onclick="window.location.href='https://way2qae.blogspot.com/2022/07/interview-questions-related-to-java.html';">View
-                All Questions</button>
-        </div>
+    <div class="container" onclick="window.location.href='interviewqueshome.html';">
+        <a href="#" class="center"> View All Questions</a>
     </div>
 
     <div class="container" id="qa-section">
 
     </div>
 
+    <br><br>
 
-    <script type="text/javascript">
-        const quesAnsArray = [
-    {
-        "ques": "In agile, what is a retrospective meeting?",
-        "ans": "<div><p>As a software tester, Agile methodology is likely to be an integral part of your day-to-day work. Agile is an iterative and incremental software development approach that emphasizes flexibility and collaboration between development teams and stakeholders. One of the key ceremonies in Agile is the retrospective meeting.</p><p>A retrospective meeting, also known as a sprint retrospective or iteration retrospective, is a regular meeting held by an Agile team at the end of a sprint or iteration. The purpose of the retrospective is to reflect on the team's performance during the sprint, identify areas for improvement, and determine actions to be taken to address them in the next sprint.</p><p>As a software tester, the retrospective meeting is a valuable opportunity to reflect on the quality of the software you have been testing, as well as the effectiveness of your testing approach. During the retrospective, you may discuss issues that arose during the sprint, such as defects that were missed or testing that was incomplete, and work with the development team to identify ways to improve the quality of the software going forward.</p><p>In addition to reflecting on the quality of the software, the retrospective may also focus on process improvements for testing. For example, you may discuss ways to streamline the testing process, improve communication between testers and developers, or identify new testing tools or techniques that could be used to improve the efficiency and effectiveness of testing.</p><p>As a software tester, your participation in the retrospective meeting is crucial to its success. You can share your perspective on what worked well and what didn't during the sprint from a testing standpoint, and contribute to the team's discussion of how to improve the testing process going forward. By actively participating in the retrospective, you can help your Agile team to continuously improve the quality of the software being developed, and ensure that the testing process is effective and efficient.</p></div>"
-    },
-    {
-        "ques": "How do you start work when there is a story assigned to you?",
-        "ans": "<div><p>As a software tester working in an Agile environment, when a story is assigned to you, there are several steps you can take to ensure that you start your work effectively and efficiently.</p><ol><li><p>Understand the Story: The first step is to understand the story that has been assigned to you. You should read the user story carefully, and make sure you understand the requirements and the acceptance criteria. If you have any questions or concerns, you should discuss them with the product owner or the development team.</p></li><li><p>Collaborate with the Development Team: As an Agile tester, collaboration with the development team is crucial. You should work closely with the developers to make sure that the requirements are clear, and to identify any potential issues or challenges that may arise during the testing process. You can also collaborate with the development team to plan the testing approach and identify any automated or manual tests that may be needed.</p></li><li><p>Develop a Test Plan: Once you understand the requirements and have identified any potential challenges or issues, you can develop a test plan. The test plan should outline the testing approach and the test cases that will be used to verify the functionality of the software. The test plan should be reviewed and approved by the development team and the product owner before testing begins.</p></li><li><p>Execute Tests: Once the test plan is approved, you can begin executing the tests. You should follow the test plan carefully, and document any defects that are found. You should also work closely with the development team to ensure that any defects are resolved in a timely manner.</p></li><li><p>Report Results: As a software tester, you should provide regular updates on the testing progress and the results of the testing. You can use tools like test management software to document and report test results, including any defects that have been found.</p></li><li><p>Participate in Retrospectives: Finally, as an Agile tester, it is important to participate in retrospectives to reflect on the testing process and identify opportunities for improvement. You can share your feedback and insights on what worked well and what didn't during the testing process, and work with the development team to identify ways to improve the testing process going forward.</p></li></ol><p>In summary, starting work on a story as an Agile software tester involves understanding the requirements, collaborating with the development team, developing a test plan, executing tests, reporting results, and participating in retrospectives. By following these steps, you can ensure that your testing process is effective, efficient, and aligned with the goals of the Agile development process.</p></div>"
-    },
-    {
-        "ques": "What are Agile concepts?",
-        "ans": "<div><p>Agile methodology is an iterative and incremental approach to software development that emphasizes flexibility, collaboration, and continuous improvement. The Agile methodology is built around a set of core concepts that help development teams to work efficiently and effectively. As a software tester, it is important to understand these Agile concepts in order to participate in the development process and contribute to the success of the project. Some of the key Agile concepts include:</p><ol><li><p>Iterative and Incremental Development: Agile methodology involves developing software in short iterations or sprints, with each iteration building upon the previous one. This approach allows for flexibility and adaptability, as the team can quickly respond to changing requirements or feedback from stakeholders.</p></li><li><p>Cross-functional Teams: Agile methodology emphasizes collaboration and communication between all members of the development team, including developers, testers, product owners, and other stakeholders. This helps to ensure that everyone is working towards the same goals and that any issues or challenges can be addressed quickly and effectively.</p></li><li><p>User Involvement: Agile methodology places a strong emphasis on involving users and stakeholders throughout the development process. This helps to ensure that the software meets their needs and expectations, and that any issues or concerns can be addressed early in the development cycle.</p></li><li><p>Continuous Delivery: Agile methodology involves continuously delivering working software to users and stakeholders throughout the development process. This approach helps to ensure that the software is tested and validated regularly, and that any issues or defects can be addressed quickly.</p></li><li><p>Emphasis on Feedback: Agile methodology places a strong emphasis on feedback from stakeholders, including users, product owners, and other members of the development team. This feedback is used to continuously improve the software and the development process.</p></li><li><p>Emphasis on Quality: Agile methodology places a strong emphasis on delivering high-quality software. This includes using automated testing, continuous integration, and other best practices to ensure that the software is thoroughly tested and validated before release.</p></li></ol><p>In summary, Agile methodology is built around a set of core concepts that emphasize flexibility, collaboration, continuous improvement, user involvement, feedback, and quality. As a software tester, understanding these concepts is critical to effectively participating in the development process and contributing to the success of the project.</p></div>"
-    },
-    {
-        "ques": "What are the uses of JIRA apart from logging defects for a software testing team memeber?",
-        "ans": "<div><p>JIRA is a powerful project management tool that is widely used in Agile software development environments. While it is commonly used for logging defects and managing the bug tracking process, there are many other uses of JIRA that can benefit software testing team members. Some of these uses include:</p><ol><li><p>Test Case Management: JIRA can be used to manage and track test cases throughout the testing process. This includes creating test plans, defining test cases, executing tests, and reporting results. JIRA's integration with testing tools such as Zephyr allows for a seamless test management experience.</p></li><li><p>Requirements Management: JIRA can be used to manage requirements throughout the development process. This includes capturing and tracking requirements, linking requirements to user stories and test cases, and reporting on the status of requirements.</p></li><li><p>Agile Project Management: JIRA can be used to manage Agile projects, including sprint planning, backlog management, and task tracking. JIRA's Agile features such as Scrum and Kanban boards make it easy to manage the workflow of the team and ensure that everyone is on the same page.</p></li><li><p>Collaboration and Communication: JIRA provides features that allow team members to collaborate and communicate effectively. This includes commenting and tagging, assigning tasks to team members, and real-time updates on the status of the project.</p></li><li><p>Reporting and Analytics: JIRA provides powerful reporting and analytics features that can be used to track project progress, identify trends and issues, and report on the status of the project. JIRA's customizable dashboards and reports make it easy to get a clear picture of the project's progress and status.</p></li><li><p>Integration with Other Tools: JIRA can be integrated with a wide range of other tools, including testing tools, version control systems, and continuous integration servers. This makes it easy to create a seamless workflow for the development and testing process.</p></li></ol><p>In summary, JIRA is a versatile tool that offers many benefits for software testing team members beyond just logging defects. It can be used for test case management, requirements management, Agile project management, collaboration and communication, reporting and analytics, and integration with other tools. By leveraging the full capabilities of JIRA, software testing team members can work more efficiently and effectively, and contribute to the success of the project.</p></div>"
-    },
-    {
-        "ques": "What is the difference between product backlog and sprint backlog?",
-        "ans": "<div><p>In Agile methodology, the product backlog and sprint backlog are two important concepts that help to manage the development process. As a software tester, it is important to understand the difference between these two backlogs to effectively participate in the development process.</p><p>Product Backlog:<br>The product backlog is a prioritized list of features, requirements, and user stories that need to be implemented in the product. It is the responsibility of the product owner to manage the product backlog. The product backlog represents the entire scope of work that needs to be done to complete the project, and it is continually refined and updated throughout the development process.</p><p>The product backlog includes high-level requirements and user stories that define the overall goals of the project. It provides a clear understanding of the product vision and the business value of each feature or requirement. The items in the product backlog are ordered based on their priority and value to the business. The product backlog is dynamic and is continuously updated as new requirements or features are added, removed, or modified.</p><p>Sprint Backlog:<br>The sprint backlog is a subset of the product backlog that represents the work that the development team plans to complete during a specific sprint. The sprint backlog is created by the development team during the sprint planning meeting, and it includes the user stories and tasks that the team commits to completing during the sprint.</p><p>The sprint backlog includes detailed information about the tasks required to complete each user story. This includes estimates of the time required for each task, as well as any dependencies or risks associated with each task. The sprint backlog is fixed for the duration of the sprint and provides a clear understanding of what the development team will be working on during the sprint.</p><p>The sprint backlog is owned by the development team and is used to track the progress of the sprint. The team uses the sprint backlog to manage their work and ensure that they are on track to complete the user stories committed to during the sprint planning meeting.</p><p>In summary, the product backlog represents the entire scope of work for the project, while the sprint backlog represents the work that the development team has committed to completing during a specific sprint. The product backlog is managed by the product owner, while the sprint backlog is owned by the development team. Understanding the difference between these two backlogs is essential for effective Agile development, as it allows for better planning, management, and prioritization of work.</p></div>"
-    },
-    {
-        "ques": "Which agile methodologies do we use in Software development project?",
-        "ans": "<div><p>There are several Agile methodologies used in software development projects, each with their own approach and focus. As a software tester, it is important to understand these different methodologies to better understand the development process and your role within it. Here are some of the most common Agile methodologies used in software development projects:</p><ol><li><p>Scrum: Scrum is one of the most widely used Agile methodologies in software development. It is an iterative and incremental framework that emphasizes teamwork, collaboration, and continuous improvement. In Scrum, work is organized into sprints, which are short time periods (usually 2-4 weeks) during which a set of user stories are completed.</p></li><li><p>Kanban: Kanban is another Agile methodology used in software development. It emphasizes visual management of workflow and the continuous delivery of small batches of work. Kanban is based on the principle of just-in-time delivery and is designed to reduce waste and increase efficiency.</p></li><li><p>Extreme Programming (XP): Extreme Programming is an Agile methodology that focuses on software development practices and principles. It emphasizes continuous testing, pair programming, and frequent releases to ensure quality and customer satisfaction.</p></li><li><p>Lean: Lean is an Agile methodology that is based on the principles of Lean manufacturing. It emphasizes the elimination of waste, continuous improvement, and customer value. Lean is designed to reduce the time and cost of development while increasing the quality of the product.</p></li><li><p>Crystal: Crystal is an Agile methodology that focuses on team size and communication. It is designed to be flexible and adaptable to the needs of the team and the project. Crystal is based on the principles of transparency, frequent delivery, and continuous improvement.</p></li><li><p>Dynamic Systems Development Method (DSDM): DSDM is an Agile methodology that is based on the principle of delivering functional software early and often. It emphasizes close collaboration between the development team and the business stakeholders to ensure that the software meets the needs of the business.</p></li></ol><p>In summary, there are several Agile methodologies used in software development projects, each with their own approach and focus. Scrum, Kanban, XP, Lean, Crystal, and DSDM are some of the most common Agile methodologies used in software development. Understanding these methodologies and their principles can help software testers better understand the development process and their role within it.</p></div>"
-    },
-    {
-        "ques": "What is story estimation?",
-        "ans": "<div><p>Story estimation is a critical part of Agile development methodology and is used to estimate the amount of time and effort required to complete a specific user story. As a software tester, it is important to understand how story estimation works and how it affects the overall development process.</p><p>In Agile development, a user story is a short, simple description of a feature or requirement from the perspective of the end-user. These user stories are used to drive the development process, and they are typically broken down into smaller, more manageable tasks. Story estimation involves assigning an estimate, usually in points or time, to each of these smaller tasks, based on the complexity of the task and the level of effort required to complete it.</p><p>The story estimation process typically involves the development team, including software testers, who work together to estimate the effort required to complete each task. Estimation is done in a collaborative manner, and each team member provides their input based on their knowledge and expertise. The team then reaches a consensus on the estimate for each task.</p><p>One common method used for story estimation is planning poker. In planning poker, each team member is given a set of cards with numbers on them representing the effort required to complete a task. The team members then take turns selecting a card and presenting their estimate. The estimates are then discussed, and the team members continue to select cards until a consensus is reached.</p><p>The estimates assigned to each task are used to determine the overall timeline for the project and to prioritize the work to be done. Story estimation helps the team to identify potential roadblocks early on and to make adjustments to the development process as necessary to ensure that the project stays on track.</p><p>In summary, story estimation is an essential part of Agile development methodology that involves assigning estimates to individual tasks based on the level of effort required to complete them. The process is collaborative and involves the entire development team, including software testers. Story estimation helps to ensure that the development process stays on track and that potential roadblocks are identified and addressed early on.</p></div>"
-    },
-    {
-        "ques": "What is a retrospective meeting?",
-        "ans": "<div><p>A retrospective meeting, also known as a sprint retrospective, is a key part of the Agile development process. As a software tester, it is important to understand the purpose of a retrospective meeting and how it can benefit the development team and the overall project.</p><p>A retrospective meeting is held at the end of a sprint, which is a fixed period of time (usually 1-4 weeks) during which a set of user stories are completed. The purpose of the retrospective meeting is to reflect on the sprint that has just been completed and to identify opportunities for improvement in the development process.</p><p>During the retrospective meeting, the development team, including software testers, come together to review the previous sprint. The team discusses what went well, what didn't go well, and what changes can be made to improve the process going forward. The retrospective meeting is a time for the team to reflect on their successes and challenges and to work together to find ways to improve the process for the next sprint.</p><p>The retrospective meeting typically follows a structured format, which may include the following steps:</p><ol><li><p>Setting the stage: The team sets the tone for the meeting and establishes the objectives and goals.</p></li><li><p>Gather data: The team gathers data and feedback on what went well and what didn't go well during the previous sprint.</p></li><li><p>Generate insights: The team analyzes the data and identifies patterns and trends in the feedback.</p></li><li><p>Decide what to do: The team decides on action items to improve the development process and sets specific goals and targets for the next sprint.</p></li><li><p>Close the meeting: The team summarizes the meeting and establishes a plan for implementing the action items.</p></li></ol><p>The retrospective meeting is an important part of the Agile development process as it allows the development team to continuously improve their process and to deliver a better product to the customer. As a software tester, your input and feedback during the retrospective meeting can help to improve the testing process and ensure that the software is delivered to the highest standard.</p></div>"
-    },
-    {
-        "ques": "What do the product owner and scrum master do?",
-        "ans": "<div><p>In Agile methodology, the Product Owner and Scrum Master are key roles within the Scrum framework, and their functions are essential to the success of the development team. As a software tester, it is important to understand the responsibilities of both roles and how they work together.</p><p>Product Owner:<br>The Product Owner is responsible for representing the interests of the customer or end-user and ensures that the product being developed meets their needs. The Product Owner is the primary point of contact for the development team and is responsible for managing the product backlog.</p><p>The key responsibilities of the Product Owner include:</p><ol><li><p>Defining and prioritizing the product backlog: The Product Owner works with the development team to define and prioritize the product backlog, which is a list of features or requirements that need to be developed.</p></li><li><p>Communicating the product vision: The Product Owner communicates the product vision to the development team, ensuring that everyone understands the goals and objectives of the product.</p></li><li><p>Providing guidance on product development: The Product Owner provides guidance and feedback to the development team during the development process to ensure that the product meets the needs of the customer or end-user.</p></li><li><p>Accepting or rejecting completed work: The Product Owner is responsible for accepting or rejecting completed work from the development team based on whether it meets the acceptance criteria defined for each item in the product backlog.</p></li></ol><p>Scrum Master:<br>The Scrum Master is responsible for ensuring that the development team follows the Scrum framework and that the development process is as efficient and effective as possible. The Scrum Master serves as a facilitator and coach for the development team, enabling them to work together more effectively.</p><p>The key responsibilities of the Scrum Master include:</p><ol><li><p>Facilitating Scrum events: The Scrum Master is responsible for facilitating Scrum events such as daily stand-ups, sprint planning meetings, and sprint retrospectives.</p></li><li><p>Removing obstacles: The Scrum Master works to identify and remove any obstacles that may be hindering the development team's progress.</p></li><li><p>Promoting collaboration: The Scrum Master promotes collaboration within the development team, ensuring that all team members are working together effectively.</p></li><li><p>Coaching the development team: The Scrum Master coaches the development team on the principles and practices of Agile development, helping them to continuously improve their process.</p></li></ol><p>In summary, the Product Owner is responsible for representing the interests of the customer or end-user and ensuring that the product being developed meets their needs, while the Scrum Master is responsible for ensuring that the development team follows the Scrum framework and that the development process is as efficient and effective as possible. Both roles are essential to the success of the development team, and as a software tester, it is important to work closely with both the Product Owner and Scrum Master to ensure that the testing process is integrated smoothly into the development process.</p></div>"
-    },
-    {
-        "ques": "Who is the one who leads the agile team?",
-        "ans": "<div><p>In Agile methodology, the development team is self-organizing, which means that the team members work together to plan and execute their work. The team is responsible for organizing and managing their own work, rather than being directed by a single person. However, there are two key roles within the Scrum framework that are responsible for leading the agile team: the Product Owner and the Scrum Master.</p><p>The Product Owner is responsible for representing the interests of the customer or end-user and ensuring that the product being developed meets their needs. They are responsible for defining and prioritizing the product backlog, which is a list of features or requirements that need to be developed. The Product Owner communicates the product vision to the development team and provides guidance and feedback to ensure that the product meets the needs of the customer or end-user. While the Product Owner is not the traditional \"leader\" of the team, they are responsible for setting the direction and priorities for the development team.</p><p>The Scrum Master, on the other hand, is responsible for ensuring that the development team follows the Scrum framework and that the development process is as efficient and effective as possible. The Scrum Master serves as a facilitator and coach for the development team, enabling them to work together more effectively. The Scrum Master promotes collaboration within the development team, ensuring that all team members are working together effectively. While the Scrum Master is not the traditional \"leader\" of the team, they are responsible for coaching and guiding the team to help them continuously improve their process.</p><p>In summary, while there is not a traditional \"leader\" of the agile team in the sense of a manager or supervisor, the Product Owner and Scrum Master are both essential roles that are responsible for leading and guiding the team. As a software tester, it is important to work closely with both the Product Owner and Scrum Master to ensure that the testing process is integrated smoothly into the development process.</p></div>"
-    },
-    {
-        "ques": "If a sprint is 2 weeks, what about the automation life cycle?",
-        "ans": "<div><p>In Agile methodology, the duration of the sprint can vary depending on the project and team, but a common sprint length is 2 weeks. The automation life cycle, on the other hand, is not directly tied to the duration of the sprint. The automation life cycle is a process for developing automated tests and integrating them into the software development process.</p><p>The automation life cycle typically includes the following stages:</p><ol><li><p>Planning and design: In this stage, the test automation strategy is planned and the automated test cases are designed.</p></li><li><p>Development: In this stage, the automated test cases are implemented using a test automation framework and the software being tested.</p></li><li><p>Execution and reporting: In this stage, the automated tests are run against the software being tested and the results are reported.</p></li><li><p>Maintenance: In this stage, the automated tests are updated as the software being tested changes and evolves.</p></li></ol><p>The duration of each stage of the automation life cycle can vary depending on the complexity of the software being tested and the number of test cases being automated. It is important to note that automation should be done in parallel with manual testing in order to provide comprehensive test coverage and to catch defects early in the development process.</p><p>In terms of the relationship between the sprint and the automation life cycle, automated testing should be integrated into the sprint process as much as possible. Automated test cases should be developed and executed within each sprint to ensure that defects are caught and addressed as early as possible. The automation life cycle should be viewed as an ongoing process that is integrated into the sprint process and iteratively improved over time.</p><p>As a software tester, it is important to work closely with the development team and automation engineers to ensure that the automation life cycle is effectively integrated into the sprint process and that automated tests are developed and executed in a timely and effective manner.</p></div>"
-    }
-]
-        
-        
-        </script>
-
-    <script type="text/javascript">
-
-        const colorList = getRandomColor();
-
-        //Set Random Theme Color from list
-        function getRandomColor() {
-            const colors = ["#442288", "#4285F4", "#d9a004", "#00963f"];
-            const colorsLight = ["#77649e", "#98bbf5", "#e8ce87", "#75d19c"];
-            const i = Math.floor(Math.random() * colors.length);
-            //return [colors[i], colorsLight[i]];
-            return ["#4285F4", "#98bbf5"];
-        }
-
-        document.documentElement.style.setProperty("--themeColor", colorList[0]);
-        document.documentElement.style.setProperty("--themeColorLight", colorList[1]);
-
-        const quesAnsDiv = `
-        
-        <div class="question">Q {{INDEX}}: {{QUESTION}}<span class="arrow-down"></span></div>
-        <div class="answer">
-            <div id="postcontent">
-                <div class="code">
-                    <code>
-                    <b>ANSWER:</b> {{ANSWER}}
-                    </code>
-                </div>
-            </div>
+    <!-- Footer section -->
+    <footer class="footer">
+        <div>
+            <p class="mb-0">Tech Tutor &copy; 2023. All rights reserved.</p>
+            <!-- <p class="mb-0">Powered by <a href="https://www.example.com" target="_blank">Example Company</a></p> -->
+            <p class="mb-0">Privacy Policy | Terms of Service</p>
         </div>
-
-        `;
-
-
-        //Remove undesired elements
-        document.addEventListener('DOMContentLoaded', function () {
-            //author gadget
-            var e = document.querySelector(".about-author");
-            if (e) e.remove();
-
-            //breadcrumb
-            var e = document.querySelector("#breadcrumb");
-            if (e) e.remove();
-
-            //entry-title
-            var e = document.querySelector(".entry-title");
-            if (e) e.remove();
-
-            //Remove repeatative nav bar
-            var e = document.querySelector(".topbar-wrap");
-            if (e) e.remove();
+    </footer>
 
 
-            //logo link
-            const nodeList = document.querySelectorAll(".logo-img");
-            for (let i = 0; i < nodeList.length; i++) {
-                nodeList[i].href = 'https://way2qae.blogspot.com/2022/06/home-page.html';
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- QUESTIONS -->
+    <script type="text/javascript">
+        const topic = "Agile - Interview Questions for Automation Testing role";
+        const quesAnsArray = [
+            {
+                "ques": "In agile, what is a retrospective meeting?",
+                "ans": "<div><p>As a software tester, Agile methodology is likely to be an integral part of your day-to-day work. Agile is an iterative and incremental software development approach that emphasizes flexibility and collaboration between development teams and stakeholders. One of the key ceremonies in Agile is the retrospective meeting.</p><p>A retrospective meeting, also known as a sprint retrospective or iteration retrospective, is a regular meeting held by an Agile team at the end of a sprint or iteration. The purpose of the retrospective is to reflect on the team's performance during the sprint, identify areas for improvement, and determine actions to be taken to address them in the next sprint.</p><p>As a software tester, the retrospective meeting is a valuable opportunity to reflect on the quality of the software you have been testing, as well as the effectiveness of your testing approach. During the retrospective, you may discuss issues that arose during the sprint, such as defects that were missed or testing that was incomplete, and work with the development team to identify ways to improve the quality of the software going forward.</p><p>In addition to reflecting on the quality of the software, the retrospective may also focus on process improvements for testing. For example, you may discuss ways to streamline the testing process, improve communication between testers and developers, or identify new testing tools or techniques that could be used to improve the efficiency and effectiveness of testing.</p><p>As a software tester, your participation in the retrospective meeting is crucial to its success. You can share your perspective on what worked well and what didn't during the sprint from a testing standpoint, and contribute to the team's discussion of how to improve the testing process going forward. By actively participating in the retrospective, you can help your Agile team to continuously improve the quality of the software being developed, and ensure that the testing process is effective and efficient.</p></div>"
+            },
+            {
+                "ques": "How do you start work when there is a story assigned to you?",
+                "ans": "<div><p>As a software tester working in an Agile environment, when a story is assigned to you, there are several steps you can take to ensure that you start your work effectively and efficiently.</p><ol><li><p>Understand the Story: The first step is to understand the story that has been assigned to you. You should read the user story carefully, and make sure you understand the requirements and the acceptance criteria. If you have any questions or concerns, you should discuss them with the product owner or the development team.</p></li><li><p>Collaborate with the Development Team: As an Agile tester, collaboration with the development team is crucial. You should work closely with the developers to make sure that the requirements are clear, and to identify any potential issues or challenges that may arise during the testing process. You can also collaborate with the development team to plan the testing approach and identify any automated or manual tests that may be needed.</p></li><li><p>Develop a Test Plan: Once you understand the requirements and have identified any potential challenges or issues, you can develop a test plan. The test plan should outline the testing approach and the test cases that will be used to verify the functionality of the software. The test plan should be reviewed and approved by the development team and the product owner before testing begins.</p></li><li><p>Execute Tests: Once the test plan is approved, you can begin executing the tests. You should follow the test plan carefully, and document any defects that are found. You should also work closely with the development team to ensure that any defects are resolved in a timely manner.</p></li><li><p>Report Results: As a software tester, you should provide regular updates on the testing progress and the results of the testing. You can use tools like test management software to document and report test results, including any defects that have been found.</p></li><li><p>Participate in Retrospectives: Finally, as an Agile tester, it is important to participate in retrospectives to reflect on the testing process and identify opportunities for improvement. You can share your feedback and insights on what worked well and what didn't during the testing process, and work with the development team to identify ways to improve the testing process going forward.</p></li></ol><p>In summary, starting work on a story as an Agile software tester involves understanding the requirements, collaborating with the development team, developing a test plan, executing tests, reporting results, and participating in retrospectives. By following these steps, you can ensure that your testing process is effective, efficient, and aligned with the goals of the Agile development process.</p></div>"
+            },
+            {
+                "ques": "What are Agile concepts?",
+                "ans": "<div><p>Agile methodology is an iterative and incremental approach to software development that emphasizes flexibility, collaboration, and continuous improvement. The Agile methodology is built around a set of core concepts that help development teams to work efficiently and effectively. As a software tester, it is important to understand these Agile concepts in order to participate in the development process and contribute to the success of the project. Some of the key Agile concepts include:</p><ol><li><p>Iterative and Incremental Development: Agile methodology involves developing software in short iterations or sprints, with each iteration building upon the previous one. This approach allows for flexibility and adaptability, as the team can quickly respond to changing requirements or feedback from stakeholders.</p></li><li><p>Cross-functional Teams: Agile methodology emphasizes collaboration and communication between all members of the development team, including developers, testers, product owners, and other stakeholders. This helps to ensure that everyone is working towards the same goals and that any issues or challenges can be addressed quickly and effectively.</p></li><li><p>User Involvement: Agile methodology places a strong emphasis on involving users and stakeholders throughout the development process. This helps to ensure that the software meets their needs and expectations, and that any issues or concerns can be addressed early in the development cycle.</p></li><li><p>Continuous Delivery: Agile methodology involves continuously delivering working software to users and stakeholders throughout the development process. This approach helps to ensure that the software is tested and validated regularly, and that any issues or defects can be addressed quickly.</p></li><li><p>Emphasis on Feedback: Agile methodology places a strong emphasis on feedback from stakeholders, including users, product owners, and other members of the development team. This feedback is used to continuously improve the software and the development process.</p></li><li><p>Emphasis on Quality: Agile methodology places a strong emphasis on delivering high-quality software. This includes using automated testing, continuous integration, and other best practices to ensure that the software is thoroughly tested and validated before release.</p></li></ol><p>In summary, Agile methodology is built around a set of core concepts that emphasize flexibility, collaboration, continuous improvement, user involvement, feedback, and quality. As a software tester, understanding these concepts is critical to effectively participating in the development process and contributing to the success of the project.</p></div>"
+            },
+            {
+                "ques": "What are the uses of JIRA apart from logging defects for a software testing team memeber?",
+                "ans": "<div><p>JIRA is a powerful project management tool that is widely used in Agile software development environments. While it is commonly used for logging defects and managing the bug tracking process, there are many other uses of JIRA that can benefit software testing team members. Some of these uses include:</p><ol><li><p>Test Case Management: JIRA can be used to manage and track test cases throughout the testing process. This includes creating test plans, defining test cases, executing tests, and reporting results. JIRA's integration with testing tools such as Zephyr allows for a seamless test management experience.</p></li><li><p>Requirements Management: JIRA can be used to manage requirements throughout the development process. This includes capturing and tracking requirements, linking requirements to user stories and test cases, and reporting on the status of requirements.</p></li><li><p>Agile Project Management: JIRA can be used to manage Agile projects, including sprint planning, backlog management, and task tracking. JIRA's Agile features such as Scrum and Kanban boards make it easy to manage the workflow of the team and ensure that everyone is on the same page.</p></li><li><p>Collaboration and Communication: JIRA provides features that allow team members to collaborate and communicate effectively. This includes commenting and tagging, assigning tasks to team members, and real-time updates on the status of the project.</p></li><li><p>Reporting and Analytics: JIRA provides powerful reporting and analytics features that can be used to track project progress, identify trends and issues, and report on the status of the project. JIRA's customizable dashboards and reports make it easy to get a clear picture of the project's progress and status.</p></li><li><p>Integration with Other Tools: JIRA can be integrated with a wide range of other tools, including testing tools, version control systems, and continuous integration servers. This makes it easy to create a seamless workflow for the development and testing process.</p></li></ol><p>In summary, JIRA is a versatile tool that offers many benefits for software testing team members beyond just logging defects. It can be used for test case management, requirements management, Agile project management, collaboration and communication, reporting and analytics, and integration with other tools. By leveraging the full capabilities of JIRA, software testing team members can work more efficiently and effectively, and contribute to the success of the project.</p></div>"
+            },
+            {
+                "ques": "What is the difference between product backlog and sprint backlog?",
+                "ans": "<div><p>In Agile methodology, the product backlog and sprint backlog are two important concepts that help to manage the development process. As a software tester, it is important to understand the difference between these two backlogs to effectively participate in the development process.</p><p>Product Backlog:<br>The product backlog is a prioritized list of features, requirements, and user stories that need to be implemented in the product. It is the responsibility of the product owner to manage the product backlog. The product backlog represents the entire scope of work that needs to be done to complete the project, and it is continually refined and updated throughout the development process.</p><p>The product backlog includes high-level requirements and user stories that define the overall goals of the project. It provides a clear understanding of the product vision and the business value of each feature or requirement. The items in the product backlog are ordered based on their priority and value to the business. The product backlog is dynamic and is continuously updated as new requirements or features are added, removed, or modified.</p><p>Sprint Backlog:<br>The sprint backlog is a subset of the product backlog that represents the work that the development team plans to complete during a specific sprint. The sprint backlog is created by the development team during the sprint planning meeting, and it includes the user stories and tasks that the team commits to completing during the sprint.</p><p>The sprint backlog includes detailed information about the tasks required to complete each user story. This includes estimates of the time required for each task, as well as any dependencies or risks associated with each task. The sprint backlog is fixed for the duration of the sprint and provides a clear understanding of what the development team will be working on during the sprint.</p><p>The sprint backlog is owned by the development team and is used to track the progress of the sprint. The team uses the sprint backlog to manage their work and ensure that they are on track to complete the user stories committed to during the sprint planning meeting.</p><p>In summary, the product backlog represents the entire scope of work for the project, while the sprint backlog represents the work that the development team has committed to completing during a specific sprint. The product backlog is managed by the product owner, while the sprint backlog is owned by the development team. Understanding the difference between these two backlogs is essential for effective Agile development, as it allows for better planning, management, and prioritization of work.</p></div>"
+            },
+            {
+                "ques": "Which agile methodologies do we use in Software development project?",
+                "ans": "<div><p>There are several Agile methodologies used in software development projects, each with their own approach and focus. As a software tester, it is important to understand these different methodologies to better understand the development process and your role within it. Here are some of the most common Agile methodologies used in software development projects:</p><ol><li><p>Scrum: Scrum is one of the most widely used Agile methodologies in software development. It is an iterative and incremental framework that emphasizes teamwork, collaboration, and continuous improvement. In Scrum, work is organized into sprints, which are short time periods (usually 2-4 weeks) during which a set of user stories are completed.</p></li><li><p>Kanban: Kanban is another Agile methodology used in software development. It emphasizes visual management of workflow and the continuous delivery of small batches of work. Kanban is based on the principle of just-in-time delivery and is designed to reduce waste and increase efficiency.</p></li><li><p>Extreme Programming (XP): Extreme Programming is an Agile methodology that focuses on software development practices and principles. It emphasizes continuous testing, pair programming, and frequent releases to ensure quality and customer satisfaction.</p></li><li><p>Lean: Lean is an Agile methodology that is based on the principles of Lean manufacturing. It emphasizes the elimination of waste, continuous improvement, and customer value. Lean is designed to reduce the time and cost of development while increasing the quality of the product.</p></li><li><p>Crystal: Crystal is an Agile methodology that focuses on team size and communication. It is designed to be flexible and adaptable to the needs of the team and the project. Crystal is based on the principles of transparency, frequent delivery, and continuous improvement.</p></li><li><p>Dynamic Systems Development Method (DSDM): DSDM is an Agile methodology that is based on the principle of delivering functional software early and often. It emphasizes close collaboration between the development team and the business stakeholders to ensure that the software meets the needs of the business.</p></li></ol><p>In summary, there are several Agile methodologies used in software development projects, each with their own approach and focus. Scrum, Kanban, XP, Lean, Crystal, and DSDM are some of the most common Agile methodologies used in software development. Understanding these methodologies and their principles can help software testers better understand the development process and their role within it.</p></div>"
+            },
+            {
+                "ques": "What is story estimation?",
+                "ans": "<div><p>Story estimation is a critical part of Agile development methodology and is used to estimate the amount of time and effort required to complete a specific user story. As a software tester, it is important to understand how story estimation works and how it affects the overall development process.</p><p>In Agile development, a user story is a short, simple description of a feature or requirement from the perspective of the end-user. These user stories are used to drive the development process, and they are typically broken down into smaller, more manageable tasks. Story estimation involves assigning an estimate, usually in points or time, to each of these smaller tasks, based on the complexity of the task and the level of effort required to complete it.</p><p>The story estimation process typically involves the development team, including software testers, who work together to estimate the effort required to complete each task. Estimation is done in a collaborative manner, and each team member provides their input based on their knowledge and expertise. The team then reaches a consensus on the estimate for each task.</p><p>One common method used for story estimation is planning poker. In planning poker, each team member is given a set of cards with numbers on them representing the effort required to complete a task. The team members then take turns selecting a card and presenting their estimate. The estimates are then discussed, and the team members continue to select cards until a consensus is reached.</p><p>The estimates assigned to each task are used to determine the overall timeline for the project and to prioritize the work to be done. Story estimation helps the team to identify potential roadblocks early on and to make adjustments to the development process as necessary to ensure that the project stays on track.</p><p>In summary, story estimation is an essential part of Agile development methodology that involves assigning estimates to individual tasks based on the level of effort required to complete them. The process is collaborative and involves the entire development team, including software testers. Story estimation helps to ensure that the development process stays on track and that potential roadblocks are identified and addressed early on.</p></div>"
+            },
+            {
+                "ques": "What is a retrospective meeting?",
+                "ans": "<div><p>A retrospective meeting, also known as a sprint retrospective, is a key part of the Agile development process. As a software tester, it is important to understand the purpose of a retrospective meeting and how it can benefit the development team and the overall project.</p><p>A retrospective meeting is held at the end of a sprint, which is a fixed period of time (usually 1-4 weeks) during which a set of user stories are completed. The purpose of the retrospective meeting is to reflect on the sprint that has just been completed and to identify opportunities for improvement in the development process.</p><p>During the retrospective meeting, the development team, including software testers, come together to review the previous sprint. The team discusses what went well, what didn't go well, and what changes can be made to improve the process going forward. The retrospective meeting is a time for the team to reflect on their successes and challenges and to work together to find ways to improve the process for the next sprint.</p><p>The retrospective meeting typically follows a structured format, which may include the following steps:</p><ol><li><p>Setting the stage: The team sets the tone for the meeting and establishes the objectives and goals.</p></li><li><p>Gather data: The team gathers data and feedback on what went well and what didn't go well during the previous sprint.</p></li><li><p>Generate insights: The team analyzes the data and identifies patterns and trends in the feedback.</p></li><li><p>Decide what to do: The team decides on action items to improve the development process and sets specific goals and targets for the next sprint.</p></li><li><p>Close the meeting: The team summarizes the meeting and establishes a plan for implementing the action items.</p></li></ol><p>The retrospective meeting is an important part of the Agile development process as it allows the development team to continuously improve their process and to deliver a better product to the customer. As a software tester, your input and feedback during the retrospective meeting can help to improve the testing process and ensure that the software is delivered to the highest standard.</p></div>"
+            },
+            {
+                "ques": "What do the product owner and scrum master do?",
+                "ans": "<div><p>In Agile methodology, the Product Owner and Scrum Master are key roles within the Scrum framework, and their functions are essential to the success of the development team. As a software tester, it is important to understand the responsibilities of both roles and how they work together.</p><p>Product Owner:<br>The Product Owner is responsible for representing the interests of the customer or end-user and ensures that the product being developed meets their needs. The Product Owner is the primary point of contact for the development team and is responsible for managing the product backlog.</p><p>The key responsibilities of the Product Owner include:</p><ol><li><p>Defining and prioritizing the product backlog: The Product Owner works with the development team to define and prioritize the product backlog, which is a list of features or requirements that need to be developed.</p></li><li><p>Communicating the product vision: The Product Owner communicates the product vision to the development team, ensuring that everyone understands the goals and objectives of the product.</p></li><li><p>Providing guidance on product development: The Product Owner provides guidance and feedback to the development team during the development process to ensure that the product meets the needs of the customer or end-user.</p></li><li><p>Accepting or rejecting completed work: The Product Owner is responsible for accepting or rejecting completed work from the development team based on whether it meets the acceptance criteria defined for each item in the product backlog.</p></li></ol><p>Scrum Master:<br>The Scrum Master is responsible for ensuring that the development team follows the Scrum framework and that the development process is as efficient and effective as possible. The Scrum Master serves as a facilitator and coach for the development team, enabling them to work together more effectively.</p><p>The key responsibilities of the Scrum Master include:</p><ol><li><p>Facilitating Scrum events: The Scrum Master is responsible for facilitating Scrum events such as daily stand-ups, sprint planning meetings, and sprint retrospectives.</p></li><li><p>Removing obstacles: The Scrum Master works to identify and remove any obstacles that may be hindering the development team's progress.</p></li><li><p>Promoting collaboration: The Scrum Master promotes collaboration within the development team, ensuring that all team members are working together effectively.</p></li><li><p>Coaching the development team: The Scrum Master coaches the development team on the principles and practices of Agile development, helping them to continuously improve their process.</p></li></ol><p>In summary, the Product Owner is responsible for representing the interests of the customer or end-user and ensuring that the product being developed meets their needs, while the Scrum Master is responsible for ensuring that the development team follows the Scrum framework and that the development process is as efficient and effective as possible. Both roles are essential to the success of the development team, and as a software tester, it is important to work closely with both the Product Owner and Scrum Master to ensure that the testing process is integrated smoothly into the development process.</p></div>"
+            },
+            {
+                "ques": "Who is the one who leads the agile team?",
+                "ans": "<div><p>In Agile methodology, the development team is self-organizing, which means that the team members work together to plan and execute their work. The team is responsible for organizing and managing their own work, rather than being directed by a single person. However, there are two key roles within the Scrum framework that are responsible for leading the agile team: the Product Owner and the Scrum Master.</p><p>The Product Owner is responsible for representing the interests of the customer or end-user and ensuring that the product being developed meets their needs. They are responsible for defining and prioritizing the product backlog, which is a list of features or requirements that need to be developed. The Product Owner communicates the product vision to the development team and provides guidance and feedback to ensure that the product meets the needs of the customer or end-user. While the Product Owner is not the traditional \"leader\" of the team, they are responsible for setting the direction and priorities for the development team.</p><p>The Scrum Master, on the other hand, is responsible for ensuring that the development team follows the Scrum framework and that the development process is as efficient and effective as possible. The Scrum Master serves as a facilitator and coach for the development team, enabling them to work together more effectively. The Scrum Master promotes collaboration within the development team, ensuring that all team members are working together effectively. While the Scrum Master is not the traditional \"leader\" of the team, they are responsible for coaching and guiding the team to help them continuously improve their process.</p><p>In summary, while there is not a traditional \"leader\" of the agile team in the sense of a manager or supervisor, the Product Owner and Scrum Master are both essential roles that are responsible for leading and guiding the team. As a software tester, it is important to work closely with both the Product Owner and Scrum Master to ensure that the testing process is integrated smoothly into the development process.</p></div>"
+            },
+            {
+                "ques": "If a sprint is 2 weeks, what about the automation life cycle?",
+                "ans": "<div><p>In Agile methodology, the duration of the sprint can vary depending on the project and team, but a common sprint length is 2 weeks. The automation life cycle, on the other hand, is not directly tied to the duration of the sprint. The automation life cycle is a process for developing automated tests and integrating them into the software development process.</p><p>The automation life cycle typically includes the following stages:</p><ol><li><p>Planning and design: In this stage, the test automation strategy is planned and the automated test cases are designed.</p></li><li><p>Development: In this stage, the automated test cases are implemented using a test automation framework and the software being tested.</p></li><li><p>Execution and reporting: In this stage, the automated tests are run against the software being tested and the results are reported.</p></li><li><p>Maintenance: In this stage, the automated tests are updated as the software being tested changes and evolves.</p></li></ol><p>The duration of each stage of the automation life cycle can vary depending on the complexity of the software being tested and the number of test cases being automated. It is important to note that automation should be done in parallel with manual testing in order to provide comprehensive test coverage and to catch defects early in the development process.</p><p>In terms of the relationship between the sprint and the automation life cycle, automated testing should be integrated into the sprint process as much as possible. Automated test cases should be developed and executed within each sprint to ensure that defects are caught and addressed as early as possible. The automation life cycle should be viewed as an ongoing process that is integrated into the sprint process and iteratively improved over time.</p><p>As a software tester, it is important to work closely with the development team and automation engineers to ensure that the automation life cycle is effectively integrated into the sprint process and that automated tests are developed and executed in a timely and effective manner.</p></div>"
             }
+        ];
+    </script>
 
+    <!-- Constant JS -->
+    <script src="../js/script.js"></script>
 
-            //Width 95%
-            const eleList = document.querySelectorAll(".row-x1");
-            for (let i = 0; i < eleList.length; i++) {
-                eleList[i].style.width = '95%';
-            }
-
-            //view count
-            var viewCountElement = document.querySelector("#view-count");
-            if (viewCountElement) {
-                var visitCount = localStorage.getItem("page_view");
-                visitCount = Number(visitCount) + 1;
-                if (visitCount < 1500) { visitCount = (1500 + Math.floor((Math.random() * 1000) + 1)); }
-                localStorage.setItem("page_view", visitCount);
-                for (let i = 1; i <= visitCount; i++) {
-                    viewCountElement.innerHTML = visitCount;
-                }
-            }
-
-            //Add question section
-            let number = 1;
-            let len = (quesAnsArray.length + "").length;
-            quesAnsArray.forEach(qa => {
-                let index = number.toString().padStart(len, '0');
-                var quesAns = quesAnsDiv.replace('{{QUESTION}}', qa.ques).replace('{{ANSWER}}', qa.ans).replace('{{INDEX}}', index);
-                var qaSection = document.querySelector('#qa-section');
-                qaSection.innerHTML += quesAns;
-                number++;
-            });
-
-
-            //Handle collapsibles
-            const questions = document.querySelectorAll(".question");
-
-            questions.forEach(question => {
-                question.addEventListener("click", () => {
-                    question.scrollIntoView();
-                    question.classList.toggle("active");
-                    const arrow = question.querySelector(".arrow-down");
-                    arrow.classList.toggle("rotate");
-                    const answer = question.nextElementSibling;
-                    if (answer.style.display === "block") {
-                        answer.style.display = "none";
-                    } else {
-                        answer.style.display = "block";
-                    }
-                });
-            });
-
-
-            function collapseExpandedQuesAns() {
-                const activeQuestions = document.querySelectorAll(".question.active");
-
-                activeQuestions.forEach(activeQues => {
-                    activeQues.classList.toggle("active");
-                    const activeQuesArrows = activeQues.querySelectorAll(".arrow-down");
-                    activeQuesArrows.forEach(activeQuesArrow => {
-                        activeQuesArrow.classList.toggle("rotate");
-                    });
-                    const activeQuesAnswer = activeQues.nextElementSibling;
-                    if (activeQuesAnswer.style.display === "block") {
-                        activeQuesAnswer.style.display = "none";
-                    } else {
-                        activeQuesAnswer.style.display = "block";
-                    }
-                });
-            }
-
-
-        }, false);
-
-
+    <!-- This page JS -->
+    <script type="text/javascript">
+        setTitle();
+        document.addEventListener('DOMContentLoaded', addQuestions, false);
     </script>
 </body>
-
-</html>
