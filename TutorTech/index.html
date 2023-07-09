@@ -806,7 +806,8 @@
             const courses = ['Java programming', 'Python programming', 'Web Development', 'Selenium Test Automation', "API Automation"];
             const selectedCourse = selectElementFromArray(courses);
             const date = getNextMondayDate();
-            const newsText = '<span style="color: red;">' + `New Batches starting for "${selectedCourse}" from <b>${date}</b>` + '</span>';
+            const newsText = '<span style="color: red;">' + `Next cohort for "${selectedCourse}" from <b>${date}</b>
+                <br><br> Click  to enroll!!!` + '</span>';
             $('#news-text').html(newsText);
 
 
