@@ -12,6 +12,10 @@
     background-color: #aaa;
 }
 
+.navbar {
+    background-color: #222;
+}
+
 .nav-link {
     color: #fff !important;
 }
