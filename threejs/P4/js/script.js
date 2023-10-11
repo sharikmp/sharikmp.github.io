@@ -71,6 +71,12 @@ scene.add(blueLight);
 
 
 
+// Set up the renderer
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(w, h);
+canva.appendChild(renderer.domElement);
+
+
 // const textureLoader = new THREE.TextureLoader();
 // let backgroundTexture;
 
@@ -91,12 +97,6 @@ scene.add(blueLight);
 // camera.lookAt(new THREE.Vector3(0, 0, 0)); // Point the camera towards the center of the scene
 
 
-
-
-// Set up the renderer
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(w, h);
-canva.appendChild(renderer.domElement);
 
 
 
