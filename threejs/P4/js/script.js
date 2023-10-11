@@ -71,24 +71,24 @@ scene.add(blueLight);
 
 
 
-const textureLoader = new THREE.TextureLoader();
-let backgroundTexture;
+// const textureLoader = new THREE.TextureLoader();
+// let backgroundTexture;
 
-textureLoader.load('./images/bg.jpg', (texture) => {
-    backgroundTexture = texture;
-    backgroundTexture.wrapS = THREE.RepeatWrapping;
-    backgroundTexture.wrapT = THREE.RepeatWrapping;
-    backgroundTexture.repeat.set(4, 4); // Adjust the repeat values as needed
-    const backgroundGeometry = new THREE.PlaneGeometry(w, h); // Use the width and height of your scene
-    const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture, side: THREE.DoubleSide });
-    const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-    scene.add(backgroundMesh);
-});
+// textureLoader.load('./images/bg.jpg', (texture) => {
+//     backgroundTexture = texture;
+//     backgroundTexture.wrapS = THREE.RepeatWrapping;
+//     backgroundTexture.wrapT = THREE.RepeatWrapping;
+//     backgroundTexture.repeat.set(4, 4); // Adjust the repeat values as needed
+//     const backgroundGeometry = new THREE.PlaneGeometry(w, h); // Use the width and height of your scene
+//     const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture, side: THREE.DoubleSide });
+//     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+//     scene.add(backgroundMesh);
+// });
 
 
 
-camera.position.set(cam_pos_x_value, cam_pos_y_value, cam_pos_z_value);
-camera.lookAt(new THREE.Vector3(0, 0, 0)); // Point the camera towards the center of the scene
+// camera.position.set(cam_pos_x_value, cam_pos_y_value, cam_pos_z_value);
+// camera.lookAt(new THREE.Vector3(0, 0, 0)); // Point the camera towards the center of the scene
 
 
 
@@ -103,15 +103,23 @@ canva.appendChild(renderer.domElement);
 
 // Create Sun
 // Set the sun geometry and material
-const sunGeometry = new THREE.SphereGeometry(20, 64, 64);
-const sunMaterial = new THREE.MeshPhongMaterial({
-    color: 0xf0690e,
-    specular: 0x101010,
-    shininess: 32,
-});
-const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-scene.add(sun);
+// const sunGeometry = new THREE.SphereGeometry(20, 64, 64);
+// const sunMaterial = new THREE.MeshPhongMaterial({
+//     color: 0xf0690e,
+//     specular: 0x101010,
+//     shininess: 32,
+// });
+// const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+// scene.add(sun);
+// Load the sun texture
+var loader = new THREE.TextureLoader();
+var sunTexture = loader.load('https://cdn.pixabay.com/photo/2015/11/01/15/38/the-background-1017060_960_720.jpg');
 
+// Create a sun sphere and add the texture
+var sunGeometry = new THREE.SphereGeometry(20, 64, 64);
+var sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
+var sun = new THREE.Mesh(sunGeometry, sunMaterial);
+scene.add(sun);
 
 
 
