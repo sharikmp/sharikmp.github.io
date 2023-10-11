@@ -113,11 +113,11 @@ canva.appendChild(renderer.domElement);
 // scene.add(sun);
 // Load the sun texture
 var loader = new THREE.TextureLoader();
-var sunTexture = loader.load('https://cdn.pixabay.com/photo/2015/11/01/15/38/the-background-1017060_960_720.jpg');
+var sunTexture = loader.load('./images/sun-texture.jpg');
 
 // Create a sun sphere and add the texture
 var sunGeometry = new THREE.SphereGeometry(20, 64, 64);
-var sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
+var sunMaterial = new THREE.MeshStandardMaterial({ map: sunTexture });
 var sun = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sun);
 
