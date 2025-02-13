@@ -303,15 +303,12 @@ form label {
 
 
 .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 30px;
     color: var(--secondary-color);
+    font-size: 18px;
+    max-width: 500px;
 }
 
 .contact-links a i {
-    font-size: 30px;
     color: var(--secondary-color);
     text-decoration: none;
 }
