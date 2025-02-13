@@ -1,36 +1,63 @@
+/* Define CSS Variables */
+:root {
+    --primary-color: #000;
+    --secondary-color: #fff;
+    --accent-color: #0473fb;
+    --dark-gray: #666;
+    --light-gray: #aaa;
+    --scrollbar-border: #1e1e1e;
+    --hover-color: rgb(79, 0, 128);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #666;
+    background-color: var(--dark-gray);
     border-radius: 10px;
-    border: 2px solid #1e1e1e;
+    border: 2px solid var(--scrollbar-border);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
+    background-color: var(--light-gray);
 }
 
-.navbar {
-    background-color: #222;
+/* Global styles */
+body {
+    background-color: #000;
+    background-image: linear-gradient(270deg, #2d3436 0%, #000000 74%);
 }
 
+.navbar,
+.footer {
+    background-color: #000;
+    background-image: linear-gradient(0deg, #2d3436 0%, #000000 74%);
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Navbar */
 .nav-link {
-    color: #fff !important;
+    color: var(--secondary-color) !important;
 }
 
-.navbar-brand img{
-    border: 2px solid #fff;
+.navbar-brand img {
+    border: 2px solid var(--secondary-color);
     border-radius: 10px;
     height: 50px;
     width: auto;
 }
 
 .navbar-toggler-icon {
-    color: #fff;
+    color: var(--secondary-color);
 }
 
+/* Carousel */
 .carousel {
     text-align: center;
     margin: auto;
@@ -46,7 +73,27 @@
     font-size: 14px;
 }
 
-/* Center align content */
+/* Section headings */
+h1,
+.section-title {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 32px;
+    color: var(--secondary-color);
+}
+
+section h2 {
+    padding: 30px 0;
+}
+
+/* Center alignment */
 .center {
     display: flex;
     flex-direction: column;
@@ -55,90 +102,24 @@
     padding: 20px;
 }
 
-/* Heading styles */
-h1 {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 2rem;
+/* Cards */
+.card,
+.service {
+    background: #FFEFBA;
+    background: -webkit-linear-gradient(to left, #FFFFFF, #FFEFBA);
+    background: linear-gradient(to left, #FFFFFF, #FFEFBA);
 }
 
-/* Button styles */
-.btn-xl {
-    font-size: 1.5rem;
-    padding: 1.5rem 3rem;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-xl:hover {
-    background-color: #0056b3;
-}
-
-
-/* Add custom CSS styles for card animation */
 .card {
     opacity: 0;
     transform: translateX(-500px);
     transition: opacity 0.5s, transform 0.8s;
     min-height: 300px;
-    margin-bottom: 30px;
+    padding: 30px;
+    margin: 15px;
 }
 
-/* Footer styles */
-.footer {
-    background-color: #222;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
-
-.footer p {
-    margin-bottom: 0;
-}
-
-.footer .fa {
-    margin-right: 5px;
-}
-
-/* CSS for the scroll-to-top button */
-.scroll-to-top {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.scroll-to-top i {
-    margin-top: 2px;
-}
-
-section h2 {
-    padding: 30px 0;
-}
-
-#services {
-    background-color: #f8f8f8;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-    background-color: #f8f9fa;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 32px;
-}
-
+/* Services */
 .services-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -149,7 +130,6 @@ section h2 {
     flex-basis: 30%;
     padding: 30px;
     margin: 15px;
-    background-color: #ffffff;
     text-align: center;
 }
 
@@ -166,38 +146,139 @@ section h2 {
 
 .service-description {
     font-size: 16px;
+    text-align: left;
 }
 
+/* Buttons */
 .btn200 {
     min-width: 200px;
+    background-color: var(--primary-color);
+    border: var(--primary-color);
 }
 
-a>i:hover {
-    color: rgb(79, 0, 128);
+.btn200:hover {
+    background-color: var(--accent-color);
+    border: var(--accent-color);
 }
 
+/* Scroll-to-top */
+.scroll-to-top {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.scroll-to-top i {
+    margin-top: 2px;
+}
+
+/* Footer */
+.footer {
+    color: var(--secondary-color);
+    padding: 20px;
+    text-align: center;
+}
+
+.footer p {
+    margin-bottom: 0;
+}
+
+.footer .fa {
+    margin-right: 5px;
+}
+
+/* News headlines */
 .news-headline {
     margin: 5px auto;
-    background-color: #f9b1b1;
+    background-color: var(--accent-color);
     padding: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: textAnimation 1.5s ease-in-out infinite;
 }
 
 .news-headline h2 {
     margin: 0;
     font-size: 13px;
-    color: #000;
+    color: var(--primary-color);
 }
 
-
+/* Course cards */
 .course-card {
     border: 1px solid #ddd;
     border-radius: 1rem;
     margin-bottom: 5px;
-    background-color: #ffffff;
-
+    background-color: var(--secondary-color);
 }
 
+.course h3 {
+    margin: 30px 0;
+}
+
+/* Expandable description */
+.expandable .description {
+    display: none;
+}
+
+.expandable.expanded .description {
+    display: block;
+    font-size: 11px;
+}
+
+.description ul,
+.description ol {
+    padding: 0;
+}
+
+.description li {
+    margin: 5px;
+}
+
+a>i {
+    color: var(--primary-color);
+}
+
+/* Hover effects */
+a>i:hover {
+    color: var(--hover-color);
+}
+
+/* Enroll button */
+.enrollnow {
+    cursor: pointer;
+}
+
+form {
+    border: 2px solid var(--secondary-color);
+    padding: 1rem;
+    border-top-left-radius: 1rem;
+}
+
+form label {
+    color: var(--secondary-color);
+}
+
+/* Animation */
+@keyframes textAnimation {
+    0% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.8;
+    }
+}
+
+/* Media queries */
 @media (min-width: 768px) {
     .course-card {
         padding: 30px;
@@ -219,51 +300,41 @@ a>i:hover {
 }
 
 
-.course h3 {
+
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    color: var(--secondary-color);
 }
 
-.coursedetails {
-    text-align: left !important;
+.contact-links a i {
+    font-size: 30px;
+    color: var(--secondary-color);
+    text-decoration: none;
 }
 
-.expandable .description {
-    display: none;
+.contact-links a i:hover {
+    color: var(--accent-color)
 }
 
-.expandable.expanded .description {
-    display: block;
-    font-size: 11px;
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    /* Ensures navbar stays above other content */
+    background-color: #333;
+    /* You can change the background color */
+    padding: 10px;
+    /* Adjust padding as per your need */
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Optional: adds a shadow effect when scrolling */
 }
 
-.description ul,
-ol {
-    padding: 0;
-}
 
-.description li {
-    margin: 5px;
-}
-
-/* Define the animation keyframes */
-@keyframes textAnimation {
-    0% {
-        opacity: 0.8;
-        /* transform: translateX(700px); */
-    }
-
-    100% {
-        opacity: 1;
-        /* transform: translateX(0px); */
-    }
-}
-
-/* Apply the animation to the text element */
-.news-headline {
-    animation: textAnimation 1s ease-in-out infinite;
-}
-
-.enrollnow {
-    cursor: pointer;
+.intro {
+    color: var(--accent-color);
 }

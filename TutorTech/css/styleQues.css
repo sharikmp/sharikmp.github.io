@@ -1,5 +1,5 @@
 :root {
-    --themeColor: #4285F4;
+    --themeColor: #ff4c68;
     --themeColorLight: #98bbf5;
     --white: #fff;
 }
@@ -9,7 +9,6 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2;
 }
 
 .container {
@@ -26,7 +25,6 @@ body {
     line-height: 1.25rem;
     font-family: sans-serif;
     background-color: var(--themeColor) !important;
-    color: #fff;
     border: 2px solid var(--themeColor);
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
@@ -56,22 +54,21 @@ body {
 
 /* Style for the question section */
 .question {
-    background-color: #f9f9f9;
     padding: 10px;
     padding-bottom: 20px;
     font-weight: bold;
     font-size: 11px;
     font-family: sans-serif;
     cursor: pointer;
-    border-top: 1px solid #ddd;
-    border-bottom: 5px solid #ddd;
     line-height: 2rem;
+    color: var(--white);
+    border: 1px solid var(--white);
+    border-top-left-radius: 1rem;
 }
 
 
 .question:hover {
     background-color: var(--themeColor) !important;
-    color: #fff;
 }
 
 /* Style for the active question section */

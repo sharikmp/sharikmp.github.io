@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/fevicon.png" type="image/x-icon">
     <link rel="shortcut icon" href="img/fevicon.png" type="image/x-icon">
-    <title>Tech Tutor</title>
+    <title>Way2QAE</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -21,9 +21,10 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="#">
-            <img src="img/logo.png" alt="Tech Tutor">
+            <img src="img/logo.png" alt="Way2QAE">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -44,10 +45,10 @@
                     <a class="nav-link" href="pages/interviewqueshome.html">Interview Prep</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">About Us</a>
+                    <a class="nav-link" href="#about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact Us</a>
+                    <a class="nav-link" href="#contact">Contact</a>
                 </li>
             </ul>
         </div>
@@ -70,7 +71,7 @@
             <div class="carousel-item active">
                 <img src="img/2.jpg" alt="Image 1">
                 <div class="carousel-caption">
-                    <h3>Unlock Your Academic Potential with Expert Help, Tutoring, and Solutions.</h3>
+                    <h6 id="intro" class="intro">Be Industry Ready!</h6>
                 </div>
             </div>
         </div>
@@ -80,59 +81,64 @@
     <br>
 
     <!-- Services Section -->
-    <div class="container">
-        <section id="services" class="container" style="background-color: #f8f9fa;">
-            <h2 class="section-title">Our Services</h2>
+    <div class="container ">
+        <section id="services" class="container">
+            <h2 class="section-title">Services</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="service">
-                        <a href="#course-section" class="service">
-                            <i class="fa fa-laptop fa-3x mb-3"></i>
+                    <div class="service ">
+                        <a href="#course-section">
+                            <i class="fa fa-chalkboard-teacher fa-3x mb-3"></i>
                         </a>
-                        <h3 class="service-title">Tutoring</h3>
-                        <p class="service-description">Struggling to grasp a tricky concept? <br> Our expert tutors
-                            offer
-                            personalized, one-on-one sessions to help you excel in any subject. With tailored teaching
-                            styles and varied expertise, we aim to boost your understanding and academic success.</p>
+                        <h4 class="service-title">Mentoring</h4>
+                        <ul class="service-description">
+                            <li>Structured learning </li>
+                            <li>Hands-on project guidance</li>
+                            <li>Industry best practices</li>
+                            <li>1-on-1 doubt resolution</li>
+                        </ul>
                         <div class="text-center mt-auto">
-                            <button class="btn btn-primary btn200" id="start-learning-btn"><i class="fa fa-laptop"></i>
-                                Start learning!</button>
+                            <button class="btn btn-primary btn200" id="start-learning-btn">
+                                <i class="fa fa-chalkboard-teacher"></i> Get Mentored!
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="service">
-                        <a href="#contact" class="service">
-                            <i class="fas fa-hands-helping fa-3x mb-3"></i>
+                    <div class="service ">
+                        <a href="#contact">
+                            <i class="fas fa-tasks fa-3x mb-3"></i>
                         </a>
-                        <h3 class="service-title">Assignment Help</h3>
-                        <p class="service-description">Stuck with a challenging assignment? <br> Our skilled experts are
-                            here to
-                            help! We offer custom solutions for research papers, essays, and more, covering a variety of
-                            subjects. Get top-notch, original work that will impress your professors and elevate your
-                            grades.</p>
+                        <h4 class="service-title">Assignment Help</h4>
+                        <ul class="service-description">
+                            <li>Debugging and troubleshooting</li>
+                            <li>Code optimization techniques</li>
+                            <li>Test automation solutions</li>
+                            <li>Project-based learning support</li>
+                        </ul>
                         <div class="text-center mt-auto">
-                            <button class="btn btn-primary btn200" id="get-help-btn"><i
-                                    class="fas fa-hands-helping"></i>
-                                Get help!</button>
+                            <button class="btn btn-primary btn200" id="get-help-btn">
+                                <i class="fas fa-tasks"></i> Get Help!
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="service">
-                        <a href="#contact" class="service">
-                            <i class="fa fa-file-text-o fa-3x mb-3"></i>
+                    <div class="service ">
+                        <a href="#contact">
+                            <i class="fa fa-user-tie fa-3x mb-3"></i>
                         </a>
-                        <h3 class="service-title">Solved Solutions</h3>
-                        <p class="service-description">Need assignment inspiration? <br> Our database of solved
-                            solutions
-                            has got
-                            you covered! From essays to problem-solving, we offer a vast range of references to elevate
-                            your
-                            work and help you understand different structures, formats, and approaches.</p>
+                        <h4 class="service-title">Interviews Guide</h4>
+                        <ul class="service-description">
+                            <li>Mock interviews & feedback</li>
+                            <li>Technical coding challenges</li>
+                            <li>Test automation frameworks</li>
+                            <li>Behavioral question strategies</li>
+                        </ul>
                         <div class="text-center mt-auto">
-                            <button class="btn btn-primary btn200" id="feeling-interested-btn"><i
-                                    class="fa fa-file-text-o"></i> Feeling Lucky!</button>
+                            <button class="btn btn-primary btn200" id="feeling-interested-btn">
+                                <i class="fa fa-user-tie"></i> Ace Your Interview!
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -142,16 +148,17 @@
     <br>
 
     <!-- Courses Offered section -->
-    <div class="container">
-        <section class="course container" id="course-section" style="background-color: #f8f9fa;">
-            <h2 style="margin: 30px;" class="center">Courses Offered </h2>
+    <div class="container ">
+        <section class="course container" id="course-section">
+            <h2 style="margin: 30px;" class="center section-title">Courses Offered </h2>
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="center">
                             <i class="fas fa-laptop-code fa-3x"></i>
-                            <h3>Python Programming</h3>
-                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                            <h4>Python Programming</h4>
+                            <button class="btn btn-primary enrollnow btn200"><i class="fas fa-clipboard-list"></i>
+                                Enroll
                                 Now</button>
                         </div>
                         <br>
@@ -214,11 +221,12 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="center">
                             <i class="fas fa-laptop-code fa-3x"></i>
-                            <h3>Java Programming</h3>
-                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                            <h4>Java Programming</h4>
+                            <button class="btn btn-primary enrollnow btn200"><i class="fas fa-clipboard-list"></i>
+                                Enroll
                                 Now</button>
                         </div>
                         <br>
@@ -281,27 +289,28 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="center">
                             <i class="fas fa-laptop-code fa-3x"></i>
-                            <h3>Web Development</h3>
-                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
-                                Now</button>
+                            <h4>Playwright Automation</h4>
+                            <button class="btn btn-primary enrollnow btn200">
+                                <i class="fas fa-clipboard-list"></i> Enroll Now
+                            </button>
                         </div>
                         <br>
                         <div class="coursedetails">
                             <ul>
                                 <li>
-                                    <p><b>Learning hrs: </b>~80h</p>
+                                    <p><b>Learning hrs: </b>~30h</p>
                                 </li>
                                 <li>
                                     <p><b>100%</b> Hands-on practice</p>
                                 </li>
                                 <li>
-                                    <p><b>5 Projects</b> Live Website Projects</p>
+                                    <p><b>Industry Level</b> Framework Development</p>
                                 </li>
                                 <li>
-                                    <p><b>Free </b>Projects Hosting</p>
+                                    <p><b>Live </b>Coding</p>
                                 </li>
                                 <li>
                                     <div class="expandable">
@@ -309,36 +318,36 @@
                                                 details...)</a></div>
                                         <div class="description">
                                             <ol>
-                                                <li>Introduction to Web Development (2h)</li>
-                                                <li>Setting Up Your Development Environment (1h)</li>
-                                                <li>HTML Basics (3h)</li>
-                                                <li>HTML Forms and Input Validation (2h)</li>
-                                                <li>Introduction to CSS (3h)</li>
-                                                <li>Styling HTML Elements with CSS (3h)</li>
-                                                <li>CSS Box Model and Layout (2h)</li>
-                                                <li>CSS Flexbox and Grid (3h)</li>
-                                                <li>Introduction to JavaScript (2h)</li>
-                                                <li>JavaScript Variables and Data Types (2h)</li>
-                                                <li>JavaScript Functions and Control Flow (3h)</li>
-                                                <li>JavaScript DOM Manipulation (3h)</li>
-                                                <li>JavaScript Events and Event Handling (3h)</li>
-                                                <li>JavaScript Form Validation (2h)</li>
-                                                <li>JavaScript Arrays and Loops (2h)</li>
-                                                <li>Introduction to Responsive Web Design (2h)</li>
-                                                <li>Media Queries and Responsive Layouts (3h)</li>
-                                                <li>CSS Transitions and Animations (2h)</li>
-                                                <li>Introduction to Bootstrap Framework (2h)</li>
-                                                <li>Building a Responsive Web Page with Bootstrap (3h)</li>
-                                                <li>Introduction to JavaScript Libraries (2h)</li>
-                                                <li>Working with jQuery Library (3h)</li>
-                                                <li>Introduction to AJAX (2h)</li>
-                                                <li>Asynchronous JavaScript with AJAX (3h)</li>
-                                                <li>Introduction to JSON and APIs (2h)</li>
-                                                <li>Consuming Web APIs with JavaScript (3h)</li>
-                                                <li>Introduction to Browser Storage (2h)</li>
-                                                <li>Local Storage and Session Storage (2h)</li>
-                                                <li>Introduction to Version Control with Git (2h)</li>
-                                                <li>Deploying Your Web Project (1h)</li>
+                                                <li>Introduction & Architecture (1h)</li>
+                                                <li>Writing First Playwright Test (1h)</li>
+                                                <li>Working with Locators (1h)</li>
+                                                <li>Handling UI Interactions (1h)</li>
+                                                <li>Handling Alerts & Dialogs (1h)</li>
+                                                <li>Handling Frames & iFrames (1h)</li>
+                                                <li>Working with Assertions (1h)</li>
+                                                <li>Playwright Test Runner & Configs (1h)</li>
+                                                <li>Handling Page Navigation & Waits (1h)</li>
+                                                <li>Working with API Testing (1h)</li>
+                                                <li>File Uploads & Downloads (1h)</li>
+                                                <li>Mouse & Keyboard Actions (1h)</li>
+                                                <li>Debugging & Error Handling (1h)</li>
+                                                <li>Different Browsers & Devices (1h)</li>
+                                                <li>Generating Reports & Logging (1h)</li>
+                                                <li>Reading Data from Files (CSV, JSON) (1h)</li>
+                                                <li>Data-Driven & Parameterization (1h)</li>
+                                                <li>Working with Env Variables & Config (1h)</li>
+                                                <li>Handling Authentication & Sessions (1h)</li>
+                                                <li>Mocking & Intercepting Requests (1h)</li>
+                                                <li>Running Tests in CI/CD Pipeline (1h)</li>
+                                                <li>Managing Test Suites & Tagging (1h)</li>
+                                                <li>Performance Testing with Playwright (1h)</li>
+                                                <li>Visual Regression Testing (1h)</li>
+                                                <li>Industry Level Framework - Part 1 (1h)</li>
+                                                <li>Industry Level Framework - Part 2 (1h)</li>
+                                                <li>Industry Level Framework - Part 3 (1h)</li>
+                                                <li>Industry Level Framework - Part 4 (1h)</li>
+                                                <li>Industry Level Framework - Part 5 (1h)</li>
+                                                <li>Industry Level Framework - Part 6 (1h)</li>
                                             </ol>
                                         </div>
                                     </div>
@@ -347,12 +356,14 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="center">
                             <i class="fas fa-laptop-code fa-3x"></i>
-                            <h3>Software Testing Basics</h3>
-                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                            <h4>Software Testing Basics</h4>
+                            <button class="btn btn-primary enrollnow btn200"><i class="fas fa-clipboard-list"></i>
+                                Enroll
                                 Now</button>
                         </div>
                         <br>
@@ -397,11 +408,12 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="center">
                             <i class="fas fa-laptop-code fa-3x"></i>
-                            <h3>Selenium Automation Testing</h3>
-                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                            <h4>Selenium Automation</h4>
+                            <button class="btn btn-primary enrollnow btn200"><i class="fas fa-clipboard-list"></i>
+                                Enroll
                                 Now</button>
                         </div>
                         <br>
@@ -462,11 +474,12 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="center">
                             <i class="fas fa-laptop-code fa-3x"></i>
-                            <h3>Rest Assured Automation</h3>
-                            <button class="btn btn-primary enrollnow"><i class="fas fa-clipboard-list"></i> Enroll
+                            <h4>Rest Assured Automation</h4>
+                            <button class="btn btn-primary enrollnow btn200"><i class="fas fa-clipboard-list"></i>
+                                Enroll
                                 Now</button>
                         </div>
                         <br>
@@ -534,99 +547,97 @@
 
 
     <!-- Page content -->
-    <div id="about" class="container mt-5" >
+    <div id="about" class="container mt-5 ">
 
-        <section class="container mt-5" style="background-color: #f8f9fa;">
-            
-            <h2>Empowering Success: </h2>
+        <section class="container mt-5">
+            <h2 style="margin: 30px;" class="center section-title">Empowering QA with Automation, Performance, and
+                Precision</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="card-body text-center">
-                            <i class="fa fa-graduation-cap fa-3x mb-3"></i>
-                            <h5 class="card-title">Comprehensive Solutions</h5>
-                            <p class="card-text">At our Assignment Solutions, we take pride in providing comprehensive
-                                solutions for all your assignment needs.</p>
+                            <i class="fa fa-code fa-3x mb-3"></i>
+                            <h5 class="card-title">Automation Frameworks</h5>
+                            <p class="card-text">Experienced in designing and implementing scalable test automation
+                                frameworks using Selenium, Appium, and REST Assured.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="card-body text-center">
-                            <i class="fa fa-check-square-o fa-3x mb-3"></i>
-                            <h5 class="card-title">Expert Writers</h5>
-                            <p class="card-text">Our team of expert writers is dedicated to helping you achieve academic
-                                success with years of experience in the field.</p>
+                            <i class="fa fa-check-circle fa-3x mb-3"></i>
+                            <h5 class="card-title">Test Strategy & Execution</h5>
+                            <p class="card-text">Proficient in defining test strategies, writing robust test cases, and
+                                executing automated and manual test scenarios.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="card-body text-center">
-                            <i class="fa fa-file-text-o fa-3x mb-3"></i>
-                            <h5 class="card-title">Wide Range of Assignments</h5>
-                            <p class="card-text">Whether you need help with essays, research papers, case studies, or
-                                any other type of assignment, we have you covered.</p>
+                            <i class="fa fa-database fa-3x mb-3"></i>
+                            <h5 class="card-title">API & Database Testing</h5>
+                            <p class="card-text">Skilled in validating RESTful APIs using Postman and automation, along
+                                with SQL expertise for database validation.</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="card-body text-center">
                             <i class="fa fa-cogs fa-3x mb-3"></i>
-                            <h5 class="card-title">Holistic Approach</h5>
-                            <p class="card-text">Our approach to assignment solutions is holistic, taking into
-                                consideration all aspects of the assignment, including research, analysis, writing,
-                                formatting, and referencing.</p>
+                            <h5 class="card-title">CI/CD & DevOps</h5>
+                            <p class="card-text">Hands-on experience with CI/CD pipelines, integrating automated tests
+                                in Jenkins, GitHub Actions, and Azure DevOps.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="card-body text-center">
-                            <i class="fa fa-clock-o fa-3x mb-3"></i>
-                            <h5 class="card-title">Timely Delivery</h5>
-                            <p class="card-text">We understand the importance of deadlines in academic assignments, and
-                                we are committed to delivering your solutions on time, every time.</p>
+                            <i class="fa fa-clock fa-3x mb-3"></i>
+                            <h5 class="card-title">Performance & Security Testing</h5>
+                            <p class="card-text">Proficient in performance testing with JMeter and security testing best
+                                practices to ensure robust applications.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card ">
                         <div class="card-body text-center">
                             <i class="fas fa-lightbulb fa-3x mb-3"></i>
-                            <h5 class="card-title">Academic and Professional Solutions</h5>
-                            <p class="card-text">Whether you are a student struggling with a complex assignment or a
-                                professional seeking assistance with a work-related task, our comprehensive assignment
-                                solutions are designed to meet your needs.</p>
+                            <h5 class="card-title">Agile & Continuous Testing</h5>
+                            <p class="card-text">Well-versed in Agile methodologies, collaborating with teams to enable
+                                shift-left testing and continuous quality assurance.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
+
         </section>
     </div>
 
-    <br>
-
-    <div class="container">
-        <section id="quickquery" style="background-color: #f8f9fa;" class="container">
-            <div class="center">
-                <h1>Have a question or need assistance?</h1>
-                <p>Get in touch with our experts now and experience our exceptional service.</p>
-                <a class="btn btn-primary" href="#contact" class="btn">Quick Query</a>
-            </div>
-        </section>
-    </div>
     <br>
 
     <!-- Contact form section -->
     <div class="container">
-        <section id="contact" style="background-color: #f8f9fa; padding: 20px;" class="container">
-            <div class="container mt-5">
-                <h2>Contact Us</h2>
+        <section id="contact" style="padding: 20px;" class="container">
+            <h2 style="margin: 30px;" class="center section-title">Contact</h2>
+            <div class="contact-links">
+                <!-- Email Link -->
+                <a href="mailto:tnasmp2011@gmail.com" target="_blank" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <!-- WhatsApp Link -->
+                <a href="https://wa.me/+91-869708896" target="_blank" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <!-- <div class="container mt-5">
                 <form action="contact.php" method="post" id="contactForm">
                     <div class="form-group">
                         <label for="name">Name:</label>
@@ -654,9 +665,9 @@
                             required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <div id="response" class="mt-3"></div> <!-- Response message container -->
+                    <div id="response" class="mt-3"></div> 
                 </form>
-            </div>
+            </div> -->
 
         </section>
     </div>
@@ -666,7 +677,7 @@
     <!-- Footer section -->
     <footer class="footer">
         <div>
-            <p class="mb-0">Tech Tutor &copy; 2023. All rights reserved.</p>
+            <p class="mb-0">Way2QAE &copy; 2021. All rights reserved.</p>
             <!-- <p class="mb-0">Powered by <a href="https://www.example.com" target="_blank">Example Company</a></p> -->
             <p class="mb-0">Privacy Policy | Terms of Service</p>
         </div>
@@ -742,23 +753,25 @@
             document.getElementById("contactForm").addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevent form submission
 
-                // Fetch form data
-                var formData = new FormData(event.target);
+                alert("Please contact via email: tnasmp2011@gmail.com");
 
-                // Send form data to PHP script
-                fetch(event.target.action, {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(function (response) {
-                        return response.text();
-                    })
-                    .then(function (response) {
-                        displayResponseMessage(response); // Display response message
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
+                // Fetch form data
+                // var formData = new FormData(event.target);
+
+                // // Send form data to PHP script
+                // fetch(event.target.action, {
+                //     method: "POST",
+                //     body: formData
+                // })
+                //     .then(function (response) {
+                //         return response.text();
+                //     })
+                //     .then(function (response) {
+                //         displayResponseMessage(response); // Display response message
+                //     })
+                //     .catch(function (error) {
+                //         console.error(error);
+                //     });
             });
         });
 
@@ -800,16 +813,45 @@
         //Set News headline
 
         $(document).ready(function () {
-            const courses = ['Java programming', 'Python programming', 'Web Development', 'Selenium Test Automation', "API Automation"];
+            const courses = ["Industry Ready Playwright Automation"];
             const selectedCourse = selectElementFromArray(courses);
             const date = getNextMondayDate();
-            const newsText = '<span style="color: red;">' + `Next cohort for "${selectedCourse}" from <b>${date}</b>
+            const newsText = '<span style="color: #fff;">' + `Next cohort for "${selectedCourse}" from <b>${date}</b>
                 <br><br> Click  to enroll!!!` + '</span>';
             $('#news-text').html(newsText);
-
-
-
         });
+
+
+        $(document).ready(function () {
+            function animateText(selector, textArray, delay = 2000) {
+                let index = 0;
+                function changeText() {
+                    $(selector).fadeOut(250, function () {
+                        $(this).text(textArray[index]).fadeIn(250);
+                    });
+                    index = index == textArray.length ? 0 : index+1;
+                    setTimeout(changeText, delay);
+                }
+                changeText();
+            }
+
+            let introTexts = [
+                "",
+                "Hey there, welcome to Way2QAE!",
+                "I'm Sharik, an experienced SDET.",
+                "7+ years of expertise in test automation.",
+                "Specialized in Playwright, Selenium, and Rest Assured.",
+                "Passionate about mentoring and upskilling QA talent.",
+                "Committed to innovation in software testing.",
+                "Bridging the gap between theory and practice.",
+                "Let's elevate your QA career together!",
+                "Reach out for expert guidance!"
+            ];
+
+
+            animateText("#intro", introTexts);
+        });
+
 
 
         // Function to display response message on the form
