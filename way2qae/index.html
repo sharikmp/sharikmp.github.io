@@ -546,7 +546,7 @@
     </div>
 
 
-    <!-- Page content -->
+    <!-- About Section -->
     <div id="about" class="container mt-5 ">
 
         <section class="container mt-5">
@@ -749,32 +749,32 @@
 
 
 
-        $(document).ready(function () {
-            // Add event listener for form submission
-            document.getElementById("contactForm").addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent form submission
+        // $(document).ready(function () {
+        //     // Add event listener for form submission
+        //     document.getElementById("contactForm").addEventListener("submit", function (event) {
+        //         event.preventDefault(); // Prevent form submission
 
-                alert("Please contact via email: tnasmp2011@gmail.com");
+        //         alert("Please contact via email: tnasmp2011@gmail.com");
 
-                // Fetch form data
-                // var formData = new FormData(event.target);
+        //         //Fetch form data
+        //         var formData = new FormData(event.target);
 
-                // // Send form data to PHP script
-                // fetch(event.target.action, {
-                //     method: "POST",
-                //     body: formData
-                // })
-                //     .then(function (response) {
-                //         return response.text();
-                //     })
-                //     .then(function (response) {
-                //         displayResponseMessage(response); // Display response message
-                //     })
-                //     .catch(function (error) {
-                //         console.error(error);
-                //     });
-            });
-        });
+        //         // Send form data to PHP script
+        //         fetch(event.target.action, {
+        //             method: "POST",
+        //             body: formData
+        //         })
+        //             .then(function (response) {
+        //                 return response.text();
+        //             })
+        //             .then(function (response) {
+        //                 displayResponseMessage(response); // Display response message
+        //             })
+        //             .catch(function (error) {
+        //                 console.error(error);
+        //             });
+        //     });
+        // });
 
 
         $(document).ready(function () {
@@ -824,23 +824,45 @@
 
 
         $(document).ready(function () {
-            function animateText(selector, textArray, delay = 2000) {
+            function typeText(selector, textArray, typingSpeed = 50, delay = 1000) {
                 let index = 0;
-                function changeText() {
-                    $(selector).fadeOut(250, function () {
-                        $(this).text(textArray[index]).fadeIn(250);
-                    });
-                    index = index == textArray.length ? 0 : index+1;
-                    setTimeout(changeText, delay);
+                let element = $(selector);
+
+                function typeLine(line, callback) {
+                    let charIndex = 0;
+                    element.text(""); // Clear text before typing
+
+                    function typeChar() {
+                        if (charIndex < line.length) {
+                            element.append(line[charIndex]);
+                            charIndex++;
+                            setTimeout(typeChar, typingSpeed);
+                        } else {
+                            setTimeout(callback, delay);
+                        }
+                    }
+                    typeChar();
                 }
-                changeText();
+
+                function startTyping() {
+                    typeLine(textArray[index], function () {
+                        setTimeout(() => {
+                            element.fadeOut(500, function () {
+                                index = (index + 1) % textArray.length;
+                                startTyping();
+                                element.fadeIn(500);
+                            });
+                        }, 500);
+                    });
+                }
+
+                startTyping();
             }
 
             let introTexts = [
-                "",
                 "Hey there, welcome to Way2QAE!",
                 "I'm Sharik, an experienced SDET.",
-                "7+ years of expertise in test automation.",
+                "With 7+ years of expertise in test automation.",
                 "Specialized in Playwright, Selenium, and Rest Assured.",
                 "Passionate about mentoring and upskilling QA talent.",
                 "Committed to innovation in software testing.",
@@ -849,9 +871,9 @@
                 "Reach out for expert guidance!"
             ];
 
-
-            animateText("#intro", introTexts);
+            typeText("#intro", introTexts);
         });
+
 
 
 
