@@ -1,0 +1,279 @@
+/* ===========================
+   Theme Variables
+=========================== */
+:root {
+    --primary-color: #b76e79;
+    --secondary-color: #fff8f0;
+    --container-bg: white;
+    --box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ===========================
+   General Layout & Body
+=========================== */
+body {
+    background-color: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+    font-family: 'Dancing Script', cursive;
+}
+
+/* ===========================
+   Decorative Biodata & Photos Container
+=========================== */
+.biodata-container,
+.photos-container,
+.setting-container {
+    background-color: var(--container-bg);
+    width: 21cm;
+    height: auto;
+    padding: 30px;
+    margin: 20px auto;
+    box-shadow: var(--box-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* ===========================
+    Settings Container
+============================== */
+
+.setting-container {
+    height: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.print-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 5px 0;
+}
+
+/* Button Styling */
+.button {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-family: 'Dancing Script', cursive;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    transition: all 0.2s ease;
+}
+
+.button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* Dropdown Styling */
+#themeSelector {
+    padding: 6px 10px;
+    font-size: 14px;
+    font-family: 'Dancing Script', cursive;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    transition: all 0.2s ease;
+}
+
+#themeSelector:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* Label Styling */
+label[for="themeSelector"] {
+    font-size: 14px;
+    font-family: 'Dancing Script', cursive;
+    color: var(--primary-color);
+    margin-right: 4px;
+}
+
+/* ===========================
+   Header Styling
+=========================== */
+h2 {
+    text-align: center;
+    font-size: 48px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.sections {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 24px;
+    color: var(--primary-color);
+    border-bottom: 2px dashed var(--primary-color);
+    padding-bottom: 5px;
+    font-family: 'Dancing Script', cursive;
+}
+
+/* ===========================
+   Photo Upload Placeholder
+=========================== */
+.photo-placeholder {
+    width: 120px;
+    height: 120px;
+    border: 3px dashed var(--primary-color);
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    cursor: pointer;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-placeholder i {
+    color: var(--primary-color);
+    font-size: 40px;
+    position: absolute;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* ===========================
+   Photo Display
+=========================== */
+.photos-container {
+    display: none;
+    overflow: hidden;
+    page-break-inside: avoid;
+}
+
+.photo-large {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border: 3px dashed var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================
+   Table Styling
+=========================== */
+.key-value-table {
+    width: 100%;
+}
+
+.key-value-table th,
+.key-value-table td {
+    font-size: 14px;
+    border: none;
+    background-color: var(--secondary-color);
+}
+
+.key-value-table input {
+    padding: 2px 6px;
+    font-size: 14px;
+}
+
+/* ===========================
+   Icons & Actions
+=========================== */
+.action-icon {
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 4px;
+    color: var(--primary-color);
+}
+
+
+/* ===========================
+   Primary Color Link Styling
+=========================== */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+    font-family: 'Dancing Script', cursive;
+    font-size: 14px;
+}
+
+a:hover {
+    color: darken(var(--primary-color), 10%);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+a:active {
+    color: darken(var(--primary-color), 20%);
+}
+
+
+/* ===========================
+   Print Styles
+=========================== */
+@media print {
+    body {
+        background: none !important;
+        margin: 0;
+        padding: 0;
+        height: auto;
+        overflow: visible;
+    }
+
+    .print {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+    }
+
+    /* Ensure containers fit within pages */
+    .biodata-container,
+    .photos-container {
+        width: 98%;
+        max-width: 100%;
+        height: auto;
+        box-shadow: none;
+        margin: 0;
+        padding: 10px;
+        page-break-inside: avoid;
+        overflow: hidden;
+    }
+
+    /* Ensure no extra blank pages */
+    .biodata-container:last-of-type,
+    .photos-container:last-of-type {
+        page-break-after: auto;
+    }
+
+    /* Clean up form inputs for print */
+    input {
+        border: none !important;
+        outline: none !important;
+    }
+
+    /* Hide unnecessary UI elements */
+    .actions,
+    .view-photo {
+        display: none !important;
+    }
+
+    /* Ensure consistent layout */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+}
