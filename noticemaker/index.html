@@ -350,10 +350,17 @@
 
     <script>
         const content = `Dear Students,\n\n\n\nRefer the timing below.\nThank You.`;
-        
+
         document.addEventListener('DOMContentLoaded', function () {
             updateNoticeContent(content);
             updateDeleteIcons('.delete-btn', '✖', 'red');
+            // Save data to cookies
+            saveToCookies({ username: "JohnDoe", theme: "dark" });
+
+            // Retrieve data from cookies
+            let userData = getFromCookies(["username", "theme"]);
+            console.log(userData);
+
         });
 
 
@@ -404,6 +411,31 @@
             document.querySelector('#editableNotice').innerHTML = content;
         }
 
+        /**
+         * Save to Cookies
+         */
+        function saveToCookies(data) {
+            Object.keys(data).forEach(key => {
+                document.cookie = `${key}=${encodeURIComponent(data[key])}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+            });
+        }
+
+        /**
+         * Retrieve from cookies
+         */
+        function getFromCookies(keys) {
+            let cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+                let [key, value] = cookie.split('=');
+                if (keys.includes(key)) {
+                    acc[key] = decodeURIComponent(value);
+                } else {
+                    console.log(`Cookie not found for key: ${key}`);
+                }
+                return acc;
+            }, {});
+
+            return cookies;
+        }
 
     </script>
 
