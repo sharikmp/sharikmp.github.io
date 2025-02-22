@@ -406,57 +406,63 @@
 
 
 
-        // ============= Cookie handling ======== 
-        // Save to Cookies
-        function saveCurrentData() {
+        // ================= Cookie Handling =================
 
-            const data = {
-                noticeData: document.querySelector('#editableNotice')?.textContent || '',
+        // Define keys with their corresponding selectors
+        const elementSelectors = {
+            noticeData: '#editableNotice',
+            monTime: '.mon input',
+            tueTime: '.tue input',
+            wedTime: '.wed input',
+            thuTime: '.thu input',
+            friTime: '.fri input',
+            satTime: '.sat input',
+            sunTime: '.sun input',
+            signInput1: '#sign-input-1',
+            signInput2: '#sign-input-2',
+            signInput3: '#sign-input-3',
+            signInput4: '#sign-input-4',
+            signInput5: '#sign-input-5',
+        };
 
-                monTime: document.querySelector('.mon input')?.value || '',
-                tueTime: document.querySelector('.tue input')?.value || '',
-                wedTime: document.querySelector('.wed input')?.value || '',
-                thuTime: document.querySelector('.thu input')?.value || '',
-                friTime: document.querySelector('.fri input')?.value || '',
-                satTime: document.querySelector('.sat input')?.value || '',
-                sunTime: document.querySelector('.sun input')?.value || '',
-
-                signInput1: document.querySelector('#sign-input-1')?.value || '',
-                signInput2: document.querySelector('#sign-input-2')?.value || '',
-                signInput3: document.querySelector('#sign-input-3')?.value || '',
-                signInput4: document.querySelector('#sign-input-4')?.value || '',
-                signInput5: document.querySelector('#sign-input-5')?.value || '',
+        // Utility function to get an element safely
+        function getElement(selector) {
+            const element = document.querySelector(selector);
+            if (!element) {
+                console.warn(`Element not found: ${selector}`);
+                return null;
             }
+            return element;
+        }
+
+        // Function to save data to cookies
+        function saveCurrentData() {
+            let data = {};
+
+            Object.entries(elementSelectors).forEach(([key, selector]) => {
+                const element = getElement(selector);
+                if (element) {
+                    data[key] = element.tagName === "INPUT" || element.tagName === "TEXTAREA"
+                        ? element.value
+                        : element.textContent;
+                }
+            });
 
             Object.keys(data).forEach(key => {
                 document.cookie = `${key}=${encodeURIComponent(data[key])}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
             });
 
+            console.log("Data saved to cookies:", data);
         }
 
-        // Retrieve from cookies
+        // Function to retrieve data from cookies
         function retrieveSavedData() {
-            const keys = [
-                'noticeData',
-                'sunTime',
-                'satTime',
-                'friTime',
-                'thuTime',
-                'wedTime',
-                'tueTime',
-                'monTime',
-                'signInput1',
-                'signInput2',
-                'signInput3',
-                'signInput4',
-                'signInput5',
-            ];
             let cookies = document.cookie.split('; ').reduce((acc, cookie) => {
                 let [key, value] = cookie.split('=');
-                if (keys.includes(key)) {
+                if (key in elementSelectors) {
                     acc[key] = decodeURIComponent(value);
                 } else {
-                    console.log(`Cookie not found for key: ${key}`);
+                    console.warn(`Cookie not found for key: ${key}`);
                 }
                 return acc;
             }, {});
@@ -464,30 +470,25 @@
             return cookies;
         }
 
-
+        // Function to set retrieved data back into the form
         function setRetrievedDataInForm() {
-
             const data = retrieveSavedData();
-            console.log(JSON.stringify(data));
+            if (Object.keys(data).length === 0) return;
 
-            if(Object.keys(data).length == 0 ) return;
+            Object.entries(elementSelectors).forEach(([key, selector]) => {
+                const element = getElement(selector);
+                if (element && data[key] !== undefined) {
+                    if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
+                        element.value = data[key];
+                    } else {
+                        element.textContent = data[key];
+                    }
+                }
+            });
 
-            document.querySelector('#editableNotice')?.textContent = data.noticeData;
-
-            document.querySelector('.mon input')?.value = data.monTime;
-            document.querySelector('.tue input')?.value = data.tueTime;
-            document.querySelector('.wed input')?.value = data.wedTime;
-            document.querySelector('.thu input')?.value = data.thuTime;
-            document.querySelector('.fri input')?.value = data.friTime;
-            document.querySelector('.sat input')?.value = data.satTime;
-            document.querySelector('.sun input')?.value = data.sunTime;
-
-            document.querySelector('#sign-input-1')?.value = data.signInput1;
-            document.querySelector('#sign-input-2')?.value = data.signInput2;
-            document.querySelector('#sign-input-3')?.value = data.signInput3;
-            document.querySelector('#sign-input-4')?.value = data.signInput4;
-            document.querySelector('#sign-input-5')?.value = data.signInput5;
+            console.log("Data restored from cookies:", data);
         }
+
     </script>
 
 </body>
