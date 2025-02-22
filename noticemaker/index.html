@@ -411,21 +411,21 @@
         function saveCurrentData() {
 
             const data = {
-                noticeData: document.querySelector('#editableNotice').textContent || '',
+                noticeData: document.querySelector('#editableNotice')?.textContent || '',
 
-                monTime: document.querySelector('.mon input').value || '',
-                tueTime: document.querySelector('.tue input').value || '',
-                wedTime: document.querySelector('.wed input').value || '',
-                thuTime: document.querySelector('.thu input').value || '',
-                friTime: document.querySelector('.fri input').value || '',
-                satTime: document.querySelector('.sat input').value || '',
-                sunTime: document.querySelector('.sun input').value || '',
+                monTime: document.querySelector('.mon input')?.value || '',
+                tueTime: document.querySelector('.tue input')?.value || '',
+                wedTime: document.querySelector('.wed input')?.value || '',
+                thuTime: document.querySelector('.thu input')?.value || '',
+                friTime: document.querySelector('.fri input')?.value || '',
+                satTime: document.querySelector('.sat input')?.value || '',
+                sunTime: document.querySelector('.sun input')?.value || '',
 
-                signInput1: document.querySelector('#sign-input-1').value || '',
-                signInput2: document.querySelector('#sign-input-2').value || '',
-                signInput3: document.querySelector('#sign-input-3').value || '',
-                signInput4: document.querySelector('#sign-input-4').value || '',
-                signInput5: document.querySelector('#sign-input-5').value || '',
+                signInput1: document.querySelector('#sign-input-1')?.value || '',
+                signInput2: document.querySelector('#sign-input-2')?.value || '',
+                signInput3: document.querySelector('#sign-input-3')?.value || '',
+                signInput4: document.querySelector('#sign-input-4')?.value || '',
+                signInput5: document.querySelector('#sign-input-5')?.value || '',
             }
 
             Object.keys(data).forEach(key => {
@@ -472,21 +472,21 @@
 
             if(Object.keys(data).length == 0 ) return;
 
-            document.querySelector('#editableNotice').textContent = data.noticeData;
+            document.querySelector('#editableNotice')?.textContent = data.noticeData;
 
-            document.querySelector('.mon input').value = data.monTime;
-            document.querySelector('.tue input').value = data.tueTime;
-            document.querySelector('.wed input').value = data.wedTime;
-            document.querySelector('.thu input').value = data.thuTime;
-            document.querySelector('.fri input').value = data.friTime;
-            document.querySelector('.sat input').value = data.satTime;
-            document.querySelector('.sun input').value = data.sunTime;
+            document.querySelector('.mon input')?.value = data.monTime;
+            document.querySelector('.tue input')?.value = data.tueTime;
+            document.querySelector('.wed input')?.value = data.wedTime;
+            document.querySelector('.thu input')?.value = data.thuTime;
+            document.querySelector('.fri input')?.value = data.friTime;
+            document.querySelector('.sat input')?.value = data.satTime;
+            document.querySelector('.sun input')?.value = data.sunTime;
 
-            document.querySelector('#sign-input-1').value = data.signInput1;
-            document.querySelector('#sign-input-2').value = data.signInput2;
-            document.querySelector('#sign-input-3').value = data.signInput3;
-            document.querySelector('#sign-input-4').value = data.signInput4;
-            document.querySelector('#sign-input-5').value = data.signInput5;
+            document.querySelector('#sign-input-1')?.value = data.signInput1;
+            document.querySelector('#sign-input-2')?.value = data.signInput2;
+            document.querySelector('#sign-input-3')?.value = data.signInput3;
+            document.querySelector('#sign-input-4')?.value = data.signInput4;
+            document.querySelector('#sign-input-5')?.value = data.signInput5;
         }
     </script>
 
