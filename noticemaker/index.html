@@ -8,6 +8,19 @@
     <!-- HTM2Canvas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
+        /* Theme Colors */
+        :root {
+            --theme-primary: royalblue;
+            --theme-secondary: #007BFF;
+            --theme-secondary-dark: #0056b3;
+            --theme-light: rgba(255, 255, 255, 0.9);
+            --theme-bg: #fafafa;
+            --theme-text: #2c3e50;
+            --theme-border: lightgrey;
+            --theme-shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Global Reset */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,6 +28,7 @@
             font-family: Arial, sans-serif;
         }
 
+        /* Layout */
         body {
             display: flex;
             flex-direction: column;
@@ -24,17 +38,19 @@
             background-size: cover;
         }
 
+        /* Card */
         .card {
             width: 400px;
             min-height: 600px;
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--theme-light);
             border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
+            box-shadow: 0px 4px 8px var(--theme-shadow);
+            padding: 10px;
             text-align: center;
             position: relative;
         }
 
+        /* Image Upload */
         .image-upload {
             width: 100%;
             height: 150px;
@@ -76,16 +92,18 @@
             cursor: pointer;
         }
 
+        /* Content */
         .content {
             margin-top: 15px;
         }
 
+        /* Inputs & Textarea */
         textarea,
         input {
             width: 100%;
             padding: 6px;
             margin: 3px 0;
-            border: 2px dotted lightgrey;
+            border: 2px dotted var(--theme-border);
             border-radius: 5px;
         }
 
@@ -95,7 +113,26 @@
             font-weight: bold;
         }
 
-        /* Compact Timetable */
+        /* Editable Div */
+        .editable-div {
+            min-height: 100px;
+            padding: 10px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            outline: none;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: left;
+            font-family: monospace;
+            background-color: var(--theme-text);
+            color: #fff;
+            border: 2px dotted var(--theme-primary);
+            border-top-left-radius: 1rem;
+            box-shadow: inset 0 2px 5px var(--theme-shadow);
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Timetable */
         .timetable {
             margin-top: 10px;
         }
@@ -109,38 +146,50 @@
             padding: 3px;
         }
 
-        .timetable td:first-child {
-            text-align: right;
-            width: 22%;
-            font-weight: bold;
-            color: royalblue;
-        }
-
-        .timetable td:nth-child(2) {
-            width: 23%;
-            text-align: left;
-        }
-
-        .timetable td:nth-child(3) {
-            width: 5%;
-            text-align: left;
-        }
-
+        .timetable td:first-child,
         .timetable td:nth-child(4) {
-            width: 22%;
             text-align: right;
+            width: 22%;
             font-weight: bold;
-            color: royalblue;
+            color: var(--theme-primary);
         }
 
+        .timetable td:nth-child(2),
         .timetable td:nth-child(5) {
             width: 23%;
             text-align: left;
         }
 
+        .timetable td:nth-child(3),
         .timetable td:nth-child(6) {
             width: 5%;
             text-align: left;
+        }
+
+        /* Timetable Inputs */
+        .timetable input {
+            padding: 2px 6px;
+            font-size: 13px;
+            margin: 1px;
+            border: 1px dotted var(--theme-border);
+            height: 1.5rem;
+        }
+
+        /* Buttons */
+        .download-btn {
+            margin-top: 15px;
+            padding: 12px;
+            background: var(--theme-secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 200px;
+            font-size: 16px;
+        }
+
+        .download-btn:hover {
+            background: var(--theme-secondary-dark);
         }
 
         .delete-btn {
@@ -151,22 +200,6 @@
             color: red;
             cursor: pointer;
             font-size: 14px;
-        }
-
-        .download-btn {
-            margin-top: 15px;
-            padding: 12px;
-            background: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 200px;
-            font-size: 16px;
-        }
-
-        .download-btn:hover {
-            background: #0056b3;
         }
 
         /* Hide Borders When Downloading */
@@ -180,14 +213,7 @@
             display: none;
         }
 
-        .timetable input {
-            padding: 2px 6px;
-            font-size: 13px;
-            margin: 1px;
-            border: 1px dotted lightgrey;
-        }
-
-        /* Sign-Area Styling */
+        /* Signature Area */
         .sign-area {
             display: flex;
             flex-direction: column;
@@ -198,25 +224,26 @@
             width: 100%;
             max-width: 400px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid royalblue;
+            border-left: 5px solid var(--theme-primary);
         }
 
         .sign-area label {
             font-size: 1.2em;
             font-weight: bold;
             margin-bottom: 5px;
-            color: royalblue;
+            color: var(--theme-primary);
         }
 
         .sign-input {
             width: 100%;
             padding: 2px;
             font-size: 13px;
-            color: #2c3e50;
+            color: var(--theme-text);
             border: none;
             border-bottom: 1px dashed #aaa;
             background: transparent;
             outline: none;
+            height: 1.5rem;
         }
 
         /* Contact & Place Styling */
@@ -245,14 +272,8 @@
         </label>
 
         <div class="content">
-            <textarea placeholder="Enter Notice Details...">
-Dear Students,
-
-
-
-Refer timing below. 
-Thank You.
-            </textarea>
+            <div id="editableNotice" contenteditable="true" class="editable-div">
+            </div>
         </div>
 
         <!-- Compact Timetable -->
@@ -262,31 +283,31 @@ Thank You.
                     <tr>
                         <td class="mon">Monday</td>
                         <td class="mon"><input type="text" value="05:30 PM"></td>
-                        <td class="mon"><button class="delete-btn" onclick="deleteRow(this)">✖</button></td>
+                        <td class="mon"><button class="delete-btn" onclick="deleteRow(this)"></button></td>
                         <td class="tue">Tuesday</td>
                         <td class="tue"><input type="text" value="06:00 PM"></td>
-                        <td class="tue"><button class="delete-btn" onclick="deleteRow(this)">✖</button></td>
+                        <td class="tue"><button class="delete-btn" onclick="deleteRow(this)"></button></td>
                     </tr>
                     <tr>
                         <td class="wed">Wednesday</td>
                         <td class="wed"><input type="text" value="06:00 PM"></td>
-                        <td class="wed"><button class="delete-btn" onclick="deleteRow(this)">✖</button></td>
+                        <td class="wed"><button class="delete-btn" onclick="deleteRow(this)"></button></td>
                         <td class="thu">Thursday</td>
                         <td class="thu"><input type="text" value="07:30 PM"></td>
-                        <td class="thu"><button class="delete-btn" onclick="deleteRow(this)">✖</button></td>
+                        <td class="thu"><button class="delete-btn" onclick="deleteRow(this)"></button></td>
                     </tr>
                     <tr>
                         <td class="fri">Friday</td>
                         <td class="fri"><input type="text" value="07:30 PM"></td>
-                        <td class="fri"><button class="delete-btn" onclick="deleteRow(this)">✖</button></td>
+                        <td class="fri"><button class="delete-btn" onclick="deleteRow(this)"></button></td>
                         <td class="sat">Saturday</td>
                         <td class="sat"><input type="text" value="08:00 PM"></td>
-                        <td class="sat"><button class="delete-btn" onclick="deleteRow(this)">✖</button></td>
+                        <td class="sat"><button class="delete-btn" onclick="deleteRow(this)"></button></td>
                     </tr>
                     <tr>
                         <td class="sun">Sunday</td>
                         <td class="sun"><input type="text" value="08:00 PM"></td>
-                        <td class="sun"><button class="delete-btn" onclick="deleteRow(this)">✖</button></td>
+                        <td class="sun"><button class="delete-btn" onclick="deleteRow(this)"></button></td>
                     </tr>
                     <tr>
                     </tr>
@@ -311,7 +332,7 @@ Thank You.
             </div>
             <div class="contact-info">
                 <i></i>
-                <input type="text" class="sign-input" value="Dedicated to teaching since 1995">
+                <input type="text" class="sign-input" value="Dedicated to teaching since 1985">
             </div>
             <div class="contact-info">
                 <i></i>
@@ -328,6 +349,14 @@ Thank You.
     <button class="download-btn" onclick="downloadNotice()">Download Notice</button>
 
     <script>
+        const content = `Dear Students,\n\n\n\nRefer the timing below.\nThank You.`;
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            updateNoticeContent(content);
+            updateDeleteIcons('.delete-btn', '✖', 'red');
+        });
+
+
         function previewImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -353,13 +382,29 @@ Thank You.
         function downloadNotice() {
             const timestamp = new Date().getTime();
             const card = document.getElementById('noticeCard');
+            updateDeleteIcons('.delete-btn', '✔', 'green');
+
             html2canvas(card).then(canvas => {
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
                 link.download = `Notice_${timestamp}.png`;
                 link.click();
             });
+            updateDeleteIcons('.delete-btn', '✖', 'red');
         }
+
+        function updateDeleteIcons(selector, icon, color) {
+            document.querySelectorAll(selector).forEach(btn => {
+                btn.innerHTML = icon;
+                btn.style.color = color;
+            });
+        }
+
+        function updateNoticeContent(content) {
+            document.querySelector('#editableNotice').innerHTML = content;
+        }
+
+
     </script>
 
 </body>
