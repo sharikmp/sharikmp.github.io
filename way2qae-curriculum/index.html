@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry Ready Selenium Automation Testing</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js" defer></script>
+</head>
+
+<body>
+    <br>
+    <div class="course-options">
+        <select id="scriptSelector">
+            <option value="">-- Select a course --</option>
+            <option value="./js/manual.js">Industry Ready Software Manual Testing</option>
+            <option value="./js/selenium-java.js">Industry Ready Selenium Automation Testing</option>
+        </select>
+    </div>
+    <br>
+    <div id="schedule-container">
+    </div>
+    <script>
+        document.getElementById('scriptSelector').addEventListener('change', function () {
+            const selectedScript = this.value;
+            const scriptId = "dynamicScript"; 
+            document.title = this.options[this.selectedIndex].innerHTML;
+
+            // Remove existing script if any
+            const existingScript = document.getElementById(scriptId);
+            if (existingScript) {
+                existingScript.remove();
+            }
+
+            // Load new script only if a valid option is selected
+            if (selectedScript) {
+                const script = document.createElement('script');
+                script.src = selectedScript;
+                script.id = scriptId;
+                script.onload = () => {
+                    console.log(`${selectedScript} loaded successfully`);
+                    renderSchedule(data);
+                }
+                script.onerror = () => console.error(`Failed to load ${selectedScript}`);
+                document.body.appendChild(script); // Append script to body
+            }
+        });
+    </script>
+</body>
+
+</html>

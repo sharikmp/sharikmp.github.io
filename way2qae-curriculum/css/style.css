@@ -1,0 +1,162 @@
+body {
+    font-family: Arial, sans-serif;
+    background: white;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    place-items: center; /* Centers the container */
+}
+
+.course-options {
+    width: 21cm;
+    max-width: 21cm;
+}
+
+.course-options select {
+    width: 100%;
+    appearance: none; /* Remove default OS styling */
+    background-color: #571b5a;
+    color: white;
+    font-size: 13px;
+    padding: 10px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Add dropdown arrow */
+.course-options select {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5.516 7.548L10 12.033l4.484-4.485a1 1 0 111.414 1.415l-5.192 5.191a1 1 0 01-1.415 0L4.101 8.962a1 1 0 111.415-1.414z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+/* Hover and focus effects */
+.course-options select:hover {
+    background-color: #73206d;
+}
+
+.course-options select:focus {
+    border-color: #ff4f6d;
+}
+
+/* Style for dropdown options */
+.course-options option {
+    background: white;
+    color: black;
+    font-size: 13px;
+}
+
+
+.container {
+    width: 21cm;
+    height: 95%;
+    max-width: 21cm;
+    max-height: 95%;
+    display: flex;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 3%;
+    margin-top: 1%;
+    background: linear-gradient(to right, #2c003e, #571b5a);
+}
+
+.left-panel {
+    width: 30%;
+    padding: 20px;
+}
+
+.right-panel {
+    width: 70%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.goal ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.goal ul li {
+    margin: 10px 0;
+    color: #ff6584;
+    font-size: 18px;
+}
+
+.section {
+    background: #f4e1f4;
+    padding-left: 15px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    color: black;
+}
+
+.section h2 {
+    font-size: 20px;
+    margin: 0 0 10px;
+    background: #d179d1;
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+}
+
+.section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.section ul li {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: linear-gradient(to right, #2c003e, #571b5a);
+    }
+
+    .container {
+        page-break-after: always;
+        background: none;
+    }
+
+    body::after {
+        content: "© Sharik MP 2025";
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-30deg);
+        font-size: 50px;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.6);
+        z-index: 101;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    body::before {
+        content: "© Sharik MP 2025";
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 20px;
+        font-weight: bold;
+        color: rgba(200, 200, 200, 0.4);
+        z-index: 100;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+}
