@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Slides</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 1123px;
+            height: 770px;
+            background: linear-gradient(to right, #32004B, #480057);
+            color: white;
+            display: flex;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            page-break-after: always;
+        }
+
+        .left-section {
+            width: 40%;
+        }
+
+        .right-section {
+            width: 60%;
+            background: linear-gradient(to right, #dbadf3, #ffffff);
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 6rem;
+            margin: 0;
+        }
+
+        .question {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+
+        .code {
+            background-color: #f4f4f4;
+            color: #32004B;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 20px;
+            display: inline-block;
+            width: 90%;
+        }
+
+        .options p {
+            font-size: 2rem;
+            margin: 5px 0;
+        }
+
+        .explanation {
+            background: #DFF2BF;
+            color: #4F8A10;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const questions = [
+            {
+                "number": 1,
+                "question": "Which concept allows a subclass to provide a specific implementation of a method defined in its superclass?",
+                "options": ["Method Overloading", "Method Overriding", "Encapsulation", "Abstraction"],
+                "answer": "Method Overriding",
+                "explanation": "Method Overriding allows a subclass to provide a specific implementation of a method that is already defined in its superclass."
+            },
+            {
+                "number": 2,
+                "question": "Which of the following is an example of compile-time polymorphism?",
+                "options": ["Method Overriding", "Method Overloading", "Abstraction", "Interface"],
+                "answer": "Method Overloading",
+                "explanation": "Method Overloading occurs when multiple methods in the same class have the same name but different parameters, which is resolved at compile time."
+            },
+            {
+                "number": 3,
+                "question": "What will be the output of the following code?",
+                "code": "class Parent { void show() { System.out.println(\"Parent\"); } }<br>class Child extends Parent { void show() { System.out.println(\"Child\"); } }<br>public class Test { public static void main(String[] args) { Parent obj = new Child(); obj.show(); } }",
+                "options": ["Parent", "Child", "Compilation Error", "Runtime Error"],
+                "answer": "Child",
+                "explanation": "Since obj is of type Parent but instantiated as Child, the overridden method in Child is executed due to dynamic method dispatch."
+            },
+            {
+                "number": 4,
+                "question": "Which keyword is used to achieve inheritance in Java?",
+                "options": ["extends", "implements", "inherits", "super"],
+                "answer": "extends",
+                "explanation": "The 'extends' keyword is used to create a subclass that inherits methods and properties from a superclass."
+            },
+            {
+                "number": 5,
+                "question": "Which of the following statements about interfaces in Java is true?",
+                "options": [
+                    "An interface can contain method implementations.",
+                    "A class can implement multiple interfaces.",
+                    "An interface can extend a class.",
+                    "Interfaces cannot have default methods."
+                ],
+                "answer": "A class can implement multiple interfaces.",
+                "explanation": "Java allows multiple inheritance using interfaces, meaning a class can implement multiple interfaces."
+            },
+            {
+                "number": 6,
+                "question": "What will be the output of the following code?",
+                "code": "interface A { void show(); }<br>class B implements A { public void show() { System.out.println(\"Hello World\"); } }<br>public class Test { public static void main(String[] args) { A obj = new B(); obj.show(); } }",
+                "options": ["Compilation Error", "Runtime Error", "Hello World", "No Output"],
+                "answer": "Hello World",
+                "explanation": "Since class B implements interface A and provides an implementation for show(), calling obj.show() prints 'Hello World'."
+            },
+            {
+                "number": 7,
+                "question": "Which of the following is NOT a characteristic of abstraction?",
+                "options": [
+                    "Hides implementation details",
+                    "Defines only essential features",
+                    "Provides complete method implementations",
+                    "Implemented using abstract classes or interfaces"
+                ],
+                "answer": "Provides complete method implementations",
+                "explanation": "Abstraction hides implementation details and focuses only on essential features, but does not provide complete method implementations."
+            },
+            {
+                "number": 8,
+                "question": "What will be the output of the following code?",
+                "code": "abstract class A { abstract void display(); }<br>class B extends A { void display() { System.out.println(\"Displaying\"); } }<br>public class Test { public static void main(String[] args) { A obj = new B(); obj.display(); } }",
+                "options": ["Displaying", "Compilation Error", "Runtime Error", "No Output"],
+                "answer": "Displaying",
+                "explanation": "Class B provides an implementation of the abstract method display(), so calling obj.display() prints 'Displaying'."
+            },
+            {
+                "number": 9,
+                "question": "What will be the output of the following code?",
+                "code": "class Parent { int x = 10; }<br>class Child extends Parent { int x = 20; }<br>public class Test { public static void main(String[] args) { Parent obj = new Child(); System.out.println(obj.x); } }",
+                "options": ["10", "20", "Compilation Error", "Runtime Error"],
+                "answer": "10",
+                "explanation": "Since variable hiding occurs, obj.x refers to the variable in Parent, not Child, so it prints 10."
+            },
+            {
+                "number": 10,
+                "question": "Which of the following statements is true about Java inheritance?",
+                "options": [
+                    "A class can inherit multiple classes using 'extends'.",
+                    "Private members of the superclass are accessible in the subclass.",
+                    "A subclass can override a final method of the superclass.",
+                    "A subclass inherits public and protected members of the superclass."
+                ],
+                "answer": "A subclass inherits public and protected members of the superclass.",
+                "explanation": "In Java, a subclass can inherit public and protected members of the superclass but not private members."
+            }
+        ]
+
+
+        document.body.innerHTML = questions.map(q => `
+            <div class="container">
+                <div class="left-section">
+                    <h1>${q.number}.</h1>
+                    <p class="question">${q.question}</p>
+                ${q.code ? `<div class="code">${q.code}</div>` : ''}
+                </div>
+                <div class="right-section">
+                    <div class="options">
+                        ${q.options.map((opt, i) => `<p>&#9658; ${String.fromCharCode(65 + i)}) ${opt}</p>`).join('')}
+                    </div>
+                </div>
+            </div>
+        
+            <div class="container">
+                <div class="left-section">
+                    <h1>${q.number}.</h1>
+                    <p class="question">${q.question}</p>
+                ${q.code ? `<div class="code">${q.code}</div>` : ''}
+                </div>
+                <div class="right-section">
+                    <div class="options">
+                        ${q.options.map((opt, i) => `<p>&#9658; ${String.fromCharCode(65 + i)}) ${opt}</p>`).join('')}
+                    </div>
+                    <div class="explanation">
+                        <p>&#9658; <b>Explanation:</b></p>
+                        <p>${q.explanation}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PF Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 450px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            text-align: left;
+            margin: auto;
+        }
+        h2 { color: #007BFF; }
+        label {
+            display: block;
+            font-weight: bold;
+            text-align: left;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+        input[type="number"], button {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+        p {
+            font-size: 13px;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .info-text {
+            font-size: 13px;
+            color: #555;
+        }
+        .highlight {
+            font-size: 13px;
+            color: #28a745;
+        }
+        #finalBalance {
+            font-size: 18px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Provident Fund (PF) Calculator</h2>
+    
+    <label>Current PF Balance (₹):</label>
+    <input type="number" id="pfBalance" placeholder="Enter current PF balance" value="0">
+    
+    <label>Current Interest Rate (%):</label>
+    <input type="number" id="interestRate" placeholder="Annual interest rate" value="8.15" step="0.01">
+    
+    <label>Employee PF Deduction (₹):</label>
+    <input type="number" id="employeePf" placeholder="Your monthly PF deduction" value="5000">
+    
+    <p class="info-text">Employer Contribution:</p>
+    <p class="highlight">EPF: ₹<span id="epf">0</span> | EPS: ₹<span id="eps">0</span> | Total: ₹<span id="employerPf">0</span></p>
+    
+    <p class="info-text">Total Monthly Contribution: <span class="highlight">₹<span id="totalMonthly">0</span></span></p>
+    
+    <label>Calculate for next (years):</label>
+    <input type="number" id="years" placeholder="Years" value="10">
+    
+    <label>Expected Yearly Increment (%):</label>
+    <input type="number" id="increment" placeholder="Expected salary increment" value="6" step="0.1">
+    
+    <label>
+        <input type="checkbox" id="showTable"> Show year-wise balance
+    </label>
+    
+    <button onclick="calculatePF()">Calculate</button>
+
+    <h3>Final PF Balance: <span class="highlight" id="finalBalance"></span></h3>
+
+    <div id="resultTable"></div>
+</div>
+
+<script>
+
+    window.onload = calculatePF;
+    
+    function calculatePF() {
+        let pfBalance = parseFloat(document.getElementById("pfBalance").value);
+        let interestRate = parseFloat(document.getElementById("interestRate").value) / 100;
+        let employeePf = parseFloat(document.getElementById("employeePf").value);
+        let years = parseInt(document.getElementById("years").value);
+        let increment = parseFloat(document.getElementById("increment").value) / 100;
+        let showTable = document.getElementById("showTable").checked;
+
+        if (isNaN(employeePf) || employeePf < 0) {
+            alert("Enter a valid Employee PF deduction.");
+            return;
+        }
+
+        // EPS Calculation (Max ₹1250)
+        let epsContribution = Math.min(employeePf * 0.1667, 1250);
+        let employerEpf = employeePf - epsContribution; // Employer PF = Employee PF - EPS
+        let totalEmployer = employerEpf + epsContribution;
+        let totalMonthly = employeePf + totalEmployer;
+        
+        document.getElementById("employerPf").textContent = totalEmployer.toFixed(0);
+        document.getElementById("epf").textContent = employerEpf.toFixed(0);
+        document.getElementById("eps").textContent = epsContribution.toFixed(0);
+        document.getElementById("totalMonthly").textContent = totalMonthly.toFixed(0);
+
+        let totalBalance = pfBalance;
+        let initialBalance = pfBalance;
+        let tableContent = "<table><tr><th>Year</th><th>Balance (₹)</th></tr>";
+
+        for (let year = 1; year <= years; year++) {
+            let yearlyContribution = (employeePf + totalEmployer) * 12;
+            totalBalance += yearlyContribution;
+            totalBalance += totalBalance * interestRate;
+            
+            // Increment salary contribution yearly
+            employeePf += employeePf * increment;
+            epsContribution = Math.min(employeePf * 0.1667, 1250);
+            employerEpf = employeePf - epsContribution; // Employer PF Calculation
+            totalEmployer = employerEpf + epsContribution;
+
+            if (showTable) {
+                tableContent += `<tr><td>${year}</td><td>₹${totalBalance.toFixed(0)}</td></tr>`;
+            }
+        }
+
+        document.getElementById("finalBalance").textContent = '₹' + totalBalance.toFixed(0);
+
+        if (showTable) {
+            tableContent += "</table>";
+            document.getElementById("resultTable").innerHTML = tableContent;
+        } else {
+            document.getElementById("resultTable").innerHTML = "";
+        }
+    }
+
+    calculatePF();
+</script>
+
+</body>
+</html>
