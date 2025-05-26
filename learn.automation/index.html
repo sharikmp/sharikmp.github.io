@@ -123,39 +123,41 @@
 </form>
 
 <script>
-  // Mock users
-  const users = {
-    "admin": "admin123",
-    "user1": "pass123"
-  };
-
-  const form = document.getElementById("loginForm");
-  const messageBox = document.getElementById("loginMessage");
-
-  form.addEventListener("submit", function(e) {
-    e.preventDefault(); // prevent form submission
-
-    const uname = form.uname.value.trim();
-    const psw = form.psw.value.trim();
-
-    if (users[uname] && users[uname] === psw) {
-      showMessage("Login successful!", "success");
-    } else {
-      showMessage("Invalid username or password!", "error");
+    // Mock users
+    const users = {
+      "admin": "admin123",
+      "user1": "pass123"
+    };
+  
+    const form = document.getElementById("loginForm");
+    const messageBox = document.getElementById("loginMessage");
+  
+    form.addEventListener("submit", function(e) {
+      e.preventDefault(); // prevent form submission
+  
+      const uname = form.uname.value.trim();
+      const psw = form.psw.value.trim();
+  
+      if (users[uname] && users[uname] === psw) {
+        // Redirect to welcome page with username in query string
+        window.location.href = `welcome.html?user=${encodeURIComponent(uname)}`;
+      } else {
+        showMessage("Invalid username or password!", "error");
+      }
+    });
+  
+    function showMessage(msg, type) {
+      messageBox.style.display = "block";
+      messageBox.textContent = msg;
+      messageBox.className = "message " + type;
     }
-  });
-
-  function showMessage(msg, type) {
-    messageBox.style.display = "block";
-    messageBox.textContent = msg;
-    messageBox.className = "message " + type;
-  }
-
-  function resetForm() {
-    form.reset();
-    messageBox.style.display = "none";
-  }
-</script>
+  
+    function resetForm() {
+      form.reset();
+      messageBox.style.display = "none";
+    }
+  </script>
+  
 
 </body>
 </html>

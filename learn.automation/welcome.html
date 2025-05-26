@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .welcome-box {
+      background-color: white;
+      padding: 30px 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .welcome-box h1 {
+      color: #04AA6D;
+    }
+  </style>
+</head>
+<body>
+
+<div class="welcome-box">
+  <h1 id="welcomeMessage">Welcome!</h1>
+  <p>You have successfully logged in.</p>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const username = params.get("user");
+
+  if (username) {
+    document.getElementById("welcomeMessage").textContent = `Welcome, ${username}!`;
+  }
+</script>
+
+</body>
+</html>
