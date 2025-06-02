@@ -125,9 +125,11 @@
 <script>
     // Mock users
     const users = {
-      "admin": "admin123",
-      "user1": "pass123"
+      "admin": "@#$Admin@#$",
+      "user1": "@#$User1@#$"
     };
+
+    const password = "@#$Abc123@#$"
   
     const form = document.getElementById("loginForm");
     const messageBox = document.getElementById("loginMessage");
@@ -156,7 +158,7 @@
       form.reset();
       messageBox.style.display = "none";
     }
-  </script>
+</script>
   
 
 </body>

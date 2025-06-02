@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playwright Locators Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    section {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    label, input, button, a {
+      display: block;
+      margin-top: 0.5rem;
+    }
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 200px;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .profile-img {
+      width: 100px;
+      height: auto;
+    }
+    .output {
+      margin-top: 1rem;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Playwright Locators Demo Page</h1>
+
+  <section>
+    <h2>User Login Form</h2>
+    <form id="userForm" onsubmit="handleSubmit(event)">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text">
+
+      <input type="email" placeholder="Enter your email" name="email">
+
+      <img src="./playwright.png" alt="User Profile" class="profile-img">
+
+      <button title="Click to Close" class="btn" onclick="showMessage('Close button clicked')">Close</button>
+
+      <button aria-label="submit form" class="btn" type="submit">Submit</button>
+
+      <button data-testid="register-button" class="btn" type="button" onclick="showMessage('Register button clicked')">Register</button>
+
+      <button class="btn" onclick="showMessage('Login button clicked')">Login</button>
+
+      <button aria-label="Refresh Page" class="btn" type="button" onclick="showMessage('Refresh clicked')">Refresh</button>
+    </form>
+
+    <div id="output" class="output"></div>
+  </section>
+
+  <section>
+    <h2>XPath Example</h2>
+    <div id="xpath-example">
+      <span class="item" onclick="showMessage('XPath item clicked')">XPath Target</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Repeated Elements</h2>
+    <ul>
+      <li class="list-item" onclick="showMessage('Item 1 clicked')">Item 1</li>
+      <li class="list-item" onclick="showMessage('Item 2 clicked')">Item 2</li>
+      <li class="list-item" onclick="showMessage('Item 3 clicked')">Item 3</li>
+    </ul>
+  </section>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const email = document.querySelector('input[type="email"]').value;
+      if (username && email) {
+        showMessage(`Form submitted! Username: ${username}, Email: ${email}`);
+      } else {
+        showMessage('Please fill in both username and email.');
+      }
+    }
+
+    function showMessage(message) {
+      document.getElementById('output').textContent = message;
+    }
+  </script>
+</body>
+</html>
