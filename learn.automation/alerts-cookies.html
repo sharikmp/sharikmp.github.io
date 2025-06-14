@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Playwright Browser Dialogs & Cookies Demo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f2f2f2;
+      padding: 2rem;
+    }
+    section {
+      background: white;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 8px 12px;
+      margin: 0.5rem 0;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 0.75rem;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Playwright Dialogs & Cookies Test</h1>
+
+  <section>
+    <h2>Alerts & Confirms</h2>
+    <button onclick="showAlert()">Show Alert</button>
+    <button onclick="showConfirm()">Show Confirm</button>
+    <div id="confirmOutput" class="output"></div>
+  </section>
+
+  <section>
+    <h2>Prompt Dialog</h2>
+    <button onclick="showPrompt()">Enter Your Name</button>
+    <div id="promptOutput" class="output"></div>
+  </section>
+
+  <section>
+    <h2>Accept / Dismiss Handling</h2>
+    <button onclick="handleAcceptDismiss()">Proceed with Action</button>
+    <div id="acceptOutput" class="output"></div>
+  </section>
+
+  <section>
+    <h2>Cookies Handling</h2>
+    <button onclick="setCookie()">Set Cookie</button>
+    <button onclick="getCookie()">Get Cookie</button>
+    <button onclick="clearCookie()">Clear Cookie</button>
+    <div id="cookieOutput" class="output"></div>
+  </section>
+
+  <script>
+    function showAlert() {
+      alert('This is a browser alert!');
+    }
+
+    function showConfirm() {
+      const result = confirm('Do you confirm this action?');
+      document.getElementById('confirmOutput').textContent = result ? 'Confirmed ✅' : 'Cancelled ❌';
+    }
+
+    function showPrompt() {
+      const name = prompt('Enter your name:');
+      document.getElementById('promptOutput').textContent = name ? `Hello, ${name}` : 'No name entered.';
+    }
+
+    function handleAcceptDismiss() {
+      const result = confirm('Do you want to proceed?');
+      document.getElementById('acceptOutput').textContent = result
+        ? 'You chose to proceed.'
+        : 'Action was canceled.';
+    }
+
+    function setCookie() {
+      document.cookie = "user=testUser; path=/;";
+      document.getElementById('cookieOutput').textContent = 'Cookie set!';
+    }
+
+    function getCookie() {
+      const cookies = document.cookie;
+      document.getElementById('cookieOutput').textContent = `Current Cookies: ${cookies || 'None'}`;
+    }
+
+    function clearCookie() {
+      document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.getElementById('cookieOutput').textContent = 'Cookie cleared.';
+    }
+  </script>
+
+</body>
+</html>

@@ -90,8 +90,65 @@
     <button id="disableBtn" class="btn" onclick="toggleInput(false)">Disable</button>
     <div id="output3" class="output"></div>
   </section>
+  <section>
+    <h2>Multi-Select Dropdown</h2>
+    <label for="frameworks">Select your favorite frameworks:</label>
+    <select id="frameworks" multiple size="4">
+      <option value="react">React</option>
+      <option value="angular">Angular</option>
+      <option value="vue">Vue</option>
+      <option value="svelte">Svelte</option>
+    </select>
+    <button class="btn" onclick="handleMultiSelect()">Submit</button>
+    <div id="output4" class="output"></div>
+  </section>
+
+  <section>
+    <h2>Custom Dropdown Menu</h2>
+    <div class="dropdown" id="customDropdown" style="position: relative; width: 200px;">
+      <button class="btn" id="dropdownToggle">Select an option</button>
+      <div class="dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; width: 100%;">
+        <div data-value="1" style="padding: 10px; cursor: pointer;">Custom Option 1</div>
+        <div data-value="2" style="padding: 10px; cursor: pointer;">Custom Option 2</div>
+        <div data-value="3" style="padding: 10px; cursor: pointer;">Custom Option 3</div>
+      </div>
+    </div>
+    <div id="output5" class="output"></div>
+  </section>
 
   <script>
+    function handleMultiSelect() {
+      const select = document.getElementById('frameworks');
+      const selected = Array.from(select.selectedOptions).map(opt => opt.value);
+      document.getElementById('output4').textContent = selected.length
+        ? `Selected: ${selected.join(', ')}`
+        : 'No frameworks selected';
+    }
+
+    // Custom dropdown logic
+    const customDropdown = document.getElementById('customDropdown');
+    const dropdownToggle = document.getElementById('dropdownToggle');
+    const dropdownMenu = customDropdown.querySelector('.dropdown-menu');
+
+    dropdownToggle.addEventListener('click', () => {
+      dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+    });
+
+    dropdownMenu.querySelectorAll('div').forEach(item => {
+      item.addEventListener('click', () => {
+        dropdownToggle.textContent = item.textContent;
+        document.getElementById('output5').textContent = `Selected: ${item.getAttribute('data-value')}`;
+        dropdownMenu.style.display = 'none';
+      });
+    });
+
+    // Close the custom dropdown if clicked outside
+    document.addEventListener('click', (e) => {
+      if (!customDropdown.contains(e.target)) {
+        dropdownMenu.style.display = 'none';
+      }
+    });
+
     function handleDropdownCheckbox() {
       const lang = document.getElementById('language').value;
       const subscribed = document.getElementById('subscribe').checked;
