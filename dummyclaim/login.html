@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DummyClaim Insurance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind.js"></script>
+
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold text-blue-600">DummyClaim</a>
+            <div class="space-x-6">
+                <a href="index.html" class="hover:text-blue-600">Home</a>
+                <a href="#" class="hover:text-blue-600">Login</a>
+                <a href="register.html" class="hover:text-blue-600">Register</a>
+                <a href="contact.html" class="hover:text-blue-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+            <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">Login to DummyClaim</h2>
+
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="email" class="block mb-1 text-sm font-medium">Email</label>
+                    <input type="email" id="email"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block mb-1 text-sm font-medium">Password</label>
+                    <input type="password" id="password"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div id="error" class="text-red-500 text-sm mb-4 hidden">Invalid email or password</div>
+
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                    Login
+                </button>
+            </form>
+
+            <p class="mt-4 text-center text-sm text-gray-500">
+                Don't have an account? <a href="register.html" class="text-blue-600 hover:underline">Register</a>
+            </p>
+            <br><br>
+            <div class="text-m font-bold text-left text-blue-600 mb-6">Use the following DummyClaim credential</div>
+            <div id="valid-cred" class="text-blue-400 text-sm mb-4">
+                Username: test-user@dummyclaim.com
+                <br>
+                Password: TestUser@0987654321
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-20">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+            &copy; 2025 DummyClaim Insurance. All rights reserved.
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
+
+</body>
+
+</html>

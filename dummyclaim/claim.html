@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DummyClaim Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Session Management -->
+  <script src="js/main.js"></script>
+  <script src="js/session.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-xl font-semibold text-blue-700">DummyClaim Dashboard</h1>
+    <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+      Logout
+    </button>
+  </nav>
+
+  <div class="max-w-6xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+    <!-- Step Sidebar -->
+    <aside class="col-span-1">
+      <ul class="space-y-4 text-sm font-medium">
+        <li id="stepLabel1" class="text-blue-600">1. Insurance Information</li>
+        <li id="stepLabel2" class="text-gray-400">2. Patient Information</li>
+        <li id="stepLabel3" class="text-gray-400">3. Treatment & Provider</li>
+        <li id="stepLabel4" class="text-gray-400">4. Review & Submit</li>
+      </ul>
+    </aside>
+
+    <!-- Step Forms -->
+    <main class="col-span-3">
+      <form id="claimForm" class="bg-white p-6 rounded shadow space-y-6">
+        <!-- Step 1 -->
+        <div class="step" id="step1">
+          <h2 class="text-xl font-bold mb-4">Insurance Information</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input name="policyHolderName" placeholder="Policy Holder Name *" required class="p-2 border rounded" />
+            <input name="insuranceCompany" placeholder="Insurance Company *" required class="p-2 border rounded" />
+            <input name="policyNumber" placeholder="Policy Number *" required class="p-2 border rounded" />
+            <input name="groupNumber" placeholder="Group Number (if any)" class="p-2 border rounded" />
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step hidden" id="step2">
+          <h2 class="text-xl font-bold mb-4">Patient Information</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input name="patientName" placeholder="Patient Full Name *" required class="p-2 border rounded" />
+            <input name="dob" type="date" placeholder="Date of Birth *" required class="p-2 border rounded" />
+            <input name="phone" placeholder="Phone Number *" required class="p-2 border rounded" />
+            <input name="email" type="email" placeholder="Email Address *" required class="p-2 border rounded" />
+            <textarea name="address" placeholder="Patient Address *" required class="p-2 border rounded col-span-2"></textarea>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step hidden" id="step3">
+          <h2 class="text-xl font-bold mb-4">Treatment & Provider Details</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input name="providerName" placeholder="Provider or Hospital Name *" required class="p-2 border rounded" />
+            <input name="treatmentDate" type="date" placeholder="Date of Treatment *" required class="p-2 border rounded" />
+            <input name="diagnosis" placeholder="Diagnosis / Reason for Visit *" required class="p-2 border rounded" />
+            <input name="treatmentCost" placeholder="Treatment Cost *" required class="p-2 border rounded" />
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step hidden" id="step4">
+          <h2 class="text-xl font-bold mb-4">Review & Submit</h2>
+          <p class="text-gray-600">Please review the entered information. If everything is correct, submit the claim.</p>
+          <div id="reviewData" class="bg-gray-100 p-4 rounded text-sm mt-4"></div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between">
+          <button type="button" id="prevBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded hidden">Previous</button>
+          <button type="button" id="nextBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded">Next</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <!-- Page element related JS -->
+  <script defer src="js/claim.js"></script>
+
+  <!-- Footer -->
+  <footer class="mt-16 bg-white py-6 text-center text-sm text-gray-500 border-t">
+    <div class="space-x-4">
+      <a href="#">FAQ</a>
+      <a href="#">About</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Support</a>
+    </div>
+    <p class="mt-2">&copy; 2025 DummyClaim. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

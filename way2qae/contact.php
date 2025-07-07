@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $query = $_POST["query"];
 
   // Set up email headers
-  $to = "tnasmp2011@gmail.com"; // Change this to your email address
+  $to = "way2qae.info@gmail.com"; // Change this to your email address
   $subject = "Contact Us Form Submission";
   $message = "Name: " . $name . "\n";
   $message .= "Email: " . $email . "\n";

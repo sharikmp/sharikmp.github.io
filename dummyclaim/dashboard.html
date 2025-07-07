@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DummyClaim Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Session Management -->
+  <script src="js/main.js"></script>
+  <script src="js/session.js"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-xl font-semibold text-blue-700">DummyClaim Dashboard</h1>
+    <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+      Logout
+    </button>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="p-6 space-y-8 max-w-6xl mx-auto">
+
+    <!-- Welcome Message -->
+    <section>
+      <h2 class="text-2xl font-bold mb-2">Welcome back!</h2>
+      <p class="text-gray-600">Here’s a snapshot of your insurance profile.</p>
+    </section>
+
+    <!-- Dashboard Stats -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-white p-4 shadow rounded-xl text-center">
+        <h3 class="text-lg font-medium text-gray-700">Total Claims</h3>
+        <p class="text-3xl font-bold text-blue-700 mt-2">28</p>
+      </div>
+      <div class="bg-white p-4 shadow rounded-xl text-center">
+        <h3 class="text-lg font-medium text-gray-700">Active Policies</h3>
+        <p class="text-3xl font-bold text-green-600 mt-2">12</p>
+      </div>
+      <div class="bg-white p-4 shadow rounded-xl text-center">
+        <h3 class="text-lg font-medium text-gray-700">Pending Approvals</h3>
+        <p class="text-3xl font-bold text-yellow-500 mt-2">4</p>
+      </div>
+      <div class="bg-white p-4 shadow rounded-xl text-center">
+        <h3 class="text-lg font-medium text-gray-700">Total Claim</h3>
+        <p class="text-3xl font-bold text-purple-600 mt-2">$1,240</p>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 shadow rounded-xl">
+        <h4 class="text-lg font-semibold mb-2">Recent Claims</h4>
+        <ul class="list-disc ml-6 text-sm text-gray-600">
+          <li>Auto claim submitted on July 1</li>
+          <li>Health claim approved on June 29</li>
+          <li>Travel claim under review</li>
+        </ul>
+      </div>
+
+      <div class="bg-white p-6 shadow rounded-xl">
+        <h4 class="text-lg font-semibold mb-2">Account Summary</h4>
+        <p class="text-sm text-gray-700">Your profile is 90% complete.</p>
+        <p class="text-sm text-gray-700 mt-1">Preferred plan: <span class="font-semibold">Gold Health+</span></p>
+      </div>
+    </section>
+    
+    <!-- Create New Claim Button -->
+    <div class="flex justify-end m-6">
+      <a href="claim.html">
+        <button
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200">
+          + Create New Claim
+        </button>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white mt-10 p-4 shadow-inner text-center text-sm text-gray-500">
+    &copy; 2025 DummyClaim. All rights reserved.
+  </footer>
+
+</body>
+
+</html>
