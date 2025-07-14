@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Upload | Claim Document Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <div class="max-w-3xl mx-auto py-10 px-4 space-y-8">
+    <h2 class="text-2xl font-bold text-blue-700">Quick Upload</h2>
+
+    <!-- Claim ID Section -->
+    <div id="claimIdSection" class="bg-white p-6 rounded-lg shadow space-y-4">
+      <label class="block font-medium">Enter Claim ID <span class="text-red-500">*</span></label>
+      <div class="flex items-center space-x-4">
+        <input id="claimIdInput" type="text" placeholder="Claim ID (6-20 alphanumeric)"
+               class="flex-1 border border-gray-300 p-2 rounded" />
+        <button id="claimIdSubmit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          Submit
+        </button>
+      </div>
+      <div id="claimIdError" class="text-red-500 text-sm hidden"></div>
+      <div id="showClaimId" class="text-sm text-gray-600"></div>
+    </div>
+
+    <!-- OTP Section -->
+    <div id="otpSection" class="bg-white p-6 rounded-lg shadow space-y-4 hidden">
+      <p>OTP sent to xxxxxx1234</p>
+      <div class="flex items-center space-x-4">
+        <input id="otpInput" type="text" placeholder="Enter OTP"
+               class="flex-1 border border-gray-300 p-2 rounded" />
+        <button id="otpSubmit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          Verify
+        </button>
+      </div>
+      <button id="resendOtp" class="text-blue-600 hover:underline text-sm">Resend OTP</button>
+      <div id="otpError" class="text-red-500 text-sm hidden"></div>
+    </div>
+
+    <!-- Claim Details & Upload -->
+    <div id="uploadSection" class="bg-white p-6 rounded-lg shadow space-y-6 hidden">
+      <!-- Mocked Claim Details -->
+      <div class="space-y-1">
+        <p><strong>Claimant Name:</strong> John Doe</p>
+        <p><strong>Claim Type:</strong> Auto</p>
+        <p><strong>Status:</strong> Pending</p>
+      </div>
+
+      <!-- File Upload -->
+      <div>
+        <label class="block font-medium">Upload PDF Document</label>
+        <input id="fileInput" type="file" accept="application/pdf" class="mt-1" />
+        <button id="uploadBtn" class="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+          Upload Document
+        </button>
+        <div id="fileError" class="text-red-500 text-sm mt-1 hidden"></div>
+        <div id="uploadSuccess" class="text-green-600 text-sm mt-1 hidden">Document uploaded successfully</div>
+      </div>
+
+      <!-- Uploaded Documents Table -->
+      <table id="docsTable" class="w-full text-left border-collapse hidden">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border p-2">#</th>
+            <th class="border p-2">File Name</th>
+            <th class="border p-2">File Size</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <!-- Submit Documents Button -->
+      <button id="submitDocsBtn" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 hidden">
+        Submit Documents
+      </button>
+
+      <!-- Final Submission Section -->
+      <div id="finalSection" class="bg-white p-6 rounded-lg shadow space-y-4 hidden">
+        <h3 class="font-semibold">Uploaded Documents</h3>
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border p-2">#</th>
+              <th class="border p-2">File Name</th>
+              <th class="border p-2">Size</th>
+              <th class="border p-2">Action</th>
+            </tr>
+          </thead>
+          <tbody id="finalTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/quickUpload.js"></script>
+</body>
+</html>
