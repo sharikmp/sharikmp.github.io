@@ -59,6 +59,7 @@ otpSubmit.addEventListener('click', () => {
   otpError.classList.add('hidden');
   uploadSection.classList.remove('hidden');
 });
+
 resendOtp.addEventListener('click', () => {
   alert('OTP resent: ' + STATIC_OTP);
 });
@@ -92,7 +93,7 @@ uploadBtn.addEventListener('click', () => {
   // Update table
   docsTable.classList.remove('hidden');
   docsTbody.innerHTML = uploadedDocs.map((f, i) => {
-    return `<tr>\n<td class='border p-2'>${i+1}</td>\n<td class='border p-2'>${f.name}</td>\n<td class='border p-2'>${(f.size/1024).toFixed(2)} KB</td>\n</tr>`;
+    return `<tr>\n<td class='border p-2'>${i + 1}</td>\n<td class='border p-2'>${f.name}</td>\n<td class='border p-2'>${(f.size / 1024).toFixed(2)} KB</td>\n</tr>`;
   }).join('');
 
   submitDocsBtn.classList.remove('hidden');
@@ -102,19 +103,20 @@ uploadBtn.addEventListener('click', () => {
 submitDocsBtn.addEventListener('click', () => {
   // Populate final section
   finalTbody.innerHTML = uploadedDocs.map((f, i) => {
-    return `<tr>\n<td class='border p-2'>${i+1}</td>\n<td class='border p-2'>${f.name}</td>\n<td class='border p-2'>${(f.size/1024).toFixed(2)} KB</td>\n<td class='border p-2'><button class='text-blue-600 hover:underline' onclick='downloadDoc(${i})'>Download</button></td>\n</tr>`;
+    return `<tr>\n<td class='border p-2'>${i + 1}</td>\n<td class='border p-2'>${f.name}</td>\n<td class='border p-2'>${(f.size / 1024).toFixed(2)} KB</td>\n<td class='border p-2'><button class='text-blue-600 hover:underline' onclick='downloadDoc(${i})'>Download</button></td>\n</tr>`;
   }).join('');
 
   finalSection.classList.remove('hidden');
 });
 
 // Download mock
-window.downloadDoc = function(idx) {
+window.downloadDoc = function (idx) {
   const file = uploadedDocs[idx];
-  const url = URL.createObjectURL(file);
+  // Simulate a downloadable file by pointing to a server-hosted file
   const a = document.createElement('a');
-  a.href = url;
+  a.href = `/downloads/${file.name}`; // serve this file via HTTP
   a.download = file.name;
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  document.body.removeChild(a);
 };
