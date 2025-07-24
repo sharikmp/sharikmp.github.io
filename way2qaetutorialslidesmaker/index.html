@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial Slides</title>
+    <title>Tutorial Slides Generator</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         :root {
             --primary-color: #32004B;
@@ -19,6 +21,15 @@
             .container {
                 margin: 0 !important;
             }
+
+            #controls {
+                display: none;
+            }
+
+            body {
+                background-color: #000 !important;
+                vertical-align: center !important;
+            }
         }
 
         @page {
@@ -29,14 +40,41 @@
             font-family: Arial, sans-serif;
             background-color: var(--white-color);
             margin: 0;
-            justify-content: center;
+            padding: 20px;
+        }
+
+        textarea {
+            width: 96%;
+            height: 700px;
+            resize: vertical;
+            font-family: monospace;
+            font-size: small;
+            padding: 10px;
+            margin: 10px;
+            border: 2px solid #f4eec9;
+            background-color: #222;
+            color: #f4eec9;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .slides-wrapper {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
         }
 
         .container {
             width: 1123px;
-            height: 770px;
+            height: 720px;
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: var(--white-color);
             display: flex;
@@ -44,59 +82,23 @@
             box-shadow: 0 0 20px var(--shadow-color);
             position: relative;
             page-break-after: always;
-            margin: 20px;
+            margin: 20px 0;
         }
 
-        .left-section {
-            width: 40%;
+        .full-section {
+            width: 100%;
+            height: 100%;
         }
 
-        .right-section {
-            width: 60%;
-            background: linear-gradient(to right, var(--light-color), var(--white-color));
-            color: var(--text-dark-color);
-            padding: 20px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .full-section .topic {
+            font-size: 36px;
+            text-align: center;
+            margin: 10px;
         }
 
-        .right-section img {
+        .full-section img {
             width: 95%;
             height: auto;
-        }
-
-        .left-section h1 {
-            font-size: 4rem;
-            margin: 0;
-        }
-
-        .left-section .topic {
-            font-size: 2rem;
-            margin-top: 10px;
-        }
-
-        .explanation {
-            background-color: var(--white-color);
-            color: var(--primary-color);
-            padding: 15px; 
-            border-radius: 5px;
-            font-family: monospace;
-            font-weight: bold;
-            font-size: 18px;
-            margin-top: 20px;
-            display: inline-block;
-            width: 90%;
-            line-height: 2rem;
-            height: 570px;
-        }
-
-        .usage,
-        .example {
-            font-size: 1rem;
-            margin: 5px 0;
-            line-height: 2rem;
         }
 
         .styled-list {
@@ -110,51 +112,640 @@
             line-height: 1.5;
             color: var(--text-dark-color);
         }
-    </style>
 
-    <script src="./sessions/selenium/cucumber-01.js"></script>
+        .inputs {
+            padding: 5px 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            margin-left: 10px;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        span.error {
+            color: red;
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .slide-block,
+        .slide-block h2 {
+            margin-top: 10px;
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            padding: 10px;
+            padding-left: 20px;
+            border-radius: 10px;
+            height: 85%;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .styled-table th {
+            background-color: var(--light-color);
+            font-weight: bold;
+        }
+
+        .bg-icon {
+            position: absolute;
+            opacity: 0.5;
+            color: white;
+            pointer-events: none;
+            filter: blur(0.9px);
+            z-index: 0;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="controls">
 
-    <script>
-        document.body.innerHTML = questions.map(q => `
-        <div class="container">
-                <div class="left-section" contenteditable="true">
-                    <h1>${q.number}</h1>
-                    <h2 class="topic">${q.topic}</h2>
-                    ${q.explanation ? `<div class="explanation">${getAsList(q.explanation)}</div>` : ''}
-                </div>
-                <div class="right-section" contenteditable="true">
-                    ${q.usage ? `<div class="usage">${getAsList(q.usage)}</div>` : ''}
-                    ${q.example ? `<div class="example">${getAsList(q.example)}</div>` : ''}
-                </div>
+
+        <div style="position: block; z-index: 1000; margin-left: 10px;">
+            <label for="themeSelect"><strong>Theme: </strong></label>
+            <select class="inputs" id="themeSelect" onchange="applyTheme(this.value)">
+                <option>Creative Gradient</option>
+                <option>Green Navy Focus</option>
+                <option>Modern Corporate</option>
+                <option>Minimal Neutral</option>
+                <option>Engineering Tech</option>
+                <option>Startup Clean</option>
+                <option>Executive Grey</option>
+                <option>Oceanic Blue</option>
+                <option>Sunset Warm</option>
+            </select>
+            <label for="copyright"><strong>Copyright: </strong></label>
+            <select class="inputs" type="text" name="copyright" id="copyright" value="Way2QAE"
+                onchange="generateSlides()">
+                <option>Way2QAE</option>
+                <option>Sharik M. P.</option>
+            </select>
+            <label for="hide-logo"><strong>Hide Logo: </strong></label>
+            <input class="inputs" type="checkbox" name="hide-logo" id="hide-logo" onchange="setLogo()">
         </div>
-        `).join('');
+
+        <br>
+
+        <table style="width: 96%; table-layout: fixed;">
+            <!-- <tr>
+                <th>Add Slides</th>
+                <th>All Slides</th>
+            </tr> -->
+            <tr>
+                <td>
+                    <textarea id="addSlides" placeholder="Paste or edit your slides JSON here"></textarea>
+                    <button onclick="addSlides()">Add Slides</button>
+                    <span class="error" id="add-error" style="color: red; margin-top: 5px;"></span>
+                </td>
+                <td>
+                    <textarea id="jsonInput" placeholder="Paste or edit your JSON here"></textarea>
+                    <button onclick="generateSlides()">Generate Slides</button>
+                    <button onclick="resetAll()">Reset All</button>
+                    <span class="error" id="main-error" style="color: red; margin-top: 5px;"></span>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
 
 
-        function getAsList(jsonObject) {
-            if (!jsonObject || !jsonObject.heading || !jsonObject.points) {
-                return "<p>Invalid data provided</p>";
+
+
+
+    <div id="slidesContainer" class="slides-wrapper"></div>
+
+    <!-- Icon Generation script -->
+    <script>
+
+        // Choose Font Awesome icon class names (coding/dev/laptop-related)
+        const iconClasses = [
+            'fa-laptop-code',
+            'fa-terminal',
+            'fa-code',
+            'fa-microchip',
+            'fa-cogs',
+            'fa-server',
+            'fa-bug'
+        ];
+
+        function createRandomIcon(container, row, col, totalRows, totalCols) {
+            const icon = document.createElement('i');
+            icon.classList.add('fas', ...iconClasses[Math.floor(Math.random() * iconClasses.length)].split(' '), 'bg-icon');
+
+            const iconSize = 40;
+            icon.style.fontSize = `${iconSize}px`;
+
+            // Calculate base grid position
+            const topPercent = (row + 0.5) * (100 / totalRows);
+            const leftPercent = (col + 0.5) * (100 / totalCols);
+
+            // Slight random offset within each grid cell to avoid rigid grid feel
+            const offsetRange = 70; // in %
+            const randomTopOffset = (Math.random() - 0.5) * offsetRange;
+            const randomLeftOffset = (Math.random() - 0.5) * offsetRange;
+
+            icon.style.top = `calc(${topPercent}% + ${randomTopOffset}px)`;
+            icon.style.left = `calc(${leftPercent}% + ${randomLeftOffset}px)`;
+
+            // Random rotation
+            const rotation = Math.floor(Math.random() * 360);
+            icon.style.transform = `rotate(${rotation}deg)`;
+
+            // Optional: color tint
+            icon.style.color = `rgba(255, 255, 255, ${Math.random() * 0.1 + 0.05})`;
+
+            container.appendChild(icon);
+        }
+
+        function createBackgroundIcons() {
+            const containers = document.querySelectorAll('.slides-container');
+
+            for (let container of containers) {
+                // Grid configuration
+                const totalIcons = 72;
+                const cols = 12;
+                const rows = Math.ceil(totalIcons / cols);
+
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        createRandomIcon(container, r, c, rows, cols);
+                    }
+                }
+            }
+        }
+
+    </script>
+
+    <!-- Slide generation script -->
+    <script>
+
+        window.onload = () => {
+            const lastStoredJson = getJsonFromLocalStorage();
+            if (lastStoredJson) {
+                document.getElementById("jsonInput").value = JSON.stringify(lastStoredJson, null, 2);
+                generateSlides(false);
+            }
+        };
+
+        function generateSlides(scroll=true) {
+            const slidesContainer = document.getElementById("slidesContainer");
+            const rawJson = document.getElementById("jsonInput").value;
+
+            let dataArray, slideCount = 0, slidesTitle;
+
+            try {
+                dataArray = JSON.parse(rawJson);
+            } catch (err) {
+                document.getElementById("main-error").innerHTML = "Invalid JSON";
+                return;
             }
 
-            let html = `<h2>${jsonObject.heading}</h2>`;
-            html += "<ul class='styled-list'>";
+            document.getElementById("main-error").innerHTML = "";
+            slidesContainer.innerHTML = "";
 
-            jsonObject.points.forEach(point => {
-                const parts = point.split(':');
-                if (parts.length > 1) {
-                    html += `<li><strong>${parts[0]}:</strong> ${parts.slice(1).join(':')}</li>`;
-                } else {
-                    html += `<li>${point}</li>`;
+            for (let data of dataArray) {
+
+                const { course, title, session, slides } = data;
+
+                //Only set once with the first title
+                if (!slidesTitle) {
+                    slidesTitle = title;//set it so that it's not replaced
+                    updateTitle(slidesTitle);
+                }
+
+                // Cover Page
+                const coverHTML = `
+                    <div class="container cover-container" style="position: relative; align-items: center; flex-direction: column; text-align: center; overflow: hidden; color: var(--white-color);">
+                        <img src="./img/bg1.jpg" alt="Cover Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
+                        <h1 style="width: 80%; font-size: 3rem; margin: 0; z-index: 1;" contenteditable="true">${title.toUpperCase()}</h1>
+                        <h2 style="font-size: 1rem; margin-top: 10px; z-index: 1;" contenteditable="true">(${session.toUpperCase()})</h2>
+                        <img class="slides-logo" src="./img/logo2.png" alt="Logo" style="position: absolute; top: 20px; right: 20px; width: 120px; height: 100px; z-index: 2;" />
+                        
+                        <h1 style="position: absolute; bottom: 50px; align-items: center; font-size: 3rem; color: var(--white-color);">${course.toUpperCase()}</h1>
+                        <h2 style="position: absolute; bottom: 10px; align-items: center; font-size: 1rem; color: var(--white-color);" contenteditable="true">
+                            < ${copyright()} >
+                        </h2>
+                    </div>
+                `;
+
+                const slideHTML = slides.map(slide => {
+                    slideCount++;
+                    const contentBlocks = slide.contents.map(content => {
+                        const { type, heading } = content;
+
+                        if (type === "bullets") {
+                            return `<div class="slide-block"><h4 class="heading">${heading}</h4>${getBulletList(content.points)}</div>`;
+                        } else if (type === "table") {
+                            return `<div class="slide-block"><h4 class="heading">${heading}</h4>${getTable(content.headers, content.rows)}</div>`;
+                        } else if (type === "code") {
+                            return `<div class="slide-block"><h4 class="heading">${heading}</h4><pre><code class="vscode" style="color: black;">${content.code}</code></pre></div>`;
+                        }
+
+                        return "";
+                    }).join('');
+
+                    return `
+                        <div class="container slides-container" data-index="${slideCount}" contenteditable="true">
+                            <div class="full-section">
+                                <h2 class="topic">${slide.topic.toUpperCase()}</h2>
+                                <div class="content">${contentBlocks}</div>
+                            </div>
+
+                            <!-- Footers  -->
+                            <div style="position: absolute; bottom: 10px; left: 20px; font-size: 12px; color: var(--white-color);">
+                                ${new Date().toDateString()}
+                            </div>
+                            <div style="position: absolute; bottom: 10px; right: 50%; font-size: 12px; color: var(--white-color);">
+                                ${slideCount}
+                            </div>
+                            <div style="position: absolute; bottom: 10px; right: 20px; font-size: 12px; color: var(--white-color);">
+                                © ${new Date().getFullYear()} ${copyright()}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                slidesContainer.innerHTML += coverHTML + slideHTML;
+
+            }
+
+            createBackgroundIcons();
+            storeJsonToLocalStorage(dataArray);
+            setLogo();
+            if(scroll) slidesContainer.scrollIntoView({ behavior: 'smooth'});
+        }
+
+        function updateTitle(title) {
+            document.title = title + " - " + new Date().toDateString();
+        }
+
+        function copyright() {
+            return document.getElementById('copyright').value;
+        }
+
+        function setLogo() {
+            const hideLogoRadio = document.getElementById('hide-logo');
+            const logoElements = document.querySelectorAll('.slides-logo');
+
+            logoElements.forEach((el) => {
+                el.style.display = hideLogoRadio.checked ? 'none' : 'block';
+            });
+        }
+
+        function getBulletList(points) {
+            let html = "<ul class='styled-list'>";
+            points.forEach(p => {
+                if (typeof p === "string") {
+                    html += `<li>${p}</li>`;
+                } else if (typeof p === "object" && p.subpoints) {
+                    html += `<li>${p.text}<ul>`;
+                    p.subpoints.forEach(sub => {
+                        html += `<li>${sub}</li>`;
+                    });
+                    html += `</ul></li>`;
                 }
             });
-
             html += "</ul>";
-
             return html;
         }
+
+        function getTable(headers, rows) {
+            let html = `<table class="styled-table"><thead><tr>`;
+            headers.forEach(h => html += `<th>${h}</th>`);
+            html += `</tr></thead><tbody>`;
+            rows.forEach(row => {
+                html += `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`;
+            });
+            html += `</tbody></table>`;
+            return html;
+        }
+
+        function addSlides() {
+            const rawJsonStr = document.getElementById("jsonInput").value;
+            const additionalJsonStr = document.getElementById("addSlides").value;
+
+            let mainJson, additionalJson;
+
+            try {
+                mainJson = JSON.parse(rawJsonStr);
+            } catch (err) {
+                document.getElementById("main-error").innerHTML = "Initialized main JSON as []";
+                mainJson = [];
+            }
+
+            try {
+                additionalJson = JSON.parse(additionalJsonStr);
+            } catch (err) {
+                document.getElementById("add-error").innerHTML = "Invalid additional JSON.";
+                return;
+            }
+
+            document.getElementById("main-error").innerHTML = "";
+            document.getElementById("add-error").innerHTML = "";
+
+            // Ensure additionalJson is an array (wrap if it's a single slide)
+            const newSlides = Array.isArray(additionalJson) ? additionalJson : [additionalJson];
+
+            // Merge slides
+            if (mainJson && Array.isArray(mainJson)) {
+                mainJson = mainJson.concat(newSlides);
+            } else {
+                document.getElementById("main-error").innerHTML = "Main JSON does not have a valid slides array.";
+                return;
+            }
+
+            // Update textarea with the updated JSON
+            document.getElementById("jsonInput").value = JSON.stringify(mainJson, null, 2);
+
+            // Re-generate slides with the updated JSON
+            generateSlides();
+            document.getElementById("addSlides").value = "";
+        }
+
+        function storeJsonToLocalStorage(jsonData) {
+            try {
+                const key = "slidesMainJson";
+                const jsonString = JSON.stringify(jsonData);
+                localStorage.setItem(key, jsonString);
+            } catch (e) {
+                console.error("Failed to store JSON data:", e);
+            }
+        }
+
+        function getJsonFromLocalStorage() {
+            try {
+                const key = "slidesMainJson";
+                const jsonString = localStorage.getItem(key);
+                if (!jsonString) return null;
+                return JSON.parse(jsonString);
+            } catch (e) {
+                console.error("Failed to retrieve or parse JSON data:", e);
+                return null;
+            }
+        }
+
+        function resetAll() {
+            document.getElementById("jsonInput").value = "";
+            document.getElementById("addSlides").value = "";
+            storeJsonToLocalStorage("");
+        }
     </script>
+
+    <!-- Theme script -->
+    <script>
+        const themes = {
+            "Green Navy Focus": {
+                "--primary-color": "#003C7B",
+                "--secondary-color": "#3BB65B",
+                "--light-color": "#E6F4EA",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#1A1A1A"
+            },
+            "Modern Corporate": {
+                "--primary-color": "#1A237E",
+                "--secondary-color": "#283593",
+                "--light-color": "#E8EAF6",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#1a1a1a"
+            },
+            "Minimal Neutral": {
+                "--primary-color": "#2E3A59",
+                "--secondary-color": "#43536D",
+                "--light-color": "#F4F5F7",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#222"
+            },
+            "Engineering Tech": {
+                "--primary-color": "#0D47A1",
+                "--secondary-color": "#1565C0",
+                "--light-color": "#BBDEFB",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#0D1B2A"
+            },
+            "Creative Gradient": {
+                "--primary-color": "#6A11CB",
+                "--secondary-color": "#2575FC",
+                "--light-color": "#E3F2FD",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#2C2C2C"
+            },
+            "Startup Clean": {
+                "--primary-color": "#0A192F",
+                "--secondary-color": "#112240",
+                "--light-color": "#F4F4F4",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#333333"
+            },
+            "Executive Grey": {
+                "--primary-color": "#2C2C2C",
+                "--secondary-color": "#3D3D3D",
+                "--light-color": "#D7D7D7",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#111111"
+            },
+            "Oceanic Blue": {
+                "--primary-color": "#003B73",
+                "--secondary-color": "#005792",
+                "--light-color": "#DDEEFF",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#0A1A2F"
+            },
+            "Sunset Warm": {
+                "--primary-color": "#F86482",
+                "--secondary-color": "#EEF60E",
+                "--light-color": "#f69178",
+                "--white-color": "#ffffff",
+                "--text-dark-color": "#2E0907"
+            }
+        };
+
+
+        function applyTheme(themeName) {
+            const root = document.documentElement;
+            const theme = themes[themeName];
+            for (let varName in theme) {
+                root.style.setProperty(varName, theme[varName]);
+            }
+        }
+
+        // Set default theme
+        document.addEventListener("DOMContentLoaded", () => {
+            applyTheme("Creative Gradient");
+        });
+    </script>
+
+    <script>
+        const sample =
+            `
+{
+  "title": "Conditional Logic & Control Flow",
+  "session": "Session 02 - 03",
+  "course": "END-TO-END PLAYWRIGHT AUTOMATION",
+  "slides": [
+    {
+      "number": "1",
+      "topic": "if, else if, else statements",
+      "contents": [
+        {
+          "type": "bullets",
+          "heading": "Basic Conditional Statements",
+          "points": [
+            "Used to execute different code based on conditions",
+            "if checks a condition and runs the block if true",
+            "else if checks additional conditions",
+            "else runs when all previous conditions are false",
+            "Conditions must evaluate to a boolean"
+          ]
+        },
+        {
+          "type": "code",
+          "heading": "Example: Checking User Role",
+          "language": "javascript",
+          "code": "let role = 'admin';\n\nif (role === 'admin') {\n  console.log('Access granted to admin panel');\n} else if (role === 'user') {\n  console.log('Access granted to user dashboard');\n} else {\n  console.log('Access denied');\n}"
+        }
+      ]
+    },
+    {
+      "number": "2",
+      "topic": "Ternary Operator",
+      "contents": [
+        {
+          "type": "bullets",
+          "heading": "Ternary Operator Basics",
+          "points": [
+            "A shorter syntax for simple if-else expressions",
+            "Syntax: condition ? value_if_true : value_if_false",
+            "Used for concise expressions or inline logic",
+            "Avoid nesting ternary operators for clarity"
+          ]
+        },
+        {
+          "type": "code",
+          "heading": "Example: Login Status",
+          "language": "javascript",
+          "code": "let isLoggedIn = true;\nlet message = isLoggedIn ? 'Welcome back!' : 'Please log in';\nconsole.log(message);"
+        }
+      ]
+    },
+    {
+      "number": "3",
+      "topic": "switch statement",
+      "contents": [
+        {
+          "type": "bullets",
+          "heading": "Using switch for Multiple Conditions",
+          "points": [
+            "switch is used when there are multiple possible values for a variable",
+            "Each case checks for a match with the expression",
+            "Use break to exit a case block",
+            "default runs if no case matches"
+          ]
+        },
+        {
+          "type": "code",
+          "heading": "Example: Status Check",
+          "language": "javascript",
+          "code": "let status = 'pending';\n\nswitch (status) {\n  case 'success':\n    console.log('Test passed');\n    break;\n  case 'failure':\n    console.log('Test failed');\n    break;\n  case 'pending':\n    console.log('Test is still running');\n    break;\n  default:\n    console.log('Unknown status');\n}"
+        }
+      ]
+    },
+    {
+      "number": "4",
+      "topic": "Common Use Cases",
+      "contents": [
+        {
+          "type": "bullets",
+          "heading": "Where Conditionals Are Used in Tests",
+          "points": [
+            "Verifying element visibility or text content",
+            "Branching logic based on page state",
+            "Dynamic test inputs and expected outputs",
+            {
+              "text": "Handling different responses or errors",
+              "subpoints": [
+                "e.g. retry on failure",
+                "fallback when element not found"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "5",
+      "topic": "Conditional in Playwright",
+      "contents": [
+        {
+          "type": "code",
+          "heading": "Conditional Flow in Playwright Test",
+          "language": "javascript",
+          "code": "const { test, expect } = require('@playwright/test');\n\ntest('Check login feedback', async ({ page }) => {\n  await page.goto('https://example.com/login');\n  await page.fill('#username', 'user1');\n  await page.fill('#password', 'wrongpass');\n  await page.click('button[type=submit]');\n\n  const errorVisible = await page.isVisible('.error');\n  if (errorVisible) {\n    console.log('Error message is shown');\n  } else {\n    console.log('Login may have succeeded');\n  }\n});"
+        }
+      ]
+    },
+    {
+      "number": "6",
+      "topic": "Quiz: Conditional Logic",
+      "contents": [
+        {
+          "type": "bullets",
+          "heading": "Quiz - Level 1 & 2",
+          "points": [
+            {
+              "text": "What does the ternary operator return?",
+              "subpoints": ["A. true or false", "B. function", "C. one of two values", "D. switch case"]
+            },
+            {
+              "text": "What will this output?\nlet val = 'no';\nswitch(val) { case 'yes': console.log('Y'); break; default: console.log('N'); }",
+              "subpoints": ["A. Y", "B. yes", "C. N", "D. Error"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "7",
+      "topic": "Assignment",
+      "contents": [
+        {
+          "type": "bullets",
+          "heading": "Practice Assignment",
+          "points": [
+            "Create a script that takes a role ('admin', 'user', 'guest') and prints access level using if-else or switch",
+            "Use a ternary operator to assign a message based on a boolean value",
+            "In a Playwright test, use conditionals to log whether a button is enabled or not"
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+        `;
+    </script>
+
 </body>
 
 </html>

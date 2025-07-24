@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>FontAwesome Icons in Background</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e1e2f, #2b5876);
+            overflow: hidden;
+        }
+
+        .bg-icon {
+            position: absolute;
+            opacity: 0.9;
+            color: white;
+            pointer-events: none;
+            filter: blur(0.9px);
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="icon-container"></div>
+
+    <script>
+
+        // Choose Font Awesome icon class names (coding/dev/laptop-related)
+        const iconClasses = [
+            'fa-laptop-code',
+            'fa-terminal',
+            'fa-code',
+            'fa-microchip',
+            'fa-cogs',
+            'fa-server',
+            'fa-bug'
+        ];
+
+        function createRandomIcon(container, row, col, totalRows, totalCols) {
+            const icon = document.createElement('i');
+            icon.classList.add('fas', ...iconClasses[Math.floor(Math.random() * iconClasses.length)].split(' '), 'bg-icon');
+
+            const iconSize = 40;
+            icon.style.fontSize = `${iconSize}px`;
+
+            // Calculate base grid position
+            const topPercent = (row + 0.5) * (100 / totalRows);
+            const leftPercent = (col + 0.5) * (100 / totalCols);
+
+            // Slight random offset within each grid cell to avoid rigid grid feel
+            const offsetRange = 70; // in %
+            const randomTopOffset = (Math.random() - 0.5) * offsetRange;
+            const randomLeftOffset = (Math.random() - 0.5) * offsetRange;
+
+            icon.style.top = `calc(${topPercent}% + ${randomTopOffset}px)`;
+            icon.style.left = `calc(${leftPercent}% + ${randomLeftOffset}px)`;
+
+            // Random rotation
+            const rotation = Math.floor(Math.random() * 360);
+            icon.style.transform = `rotate(${rotation}deg)`;
+
+            // Optional: color tint
+            icon.style.color = `rgba(255, 255, 255, ${Math.random() * 0.1 + 0.05})`;
+
+            container.appendChild(icon);
+        }
+
+        function createBackgroundIcons() {
+            const containers = document.querySelectorAll('.container');
+
+            for (let container of containers) {
+                // Grid configuration
+                const totalIcons = 100;
+                const cols = 15;
+                const rows = Math.ceil(totalIcons / cols);
+
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        createRandomIcon(container, r, c, rows, cols);
+                    }
+                }
+            }
+        }
+
+        //Inial Apply
+        createBackgroundIcons();
+    </script>
+
+</body>
+
+</html>

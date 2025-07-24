@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Slides</title>
+    <style>
+        :root {
+            --primary-color: #32004B;
+            --secondary-color: #480057;
+            --light-color: #dbadf3;
+            --white-color: #ffffff;
+            --text-dark-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        @media print {
+            .container {
+                margin: 0 !important;
+            }
+        }
+
+        @page {
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--white-color);
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 1123px;
+            height: 770px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            display: flex;
+            padding: 40px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            position: relative;
+            page-break-after: always;
+            margin: 20px;
+        }
+
+        .left-section {
+            width: 40%;
+        }
+
+        .right-section {
+            width: 60%;
+            background: linear-gradient(to right, var(--light-color), var(--white-color));
+            color: var(--text-dark-color);
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-section img {
+            width: 95%;
+            height: auto;
+        }
+
+        .left-section h1 {
+            font-size: 4rem;
+            margin: 0;
+        }
+
+        .left-section .topic {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+
+        .explanation {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            padding: 15px; 
+            border-radius: 5px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            display: inline-block;
+            width: 90%;
+            line-height: 2rem;
+            height: 570px;
+        }
+
+        .usage,
+        .example {
+            font-size: 1rem;
+            margin: 5px 0;
+            line-height: 2rem;
+        }
+
+        .styled-list {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .styled-list li {
+            margin-bottom: 8px;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--text-dark-color);
+        }
+    </style>
+
+    <script src="./sessions/selenium/cucumber-01.js"></script>
+</head>
+
+<body>
+
+    <script>
+        document.body.innerHTML = questions.map(q => `
+        <div class="container">
+                <div class="left-section" contenteditable="true">
+                    <h1>${q.number}</h1>
+                    <h2 class="topic">${q.topic}</h2>
+                    ${q.explanation ? `<div class="explanation">${getAsList(q.explanation)}</div>` : ''}
+                </div>
+                <div class="right-section" contenteditable="true">
+                    ${q.usage ? `<div class="usage">${getAsList(q.usage)}</div>` : ''}
+                    ${q.example ? `<div class="example">${getAsList(q.example)}</div>` : ''}
+                </div>
+        </div>
+        `).join('');
+
+
+        function getAsList(jsonObject) {
+            if (!jsonObject || !jsonObject.heading || !jsonObject.points) {
+                return "<p>Invalid data provided</p>";
+            }
+
+            let html = `<h2>${jsonObject.heading}</h2>`;
+            html += "<ul class='styled-list'>";
+
+            jsonObject.points.forEach(point => {
+                const parts = point.split(':');
+                if (parts.length > 1) {
+                    html += `<li><strong>${parts[0]}:</strong> ${parts.slice(1).join(':')}</li>`;
+                } else {
+                    html += `<li>${point}</li>`;
+                }
+            });
+
+            html += "</ul>";
+
+            return html;
+        }
+    </script>
+</body>
+
+</html>
