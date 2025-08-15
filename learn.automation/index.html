@@ -1,165 +1,118 @@
+<!-- practice-topics-v2.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f2f2f2;
-  }
-
-  form {
-    border: 3px solid #f1f1f1;
-    width: 100%;
-    max-width: 400px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-
-  input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
-
-  button {
-    background-color: #04AA6D;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  button:hover {
-    opacity: 0.8;
-  }
-
-  .cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-  }
-
-  .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-  }
-
-  img.avatar {
-    width: 40%;
-    border-radius: 50%;
-  }
-
-  .container {
-    padding: 16px;
-  }
-
-  .message {
-    text-align: center;
-    padding: 10px;
-    margin: 10px;
-    display: none;
-    font-weight: bold;
-  }
-
-  .success {
-    color: green;
-  }
-
-  .error {
-    color: red;
-  }
-
-  span.psw {
-    float: right;
-    padding-top: 16px;
-  }
-
-  @media screen and (max-width: 300px) {
-    span.psw {
-      display: block;
-      float: none;
-    }
-    .cancelbtn {
-      width: 100%;
-    }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playwright Automation Practice Topics</title>
+    <!-- Use Tailwind CSS for a modern, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Lighter background */
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800">
 
-<form id="loginForm">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-blue-700">Playwright Practice Hub</a>
+            <div class="space-x-6">
+                <a href="#" class="hover:text-blue-700 font-medium">Home</a>
+                <a href="#" class="hover:text-blue-700 font-medium">Guides</a>
+                <a href="#" class="hover:text-blue-700 font-medium">Topics</a>
+            </div>
+        </div>
+    </nav>
 
-  <div class="container">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
+    <!-- Main Content Container -->
+    <div class="min-h-screen flex flex-col items-center p-8">
+        <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-4xl">
+            <!-- Main Page Header -->
+            <h1 class="text-3xl font-extrabold text-blue-700 text-center mb-2">Automation Practice Topics</h1>
+            <p class="mt-2 text-gray-600 text-center mb-6">Select a topic below to start your Playwright practice!</p>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+            <!-- Topics Container -->
+            <div id="topics-container" class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Topics will be dynamically loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
 
-    <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
-  </div>
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-20">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+            &copy; 2025 Playwright Practice. All rights reserved.
+        </div>
+    </footer>
 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn" onclick="resetForm()">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
-  </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- JSON Object containing practice topics ---
+            const topicsData = [
+                {
+                    title: 'Login & Authentication',
+                    url: 'login.html',
+                    description: 'Practice logging in, handling different authentication methods, and verifying successful login.',
+                },
+                {
+                    title: 'Multi-level Iframes',
+                    url: 'index.html',
+                    description: 'Automate forms and interactions inside single and nested iframes.',
+                },
+                {
+                    title: 'Form Handling',
+                    url: '#',
+                    description: 'Automate filling out complex forms, handling different input types, and form submissions.',
+                },
+                {
+                    title: 'Table & Data Grid',
+                    url: '#',
+                    description: 'Practice interacting with and validating data in dynamic tables and data grids.',
+                },
+                {
+                    title: 'Pop-ups & Alerts',
+                    url: '#',
+                    description: 'Handle browser dialogs, modal pop-ups, and native alerts gracefully.',
+                },
+                {
+                    title: 'File Upload & Download',
+                    url: '#',
+                    description: 'Automate uploading files to a page and verifying file downloads.',
+                },
+            ];
 
-  <div id="loginMessage" class="message"></div>
-</form>
+            const topicsContainer = document.getElementById('topics-container');
 
-<script>
-    // Mock users
-    const users = {
-      "admin": "@#$Admin@#$",
-      "user1": "@#$User1@#$"
-    };
+            // --- Function to dynamically create topic links without icons ---
+            function createTopicLinks() {
+                topicsData.forEach(topic => {
+                    const topicCard = document.createElement('a');
+                    topicCard.href = topic.url;
+                    topicCard.className = 'block p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-300';
 
-    const password = "@#$Abc123@#$"
-  
-    const form = document.getElementById("loginForm");
-    const messageBox = document.getElementById("loginMessage");
-  
-    form.addEventListener("submit", function(e) {
-      e.preventDefault(); // prevent form submission
-  
-      const uname = form.uname.value.trim();
-      const psw = form.psw.value.trim();
-  
-      if (users[uname] && users[uname] === psw) {
-        // Redirect to welcome page with username in query string
-        window.location.href = `welcome.html?user=${encodeURIComponent(uname)}`;
-      } else {
-        showMessage("Invalid username or password!", "error");
-      }
-    });
-  
-    function showMessage(msg, type) {
-      messageBox.style.display = "block";
-      messageBox.textContent = msg;
-      messageBox.className = "message " + type;
-    }
-  
-    function resetForm() {
-      form.reset();
-      messageBox.style.display = "none";
-    }
-</script>
-  
+                    const title = document.createElement('h3');
+                    title.className = 'text-xl font-bold text-gray-900';
+                    title.textContent = topic.title;
+
+                    const description = document.createElement('p');
+                    description.className = 'mt-2 text-sm text-gray-600';
+                    description.textContent = topic.description;
+
+                    topicCard.appendChild(title);
+                    topicCard.appendChild(description);
+
+                    topicsContainer.appendChild(topicCard);
+                });
+            }
+
+            // Call the function on page load
+            createTopicLinks();
+        });
+    </script>
 
 </body>
 </html>
