@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Baby’s First Year Flipbook</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: #fffaf0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 50px;
+            margin: 10px;
+        }
+
+        #timer {
+            font-size: 32px;
+            margin-bottom: 20px;
+            background: #ffe0e0;
+            padding: 10px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, .2);
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        img {
+            width: auto;
+            height: 700px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px #ff8fa3;
+            background: #f9f9f9;
+            padding: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>👶 Zohan's First Year 📖</h1>
+    <div id="timer"></div>
+
+    <div class="container">
+        <img id="babyPhoto" src="img/0.jpeg" alt="1 month">
+        <div id="caption">0 day - Welcome to the world 🌍</div>
+    </div>
+
+    <script>
+        /* ========== Flipbook ========== */
+        let currentPage = 0;
+        const totalPages = 12;
+
+        // Example milestone messages (you can customize each!)
+        const messages = [
+            "0 Month <br> Welcome to the world 🌍",
+            "1 Month <br> First Look 😊",
+            "2 Months <br> Welcome Back Home",
+            "3 Months <br> Rolling over 🎉",
+            "4 Months <br> Holding toys 🧸",
+            "5 Months <br> First laugh 😄",
+            "6 Months <br> First Ramadan, first Eid and fruits 👏",
+            "7 Months <br> Woohoo, First solid food 🥄",
+            "8 Months <br> Adventure Begins 🚀",
+            "9 Months <br> Exploring different foods 🙌",
+            "10 Months <br> First words 🗣️",
+            "11 Months <br> Digitalization 🚶‍♂️",
+            "12 Months <br> Happy Birthday 🎂"
+        ];
+
+        function updatePage() {
+            document.getElementById("babyPhoto").src = `img/${currentPage}.jpeg`;
+            document.getElementById("caption").innerHTML = messages[currentPage];
+            currentPage++;
+            if (currentPage > totalPages) { currentPage = 0; }
+        }
+
+        /* ========== Baby Age Timer ========== */
+        const birthDate = new Date("2024-08-29T13:10:00"); // <-- change DOB
+
+        function updateTimer() {
+            const now = new Date();
+            let years = now.getFullYear() - birthDate.getFullYear();
+            let months = now.getMonth() - birthDate.getMonth();
+            let days = now.getDate() - birthDate.getDate();
+            let hours = now.getHours() - birthDate.getHours();
+            let minutes = now.getMinutes() - birthDate.getMinutes();
+            let seconds = now.getSeconds() - birthDate.getSeconds();
+
+            // Adjust negatives
+            if (seconds < 0) { seconds += 60; minutes--; }
+            if (minutes < 0) { minutes += 60; hours--; }
+            if (hours < 0) { hours += 24; days--; }
+            if (days < 0) {
+                months--;
+                let prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+            if (months < 0) { months += 12; years--; }
+
+            document.getElementById("timer").innerText = `${years}y ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (seconds % 3 === 0) {
+                updatePage();
+            }
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+        updatePage()
+    </script>
+</body>
+
+</html>
