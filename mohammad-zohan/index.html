@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Baby’s First Year Flipbook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body {
-            font-family: 'Comic Sans MS', cursive;
+            font-family: "Comic Neue", "Comic Sans MS", sans-serif;
             background: #fffaf0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            color: #8f00ff
         }
+
 
         h1 {
             font-size: 50px;
@@ -25,21 +29,92 @@
             padding: 10px 20px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, .2);
+            color: #000
         }
 
         .container {
             text-align: center;
         }
 
+        .container #caption {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #8f00ff;
+        }
+
         img {
             width: auto;
-            height: 700px;
+            height: 600px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px #ff8fa3;
-            background: #f9f9f9;
             padding: 6px;
+            background: #f9f9f9;
+
+            /* create a border with animated gradient */
+            border: 8px solid transparent;
+            border-radius: 1rem;
+            border-image: conic-gradient(from 0deg,
+                    #ff0000,
+                    #ff7f00,
+                    #ffff00,
+                    #00ff00,
+                    #0000ff,
+                    #4b0082,
+                    #8f00ff,
+                    #ff0000) 1;
+            animation: spinBorder 5s linear infinite;
+        }
+
+        /* keyframes to rotate the gradient */
+        @keyframes spinBorder {
+            0% {
+                border-image-source: conic-gradient(from 0deg,
+                        #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff, #ff0000);
+            }
+
+            100% {
+                border-image-source: conic-gradient(from 360deg,
+                        #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff, #ff0000);
+            }
+        }
+
+        #floatingIcons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            /* icons don’t block clicks */
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.7;
+            animation: float 12s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
         }
     </style>
+    <!-- make sure jQuery is loaded in your <head> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -47,17 +122,21 @@
     <h1>👶 Zohan's First Year 📖</h1>
     <div id="timer"></div>
 
+    <div id="floatingIcons"></div>
+
     <div class="container">
         <img id="babyPhoto" src="img/0.jpeg" alt="1 month">
-        <div id="caption">0 day - Welcome to the world 🌍</div>
+        <div id="caption">0 Month <br> Welcome to the world 🌍</div>
     </div>
+
 
     <script>
         /* ========== Flipbook ========== */
-        let currentPage = 0;
-        const totalPages = 12;
+        let currentPage = 1;
+        const totalPages = 13;   // 0–12 months
+        const PER_UPDATE = 3;    // update photo every 5 seconds
 
-        // Example milestone messages (you can customize each!)
+        // Example milestone messages
         const messages = [
             "0 Month <br> Welcome to the world 🌍",
             "1 Month <br> First Look 😊",
@@ -75,10 +154,28 @@
         ];
 
         function updatePage() {
-            document.getElementById("babyPhoto").src = `img/${currentPage}.jpeg`;
-            document.getElementById("caption").innerHTML = messages[currentPage];
-            currentPage++;
-            if (currentPage > totalPages) { currentPage = 0; }
+            // decide extension (only month 1 has .png)
+            let imgSrc = currentPage === 1
+                ? `img/${currentPage}.png`
+                : `img/${currentPage}.jpeg`;
+
+            // Animate photo fade
+            $("#babyPhoto").fadeOut(200, function () {
+                $(this).attr("src", imgSrc).fadeIn(300);
+            });
+
+            // Animate caption slide
+            $("#caption").slideUp(400, function () {
+                $(this).html(messages[currentPage]).slideDown(400, () => {
+                    // increment and wrap correctly
+                    currentPage++;
+                    if (currentPage >= totalPages) {
+                        currentPage = 0;
+                    }
+                });
+            });
+
+
         }
 
         /* ========== Baby Age Timer ========== */
@@ -104,15 +201,75 @@
             }
             if (months < 0) { months += 12; years--; }
 
-            document.getElementById("timer").innerText = `${years}y ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s`;
+            const yearText = years === 1 ? "year" : "years";
+            const monthText = months === 1 ? "month" : "months";
+            const dayText = days === 1 ? "day" : "days";
+            const hourText = hours === 1 ? "hour" : "hours";
+            const minuteText = minutes === 1 ? "minute" : "minutes";
+            const secondText = seconds === 1 ? "second" : "seconds";
 
-            if (seconds % 3 === 0) {
+            document.getElementById("timer").innerText =
+                `${years} ${yearText} ${months} ${monthText} ${days} ${dayText} ` +
+                `${hours} ${hourText} ${minutes} ${minuteText} ${seconds} ${secondText}`;
+
+            // auto update image every PER_UPDATE seconds
+            if (seconds % PER_UPDATE === 0) {
                 updatePage();
             }
         }
+
+        // run timer loop
         setInterval(updateTimer, 1000);
         updateTimer();
-        updatePage()
+    </script>
+
+    <script>
+        /* ========== Floating Icons ========== */
+        const babyIcons = [
+            "fa-solid fa-heart",
+            "fa-solid fa-star",
+            "fa-solid fa-gift",
+            "fa-solid fa-balloon"
+        ];
+
+        let lastPositions = []; // keep track of recent positions
+        const MIN_DISTANCE = 8; // vw units – adjust to increase spacing
+
+        function spawnIcon() {
+            const icon = document.createElement("i");
+            icon.className = `floating-icon ${babyIcons[Math.floor(Math.random() * babyIcons.length)]}`;
+
+            // generate a random position with no overlap
+            let left;
+            let attempts = 0;
+            do {
+                left = Math.random() * 100; // in vw
+                attempts++;
+            } while (
+                lastPositions.some(pos => Math.abs(pos - left) < MIN_DISTANCE) && attempts < 10
+            );
+
+            // update last positions
+            lastPositions.push(left);
+            if (lastPositions.length > 5) lastPositions.shift(); // keep only last few
+
+            // apply styles
+            icon.style.left = left + "vw";
+            icon.style.color = `hsl(${Math.random() * 360}, 80%, 65%)`;
+            icon.style.fontSize = (20 + Math.random() * 40) + "px";
+
+            document.getElementById("floatingIcons").appendChild(icon);
+
+            // remove after animation ends
+            setTimeout(() => {
+                icon.remove();
+            }, 12000);
+        }
+
+
+        // keep spawning icons every 2s
+        setInterval(spawnIcon, 200);
+
     </script>
 </body>
 
