@@ -1,0 +1,552 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bill Splitter</title>
+  <meta name="description" content="Production-ready bill splitter with local storage" />
+  <style>
+    :root{
+      --bg:#0b1020; --panel:#111831; --muted:#93a0b6; --text:#e6ecf3; --acc:#6aa6ff; --acc-2:#7ef0b6; --danger:#ff6b6b;
+      --ring: 0 0 0 3px rgba(106,166,255,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:linear-gradient(180deg,#0a0f1c,#0e1530 60%,#0a0f1c);
+      color:var(--text); font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+    }
+    .container{max-width:1100px;margin:24px auto;padding:0 16px}
+    header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+    h1{font-size:20px;margin:0}
+    .badge{font-size:12px;color:#0b1020;background:linear-gradient(90deg,var(--acc),var(--acc-2));padding:2px 8px;border-radius:999px}.grid{display:grid;gap:16px}
+@media(min-width:900px){.grid{grid-template-columns:1.2fr 1fr}}
+
+.card{background:rgba(21,30,62,.7);border:1px solid rgba(255,255,255,.06);backdrop-filter: blur(8px);
+  border-radius:16px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.card h2{margin:0 0 12px 0;font-size:16px;color:#eaf2ff}
+
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>.flex{flex:1 1 160px}
+
+label{display:block;font-size:12px;color:var(--muted);margin:2px 2px 6px}
+input,select,button,textarea{
+  font:inherit;color:var(--text);
+}
+input,select,textarea{
+  width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08);
+  background:rgba(9,13,30,.6); outline:none; transition: box-shadow .15s,border-color .15s;
+}
+input:focus,select:focus,textarea:focus{box-shadow:var(--ring); border-color:rgba(106,166,255,.6)}
+input[type=number]{appearance:textfield}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{appearance:none;margin:0}
+
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:12px;padding:10px 14px;cursor:pointer;
+  background:linear-gradient(90deg,var(--acc),var(--acc-2)); color:#091021; font-weight:600}
+.btn.secondary{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.12)}
+.btn.ghost{background:transparent;color:var(--muted)}
+.btn.danger{background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--danger)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:8px}
+
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
+th{font-size:12px;color:var(--muted);text-align:left}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+
+.pill{padding:2px 8px;border:1px solid rgba(255,255,255,.15);border-radius:999px;color:var(--muted);font-size:12px}
+.muted{color:var(--muted)}
+.right{text-align:right}
+.center{text-align:center}
+
+.inline-edit{display:flex;gap:8px;align-items:center}
+.hidden{display:none}
+
+.footer{margin-top:14px;color:var(--muted);font-size:12px}
+.warn{color:#ffc86a}
+.success{color:#7ef0b6}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);margin:10px 0}
+
+.settlement-item{display:flex;justify-content:space-between;gap:10px;padding:8px 0}
+.settlement-item .who{font-weight:600}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  /* Mobile-first enhancements */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:640px){
+  .row>.flex{flex:1 1 100%}
+  .toolbar{flex-direction:column}
+  .toolbar .btn,.btn{width:100%}
+  table.responsive thead,table.responsive tfoot{display:none}
+  table.responsive,table.responsive tbody,table.responsive tr,table.responsive td{display:block;width:100%}
+  table.responsive tr{margin:10px 0;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:12px}
+  table.responsive td{border:none;padding:8px 10px;display:flex;justify-content:space-between;gap:8px}
+  table.responsive td::before{content:attr(data-label);color:var(--muted);font-size:12px}
+  .center,.right{text-align:left}
+}
+@media (min-width:641px){.btn{width:auto}}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Bill Splitter</h1>
+      <span class="badge">Local storage</span>
+    </header><div class="grid">
+  <!-- Participants / Setup -->
+  <section class="card" aria-labelledby="setup-title">
+    <h2 id="setup-title">Participants</h2>
+    <div class="row" style="align-items:flex-end">
+      <div class="flex">
+        <label for="numPeople">Number of people</label>
+        <input id="numPeople" type="number" min="1" step="1" placeholder="e.g. 3" />
+      </div>
+      <div>
+        <button id="btnGenerate" class="btn secondary">Generate name fields</button>
+      </div>
+      <div class="flex">
+        <label for="currency">Currency</label>
+        <select id="currency" title="Currency">
+          <option value="INR">INR (₹)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="JPY">JPY (¥)</option>
+        </select>
+      </div>
+      <div>
+        <button id="btnSaveNames" class="btn">Save participants</button>
+      </div>
+    </div>
+    <div id="namesFields" class="row" style="margin-top:8px"></div>
+    <div class="divider"></div>
+    <div class="toolbar">
+      <button id="btnExport" class="btn secondary" title="Export a backup JSON">Export</button>
+      <label class="btn secondary" for="importFile" title="Import a backup JSON" style="cursor:pointer">Import<input id="importFile" type="file" accept="application/json" class="sr-only"></label>
+      <button id="btnClearAll" class="btn danger" title="Delete all data">Clear all</button>
+      <button id="btnPrint" class="btn ghost" title="Print or save PDF">Print</button>
+    </div>
+    <p class="footer muted">Editing participants with existing expenses will keep data but recompute shares. Names map by order.</p>
+  </section>
+
+  <!-- Add expense -->
+  <section class="card" aria-labelledby="expense-title">
+    <h2 id="expense-title">Add expense</h2>
+    <form id="expenseForm" class="row" autocomplete="off">
+      <div class="flex">
+        <label for="exName">Name</label>
+        <input id="exName" required placeholder="e.g. Dinner" />
+      </div>
+      <div class="flex">
+        <label for="exAmount">Amount</label>
+        <input id="exAmount" type="number" required min="0" step="0.01" placeholder="0.00" />
+      </div>
+      <div class="flex">
+        <label for="exPaidBy">Paid by</label>
+        <select id="exPaidBy" required></select>
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button class="btn" type="submit">Add</button>
+      </div>
+    </form>
+    <p class="footer muted">Split equally among all participants. Amounts use two decimals. Rounding handled exactly.</p>
+  </section>
+</div>
+
+<!-- Expenses table -->
+<section class="card" aria-labelledby="list-title" style="margin-top:16px">
+  <h2 id="list-title">Expenses</h2>
+  <div class="table-wrap">
+    <table id="expensesTable" class="responsive">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th class="right">Total</th>
+          <th>Per‑head</th>
+          <th>Paid by</th>
+          <th>When</th>
+          <th class="center">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="expensesBody"></tbody>
+      <tfoot>
+        <tr>
+          <th colspan="2" class="right">Total</th>
+          <th class="right" id="totalOut"></th>
+          <th colspan="4"></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- Summary -->
+<section class="card" aria-labelledby="summary-title">
+  <h2 id="summary-title">Summary per person</h2>
+  <div class="table-wrap">
+    <table id="summaryTable" class="responsive">
+      <thead>
+        <tr>
+          <th>Person</th>
+          <th class="right">Paid</th>
+          <th class="right">Share</th>
+          <th class="right">Net</th>
+        </tr>
+      </thead>
+      <tbody id="summaryBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Settlement -->
+<section class="card" aria-labelledby="settle-title">
+  <h2 id="settle-title">Who pays whom</h2>
+  <div id="settlements"></div>
+  <p class="footer muted">Greedy settlement. Minimal transfers not guaranteed but typical. All numbers exact to cents.</p>
+</section>
+
+<p class="footer center">Source is saved locally. No network use.</p>
+
+  </div>  <script>
+  (()=>{
+    // ------- Utilities -------
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    const STORAGE_KEY = 'billsplitter_v1';
+
+    const fmt = (cents, currency) => {
+      const f = new Intl.NumberFormat(undefined, { style:'currency', currency, minimumFractionDigits:2, maximumFractionDigits:2 });
+      return f.format((cents||0)/100);
+    }
+    const moneyToCents = (str) => {
+      if (typeof str === 'number') return Math.round(str * 100);
+      if (!str) return 0;
+      const n = Number(String(str).replace(/[^0-9.-]/g,''));
+      return Math.round((isFinite(n)? n:0) * 100);
+    }
+
+    const uid = () => Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+    const ts = () => new Date().toISOString();
+
+    // ------- State -------
+    const state = {
+      participants: [], // ["Alice","Bob"]
+      currency: 'INR',
+      expenses: [] // {id,name,amountCents,paidBy,timestamp}
+    };
+
+    // Load
+    function load(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return;
+        const obj = JSON.parse(raw);
+        if(Array.isArray(obj.participants)) state.participants = obj.participants;
+        if(typeof obj.currency === 'string') state.currency = obj.currency;
+        if(Array.isArray(obj.expenses)) state.expenses = obj.expenses.filter(e=> Number.isInteger(e.amountCents) && e.paidBy>=0 && e.paidBy<=(state.participants.length||Infinity));
+      }catch(err){ console.error('Load failed', err); }
+    }
+
+    function save(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    // ------- Rendering -------
+    const numInput = $('#numPeople');
+    const btnGenerate = $('#btnGenerate');
+    const namesFields = $('#namesFields');
+    const btnSaveNames = $('#btnSaveNames');
+    const selCurrency = $('#currency');
+
+    const exForm = $('#expenseForm');
+    const exName = $('#exName');
+    const exAmount = $('#exAmount');
+    const exPaidBy = $('#exPaidBy');
+
+    const expensesBody = $('#expensesBody');
+    const totalOut = $('#totalOut');
+
+    const summaryBody = $('#summaryBody');
+    const settlementsDiv = $('#settlements');
+
+    function renderNamesFields(){
+      const n = Math.max(1, Number(numInput.value||state.participants.length||1));
+      namesFields.innerHTML = '';
+      for(let i=0;i<n;i++){
+        const val = state.participants[i] || `Person ${i+1}`;
+        const wrap = document.createElement('div');
+        wrap.className='flex';
+        wrap.innerHTML = `<label>Name #${i+1}</label><input class="nameField" data-index="${i}" placeholder="Person ${i+1}" value="${escapeHtml(val)}" />`;
+        namesFields.appendChild(wrap);
+      }
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    }
+
+    function refreshPaidBy(){
+      exPaidBy.innerHTML = state.participants.map((p,i)=>`<option value="${i}">${escapeHtml(p)}</option>`).join('');
+    }
+
+    function renderExpenses(){
+      const n = state.participants.length || 1;
+      let total = 0;
+      const rows = state.expenses.map((e,idx)=>{
+        total += e.amountCents;
+        const per = Math.floor(e.amountCents / n);
+        const rem = e.amountCents - per * n;
+        const perShow = fmt(per, state.currency) + (rem? ` + ${(rem/n).toFixed(2)}*`:'');
+        const when = new Date(e.timestamp).toLocaleString();
+        const payer = state.participants[e.paidBy] || `#${e.paidBy+1}`;
+        return `<tr data-id="${e.id}">
+          <td>${idx+1}</td>
+          <td>${escapeHtml(e.name)}</td>
+          <td class="right">${fmt(e.amountCents, state.currency)}</td>
+          <td>${fmt(Math.round(e.amountCents/n), state.currency)} <span class="pill" title="Remainders are distributed fairly across people">per head</span></td>
+          <td>${escapeHtml(payer)}</td>
+          <td><span class="muted">${when}</span></td>
+          <td class="center">
+            <button class="btn secondary btn-edit" title="Edit">Edit</button>
+            <button class="btn danger btn-del" title="Delete">Delete</button>
+          </td>
+        </tr>`
+      }).join('');
+      expensesBody.innerHTML = rows || `<tr><td colspan="7" class="center muted">No expenses yet</td></tr>`;
+      totalOut.textContent = fmt(total, state.currency);
+    }
+
+    function computeSummary(){
+      const n = state.participants.length || 1;
+      const paid = Array(n).fill(0);
+      const owed = Array(n).fill(0);
+      // offset to rotate remainders fairly across people per expense
+      let rot = 0;
+      state.expenses.forEach(e=>{
+        paid[e.paidBy] += e.amountCents;
+        const base = Math.floor(e.amountCents / n);
+        const rem = e.amountCents - base * n;
+        for(let i=0;i<n;i++) owed[i] += base;
+        for(let r=0;r<rem;r++) owed[(rot + r) % n] += 1;
+        rot = (rot + rem) % n;
+      });
+      const net = owed.map((o,i)=> paid[i]-o ); // + means creditor, - means owes
+      return {paid, owed, net};
+    }
+
+    function renderSummary(){
+      const {paid, owed, net} = computeSummary();
+      summaryBody.innerHTML = state.participants.map((p,i)=>{
+        const cls = net[i]>0? 'success' : net[i]<0? 'warn' : 'muted';
+        return `<tr>
+          <td>${escapeHtml(p)}</td>
+          <td class="right">${fmt(paid[i], state.currency)}</td>
+          <td class="right">${fmt(owed[i], state.currency)}</td>
+          <td class="right ${cls}">${fmt(net[i], state.currency)}</td>
+        </tr>`
+      }).join('');
+    }
+
+    function applyResponsiveLabels(){
+      const map = (table) => {
+        if(!table) return;
+        const labels = Array.from(table.querySelectorAll('thead th')).map(th=>th.textContent.trim());
+        table.querySelectorAll('tbody tr').forEach(tr=>{
+          Array.from(tr.children).forEach((td,i)=> td.setAttribute('data-label', labels[i]||''));
+        });
+      };
+      map(document.getElementById('expensesTable'));
+      map(document.getElementById('summaryTable'));
+    }
+
+    function settle(){
+
+      const {net} = computeSummary();
+      const debtors = [];// {i,amt}
+      const creditors = [];
+      net.forEach((v,i)=>{ if(v<0) debtors.push({i,amt:-v}); else if(v>0) creditors.push({i,amt:v}); });
+      debtors.sort((a,b)=>b.amt-a.amt); // largest owes first
+      creditors.sort((a,b)=>b.amt-a.amt); // largest to receive first
+      const tx = [];
+      let di=0, ci=0;
+      while(di<debtors.length && ci<creditors.length){
+        const pay = Math.min(debtors[di].amt, creditors[ci].amt);
+        tx.push({from:debtors[di].i, to:creditors[ci].i, amt:pay});
+        debtors[di].amt -= pay; creditors[ci].amt -= pay;
+        if(debtors[di].amt===0) di++;
+        if(creditors[ci].amt===0) ci++;
+      }
+      return tx;
+    }
+
+    function renderSettlement(){
+      const tx = settle();
+      if(!tx.length){
+        settlementsDiv.innerHTML = `<div class="muted">All square. No transfers needed.</div>`; return;
+      }
+      settlementsDiv.innerHTML = tx.map(t=>{
+        return `<div class="settlement-item">
+          <div class="who">${escapeHtml(state.participants[t.from])}</div>
+          <div class="muted">pays</div>
+          <div class="who">${escapeHtml(state.participants[t.to])}</div>
+          <div class="right">${fmt(t.amt, state.currency)}</div>
+        </div>`
+      }).join('');
+    }
+
+    function fullRender(){
+      refreshPaidBy();
+      renderExpenses();
+      renderSummary();
+      applyResponsiveLabels();
+      renderSettlement();
+      save();
+    }
+
+    // ------- Handlers -------
+    btnGenerate.addEventListener('click', ()=>{
+      const n = Math.max(1, Number(numInput.value||1));
+      state.participants = Array.from({length:n}, (_,i)=>`Person ${i+1}`);
+      renderNamesFields();
+      refreshPaidBy();
+      save();
+    });
+
+    btnSaveNames.addEventListener('click', ()=>{
+      const fields = $$('.nameField');
+      if(!fields.length){ alert('Generate name fields first.'); return; }
+      const names = fields.map(f=>f.value.trim()).map((v,i)=> v||`Person ${i+1}`);
+      if(new Set(names.map(n=>n.toLowerCase())).size !== names.length){
+        if(!confirm('Duplicate names detected. Continue?')) return;
+      }
+      state.participants = names;
+      fullRender();
+    });
+
+    selCurrency.addEventListener('change', ()=>{ state.currency = selCurrency.value; fullRender(); });
+
+    exForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = exName.value.trim();
+      const amtCents = moneyToCents(exAmount.value);
+      const paidBy = Number(exPaidBy.value||0);
+      if(!name) return alert('Enter expense name.');
+      if(!(amtCents>0)) return alert('Enter amount > 0.');
+      if(!(paidBy>=0 && paidBy<state.participants.length)) return alert('Choose payer.');
+      state.expenses.push({id:uid(), name, amountCents:amtCents, paidBy, timestamp:ts()});
+      exForm.reset();
+      exPaidBy.value = String(Math.min(paidBy, state.participants.length-1));
+      fullRender();
+      exName.focus();
+    });
+
+    // Edit/Delete in table
+    expensesBody.addEventListener('click', (e)=>{
+      const tr = e.target.closest('tr[data-id]');
+      if(!tr) return;
+      const id = tr.getAttribute('data-id');
+      const item = state.expenses.find(x=>x.id===id);
+      if(!item) return;
+
+      if(e.target.classList.contains('btn-del')){
+        if(confirm('Delete this expense?')){
+          state.expenses = state.expenses.filter(x=>x.id!==id);
+          fullRender();
+        }
+        return;
+      }
+
+      if(e.target.classList.contains('btn-edit')){
+        // replace row with inline editor
+        const opts = state.participants.map((p,i)=>`<option value="${i}" ${i===item.paidBy?'selected':''}>${escapeHtml(p)}</option>`).join('');
+        tr.innerHTML = `
+          <td class="muted">edit</td>
+          <td><input class="edit-name" value="${escapeHtml(item.name)}"></td>
+          <td><input class="edit-amt" type="number" min="0" step="0.01" value="${(item.amountCents/100).toFixed(2)}"></td>
+          <td class="muted">auto</td>
+          <td><select class="edit-paid">${opts}</select></td>
+          <td class="muted">${new Date(item.timestamp).toLocaleString()}</td>
+          <td class="center inline-edit">
+            <button class="btn" data-act="save">Save</button>
+            <button class="btn secondary" data-act="cancel">Cancel</button>
+          </td>`;
+        const onClick = (ev)=>{
+          const act = ev.target.getAttribute('data-act');
+          if(!act) return;
+          if(act==='cancel'){ fullRender(); return; }
+          if(act==='save'){
+            const name = tr.querySelector('.edit-name').value.trim();
+            const amt = moneyToCents(tr.querySelector('.edit-amt').value);
+            const paidBy = Number(tr.querySelector('.edit-paid').value);
+            if(!name) return alert('Enter expense name.');
+            if(!(amt>0)) return alert('Enter amount > 0.');
+            if(!(paidBy>=0 && paidBy<state.participants.length)) return alert('Choose payer.');
+            item.name = name; item.amountCents = amt; item.paidBy = paidBy;
+            fullRender();
+          }
+        };
+        tr.addEventListener('click', onClick, { once:false });
+      }
+    });
+
+    // Export / Import / Clear / Print
+    $('#btnExport').addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = Object.assign(document.createElement('a'), {href:url, download:`bill-splitter-${new Date().toISOString().slice(0,10)}.json`});
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    });
+
+    $('#importFile').addEventListener('change', (e)=>{
+      const f = e.target.files[0]; if(!f) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const obj = JSON.parse(reader.result);
+          if(!Array.isArray(obj.participants) || !Array.isArray(obj.expenses)) throw new Error('Invalid file');
+          state.participants = obj.participants.map(x=>String(x));
+          state.currency = typeof obj.currency==='string'? obj.currency : 'INR';
+          state.expenses = obj.expenses.map(x=>({id:x.id||uid(), name:String(x.name||''), amountCents:Math.max(0,Number(x.amountCents|0)), paidBy:Number(x.paidBy|0), timestamp:x.timestamp||ts()}));
+          selCurrency.value = state.currency;
+          numInput.value = state.participants.length;
+          renderNamesFields();
+          fullRender();
+        }catch(err){ alert('Import failed. Check file.'); }
+        e.target.value='';
+      };
+      reader.readAsText(f);
+    });
+
+    $('#btnClearAll').addEventListener('click', ()=>{
+      if(!confirm('Clear all data?')) return;
+      state.participants = [];
+      state.expenses = [];
+      state.currency = 'INR';
+      localStorage.removeItem(STORAGE_KEY);
+      init();
+    });
+
+    $('#btnPrint').addEventListener('click', ()=>{ window.print(); });
+
+    // ------- Init -------
+    function init(){
+      load();
+      selCurrency.value = state.currency || 'INR';
+      if(state.participants.length){
+        numInput.value = state.participants.length;
+        renderNamesFields();
+      }
+      refreshPaidBy();
+      fullRender();
+    }
+
+    init();
+  })();
+  </script></body>
+</html>
