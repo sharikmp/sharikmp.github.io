@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Credit Score Challenge + Uniform Gauge</title>
+    <title>Credit Score Challenge</title>
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide -->
@@ -19,15 +19,19 @@
             background-color: #e6f6da;
             position: relative;
             color: #111827;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: clamp(16px, 5vw, 48px) 0;
         }
 
-        body::before {
+        /* body::before {
             content: '';
             position: fixed;
             inset: 0;
             background-image: url('img/grass.png');
             background-size: 220px;
-            opacity: .35;
+            opacity: .35; 
             z-index: -2;
         }
 
@@ -37,7 +41,7 @@
             inset: 0;
             background: linear-gradient(180deg, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, .45) 35%, rgba(234, 247, 218, .85) 100%);
             z-index: -1;
-        }
+        } */
 
         /* Buttons & container */
         .answer-options {
@@ -105,21 +109,22 @@
             /* padding: clamp(16px, 4vw, 48px); */
             display: flex;
             justify-content: center;
+            width: min(430px, 100%);
         }
 
         .booth-frame {
             width: min(1200px, 100%);
             background: rgba(255, 255, 255, .92);
-            border-radius: 42px 42px 28px 28px;
-            border: 6px solid #d9f99d;
-            box-shadow: 0 35px 85px -45px rgba(15, 23, 42, .75);
+            /* border-radius: 42px 42px 28px 28px; */
+            /* border: 6px solid #d9f99d; */
+            /* box-shadow: 0 35px 85px -45px rgba(15, 23, 42, .75); */
             overflow: hidden;
             position: relative;
         }
 
         .booth-arch {
             text-align: center;
-            padding: clamp(24px, 6vw, 64px);
+            padding: 30px 10px;
             background: linear-gradient(160deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .7)), linear-gradient(60deg, #fefce8, #dcfce7);
             border-bottom: 1px solid rgba(15, 23, 42, .05);
         }
@@ -184,8 +189,9 @@
         .booth-body {
             display: flex;
             flex-wrap: wrap;
+            flex-direction: column;
             gap: 24px;
-            padding: clamp(16px, 3.2vw, 36px);
+            /* padding: 1px; */
             background: linear-gradient(90deg, rgba(255, 255, 255, .95), rgba(250, 250, 249, .9));
         }
 
@@ -194,7 +200,7 @@
             background: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(255, 249, 219, .8));
             border: 2px solid rgba(113, 63, 18, .15);
             border-radius: 28px;
-            padding: 24px;
+            padding: 24px 10px;
             position: relative;
             box-shadow: inset 0 10px 30px rgba(250, 204, 21, .2);
         }
@@ -238,7 +244,7 @@
         }
 
         .shelf-juice {
-            background: rgba(255, 255, 255, .92);
+            background: #FCFDFD;
             border-radius: 18px;
             padding: .8rem .7rem;
             border: 2px solid rgba(113, 63, 18, .08);
@@ -250,10 +256,10 @@
         }
 
         .shelf-juice img {
-            width: 56px;
-            height: 56px;
+            width: 100px;
+            height: 100px;
             object-fit: contain;
-            filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .2));
+            /* filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .2)); */
         }
 
         .shelf-code {
@@ -320,6 +326,8 @@
             display: flex;
             gap: 12px;
             justify-content: center;
+            flex-direction: column;
+            align-items: stretch;
         }
 
         .counter-panel {
@@ -329,22 +337,6 @@
             border-radius: 16px;
             background: repeating-linear-gradient(135deg, rgba(113, 63, 18, .2), rgba(113, 63, 18, .2) 10px, rgba(250, 250, 249, .2) 10px, rgba(250, 250, 249, .2) 20px);
             border: 1px solid rgba(113, 63, 18, .25);
-        }
-
-        @media (max-width: 960px) {
-            .booth-body {
-                flex-direction: column;
-            }
-
-            .shelf-panel,
-            .booth-container {
-                flex-basis: auto;
-            }
-
-            .counter-front {
-                flex-direction: column;
-                align-items: stretch;
-            }
         }
 
         /* Uniform modern gauge (numbers removed) */
@@ -421,7 +413,7 @@
             <div class="booth-arch">
                 <p class="arch-eyebrow">Credit Score Juice Booth</p>
                 <h1>Scan • Guess • Sip the Color!</h1>
-                <p class="arch-note">Scan the QR code, read the repayment behavior, then match it to the correct credit
+                <p class="arch-note">Scan the QR code, read the payment behavior, then match it to the correct credit
                     score color to earn your mini juice shot.</p>
                 <div id="score-arch" class="arch-strips"></div>
             </div>
@@ -513,7 +505,7 @@
         const colorLookup = {
             PURPLE: { hex: '#6D3DBA', en: 'Elite', ar: 'ممتاز', flavor: 'Blackberry', descEN: 'You have an excellent credit score. Negligible chance of loan failure.', descAR: 'لديك تصنيف ائتماني ممتاز مما يعني أن احتمالية تعثرك منخفضة جدًا.' },
             BLUE: { hex: '#2E86DE', en: 'Ultimate', ar: 'جيد جدًا', flavor: 'Blueberry', descEN: 'You have a good credit score. You rarely miss payments.', descAR: 'لديك تصنيف ائتماني جيد جدًا مما يعني أنك نادرًا ما تتخلف عن السداد.' },
-            GREEN: { hex: '#2ECC71', en: 'Prime', ar: 'جيد', flavor: 'Apple & Cucumber Shot', descEN: 'You have an average credit score. You have failed a few times on repayments.', descAR: 'لديك تصنيف ائتماني جيد مما يعني أنك تخلفت عن السداد في بعض الأحيان.' },
+            GREEN: { hex: '#2ECC71', en: 'Prime', ar: 'جيد', flavor: 'Apple & Cucumber', descEN: 'You have an average credit score. You have failed a few times on repayments.', descAR: 'لديك تصنيف ائتماني جيد مما يعني أنك تخلفت عن السداد في بعض الأحيان.' },
             YELLOW: { hex: '#F1C40F', en: 'Severe', ar: 'صعب', flavor: 'Lemon & Ginger', descEN: 'You have a below-average credit score. You have failed multiple times.', descAR: 'لديك تصنيف ائتماني صعب مما يعني أنك تخلفت عن السداد عدة مرات.' },
             RED: { hex: '#E74C3C', en: 'Risk', ar: 'مخاطرة', flavor: 'Beetroot', descEN: 'You have a poor credit score. High chances of rejection.', descAR: 'لديك تصنيف ائتماني ضعيف مع احتمالية عالية لرفض طلباتك الائتمانية.' }
         };
@@ -752,7 +744,7 @@
                 card.style.setProperty('--juice-color', data.hex);
                 card.innerHTML = `
                     <img src="${getImagePathForColor(colorKey)}" alt="${data.flavor} juice bottle" />
-                    <span class="shelf-code">${colorKey}</span>
+                    <!-- <span class="shelf-code">${colorKey}</span> -->
                     <span class="shelf-label">${data.en}</span>
                     <span class="shelf-flavor">${data.flavor}</span>
                 `;
