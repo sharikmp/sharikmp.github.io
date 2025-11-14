@@ -234,7 +234,6 @@
 
         .booth-scene {
             position: relative;
-            /* padding: clamp(16px, 4vw, 48px); */
             display: flex;
             justify-content: center;
         }
@@ -242,9 +241,6 @@
         .booth-frame {
             width: min(1200px, 100%);
             background: rgba(255, 255, 255, .92);
-            /* border-radius: 42px 42px 28px 28px; */
-            /* border: 6px solid #d9f99d; */
-            /* box-shadow: 0 35px 85px -45px rgba(15, 23, 42, .75); */
             overflow: hidden;
             position: relative;
         }
@@ -615,9 +611,6 @@
                             <p class="mt-4 text-green-700 font-extrabold text-lg p-2 bg-green-200 rounded-lg">Show this
                                 screen to the counter staff to claim your free shot!</p>
                         </div>
-                        <button id="restart-button"
-                            class="w-full py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 transition duration-150">Try
-                            Another Challenge</button>
                     </div>
                 </div>
             </div>
@@ -704,7 +697,6 @@
         const $descriptionAr = document.getElementById('description-ar');
         const $juiceFlavor = document.getElementById('juice-flavor');
         const $juiceImage = document.getElementById('juice-image');
-        const $restartButton = document.getElementById('restart-button');
         const $confirmModal = document.getElementById('confirm-modal');
         const $modalColorName = document.getElementById('modal-color-name');
         const $modalFlavor = document.getElementById('modal-flavor');
@@ -1141,8 +1133,6 @@
         }
 
         function initApp() { currentQuestion = null; showQuestionScreen(); }
-
-        $restartButton.addEventListener('click', initApp);
 
         // Gauge init
         const host = document.getElementById('creditGauge');
