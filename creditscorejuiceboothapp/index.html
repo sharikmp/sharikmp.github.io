@@ -19,10 +19,6 @@
             background-color: #e6f6da;
             position: relative;
             color: #111827;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: clamp(16px, 5vw, 48px) 0;
         }
 
         /* body::before {
@@ -109,7 +105,6 @@
             /* padding: clamp(16px, 4vw, 48px); */
             display: flex;
             justify-content: center;
-            width: min(430px, 100%);
         }
 
         .booth-frame {
@@ -126,7 +121,7 @@
             text-align: center;
             padding: 30px 10px;
             background: linear-gradient(160deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .7)), linear-gradient(60deg, #fefce8, #dcfce7);
-            border-bottom: 1px solid rgba(15, 23, 42, .05);
+            /* border-bottom: 1px solid rgba(15, 23, 42, .05); */
         }
 
         .arch-eyebrow {
@@ -189,9 +184,8 @@
         .booth-body {
             display: flex;
             flex-wrap: wrap;
-            flex-direction: column;
             gap: 24px;
-            /* padding: 1px; */
+            padding: 30px 10px;
             background: linear-gradient(90deg, rgba(255, 255, 255, .95), rgba(250, 250, 249, .9));
         }
 
@@ -326,8 +320,6 @@
             display: flex;
             gap: 12px;
             justify-content: center;
-            flex-direction: column;
-            align-items: stretch;
         }
 
         .counter-panel {
@@ -337,6 +329,22 @@
             border-radius: 16px;
             background: repeating-linear-gradient(135deg, rgba(113, 63, 18, .2), rgba(113, 63, 18, .2) 10px, rgba(250, 250, 249, .2) 10px, rgba(250, 250, 249, .2) 20px);
             border: 1px solid rgba(113, 63, 18, .25);
+        }
+
+        @media (max-width: 960px) {
+            .booth-body {
+                flex-direction: column;
+            }
+
+            .shelf-panel,
+            .booth-container {
+                flex-basis: auto;
+            }
+
+            .counter-front {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
 
         /* Uniform modern gauge (numbers removed) */
