@@ -64,6 +64,23 @@
             text-align: left;
         }
 
+        .color-button.is-selected {
+            transform: translateY(-6px);
+            box-shadow: 0 35px 55px -32px rgba(14, 165, 233, .6);
+            outline: 3px solid rgba(45, 212, 191, .65);
+            outline-offset: 4px;
+        }
+
+        .color-button.option-reveal {
+            opacity: 0;
+            transform: translateY(24px) scale(.98);
+        }
+
+        .color-button.option-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
         .color-button .code {
             font-size: .8rem;
             letter-spacing: .15em;
@@ -98,6 +115,121 @@
 
         .color-button:active {
             transform: translateY(-1px);
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .confirm-modal {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(16px, 5vw, 48px);
+            background: rgba(15, 23, 42, .55);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s ease;
+            z-index: 50;
+        }
+
+        .confirm-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-panel {
+            width: min(420px, 100%);
+            background: linear-gradient(180deg, #fff, #fef9c3);
+            border: 2px solid rgba(113, 63, 18, .25);
+            border-radius: 28px;
+            box-shadow: 0 40px 80px -45px rgba(15, 23, 42, .75);
+            padding: clamp(20px, 4vw, 32px);
+            position: relative;
+        }
+
+        .modal-eyebrow {
+            text-transform: uppercase;
+            font-size: .75rem;
+            letter-spacing: .35em;
+            color: #65a30d;
+            margin-bottom: .45rem;
+        }
+
+        .modal-heading h3 {
+            margin: 0;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: #14532d;
+        }
+
+        .modal-flavor {
+            margin: .4rem 0 0;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .modal-selection {
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 22px;
+            border: 1px dashed rgba(14, 116, 144, .4);
+            background: rgba(219, 234, 254, .5);
+        }
+
+        .modal-swatch {
+            width: 64px;
+            height: 64px;
+            border-radius: 999px;
+            border: 4px solid #fefce8;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, .3);
+            display: inline-block;
+        }
+
+        .modal-message {
+            margin: 0;
+            font-size: 1rem;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .modal-actions {
+            margin-top: 1.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1 1 160px;
+            border-radius: 18px;
+            padding: .85rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #16a34a, #4ade80);
+            color: #fff;
+            box-shadow: 0 15px 30px -20px rgba(22, 163, 74, .7);
+        }
+
+        .modal-btn.secondary {
+            background: #fff;
+            color: #1f2937;
+            border: 1px solid rgba(15, 23, 42, .15);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-3px);
         }
 
         .booth-scene {
@@ -502,6 +634,25 @@
         </div>
     </div>
 
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="confirm-modal" aria-hidden="true">
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-color-name">
+            <div class="modal-heading">
+                <p class="modal-eyebrow">Confirm Your Shot</p>
+                <h3 id="modal-color-name">Select a color</h3>
+                <p id="modal-flavor" class="modal-flavor">Choose the flavor that fits the score.</p>
+            </div>
+            <div class="modal-selection">
+                <span id="modal-color-swatch" class="modal-swatch" aria-hidden="true"></span>
+                <p id="modal-message" class="modal-message">Ready to lock in this credit score color?</p>
+            </div>
+            <div class="modal-actions">
+                <button id="modal-cancel" type="button" class="modal-btn secondary">Cancel</button>
+                <button id="modal-confirm" type="button" class="modal-btn primary">Confirm Guess</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- CONSTANTS ---
         const IMAGE_BASE = 'img';
@@ -554,6 +705,41 @@
         const $juiceFlavor = document.getElementById('juice-flavor');
         const $juiceImage = document.getElementById('juice-image');
         const $restartButton = document.getElementById('restart-button');
+        const $confirmModal = document.getElementById('confirm-modal');
+        const $modalColorName = document.getElementById('modal-color-name');
+        const $modalFlavor = document.getElementById('modal-flavor');
+        const $modalSwatch = document.getElementById('modal-color-swatch');
+        const $modalMessage = document.getElementById('modal-message');
+        const $modalCancel = document.getElementById('modal-cancel');
+        const $modalConfirm = document.getElementById('modal-confirm');
+
+        const supportsIntersectionObserver = typeof window !== 'undefined' && 'IntersectionObserver' in window;
+        const optionObserver = supportsIntersectionObserver
+            ? new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('option-visible');
+                        entry.target.classList.remove('option-reveal');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.45 })
+            : null;
+
+        function revealOptionOnScroll(el) {
+            if (!el) return;
+            el.classList.add('option-reveal');
+            if (optionObserver) {
+                optionObserver.observe(el);
+            } else {
+                const show = () => el.classList.add('option-visible');
+                if (typeof requestAnimationFrame === 'function') {
+                    requestAnimationFrame(show);
+                } else {
+                    setTimeout(show, 0);
+                }
+            }
+        }
 
         // --- UNIFORM GAUGE CONFIG ---
         const CONFIG = {
@@ -570,6 +756,12 @@
         };
 
         const SEG_SIZE = (CONFIG.max - CONFIG.min) / CONFIG.segments.length; // 120 with 300–900
+
+        let gaugeCurrentScore = (CONFIG.min + CONFIG.max) / 2;
+        let gaugeWiggleActive = false;
+        const optionButtons = new Map();
+        let selectedOptionKey = null;
+        let pendingAnswerKey = null;
 
         // Compute segment boundaries uniformly
         function segBounds(index) {
@@ -675,7 +867,8 @@
             return Math.round((start + end) / 2);
         }
 
-        function setCreditScore(score) {
+        function setCreditScore(score, options = {}) {
+            const { track = true } = options;
             const s = clamp(score, CONFIG.min, CONFIG.max);
             const angle = mapValueToAngle(s);
             const needle = document.getElementById('needle');
@@ -685,6 +878,32 @@
             if (bandText) { bandText.textContent = seg ? seg.name.toUpperCase() : ''; }
             const host = document.getElementById('creditGauge');
             if (host) { host.setAttribute('aria-label', `Credit score band: ${seg ? seg.name : ''}`); }
+            if (track) { gaugeCurrentScore = s; }
+        }
+
+        function wiggleNeedle() {
+            if (gaugeWiggleActive) return;
+            gaugeWiggleActive = true;
+            const baseScore = gaugeCurrentScore;
+            const wobble = Math.min(SEG_SIZE * 0.75, 60);
+            setCreditScore(baseScore + wobble, { track: false });
+            setTimeout(() => setCreditScore(baseScore - wobble / 2, { track: false }), 240);
+            setTimeout(() => {
+                setCreditScore(baseScore, { track: false });
+                gaugeWiggleActive = false;
+            }, 520);
+        }
+
+        function initGaugeScrollAnimation(targetEl) {
+            if (!supportsIntersectionObserver || !targetEl) return;
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        wiggleNeedle();
+                    }
+                });
+            }, { threshold: 0.5 });
+            observer.observe(targetEl);
         }
 
         function getImagePathForColor(colorKey) {
@@ -718,8 +937,64 @@
             return `#${nr}${ng}${nb}`;
         }
 
+        function setSelectedOption(colorKey) {
+            selectedOptionKey = colorKey;
+            optionButtons.forEach((btn, key) => {
+                if (!btn) return;
+                if (colorKey && key === colorKey) {
+                    btn.classList.add('is-selected');
+                } else {
+                    btn.classList.remove('is-selected');
+                }
+            });
+        }
+
+        function showConfirmModal(colorKey) {
+            const colorData = colorLookup[colorKey];
+            pendingAnswerKey = colorKey;
+            setSelectedOption(colorKey);
+            if ($modalColorName) {
+                $modalColorName.textContent = colorData ? `${colorData.en} (${colorKey})` : colorKey;
+            }
+            if ($modalFlavor) {
+                $modalFlavor.textContent = colorData
+                    ? `${colorData.flavor} shot is waiting for you.`
+                    : 'Lock this shot in?';
+            }
+            if ($modalMessage) {
+                const label = colorData ? colorData.en : colorKey;
+                $modalMessage.textContent = `Ready to lock ${label} as your final answer?`;
+            }
+            if ($modalSwatch) {
+                $modalSwatch.style.background = colorData ? colorData.hex : '#d1fae5';
+            }
+            if ($confirmModal) {
+                $confirmModal.classList.add('open');
+                $confirmModal.setAttribute('aria-hidden', 'false');
+            }
+            if (typeof document !== 'undefined' && document.body) {
+                document.body.classList.add('modal-open');
+            }
+        }
+
+        function closeConfirmModal(options = {}) {
+            const { resetSelection = true } = options;
+            if ($confirmModal) {
+                $confirmModal.classList.remove('open');
+                $confirmModal.setAttribute('aria-hidden', 'true');
+            }
+            if (typeof document !== 'undefined' && document.body) {
+                document.body.classList.remove('modal-open');
+            }
+            if (resetSelection) {
+                setSelectedOption(null);
+            }
+            pendingAnswerKey = null;
+        }
+
         function renderAnswerButtons() {
             $answerOptions.innerHTML = '';
+            optionButtons.clear();
             colorOrder.forEach(colorKey => {
                 const colorData = colorLookup[colorKey];
                 const btn = document.createElement('button');
@@ -729,15 +1004,47 @@
                 btn.style.setProperty('--swatch-soft', lightenHex(colorData.hex, 0.35));
                 if (isColorLight(colorData.hex)) { btn.classList.add('is-light'); }
                 btn.setAttribute('aria-label', `${colorData.en} (${colorKey})`);
+                btn.dataset.color = colorKey;
                 btn.innerHTML = `
                     <span class="code">${colorKey}</span>
                     <!-- <span class="label">${colorData.en}</span>
                     <span class="flavor">${colorData.flavor}</span> -->
                 `;
-                btn.addEventListener('click', () => handleAnswer(colorKey));
+                btn.addEventListener('click', () => showConfirmModal(colorKey));
                 $answerOptions.appendChild(btn);
+                optionButtons.set(colorKey, btn);
+                revealOptionOnScroll(btn);
+            });
+            setSelectedOption(selectedOptionKey);
+        }
+
+        if ($modalCancel) {
+            $modalCancel.addEventListener('click', () => closeConfirmModal());
+        }
+
+        if ($modalConfirm) {
+            $modalConfirm.addEventListener('click', () => {
+                if (!pendingAnswerKey) return;
+                const answerKey = pendingAnswerKey;
+                closeConfirmModal({ resetSelection: false });
+                handleAnswer(answerKey);
+                setSelectedOption(null);
             });
         }
+
+        if ($confirmModal) {
+            $confirmModal.addEventListener('click', (event) => {
+                if (event.target === $confirmModal) {
+                    closeConfirmModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && $confirmModal && $confirmModal.classList.contains('open')) {
+                closeConfirmModal();
+            }
+        });
 
         function buildColorShelf() {
             if (!$colorShelf) return;
@@ -783,6 +1090,7 @@
         }
 
         function showQuestionScreen() {
+            closeConfirmModal();
             $resultScreen.classList.add('hidden');
             $questionScreen.classList.remove('hidden');
             const q = getRandomQuestion();
@@ -840,6 +1148,7 @@
         const host = document.getElementById('creditGauge');
         buildGauge(host);
         setCreditScore(midOfSegment('GREEN'));
+        initGaugeScrollAnimation(host);
         window.addEventListener('load', () => {
             lucide.createIcons();
             renderArchSegments();
