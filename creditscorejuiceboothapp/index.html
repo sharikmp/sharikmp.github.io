@@ -43,7 +43,7 @@
         .answer-options {
             display: grid;
             gap: 1rem;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(1fr));
             text-align: center;
         }
 
@@ -436,14 +436,11 @@
                     <!-- Header -->
                     <header class="text-center mb-6">
                         <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800">Credit Score Challenge</h2>
-                        <p class="text-lg text-green-600 font-semibold mt-1">Guess Your Color, Claim Your Shot! 🍹</p>
+                        <p class="text-lg text-green-600 font-semibold mt-1">Guess Your Color, Claim Your Shot!</p>
                     </header>
 
                     <!-- Uniform Gauge (numbers removed) -->
                     <section class="gauge-card mb-8">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-base font-semibold text-gray-700">Score Gauge</h3>
-                        </div>
                         <div id="creditGauge" class="gauge" aria-label="Credit score band" role="img"></div>
                         <div id="gLegend" class="g-legend"></div>
                     </section>
