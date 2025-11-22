@@ -1,0 +1,497 @@
+// script.js
+
+// --- CONSTANTS ---
+const IMAGE_BASE = 'img';
+
+// --- MOCK BACKEND DATA ---
+const colorLookup = {
+  PURPLE: {
+    hex: '#6D3DBA',
+    en: 'Elite',
+    ar: 'ممتاز',
+    flavor: 'Blackberry',
+    descEN: 'You have an excellent credit score. Negligible chance of loan failure.',
+    descAR: 'لديك تصنيف ائتماني ممتاز مما يعني أن احتمالية تعثرك منخفضة جدًا.'
+  },
+  BLUE: {
+    hex: '#2E86DE',
+    en: 'Ultimate',
+    ar: 'جيد جدًا',
+    flavor: 'Blueberry',
+    descEN: 'You have a good credit score. You rarely miss payments.',
+    descAR: 'لديك تصنيف ائتماني جيد جدًا مما يعني أنك نادرًا ما تتخلف عن السداد.'
+  },
+  GREEN: {
+    hex: '#2ECC71',
+    en: 'Prime',
+    ar: 'جيد',
+    flavor: 'Apple & Cucumber Shot',
+    descEN: 'You have an average credit score. You have failed a few times on repayments.',
+    descAR: 'لديك تصنيف ائتماني جيد مما يعني أنك تخلفت عن السداد في بعض الأحيان.'
+  },
+  YELLOW: {
+    hex: '#F1C40F',
+    en: 'Severe',
+    ar: 'صعب',
+    flavor: 'Lemon & Ginger',
+    descEN: 'You have a below-average credit score. You have failed multiple times.',
+    descAR: 'لديك تصنيف ائتماني صعب مما يعني أنك تخلفت عن السداد عدة مرات.'
+  },
+  RED: {
+    hex: '#E74C3C',
+    en: 'Risk',
+    ar: 'مخاطرة',
+    flavor: 'Beetroot',
+    descEN: 'You have a poor credit score. High chances of rejection.',
+    descAR: 'لديك تصنيف ائتماني ضعيف مع احتمالية عالية لرفض طلباتك الائتمانية.'
+  }
+};
+
+const colorImages = {
+  PURPLE: '01-blackberry.png',
+  BLUE: '02-blueberry.png',
+  GREEN: '03-apple-cucumber.png',
+  YELLOW: '04-lemon-ginger.png',
+  RED: '05-beetroot.png'
+};
+
+const colorOrder = ['PURPLE', 'BLUE', 'GREEN', 'YELLOW', 'RED'];
+
+const initialQuestions = [
+  { id: 1, text: 'You always pay loans on time and never miss payments.', answer: 'PURPLE' },
+  { id: 2, text: 'You missed one payment this year but usually pay on time.', answer: 'BLUE' },
+  { id: 3, text: 'You occasionally delay your loan payments.', answer: 'GREEN' },
+  { id: 4, text: 'You have multiple delayed payments and reminders.', answer: 'YELLOW' },
+  {
+    id: 5,
+    text: "Your loan payment was delayed; it's now legal, and you have also missed your credit card payments.",
+    answer: 'RED'
+  }
+];
+
+// --- APPLICATION STATE ---
+let availableQuestions = [...initialQuestions];
+let currentQuestion = null;
+
+// --- DOM ELEMENTS ---
+const $questionScreen = document.getElementById('question-screen');
+const $resultScreen = document.getElementById('result-screen');
+const $questionText = document.getElementById('question-text');
+const $answerOptions = document.getElementById('answer-options');
+const $colorShelf = document.getElementById('color-shelf');
+const $scoreArch = document.getElementById('score-arch');
+const $resultBanner = document.getElementById('result-banner');
+const $resultText = document.getElementById('result-text');
+const $correctColorBox = document.getElementById('correct-color-box');
+const $correctColorEn = document.getElementById('correct-color-en');
+const $correctColorAr = document.getElementById('correct-color-ar');
+const $descriptionEn = document.getElementById('description-en');
+const $descriptionAr = document.getElementById('description-ar');
+const $juiceFlavor = document.getElementById('juice-flavor');
+const $juiceImage = document.getElementById('juice-image');
+const $restartButton = document.getElementById('restart-button');
+const $startHeroButton = document.getElementById('start-hero');
+const $navStartButton = document.getElementById('nav-start');
+
+// --- UNIFORM GAUGE CONFIG ---
+const CONFIG = {
+  min: 300,
+  max: 900,
+  // Equal-sized segments across the range
+  segments: [
+    { key: 'RED', name: 'Risk', color: '#E74C3C' },
+    { key: 'YELLOW', name: 'Severe', color: '#F1C40F' },
+    { key: 'GREEN', name: 'Prime', color: '#2ECC71' },
+    { key: 'BLUE', name: 'Ultimate', color: '#2E86DE' },
+    { key: 'PURPLE', name: 'Elite', color: '#6D3DBA' }
+  ]
+};
+
+const SEG_SIZE = (CONFIG.max - CONFIG.min) / CONFIG.segments.length; // 120 with 300–900
+
+// Compute segment boundaries uniformly
+function segBounds(index) {
+  const start = CONFIG.min + index * SEG_SIZE;
+  const end = index === CONFIG.segments.length - 1 ? CONFIG.max : start + SEG_SIZE;
+  return { start, end };
+}
+
+function clamp(n, a, b) {
+  return Math.max(a, Math.min(b, n));
+}
+
+// Gauge builder (no numeric labels)
+function buildGauge(el) {
+  if (!el) return;
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('viewBox', '0 0 1000 500');
+
+  // Track
+  const bg = document.createElementNS(svgNS, 'path');
+  bg.setAttribute('d', describeArc(500, 480, 420, 180, 0));
+  bg.setAttribute('fill', 'none');
+  bg.setAttribute('stroke', 'rgba(0,0,0,.08)');
+  bg.setAttribute('stroke-width', '32');
+  svg.appendChild(bg);
+
+  // Uniform segments
+  CONFIG.segments.forEach((seg, i) => {
+    const { start, end } = segBounds(i);
+    seg.start = start;
+    seg.end = end; // persist computed bounds
+    const startAng = mapValueToAngle(start);
+    const endAng = mapValueToAngle(end);
+    const path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('d', describeArc(500, 480, 420, startAng, endAng));
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', seg.color);
+    path.setAttribute('stroke-width', '32');
+    path.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(path);
+  });
+
+  // Ticks (no numbers)
+  const ticks = document.createElementNS(svgNS, 'g');
+  ticks.setAttribute('opacity', '0.5');
+  for (let i = 0; i <= 10; i++) {
+    const v = CONFIG.min + (i / 10) * (CONFIG.max - CONFIG.min);
+    const a = (mapValueToAngle(v) * Math.PI) / 180;
+    const r1 = 380;
+    const r2 = 405;
+    const x1 = 500 + r1 * Math.cos(Math.PI - a);
+    const y1 = 480 - r1 * Math.sin(Math.PI - a);
+    const x2 = 500 + r2 * Math.cos(Math.PI - a);
+    const y2 = 480 - r2 * Math.sin(Math.PI - a);
+    const t = document.createElementNS(svgNS, 'line');
+    t.setAttribute('x1', x1);
+    t.setAttribute('y1', y1);
+    t.setAttribute('x2', x2);
+    t.setAttribute('y2', y2);
+    t.setAttribute('stroke', 'rgba(0,0,0,.22)');
+    t.setAttribute('stroke-width', i % 5 === 0 ? '3' : '1.5');
+    ticks.appendChild(t);
+  }
+  svg.appendChild(ticks);
+
+  // Needle
+  const needle = document.createElementNS(svgNS, 'g');
+  needle.setAttribute('id', 'needle');
+  needle.setAttribute('class', 'g-needle');
+  needle.setAttribute('transform', 'rotate(-90 500 400)');
+
+  const pointer = document.createElementNS(svgNS, 'rect');
+  pointer.setAttribute('x', '498');
+  pointer.setAttribute('y', '160');
+  pointer.setAttribute('width', '4');
+  pointer.setAttribute('height', '250');
+  pointer.setAttribute('rx', '2');
+  pointer.setAttribute('class', 'g-needle-shaft');
+
+  const shaft = document.createElementNS(svgNS, 'path');
+  shaft.setAttribute('class', 'g-needle-shaft');
+  shaft.setAttribute('d', 'M500,400 L490,430 L510,430 Z');
+
+  const cap = document.createElementNS(svgNS, 'circle');
+  cap.setAttribute('cx', '500');
+  cap.setAttribute('cy', '400');
+  cap.setAttribute('r', '12');
+  cap.setAttribute('class', 'g-needle-cap');
+
+  needle.appendChild(pointer);
+  needle.appendChild(shaft);
+  needle.appendChild(cap);
+  svg.appendChild(needle);
+
+  // Band readout only
+  const ro = document.createElement('div');
+  ro.className = 'g-readout';
+  ro.innerHTML = `<div class="g-band" id="bandText">—</div>`;
+
+  el.appendChild(svg);
+  el.appendChild(ro);
+
+  // Legend
+  const legend = document.getElementById('gLegend');
+  if (!legend) return;
+  legend.innerHTML = '';
+  CONFIG.segments.forEach(seg => {
+    const it = document.createElement('div');
+    it.className = 'item';
+    it.innerHTML = `<span class="sw" style="background:${seg.color}"></span>${seg.name}`;
+    legend.appendChild(it);
+  });
+}
+
+function mapValueToAngle(value) {
+  const v = clamp(value, CONFIG.min, CONFIG.max);
+  const t = (v - CONFIG.min) / (CONFIG.max - CONFIG.min); // 0→1
+  return 180 * (1 - t); // 180→0 left→right
+}
+
+function describeArc(cx, cy, r, startAngle, endAngle) {
+  const start = polar(cx, cy, r, endAngle);
+  const end = polar(cx, cy, r, startAngle);
+  const largeArc = Math.abs(endAngle - startAngle) <= 180 ? 0 : 1;
+  return ['M', start.x, start.y, 'A', r, r, 0, largeArc, 0, end.x, end.y].join(' ');
+}
+
+function polar(cx, cy, r, deg) {
+  const a = (deg * Math.PI) / 180;
+  return {
+    x: cx + r * Math.cos(Math.PI - a),
+    y: cy - r * Math.sin(Math.PI - a)
+  };
+}
+
+function findSegmentByScore(score) {
+  return CONFIG.segments.find((s, i, arr) => {
+    const { start, end } = segBounds(i);
+    return score >= start && (i === arr.length - 1 ? score <= end : score < end);
+  });
+}
+
+function midOfSegment(key) {
+  const i = CONFIG.segments.findIndex(s => s.key === key);
+  if (i < 0) return (CONFIG.min + CONFIG.max) / 2;
+  const { start, end } = segBounds(i);
+  return Math.round((start + end) / 2);
+}
+
+function setCreditScore(score) {
+  const s = clamp(score, CONFIG.min, CONFIG.max);
+  const angle = mapValueToAngle(s);
+  const needle = document.getElementById('needle');
+  const bandText = document.getElementById('bandText');
+  const seg = findSegmentByScore(s);
+
+  if (needle) {
+    needle.style.transform = `rotate(${angle - 90}deg)`;
+  }
+  if (bandText) {
+    bandText.textContent = seg ? seg.name.toUpperCase() : '';
+  }
+  const host = document.getElementById('creditGauge');
+  if (host) {
+    host.setAttribute('aria-label', `Credit score band: ${seg ? seg.name : ''}`);
+  }
+}
+
+function getImagePathForColor(colorKey) {
+  return `${IMAGE_BASE}/${colorImages[colorKey] || colorImages.GREEN}`;
+}
+
+function isColorLight(hex) {
+  if (!hex) return false;
+  const sanitized = hex.replace('#', '');
+  const bigint = parseInt(sanitized, 16);
+  if (Number.isNaN(bigint)) return false;
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.75;
+}
+
+function lightenHex(hex, amount = 0.2) {
+  if (!hex) return '#ffffff';
+  const sanitized = hex.replace('#', '');
+  const bigint = parseInt(sanitized, 16);
+  if (Number.isNaN(bigint)) return hex;
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  const mix = channel => Math.min(255, Math.round(channel + (255 - channel) * amount));
+  const nr = mix(r).toString(16).padStart(2, '0');
+  const ng = mix(g).toString(16).padStart(2, '0');
+  const nb = mix(b).toString(16).padStart(2, '0');
+  return `#${nr}${ng}${nb}`;
+}
+
+function renderAnswerButtons() {
+  if (!$answerOptions) return;
+  $answerOptions.innerHTML = '';
+  colorOrder.forEach(colorKey => {
+    const colorData = colorLookup[colorKey];
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'color-button focus:outline-none';
+    btn.style.setProperty('--swatch', colorData.hex);
+    btn.style.setProperty('--swatch-soft', lightenHex(colorData.hex, 0.35));
+    if (isColorLight(colorData.hex)) {
+      btn.classList.add('is-light');
+    }
+    btn.setAttribute('aria-label', `${colorData.en} (${colorKey})`);
+    btn.innerHTML = `
+      <span class="code">${colorKey}</span>
+    `;
+    btn.addEventListener('click', () => handleAnswer(colorKey));
+    $answerOptions.appendChild(btn);
+  });
+}
+
+function buildColorShelf() {
+  if (!$colorShelf) return;
+  $colorShelf.innerHTML = '';
+  colorOrder.forEach(colorKey => {
+    const data = colorLookup[colorKey];
+    const card = document.createElement('div');
+    card.className = 'shelf-juice';
+    card.style.setProperty('--juice-color', data.hex);
+    card.innerHTML = `
+      <img src="${getImagePathForColor(colorKey)}" alt="${data.flavor} juice bottle" />
+      <span class="shelf-code">${colorKey}</span>
+      <span class="shelf-label">${data.en}</span>
+      <span class="shelf-flavor">${data.flavor}</span>
+    `;
+    $colorShelf.appendChild(card);
+  });
+}
+
+function renderArchSegments() {
+  if (!$scoreArch) return;
+  $scoreArch.innerHTML = '';
+  CONFIG.segments.forEach(seg => {
+    const data = colorLookup[seg.key];
+    const block = document.createElement('div');
+    block.className = 'arch-segment';
+    block.style.setProperty('--seg-color', seg.color);
+    block.innerHTML = `
+      <span class="seg-code">${seg.key}</span>
+      <span class="seg-name">${data ? data.en : seg.name}</span>
+    `;
+    $scoreArch.appendChild(block);
+  });
+}
+
+// --- Quiz Logic ---
+function getRandomQuestion() {
+  if (availableQuestions.length === 0) {
+    availableQuestions = [...initialQuestions];
+  }
+  const index = Math.floor(Math.random() * availableQuestions.length);
+  currentQuestion = availableQuestions[index];
+  availableQuestions.splice(index, 1);
+  return currentQuestion;
+}
+
+function showQuestionScreen() {
+  if (!$questionScreen || !$resultScreen || !$questionText) return;
+
+  $resultScreen.classList.add('hidden');
+  $questionScreen.classList.remove('hidden');
+  const q = getRandomQuestion();
+  $questionText.textContent = q.text;
+
+  renderAnswerButtons();
+
+  // Reset gauge to center of Prime
+  setCreditScore(midOfSegment('GREEN'));
+}
+
+function handleAnswer(userAnswer) {
+  if (!currentQuestion) return;
+  const correct = currentQuestion.answer;
+  const isCorrect = userAnswer === correct;
+  showResultScreen(isCorrect, correct);
+}
+
+function showResultScreen(isCorrect, correctAnswer) {
+  if (
+    !$questionScreen ||
+    !$resultScreen ||
+    !$resultBanner ||
+    !$resultText ||
+    !$correctColorBox ||
+    !$correctColorEn ||
+    !$correctColorAr ||
+    !$descriptionEn ||
+    !$descriptionAr ||
+    !$juiceFlavor ||
+    !$juiceImage
+  ) {
+    return;
+  }
+
+  $questionScreen.classList.add('hidden');
+  $resultScreen.classList.remove('hidden');
+  const correctData = colorLookup[correctAnswer];
+
+  if (isCorrect) {
+    $resultBanner.className =
+      'p-4 rounded-xl shadow-lg bg-green-100 border-l-4 border-green-500';
+    $resultText.textContent = 'Nailed it! You matched the right band.';
+    $resultText.classList.remove('text-red-700');
+    $resultText.classList.add('text-green-700');
+  } else {
+    $resultBanner.className =
+      'p-4 rounded-xl shadow-lg bg-red-100 border-l-4 border-red-500';
+    $resultText.textContent = `Good try! The correct color was ${correctAnswer}.`;
+    $resultText.classList.remove('text-green-700');
+    $resultText.classList.add('text-red-700');
+  }
+
+  // Correct answer details
+  $correctColorBox.style.backgroundColor = correctData.hex;
+  $correctColorEn.textContent = `${correctAnswer} (${correctData.en})`;
+  $correctColorAr.textContent = correctData.ar;
+  $descriptionEn.textContent = correctData.descEN;
+  $descriptionAr.textContent = correctData.descAR;
+  $juiceFlavor.textContent = `You've earned the ${correctAnswer} shot (${correctData.flavor} flavor)!`;
+  $juiceImage.src = getImagePathForColor(correctAnswer);
+  $juiceImage.onerror = () => {
+    $juiceImage.src = `${IMAGE_BASE}/2ECC71/ffffff?text=Juice+Shot`;
+  };
+
+  // Move gauge needle to the center of the correct band
+  setCreditScore(midOfSegment(correctAnswer));
+}
+
+function initApp() {
+  currentQuestion = null;
+  showQuestionScreen();
+}
+
+// Attach events
+if ($restartButton) {
+  $restartButton.addEventListener('click', initApp);
+}
+
+function scrollToApp() {
+  const app = document.getElementById('app-container');
+  if (app) {
+    app.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+if ($startHeroButton) {
+  $startHeroButton.addEventListener('click', () => {
+    initApp();
+    scrollToApp();
+  });
+}
+
+if ($navStartButton) {
+  $navStartButton.addEventListener('click', () => {
+    initApp();
+    scrollToApp();
+  });
+}
+
+// Gauge init
+const host = document.getElementById('creditGauge');
+if (host) {
+  buildGauge(host);
+  setCreditScore(midOfSegment('GREEN'));
+}
+
+// On load
+window.addEventListener('load', () => {
+  if (window.lucide && typeof lucide.createIcons === 'function') {
+    lucide.createIcons();
+  }
+  renderArchSegments();
+  buildColorShelf();
+  initApp();
+});

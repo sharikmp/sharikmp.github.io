@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Rectangle / Triangle Area Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font Awesome for edit/delete icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #020617;
+            --accent: #22c55e;
+            --accent-soft: rgba(34, 197, 94, 0.14);
+            --accent2: #38bdf8;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --border: #1f2937;
+            --danger: #f97373;
+            --radius-lg: 16px;
+            --radius-pill: 999px;
+            --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.65);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 900px;
+            background: linear-gradient(145deg, #020617 0%, #020617 40%, #020617 100%);
+            border-radius: 24px;
+            padding: 18px 16px 22px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .title-block h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .title-block p {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .total-card {
+            background: radial-gradient(circle at top left, #22c55e33, #0f172a 48%, #0f172a 100%);
+            border-radius: var(--radius-lg);
+            padding: 14px 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+        }
+
+        .total-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--muted);
+        }
+
+        .total-value {
+            font-size: 1.7rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #22c55e, #a855f7, #38bdf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+        }
+
+        .total-subline {
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .dataset-bar {
+            margin-top: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .dataset-bar select {
+            flex: 1 1 160px;
+            min-width: 0;
+            padding: 6px 8px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(51, 65, 85, 0.9);
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text);
+            font-size: 0.75rem;
+            outline: none;
+        }
+
+        .dataset-bar button {
+            padding: 6px 9px;
+            font-size: 0.75rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .dataset-bar button:hover {
+            border-color: var(--accent2);
+        }
+
+        .dataset-info {
+            margin-top: 4px;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        main {
+            margin-top: 8px;
+        }
+
+        .toolbar-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .hint-text {
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+
+        .add-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.7rem;
+            font-weight: 500;
+            background: radial-gradient(circle at top, #22c55e, #15803d);
+            color: #e5f9f0;
+            box-shadow: 0 14px 30px rgba(34, 197, 94, 0.55);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .add-btn:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 0 8px 18px rgba(34, 197, 94, 0.45);
+        }
+
+        .entries-card {
+            margin-top: 4px;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(31, 41, 55, 1);
+            background: radial-gradient(circle at top, #020617, #020617 48%, #020617 100%);
+            padding: 8px 0;
+            max-height: 55vh;
+            overflow: auto;
+        }
+
+        .empty-state {
+            padding: 20px 16px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .entry-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 14px;
+            border-bottom: 1px solid rgba(30, 41, 59, 0.8);
+            font-size: 0.8rem;
+        }
+
+        .entry-row:last-child {
+            border-bottom: none;
+        }
+
+        .entry-main {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .shape-icon {
+            width: 16px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .area-text {
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+        }
+
+        .area-text.plus {
+            color: #4ade80;
+        }
+
+        .area-text.minus {
+            color: #fb7185;
+        }
+
+        .dim-text {
+            flex: 1;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .dim-arrow {
+            opacity: 0.7;
+            margin: 0 4px;
+        }
+
+        .entry-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .icon-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--muted);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .icon-btn:hover {
+            color: var(--text);
+            background: rgba(30, 64, 175, 0.9);
+        }
+
+        .icon-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.18);
+            color: #fecaca;
+        }
+
+        /* Modal */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.76);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            z-index: 50;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 430px;
+            background: radial-gradient(circle at top left, #02684a22, #020617 55%, #020617);
+            border-radius: 18px;
+            padding: 14px 14px 12px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .modal-subtitle {
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .close-btn {
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-section-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .toggle-group {
+            display: inline-flex;
+            border-radius: var(--radius-pill);
+            padding: 2px;
+            background: rgba(15, 23, 42, 0.86);
+            border: 1px solid rgba(30, 64, 175, 0.6);
+            gap: 2px;
+        }
+
+        .toggle-btn {
+            border-radius: 999px;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            color: var(--muted);
+            background: transparent;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .toggle-btn span.icon {
+            font-size: 0.8rem;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #22c55e, #38bdf8);
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .toggle-btn.negative.active {
+            background: linear-gradient(135deg, #fb7185, #f97316);
+            color: #0b1120;
+        }
+
+        .shape-toggle .toggle-btn.active {
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            color: #e5e7eb;
+        }
+
+        .inputs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .field label {
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+
+        .field-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .field input[type="number"] {
+            width: 100%;
+            padding: 7px 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(55, 65, 81, 0.95);
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text);
+            font-size: 0.78rem;
+            outline: none;
+        }
+
+        .field input[type="number"]:focus {
+            border-color: var(--accent2);
+            box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+        }
+
+        .suffix {
+            font-size: 0.75rem;
+            color: var(--muted);
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .shape-section {
+            display: none;
+        }
+
+        .shape-section.active {
+            display: block;
+        }
+
+        .hint-box {
+            margin-top: 2px;
+            border-radius: 10px;
+            padding: 6px 8px;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px dashed rgba(55, 65, 81, 0.9);
+            font-size: 0.72rem;
+            color: var(--muted);
+            min-height: 32px;
+            white-space: pre-line;
+        }
+
+        .area-preview {
+            margin-top: 2px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .modal-footer {
+            margin-top: 6px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .error-text {
+            font-size: 0.7rem;
+            color: var(--danger);
+            flex: 1;
+        }
+
+        .primary-btn {
+            min-width: 90px;
+            padding: 7px 14px;
+            border-radius: var(--radius-pill);
+            border: none;
+            background: linear-gradient(135deg, #22c55e, #38bdf8);
+            color: #020617;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Scrollbars (desktop) */
+
+        .entries-card::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .entries-card::-webkit-scrollbar-thumb {
+            background: rgba(30, 64, 175, 0.7);
+            border-radius: 999px;
+        }
+
+        @media (max-width: 640px) {
+            .app {
+                padding: 14px 10px 18px;
+                border-radius: 18px;
+            }
+
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .title-block h1 {
+                font-size: 1rem;
+            }
+
+            .toolbar-row {
+                align-items: flex-start;
+            }
+
+            .hint-text {
+                font-size: 0.7rem;
+            }
+
+            .add-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.5rem;
+            }
+
+            .entry-row {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .entry-actions {
+                margin-left: 24px;
+            }
+
+            .modal {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <header>
+            <div class="header-top">
+                <div class="title-block">
+                    <h1>Shape Area Sheet</h1>
+                    <p>Sum areas of rectangles & right triangles in feet/inches.</p>
+                </div>
+                <div class="total-card">
+                    <div class="total-label">Net Total Area</div>
+                    <div class="total-value" id="totalArea">0.00 sqft</div>
+                    <div class="total-subline" id="totalSubline">No entries yet.</div>
+                    <div class="dataset-bar">
+                        <select id="datasetSelect">
+                            <option value="">No saved sheets</option>
+                        </select>
+                        <button id="saveBtn" type="button">Save</button>
+                        <button id="saveAsBtn" type="button">Save As…</button>
+                    </div>
+                    <div class="dataset-info" id="datasetInfo"></div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="toolbar-row">
+                <div class="hint-text">
+                    Use the plus button to add rectangle or triangle entries, then save sets by name for later.
+                </div>
+                <button class="add-btn" id="openModalBtn" type="button">+</button>
+            </div>
+
+            <div class="entries-card">
+                <div class="empty-state" id="emptyState">
+                    No areas yet. Tap the + button to start adding entries.
+                </div>
+                <ul id="entriesList" style="list-style: none; display: none;"></ul>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title" id="modalTitle">Add area entry</div>
+                    <div class="modal-subtitle">Choose operation, shape and dimensions.</div>
+                </div>
+                <button class="close-btn" id="closeModalBtn" type="button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="modal-section-label">Operation</div>
+                    <div class="toggle-group" id="opToggle">
+                        <button class="toggle-btn active" data-op="plus" type="button">
+                            <span class="icon">+</span>Add
+                        </button>
+                        <button class="toggle-btn negative" data-op="minus" type="button">
+                            <span class="icon">−</span>Subtract
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="modal-section-label">Shape</div>
+                    <div class="toggle-group shape-toggle" id="shapeToggle">
+                        <button class="toggle-btn active" data-shape="rectangle" type="button">
+                            <span class="icon">▭</span>Rectangle
+                        </button>
+                        <button class="toggle-btn" data-shape="triangle" type="button">
+                            <span class="icon">△</span>Right triangle
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rectangle inputs -->
+                <div class="shape-section active" id="rectSection">
+                    <div class="modal-section-label" style="margin-bottom: 2px;">Rectangle dimensions</div>
+                    <div class="inputs-grid">
+                        <div class="field">
+                            <label>Length</label>
+                            <div class="field-row">
+                                <input type="number" id="rectLengthFt" min="0" step="1" placeholder="ft" />
+                                <span class="suffix">ft</span>
+                                <input type="number" id="rectLengthIn" min="0" step="1" placeholder="in" />
+                                <span class="suffix">in</span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Breadth</label>
+                            <div class="field-row">
+                                <input type="number" id="rectWidthFt" min="0" step="1" placeholder="ft" />
+                                <span class="suffix">ft</span>
+                                <input type="number" id="rectWidthIn" min="0" step="1" placeholder="in" />
+                                <span class="suffix">in</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Triangle inputs -->
+                <div class="shape-section" id="triSection">
+                    <div class="modal-section-label" style="margin-bottom: 2px;">Right triangle dimensions</div>
+                    <div class="inputs-grid">
+                        <div class="field">
+                            <label>Base</label>
+                            <div class="field-row">
+                                <input type="number" id="triBaseFt" min="0" step="1" placeholder="ft" />
+                                <span class="suffix">ft</span>
+                                <input type="number" id="triBaseIn" min="0" step="1" placeholder="in" />
+                                <span class="suffix">in</span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Height</label>
+                            <div class="field-row">
+                                <input type="number" id="triHeightFt" min="0" step="1" placeholder="ft" />
+                                <span class="suffix">ft</span>
+                                <input type="number" id="triHeightIn" min="0" step="1" placeholder="in" />
+                                <span class="suffix">in</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="modal-section-label" style="margin-bottom: 2px;">Calculation hint</div>
+                    <div class="hint-box" id="calcHint">Enter dimensions to see the formula and area.</div>
+                    <div class="area-preview" id="previewArea"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="error-text" id="modalError"></div>
+                <button class="primary-btn" id="confirmBtn" type="button" disabled>
+                    <span id="confirmBtnLabel">Add</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Storage schema:
+        // localStorage["areaCalculatorDatasets_v1"] = JSON.stringify({
+        //   datasets: {
+        //     [name]: {
+        //       name,
+        //       items: [ { id, op, shape, dims, areaSqft, hint, dimsLabel } ],
+        //       createdAt,
+        //       updatedAt
+        //     }
+        //   },
+        //   lastOpened: "name"
+        // });
+
+        const STORAGE_KEY = "areaCalculatorDatasets_v1";
+
+        const totalAreaEl = document.getElementById("totalArea");
+        const totalSublineEl = document.getElementById("totalSubline");
+        const datasetSelectEl = document.getElementById("datasetSelect");
+        const datasetInfoEl = document.getElementById("datasetInfo");
+        const saveBtn = document.getElementById("saveBtn");
+        const saveAsBtn = document.getElementById("saveAsBtn");
+
+        const entriesListEl = document.getElementById("entriesList");
+        const emptyStateEl = document.getElementById("emptyState");
+
+        const openModalBtn = document.getElementById("openModalBtn");
+        const modalOverlay = document.getElementById("modalOverlay");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalErrorEl = document.getElementById("modalError");
+        const confirmBtn = document.getElementById("confirmBtn");
+        const confirmBtnLabel = document.getElementById("confirmBtnLabel");
+        const calcHintEl = document.getElementById("calcHint");
+        const previewAreaEl = document.getElementById("previewArea");
+
+        const opToggle = document.getElementById("opToggle");
+        const shapeToggle = document.getElementById("shapeToggle");
+        const rectSection = document.getElementById("rectSection");
+        const triSection = document.getElementById("triSection");
+
+        const rectLengthFt = document.getElementById("rectLengthFt");
+        const rectLengthIn = document.getElementById("rectLengthIn");
+        const rectWidthFt = document.getElementById("rectWidthFt");
+        const rectWidthIn = document.getElementById("rectWidthIn");
+
+        const triBaseFt = document.getElementById("triBaseFt");
+        const triBaseIn = document.getElementById("triBaseIn");
+        const triHeightFt = document.getElementById("triHeightFt");
+        const triHeightIn = document.getElementById("triHeightIn");
+
+        let appState = {
+            datasets: {},
+            lastOpened: null
+        };
+        let currentDatasetName = "";
+        let currentItems = [];
+        let editingId = null; // null = adding new
+
+        function loadStorage() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return;
+            try {
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === "object") {
+                    appState = {
+                        datasets: parsed.datasets || {},
+                        lastOpened: parsed.lastOpened || null
+                    };
+                }
+            } catch (e) {
+                console.warn("Failed to parse stored datasets", e);
+            }
+        }
+
+        function saveStorage() {
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify({
+                    datasets: appState.datasets,
+                    lastOpened: appState.lastOpened
+                })
+            );
+        }
+
+        function findLatestDatasetName() {
+            const names = Object.keys(appState.datasets);
+            if (!names.length) return null;
+            let latestName = names[0];
+            let latestTime = appState.datasets[latestName].updatedAt || 0;
+            for (const name of names) {
+                const t = appState.datasets[name].updatedAt || appState.datasets[name].createdAt || 0;
+                if (t > latestTime) {
+                    latestTime = t;
+                    latestName = name;
+                }
+            }
+            return latestName;
+        }
+
+        function renderDatasetSelect() {
+            const names = Object.keys(appState.datasets);
+            datasetSelectEl.innerHTML = "";
+            if (!names.length) {
+                const opt = document.createElement("option");
+                opt.value = "";
+                opt.textContent = "No saved sheets";
+                datasetSelectEl.appendChild(opt);
+                datasetSelectEl.disabled = true;
+                datasetInfoEl.textContent = "Nothing saved yet. Work with a temporary sheet, then Save As.";
+                return;
+            }
+            datasetSelectEl.disabled = false;
+            const labelOpt = document.createElement("option");
+            labelOpt.value = "";
+            labelOpt.textContent = "Select saved sheet…";
+            datasetSelectEl.appendChild(labelOpt);
+
+            names
+                .sort((a, b) => {
+                    const ta = appState.datasets[a].updatedAt || appState.datasets[a].createdAt || 0;
+                    const tb = appState.datasets[b].updatedAt || appState.datasets[b].createdAt || 0;
+                    return tb - ta;
+                })
+                .forEach((name) => {
+                    const item = appState.datasets[name];
+                    const opt = document.createElement("option");
+                    opt.value = name;
+                    const count = item.items ? item.items.length : 0;
+                    opt.textContent = `${name} (${count} entries)`;
+                    datasetSelectEl.appendChild(opt);
+                });
+
+            datasetSelectEl.value = currentDatasetName || "";
+            updateDatasetInfo();
+        }
+
+        function updateDatasetInfo() {
+            if (!currentDatasetName) {
+                datasetInfoEl.textContent = "Working on an unsaved sheet.";
+                return;
+            }
+            const ds = appState.datasets[currentDatasetName];
+            if (!ds) {
+                datasetInfoEl.textContent = "Working on an unsaved sheet.";
+                return;
+            }
+            const count = ds.items ? ds.items.length : 0;
+            const updated = ds.updatedAt
+                ? new Date(ds.updatedAt).toLocaleString()
+                : new Date(ds.createdAt).toLocaleString();
+            datasetInfoEl.textContent = `Active sheet: "${currentDatasetName}" • ${count} entr${count === 1 ? "y" : "ies"
+                } • Last saved: ${updated}`;
+        }
+
+        function setCurrentItems(items) {
+            currentItems = Array.isArray(items) ? items.slice() : [];
+            renderEntries();
+            updateTotal();
+        }
+
+        function renderEntries() {
+            entriesListEl.innerHTML = "";
+            if (!currentItems.length) {
+                emptyStateEl.style.display = "block";
+                entriesListEl.style.display = "none";
+                return;
+            }
+            emptyStateEl.style.display = "none";
+            entriesListEl.style.display = "block";
+
+            currentItems.forEach((item) => {
+                const li = document.createElement("li");
+                li.className = "entry-row";
+
+                const main = document.createElement("div");
+                main.className = "entry-main";
+
+                const shapeSpan = document.createElement("span");
+                shapeSpan.className = "shape-icon";
+                shapeSpan.textContent = item.shape === "rectangle" ? "▭" : "△";
+
+                const areaSpan = document.createElement("span");
+                areaSpan.className = "area-text " + (item.op === "plus" ? "plus" : "minus");
+                const sign = item.op === "plus" ? "+" : "−";
+                areaSpan.textContent = `${sign}${item.areaSqft.toFixed(2)} sqft`;
+
+                const dimSpan = document.createElement("span");
+                dimSpan.className = "dim-text";
+                const arrow = "→";
+                dimSpan.textContent = `${" ".repeat(2)}${arrow} ${item.dimsLabel}`;
+
+                main.appendChild(shapeSpan);
+                main.appendChild(areaSpan);
+                main.appendChild(dimSpan);
+
+                const actions = document.createElement("div");
+                actions.className = "entry-actions";
+
+                const editBtn = document.createElement("button");
+                editBtn.type = "button";
+                editBtn.className = "icon-btn edit";
+                editBtn.innerHTML = '<i class="fas fa-pen"></i>';
+                editBtn.addEventListener("click", () => openEditModal(item.id));
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.type = "button";
+                deleteBtn.className = "icon-btn delete";
+                deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                deleteBtn.addEventListener("click", () => deleteEntry(item.id));
+
+                actions.appendChild(editBtn);
+                actions.appendChild(deleteBtn);
+
+                li.appendChild(main);
+                li.appendChild(actions);
+
+                entriesListEl.appendChild(li);
+            });
+        }
+
+        function updateTotal() {
+            const total = currentItems.reduce((sum, item) => {
+                const sign = item.op === "plus" ? 1 : -1;
+                return sum + sign * item.areaSqft;
+            }, 0);
+            totalAreaEl.textContent = `${total.toFixed(2)} sqft`;
+            if (!currentItems.length) {
+                totalSublineEl.textContent = "No entries yet.";
+            } else {
+                const plusCount = currentItems.filter((x) => x.op === "plus").length;
+                const minusCount = currentItems.length - plusCount;
+                totalSublineEl.textContent = `Using ${plusCount} added and ${minusCount} subtracted areas.`;
+            }
+        }
+
+        function feetInchesToFeet(ft, inch) {
+            const f = parseFloat(ft);
+            const i = parseFloat(inch);
+            const ftVal = isNaN(f) ? 0 : f;
+            const inVal = isNaN(i) ? 0 : i;
+            return ftVal + inVal / 12;
+        }
+
+        function formatFeetInches(ft, inch) {
+            const f = Number.isFinite(parseInt(ft, 10)) ? parseInt(ft, 10) : 0;
+            const i = Number.isFinite(parseInt(inch, 10)) ? parseInt(inch, 10) : 0;
+            return `${f}'${i}"`;
+        }
+
+        function currentOperation() {
+            const active = opToggle.querySelector(".toggle-btn.active");
+            return active && active.dataset.op === "minus" ? "minus" : "plus";
+        }
+
+        function currentShape() {
+            const active = shapeToggle.querySelector(".toggle-btn.active");
+            return active && active.dataset.shape === "triangle" ? "triangle" : "rectangle";
+        }
+
+        function computeFromInputs() {
+            const op = currentOperation();
+            const shape = currentShape();
+            let valid = true;
+            let area = 0;
+            let hint = "";
+            let dimsLabel = "";
+            let dimsData = {};
+
+            if (shape === "rectangle") {
+                const lf = rectLengthFt.value;
+                const li = rectLengthIn.value;
+                const wf = rectWidthFt.value;
+                const wi = rectWidthIn.value;
+
+                const lfNum = parseInt(lf || "0", 10);
+                const liNum = parseInt(li || "0", 10);
+                const wfNum = parseInt(wf || "0", 10);
+                const wiNum = parseInt(wi || "0", 10);
+
+                if ((lfNum <= 0 && liNum <= 0) || (wfNum <= 0 && wiNum <= 0)) {
+                    valid = false;
+                } else {
+                    const lenFt = feetInchesToFeet(lfNum, liNum);
+                    const widFt = feetInchesToFeet(wfNum, wiNum);
+                    area = lenFt * widFt;
+                    dimsLabel = `${formatFeetInches(lfNum, liNum)} x ${formatFeetInches(wfNum, wiNum)}`;
+                    hint =
+                        `Rectangle area = length × breadth\n` +
+                        `= ${lenFt.toFixed(2)} ft × ${widFt.toFixed(2)} ft\n` +
+                        `= ${area.toFixed(2)} sqft`;
+                    dimsData = {
+                        lengthFt: lfNum,
+                        lengthIn: liNum,
+                        widthFt: wfNum,
+                        widthIn: wiNum
+                    };
+                }
+            } else if (shape === "triangle") {
+                const bf = triBaseFt.value;
+                const bi = triBaseIn.value;
+                const hf = triHeightFt.value;
+                const hi = triHeightIn.value;
+
+                const bfNum = parseInt(bf || "0", 10);
+                const biNum = parseInt(bi || "0", 10);
+                const hfNum = parseInt(hf || "0", 10);
+                const hiNum = parseInt(hi || "0", 10);
+
+                if ((bfNum <= 0 && biNum <= 0) || (hfNum <= 0 && hiNum <= 0)) {
+                    valid = false;
+                } else {
+                    const baseFt = feetInchesToFeet(bfNum, biNum);
+                    const heightFt = feetInchesToFeet(hfNum, hiNum);
+                    area = 0.5 * baseFt * heightFt;
+                    dimsLabel = `${formatFeetInches(bfNum, biNum)} x ${formatFeetInches(
+                        hfNum,
+                        hiNum
+                    )}`;
+                    hint =
+                        `Right triangle area = ½ × base × height\n` +
+                        `= 0.5 × ${baseFt.toFixed(2)} ft × ${heightFt.toFixed(2)} ft\n` +
+                        `= ${area.toFixed(2)} sqft`;
+                    dimsData = {
+                        baseFt: bfNum,
+                        baseIn: biNum,
+                        heightFt: hfNum,
+                        heightIn: hiNum
+                    };
+                }
+            }
+
+            if (!valid || !Number.isFinite(area) || area <= 0) {
+                return null;
+            }
+            return { op, shape, area, hint, dimsLabel, dimsData };
+        }
+
+        function refreshModalPreview() {
+            const result = computeFromInputs();
+            if (!result) {
+                calcHintEl.textContent = "Enter valid dimensions greater than zero.";
+                previewAreaEl.textContent = "";
+                confirmBtn.disabled = true;
+                modalErrorEl.textContent = "";
+                return;
+            }
+            calcHintEl.textContent = result.hint;
+            const sign = result.op === "plus" ? "+" : "−";
+            previewAreaEl.textContent = `${sign}${result.area.toFixed(2)} sqft will be applied.`;
+            confirmBtn.disabled = false;
+            modalErrorEl.textContent = "";
+        }
+
+        function clearModalInputs() {
+            rectLengthFt.value = "";
+            rectLengthIn.value = "";
+            rectWidthFt.value = "";
+            rectWidthIn.value = "";
+            triBaseFt.value = "";
+            triBaseIn.value = "";
+            triHeightFt.value = "";
+            triHeightIn.value = "";
+            calcHintEl.textContent = "Enter dimensions to see the formula and area.";
+            previewAreaEl.textContent = "";
+            modalErrorEl.textContent = "";
+            confirmBtn.disabled = true;
+        }
+
+        function openAddModal() {
+            editingId = null;
+            modalTitle.textContent = "Add area entry";
+            // default op: plus
+            opToggle.querySelectorAll(".toggle-btn").forEach((btn) => btn.classList.remove("active"));
+            opToggle.querySelector('[data-op="plus"]').classList.add("active");
+            // default shape: rectangle
+            shapeToggle
+                .querySelectorAll(".toggle-btn")
+                .forEach((btn) => btn.classList.remove("active"));
+            shapeToggle.querySelector('[data-shape="rectangle"]').classList.add("active");
+            rectSection.classList.add("active");
+            triSection.classList.remove("active");
+            confirmBtnLabel.textContent = "Add";
+            clearModalInputs();
+            modalOverlay.classList.add("active");
+        }
+
+        function openEditModal(id) {
+            const item = currentItems.find((x) => x.id === id);
+            if (!item) return;
+            editingId = id;
+            modalTitle.textContent = "Edit area entry";
+
+            opToggle.querySelectorAll(".toggle-btn").forEach((btn) => btn.classList.remove("active"));
+            opToggle
+                .querySelector(`[data-op="${item.op === "minus" ? "minus" : "plus"}"]`)
+                .classList.add("active");
+
+            shapeToggle
+                .querySelectorAll(".toggle-btn")
+                .forEach((btn) => btn.classList.remove("active"));
+            shapeToggle
+                .querySelector(`[data-shape="${item.shape === "triangle" ? "triangle" : "rectangle"}"]`)
+                .classList.add("active");
+
+            if (item.shape === "rectangle") {
+                rectSection.classList.add("active");
+                triSection.classList.remove("active");
+                rectLengthFt.value = item.dims.lengthFt;
+                rectLengthIn.value = item.dims.lengthIn;
+                rectWidthFt.value = item.dims.widthFt;
+                rectWidthIn.value = item.dims.widthIn;
+                triBaseFt.value = "";
+                triBaseIn.value = "";
+                triHeightFt.value = "";
+                triHeightIn.value = "";
+            } else {
+                rectSection.classList.remove("active");
+                triSection.classList.add("active");
+                triBaseFt.value = item.dims.baseFt;
+                triBaseIn.value = item.dims.baseIn;
+                triHeightFt.value = item.dims.heightFt;
+                triHeightIn.value = item.dims.heightIn;
+                rectLengthFt.value = "";
+                rectLengthIn.value = "";
+                rectWidthFt.value = "";
+                rectWidthIn.value = "";
+            }
+
+            confirmBtnLabel.textContent = "Update";
+            calcHintEl.textContent = item.hint;
+            const sign = item.op === "plus" ? "+" : "−";
+            previewAreaEl.textContent = `${sign}${item.areaSqft.toFixed(2)} sqft (current)`;
+            confirmBtn.disabled = false;
+            modalErrorEl.textContent = "";
+            modalOverlay.classList.add("active");
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove("active");
+        }
+
+        function deleteEntry(id) {
+            const idx = currentItems.findIndex((x) => x.id === id);
+            if (idx === -1) return;
+            if (!confirm("Delete this entry?")) return;
+            currentItems.splice(idx, 1);
+            renderEntries();
+            updateTotal();
+        }
+
+        function saveCurrentTo(name) {
+            if (!name) return;
+            const trimmed = name.trim();
+            if (!trimmed) return;
+            const now = Date.now();
+            appState.datasets[trimmed] = {
+                name: trimmed,
+                items: currentItems.slice(),
+                createdAt: appState.datasets[trimmed]?.createdAt || now,
+                updatedAt: now
+            };
+            appState.lastOpened = trimmed;
+            currentDatasetName = trimmed;
+            saveStorage();
+            renderDatasetSelect();
+        }
+
+        // Event wiring
+
+        openModalBtn.addEventListener("click", openAddModal);
+        closeModalBtn.addEventListener("click", closeModal);
+        modalOverlay.addEventListener("click", (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        opToggle.addEventListener("click", (e) => {
+            const btn = e.target.closest(".toggle-btn");
+            if (!btn) return;
+            opToggle.querySelectorAll(".toggle-btn").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            confirmBtnLabel.textContent = btn.dataset.op === "minus" ? "Subtract" : "Add";
+            refreshModalPreview();
+        });
+
+        shapeToggle.addEventListener("click", (e) => {
+            const btn = e.target.closest(".toggle-btn");
+            if (!btn) return;
+            shapeToggle.querySelectorAll(".toggle-btn").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            if (btn.dataset.shape === "rectangle") {
+                rectSection.classList.add("active");
+                triSection.classList.remove("active");
+            } else {
+                rectSection.classList.remove("active");
+                triSection.classList.add("active");
+            }
+            calcHintEl.textContent = "Enter dimensions to see the formula and area.";
+            previewAreaEl.textContent = "";
+            confirmBtn.disabled = true;
+            modalErrorEl.textContent = "";
+        });
+
+        [
+            rectLengthFt,
+            rectLengthIn,
+            rectWidthFt,
+            rectWidthIn,
+            triBaseFt,
+            triBaseIn,
+            triHeightFt,
+            triHeightIn
+        ].forEach((el) => {
+            el.addEventListener("input", refreshModalPreview);
+        });
+
+        confirmBtn.addEventListener("click", () => {
+            const result = computeFromInputs();
+            if (!result) {
+                modalErrorEl.textContent = "Please enter valid dimensions.";
+                return;
+            }
+            const entry = {
+                id: editingId || `${Date.now()}_${Math.random().toString(16).slice(2)}`,
+                op: result.op,
+                shape: result.shape,
+                dims: result.dimsData,
+                areaSqft: result.area,
+                hint: result.hint,
+                dimsLabel: result.dimsLabel
+            };
+            if (editingId) {
+                const idx = currentItems.findIndex((x) => x.id === editingId);
+                if (idx !== -1) {
+                    currentItems[idx] = entry;
+                }
+            } else {
+                currentItems.push(entry);
+            }
+            renderEntries();
+            updateTotal();
+            closeModal();
+        });
+
+        datasetSelectEl.addEventListener("change", () => {
+            const name = datasetSelectEl.value;
+            if (!name || !appState.datasets[name]) {
+                currentDatasetName = "";
+                appState.lastOpened = null;
+                saveStorage();
+                updateDatasetInfo();
+                return;
+            }
+            currentDatasetName = name;
+            appState.lastOpened = name;
+            saveStorage();
+            setCurrentItems(appState.datasets[name].items || []);
+            updateDatasetInfo();
+        });
+
+        saveBtn.addEventListener("click", () => {
+            if (!currentDatasetName) {
+                // fall back to save-as
+                const name = prompt("Enter a name to save this sheet:");
+                if (!name) return;
+                saveCurrentTo(name);
+            } else {
+                saveCurrentTo(currentDatasetName);
+            }
+        });
+
+        saveAsBtn.addEventListener("click", () => {
+            const name = prompt("Save As: enter a new name for this sheet:");
+            if (!name) return;
+            if (appState.datasets[name]?.items) {
+                const overwrite = confirm(
+                    `A sheet named "${name}" already exists. Overwrite it with current entries?`
+                );
+                if (!overwrite) return;
+            }
+            saveCurrentTo(name);
+        });
+
+        // Initialise
+
+        loadStorage();
+        const initialName = appState.lastOpened || findLatestDatasetName();
+        currentDatasetName = initialName || "";
+        if (currentDatasetName && appState.datasets[currentDatasetName]) {
+            setCurrentItems(appState.datasets[currentDatasetName].items || []);
+        } else {
+            setCurrentItems([]);
+        }
+        renderDatasetSelect();
+    </script>
+</body>
+
+</html>
