@@ -1,0 +1,218 @@
+/* Table Card Shell */
+.js-table-shell {
+    background-color: var(--td-bg-panel);
+    border: 1px solid var(--td-border);
+    box-shadow: var(--td-card-shadow);
+    border-radius: var(--td-radius-xl);
+}
+
+.js-table-shell .card-header,
+.js-table-shell .card-footer {
+    background-color: transparent;
+    border-color: var(--td-border);
+}
+
+/* Inputs */
+.js-table-shell .form-control,
+.js-table-shell .form-select,
+.js-table-shell .input-group-text {
+    background-color: var(--td-input-bg) !important;
+    border: 1px solid var(--td-border) !important;
+    color: var(--td-text-primary) !important;
+}
+
+.js-table-shell .form-control:focus,
+.js-table-shell .form-select:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    border-color: var(--td-primary) !important;
+}
+
+.js-table-shell .form-control::placeholder {
+    color: var(--td-text-muted);
+}
+
+/* Table */
+.js-table-shell .table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--td-text-primary);
+    --bs-table-border-color: var(--td-border);
+    margin-bottom: 0;
+}
+
+.js-table-shell .table> :not(caption)>*>* {
+    border-bottom-color: var(--td-border);
+    padding: 0.75rem 1rem;
+}
+
+.js-table-shell .table thead th {
+    color: var(--td-text-secondary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--td-border);
+    background: linear-gradient(to right, var(--td-bg-glass), var(--td-bg-panel));
+}
+
+.js-table-shell .table-striped>tbody>tr:nth-of-type(odd)>* {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.js-table-shell .table-hover>tbody>tr:hover>* {
+    background-color: var(--td-table-hover);
+    color: var(--td-text-primary);
+}
+
+/* Buttons */
+.js-table-shell .btn-primary {
+    background-color: var(--td-primary);
+    border-color: var(--td-primary);
+    color: var(--td-text-primary);
+}
+
+.js-table-shell .btn-success {
+    background-color: var(--td-success);
+    border-color: var(--td-success);
+    color: var(--td-text-primary);
+}
+
+.js-table-shell .btn-outline-primary {
+    color: var(--td-primary);
+    border-color: var(--td-primary);
+    background-color: transparent;
+}
+
+.js-table-shell .btn-outline-primary:hover,
+.js-table-shell .btn-primary:hover {
+    background-color: var(--td-primary);
+    border-color: var(--td-primary);
+    color: var(--td-text-primary);
+}
+
+.js-table-shell .btn-outline-secondary {
+    border-color: var(--td-border);
+    color: var(--td-text-secondary);
+    background-color: transparent;
+}
+
+.js-table-shell .btn-outline-secondary:hover {
+    background-color: var(--td-input-bg);
+    color: var(--td-text-primary);
+    border-color: var(--td-border-hover);
+}
+
+.js-table-shell .btn-outline-light {
+    border-color: var(--td-border);
+    color: var(--td-text-secondary);
+    background-color: transparent;
+}
+
+.js-table-shell .btn-outline-light:hover {
+    background-color: var(--td-border-hover);
+    border-color: var(--td-border-hover);
+    color: var(--td-text-primary);
+}
+
+/* Badges & Indicators */
+.js-table-shell .badge.bg-secondary {
+    background-color: var(--td-input-bg) !important;
+    border: 1px solid var(--td-border);
+    color: var(--td-text-secondary) !important;
+}
+
+.js-table-shell .badge.bg-warning {
+    background-color: var(--td-warning) !important;
+    color: var(--td-bg-main) !important;
+}
+
+.js-table-shell .js-req-dot {
+    color: var(--td-danger);
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-left: 2px;
+}
+
+.js-table-shell .js-footer-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--td-success);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: var(--td-glow-green);
+}
+
+.js-table-shell .text-muted {
+    color: var(--td-text-secondary) !important;
+}
+
+/* Modal overrides */
+.js-table-modal .modal-content {
+    background-color: var(--td-bg-panel);
+    border: 1px solid var(--td-border);
+    box-shadow: var(--td-shadow);
+    border-radius: var(--td-radius-md);
+}
+
+.js-table-modal .modal-header,
+.js-table-modal .modal-footer {
+    border-color: var(--td-border);
+}
+
+.js-table-modal .btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.js-table-modal-backdrop.show {
+    opacity: 0.7;
+    background-color: var(--td-bg-main);
+}
+
+/* Icon Buttons */
+.js-table-shell .icon-btn {
+    border: none;
+    background: transparent;
+    color: var(--td-text-secondary);
+    padding: 6px 10px;
+    border-radius: 10px;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.js-table-shell .icon-btn:hover {
+    background-color: var(--td-border-hover);
+    color: var(--td-text-primary);
+}
+
+.js-table-shell .icon-btn:active {
+    transform: translateY(1px);
+}
+
+.js-table-shell .icon-btn:focus-visible {
+    outline: 2px solid var(--td-primary);
+    outline-offset: 2px;
+}
+
+.js-table-shell .icon-btn-primary {
+    color: var(--td-primary);
+}
+
+.js-table-shell .icon-btn-success {
+    color: var(--td-success);
+}
+
+.js-table-shell .icon-btn-danger {
+    color: var(--td-danger);
+}
+
+.js-table-shell .td-action-buttons {
+    flex-wrap: nowrap;
+}
+
+.js-table-shell .td-action-buttons .icon-btn {
+    white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+    .js-table-shell .td-action-buttons {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+}
