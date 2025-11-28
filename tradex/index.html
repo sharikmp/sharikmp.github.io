@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light" data-theme="light">
+<html lang="en" data-bs-theme="dark" data-theme="dark">
 
 <head>
     <meta charset="UTF-8" />
@@ -22,9 +22,7 @@
         :root,
         [data-theme="dark"] {
             --td-bg-main: #020617;
-            /* Deepest Slate */
             --td-bg-panel: #0f172a;
-            /* Lighter Slate */
             --td-bg-glass: rgba(15, 23, 42, 0.85);
             --td-border: rgba(148, 163, 184, 0.08);
             --td-border-hover: rgba(148, 163, 184, 0.2);
@@ -65,19 +63,13 @@
 
         [data-theme="light"] {
             --td-bg-main: #f8fafc;
-            /* Ultra light slate */
             --td-bg-panel: #ffffff;
-            /* White */
             --td-bg-glass: rgba(255, 255, 255, 0.95);
             --td-border: #e2e8f0;
-            /* Slate 200 */
             --td-border-hover: #cbd5e1;
             --td-text-primary: #0f172a;
-            /* Slate 900 */
             --td-text-secondary: #64748b;
-            /* Slate 500 */
             --td-text-muted: #94a3b8;
-            /* Slate 400 */
             --td-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             --td-card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
             --td-input-bg: #f1f5f9;
@@ -421,12 +413,11 @@
             margin-bottom: 2rem;
         }
 
-        /* --- MODERN STAT CARD (Layout Reference) --- */
+        /* --- MODERN STAT CARD --- */
         .td-stat-card {
             background: var(--td-bg-panel);
             border: 1px solid var(--td-border);
             border-radius: var(--td-radius-xl);
-            /* Big rounded corners */
             padding: 1.5rem;
             position: relative;
             height: 100%;
@@ -477,7 +468,6 @@
             width: 54px;
             height: 54px;
             border-radius: 18px;
-            /* Smooth corners */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -715,8 +705,190 @@
             .td-sidebar.collapsed {
                 display: none;
             }
+        }
 
-            /* On super small screens, collapsed might just hide */
+        /* --- NEW STYLES FOR TICKER MODAL & CRUD --- */
+
+        /* Glass Button Overrides */
+        .td-btn-glass {
+            background: var(--td-grad-1);
+            border-color: var(--td-border);
+            color: var(--td-text-secondary);
+        }
+
+        .td-btn-glass:hover {
+            background: var(--td-border-hover);
+            color: var(--td-text-primary);
+            border-color: var(--td-text-muted);
+        }
+
+        .td-btn-glass-success {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ade80;
+        }
+
+        .td-btn-glass-success:hover {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+        }
+
+        /* Modal Styling */
+        .td-modal-content {
+            background-color: var(--td-bg-panel);
+            border: 1px solid var(--td-border);
+            box-shadow: var(--td-shadow);
+            border-radius: var(--td-radius-xl);
+        }
+
+        .td-modal-body {
+            /* Custom Scrollbar for Modal Body */
+            scrollbar-width: thin;
+            scrollbar-color: var(--td-text-muted) var(--td-bg-panel);
+        }
+
+        /* Horizontal Scroll Container for Inputs */
+        .ticker-form-container {
+            width: 100%;
+            overflow-x: auto;
+            /* Allow horizontal scroll */
+            padding-bottom: 1rem;
+        }
+
+        /* Grid Row for Inputs */
+        .ticker-input-row {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            background: transparent;
+            min-width: max-content;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        /* Input Fields Styling */
+        .td-input-clean {
+            background-color: var(--td-input-bg);
+            border: 1px solid var(--td-border);
+            color: var(--td-text-primary);
+            font-size: 0.85rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        .td-input-clean:focus {
+            background-color: var(--td-bg-panel);
+            border-color: #3b82f6;
+            outline: none;
+            color: var(--td-text-primary);
+        }
+
+        /* Specific Widths for Inputs */
+        .w-ticker {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .w-name {
+            width: 200px;
+            flex-shrink: 0;
+        }
+
+        .w-std {
+            width: 140px;
+            flex-shrink: 0;
+        }
+
+        .w-desc {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        /* Action Column in Row */
+        .row-action {
+            width: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 5px;
+        }
+
+        /* Status Tiny Text */
+        .row-status-msg {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 4px;
+            white-space: nowrap;
+            height: 14px;
+        }
+
+        .status-success {
+            color: var(--td-success);
+        }
+
+        .status-error {
+            color: var(--td-danger);
+        }
+
+        .border-dashed {
+            border-style: dashed !important;
+        }
+
+        .btn-close {
+            color: var(--td-danger) !important;
+        }
+
+        #tickerModal .modal-header .right {
+            margin-left: auto;
+        }
+
+        /* Base style for the trash icon */
+        .bi-trash {
+            color: #dc3545;
+            /* Red color */
+            font-size: 1.1em;
+            /* Slightly larger base size */
+            display: inline-block;
+            /* Crucial for transforms */
+            transition: color 0.2s ease-out;
+            /* Smooth color transition */
+            cursor: pointer;
+            /* Indicates it's clickable */
+            /* Add a slight bottom margin or padding if it seems to clip content below it during bounce */
+        }
+
+        /* Keyframes for the bouncing animation */
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+                /* Start and end at original position */
+            }
+
+            40% {
+                transform: translateY(-8px);
+                /* Bounce up higher */
+            }
+
+            60% {
+                transform: translateY(-4px);
+                /* Fall a bit, but not fully down */
+            }
+        }
+
+        /* Hover effect: Apply the bounce animation */
+        .bi-trash:hover {
+            color: #a71d2a;
+            /* Darker red on hover */
+            animation: bounce 0.8s ease-in-out;
+            /* Apply bounce animation */
+            /* You can make it infinite for a continuous bounce, or just once: */
+            /* animation: bounce 0.8s ease-in-out infinite; */
         }
     </style>
 </head>
@@ -989,7 +1161,7 @@
                         </div>
                     </section>
 
-                    <!-- Stocks Tab -->
+                    <!-- Stocks Tab (UPDATED) -->
                     <section id="tab-stocks" class="tab-view">
                         <div class="d-flex justify-content-between align-items-end mb-4">
                             <div>
@@ -998,9 +1170,20 @@
                                     Active symbols configured for pattern scanning.
                                 </div>
                             </div>
-                            <button class="btn btn-outline-success">
-                                <i class="bi bi-plus-lg me-2"></i> Add Ticker
-                            </button>
+                            <div class="d-flex gap-2">
+                                <!-- Hidden File Input for CSV -->
+                                <input type="file" id="csvFileInput" accept=".csv" style="display: none;" />
+
+                                <button class="btn btn-outline-secondary td-btn-glass"
+                                    onclick="document.getElementById('csvFileInput').click()">
+                                    <i class="bi bi-file-earmark-spreadsheet me-2"></i>Upload CSV
+                                </button>
+
+                                <button class="btn btn-outline-success td-btn-glass-success"
+                                    onclick="openTickerModal()">
+                                    <i class="bi bi-plus-lg me-2"></i> Add Ticker
+                                </button>
+                            </div>
                         </div>
 
                         <div class="td-card">
@@ -1009,10 +1192,36 @@
                                 <span class="badge bg-secondary bg-opacity-10 text-secondary font-mono"
                                     id="stocksCountLabel">0</span>
                             </div>
-                            <div class="tab-loader" id="loader-stocks">
+
+                            <!-- Main Table Loader -->
+                            <div class="tab-loader" id="loader-stocks" style="display: none;">
                                 <div class="spinner-border text-primary" role="status"></div>
                             </div>
-                            <div id="stocks-table" class="td-table-wrapper"></div>
+
+                            <!-- Main View Table -->
+                            <div id="stocks-table" class="td-table-wrapper table-responsive">
+                                <table class="table td-table align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Ticker</th>
+                                            <th>Name</th>
+                                            <th>Exchange</th>
+                                            <th>Sector</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th class="text-end">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mainTickerTableBody">
+                                        <!-- Rows injected via JS -->
+                                    </tbody>
+                                </table>
+                                <!-- Empty State -->
+                                <div id="emptyState" class="text-center py-5 text-muted" style="display:none;">
+                                    <i class="bi bi-layers mb-2" style="font-size: 2rem;"></i>
+                                    <p>No tickers found. Add or upload data.</p>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -1220,6 +1429,62 @@
         </div>
     </div>
 
+    <!-- CRUD Modal -->
+    <div class="modal fade" id="tickerModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content td-modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header border-bottom-0 pb-0">
+                    <div>
+                        <h5 class="modal-title fw-bold text-white">Manage Tickers</h5>
+                        <!-- <p class="text-muted small mb-0">Add or update multiple tickers. Scroll horizontally for more fields.</p> -->
+                    </div>
+                    <div class="d-flex gap-2 right">
+                        <button type="button" class="btn-close btn btn-sm btn-outline-secondary" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body td-modal-body bg-transparent">
+                    <div class="ticker-form-container">
+                        <!-- Dynamic Rows Container -->
+                        <div id="modalRowContainer">
+                            <!-- Rows injected via JS -->
+                        </div>
+
+                        <!-- Add Row Button -->
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-outline-primary border-dashed w-100" onclick="addInputRow()">
+                                <i class="bi bi-plus-circle me-1"></i> Add Another Row
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer border-top-0 pt-0 d-flex justify-content-between align-items-center">
+                    <span class="text-info small font-mono"></span>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-danger" id="btnResetTickers" onclick="resetModal()">
+                            <span class="spinner-border spinner-border-sm me-2 d-none" role="status"
+                                aria-hidden="true"></span>
+                            Clear All
+                        </button>
+                        <button type="button" class="btn btn-success" id="btnSaveTickers" onclick="saveTickers()">
+                            <span class="spinner-border spinner-border-sm me-2 d-none" role="status"
+                                aria-hidden="true"></span>
+                            Save Tickers
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 pt-0 d-flex justify-content-between align-items-center">
+                    <span id="modalGlobalStatus" class="text-info small font-mono"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Global Loader -->
     <div id="global-loader">
         <div class="td-spinner"></div>
@@ -1230,7 +1495,333 @@
 
     <script>
         // -----------------------------
-        // Mock Data (Unchanged)
+        // New Ticker CRUD Logic (Integrated)
+        // -----------------------------
+
+        // State Management
+        let tickersDB = [];
+        let currentRowId = 0;
+
+        // Mock Ticker Operations
+        const TickerMockAPI = {
+            fetchTickers: () => {
+                return new Promise((resolve) => {
+                    setTimeout(() => resolve([...tickersDB]), 600);
+                });
+            },
+            saveTicker: (tickerObj) => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        // Random failure to simulate network issues
+                        const success = Math.random() > 0.05;
+                        if (success) {
+                            const index = tickersDB.findIndex(t => t.code === tickerObj.code);
+                            if (index >= 0) {
+                                tickersDB[index] = tickerObj;
+                            } else {
+                                tickersDB.push(tickerObj);
+                            }
+                            resolve({ status: 'success', msg: 'Saved' });
+                        } else {
+                            reject({ status: 'error', msg: 'Network Error' });
+                        }
+                    }, 400);
+                });
+            },
+            deleteTicker: (code) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        tickersDB = tickersDB.filter(t => t.code !== code);
+                        resolve(true);
+                    }, 400);
+                });
+            }
+        };
+
+        // Modal Functions (Global Scope for HTML onClick)
+        function openTickerModal() {
+            const modalEl = new bootstrap.Modal(document.getElementById('tickerModal'));
+            resetModal();
+            addInputRow();
+            modalEl.show();
+        }
+
+        function resetModal() {
+            document.getElementById('modalRowContainer').innerHTML = '';
+            document.getElementById('modalGlobalStatus').textContent = '';
+            currentRowId = 0;
+        }
+
+        function addInputRow(data = {}) {
+            currentRowId++;
+            const container = document.getElementById('modalRowContainer');
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'ticker-input-row';
+            rowDiv.id = `row-${currentRowId}`;
+
+            const v = (val) => val || '';
+
+            rowDiv.innerHTML = `
+                <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-ticker text-uppercase font-mono" name="code" value="${v(data.code)}" placeholder="TICKER *" required>
+                </div>
+                <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-std" name="exchange" value="${v(data.exchange)}" placeholder="Exchange *" required>
+                </div>
+                <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-name" name="name" value="${v(data.name)}" placeholder="Company Name">
+                </div>
+                <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-std" name="status" value="${v(data.status)}" placeholder="Status (Active)">
+                </div>
+                <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-std" name="sector" value="${v(data.sector)}" placeholder="Sector">
+                </div>
+                <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-std" name="type" value="${v(data.type)}" placeholder="Type (Large/Mid)">
+                </div>
+                 <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-desc" name="desc" value="${v(data.desc)}" placeholder="Description">
+                </div>
+                 <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-std" name="note1" value="${v(data.note1)}" placeholder="Note 1">
+                </div>
+                 <div class="d-flex flex-column">
+                    <input type="text" class="td-input-clean w-std" name="note2" value="${v(data.note2)}" placeholder="Note 2">
+                </div>
+                
+                <div class="row-action">
+                    <button class="btn btn-sm btn-link text-danger p-0" onclick="removeRow('row-${currentRowId}')" title="Remove Row">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    <div class="row-status-msg" id="status-${currentRowId}"></div>
+                </div>
+            `;
+            container.appendChild(rowDiv);
+            container.parentElement.scrollTop = container.parentElement.scrollHeight;
+        }
+
+        function removeRow(rowId) {
+            const el = document.getElementById(rowId);
+            if (el) el.remove();
+        }
+
+        async function saveTickers() {
+            const rows = document.querySelectorAll('.ticker-input-row');
+            const saveBtn = document.getElementById('btnSaveTickers');
+            const globalStatus = document.getElementById('modalGlobalStatus');
+
+            let valid = true;
+            let payload = [];
+            const errorBorderColor = '#ef4444';
+            const defaultBorderColor = '';
+
+            rows.forEach(row => {
+                // 1. Get ALL input elements in the current row
+                const inputs = row.querySelectorAll('input');
+                let obj = {};
+                let rowValid = true; // Flag for current row's validity
+
+                // 2. Build the data object (payload item) and perform dynamic validation
+                inputs.forEach(input => {
+                    const trimmedValue = input.value.trim();
+                    obj[input.name] = trimmedValue;
+
+                    // Check if the input is marked 'required' AND its trimmed value is empty
+                    if (input.required && trimmedValue === '') {
+                        input.style.borderColor = errorBorderColor;
+                        rowValid = false;
+                        valid = false; // Set overall validation to false
+                    } else {
+                        // Clear validation styling if present
+                        input.style.borderColor = defaultBorderColor;
+                    }
+                });
+
+                // 3. If the entire row is valid, prepare it for the payload
+                if (rowValid) {
+                    obj.rowId = row.id.split('-')[1];
+                    payload.push(obj);
+                }
+            });
+
+            // --- Validation Check ---
+            if (!valid) {
+                globalStatus.innerHTML = '<span class="text-danger">Please fill all mandatory fields (marked required).</span>';
+                return;
+            }
+
+            if (payload.length === 0) {
+                // Only return if there are rows but none are valid or if no rows exist.
+                // Assuming rows.length === 0 means there's nothing to save.
+                if (rows.length > 0) {
+                    globalStatus.innerHTML = '<span class="text-warning">No valid data rows found to save.</span>';
+                }
+                return;
+            }
+
+            // --- Saving Logic (Unchanged) ---
+            saveBtn.disabled = true;
+            saveBtn.querySelector('.spinner-border').classList.remove('d-none');
+            globalStatus.textContent = `Processing ${payload.length} tickers...`;
+
+            let successCount = 0;
+
+            for (const item of payload) {
+                const statusEl = document.getElementById(`status-${item.rowId}`);
+                if (statusEl) {
+                    statusEl.textContent = 'Saving...';
+                    statusEl.className = 'row-status-msg text-muted';
+                }
+
+                try {
+                    // NOTE: Assuming TickerMockAPI.saveTicker(item) is defined elsewhere
+                    await TickerMockAPI.saveTicker(item);
+                    if (statusEl) {
+                        statusEl.innerHTML = '<i class="bi bi-check-circle-fill"></i> Saved';
+                        statusEl.className = 'row-status-msg status-success';
+                    }
+                    successCount++;
+                } catch (err) {
+                    if (statusEl) {
+                        statusEl.innerHTML = '<i class="bi bi-x-circle-fill"></i> Failed';
+                        statusEl.className = 'row-status-msg status-error';
+                    }
+                }
+            }
+
+            saveBtn.disabled = false;
+            saveBtn.querySelector('.spinner-border').classList.add('d-none');
+            globalStatus.innerHTML = successCount === payload.length
+                ? `<span class="text-success">All ${successCount} tickers updated successfully!</span>`
+                : `<span class="text-warning">Finished with errors. ${successCount}/${payload.length} saved.</span>`;
+
+            refreshMainTable();
+        }
+        
+        function deleteTicker(code) {
+            if (confirm(`Delete ${code}?`)) {
+                TickerMockAPI.deleteTicker(code).then(() => refreshMainTable());
+            }
+        }
+
+        function refreshMainTable() {
+            const loader = document.getElementById('loader-stocks');
+            const tableBody = document.getElementById('mainTickerTableBody');
+            const emptyState = document.getElementById('emptyState');
+            const countLabel = document.getElementById('stocksCountLabel');
+
+            if (!loader || !tableBody) return;
+
+            loader.style.display = 'flex';
+            tableBody.innerHTML = '';
+            emptyState.style.display = 'none';
+
+            TickerMockAPI.fetchTickers().then(data => {
+                loader.style.display = 'none';
+                countLabel.textContent = data.length;
+
+                if (data.length === 0) {
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                data.forEach(t => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="font-mono text-white fw-bold">${t.code}</td>
+                        <td>${t.name || '-'}</td>
+                        <td><span class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary border-opacity-25">${t.exchange || 'N/A'}</span></td>
+                        <td class="text-muted small">${t.sector || '-'}</td>
+                        <td><span class="badge rounded-pill bg-primary bg-opacity-10 text-primary">${t.type || 'Eq'}</span></td>
+                        <td>${t.status === 'Active' ? '<i class="bi bi-circle-fill text-success" style="font-size:8px"></i>' : '<i class="bi bi-circle-fill text-secondary" style="font-size:8px"></i>'}</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-icon text-muted" onclick="deleteTicker('${t.code}')"><i class="bi bi-trash"></i></button>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            });
+        }
+
+        // CSV Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const csvInput = document.getElementById('csvFileInput');
+            if (csvInput) {
+                csvInput.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const text = event.target.result;
+
+                        const lines = text.split('\n');
+                        if (lines.length > 51) {
+                            alert("Limit exceeded: Max 50 tickers allowed per upload.");
+                            return;
+                        }
+
+                        const totalCurrent = document.querySelectorAll('.ticker-input-row').length;
+                        if (totalCurrent + lines.length > 100) {
+                            alert("Total rows cannot exceed 100.");
+                            return;
+                        }
+
+                        const header = lines[0].toLowerCase();
+                        if (!header.includes('ticker')) {
+                            alert("Invalid CSV: Must contain 'Ticker' column.");
+                            return;
+                        }
+
+                        // Open modal
+                        const modalEl = new bootstrap.Modal(document.getElementById('tickerModal'));
+                        modalEl.show();
+
+                        if (document.getElementById('modalRowContainer').children.length === 0) {
+                            resetModal();
+                        }
+
+                        for (let i = 1; i < lines.length; i++) {
+                            const line = lines[i].trim();
+                            if (!line) continue;
+
+                            const cols = line.split(',');
+                            const data = {
+                                code: cols[0] || '',
+                                name: cols[1] || '',
+                                exchange: cols[2] || '',
+                                status: cols[3] || '',
+                                sector: cols[4] || '',
+                                type: cols[5] || '',
+                                desc: cols[6] || ''
+                            };
+                            addInputRow(data);
+                        }
+                    };
+                    reader.readAsText(file);
+                    e.target.value = '';
+                });
+            }
+
+            // Initial seed for mock data
+            if (tickersDB.length === 0) {
+                const seeds = MockData.getStocks();
+                // Map old mock format to new format
+                tickersDB = seeds.map(s => ({
+                    code: s.Ticker,
+                    name: s.Name,
+                    exchange: s.Exchange,
+                    status: s.IsActive ? 'Active' : 'Inactive',
+                    sector: 'Technology',
+                    type: 'Large'
+                }));
+            }
+        });
+
+
+        // -----------------------------
+        // Mock Data
         // -----------------------------
         class MockData {
             static getDashboard() {
@@ -1249,6 +1840,7 @@
                     ]
                 };
             }
+            
             static getStocks() {
                 return [
                     { ID: '1', Ticker: 'RELIANCE', Name: 'Reliance Industries', Exchange: 'NSE', IsActive: true },
@@ -1257,6 +1849,7 @@
                     { ID: '4', Ticker: 'HDFCBANK', Name: 'HDFC Bank', Exchange: 'NSE', IsActive: false }
                 ];
             }
+            
             static getOhlcv() {
                 return [
                     { Ticker: 'RELIANCE', Timeframe: '5m', CandleTime: '2025-01-01 09:20', Open: 2450, High: 2456, Low: 2447, Close: 2454, Volume: 120000 },
@@ -1264,12 +1857,14 @@
                     { Ticker: 'RELIANCE', Timeframe: '5m', CandleTime: '2025-01-01 09:30', Open: 2457, High: 2462, Low: 2455, Close: 2460, Volume: 84000 }
                 ];
             }
+            
             static getMonitor() {
                 return [
                     { ID: 'M1', Ticker: 'RELIANCE', SignalType: 'FVG', Direction: 'Bullish', GapLow: 2445, GapHigh: 2455, SignalStartTime: '2025-01-01 09:20', SignalEndTime: '2025-01-01 09:35', Status: 'Active' },
                     { ID: 'M2', Ticker: 'TCS', SignalType: 'FVG', Direction: 'Bearish', GapLow: 3700, GapHigh: 3710, SignalStartTime: '2025-01-01 10:10', SignalEndTime: '2025-01-01 10:25', Status: 'Triggered' }
                 ];
             }
+            
             static getPortfolio() {
                 return {
                     open: [
@@ -1281,6 +1876,7 @@
                     ]
                 };
             }
+            
             static getTransactions() {
                 return [
                     { ID: 'T1', PortfolioId: 'P1', Datetime: '2025-01-01 09:25', Ticker: 'RELIANCE', Type: 'Buy', Quantity: 50, Price: 2450, TargetPrice: 2480, StopLossPrice: 2430, RealizedPL: '' },
@@ -1288,6 +1884,7 @@
                     { ID: 'T0', PortfolioId: 'P0', Datetime: '2024-12-31 11:00', Ticker: 'INFY', Type: 'Sell', Quantity: 40, Price: 1475, TargetPrice: 1475, StopLossPrice: 1435, RealizedPL: 1000 }
                 ];
             }
+            
             static getLogs() {
                 return [
                     { ID: 'L1', JobType: 'OhlcvBatch', StartedAt: '2025-01-01 09:15:00', EndedAt: '2025-01-01 09:15:05', Status: 'Success', Message: 'Fetched OHLCV for 4 tickers.' },
@@ -1303,7 +1900,7 @@
         class ApiMock {
             static delay(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
             static async getDashboard() { await this.delay(500); return MockData.getDashboard(); }
-            static async getStocks() { await this.delay(500); return MockData.getStocks(); }
+            // Note: getStocks removed here as we use TickerMockAPI for the Stocks tab
             static async getOhlcv() { await this.delay(500); return MockData.getOhlcv(); }
             static async getMonitor() { await this.delay(500); return MockData.getMonitor(); }
             static async getPortfolio() { await this.delay(500); return MockData.getPortfolio(); }
@@ -1432,7 +2029,6 @@
                 UIRender.showLoader('#loader-dashboard-equity');
                 const data = await ApiMock.getDashboard();
 
-                // We update the DOM elements inside the new card structure
                 UIRender.setText('#metricPlToday', (data.plToday >= 0 ? '+' : '') + data.plToday.toFixed(2));
                 UIRender.setText('#metricPlTodayPct', (data.plTodayPct >= 0 ? '+' : '') + data.plTodayPct.toFixed(1) + '%');
                 UIRender.setText('#metricOpenPl', (data.openPl >= 0 ? '+' : '') + data.openPl.toFixed(2));
@@ -1441,7 +2037,6 @@
 
                 const plEl = document.getElementById('metricPlToday');
                 if (plEl) {
-                    // Simple color logic for the main number
                     plEl.style.color = data.plToday >= 0 ? 'var(--td-success)' : 'var(--td-danger)';
                 }
 
@@ -1449,18 +2044,9 @@
                 document.getElementById('dashboard-equity-placeholder').style.display = 'block';
             }
 
+            // Updated loadStocks to use the new refreshMainTable logic
             static async loadStocks() {
-                UIRender.showLoader('#loader-stocks');
-                const stocks = await ApiMock.getStocks();
-                UIRender.setText('#stocksCountLabel', `${stocks.length}`);
-                const columns = [
-                    { key: 'Ticker', label: 'Ticker' },
-                    { key: 'Name', label: 'Name' },
-                    { key: 'Exchange', label: 'Exchange' },
-                    { key: 'IsActive', label: 'Status', format: val => val ? '<span class="badge bg-success bg-opacity-10 text-success">ACTIVE</span>' : '<span class="badge bg-secondary bg-opacity-10 text-secondary">INACTIVE</span>' }
-                ];
-                UIRender.table('#stocks-table', columns, stocks);
-                UIRender.hideLoader('#loader-stocks');
+                refreshMainTable();
             }
 
             static async loadOhlcv() {
