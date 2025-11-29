@@ -508,6 +508,13 @@ class JSTable {
                     cols.forEach(col => {
                         const th = document.createElement("th");
                         th.className = "text-nowrap";
+                        if (col.align === "end") {
+                            th.classList.add("text-end");
+                        } else if (col.align === "center") {
+                            th.classList.add("text-center");
+                        } else {
+                            th.classList.add("text-start");
+                        }
                         th.style.cursor = "pointer";
                         th.style.userSelect = "none";
 
@@ -604,6 +611,14 @@ class JSTable {
                     return rows;
                 }
 
+                _rowArrayToObject(row) {
+                    const obj = {};
+                    this.state.columns.forEach((col, idx) => {
+                        obj[col.id] = row[idx];
+                    });
+                    return obj;
+                }
+
                 _renderBody() {
                     const bodyEl = this._elements.bodyEl;
                     bodyEl.innerHTML = "";
@@ -614,9 +629,17 @@ class JSTable {
                     rows.forEach(({ row, idx: rIdx }) => {
                         const tr = document.createElement("tr");
                         tr.dataset.rowIndex = rIdx;
+                        const rowObject = this._rowArrayToObject(row);
 
                         this.state.columns.forEach((col, cIdx) => {
                             const td = document.createElement("td");
+                            if (col.align === "end") {
+                                td.classList.add("text-end");
+                            } else if (col.align === "center") {
+                                td.classList.add("text-center");
+                            } else {
+                                td.classList.add("text-start");
+                            }
                             const val = row[cIdx];
                             const key = this._cellKey(rIdx, col.id);
                             const isInvalid = this.state.ui.editMode && this._validationState.invalidCells.has(key);
@@ -656,14 +679,17 @@ class JSTable {
                                     td.appendChild(input);
                                 }
                             } else {
-                                if (val == null || val === "") {
+                                const formatted = typeof col.format === "function" ? col.format(val, rowObject) : val;
+                                if (formatted == null || formatted === "") {
                                     const span = document.createElement("span");
                                     span.className = "small fst-italic";
                                     span.style.color = "var(--td-text-muted)";
                                     span.textContent = "-";
                                     td.appendChild(span);
+                                } else if (col.allowHtml) {
+                                    td.innerHTML = formatted;
                                 } else {
-                                    td.textContent = val;
+                                    td.textContent = formatted;
                                 }
                             }
 

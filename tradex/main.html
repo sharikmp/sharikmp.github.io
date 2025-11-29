@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>TradeX Terminal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Inter (UI) & JetBrains Mono (Data) -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/js-table.css" rel="stylesheet">
+    <link href="css/notification.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <div class="td-layout">
+        <!-- Sidebar Backdrop -->
+        <div class="td-sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <!-- Top bar -->
+        <header class="td-topbar">
+            <div class="td-brand">
+                <button class="btn btn-sm td-sidebar-toggle d-lg-none me-3" id="sidebarToggleBtn">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="td-brand-logo me-2">
+                    <i class="bi bi-activity"></i>
+                </div>
+                <span>TradeX</span>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="td-badge-market d-none d-md-flex">
+                    <span class="badge-dot" style="color: var(--td-success);"></span>
+                    <span id="marketStatusText">MARKET OPEN</span>
+                </div>
+                <div class="td-user-pill">
+                    <span>Admin</span>
+                    <div class="td-user-avatar"><i class="bi bi-person-fill"></i></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="td-main">
+            <!-- Sidebar -->
+            <aside class="td-sidebar collapsed" id="sidebar">
+                <div class="td-nav-label">Analytics</div>
+                <ul class="td-sidebar-nav">
+                    <li class="td-nav-item">
+                        <a href="#" class="td-nav-link active" data-tab="dashboard">
+                            <i class="bi bi-grid-1x2-fill"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="td-nav-item">
+                        <a href="#" class="td-nav-link" data-tab="stocks">
+                            <i class="bi bi-layers-fill"></i>
+                            <span>Market Universe</span>
+                        </a>
+                    </li>
+                    <li class="td-nav-item">
+                        <a href="#" class="td-nav-link" data-tab="ohlcv">
+                            <i class="bi bi-bar-chart-fill"></i>
+                            <span>OHLCV Data</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="td-nav-label">Execution</div>
+                <ul class="td-sidebar-nav">
+                    <li class="td-nav-item">
+                        <a href="#" class="td-nav-link" data-tab="monitor">
+                            <i class="bi bi-radar"></i>
+                            <span>Scanner</span>
+                        </a>
+                    </li>
+                    <li class="td-nav-item">
+                        <a href="#" class="td-nav-link" data-tab="portfolio">
+                            <i class="bi bi-wallet2"></i>
+                            <span>Portfolio</span>
+                        </a>
+                    </li>
+                    <li class="td-nav-item">
+                        <a href="#" class="td-nav-link" data-tab="transactions">
+                            <i class="bi bi-arrow-left-right"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="td-nav-label">System</div>
+                <ul class="td-sidebar-nav">
+                    <li class="td-nav-item">
+                        <a href="#" class="td-nav-link" data-tab="settings">
+                            <i class="bi bi-sliders"></i>
+                            <span>Configuration</span>
+                        </a>
+                    </li>
+                    <li class="td-nav-item">
+                        <a href="#" class="td-nav-link" data-tab="logs">
+                            <i class="bi bi-terminal-fill"></i>
+                            <span>System Logs</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Desktop Collapse Button -->
+                <button class="td-sidebar-collapse-btn d-none d-lg-flex" id="sidebarDesktopToggle">
+                    <i class="bi bi-chevron-double-left"></i>
+                </button>
+
+                <div class="td-sidebar-footer">
+                    <div class="d-flex justify-content-between">
+                        <span>Ping</span>
+                        <span class="font-mono text-success">24ms</span>
+                    </div>
+                    <div class="text-secondary opacity-50 mt-1" style="font-size:0.7rem">v3.4.0-stable</div>
+                </div>
+            </aside>
+
+            <!-- Main content -->
+            <main class="td-content">
+                <div class="td-content-inner">
+
+                    <!-- Dashboard Tab -->
+                    <section id="tab-dashboard" class="tab-view active">
+                        <div class="d-flex flex-column flex-lg-row align-items-lg-end justify-content-between mb-5">
+                            <div>
+                                <div class="td-section-title">Dashboard Overview</div>
+                                <div class="td-section-description">
+                                    Real-time performance metrics and risk exposure.
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge rounded-pill text-bg-success px-3 py-2">
+                                    <i class="bi bi-broadcast me-1"></i> LIVE MOCK
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Modern Card Grid -->
+                        <div class="row g-4 mb-5">
+                            <!-- Card 1: Net P&L -->
+                            <div class="col-12 col-md-6 col-xl-3">
+                                <div class="td-stat-card">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div>
+                                            <div class="td-stat-label mb-2">
+                                                <span class="dot active"></span> NET P&L
+                                            </div>
+                                            <div class="td-stat-value font-mono" id="metricPlToday">+0.00</div>
+                                            <div class="td-stat-sub font-mono" id="metricPlTodayPct">+0.0%</div>
+                                        </div>
+                                        <div class="td-stat-icon-box bg-gradient-success">
+                                            <i class="bi bi-wallet2"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="td-stat-progress-label">
+                                            <span>Daily Goal</span>
+                                            <span class="text-success">65%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 65%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Open P&L -->
+                            <div class="col-12 col-md-6 col-xl-3">
+                                <div class="td-stat-card">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div>
+                                            <div class="td-stat-label mb-2">
+                                                <span class="dot active"></span> OPEN P&L
+                                            </div>
+                                            <div class="td-stat-value font-mono" id="metricOpenPl">0.00</div>
+                                            <div class="td-stat-sub">Floating Equity</div>
+                                        </div>
+                                        <div class="td-stat-icon-box bg-gradient-blue">
+                                            <i class="bi bi-graph-up-arrow"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="td-stat-progress-label">
+                                            <span>Exposure</span>
+                                            <span class="text-primary">42%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 42%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Signals -->
+                            <div class="col-12 col-md-6 col-xl-3">
+                                <div class="td-stat-card">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div>
+                                            <div class="td-stat-label mb-2">
+                                                <span class="dot active"></span> SIGNALS
+                                            </div>
+                                            <div class="td-stat-value font-mono" id="metricActiveMonitors">0</div>
+                                            <div class="td-stat-sub">Active Scans</div>
+                                        </div>
+                                        <div class="td-stat-icon-box bg-gradient-warning">
+                                            <i class="bi bi-radar"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="td-stat-progress-label">
+                                            <span>Scanner Load</span>
+                                            <span class="text-warning">Running</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                                                role="progressbar" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Fills -->
+                            <div class="col-12 col-md-6 col-xl-3">
+                                <div class="td-stat-card">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div>
+                                            <div class="td-stat-label mb-2">
+                                                <span class="dot active"></span> FILLS
+                                            </div>
+                                            <div class="td-stat-value font-mono" id="metricTradesToday">0</div>
+                                            <div class="td-stat-sub">Executions</div>
+                                        </div>
+                                        <div class="td-stat-icon-box bg-gradient-purple">
+                                            <i class="bi bi-list-check"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="td-stat-progress-label">
+                                            <span>Volume</span>
+                                            <span style="color:#a855f7">Low</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 20%; background-color: #a855f7">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart Section -->
+                        <div class="td-card mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="td-card-title mb-0">Cumulative Performance</div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-secondary">1D</button>
+                                    <button class="btn btn-sm btn-outline-secondary active">1W</button>
+                                    <button class="btn btn-sm btn-outline-secondary">1M</button>
+                                </div>
+                            </div>
+                            <div class="tab-loader" id="loader-dashboard-equity">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+                            <div id="dashboard-equity-placeholder" style="height:320px; display:none;">
+                                <!-- Simulated Chart Content via CSS -->
+                                <div
+                                    class="w-100 h-100 d-flex align-items-center justify-content-center opacity-50 text-secondary">
+                                    <div class="text-center">
+                                        <i class="bi bi-graph-up" style="font-size: 3rem; opacity:0.3"></i>
+                                        <div class="mt-3 font-mono" style="font-size:0.9rem; letter-spacing:1px">CHART
+                                            DATA VISUALIZER</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Stocks Tab (UPDATED) -->
+                    <section id="tab-stocks" class="tab-view">
+                        <div class="d-flex justify-content-between align-items-end mb-4">
+                            <div>
+                                <div class="td-section-title">Market Universe</div>
+                                <div class="td-section-description">Active symbols configured for pattern scanning.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="td-table-panel">
+                            <!-- Main Table Loader -->
+                            <div class="tab-loader" id="loader-stocks" style="display: none;">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+
+                            <!-- JSTable Mount -->
+                            <div id="stocksTableMount" class="td-table-mount"></div>
+                            <div id="stocksEmptyState" class="text-center py-5 text-muted" style="display:none;">
+                                <i class="bi bi-layers mb-2" style="font-size: 2rem;"></i>
+                                <p>No tickers available. Please check data sync.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- OHLCV Tab -->
+                    <section id="tab-ohlcv" class="tab-view">
+                        <div class="d-flex justify-content-between align-items-end mb-4">
+                            <div>
+                                <div class="td-section-title">Market Data</div>
+                                <div class="td-section-description">
+                                    Raw OHLCV feed monitor (5-min aggregation).
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <select class="form-select w-auto" id="ohlcvTickerSelect"></select>
+                                <button class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="td-table-panel">
+                            <div class="tab-loader" id="loader-ohlcv">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+                            <div id="ohlcv-table" class="td-table-mount"></div>
+                        </div>
+                    </section>
+
+                    <!-- Monitor Tab -->
+                    <section id="tab-monitor" class="tab-view">
+                        <div class="d-flex justify-content-between align-items-end mb-4">
+                            <div>
+                                <div class="td-section-title">Signal Scanner</div>
+                                <div class="td-section-description">
+                                    Live monitoring for Fair Value Gaps (FVG) and structural shifts.
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-secondary">
+                                <i class="bi bi-search me-2"></i> Scan Now
+                            </button>
+                        </div>
+
+                        <div class="td-table-panel">
+                            <div class="tab-loader" id="loader-monitor">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+                            <div id="monitor-table" class="td-table-mount"></div>
+                        </div>
+                    </section>
+
+                    <!-- Portfolio Tab -->
+                    <section id="tab-portfolio" class="tab-view">
+                        <div class="d-flex justify-content-between align-items-end mb-4">
+                            <div>
+                                <div class="td-section-title">Portfolio</div>
+                                <div class="td-section-description">
+                                    Management of open inventory and historical performance.
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-danger">
+                                <i class="bi bi-x-octagon me-2"></i> Flatten All
+                            </button>
+                        </div>
+
+                        <div class="td-table-panel mb-4">
+                            <div class="tab-loader" id="loader-portfolio-open">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+                            <div id="portfolio-open-table" class="td-table-mount"></div>
+                        </div>
+
+                        <div class="td-table-panel">
+                            <div class="tab-loader" id="loader-portfolio-closed">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+                            <div id="portfolio-closed-table" class="td-table-mount"></div>
+                        </div>
+                    </section>
+
+                    <!-- Transactions Tab -->
+                    <section id="tab-transactions" class="tab-view">
+                        <div class="d-flex justify-content-between align-items-end mb-4">
+                            <div>
+                                <div class="td-section-title">Order Blotter</div>
+                                <div class="td-section-description">
+                                    Complete ledger of executed buy and sell orders.
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-secondary">
+                                <i class="bi bi-file-earmark-spreadsheet me-2"></i> Export
+                            </button>
+                        </div>
+
+                        <div class="td-table-panel">
+                            <div class="tab-loader" id="loader-transactions">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+                            <div id="transactions-table" class="td-table-mount"></div>
+                        </div>
+                    </section>
+
+                    <!-- Settings Tab -->
+                    <section id="tab-settings" class="tab-view">
+                        <div class="td-section-title mb-4">System Configuration</div>
+
+                        <div class="row g-4">
+                            <div class="col-12 col-lg-6">
+                                <div class="td-card h-100">
+                                    <div class="td-card-title mb-3">Appearance & Environment</div>
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label text-secondary small">Theme</label>
+                                            <select class="form-select" id="themeSelect">
+                                                <option value="dark">Pro Dark (Deep Blue)</option>
+                                                <option value="black">Pitch Black (High Contrast)</option>
+                                                <option value="light">Daylight (Mint/White)</option>
+                                                <option value="royal-purple">Royal Purple</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label text-secondary small">Timezone</label>
+                                            <input type="text" class="form-control" value="Asia/Kolkata" />
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label text-secondary small">Notification Sound</label>
+                                            <select class="form-select">
+                                                <option>Silent</option>
+                                                <option selected>Ping</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="td-card h-100">
+                                    <div class="td-card-title mb-3">Risk Engine</div>
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label text-secondary small">Risk Per Trade (%)</label>
+                                            <input type="number" class="form-control" value="1.0" step="0.1" />
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label text-secondary small">Max Concurrency</label>
+                                            <input type="number" class="form-control" value="6" />
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label text-secondary small">Execution Mode</label>
+                                            <select class="form-select">
+                                                <option selected>Paper (Mock)</option>
+                                                <option>Live Direct</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Logs Tab -->
+                    <section id="tab-logs" class="tab-view">
+                        <div class="d-flex justify-content-between align-items-end mb-4">
+                            <div>
+                                <div class="td-section-title">System Health</div>
+                                <div class="td-section-description">
+                                    Batch job status and error reporting.
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+
+                        <div class="td-table-panel">
+                            <div class="tab-loader" id="loader-logs">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+                            <div id="logs-table" class="td-table-mount"></div>
+                        </div>
+                    </section>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Global Loader -->
+    <div id="global-loader">
+        <div class="td-spinner"></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/notification.js"></script>
+    <script src="js/js-table.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

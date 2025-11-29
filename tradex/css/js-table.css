@@ -1,6 +1,6 @@
 /* Table Card Shell */
 .js-table-shell {
-    background-color: var(--td-bg-panel);
+    background-color: transparent;
     border: 1px solid var(--td-border);
     box-shadow: var(--td-card-shadow);
     border-radius: var(--td-radius-xl);
