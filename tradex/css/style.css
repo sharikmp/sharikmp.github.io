@@ -2,7 +2,7 @@
 :root,
 [data-theme="dark"] {
     --td-bg-main: #020617;
-    --td-bg-panel: #0f172a;
+    --td-bg-panel: #15213c;
     --td-bg-glass: rgba(15, 23, 42, 0.85);
     --td-border: rgba(148, 163, 184, 0.08);
     --td-border-hover: rgba(148, 163, 184, 0.2);
