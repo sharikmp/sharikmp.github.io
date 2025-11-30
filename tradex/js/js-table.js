@@ -229,7 +229,7 @@ class JSTable {
 
                     const titleSpan = document.createElement("h5");
                     titleSpan.className = "mb-0 fw-bold";
-                    titleSpan.style.color = "#4285F4";
+                    titleSpan.style.color = "var(--td-text-primary)";
 
                     const badgeSpan = document.createElement("span");
                     badgeSpan.className = "badge bg-secondary ms-2";
