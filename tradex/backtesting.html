@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarketMentorPro - Backtesting Analyst</title>
+    <title>QuantLens AI - Backtesting Analyst</title>
     
     <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -126,23 +126,50 @@
             -webkit-appearance: none;
             background: var(--accent-blue);
         }
+        
+        /* Dropdown Styling */
+        .dropdown-item {
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: var(--bg-input);
+        }
+        .dropdown-item.active {
+            background-color: var(--bg-input);
+            color: var(--accent-blue);
+        }
     </style>
 </head>
 <body class="min-h-screen bg-body text-primary font-sans p-6" data-theme="light">
 
     <!-- HEADER -->
     <div class="max-w-7xl mx-auto mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div>
+        <div class="flex-shrink-0">
             <h1 class="text-3xl font-bold text-primary flex items-center gap-2">
                 <i data-lucide="activity" class="text-accent"></i>
-                MarketMentorPro
+                QuantLens AI
             </h1>
             <p class="text-secondary mt-1">Backtesting Engine & Intelligent Strategy Consultant</p>
         </div>
-        <div class="flex gap-4">
+        
+        <!-- Search Box -->
+        <div class="relative w-full max-w-md mx-4 z-50">
+            <div class="relative">
+                <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary h-4 w-4"></i>
+                <input type="text" id="stock-search" placeholder="Search symbol (e.g. NVDA, SPY)..." 
+                    autocomplete="off"
+                    class="w-full bg-surface border border-border-color text-primary pl-10 pr-4 py-2 rounded-lg focus:outline-none focus:border-accent transition-colors shadow-sm focus:ring-1 focus:ring-accent">
+            </div>
+            <!-- Dropdown -->
+            <div id="search-dropdown" class="absolute w-full mt-1 bg-surface border border-border-color rounded-lg shadow-xl hidden max-h-60 overflow-y-auto custom-scrollbar">
+                <!-- Items injected by JS -->
+            </div>
+        </div>
+
+        <div class="flex gap-4 flex-shrink-0">
             <button id="btn-toggle-settings" class="px-4 py-2 rounded-lg font-medium shadow-sm border bg-surface border-border-color text-secondary hover:text-primary hover:bg-input flex items-center gap-2 transition-all">
                 <i data-lucide="settings" class="h-4 w-4"></i>
-                Strategy Settings
+                Settings
             </button>
             <button id="btn-run-sim" class="bg-accent hover:opacity-90 text-white px-6 py-2 rounded-lg font-medium shadow-md flex items-center gap-2 transition-all">
                 <i data-lucide="play" class="h-4 w-4" id="icon-run"></i>
@@ -215,10 +242,12 @@
         </div>
     </div>
 
-    <!-- ASSET SELECTOR -->
-    <div class="max-w-7xl mx-auto mb-6">
-        <div class="flex space-x-2 border-b border-border-color" id="asset-tabs">
-            <!-- Buttons injected by JS -->
+    <!-- Active Asset Display -->
+    <div class="max-w-7xl mx-auto mb-6 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <span class="text-secondary text-sm">Analyzing:</span>
+            <span id="current-ticker-display" class="text-2xl font-bold text-primary tracking-tight">NVDA</span>
+            <span id="current-ticker-desc" class="text-xs px-2 py-1 rounded bg-input text-accent border border-border-color">Tech / High Momentum</span>
         </div>
     </div>
 
@@ -311,6 +340,24 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // --- STOCK PROFILES (Mock Database) ---
+        const STOCK_PROFILES = {
+            'NVDA': { name: 'NVIDIA Corp', price: 140, trend: 0.0015, vol: 0.022, type: 'trend', sector: 'Tech / AI' },
+            'AAPL': { name: 'Apple Inc', price: 180, trend: 0.0012, vol: 0.015, type: 'trend', sector: 'Consumer Electronics' },
+            'MSFT': { name: 'Microsoft Corp', price: 400, trend: 0.0010, vol: 0.014, type: 'trend', sector: 'Software' },
+            
+            'TSLA': { name: 'Tesla Inc', price: 220, trend: 0.0004, vol: 0.045, type: 'volatile', sector: 'Auto / Tech' },
+            'AMD':  { name: 'Adv Micro Devices', price: 160, trend: 0.0005, vol: 0.040, type: 'volatile', sector: 'Semiconductors' },
+            'META': { name: 'Meta Platforms', price: 500, trend: 0.0008, vol: 0.035, type: 'volatile', sector: 'Internet' },
+            
+            'SPY':  { name: 'S&P 500 ETF', price: 500, trend: 0.0006, vol: 0.012, type: 'balanced', sector: 'Index ETF' },
+            'QQQ':  { name: 'Nasdaq 100 ETF', price: 420, trend: 0.0007, vol: 0.014, type: 'balanced', sector: 'Index ETF' },
+            'AMZN': { name: 'Amazon.com', price: 170, trend: 0.0006, vol: 0.018, type: 'balanced', sector: 'E-Commerce' },
+            'GOOGL':{ name: 'Alphabet Inc', price: 165, trend: 0.0005, vol: 0.016, type: 'balanced', sector: 'Internet' }
+        };
+        
+        const AVAILABLE_STOCKS = Object.keys(STOCK_PROFILES);
+
         // --- STATE MANAGEMENT ---
         const state = {
             activeTicker: 'NVDA',
@@ -326,27 +373,16 @@
         };
 
         // --- CORE LOGIC (ENHANCED FOR REALISM & REVERSE ENGINEERING) ---
-        // Same core logic as before, ensuring consistency
         const generatePriceHistory = (ticker, days = 1000) => {
+            const profile = STOCK_PROFILES[ticker] || STOCK_PROFILES['SPY']; // Fallback
+            
             let data = [];
             let currentDate = new Date();
             currentDate.setDate(currentDate.getDate() - days);
             
-            let price, trendBias, volatility;
-            
-            if (ticker === 'NVDA') {
-                price = 140; 
-                trendBias = 0.0015; 
-                volatility = 0.022; 
-            } else if (ticker === 'TSLA') {
-                price = 220; 
-                trendBias = 0.0004; 
-                volatility = 0.045; 
-            } else { // SPY
-                price = 380;
-                trendBias = 0.0006; 
-                volatility = 0.012; 
-            }
+            let price = profile.price;
+            let trendBias = profile.trend;
+            let volatility = profile.vol;
 
             for (let i = 0; i < days; i++) {
                 currentDate.setDate(currentDate.getDate() + 1);
@@ -494,6 +530,8 @@
 
         const getAIInsights = (ticker, stats) => {
             const insights = [];
+            const profile = STOCK_PROFILES[ticker] || STOCK_PROFILES['SPY'];
+
             if (stats.winRate < 45 && stats.netProfit > 0) {
                 insights.push({
                     type: 'psychology',
@@ -534,23 +572,24 @@
                 });
             }
 
-            if (ticker === 'TSLA') {
+            // Context Insight based on Stock Profile
+            if (profile.type === 'volatile') {
                 insights.push({
                     type: 'market',
-                    title: 'Regime Mismatch: High Volatility',
-                    content: `TSLA's high beta caused frequent stop-outs (whipsaws). The profit comes from a few outliers. Consider adding an ATR-based Trailing Stop instead of a fixed % target to capture larger runners.`
+                    title: `Regime Mismatch: High Volatility (${ticker})`,
+                    content: `${ticker} has a high beta. Pinbar strategies rely on mean reversion, but this asset tends to trend violently or whipsaw. Consider adding an ATR-based Trailing Stop to capture larger runners instead of fixed targets.`
                 });
-            } else if (ticker === 'SPY') {
+            } else if (profile.type === 'balanced') {
                 insights.push({
                     type: 'market',
-                    title: 'Regime Match: Mean Reversion',
-                    content: `SPY's lower volatility pairs well with the Pinbar logic, reducing false signals. The equity curve is smoother, indicating this strategy fits Index behavior better than individual volatile stocks.`
+                    title: `Regime Match: Mean Reversion (${ticker})`,
+                    content: `${ticker} exhibits balanced volatility, pairing well with Pinbar logic. The equity curve should be smoother here than on individual high-beta stocks, reducing false positives.`
                 });
-            } else if (ticker === 'NVDA') {
+            } else { // Trend
                 insights.push({
                     type: 'market',
-                    title: 'Trend Alignment',
-                    content: `The strong uptrend masked entry inefficiencies. You are essentially acting as a trend follower. Monitor if performance degrades during sideways consolidation periods.`
+                    title: `Trend Alignment (${ticker})`,
+                    content: `The strong uptrend of ${ticker} masked entry inefficiencies. You are acting as a trend follower. Monitor performance carefully if the broader sector enters a consolidation phase.`
                 });
             }
 
@@ -615,7 +654,6 @@
             const container = document.getElementById('ai-insights-container');
             const recText = document.getElementById('ai-recommendation-text');
             
-            // Mapped to use white/transparency for the gradient bg
             const getColor = (type) => {
                 switch(type) {
                     case 'risk': return 'bg-white/10 border-white/20 text-white';
@@ -656,7 +694,6 @@
             const step = Math.ceil(curve.length / 500);
             const dataPoints = curve.filter((_, i) => i % step === 0).map(c => ({ x: c.date, y: c.equity }));
             
-            // Getting CSS variables for chart config
             const style = getComputedStyle(document.body);
             const borderColor = style.getPropertyValue('--border-color').trim();
             const accentColor = style.getPropertyValue('--accent-blue').trim();
@@ -719,22 +756,8 @@
             state.chartInstance.render();
         }
 
-        function updateAssetTabs() {
-            const tickers = ['NVDA', 'SPY', 'TSLA'];
-            const container = document.getElementById('asset-tabs');
-            container.innerHTML = tickers.map(t => {
-                const isActive = state.activeTicker === t;
-                const classes = isActive 
-                    ? 'text-accent border-b-2 border-accent bg-input' 
-                    : 'text-secondary hover:text-primary hover:bg-input';
-                return `<button onclick="handleAssetChange('${t}')" class="px-6 py-3 font-medium text-sm transition-colors ${classes}">${t}</button>`;
-            }).join('');
-        }
-
         // --- HANDLERS ---
-
         async function handleRunSimulation() {
-            // UI Loading State
             document.getElementById('icon-run').classList.add('hidden');
             document.getElementById('icon-loading').classList.remove('hidden');
             const dashboard = document.getElementById('dashboard-content');
@@ -765,9 +788,59 @@
 
         window.handleAssetChange = (ticker) => {
             state.activeTicker = ticker;
-            updateAssetTabs();
+            
+            // Update Active Asset Display
+            const profile = STOCK_PROFILES[ticker];
+            document.getElementById('current-ticker-display').innerText = ticker;
+            document.getElementById('current-ticker-desc').innerText = profile ? profile.sector : 'Unknown';
+            document.getElementById('stock-search').value = ''; // Clear search
+            document.getElementById('search-dropdown').classList.add('hidden'); // Hide dropdown
+
             handleRunSimulation();
         };
+
+        function initSearch() {
+            const searchInput = document.getElementById('stock-search');
+            const dropdown = document.getElementById('search-dropdown');
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toUpperCase();
+                if (query.length === 0) {
+                    dropdown.classList.add('hidden');
+                    return;
+                }
+
+                const filtered = AVAILABLE_STOCKS.filter(s => 
+                    s.includes(query) || STOCK_PROFILES[s].name.toUpperCase().includes(query)
+                );
+
+                if (filtered.length > 0) {
+                    dropdown.innerHTML = filtered.map(ticker => {
+                         const p = STOCK_PROFILES[ticker];
+                         return `
+                            <div onclick="handleAssetChange('${ticker}')" class="dropdown-item px-4 py-3 border-b border-border-color last:border-0 flex justify-between items-center transition-colors">
+                                <div>
+                                    <span class="font-bold text-primary block">${ticker}</span>
+                                    <span class="text-xs text-secondary">${p.name}</span>
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded bg-input text-secondary">${p.type}</span>
+                            </div>
+                        `;
+                    }).join('');
+                    dropdown.classList.remove('hidden');
+                } else {
+                    dropdown.innerHTML = `<div class="px-4 py-3 text-secondary text-sm">No results found</div>`;
+                    dropdown.classList.remove('hidden');
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        }
 
         // --- INIT ---
 
@@ -807,8 +880,8 @@
             updateState('macd', 'macdSensitivity');
             updateState('pinbar', 'pinbarThreshold');
 
-            updateAssetTabs();
-            handleRunSimulation();
+            initSearch();
+            handleRunSimulation(); // Run initial Sim
             lucide.createIcons();
         });
 
