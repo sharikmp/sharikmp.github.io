@@ -2,7 +2,7 @@
 :root,
 [data-theme="dark"] {
     --td-bg-main: #020617;
-    --td-bg-panel: #15213c;
+    --td-bg-panel: #0f172a;
     --td-bg-glass: rgba(15, 23, 42, 0.85);
     --td-border: rgba(148, 163, 184, 0.08);
     --td-border-hover: rgba(148, 163, 184, 0.2);
@@ -19,6 +19,8 @@
     --td-sidebar-w: 260px;
     --td-radius-xl: 24px;
     --td-radius-md: 16px;
+    --td-body-bg-color: var(--td-bg-main); /* Default to color */
+    --td-body-bg-image: radial-gradient(circle at 15% 50%, var(--td-grad-1), transparent 30%), radial-gradient(circle at 85% 30%, var(--td-grad-2), transparent 30%); /* Default to radial gradients */
 }
 
 [data-theme="black"] {
@@ -39,6 +41,8 @@
     --td-table-hover: rgba(255, 255, 255, 0.08);
     --td-radius-xl: 24px;
     --td-radius-md: 16px;
+    --td-body-bg-color: var(--td-bg-main);
+    --td-body-bg-image: none; /* No radial gradients on pure black */
 }
 
 [data-theme="light"] {
@@ -59,7 +63,36 @@
     --td-table-hover: rgba(0, 0, 0, 0.02);
     --td-radius-xl: 24px;
     --td-radius-md: 16px;
+    --td-body-bg-color: var(--td-bg-main);
+    --td-body-bg-image: radial-gradient(circle at 15% 50%, var(--td-grad-1), transparent 30%), radial-gradient(circle at 85% 30%, var(--td-grad-2), transparent 30%);
 }
+
+/* 🟢 New bright-gradient Theme 🟢 */
+[data-theme="bright-gradient"] {
+    --td-bg-main: #000000; /* Use a base dark color */
+    --td-bg-panel: rgba(255, 255, 255, 0.05); /* Slightly transparent white for panel */
+    --td-bg-glass: rgba(0, 0, 0, 0.7); /* Darker, slightly transparent glass */
+    --td-border: rgba(255, 255, 255, 0.2);
+    --td-border-hover: rgba(255, 255, 255, 0.4);
+    --td-text-primary: #ffffff; /* White primary text */
+    --td-text-secondary: #a3a3a3; /* Light grey secondary text */
+    --td-text-muted: #94a3b8; /* Blue-grey muted text */
+    --td-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    --td-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --td-input-bg: rgba(255, 255, 255, 0.1);
+    --td-grad-1: rgba(255, 255, 255, 0.05); /* Retaining radial gradient variables, though not used in body */
+    --td-grad-2: rgba(34, 197, 94, 0.05);
+    --td-logo-bg: linear-gradient(135deg, #22c55e, #064e3b);
+    --td-table-hover: rgba(255, 255, 255, 0.08);
+    --td-radius-xl: 24px;
+    --td-radius-md: 16px;
+
+    /* Custom variables for this theme's body background */
+    --td-body-bg-color: var(--td-bg-main);
+    --td-body-bg-image: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(34, 34, 135, 1) 0%, rgba(3, 141, 168, 1) 100%);
+}
+/* --- END New bright-gradient Theme --- */
+
 
 /* Common constants */
 :root {
@@ -72,13 +105,13 @@
 
 /* --- Global Reset & Typography --- */
 body {
-    background-color: var(--td-bg-main);
+    /* Use the new variables for background */
+    background-color: var(--td-body-bg-color); 
+    background-image: var(--td-body-bg-image);
     color: var(--td-text-primary);
-    font-family: 'Inter', sans-serif;
+    font-family: Arial;
+    font-size: 0.8rem;
     overflow-x: hidden;
-    background-image:
-        radial-gradient(circle at 15% 50%, var(--td-grad-1), transparent 30%),
-        radial-gradient(circle at 85% 30%, var(--td-grad-2), transparent 30%);
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -558,7 +591,8 @@ input[type="time"] {
 }
 
 [data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator,
-[data-theme="black"] input[type="time"]::-webkit-calendar-picker-indicator {
+[data-theme="black"] input[type="time"]::-webkit-calendar-picker-indicator,
+[data-theme="bright-gradient"] input[type="time"]::-webkit-calendar-picker-indicator { /* Added for the new theme */
     filter: invert(1);
 }
 

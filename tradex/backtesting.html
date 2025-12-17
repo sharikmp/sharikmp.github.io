@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketMentorPro - Backtesting Analyst</title>
+    
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config to use CSS Variables -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        body: 'var(--bg-body)',
+                        surface: 'var(--bg-surface)',
+                        input: 'var(--bg-input)',
+                        primary: 'var(--text-primary)',
+                        secondary: 'var(--text-secondary)',
+                        'border-color': 'var(--border-color)',
+                        success: 'var(--accent-green)',
+                        danger: 'var(--accent-red)',
+                        warning: 'var(--accent-yellow)',
+                        accent: 'var(--accent-blue)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            /* --- Dark Theme (Default) --- */
+            --bg-body: #131722;
+            --bg-surface: #1E222D;
+            --bg-input: #2A2E39;
+            --border-color: #2A2E39; /* Adjusted slightly for better contrast on dark */
+            --muted: #B2B5BE;
+
+            --text-primary: #FFFFFF;
+            --text-secondary: #B2B5BE;
+            --text-dark-secondary: #777;
+
+            --accent-green: #00C897;
+            --accent-dark-green: #10b981;
+            --accent-red: #FF3D57;
+            --accent-dark-red: #e7000b;
+            --accent-yellow: #ffd000;
+            --accent-dark-yellow: #f59e0b;
+            --accent-hover: #00966d;
+            --accent-blue: #3B82F6;
+
+            --gradient-card: linear-gradient(135deg, rgba(0, 200, 151, 0.95), rgba(92, 153, 251, 0.6));
+            --gradient-panel: linear-gradient(120deg, rgba(0, 200, 151, 0.12), rgba(59, 130, 246, 0.08));
+            --gradient-hero: radial-gradient(circle at top left, rgba(0, 200, 151, 0.15), transparent 40%), radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.1), transparent 40%), var(--bg-body);
+
+            --sidebar-width: 260px;
+            --header-height: 64px;
+
+            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="light"] {
+            /* --- Light Theme Overrides --- */
+            --bg-body: #F0F2F5;
+            --bg-surface: #FFFFFF;
+            --bg-input: #E9ECEF;
+            --border-color: #DEE2E6;
+
+            --text-primary: #1A1D21;
+            --text-secondary: #6C757D;
+
+            /* Accents remain consistent for financial data context */
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --gradient-hero: radial-gradient(circle at top left, rgba(0, 200, 151, 0.25), transparent 55%), radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.2), transparent 40%), var(--bg-body);
+
+            --gauge-track: #E9ECEF;
+        }
+
+        body {
+            background: var(--gradient-hero);
+            background-attachment: fixed;
+        }
+
+        /* Custom Scrollbar for AI Panel */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+        /* Fade In Animation */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-panel-gradient {
+            background: var(--gradient-card);
+        }
+
+        /* Range Input Styling */
+        input[type=range] {
+            background: var(--bg-input); 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            background: var(--accent-blue);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-body text-primary font-sans p-6" data-theme="light">
+
+    <!-- HEADER -->
+    <div class="max-w-7xl mx-auto mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="activity" class="text-accent"></i>
+                MarketMentorPro
+            </h1>
+            <p class="text-secondary mt-1">Backtesting Engine & Intelligent Strategy Consultant</p>
+        </div>
+        <div class="flex gap-4">
+            <button id="btn-toggle-settings" class="px-4 py-2 rounded-lg font-medium shadow-sm border bg-surface border-border-color text-secondary hover:text-primary hover:bg-input flex items-center gap-2 transition-all">
+                <i data-lucide="settings" class="h-4 w-4"></i>
+                Strategy Settings
+            </button>
+            <button id="btn-run-sim" class="bg-accent hover:opacity-90 text-white px-6 py-2 rounded-lg font-medium shadow-md flex items-center gap-2 transition-all">
+                <i data-lucide="play" class="h-4 w-4" id="icon-run"></i>
+                <i data-lucide="refresh-ccw" class="h-4 w-4 animate-spin hidden" id="icon-loading"></i>
+                Run Simulation
+            </button>
+        </div>
+    </div>
+
+    <!-- STRATEGY SETTINGS PANEL (Hidden by default) -->
+    <div id="settings-panel" class="max-w-7xl mx-auto mb-6 bg-surface rounded-xl shadow-lg border border-border-color overflow-hidden hidden fade-in">
+        <div class="p-4 bg-input border-b border-border-color flex justify-between items-center">
+            <h3 class="font-semibold text-primary flex items-center gap-2">
+                <i data-lucide="sliders" class="h-4 w-4 text-accent"></i> Configuration Parameters
+            </h3>
+            <button id="btn-close-settings" class="text-secondary hover:text-primary"><i data-lucide="x" class="h-5 w-5"></i></button>
+        </div>
+        <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Risk Settings -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-bold text-secondary uppercase tracking-wider">Risk Management</h4>
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <label class="text-sm font-medium text-primary">Stop Loss</label>
+                        <span id="val-stop-loss" class="text-sm font-bold text-accent">3.0%</span>
+                    </div>
+                    <input type="range" id="input-stop-loss" min="0.5" max="10" step="0.5" value="3.0" class="w-full h-2 rounded-lg appearance-none cursor-pointer">
+                </div>
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <label class="text-sm font-medium text-primary">Take Profit</label>
+                        <span id="val-take-profit" class="text-sm font-bold text-accent">8.0%</span>
+                    </div>
+                    <input type="range" id="input-take-profit" min="1" max="20" step="0.5" value="8.0" class="w-full h-2 rounded-lg appearance-none cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Indicator Settings -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-bold text-secondary uppercase tracking-wider">Indicator Logic</h4>
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <label class="text-sm font-medium text-primary">MACD Sensitivity</label>
+                        <span id="val-macd" class="text-sm font-bold text-accent">6</span>
+                    </div>
+                    <input type="range" id="input-macd" min="1" max="10" step="1" value="6" class="w-full h-2 rounded-lg appearance-none cursor-pointer">
+                    <p class="text-xs text-secondary mt-1">Lower = Smoother, Higher = More Signals</p>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <label class="text-sm font-medium text-primary">Pinbar Strictness</label>
+                        <span id="val-pinbar" class="text-sm font-bold text-accent">0.5</span>
+                    </div>
+                    <input type="range" id="input-pinbar" min="0.3" max="0.9" step="0.1" value="0.5" class="w-full h-2 rounded-lg appearance-none cursor-pointer">
+                    <p class="text-xs text-secondary mt-1">Higher = Strict Long Wicks Only</p>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="col-span-1 md:col-span-2 bg-input rounded-lg p-4 border border-dashed border-border-color flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-secondary">Current Strategy:</p>
+                    <p class="font-semibold text-primary text-sm">
+                        Buy if MACD Crosses UP AND Pinbar Wick &gt; <span id="text-pinbar-threshold">50</span>% of range.
+                    </p>
+                </div>
+                <button id="btn-apply-run" class="text-accent hover:text-white text-sm font-bold underline">Apply & Run</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ASSET SELECTOR -->
+    <div class="max-w-7xl mx-auto mb-6">
+        <div class="flex space-x-2 border-b border-border-color" id="asset-tabs">
+            <!-- Buttons injected by JS -->
+        </div>
+    </div>
+
+    <!-- DASHBOARD CONTENT -->
+    <div id="dashboard-content" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 transition-opacity duration-300 opacity-0">
+        
+        <!-- LEFT COLUMN -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- KPI GRID -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="kpi-grid">
+                <!-- KPIs injected by JS -->
+            </div>
+
+            <!-- EQUITY CHART -->
+            <div class="bg-surface p-6 rounded-xl shadow-lg border border-border-color">
+                <h3 class="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
+                    <i data-lucide="trending-up" class="h-5 w-5 text-secondary"></i>
+                    Equity Curve
+                </h3>
+                <div id="equity-chart" class="w-full h-[300px]"></div>
+            </div>
+
+            <!-- TRADE TABLE -->
+            <div class="bg-surface rounded-xl shadow-lg border border-border-color overflow-hidden">
+                <div class="px-6 py-4 border-b border-border-color bg-input flex justify-between items-center">
+                    <h3 class="font-semibold text-primary">Trade Log</h3>
+                    <div class="flex gap-2">
+                         <span class="text-xs text-secondary bg-surface px-2 py-1 rounded border border-border-color" id="trade-count-badge">50+ Trades</span>
+                         <span class="text-xs text-secondary bg-surface px-2 py-1 rounded border border-border-color">Last 5</span>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-secondary uppercase bg-input border-b border-border-color">
+                            <tr>
+                                <th class="px-6 py-3 font-medium">Date</th>
+                                <th class="px-6 py-3 font-medium">Type</th>
+                                <th class="px-6 py-3 font-medium">Price</th>
+                                <th class="px-6 py-3 font-medium">Result</th>
+                                <th class="px-6 py-3 font-medium">Exit Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trade-table-body">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: AI ANALYST -->
+        <div class="lg:col-span-1">
+            <div class="ai-panel-gradient text-white rounded-xl shadow-lg p-6 h-full flex flex-col relative overflow-hidden">
+                <!-- Decorative BG -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl opacity-20 -mr-10 -mt-10 pointer-events-none"></div>
+
+                <div class="flex items-center gap-3 mb-6 relative z-10">
+                    <div class="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
+                        <i data-lucide="brain" class="h-6 w-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold">AI Analyst</h2>
+                        <p class="text-blue-50 text-sm opacity-90">Strategic & Behavioral Insights</p>
+                    </div>
+                </div>
+
+                <!-- Insights Container -->
+                <div id="ai-insights-container" class="space-y-4 flex-1 overflow-y-auto pr-1 custom-scrollbar relative z-10">
+                    <!-- Cards injected by JS -->
+                </div>
+
+                <!-- Recommendation Footer -->
+                <div class="mt-6 pt-6 border-t border-white/20 relative z-10">
+                    <div class="flex items-start gap-3">
+                        <div class="bg-white/20 p-1.5 rounded-full mt-1">
+                            <i data-lucide="check-circle-2" class="h-4 w-4 text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-blue-100 uppercase tracking-wider font-semibold mb-1">Recommendation</p>
+                            <p id="ai-recommendation-text" class="text-sm font-medium leading-relaxed text-white">
+                                <!-- Text injected by JS -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- STATE MANAGEMENT ---
+        const state = {
+            activeTicker: 'NVDA',
+            isLoading: false,
+            simData: null,
+            params: {
+                stopLossPct: 3.0,
+                takeProfitPct: 8.0,
+                macdSensitivity: 6,
+                pinbarThreshold: 0.5
+            },
+            chartInstance: null
+        };
+
+        // --- CORE LOGIC (ENHANCED FOR REALISM & REVERSE ENGINEERING) ---
+        // Same core logic as before, ensuring consistency
+        const generatePriceHistory = (ticker, days = 1000) => {
+            let data = [];
+            let currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() - days);
+            
+            let price, trendBias, volatility;
+            
+            if (ticker === 'NVDA') {
+                price = 140; 
+                trendBias = 0.0015; 
+                volatility = 0.022; 
+            } else if (ticker === 'TSLA') {
+                price = 220; 
+                trendBias = 0.0004; 
+                volatility = 0.045; 
+            } else { // SPY
+                price = 380;
+                trendBias = 0.0006; 
+                volatility = 0.012; 
+            }
+
+            for (let i = 0; i < days; i++) {
+                currentDate.setDate(currentDate.getDate() + 1);
+                if(currentDate.getDay() === 0 || currentDate.getDay() === 6) continue;
+
+                const randomShock = (Math.random() - 0.5) * 2; 
+                const change = (trendBias + (randomShock * volatility));
+                price = price * (1 + change);
+                
+                const noise = volatility * 0.4;
+                const open = price * (1 + (Math.random() - 0.5) * noise);
+                const high = Math.max(open, price) * (1 + Math.random() * noise);
+                const low = Math.min(open, price) * (1 - Math.random() * noise);
+                
+                data.push({
+                    date: currentDate.toISOString().split('T')[0],
+                    price: parseFloat(price.toFixed(2)),
+                    open: parseFloat(open.toFixed(2)),
+                    high: parseFloat(high.toFixed(2)),
+                    low: parseFloat(low.toFixed(2)),
+                });
+            }
+            return data;
+        };
+
+        const enrichDataWithIndicators = (priceData, params) => {
+            return priceData.map((day, i) => {
+                const frequencyDivisor = 12 - params.macdSensitivity; 
+                const indicatorNoise = (Math.random() - 0.5) * 10;
+                const macdLine = (Math.sin(i / frequencyDivisor) * 50) + indicatorNoise;
+                const signalLine = (Math.sin((i - 2) / frequencyDivisor) * 50) + indicatorNoise;
+                
+                const range = day.high - day.low;
+                const bodyTop = Math.max(day.open, day.price);
+                const bodyBottom = Math.min(day.open, day.price);
+                const lowerWick = bodyBottom - day.low;
+                
+                let isPinbar = range > 0 && (lowerWick / range) > params.pinbarThreshold;
+                if (!isPinbar && Math.random() > 0.85) isPinbar = true;
+
+                return { ...day, macd: macdLine, signal: signalLine, isPinbar: isPinbar };
+            });
+        };
+
+        const runSimulation = (data, params) => {
+            let cash = 10000;
+            let holdings = 0;
+            let trades = [];
+            let equityCurve = [];
+            let entryPrice = 0;
+            
+            const stopLossPct = params.stopLossPct / 100;
+            const takeProfitPct = params.takeProfitPct / 100;
+
+            data.forEach((day, index) => {
+                if (index === 0) {
+                     equityCurve.push({ date: day.date, equity: cash });
+                     return;
+                }
+                const prevDay = data[index - 1];
+                const currentVal = cash + (holdings * day.price);
+                equityCurve.push({ date: day.date, equity: parseFloat(currentVal.toFixed(2)) });
+
+                const bullishCrossover = prevDay.macd < prevDay.signal && day.macd > day.signal;
+                const bearishCrossover = prevDay.macd > prevDay.signal && day.macd < day.signal;
+                
+                if (holdings === 0 && bullishCrossover && day.isPinbar) {
+                    const quantity = Math.floor(cash / day.price);
+                    if (quantity > 0) {
+                        cash -= quantity * day.price;
+                        holdings = quantity;
+                        entryPrice = day.price;
+                        trades.push({
+                            id: trades.length + 1,
+                            type: 'BUY',
+                            date: day.date,
+                            price: day.price,
+                            reason: 'MACD Cross + Pinbar',
+                            qty: quantity,
+                            entryValue: quantity * day.price
+                        });
+                    }
+                }
+                else if (holdings > 0) {
+                    let sellReason = '';
+                    if (day.low <= entryPrice * (1 - stopLossPct)) {
+                        sellReason = 'Stop Loss Hit';
+                        day.price = entryPrice * (1 - stopLossPct); 
+                    }
+                    else if (day.high >= entryPrice * (1 + takeProfitPct)) {
+                        sellReason = 'Take Profit Hit';
+                        day.price = entryPrice * (1 + takeProfitPct);
+                    }
+                    else if (bearishCrossover) {
+                        sellReason = 'MACD Cross Down';
+                    }
+                    
+                    if (sellReason) {
+                        const exitValue = holdings * day.price;
+                        const entryValue = trades[trades.length - 1].entryValue;
+                        const profit = exitValue - entryValue;
+                        
+                        cash += exitValue;
+                        const lastTrade = trades[trades.length - 1];
+                        lastTrade.exitDate = day.date;
+                        lastTrade.exitPrice = parseFloat(day.price.toFixed(2));
+                        lastTrade.pnl = parseFloat(profit.toFixed(2));
+                        lastTrade.pnlPct = parseFloat(((day.price - entryPrice) / entryPrice * 100).toFixed(2));
+                        lastTrade.exitReason = sellReason;
+                        holdings = 0;
+                    }
+                }
+            });
+
+            const completedTrades = trades.filter(t => t.exitPrice);
+            const wins = completedTrades.filter(t => t.pnl > 0);
+            const losses = completedTrades.filter(t => t.pnl <= 0);
+            const winRate = completedTrades.length > 0 ? (wins.length / completedTrades.length) * 100 : 0;
+            const totalPnL = completedTrades.reduce((acc, t) => acc + t.pnl, 0);
+            
+            let peak = -Infinity;
+            let maxDD = 0;
+            equityCurve.forEach(pt => {
+                if (pt.equity > peak) peak = pt.equity;
+                const dd = (peak - pt.equity) / peak * 100;
+                if (dd > maxDD) maxDD = dd;
+            });
+
+            const grossProfit = wins.reduce((a, b) => a + b.pnl, 0);
+            const grossLoss = Math.abs(losses.reduce((a, b) => a + b.pnl, 0));
+            const profitFactor = grossLoss === 0 ? grossProfit : (grossProfit / grossLoss);
+
+            return {
+                trades: completedTrades,
+                equityCurve,
+                stats: {
+                    netProfit: parseFloat(totalPnL.toFixed(2)),
+                    winRate: parseFloat(winRate.toFixed(1)),
+                    maxDrawdown: parseFloat(maxDD.toFixed(2)),
+                    profitFactor: parseFloat(profitFactor.toFixed(2)),
+                    totalTrades: completedTrades.length
+                }
+            };
+        };
+
+        const getAIInsights = (ticker, stats) => {
+            const insights = [];
+            if (stats.winRate < 45 && stats.netProfit > 0) {
+                insights.push({
+                    type: 'psychology',
+                    title: 'Psychological Hardship Warning',
+                    content: `Strategy is profitable (+$${stats.netProfit}), but Win Rate is low (${stats.winRate}%). You endured ${stats.totalTrades - Math.round(stats.totalTrades * (stats.winRate/100))} losses. Most traders quit after consecutive drawdowns. Requires extreme discipline.`
+                });
+            } else if (stats.winRate > 65) {
+                insights.push({
+                    type: 'psychology',
+                    title: 'Comfort Zone / Complacency Risk',
+                    content: `High Win Rate (${stats.winRate}%) detected. This creates a psychological safety net, but beware of "Gambler's Fallacy" – a single catastrophic loss can wipe out gains if position sizing increases due to overconfidence.`
+                });
+            } else {
+                insights.push({
+                    type: 'psychology',
+                    title: 'Balanced Psychology',
+                    content: `Win Rate is ${stats.winRate}%. This offers a sustainable emotional cadence. You are getting paid frequently enough to maintain conviction during minor drawdowns.`
+                });
+            }
+
+            if (stats.totalTrades < 30) {
+                 insights.push({
+                    type: 'risk',
+                    title: 'Sample Size Warning',
+                    content: `Generated ${stats.totalTrades} trades. While better than minimal, confident statistical significance typically requires 50+ trades across multiple market regimes.`
+                });
+            } else if (stats.maxDrawdown > 20) {
+                insights.push({
+                    type: 'risk',
+                    title: 'Deep Drawdown Alert',
+                    content: `Max Drawdown of ${stats.maxDrawdown}% is aggressive. If you managed $100k, you would have seen $${Math.round(100000 * (stats.maxDrawdown/100))} vanish. Verify if this aligns with your personal risk tolerance.`
+                });
+            } else {
+                insights.push({
+                    type: 'success',
+                    title: 'Robust Recovery Factor',
+                    content: `Solid risk management. A Max Drawdown of ${stats.maxDrawdown}% with a Profit Factor of ${stats.profitFactor} indicates the strategy recovers from losses efficiently.`
+                });
+            }
+
+            if (ticker === 'TSLA') {
+                insights.push({
+                    type: 'market',
+                    title: 'Regime Mismatch: High Volatility',
+                    content: `TSLA's high beta caused frequent stop-outs (whipsaws). The profit comes from a few outliers. Consider adding an ATR-based Trailing Stop instead of a fixed % target to capture larger runners.`
+                });
+            } else if (ticker === 'SPY') {
+                insights.push({
+                    type: 'market',
+                    title: 'Regime Match: Mean Reversion',
+                    content: `SPY's lower volatility pairs well with the Pinbar logic, reducing false signals. The equity curve is smoother, indicating this strategy fits Index behavior better than individual volatile stocks.`
+                });
+            } else if (ticker === 'NVDA') {
+                insights.push({
+                    type: 'market',
+                    title: 'Trend Alignment',
+                    content: `The strong uptrend masked entry inefficiencies. You are essentially acting as a trend follower. Monitor if performance degrades during sideways consolidation periods.`
+                });
+            }
+
+            return insights;
+        };
+
+        // --- UI & RENDERING ---
+
+        function renderKPIs(stats) {
+            const createKPI = (title, value, trend, subtext, inverse = false) => {
+                let colorClass = 'text-secondary';
+                if (trend === 'up') colorClass = inverse ? 'text-danger' : 'text-success';
+                if (trend === 'down') colorClass = inverse ? 'text-success' : 'text-danger';
+                const icon = trend === 'up' ? '▲ Good' : trend === 'down' ? '▼ Poor' : '• Neutral';
+                
+                return `
+                <div class="bg-surface p-4 rounded-xl shadow-lg border border-border-color">
+                    <p class="text-xs text-secondary font-medium uppercase tracking-wide">${title}</p>
+                    <div class="mt-2 flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-primary">${value}</span>
+                    </div>
+                    <div class="mt-2 text-xs flex items-center justify-between">
+                        <span class="${colorClass} font-medium flex items-center gap-1">${icon}</span>
+                        <span class="text-secondary">${subtext}</span>
+                    </div>
+                </div>`;
+            };
+
+            const html = [
+                createKPI('Net Profit', `$${stats.netProfit}`, stats.netProfit > 0 ? 'up' : 'down', 'Total Return'),
+                createKPI('Win Rate', `${stats.winRate}%`, stats.winRate > 50 ? 'neutral' : 'down', `${stats.totalTrades} Trades`),
+                createKPI('Profit Factor', stats.profitFactor, stats.profitFactor > 1.5 ? 'up' : 'neutral', 'Gross Win/Loss'),
+                createKPI('Max Drawdown', `${stats.maxDrawdown}%`, 'down', 'Peak to Trough', true)
+            ].join('');
+            
+            document.getElementById('kpi-grid').innerHTML = html;
+            document.getElementById('trade-count-badge').innerText = `${stats.totalTrades} Trades`;
+        }
+
+        function renderTable(trades) {
+            const tbody = document.getElementById('trade-table-body');
+            if (trades.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-secondary">No trades executed in this period.</td></tr>`;
+                return;
+            }
+            
+            const reversedTrades = [...trades].reverse().slice(0, 5);
+            tbody.innerHTML = reversedTrades.map(t => `
+                <tr class="border-b border-border-color hover:bg-input transition-colors">
+                    <td class="px-6 py-4 font-medium text-primary">${t.date}</td>
+                    <td class="px-6 py-4"><span class="bg-blue-900/50 text-blue-200 border border-blue-800 px-2 py-1 rounded text-xs font-semibold">${t.type}</span></td>
+                    <td class="px-6 py-4 text-secondary">$${t.price}</td>
+                    <td class="px-6 py-4 font-bold ${t.pnl >= 0 ? 'text-success' : 'text-danger'}">
+                        ${t.pnl >= 0 ? '+' : ''}${t.pnl} (${t.pnlPct}%)
+                    </td>
+                    <td class="px-6 py-4 text-secondary italic text-xs">${t.exitReason}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAI(insights, profitFactor) {
+            const container = document.getElementById('ai-insights-container');
+            const recText = document.getElementById('ai-recommendation-text');
+            
+            // Mapped to use white/transparency for the gradient bg
+            const getColor = (type) => {
+                switch(type) {
+                    case 'risk': return 'bg-white/10 border-white/20 text-white';
+                    case 'psychology': return 'bg-white/10 border-white/20 text-white';
+                    case 'success': return 'bg-white/10 border-white/20 text-white';
+                    case 'market': return 'bg-white/10 border-white/20 text-white';
+                    default: return 'bg-white/10 border-white/20 text-white';
+                }
+            };
+            
+            const getIcon = (type) => {
+                 switch(type) {
+                    case 'psychology': return 'brain';
+                    case 'risk': return 'shield-alert';
+                    case 'success': return 'trending-up';
+                    default: return 'terminal';
+                }
+            }
+
+            container.innerHTML = insights.map(i => `
+                <div class="p-4 rounded-lg border ${getColor(i.type)} transition-all hover:translate-x-1 hover:bg-white/15">
+                    <div class="flex items-center gap-2 mb-2 opacity-100">
+                        <i data-lucide="${getIcon(i.type)}" class="h-4 w-4 text-accent-yellow"></i>
+                        <h4 class="font-bold text-sm tracking-wide text-white">${i.title}</h4>
+                    </div>
+                    <p class="text-xs leading-relaxed opacity-90 text-blue-50">${i.content}</p>
+                </div>
+            `).join('');
+
+            recText.innerText = profitFactor > 1.3 
+                ? "Strategy shows strong statistical promise. The profit factor is healthy. Suggest proceeding to forward-testing with small capital."
+                : "Strategy metrics are inconclusive or weak. The Profit Factor is close to break-even. Consider optimizing exits or filtering chop.";
+                
+            lucide.createIcons();
+        }
+
+        function renderChart(curve) {
+            const step = Math.ceil(curve.length / 500);
+            const dataPoints = curve.filter((_, i) => i % step === 0).map(c => ({ x: c.date, y: c.equity }));
+            
+            // Getting CSS variables for chart config
+            const style = getComputedStyle(document.body);
+            const borderColor = style.getPropertyValue('--border-color').trim();
+            const accentColor = style.getPropertyValue('--accent-blue').trim();
+            const textColor = style.getPropertyValue('--text-secondary').trim();
+
+            const options = {
+                series: [{ name: 'Equity', data: dataPoints }],
+                chart: {
+                    type: 'area',
+                    height: 300,
+                    toolbar: { show: false },
+                    fontFamily: 'Inter, sans-serif',
+                    animations: { enabled: false },
+                    background: 'transparent'
+                },
+                theme: { mode: 'dark' },
+                dataLabels: { enabled: false },
+                stroke: { curve: 'straight', width: 2, colors: [accentColor] },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.5,
+                        opacityTo: 0.1,
+                        stops: [0, 90, 100],
+                        colorStops: [
+                             { offset: 0, color: accentColor, opacity: 0.4 },
+                             { offset: 100, color: accentColor, opacity: 0 }
+                        ]
+                    }
+                },
+                xaxis: {
+                    type: 'datetime',
+                    axisBorder: { show: false },
+                    axisTicks: { show: false },
+                    labels: { style: { colors: textColor } },
+                    tooltip: { enabled: false }
+                },
+                yaxis: {
+                    labels: { 
+                        formatter: (val) => `$${val.toFixed(0)}`,
+                        style: { colors: textColor }
+                    }
+                },
+                grid: {
+                    borderColor: borderColor,
+                    strokeDashArray: 4
+                },
+                tooltip: {
+                    theme: 'dark',
+                    y: { formatter: (val) => `$${val}` },
+                    style: { fontSize: '12px' }
+                }
+            };
+
+            if (state.chartInstance) {
+                state.chartInstance.destroy();
+            }
+            state.chartInstance = new ApexCharts(document.querySelector("#equity-chart"), options);
+            state.chartInstance.render();
+        }
+
+        function updateAssetTabs() {
+            const tickers = ['NVDA', 'SPY', 'TSLA'];
+            const container = document.getElementById('asset-tabs');
+            container.innerHTML = tickers.map(t => {
+                const isActive = state.activeTicker === t;
+                const classes = isActive 
+                    ? 'text-accent border-b-2 border-accent bg-input' 
+                    : 'text-secondary hover:text-primary hover:bg-input';
+                return `<button onclick="handleAssetChange('${t}')" class="px-6 py-3 font-medium text-sm transition-colors ${classes}">${t}</button>`;
+            }).join('');
+        }
+
+        // --- HANDLERS ---
+
+        async function handleRunSimulation() {
+            // UI Loading State
+            document.getElementById('icon-run').classList.add('hidden');
+            document.getElementById('icon-loading').classList.remove('hidden');
+            const dashboard = document.getElementById('dashboard-content');
+            dashboard.style.opacity = '0.5';
+
+            await new Promise(r => setTimeout(r, 600));
+
+            const rawData = generatePriceHistory(state.activeTicker, 1000);
+            const enrichedData = enrichDataWithIndicators(rawData, state.params);
+            const results = runSimulation(enrichedData, state.params);
+            const insights = getAIInsights(state.activeTicker, results.stats);
+
+            renderKPIs(results.stats);
+            renderTable(results.trades);
+            renderChart(results.equityCurve);
+            renderAI(insights, results.stats.profitFactor);
+
+            document.getElementById('icon-run').classList.remove('hidden');
+            document.getElementById('icon-loading').classList.add('hidden');
+            dashboard.style.opacity = '1';
+            
+            if(dashboard.classList.contains('opacity-0')) {
+                dashboard.classList.remove('opacity-0');
+            }
+            
+            lucide.createIcons();
+        }
+
+        window.handleAssetChange = (ticker) => {
+            state.activeTicker = ticker;
+            updateAssetTabs();
+            handleRunSimulation();
+        };
+
+        // --- INIT ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('btn-toggle-settings');
+            const closeBtn = document.getElementById('btn-close-settings');
+            const panel = document.getElementById('settings-panel');
+            
+            const togglePanel = () => {
+                panel.classList.toggle('hidden');
+                toggleBtn.classList.toggle('bg-input');
+                toggleBtn.classList.toggle('text-accent');
+                toggleBtn.classList.toggle('border-accent');
+            };
+
+            toggleBtn.onclick = togglePanel;
+            closeBtn.onclick = togglePanel;
+
+            document.getElementById('btn-run-sim').onclick = handleRunSimulation;
+            document.getElementById('btn-apply-run').onclick = handleRunSimulation;
+
+            const updateState = (id, key) => {
+                const el = document.getElementById('input-' + id);
+                const disp = document.getElementById('val-' + id);
+                el.oninput = (e) => {
+                    const val = parseFloat(e.target.value);
+                    state.params[key] = val;
+                    disp.innerText = (key.includes('Pct') ? val.toFixed(1) + '%' : val);
+                    if(key === 'pinbarThreshold') {
+                        document.getElementById('text-pinbar-threshold').innerText = Math.round(val * 100);
+                    }
+                };
+            };
+
+            updateState('stop-loss', 'stopLossPct');
+            updateState('take-profit', 'takeProfitPct');
+            updateState('macd', 'macdSensitivity');
+            updateState('pinbar', 'pinbarThreshold');
+
+            updateAssetTabs();
+            handleRunSimulation();
+            lucide.createIcons();
+        });
+
+    </script>
+</body>
+</html>
