@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Playwright File Upload & Tabs Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #1f2933;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 6px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        a,
+        button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 14px;
+            background: #2563eb;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover,
+        a:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Playwright Automation Demo</h1>
+        <p>File Upload, New Tab, and New Window Handling</p>
+    </header>
+
+    <main>
+        <!-- File Upload Section -->
+        <section class="card">
+            <h2>File Upload</h2>
+            <input type="file" id="fileInput" />
+            <p id="fileName" class="result">No file selected</p>
+        </section>
+
+        <!-- New Tab Section -->
+        <section class="card">
+            <h2>Open in New Tab</h2>
+            <a href="tab.html" target="_blank" id="newTabLink" rel="noopener noreferrer">
+                Open Tab Page
+            </a>
+        </section>
+
+        <!-- New Window Section -->
+        <section class="card">
+            <h2>Open in New Window</h2>
+            <button id="openWindowBtn">Open Popup Window</button>
+        </section>
+    </main>
+
+    <script>
+        // File upload logic
+        const fileInput = document.getElementById("fileInput");
+        const fileName = document.getElementById("fileName");
+
+        fileInput.addEventListener("change", () => {
+            if (fileInput.files.length > 0) {
+                fileName.textContent = fileInput.files[0].name;
+            } else {
+                fileName.textContent = "No file selected";
+            }
+        });
+
+        // Popup window logic
+        const openWindowBtn = document.getElementById("openWindowBtn");
+
+        openWindowBtn.addEventListener("click", () => {
+            window.open(
+                "window.html",
+                "popupWindow",
+                "width=500,height=400"
+            );
+        });
+
+    </script>
+</body>
+
+</html>

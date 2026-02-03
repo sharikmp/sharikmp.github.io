@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>New Tab Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2ff;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #1e40af;
+      margin-top: 0;
+    }
+
+    p {
+      color: #374151;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 16px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .status {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #065f46;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="tabTitle">New Tab Loaded</h1>
+    <p>This page was opened in a new browser tab.</p>
+
+    <button id="tabActionBtn">Confirm Tab Interaction</button>
+
+    <p id="tabStatus" class="status" hidden>
+      Tab interaction successful
+    </p>
+  </div>
+
+  <script>
+    document
+      .getElementById('tabActionBtn')
+      .addEventListener('click', () => {
+        const status = document.getElementById('tabStatus');
+        status.hidden = false;
+      });
+  </script>
+</body>
+</html>

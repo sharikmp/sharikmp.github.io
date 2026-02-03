@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Popup Window</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7ed;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .popup {
+      max-width: 500px;
+      margin: auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 8px;
+      border: 2px solid #f59e0b;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #92400e;
+    }
+
+    p {
+      color: #4b5563;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #f59e0b;
+      color: #fff;
+    }
+
+    .danger {
+      background: #dc2626;
+      color: #fff;
+      margin-left: 10px;
+    }
+
+    .status {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #065f46;
+    }
+  </style>
+</head>
+<body>
+  <div class="popup">
+    <h1 id="windowTitle">Popup Window Opened</h1>
+    <p>This page was opened as a separate browser window.</p>
+
+    <button id="confirmPopupBtn" class="primary">
+      Confirm Popup Interaction
+    </button>
+
+    <button id="closePopupBtn" class="danger">
+      Close Window
+    </button>
+
+    <p id="popupStatus" class="status" hidden>
+      Popup interaction confirmed
+    </p>
+  </div>
+
+  <script>
+    document
+      .getElementById('confirmPopupBtn')
+      .addEventListener('click', () => {
+        document.getElementById('popupStatus').hidden = false;
+      });
+
+    document
+      .getElementById('closePopupBtn')
+      .addEventListener('click', () => {
+        window.close();
+      });
+  </script>
+</body>
+</html>
