@@ -10,8 +10,9 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-    <style>
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="assets/styles.css">
+        <style>
         :root {
             --bg-color: #FFFFFF;
             --primary: #F16AAB;
@@ -406,22 +407,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Shared Application Logic -->
+    <script src="assets/app.js"></script>
+
+    <!-- Page-Specific Logic -->
     <script>
         let verificationCompleted = false;
-        let mockOTP = '123456';
-
-        function getCart() {
-            const cart = localStorage.getItem('wondertoyz_cart');
-            return cart ? JSON.parse(cart) : [];
-        }
-
-        function calculateTotals() {
-            const cart = getCart();
-            const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
-            const tax = subtotal * 0.1;
-            const total = subtotal + tax;
-            return { subtotal, tax, total };
-        }
 
         function renderOrderSummary() {
             const cart = getCart();
@@ -440,7 +431,7 @@
                 </div>
             `).join('');
 
-            const { subtotal, tax, total } = calculateTotals();
+            const { subtotal, tax, total } = calculateTotals(cart);
             document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
             document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
             document.getElementById('total').textContent = `$${total.toFixed(2)}`;
@@ -475,13 +466,13 @@
             if (!validateForm()) return;
 
             const phone = document.getElementById('phone').value;
-            alert(`📱 OTP will be sent to: ${phone}\n\nFor demo, the OTP is: 123456`);
+            alert(`📱 OTP will be sent to: ${phone}\n\nFor demo, the OTP is: ${SETTINGS.mockOTP}`);
             document.getElementById('otp-section').style.display = 'block';
         }
 
         function verifyOTP() {
             const enteredOTP = document.getElementById('otp').value;
-            if (enteredOTP === mockOTP) {
+            if (enteredOTP === SETTINGS.mockOTP) {
                 verificationCompleted = true;
                 document.getElementById('verification-status').className = 'verification-badge verified';
                 document.getElementById('verification-status').innerHTML = `<i class="bi bi-check-circle me-2"></i> Phone verified successfully`;
@@ -489,7 +480,7 @@
                 document.getElementById('place-order-btn').disabled = false;
                 alert('✅ Phone verification successful!');
             } else {
-                alert('❌ Invalid OTP. Please try again. (Demo OTP: 123456)');
+                alert(`❌ Invalid OTP. Please try again. (Demo OTP: ${SETTINGS.mockOTP})`);
             }
         }
 
@@ -507,7 +498,7 @@
                 return;
             }
 
-            const { subtotal, tax, total } = calculateTotals();
+            const { subtotal, tax, total } = calculateTotals(cart);
             const orderId = 'ORD-' + Date.now();
             
             const order = {
@@ -522,19 +513,17 @@
             };
 
             // Save order to localStorage
-            let orders = JSON.parse(localStorage.getItem('wondertoyz_orders') || '[]');
-            orders.push(order);
-            localStorage.setItem('wondertoyz_orders', JSON.stringify(orders));
+            saveOrder(order);
 
             // Clear cart
-            localStorage.removeItem('wondertoyz_cart');
+            localStorage.removeItem(STORAGE_KEYS.CART);
 
             // Redirect to order status page
             window.location.href = `order-status.html?orderId=${orderId}`;
         }
 
         // Initialize
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             renderOrderSummary();
         });
     </script>
