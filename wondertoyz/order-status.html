@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | WonderToys</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --primary: #F16AAB;
+            --secondary: #FFD34C;
+            --tertiary: #95BA43;
+            --text-dark: #2C3E50;
+            --text-light: #6C7A89;
+            --radius-lg: 30px;
+            --radius-md: 20px;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --wt-dark: #2B2B2B;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f0f4ff 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .navbar-brand span {
+            color: var(--secondary);
+        }
+
+        .order-status-container {
+            padding: 100px 0 60px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #95BA43 0%, #7a9c36 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 3rem;
+            color: white;
+            animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .success-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
+
+        .order-details {
+            background: #f8f9fa;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin: 40px 0;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .detail-value {
+            color: var(--text-light);
+            word-break: break-all;
+        }
+
+        .order-id {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .order-items {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin: 40px 0;
+            text-align: left;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .order-items h4 {
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .item-card {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background: white;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .item-qty {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: var(--tertiary);
+            font-size: 1.2rem;
+        }
+
+        .summary-box {
+            background: #f8f9fa;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .summary-row.total {
+            border: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--tertiary);
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 2px solid var(--tertiary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-action {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary-action:hover {
+            background-color: #d85295;
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        .btn-secondary-action {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            background-color: var(--tertiary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-secondary-action:hover {
+            background-color: #7a9c36;
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, rgba(149, 186, 67, 0.1) 0%, rgba(241, 106, 171, 0.05) 100%);
+            border-left: 5px solid var(--tertiary);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-banner i {
+            color: var(--tertiary);
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .success-card {
+                padding: 40px 20px;
+            }
+
+            .success-title {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary-action,
+            .btn-secondary-action {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Wonder<span>Toyz</span></a>
+        </div>
+    </nav>
+
+    <!-- Order Status Section -->
+    <div class="order-status-container">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+
+            <h1 class="success-title">Order Confirmed! 🎉</h1>
+            <p class="success-subtitle">Thank you for your magical order!</p>
+
+            <div class="order-details">
+                <div style="text-align: center;">
+                    <p style="font-size: 0.9rem; margin-bottom: 10px;">Order ID</p>
+                    <div class="order-id" id="order-id">ORD-1234567890</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Order Date</span>
+                    <span class="detail-value" id="order-date">Feb 26, 2026</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Estimated Delivery</span>
+                    <span class="detail-value">5-7 Business Days</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value"><span class="badge" style="background-color: var(--tertiary);">Processing</span></span>
+                </div>
+            </div>
+
+            <div class="info-banner">
+                <i class="bi bi-info-circle"></i>
+                <strong>What's Next?</strong>
+                <p style="margin: 5px 0 0 0;">We're preparing your order for shipment. You'll receive tracking updates via email and WhatsApp.</p>
+            </div>
+
+            <div class="order-items">
+                <h4>📦 Order Items</h4>
+                <div id="order-items-list">
+                    <!-- Items will be rendered here -->
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="summary-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (10%)</span>
+                        <span id="summary-tax">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="summary-shipping">FREE</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total Amount</span>
+                        <span id="summary-total">$0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="order-tracking.html" class="btn-primary-action" onclick="window.location.href='order-tracking.html?orderId=' + document.getElementById('order-id').textContent;">
+                    <i class="bi bi-geo-alt me-2"></i> Track Order
+                </a>
+                <a href="index.html" class="btn-secondary-action">
+                    <i class="bi bi-shop me-2"></i> Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function getOrderDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const orderId = params.get('orderId');
+
+            if (!orderId) {
+                // Redirect to home if no order ID
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Get order from localStorage
+            const orders = JSON.parse(localStorage.getItem('wondertoyz_orders') || '[]');
+            const order = orders.find(o => o.orderId === orderId);
+
+            if (!order) {
+                document.body.innerHTML = '<div style="text-align: center; padding: 100px;"><h2>Order not found</h2></div>';
+                return;
+            }
+
+            return order;
+        }
+
+        function renderOrderDetails() {
+            const order = getOrderDetails();
+            if (!order) return;
+
+            // Set order ID and date
+            document.getElementById('order-id').textContent = order.orderId;
+            document.getElementById('order-date').textContent = new Date(order.timestamp).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+
+            // Render order items
+            const itemsList = document.getElementById('order-items-list');
+            itemsList.innerHTML = order.items.map(item => `
+                <div class="item-card">
+                    <img src="${item.image}" alt="${item.name}" class="item-image">
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-qty">Quantity: ${item.quantity}</div>
+                    </div>
+                    <div class="item-price">$${(parseFloat(item.price) * item.quantity).toFixed(2)}</div>
+                </div>
+            `).join('');
+
+            // Update summary
+            document.getElementById('summary-subtotal').textContent = `$${order.subtotal.toFixed(2)}`;
+            document.getElementById('summary-tax').textContent = `$${order.tax.toFixed(2)}`;
+            document.getElementById('summary-total').textContent = `$${order.total.toFixed(2)}`;
+
+            // Update page title
+            document.title = `Order ${order.orderId} Confirmed | WonderToys`;
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            renderOrderDetails();
+        });
+    </script>
+</body>
+
+</html>

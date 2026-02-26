@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WonderToys | Magical Playtime</title>
+    <!-- Google Fonts for a playful yet clean look -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & THEMING
+           ========================================= */
+        :root {
+            --bg-color: #FFFFFF;
+            --primary: #F16AAB;
+            --secondary: #FFD34C;
+            --tertiary: #95BA43;
+            --text-dark: #2C3E50;
+            --text-light: #6C7A89;
+            --radius-lg: 30px;
+            --radius-md: 20px;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(241, 106, 171, 0.2);
+            --wt-pink: var(--primary);
+            --wt-yellow: #FFD34C;
+            --wt-green: #95BA43;
+            --wt-white: #FFFFFF;
+            --wt-dark: #2B2B2B;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* =========================================
+           ANIMATIONS
+           ========================================= */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-bg {
+            0% {
+                box-shadow: 0 0 0 0 rgba(241, 106, 171, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(241, 106, 171, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(241, 106, 171, 0);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        /* =========================================
+           CUSTOM COMPONENTS
+           ========================================= */
+        /* Buttons */
+        .btn-custom {
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: white;
+            animation: pulse-bg 2s infinite;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #d85295;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(241, 106, 171, 0.4);
+            animation: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+            cursor: pointer;
+        }
+
+        .navbar-brand span {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 120px 0 60px;
+            position: relative;
+            background: radial-gradient(circle at top right, rgba(255, 211, 76, 0.1), transparent 40%), radial-gradient(circle at bottom left, rgba(241, 106, 171, 0.1), transparent 40%);
+            overflow: hidden;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--wt-dark);
+            margin-bottom: 20px;
+        }
+
+        .hero-title span.highlight-pink {
+            color: var(--wt-pink);
+        }
+
+        .hero-title span.highlight-yellow {
+            color: var(--wt-yellow);
+        }
+
+        .hero-title span.highlight-green {
+            color: var(--wt-green);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-gif-container img {
+            max-width: 100%;
+            border-radius: var(--radius-lg);
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.15));
+            border: 8px solid var(--secondary);
+            background-color: white;
+        }
+
+        /* Product Cards */
+        .product-card {
+            background: white;
+            border-radius: var(--radius-md);
+            border: 2px solid transparent;
+            padding: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--secondary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-card .img-wrapper {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .product-price {
+            color: var(--tertiary);
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-top: auto;
+        }
+
+        .badge-new {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(241, 106, 171, 0.3);
+        }
+
+        .add-btn {
+            background-color: var(--tertiary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(149, 186, 67, 0.3);
+        }
+
+        .add-btn:hover {
+            background-color: #7a9c36;
+            transform: scale(1.1);
+        }
+
+        /* Views */
+        #product-detail-view {
+            display: none;
+            padding-top: 100px;
+            padding-bottom: 60px;
+            min-height: 80vh;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        /* Detail Page specific */
+        .detail-img-wrapper {
+            background-color: #f8f9fa;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            border: 4px dashed var(--secondary);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-img-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(241, 106, 171, 0.05) 0%, transparent 60%);
+            animation: float 10s linear infinite;
+        }
+
+        .detail-price {
+            font-size: 3rem;
+            color: var(--tertiary);
+            font-weight: bold;
+        }
+
+        .back-btn {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 80px 0 30px;
+            margin-top: 60px;
+            border-top: 10px solid var(--primary);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 20%;
+            width: 100px;
+            height: 10px;
+            background-color: var(--secondary);
+        }
+
+        .footer::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 20%;
+            width: 150px;
+            height: 10px;
+            background-color: var(--tertiary);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: var(--secondary);
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Custom Toast */
+        #toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .custom-toast {
+            background-color: var(--tertiary);
+            color: white;
+            border-radius: 15px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(149, 186, 67, 0.4);
+            margin-bottom: 10px;
+            animation: fadeInUp 0.3s ease-out forwards;
+        }
+
+        .btn:hover {
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        /* Custom Buttons */
+        .btn-custom {
+            border-radius: 50px;
+            padding: 14px 36px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-pink {
+            background-color: var(--wt-pink);
+            color: var(--wt-white);
+            box-shadow: 0 8px 20px rgba(241, 106, 171, 0.3);
+        }
+
+        .btn-pink:hover {
+            background-color: #d85797;
+            color: var(--wt-white);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(241, 106, 171, 0.4);
+        }
+
+        .btn-green {
+            background-color: var(--wt-green);
+            color: var(--wt-white);
+            box-shadow: 0 8px 20px rgba(149, 186, 67, 0.3);
+        }
+
+        .btn-green:hover {
+            background-color: #82a339;
+            color: var(--wt-white);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(149, 186, 67, 0.4);
+        }
+
+        /* Responsive typography */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .detail-price {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Trending Video Carousel Styling */
+        .trending-carousel-wrapper {
+            position: relative;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 12px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .trending-carousel-wrapper:hover {
+            transform: perspective(1000px) rotateY(0deg) translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .trending-carousel {
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: var(--wt-dark);
+        }
+
+        .trending-carousel video {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            opacity: 0.95;
+        }
+
+        .custom-caption {
+            position: relative;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: #FFFFFF;
+            color: var(--wt-dark);
+            border-radius: 0;
+            padding: 25px 30px 45px 30px;
+            box-shadow: none;
+            text-align: left;
+            backdrop-filter: none;
+        }
+
+        .custom-caption h5 {
+            margin-bottom: 5px;
+            font-weight: 800;
+            color: var(--wt-pink);
+            font-size: 1.25rem;
+        }
+
+        .custom-caption p {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #555;
+        }
+
+        .carousel-indicators [data-bs-target] {
+            background-color: var(--wt-pink);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 6px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 991px) {
+            .hero-section {
+                align-items: flex-start;
+                padding-top: 120px;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .trending-carousel-wrapper {
+                transform: none;
+                margin-top: 40px;
+            }
+
+            .trending-carousel-wrapper:hover {
+                transform: translateY(-5px);
+            }
+
+            .trending-carousel video {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .navbar {
+                padding: 10px 0;
+                background: rgba(255, 255, 255, 0.9);
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                margin: 0 auto 30px auto;
+            }
+
+            .btn-custom {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .custom-caption {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand brand-font fw-bold" onclick="goBackToShop()">Wonder<span>Toyz</span></a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link fw-bold active" href="#" onclick="goBackToShop()">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="#product-grid-section" onclick="goBackToShop()">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="#" onclick="goBackToShop()">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="#footer" onclick="goBackToShop()">Contact</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <button
+                            class="btn btn-outline-dark rounded-circle px-3 py-2 position-relative border-0 shadow-sm"
+                            style="background-color: #f8f9fa;">
+                            <i class="bi bi-cart3 fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                                style="background-color: var(--primary) !important; border: 2px solid white;">
+                                3
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN VIEW (Hero + Grid) -->
+    <div id="main-view">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <!-- 3D Background Container -->
+            <div id="canvas-container"></div>
+
+            <div class="container hero-content">
+                <svg style="position: absolute; bottom: 33%; left: 11%; width: 22px; color: var(--wt-green);"
+                    viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                </svg>
+
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-5 mb-lg-0 text-center text-lg-start animate-fade-up">
+                        <span class="badge rounded-pill mb-3 py-2 px-3"
+                            style="background-color: rgba(241, 106, 171, 0.1); color: var(--primary); font-weight: bold;">
+                            ✨ New Arrivals for 2026
+                        </span>
+                        <h1 class="hero-title">
+                            Play. <br>
+                            Discover. <br>
+                            <span class="highlight-pink">Imagine</span> <span class="highlight-yellow">Every</span>
+                            <span class="highlight-green">Day</span>
+                        </h1>
+                        <p class="hero-subtitle animate-fade-up delay-1">
+                            Explore a world of endless fun and creativity. Hand-picked toys designed to spark joy and
+                            nurture the genius in every child.
+                        </p>
+                        <div
+                            class="animate-fade-up delay-2 d-flex gap-3 justify-content-center justify-content-lg-start">
+                            <a href="#product-grid-section" class="btn btn-custom btn-pink px-5">Shop Collection</a>
+                            <a href="#product-grid-section" class="btn btn-custom btn-green px-5">Explore Offers</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center animate-fade-up delay-3">
+                        <div class="hero-gif-container position-relative">
+
+                            <!-- Right Column: Trending Video Carousel -->
+                            <div class="trending-carousel-wrapper">
+                                <div id="trendingToysCarousel" class="carousel slide trending-carousel"
+                                    data-bs-ride="carousel" data-bs-interval="4000">
+
+                                    <!-- Indicators -->
+                                    <div class="carousel-indicators mb-3">
+                                        <button type="button" data-bs-target="#trendingToysCarousel"
+                                            data-bs-slide-to="0" class="active" aria-current="true"
+                                            aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#trendingToysCarousel"
+                                            data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#trendingToysCarousel"
+                                            data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    </div>
+
+                                    <!-- Carousel Items -->
+                                    <div class="carousel-inner">
+                                        <!-- Item 1 -->
+                                        <div class="carousel-item active">
+                                            <video autoplay loop muted playsinline>
+                                                <source src="./trending1.mp4" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <div class="carousel-caption custom-caption">
+                                                <h5>Magic Induction RC Car</h5>
+                                                <p>#1 Trending Smart Toy this week!</p>
+                                            </div>
+                                        </div>
+                                        <!-- Item 2 -->
+                                        <!-- <div class="carousel-item">
+                                            <video autoplay loop muted playsinline>
+                                                <source src="https://www.w3schools.com/html/mov_bbb.mp4"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <div class="carousel-caption custom-caption">
+                                                <h5 style="color: var(--wt-green);">Eco-Build Kits</h5>
+                                                <p>Nurturing creativity sustainably 🌿</p>
+                                            </div>
+                                        </div> -->
+                                        <!-- Item 3 -->
+                                        <!-- <div class="carousel-item">
+                                            <video autoplay loop muted playsinline>
+                                                <source src="https://www.w3schools.com/html/mov_bbb.mp4"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <div class="carousel-caption custom-caption">
+                                                <h5 style="color: var(--wt-yellow);">Magic Plushies</h5>
+                                                <p>Soft, cuddly, and magical ✨</p>
+                                            </div>
+                                        </div> -->
+                                    </div>
+
+                                    <!-- Controls -->
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#trendingToysCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#trendingToysCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div
+                                style="position: absolute; top: 10%; left: -5%; width: 20px; height: 20px; background-color: var(--wt-green); border-radius: 50%; animation: float 3s infinite reverse;">
+                            </div>
+                            <div
+                                style="position: absolute; bottom: 10%; right: -5%; width: 30px; height: 30px; background-color: var(--wt-pink); border-radius: 50%; animation: float 4s infinite;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid Section -->
+        <section id="product-grid-section" class="py-5 bg-light">
+            <div class="container py-4">
+                <div class="text-center mb-5 animate-fade-up">
+                    <h2 class="brand-font" style="color: var(--text-dark); font-size: 2.8rem;">Our <span style="color: var(--tertiary);">Treasures</span></h2>
+                    <p class="text-muted fs-5">Handpicked wonders for imaginative minds.</p>
+                </div>
+
+                <!-- Filters -->
+                <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap animate-fade-up delay-1">
+                    <button class="btn btn-dark rounded-pill px-4">All Toys</button>
+                    <button class="btn btn-outline-dark rounded-pill px-4 bg-white">Educational</button>
+                    <button class="btn btn-outline-dark rounded-pill px-4 bg-white">Action Figures</button>
+                    <button class="btn btn-outline-dark rounded-pill px-4 bg-white">Puzzles</button>
+                </div>
+
+                <!-- Product Container (JS Injected) -->
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="product-container">
+                    <!-- Products rendered via JS -->
+                </div>
+
+                <div class="text-center mt-5">
+                    <button class="btn btn-outline-secondary rounded-pill px-5 py-2 fw-bold"
+                        onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top <i
+                            class="bi bi-arrow-up ms-2"></i></button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PRODUCT DETAIL VIEW -->
+    <div id="product-detail-view">
+        <div class="container">
+            <a href="#" class="back-btn mb-4 fs-5" onclick="goBackToShop(); return false;">
+                <i class="bi bi-arrow-left-circle-fill me-2 fs-3" style="color: var(--primary);"></i> Back to Magical
+                Shop
+            </a>
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <div class="detail-img-wrapper text-center h-100 d-flex align-items-center justify-content-center">
+                        <img id="detail-img" src="" alt="Toy" class="img-fluid position-relative"
+                            style="max-height: 450px; object-fit: contain; z-index: 2;">
+                    </div>
+                </div>
+                <div class="col-md-6 ps-md-5 d-flex flex-column justify-content-center">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="badge rounded-pill py-2 px-3"
+                            style="background-color: var(--secondary); color: var(--text-dark); font-weight: bold;"><i
+                                class="bi bi-star-fill me-1"></i> Top Rated</span>
+                        <span class="badge rounded-pill py-2 px-3"
+                            style="background-color: rgba(149, 186, 67, 0.1); color: var(--tertiary); font-weight: bold;">In
+                            Stock</span>
+                    </div>
+
+                    <h2 id="detail-title" class="brand-font mb-2"
+                        style="color: var(--text-dark); font-size: 3.5rem; line-height: 1.1;">Product Name</h2>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="text-warning me-2">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-half"></i>
+                        </div>
+                        <span class="text-muted">(128 Reviews)</span>
+                    </div>
+
+                    <p id="detail-price" class="detail-price mb-4">$0.00</p>
+
+                    <p class="lead" style="color: var(--text-light); line-height: 1.8;">
+                        Bring home the ultimate playtime companion! Carefully crafted to ensure hours of interactive
+                        fun, boosting creativity and motor skills. Made with 100% child-safe, eco-friendly materials
+                        that parents can trust.
+                    </p>
+
+                    <ul class="list-unstyled mb-4" style="color: var(--text-dark);">
+                        <li class="mb-2"><i class="bi bi-check2-circle me-2" style="color: var(--tertiary);"></i>
+                            Recommended for Ages 3+</li>
+                        <li class="mb-2"><i class="bi bi-check2-circle me-2" style="color: var(--tertiary);"></i>
+                            Non-toxic, BPA-free materials</li>
+                        <li class="mb-2"><i class="bi bi-check2-circle me-2" style="color: var(--tertiary);"></i> No
+                            assembly required</li>
+                    </ul>
+
+                    <div class="d-flex flex-wrap gap-3 mt-2">
+                        <div class="input-group" style="width: 130px;">
+                            <button class="btn btn-outline-secondary border-2" type="button"
+                                onclick="document.getElementById('qty').stepDown()">-</button>
+                            <input type="number" id="qty" class="form-control text-center border-2 fw-bold" value="1"
+                                min="1">
+                            <button class="btn btn-outline-secondary border-2" type="button"
+                                onclick="document.getElementById('qty').stepUp()">+</button>
+                        </div>
+                        <button class="btn btn-primary-custom flex-grow-1 fs-5" onclick="triggerAddToCart()">
+                            <i class="bi bi-cart-plus me-2"></i> Add to Cart
+                        </button>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="row text-center g-3">
+                        <div class="col-4">
+                            <i class="bi bi-shield-check fs-2 d-block mb-2" style="color: var(--tertiary);"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">1 Year<br>Warranty</span>
+                        </div>
+                        <div class="col-4 border-start border-end">
+                            <i class="bi bi-box-seam fs-2 d-block mb-2" style="color: var(--secondary);"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">Free<br>Shipping</span>
+                        </div>
+                        <div class="col-4">
+                            <i class="bi bi-arrow-return-left fs-2 d-block mb-2" style="color: var(--primary);"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">30-Day<br>Returns</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4 pe-lg-5">
+                    <h3 class="brand-font mb-4" style="color: white; font-size: 2rem;">Wonder<span
+                            style="color: var(--secondary);">Toys</span></h3>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.8;">Making childhood magical, one toy at a
+                        time. We believe in the power of play to educate, inspire, and bring families together.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="brand-font mb-4" style="color: var(--tertiary);">Shop</h5>
+                    <ul class="list-unstyled" style="line-height: 2;">
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Educational</a></li>
+                        <li><a href="#">Sale Items</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="brand-font mb-4" style="color: var(--tertiary);">Support</h5>
+                    <ul class="list-unstyled" style="line-height: 2;">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="brand-font mb-4" style="color: var(--secondary);">Join the Magic!</h5>
+                    <p style="color: rgba(255,255,255,0.7);">Subscribe to our newsletter for fun updates, play ideas,
+                        and magical discounts!</p>
+                    <div class="input-group mt-3">
+                        <input type="email" class="form-control py-3 rounded-start-pill border-0"
+                            placeholder="Your email address...">
+                        <button class="btn px-4 rounded-end-pill fw-bold" type="button"
+                            style="background-color: var(--primary); color: white;">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
+                <p class="mb-0" style="color: rgba(255,255,255,0.5);">&copy; 2026 WonderToys E-Commerce. Designed with
+                    <i class="bi bi-heart-fill" style="color: var(--primary);"></i> and Code.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Application Logic -->
+    <script>
+
+        // Elements 
+        const productContainer = document.getElementById('product-container');
+        const mainView = document.getElementById('main-view');
+        const detailView = document.getElementById('product-detail-view');
+
+        // Generate Product Data (100 items)
+        const products = [];
+
+        // =========================================
+        // THREE.JS PAPER PLANE ANIMATION
+        // =========================================
+        window.onload = function () {
+            init3DScene();
+            generateMockProducts();
+            renderProducts();
+        };
+
+
+        // Generate SVG avatars using Dicebear Bottts API (cute toy robots)
+        function getImageUrl(seed) {
+            return `https://api.dicebear.com/7.x/bottts/svg?seed=${seed}&radius=20&backgroundColor=f8f9fa`;
+        }
+
+        // Generate 100 unique mock products with fun names, prices, and images
+        function generateMockProducts() {
+            // Array of fun adjectives and toy nouns to generate 100 unique names
+            const adjectives = ["Super", "Mega", "Magic", "Bouncy", "Cuddly", "Flying", "Glowing", "Robo", "Mini", "Galactic", "Wobbly", "Fuzzy"];
+            const categories = ["Bear", "Car", "Drone", "Blocks", "Puzzle", "Dinosaur", "Unicorn", "Train", "Rocket", "Slime", "Robot", "Bunny"];
+
+            for (let i = 1; i <= 100; i++) {
+                const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+                const category = categories[Math.floor(Math.random() * categories.length)];
+                products.push({
+                    id: i,
+                    name: `${adj} ${category}`,
+                    price: (Math.random() * (45 - 9) + 9).toFixed(2),
+                    image: getImageUrl(`WonderToy${i}${Math.random()}`),
+                    isNew: i < 5,                                                           // Mark first 5 products as new arrivals,
+                    reviewStars: (Math.random() * 5).toFixed(1),                            // Random rating between 0.0 and 5.0
+                    reviewCount: Math.floor(Math.random() * 5000) + 1,                      // Random review count between 1 and 500
+                    category: categories[Math.floor(Math.random() * categories.length)]     // Random category based on noun
+                });
+            }
+        }
+
+        // Render Products to DOM
+        function renderProducts() {
+
+            products.forEach((product, index) => {
+                // Cascade animation for the first 16 items
+                const animationDelay = index < 16 ? `style="animation-delay: ${(index % 4) * 0.1}s"` : '';
+                const animateClass = index < 16 ? 'animate-fade-up' : '';
+
+                const badgeHtml = product.isNew ? `<span class="badge-new">NEW ✨</span>` : '';
+
+                const cardHtml = `
+                <div class="col ${animateClass}" ${animationDelay}>
+                    <div class="product-card" onclick="openProduct(${product.id})">
+                        <div class="img-wrapper">
+                            ${badgeHtml}
+                            <img src="${product.image}" alt="${product.name}" loading="lazy">
+                        </div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="text-warning mb-2" style="font-size: 0.8rem;">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="product-price">$${product.price}</span>
+                            <button class="add-btn" onclick="triggerAddToCart(event)" aria-label="Add to Cart">
+                                <i class="bi bi-plus-lg fw-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+                productContainer.insertAdjacentHTML('beforeend', cardHtml);
+            });
+
+        }
+
+        // Navigation Logic (SPA simulation)
+        function openProduct(id) {
+            // Find product data
+            const product = products.find(p => p.id === id);
+
+            // Populate details page
+            document.getElementById('detail-img').src = product.image;
+            document.getElementById('detail-title').innerText = product.name;
+            document.getElementById('detail-price').innerText = `$${product.price}`;
+            document.getElementById('qty').value = 1;
+
+            // Switch views
+            mainView.style.display = 'none';
+            detailView.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'instant' }); // snap to top
+        }
+
+        // Navigate back to main shop view (SPA simulation)
+        function goBackToShop() {
+            // Switch views back
+            detailView.style.display = 'none';
+            mainView.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Custom Toast Notification for Cart
+        function triggerAddToCart(event) {
+            // Stop propagation so we don't trigger the card's onclick (which opens detail view)
+            if (event) {
+                event.stopPropagation();
+            }
+
+            const toastContainer = document.getElementById('toast-container');
+
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.innerHTML = `
+                <i class="bi bi-bag-check-fill fs-4"></i>
+                <div>
+                    <strong class="d-block">Added to Cart!</strong>
+                    <span style="font-size: 0.85rem; opacity: 0.9;">The magic is on its way.</span>
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Animate out and remove after 3 seconds
+            setTimeout(() => {
+                toast.style.animation = 'fadeInUp 0.3s ease-in reverse forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300); // Wait for reverse animation
+            }, 3000);
+        }
+
+        // 3D Scene Initialization with THREE.js
+        function init3DScene() {
+            const container = document.getElementById('canvas-container');
+            const heroSection = document.querySelector('.hero-section');
+
+            if (!container || !heroSection) return;
+
+            // Scene Setup
+            const scene = new THREE.Scene();
+            // Fog helps blend planes into the light background
+            scene.fog = new THREE.Fog(0xFFFFFF, 20, 80);
+
+            // Camera Setup
+            const camera = new THREE.PerspectiveCamera(45, heroSection.clientWidth / heroSection.clientHeight, 0.1, 1000);
+            camera.position.z = 40;
+
+            // Renderer Setup
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(heroSection.clientWidth, heroSection.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0); // Transparent background to show CSS gradient
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            dirLight.position.set(20, 30, 20);
+            scene.add(dirLight);
+
+            // Theme Colors
+            const themeColors = [
+                0xF16AAB, // Pink
+                0xFFD34C, // Yellow
+                0x95BA43  // Green
+            ];
+
+            // Custom Paper Plane Geometry
+            const geometry = new THREE.BufferGeometry();
+            const vertices = new Float32Array([
+                0, -0.2, 3, 1.8, 0.6, -2, 0.1, 0.2, -2,                           // Right Wing
+                0, -0.2, 3, -0.1, 0.2, -2, -1.8, 0.6, -2,                          // Left Wing
+                0, -0.2, 3, 0.1, 0.2, -2, -0.1, 0.2, -2,                          // Center Top Fold (gives the paper thickness at the top)
+                0, -0.2, 3, 0, -0.8, -2, 0.1, 0.2, -2,                           // Right Keel (fuselage)
+                0, -0.2, 3, -0.1, 0.2, -2, 0, -0.8, -2                             // Left Keel (fuselage)
+            ]);
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+            geometry.computeVertexNormals();
+
+            const materialTemplate = new THREE.MeshStandardMaterial({
+                roughness: 0.9,
+                metalness: 0.1,
+                side: THREE.DoubleSide,
+                flatShading: true
+            });
+
+            const planes = [];
+            const planeCount = 10; // Number of flying planes
+
+            for (let i = 0; i < planeCount; i++) {
+                const mat = materialTemplate.clone();
+                mat.color.setHex(themeColors[Math.floor(Math.random() * themeColors.length)]);
+
+                const mesh = new THREE.Mesh(geometry, mat);
+                const scale = Math.random() * 0.8 + 0.3;
+                mesh.scale.set(scale, scale, scale);
+
+                resetPlane(mesh, true);
+
+                mesh.userData = {
+                    speed: Math.random() * 0.15 + 0.1,
+                    wobbleSpeed: Math.random() * 0.02 + 0.01,
+                    wobbleOffsetX: Math.random() * Math.PI * 2,
+                    wobbleOffsetY: Math.random() * Math.PI * 2,
+                    rotXSpeed: (Math.random() - 0.5) * 0.01,
+                    rotZSpeed: (Math.random() - 0.5) * 0.01,
+                };
+
+                scene.add(mesh);
+                planes.push(mesh);
+            }
+
+            function resetPlane(mesh, initial = false) {
+                const radius = initial ? Math.random() * 40 : 50;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+
+                // Base position
+                let x = radius * Math.sin(phi) * Math.cos(theta);
+                let y = radius * Math.sin(phi) * Math.sin(theta);
+                let z = (radius * Math.cos(phi)) - (initial ? 0 : 20);
+
+                // Bias to the RIGHT side (positive X)
+                x = Math.abs(x) + 5;
+
+                mesh.position.set(x, y, z);
+
+                // Look at a target also biased to the right
+                const target = new THREE.Vector3(
+                    (Math.random() * 20) + 10, // positive X target
+                    (Math.random() - 0.5) * 20,
+                    (Math.random() - 0.5) * 30
+                );
+                mesh.lookAt(target);
+            }
+
+            // Interactive Parallax
+            let targetMouseX = 0;
+            let targetMouseY = 0;
+            let currentMouseX = 0;
+            let currentMouseY = 0;
+
+            // Only track mouse over hero section to avoid global jumping
+            // heroSection.addEventListener('mousemove', (event) => {
+            //     const rect = heroSection.getBoundingClientRect();
+            //     targetMouseX = ((event.clientX - rect.left) / rect.width) * 2 - 2;
+            //     targetMouseY = -((event.clientY - rect.top) / rect.height) * 2 + ;
+            // });
+
+            // Handle Window Resize scoped to hero section
+            window.addEventListener('resize', () => {
+                camera.aspect = heroSection.clientWidth / heroSection.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(heroSection.clientWidth, heroSection.clientHeight);
+            });
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const time = Date.now() * 0.001;
+
+                currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+                currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+
+                camera.position.x = currentMouseX * 5;
+                camera.position.y = currentMouseY * 5;
+                camera.lookAt(new THREE.Vector3(15, 0, 0)); // Look slightly to the right to frame them well
+
+                planes.forEach(plane => {
+                    const data = plane.userData;
+                    plane.translateZ(data.speed);
+
+                    plane.rotation.x += Math.sin(time * 2 + data.wobbleOffsetX) * 0.002 + data.rotXSpeed;
+                    plane.rotation.z += Math.cos(time * 2 + data.wobbleOffsetY) * 0.005 + data.rotZSpeed;
+
+                    if (plane.position.distanceTo(scene.position) > 60) {
+                        resetPlane(plane);
+                    }
+                });
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        }
+    </script>
+</body>
+
+</html>

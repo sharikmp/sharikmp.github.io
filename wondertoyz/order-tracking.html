@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order | WonderToys</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --primary: #F16AAB;
+            --secondary: #FFD34C;
+            --tertiary: #95BA43;
+            --text-dark: #2C3E50;
+            --text-light: #6C7A89;
+            --radius-lg: 30px;
+            --radius-md: 20px;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --wt-dark: #2B2B2B;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-dark);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .navbar-brand span {
+            color: var(--secondary);
+        }
+
+        .tracking-container {
+            padding-top: 100px;
+            padding-bottom: 60px;
+            min-height: 80vh;
+        }
+
+        .tracking-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 40px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 30px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .order-id-section h3 {
+            margin: 0;
+            color: var(--text-dark);
+        }
+
+        .order-id-text {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .order-status-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .badge-processing {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-shipped {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .badge-delivered {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* Timeline */
+        .timeline {
+            margin-top: 40px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            width: 2px;
+            height: calc(100% + 30px);
+            background: linear-gradient(to bottom, var(--tertiary), #ddd);
+        }
+
+        .timeline-marker {
+            flex-shrink: 0;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-top: -5px;
+        }
+
+        .timeline-marker.active {
+            background: linear-gradient(135deg, var(--tertiary) 0%, #7a9c36 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(149, 186, 67, 0.3);
+        }
+
+        .timeline-marker.inactive {
+            background: #e9ecef;
+            color: #999;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 5px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .timeline-description {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .customer-info {
+            background: #f8f9fa;
+            border-radius: var(--radius-md);
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .info-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-dark);
+            word-break: break-all;
+        }
+
+        .masked-info {
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+        }
+
+        .support-section {
+            background: linear-gradient(135deg, rgba(241, 106, 171, 0.1) 0%, rgba(149, 186, 67, 0.1) 100%);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .support-section h5 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .support-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .support-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .support-btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .support-btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+
+        .support-btn-email {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .support-btn-email:hover {
+            background-color: #d85295;
+        }
+
+        .footer {
+            background-color: var(--wt-dark);
+            color: white;
+            padding: 50px 0 30px;
+            margin-top: 60px;
+            border-top: 10px solid var(--primary);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .info-row {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                gap: 20px;
+            }
+
+            .timeline-marker {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+
+            .support-buttons {
+                flex-direction: column;
+            }
+
+            .support-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Wonder<span>Toyz</span></a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Orders</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tracking Section -->
+    <div class="tracking-container">
+        <div class="container">
+            <h1 class="mb-5">📦 Track Your Order</h1>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="tracking-card">
+                        <div class="order-header">
+                            <div class="order-id-section">
+                                <h3>Order Details</h3>
+                                <div class="order-id-text" id="order-id">ORD-1234567890</div>
+                            </div>
+                            <div class="order-status-badge badge-processing" id="status-badge">
+                                📦 Processing
+                            </div>
+                        </div>
+
+                        <div class="timeline" id="timeline">
+                            <!-- Timeline items will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="tracking-card">
+                        <h5 class="mb-4" style="color: var(--text-dark);">Delivery Info</h5>
+                        <div class="customer-info">
+                            <div class="info-row">
+                                <div class="info-item">
+                                    <span class="info-label">Recipient</span>
+                                    <span class="info-value" id="recipient-name">John Doe</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Phone</span>
+                                    <span class="info-value masked-info" id="masked-phone">+1 ***** 4567</span>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-item" style="grid-column: 1 / -1;">
+                                    <span class="info-label">Delivery Address</span>
+                                    <span class="info-value" id="delivery-address">123 Main Street, New York, NY 10001</span>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-item">
+                                    <span class="info-label">Email</span>
+                                    <span class="info-value masked-info" id="masked-email">j**@example.com</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Est. Delivery</span>
+                                    <span class="info-value" id="est-delivery">Mar 2, 2026</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="support-section">
+                            <h5>Need Help?</h5>
+                            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 15px;">Contact us via WhatsApp or Email</p>
+                            <div class="support-buttons">
+                                <button class="support-btn support-btn-whatsapp" onclick="contactViaWhatsApp()">
+                                    <i class="bi bi-whatsapp"></i> WhatsApp
+                                </button>
+                                <button class="support-btn support-btn-email" onclick="contactViaEmail()">
+                                    <i class="bi bi-envelope"></i> Email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-6">
+                    <h3 class="mb-3" style="color: white; font-size: 1.8rem;">Wonder<span
+                            style="color: var(--secondary);">Toys</span></h3>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <p style="color: rgba(255,255,255,0.7);">&copy; 2026 WonderToys E-Commerce.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Mask sensitive information
+        function maskPhone(phone) {
+            if (!phone) return '***** ****';
+            const cleaned = phone.replace(/\D/g, '');
+            const lastFour = cleaned.slice(-4);
+            return `****${lastFour}`;
+        }
+
+        function maskEmail(email) {
+            if (!email) return '****@example.com';
+            const [name, domain] = email.split('@');
+            if (name.length <= 2) {
+                return `${name[0]}**@${domain}`;
+            }
+            return `${name[0]}**${name.slice(-1)}@${domain}`;
+        }
+
+        // Timeline step definitions
+        const timelineSteps = [
+            {
+                icon: '📋',
+                title: 'Order Confirmed',
+                date: (order) => new Date(order.timestamp).toLocaleDateString(),
+                description: 'Your order has been successfully confirmed',
+                status: 'completed'
+            },
+            {
+                icon: '⚙️',
+                title: 'Processing',
+                date: (order) => new Date(new Date(order.timestamp).getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                description: 'We\'re preparing your items for shipment',
+                status: 'active'
+            },
+            {
+                icon: '📦',
+                title: 'Shipped',
+                date: (order) => new Date(new Date(order.timestamp).getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                description: 'Your package is on its way',
+                status: 'pending'
+            },
+            {
+                icon: '🚚',
+                title: 'Out for Delivery',
+                date: (order) => new Date(new Date(order.timestamp).getTime() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                description: 'Your package will be delivered today',
+                status: 'pending'
+            },
+            {
+                icon: '✅',
+                title: 'Delivered',
+                date: (order) => new Date(new Date(order.timestamp).getTime() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                description: 'Your order has been delivered successfully',
+                status: 'pending'
+            }
+        ];
+
+        function getOrderDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const orderId = params.get('orderId');
+
+            if (!orderId) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const orders = JSON.parse(localStorage.getItem('wondertoyz_orders') || '[]');
+            const order = orders.find(o => o.orderId === orderId);
+
+            if (!order) {
+                document.body.innerHTML = '<div style="text-align: center; padding: 100px;"><h2>Order not found</h2></div>';
+                return;
+            }
+
+            return order;
+        }
+
+        function renderTracking() {
+            const order = getOrderDetails();
+            if (!order) return;
+
+            const { customerData } = order;
+
+            // Set order ID
+            document.getElementById('order-id').textContent = order.orderId;
+
+            // Set recipient info
+            document.getElementById('recipient-name').textContent = `${customerData.firstName} ${customerData.lastName}`;
+            document.getElementById('masked-phone').textContent = maskPhone(customerData.phone);
+            document.getElementById('masked-email').textContent = maskEmail(customerData.email);
+            document.getElementById('delivery-address').textContent = `${customerData.address}, ${customerData.city}, ${customerData.state} ${customerData.zipcode}`;
+
+            // Calculate estimated delivery
+            const estDeliveryDate = new Date(order.timestamp);
+            estDeliveryDate.setDate(estDeliveryDate.getDate() + 5);
+            document.getElementById('est-delivery').textContent = estDeliveryDate.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            // Render timeline
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = timelineSteps.map((step, index) => {
+                const isActive = index <= 1; // First 2 steps are active
+                return `
+                    <div class="timeline-item">
+                        <div class="timeline-marker ${isActive ? 'active' : 'inactive'}">
+                            ${step.icon}
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">${step.title}</div>
+                            <div class="timeline-date">${step.date(order)}</div>
+                            <div class="timeline-description">${step.description}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.title = `Track Order ${order.orderId} | WonderToys`;
+        }
+
+        function contactViaWhatsApp() {
+            const order = getOrderDetails();
+            const message = `Hi! I'm tracking order ${order.orderId}. Can you provide an update?`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+        }
+
+        function contactViaEmail() {
+            const order = getOrderDetails();
+            const subject = `Order Tracking - ${order.orderId}`;
+            window.location.href = `mailto:support@wondertoyz.com?subject=${encodeURIComponent(subject)}`;
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            renderTracking();
+        });
+    </script>
+</body>
+
+</html>

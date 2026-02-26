@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | WonderToys</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & THEMING
+           ========================================= */
+        :root {
+            --bg-color: #FFFFFF;
+            --primary: #F16AAB;
+            --secondary: #FFD34C;
+            --tertiary: #95BA43;
+            --text-dark: #2C3E50;
+            --text-light: #6C7A89;
+            --radius-lg: 30px;
+            --radius-md: 20px;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(241, 106, 171, 0.2);
+            --wt-pink: var(--primary);
+            --wt-yellow: #FFD34C;
+            --wt-green: #95BA43;
+            --wt-white: #FFFFFF;
+            --wt-dark: #2B2B2B;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .navbar-brand span {
+            color: var(--secondary);
+        }
+
+        /* Detail Page */
+        .detail-img-wrapper {
+            background-color: #f8f9fa;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            border: 4px dashed var(--secondary);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-img-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(241, 106, 171, 0.05) 0%, transparent 60%);
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .detail-price {
+            font-size: 3rem;
+            color: var(--tertiary);
+            font-weight: bold;
+        }
+
+        #product-detail-view {
+            padding-top: 100px;
+            padding-bottom: 60px;
+            min-height: 80vh;
+        }
+
+        .back-btn {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #d85295;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(241, 106, 171, 0.4);
+        }
+
+        /* Toast */
+        #toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .custom-toast {
+            background-color: var(--tertiary);
+            color: white;
+            border-radius: 15px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(149, 186, 67, 0.4);
+            margin-bottom: 10px;
+            animation: fadeInUp 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--wt-dark);
+            color: white;
+            padding: 80px 0 30px;
+            margin-top: 60px;
+            border-top: 10px solid var(--primary);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 20%;
+            width: 100px;
+            height: 10px;
+            background-color: var(--secondary);
+        }
+
+        .footer::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 20%;
+            width: 150px;
+            height: 10px;
+            background-color: var(--tertiary);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: var(--secondary);
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .detail-price {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Wonder<span>Toyz</span></a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html#product-grid-section">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html#footer">Contact</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="cart.html"
+                            class="btn btn-outline-dark rounded-circle px-3 py-2 position-relative border-0 shadow-sm"
+                            style="background-color: #f8f9fa; text-decoration: none;">
+                            <i class="bi bi-cart3 fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                                style="background-color: var(--primary) !important; border: 2px solid white;" id="cart-badge">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Detail Section -->
+    <div id="product-detail-view">
+        <div class="container">
+            <a href="index.html" class="back-btn mb-4 fs-5">
+                <i class="bi bi-arrow-left-circle-fill me-2 fs-3" style="color: var(--primary);"></i> Back to Magical Shop
+            </a>
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <div class="detail-img-wrapper text-center h-100 d-flex align-items-center justify-content-center">
+                        <img id="detail-img" src="" alt="Toy" class="img-fluid position-relative"
+                            style="max-height: 450px; object-fit: contain; z-index: 2;">
+                    </div>
+                </div>
+                <div class="col-md-6 ps-md-5 d-flex flex-column justify-content-center">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="badge rounded-pill py-2 px-3"
+                            style="background-color: var(--secondary); color: var(--text-dark); font-weight: bold;"><i
+                                class="bi bi-star-fill me-1"></i> Top Rated</span>
+                        <span class="badge rounded-pill py-2 px-3"
+                            style="background-color: rgba(149, 186, 67, 0.1); color: var(--tertiary); font-weight: bold;">In
+                            Stock</span>
+                    </div>
+
+                    <h2 id="detail-title" class="mb-2"
+                        style="color: var(--text-dark); font-size: 3.5rem; line-height: 1.1;">Product Name</h2>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="text-warning me-2" id="detail-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-half"></i>
+                        </div>
+                        <span class="text-muted" id="detail-reviews">(128 Reviews)</span>
+                    </div>
+
+                    <p id="detail-price" class="detail-price mb-4">$0.00</p>
+
+                    <p class="lead" style="color: var(--text-light); line-height: 1.8;">
+                        Bring home the ultimate playtime companion! Carefully crafted to ensure hours of interactive
+                        fun, boosting creativity and motor skills. Made with 100% child-safe, eco-friendly materials
+                        that parents can trust.
+                    </p>
+
+                    <ul class="list-unstyled mb-4" style="color: var(--text-dark);">
+                        <li class="mb-2"><i class="bi bi-check2-circle me-2" style="color: var(--tertiary);"></i>
+                            Recommended for Ages 3+</li>
+                        <li class="mb-2"><i class="bi bi-check2-circle me-2" style="color: var(--tertiary);"></i>
+                            Non-toxic, BPA-free materials</li>
+                        <li class="mb-2"><i class="bi bi-check2-circle me-2" style="color: var(--tertiary);"></i> No
+                            assembly required</li>
+                    </ul>
+
+                    <div class="d-flex flex-wrap gap-3 mt-2">
+                        <div class="input-group" style="width: 130px;">
+                            <button class="btn btn-outline-secondary border-2" type="button"
+                                onclick="document.getElementById('qty').stepDown()">-</button>
+                            <input type="number" id="qty" class="form-control text-center border-2 fw-bold" value="1"
+                                min="1">
+                            <button class="btn btn-outline-secondary border-2" type="button"
+                                onclick="document.getElementById('qty').stepUp()">+</button>
+                        </div>
+                        <button class="btn btn-primary-custom flex-grow-1 fs-5" onclick="addToCart()">
+                            <i class="bi bi-cart-plus me-2"></i> Add to Cart
+                        </button>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="row text-center g-3">
+                        <div class="col-4">
+                            <i class="bi bi-shield-check fs-2 d-block mb-2" style="color: var(--tertiary);"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">1 Year<br>Warranty</span>
+                        </div>
+                        <div class="col-4 border-start border-end">
+                            <i class="bi bi-box-seam fs-2 d-block mb-2" style="color: var(--secondary);"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">Free<br>Shipping</span>
+                        </div>
+                        <div class="col-4">
+                            <i class="bi bi-arrow-return-left fs-2 d-block mb-2" style="color: var(--primary);"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">30-Day<br>Returns</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4 pe-lg-5">
+                    <h3 class="mb-4" style="color: white; font-size: 2rem;">Wonder<span
+                            style="color: var(--secondary);">Toys</span></h3>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.8;">Making childhood magical, one toy at a
+                        time. We believe in the power of play to educate, inspire, and bring families together.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="mb-4" style="color: var(--tertiary);">Shop</h5>
+                    <ul class="list-unstyled" style="line-height: 2;">
+                        <li><a href="index.html">New Arrivals</a></li>
+                        <li><a href="index.html">Best Sellers</a></li>
+                        <li><a href="index.html">Categories</a></li>
+                        <li><a href="index.html">Sale Items</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="mb-4" style="color: var(--tertiary);">Support</h5>
+                    <ul class="list-unstyled" style="line-height: 2;">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-4" style="color: var(--secondary);">Join the Magic!</h5>
+                    <p style="color: rgba(255,255,255,0.7);">Subscribe to our newsletter for fun updates, play ideas,
+                        and magical discounts!</p>
+                    <div class="input-group mt-3">
+                        <input type="email" class="form-control py-3 rounded-start-pill border-0"
+                            placeholder="Your email address...">
+                        <button class="btn px-4 rounded-end-pill fw-bold" type="button"
+                            style="background-color: var(--primary); color: white;">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-4 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
+                <p class="mb-0" style="color: rgba(255,255,255,0.5);">&copy; 2026 WonderToys E-Commerce. Designed with
+                    <i class="bi bi-heart-fill" style="color: var(--primary);"></i> and Code.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Global Products Database
+        let allProducts = [];
+        const showReviewCount = true;
+
+        // Cart Management Functions
+        function getCart() {
+            const cart = localStorage.getItem('wondertoyz_cart');
+            return cart ? JSON.parse(cart) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('wondertoyz_cart', JSON.stringify(cart));
+            updateCartBadge();
+        }
+
+        function updateCartBadge() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cart-badge');
+            if (badge) {
+                badge.textContent = totalItems;
+            }
+        }
+
+        function generateStarsHTML(stars) {
+            stars = parseFloat(stars);
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(stars)) {
+                    starsHTML += '<i class="bi bi-star-fill"></i>';
+                } else if (i - stars < 1 && i - stars > 0) {
+                    starsHTML += '<i class="bi bi-star-half"></i>';
+                } else {
+                    starsHTML += '<i class="bi bi-star"></i>';
+                }
+            }
+            return starsHTML;
+        }
+
+        function getImageUrl(seed) {
+            return `https://api.dicebear.com/7.x/bottts/svg?seed=${seed}&radius=20&backgroundColor=f8f9fa`;
+        }
+
+        // Generate Mock Products
+        function generateMockProducts() {
+            const adjectives = ["Super", "Mega", "Magic", "Bouncy", "Cuddly", "Flying", "Glowing", "Robo", "Mini", "Galactic", "Wobbly", "Fuzzy"];
+            const categories = ["Bear", "Car", "Drone", "Blocks", "Puzzle", "Dinosaur", "Unicorn", "Train", "Rocket", "Slime", "Robot", "Bunny"];
+
+            for (let i = 1; i <= 100; i++) {
+                const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+                const category = categories[Math.floor(Math.random() * categories.length)];
+                allProducts.push({
+                    id: i,
+                    name: `${adj} ${category}`,
+                    price: (Math.random() * (45 - 9) + 9).toFixed(2),
+                    image: getImageUrl(`WonderToy${i}${Math.random()}`),
+                    isNew: i < 5,
+                    reviewStars: (Math.random() * 5).toFixed(1),
+                    reviewCount: Math.floor(Math.random() * 5000) + 1,
+                    category: categories[Math.floor(Math.random() * categories.length)]
+                });
+            }
+        }
+
+        // Load Product Details
+        function loadProductDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const productId = parseInt(params.get('id'));
+
+            if (!productId || allProducts.length === 0) {
+                console.error('Invalid product ID');
+                return;
+            }
+
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) {
+                console.error('Product not found');
+                return;
+            }
+
+            // Update page elements
+            document.getElementById('detail-img').src = product.image;
+            document.getElementById('detail-title').innerText = product.name;
+            document.getElementById('detail-price').innerText = `$${product.price}`;
+            document.getElementById('detail-stars').innerHTML = generateStarsHTML(product.reviewStars);
+            document.getElementById('detail-reviews').innerText = showReviewCount 
+                ? `(${product.reviewCount} Reviews)` 
+                : '(Reviews)';
+            document.title = `${product.name} | WonderToys`;
+
+            // Store current product for add to cart
+            window.currentProduct = product;
+        }
+
+        // Add to Cart
+        function addToCart() {
+            if (!window.currentProduct) return;
+
+            const quantity = parseInt(document.getElementById('qty').value) || 1;
+            const cart = getCart();
+
+            const existingItem = cart.find(item => item.id === window.currentProduct.id);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: window.currentProduct.id,
+                    name: window.currentProduct.name,
+                    price: window.currentProduct.price,
+                    image: window.currentProduct.image,
+                    quantity: quantity
+                });
+            }
+
+            saveCart(cart);
+            showToast();
+            document.getElementById('qty').value = 1;
+        }
+
+        // Show Toast Notification
+        function showToast() {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.innerHTML = `
+                <i class="bi bi-bag-check-fill fs-4"></i>
+                <div>
+                    <strong class="d-block">Added to Cart!</strong>
+                    <span style="font-size: 0.85rem; opacity: 0.9;">The magic is on its way.</span>
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'fadeInUp 0.3s ease-in reverse forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            generateMockProducts();
+            loadProductDetails();
+            updateCartBadge();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | WonderToys</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --primary: #F16AAB;
+            --secondary: #FFD34C;
+            --tertiary: #95BA43;
+            --text-dark: #2C3E50;
+            --text-light: #6C7A89;
+            --radius-lg: 30px;
+            --radius-md: 20px;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --wt-dark: #2B2B2B;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-dark);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .navbar-brand span {
+            color: var(--secondary);
+        }
+
+        .checkout-container {
+            padding-top: 100px;
+            padding-bottom: 60px;
+            min-height: 80vh;
+        }
+
+        .checkout-section {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(241, 106, 171, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .whatsapp-verification {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .whatsapp-verification i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .btn-verify-whatsapp {
+            width: 100%;
+            padding: 12px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-verify-whatsapp:hover {
+            background-color: #128C7E;
+            transform: translateY(-3px);
+        }
+
+        .btn-place-order {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-place-order:hover {
+            background-color: #d85295;
+            transform: translateY(-3px);
+        }
+
+        .btn-place-order:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .order-summary {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-soft);
+            position: sticky;
+            top: 120px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row.total {
+            border: none;
+            padding-top: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--tertiary);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .summary-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .verification-badge {
+            display: inline-block;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .verification-badge.verified {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .verification-badge.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .footer {
+            background-color: var(--wt-dark);
+            color: white;
+            padding: 50px 0 30px;
+            margin-top: 60px;
+            border-top: 10px solid var(--primary);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Wonder<span>Toyz</span></a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold" href="cart.html">
+                        <i class="bi bi-cart3"></i> Cart
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Section -->
+    <div class="checkout-container">
+        <div class="container">
+            <h1 class="mb-5">Checkout</h1>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Personal Details -->
+                    <div class="checkout-section">
+                        <h3 class="section-title">📋 Personal Information</h3>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" placeholder="Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="+1 (555) 123-4567" required>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Address -->
+                    <div class="checkout-section">
+                        <h3 class="section-title">📍 Shipping Address</h3>
+                        <div class="form-group">
+                            <label for="address">Street Address</label>
+                            <input type="text" id="address" class="form-control" placeholder="123 Main Street" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" class="form-control" placeholder="New York" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State/Province</label>
+                                <input type="text" id="state" class="form-control" placeholder="NY" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="zipcode">ZIP/Postal Code</label>
+                                <input type="text" id="zipcode" class="form-control" placeholder="10001" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" id="country" class="form-control" placeholder="United States" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Verification -->
+                    <div class="checkout-section">
+                        <h3 class="section-title">✅ Verification</h3>
+                        <div id="verification-status" class="verification-badge pending">
+                            <i class="bi bi-info-circle me-2"></i> Phone verification pending
+                        </div>
+                        <div class="whatsapp-verification">
+                            <div>
+                                <i class="bi bi-whatsapp"></i>
+                                <h5 class="mt-2 mb-3">Verify with WhatsApp</h5>
+                                <p style="margin-bottom: 0; font-size: 0.9rem;">We'll send you an OTP via WhatsApp for order confirmation</p>
+                            </div>
+                            <button class="btn-verify-whatsapp" onclick="verifyWithWhatsApp()">
+                                <i class="bi bi-send me-2"></i> Send OTP via WhatsApp
+                            </button>
+                        </div>
+                        <div id="otp-section" style="display: none;">
+                            <div class="form-group">
+                                <label for="otp">Enter OTP Code</label>
+                                <input type="text" id="otp" class="form-control" placeholder="000000" maxlength="6" required>
+                                <small class="text-muted">Enter the 6-digit code sent to your WhatsApp</small>
+                            </div>
+                            <button class="btn-verify-whatsapp" onclick="verifyOTP()" style="background-color: var(--tertiary);">
+                                <i class="bi bi-check-circle me-2"></i> Verify OTP
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <h5 class="mb-4">Order Summary</h5>
+                        <div id="cart-items">
+                            <!-- Cart items rendered here -->
+                        </div>
+                        <div class="summary-row" style="margin-top: 20px;">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (10%)</span>
+                            <span id="tax">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="shipping">FREE</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                        <button class="btn-place-order" id="place-order-btn" onclick="placeOrder()" disabled>
+                            <i class="bi bi-check-circle me-2"></i> Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-6">
+                    <h3 class="mb-3" style="color: white; font-size: 1.8rem;">Wonder<span
+                            style="color: var(--secondary);">Toys</span></h3>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <p style="color: rgba(255,255,255,0.7);">&copy; 2026 WonderToys E-Commerce.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let verificationCompleted = false;
+        let mockOTP = '123456';
+
+        function getCart() {
+            const cart = localStorage.getItem('wondertoyz_cart');
+            return cart ? JSON.parse(cart) : [];
+        }
+
+        function calculateTotals() {
+            const cart = getCart();
+            const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+            const tax = subtotal * 0.1;
+            const total = subtotal + tax;
+            return { subtotal, tax, total };
+        }
+
+        function renderOrderSummary() {
+            const cart = getCart();
+            const itemsContainer = document.getElementById('cart-items');
+            
+            itemsContainer.innerHTML = cart.map(item => `
+                <div class="summary-item">
+                    <div style="display: flex; align-items: center; flex: 1;">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div>
+                            <div style="font-weight: bold;">${item.name}</div>
+                            <small style="color: var(--text-light);">Qty: ${item.quantity}</small>
+                        </div>
+                    </div>
+                    <div style="font-weight: bold;">$${(parseFloat(item.price) * item.quantity).toFixed(2)}</div>
+                </div>
+            `).join('');
+
+            const { subtotal, tax, total } = calculateTotals();
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function getFormData() {
+            return {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zipcode: document.getElementById('zipcode').value,
+                country: document.getElementById('country').value
+            };
+        }
+
+        function validateForm() {
+            const fields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zipcode', 'country'];
+            for (let field of fields) {
+                if (!document.getElementById(field).value.trim()) {
+                    alert(`Please fill in all fields`);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function verifyWithWhatsApp() {
+            if (!validateForm()) return;
+
+            const phone = document.getElementById('phone').value;
+            alert(`📱 OTP will be sent to: ${phone}\n\nFor demo, the OTP is: 123456`);
+            document.getElementById('otp-section').style.display = 'block';
+        }
+
+        function verifyOTP() {
+            const enteredOTP = document.getElementById('otp').value;
+            if (enteredOTP === mockOTP) {
+                verificationCompleted = true;
+                document.getElementById('verification-status').className = 'verification-badge verified';
+                document.getElementById('verification-status').innerHTML = `<i class="bi bi-check-circle me-2"></i> Phone verified successfully`;
+                document.getElementById('otp-section').style.display = 'none';
+                document.getElementById('place-order-btn').disabled = false;
+                alert('✅ Phone verification successful!');
+            } else {
+                alert('❌ Invalid OTP. Please try again. (Demo OTP: 123456)');
+            }
+        }
+
+        function placeOrder() {
+            if (!verificationCompleted) {
+                alert('Please verify your phone number first');
+                return;
+            }
+
+            if (!validateForm()) return;
+
+            const cart = getCart();
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            const { subtotal, tax, total } = calculateTotals();
+            const orderId = 'ORD-' + Date.now();
+            
+            const order = {
+                orderId,
+                timestamp: new Date().toISOString(),
+                customerData: getFormData(),
+                items: cart,
+                subtotal,
+                tax,
+                total,
+                status: 'confirmed'
+            };
+
+            // Save order to localStorage
+            let orders = JSON.parse(localStorage.getItem('wondertoyz_orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('wondertoyz_orders', JSON.stringify(orders));
+
+            // Clear cart
+            localStorage.removeItem('wondertoyz_cart');
+
+            // Redirect to order status page
+            window.location.href = `order-status.html?orderId=${orderId}`;
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            renderOrderSummary();
+        });
+    </script>
+</body>
+
+</html>
