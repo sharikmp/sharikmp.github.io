@@ -3,7 +3,7 @@ const portfolioData = {
     profile: {
         name: "Sharik Madhyapradeshi",
         title: "Sr. SDET and Test Architecture Lead",
-        summary: "Passionate Software Development Engineer in Test (SDET) with 7+ years of comprehensive experience in automation tools (Selenium, Playwright, Cucumber, Rest Assured, Soap UI, and Postman) with Java and Python. Proven track record in full SDLC testing, framework architecture, API automation, and leading quality engineering initiatives.",
+        summary: "Passionate Software Development Engineer in Test (SDET) with 8+ years of comprehensive experience in automation tools (Selenium, Playwright, Cucumber, Rest Assured, Soap UI, and Postman) with Java and Python. Proven track record in full SDLC testing, framework architecture, API automation, and leading quality engineering initiatives.",
         location: "Kolkata, West Bengal, India",
         email: "Sharik.madhyapradeshi@gmail.com",
         phone: "+91-(0)-8697908892",
