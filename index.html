@@ -18,7 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assests/css/style.css">
+    <link rel="stylesheet" href="assests/css/index.css">
     
 </head>
 <body>
@@ -54,25 +54,21 @@
                     
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <span class="stat-number">7+</span>
+                            <span class="stat-number">8+</span>
                             <span class="stat-label">Years Experience</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number">28</span>
-                            <span class="stat-label">Projects Created</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">4</span>
-                            <span class="stat-label">Project Categories</span>
+                            <span class="stat-number">25+</span>
+                            <span class="stat-label">Self Projects</span>
                         </div>
                     </div>
                     
                     <div class="hero-cta">
-                        <a href="#projects" class="btn-primary-custom">
-                            <i class="fas fa-folder-open"></i> View My Work
-                        </a>
                         <a href="#" class="btn-secondary-custom">
-                            <i class="fas fa-download"></i> Download Resume
+                            <i class="fas fa-user-tie"></i> Experience Summary
+                        </a>
+                        <a href="#projects" class="btn-primary-custom">
+                            <i class="fas fa-folder-open"></i> Projects Details
                         </a>
                     </div>
                 </div>
@@ -163,283 +159,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
-    <script src="assests/js/script.js"></script>
-    
-    <script>
-        
-        // ===== INITIALIZE PORTFOLIO =====
-        document.addEventListener('DOMContentLoaded', function() {
-            renderSkills();
-            renderExperience();
-            renderProjects();
-            renderAwards();
-            renderAcademics();
-            renderFooter();
-            initializeProjectFilters();
-            initializeScrollEffects();
-        });
+    <script src="assests/js/index.js"></script>
 
-        // ===== RENDER SKILLS =====
-        function renderSkills() {
-            const skillsGrid = document.getElementById('skillsGrid');
-            skillsGrid.innerHTML = portfolioData.skills.map((skill, index) => `
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <h3>
-                        <span class="skill-category-icon">
-                            <i class="${skill.icon}"></i>
-                        </span>
-                        ${skill.category}
-                    </h3>
-                    <div class="skills-list">
-                        ${skill.items.map(s => `<span class="skill-tag">${s}</span>`).join('')}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // ===== RENDER EXPERIENCE =====
-        function renderExperience() {
-            const timeline = document.getElementById('experienceTimeline');
-            timeline.innerHTML = portfolioData.experience.map((exp, index) => `
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>${exp.company}</h3>
-                        <p class="role"><i class="fas fa-briefcase"></i> ${exp.role}</p>
-                        <p class="duration"><i class="fas fa-calendar"></i> ${exp.duration}</p>
-                        <p>${exp.description}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // ===== RENDER PROJECTS =====
-        function renderProjects() {
-            const projectsContainer = document.getElementById('projectsGrid');
-            const projects = portfolioData.projectsData.projects;
-            const categories = portfolioData.projectsData.categories;
-            
-            projectsContainer.innerHTML = categories.map(category => {
-                const categoryProjects = projects.filter(p => p.category === category.id);
-                
-                return `
-                    <div class="project-category-section" data-category="${category.id}" data-aos="fade-up">
-                        <div class="category-header">
-                            <h3><i class="${category.icon}"></i> ${category.name}</h3>
-                            <p>${category.description}</p>
-                        </div>
-                        <div class="category-projects-grid">
-                            ${categoryProjects.map(project => `
-                                <div class="project-card" data-category="${project.category}" data-id="${project.id}" onclick="openProjectDetail(${project.id})">
-                                    <div class="project-image" style="background: ${category.color};">
-                                        <i class="${project.icon} fa-2x"></i>
-                                    </div>
-                                    <div class="project-info">
-                                        <h4>${project.title}</h4>
-                                        <p class="project-description">${project.description}</p>
-                                        <div class="project-tags">
-                                            ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                                        </div>
-                                        <a href="#" class="project-link" onclick="event.stopPropagation()">
-                                            View Details <i class="fas fa-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ===== INITIALIZE PROJECT FILTERS =====
-        function initializeProjectFilters() {
-            const filters = document.getElementById('projectFilters');
-            const categories = portfolioData.projectsData.categories;
-            
-            filters.innerHTML = `
-                <button class="filter-btn active" onclick="filterProjects('all')">
-                    <i class="fas fa-th"></i> All Categories
-                </button>
-            ` + categories.map(cat => `
-                <button class="filter-btn" onclick="filterProjects('${cat.id}')" data-category="${cat.id}">
-                    <i class="${cat.icon}"></i> ${cat.name}
-                </button>
-            `).join('');
-        }
-
-        // ===== FILTER PROJECTS =====
-        function filterProjects(categoryId) {
-            const sections = document.querySelectorAll('.project-category-section');
-            const buttons = document.querySelectorAll('.filter-btn');
-            
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.closest('.filter-btn').classList.add('active');
-            
-            sections.forEach(section => {
-                if (categoryId === 'all' || section.dataset.category === categoryId) {
-                    section.classList.remove('hidden');
-                    section.style.display = 'block';
-                } else {
-                    section.classList.add('hidden');
-                    section.style.display = 'none';
-                }
-            });
-        }
-
-        // ===== OPEN PROJECT DETAIL =====
-        function openProjectDetail(projectId) {
-            const project = portfolioData.projectsData.projects.find(p => p.id === projectId);
-            const category = portfolioData.projectsData.categories.find(c => c.id === project.category);
-            if (!project) return;
-            
-            const detailView = document.getElementById('projectDetailView');
-            const detailContent = document.getElementById('projectDetailContent');
-            
-            detailContent.innerHTML = `
-                <div class="project-detail-header" style="background: ${category.color};">
-                    <button class="back-btn" onclick="closeProjectDetail()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    <h2>${project.title}</h2>
-                    <p>${project.description}</p>
-                </div>
-                <div class="project-detail-body">
-                    <div class="detail-section">
-                        <h3><i class="fas fa-star"></i> Overview</h3>
-                        <p>${project.description}</p>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h3><i class="fas fa-tags"></i> Technologies & Skills</h3>
-                        <div class="tech-stack">
-                            ${project.tags.map(tag => `<span class="tech-stack-item">${tag}</span>`).join('')}
-                        </div>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h3><i class="fas fa-link"></i> Project Link</h3>
-                        <div class="detail-links">
-                            <a href="${project.link}" target="_blank" class="detail-link-btn"><i class="fas fa-external-link-alt"></i> View Project</a>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            detailView.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // ===== CLOSE PROJECT DETAIL =====
-        function closeProjectDetail() {
-            const detailView = document.getElementById('projectDetailView');
-            detailView.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close detail view on background click
-        document.addEventListener('click', function(e) {
-            const detailView = document.getElementById('projectDetailView');
-            if (e.target === detailView) {
-                closeProjectDetail();
-            }
-        });
-
-        // ===== RENDER AWARDS =====
-        function renderAwards() {
-            const awardsGrid = document.getElementById('awardsGrid');
-            awardsGrid.innerHTML = portfolioData.awards.map((award, index) => `
-                <div class="award-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <div class="award-icon"><i class="${award.icon}"></i></div>
-                    <h3>${award.title}</h3>
-                    <p>${award.description}</p>
-                    <p class="award-year"><strong>${award.issuer}</strong> • ${award.year}</p>
-                </div>
-            `).join('');
-        }
-
-        // ===== RENDER ACADEMICS =====
-        function renderAcademics() {
-            const academicsGrid = document.getElementById('academicsGrid');
-            academicsGrid.innerHTML = portfolioData.education.map((academic, index) => `
-                <div class="academic-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <h3>${academic.institution}</h3>
-                    <p class="degree"><strong>${academic.degree}</strong></p>
-                    <p class="degree">${academic.field}</p>
-                    <p class="period"><i class="fas fa-calendar"></i> ${academic.year}</p>
-                    <p>${academic.details}</p>
-                </div>
-            `).join('');
-        }
-
-        // ===== RENDER FOOTER =====
-        function renderFooter() {
-            // Social Links
-            const socialLinks = document.getElementById('socialLinks');
-            const profile = portfolioData.profile;
-            const socials = [
-                { url: profile.linkedin, icon: 'fab fa-linkedin-in', label: 'LinkedIn' },
-                { url: profile.github, icon: 'fab fa-github', label: 'GitHub' },
-                { url: `mailto:${profile.email}`, icon: 'fas fa-envelope', label: 'Email' }
-            ];
-            
-            socialLinks.innerHTML = socials.map(link => `
-                <a href="${link.url}" target="_blank" class="social-link" title="${link.label}">
-                    <i class="${link.icon}"></i>
-                </a>
-            `).join('');
-            
-            // Footer Links
-            const footerLinks = document.getElementById('footerLinks');
-            footerLinks.innerHTML = `
-                <li><a href="#introduction"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#skills"><i class="fas fa-star"></i> Skills</a></li>
-                <li><a href="#projects"><i class="fas fa-folder"></i> Projects</a></li>
-                <li><a href="#awards"><i class="fas fa-trophy"></i> Awards</a></li>
-            `;
-            
-            // Contact Info
-            const contactInfo = document.getElementById('contactInfo');
-            contactInfo.innerHTML = `
-                <li><a href="mailto:${profile.email}"><i class="fas fa-envelope"></i> ${profile.email}</a></li>
-                <li><a href="tel:${profile.phone}"><i class="fas fa-phone"></i> ${profile.phone}</a></li>
-                <li><i class="fas fa-map-marker-alt"></i> ${profile.location}</li>
-            `;
-        }
-
-        // ===== INITIALIZE SCROLL EFFECTS =====
-        function initializeScrollEffects() {
-            AOS.init({
-                duration: 800,
-                easing: 'ease-in-out-cubic',
-                once: true,
-                offset: 100
-            });
-
-            // Navbar scroll effect
-            window.addEventListener('scroll', function() {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-        }
-
-        // ===== SMOOTH SCROLL FOR INTERNAL LINKS =====
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href === '#' || href === '') return;
-                
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
 </body>
 </html>
