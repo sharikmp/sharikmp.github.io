@@ -187,10 +187,10 @@ const portfolioData = {
             { "id": 28, "title": "MathBee", "description": "Intelligent math learning platform with adaptive difficulty levels. Provides personalized problem sets and solution explanations for effective learning.", "longDescription": { "description": "AI-powered adaptive math learning platform with difficulty progression. Personalized learning paths with instant feedback and explanations.", "points": ["Adaptive difficulty progression", "Personalized problem generation", "Instant feedback and explanations", "Progress tracking and analytics", "Multiple math topics covered", "Timed practice sessions", "Performance-based recommendations"] }, "imageLink": null, "icon": "fa-lightbulb", "category": "ai", "link": "mathbee/v2/index.html", "tags": ["AI", "Learning", "Math", "Adaptive"] }
         ],
         "categories": [
-            { "id": "qa", "name": "QA & Automation Engineering", "description": "Testing frameworks, automation utilities, and QA tools", "icon": "fa-robot", "color": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" },
-            { "id": "dev", "name": "Development & Scripting", "description": "Interactive applications, games, editors, and learning platforms", "icon": "fa-code", "color": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" },
-            { "id": "utils", "name": "Utilities & Tools", "description": "Practical calculators and utility applications", "icon": "fa-toolbox", "color": "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)" },
-            { "id": "ai", "name": "AI & Machine Learning", "description": "Intelligent learning and analysis tools", "icon": "fa-brain", "color": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)" }
+            { "id": "qa", "name": "QA & Automation Engineering", "description": "Testing frameworks, automation utilities, and QA tools", "icon": "fa fa-robot", "color": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" },
+            { "id": "dev", "name": "Development & Scripting", "description": "Interactive applications, games, editors, and learning platforms", "icon": "fa fa-code", "color": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" },
+            { "id": "utils", "name": "Utilities & Tools", "description": "Practical calculators and utility applications", "icon": "fa fa-toolbox", "color": "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)" },
+            { "id": "ai", "name": "AI & Machine Learning", "description": "Intelligent learning and analysis tools", "icon": "fa fa-brain", "color": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)" }
         ]
     },
 

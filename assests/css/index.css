@@ -260,32 +260,222 @@ section {
 
 .hero-image {
    position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+/* ===== PROFILE PIC CONTAINER ===== */
+.profile-pic-container {
+   position: relative;
+   width: 100%;
+   aspect-ratio: 1;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .profile-pic {
+   position: relative;
+   overflow: hidden;
+}
+
+@keyframes floatProfile {
+   0%, 100% {
+      transform: translateY(0px);
+   }
+   50% {
+      transform: translateY(-20px);
+   }
+}
+
+.profile-pic-inner {
+   position: relative;
    width: 100%;
-   max-width: 600px;
-   height: auto;
-   border-bottom: 1px solid var(--border-color);
+   height: 100%;
    display: flex;
    align-items: center;
    justify-content: center;
+   overflow: hidden;
 }
 
-.profile-pic img {
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
+/* Tech Icons Background */
+.tech-icon-bg {
+   position: absolute;
+   font-size: 3rem;
+   color: rgba(255, 255, 255, 0.15);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   animation: rotateIcon 8s linear infinite;
 }
 
+@keyframes rotateIcon {
+   from {
+      transform: rotate(0deg);
+   }
+   to {
+      transform: rotate(360deg);
+   }
+}
+
+.tech-icon-1 {
+   width: 100px;
+   height: 100px;
+   top: 20px;
+   left: 20px;
+   animation-duration: 8s;
+}
+
+.tech-icon-2 {
+   width: 100px;
+   height: 100px;
+   top: 20px;
+   right: 20px;
+   animation-duration: 10s;
+   animation-direction: reverse;
+}
+
+.tech-icon-3 {
+   width: 100px;
+   height: 100px;
+   bottom: 20px;
+   left: 20px;
+   animation-duration: 12s;
+}
+
+.tech-icon-4 {
+   width: 100px;
+   height: 100px;
+   bottom: 20px;
+   right: 20px;
+   animation-duration: 10s;
+   animation-direction: reverse;
+}
+
+/* Main Profile Icon */
 .profile-pic-placeholder {
-   width: 100%;
-   height: 100%;
    display: flex;
    align-items: center;
    justify-content: center;
+   font-size: 4rem;
+   position: relative;
+   z-index: 5;
+   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+   animation: pulseIcon 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseIcon {
+   0%, 100% {
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+   }
+   50% {
+      box-shadow: 0 15px 60px rgba(102, 126, 234, 0.4);
+   }
+}
+
+/* Glow Effect */
+.profile-glow {
+   position: absolute;
+   width: 380px;
+   height: 380px;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   animation: glowPulse 3s ease-in-out infinite;
+   z-index: -1;
+}
+
+@keyframes glowPulse {
+   0%, 100% {
+      opacity: 0.4;
+      transform: translate(-50%, -50%) scale(1);
+   }
+   50% {
+      opacity: 0.8;
+      transform: translate(-50%, -50%) scale(1.1);
+   }
+}
+
+/* Code Brackets */
+.code-bracket {
+   position: absolute;
    font-size: 5rem;
-   color: var(--white);
+   font-weight: 300;
+   color: rgba(102, 126, 234, 0.2);
+   z-index: 999;
+   line-height: 1;
+}
+
+.code-bracket-left {
+   top: 15%;
+   left: -20px;
+   animation: slideLeftBracket 3s ease-in-out infinite;
+}
+
+.code-bracket-right {
+   bottom: 15%;
+   right: -20px;
+   animation: slideRightBracket 3s ease-in-out infinite;
+}
+
+@keyframes slideLeftBracket {
+   0%, 100% {
+      transform: translateX(0) rotate(0deg);
+   }
+   50% {
+      transform: translateX(-20px) rotate(-5deg);
+   }
+}
+
+@keyframes slideRightBracket {
+   0%, 100% {
+      transform: translateX(0) rotate(0deg);
+   }
+   50% {
+      transform: translateX(20px) rotate(5deg);
+   }
+}
+
+/* Accent Dots */
+.accent-dot {
+   position: absolute;
+   border-radius: 50%;
+   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+   z-index: 1;
+   animation: dotFloat 4s ease-in-out infinite;
+}
+
+.accent-dot-1 {
+   width: 15px;
+   height: 15px;
+   top: 30px;
+   right: 30px;
+   animation-duration: 4s;
+}
+
+.accent-dot-2 {
+   width: 10px;
+   height: 10px;
+   bottom: 50px;
+   left: 20px;
+   animation-duration: 5s;
+   animation-delay: 0.5s;
+}
+
+@keyframes dotFloat {
+   0%, 100% {
+      transform: translateY(0) translateX(0);
+   }
+   25% {
+      transform: translateY(-15px) translateX(10px);
+   }
+   50% {
+      transform: translateY(-20px) translateX(0);
+   }
+   75% {
+      transform: translateY(-15px) translateX(-10px);
+   }
 }
 
 @media (max-width: 768px) {
@@ -298,8 +488,41 @@ section {
    }
 
    .profile-pic {
-      max-width: 300px;
-      height: 300px;
+      width: 280px;
+      height: 280px;
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+   }
+   
+   .profile-pic-placeholder {
+      width: 140px;
+      height: 140px;
+      font-size: 2.5rem;
+   }
+   
+   .code-bracket {
+      font-size: 3rem;
+   }
+   
+   .code-bracket-left {
+      top: 10%;
+      left: -15px;
+   }
+   
+   .code-bracket-right {
+      bottom: 10%;
+      right: -15px;
+   }
+   
+   .tech-icon-bg {
+      font-size: 1.5rem;
+   }
+   
+   .tech-icon-1,
+   .tech-icon-2,
+   .tech-icon-3,
+   .tech-icon-4 {
+      width: 70px;
+      height: 70px;
    }
 }
 
