@@ -324,13 +324,23 @@ function renderSkills() {
 function renderExperience() {
     const timeline = document.getElementById('experienceTimeline');
     timeline.innerHTML = portfolioData.experience.map((exp, index) => `
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>${exp.company}</h3>
-                        <p class="role"><i class="fas fa-briefcase"></i> ${exp.role}</p>
+                <div class="experience-item" data-aos="fade-up" data-aos-delay="${index * 100}">
+                    <div class="experience-left">
+                        <div class="company-header">
+                            <h3>${exp.company}</h3>
+                            <p class="role"><i class="fas fa-briefcase"></i> ${exp.role}</p>
+                        </div>
                         <p class="duration"><i class="fas fa-calendar"></i> ${exp.duration}</p>
-                        <p>${exp.description}</p>
+                        <p class="description">${exp.description}</p>
+                    </div>
+                    
+                    <div class="timeline-divider">
+                        <div class="timeline-start-dot"></div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-end-dot"></div>
+                    </div>
+                    
+                    <div class="experience-right">
                         ${exp.keyContributions && exp.keyContributions.length > 0 ? `
                             <div class="key-contributions">
                                 <h4><i class="fas fa-star"></i> Key Contributions</h4>
@@ -366,19 +376,19 @@ function renderProjects() {
                         <div class="category-projects-grid">
                             ${categoryProjects.map(project => `
                                 <div class="project-card" data-category="${project.category}" data-id="${project.id}">
-                                    ${project.imageLink ? `<div class="project-card-image"><img src="${project.imageLink}" alt="${project.title}" /></div>` : `<div class="project-image" style="background: ${category.color};"><i class="${project.icon} fa-2x"></i></div>`}
-                                    <div class="project-card-content">
-                                        <div class="project-header">
-                                            <h3>${project.title}</h3>
-                                            <span class="project-category">${category.name}</span>
+                                    <div class="project-header-card" style="background: ${category.color};">
+                                        <div class="project-header-icon">
+                                            ${project.imageLink ? `<img src="${project.imageLink}" alt="${project.title}" />` : `<i class="fa ${project.icon}"></i>`}
                                         </div>
-                                        <p class="project-summary">${project.description}</p>
+                                        <h3>${project.title}</h3>
+                                        <a href="${project.link}" class="project-header-link" target="_blank">
+                                            Visit Project <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                    <div class="project-card-content">
+                                        <p class="project-description">${project.description}</p>
                                         
                                         <div class="project-details">
-                                            <h4>Overview</h4>
-                                            <p>${project.longDescription.description}</p>
-                                            
-                                            <h4>Key Features</h4>
                                             <ul class="features-list">
                                                 ${project.longDescription.points.map(point => `<li>${point}</li>`).join('')}
                                             </ul>
@@ -386,12 +396,6 @@ function renderProjects() {
                                         
                                         <div class="project-tags">
                                             ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                                        </div>
-                                        
-                                        <div class="project-footer">
-                                            <a href="${project.link}" class="project-link" target="_blank">
-                                                Visit Project <i class="fas fa-external-link-alt"></i>
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
