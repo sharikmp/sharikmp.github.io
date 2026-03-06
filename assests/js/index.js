@@ -13,10 +13,53 @@ const portfolioData = {
     },
 
     skills: [
-        { category: "Programming", icon: "fa-code", items: ["Java (Core & Advance)", "Python", "JavaScript", "TypeScript", "HTML", "CSS"] },
-        { category: "Automation Frameworks", icon: "fa-robot", items: ["Selenium Webdriver", "Playwright", "Cucumber (BDD)", "Rest Assured", "SoapUI", "TestNG"] },
-        { category: "Testing Expertise", icon: "fa-vial", items: ["System & Integration Testing", "API Automation", "Regression Testing", "Mulesoft Testing", "Azure Function Integration"] },
-        { category: "Tools & Utilities", icon: "fa-toolbox", items: ["Maven", "Jenkins", "Microsoft TFS", "JIRA", "Postman", "Excel Apache POI", "JSON/XML Parsers"] }
+        { 
+            category: "Programming", 
+            icon: "fa-code", 
+            items: [
+                { name: "Java (Core & Advance)", duration: "8y" },
+                { name: "Python", duration: "5y" },
+                { name: "JavaScript", duration: "4y" },
+                { name: "TypeScript", duration: "2y" },
+                { name: "HTML", duration: "8y" },
+                { name: "CSS", duration: "8y" }
+            ] 
+        },
+        { 
+            category: "Automation Frameworks", 
+            icon: "fa-robot", 
+            items: [
+                { name: "Selenium Webdriver", duration: "7y" },
+                { name: "Playwright", duration: "2y" },
+                { name: "Cucumber (BDD)", duration: "6y" },
+                { name: "Rest Assured", duration: "5y" },
+                { name: "SoapUI", duration: "4y" },
+                { name: "TestNG", duration: "7y" }
+            ] 
+        },
+        { 
+            category: "Testing Expertise", 
+            icon: "fa-vial", 
+            items: [
+                { name: "System & Integration", duration: "8y" },
+                { name: "API Automation", duration: "6y" },
+                { name: "Regression Testing", duration: "8y" },
+                { name: "Mulesoft Testing", duration: "3y" },
+                { name: "Azure Integration", duration: "2y" }
+            ] 
+        },
+        { 
+            category: "Tools & Utilities", 
+            icon: "fa-toolbox", 
+            items: [
+                { name: "Maven", duration: "7y" },
+                { name: "Jenkins", duration: "5y" },
+                { name: "Microsoft TFS", duration: "4y" },
+                { name: "JIRA", duration: "6y" },
+                { name: "Postman", duration: "6y" },
+                { name: "Excel Apache POI", duration: "5y" }
+            ] 
+        }
     ],
 
     experience: [
@@ -141,6 +184,7 @@ const portfolioData = {
             { 
                 "id": 1, 
                 "title": "Playwright Utilities", 
+                "date": "Jan 2026",
                 "description": "Advanced Playwright test automation utilities for modern web testing. Includes UI action helpers, element interaction wrappers, and test data management tools.", 
                 "longDescription": { 
                     "description": "TypeScript-based Playwright utilities for enterprise-level web automation. Provides a comprehensive collection of reusable components and helpers for building robust test automation frameworks.", 
@@ -158,10 +202,10 @@ const portfolioData = {
                 "link": "PlaywrightUtilities/", 
                 "tags": ["Playwright", "Test Automation", "UI Testing"] 
             },
-            { "id": 2, "title": "UI Test Automation", "description": "Selenium-based UI test automation framework with Maven build system. Comprehensive test suite with JUnit integration and cross-browser testing capabilities.", "longDescription": { "description": "Enterprise-grade UI automation framework using Selenium WebDriver and Java. Designed with best practices for maintainability, scalability, and parallel test execution.", "points": ["Maven-based project structure with dependency management", "Page Object Model (POM) design pattern", "JUnit test runner with comprehensive assertions", "Cross-browser compatibility (Chrome, Firefox, Safari, Edge)", "Parallel test execution and comprehensive reporting", "CI/CD pipeline integration"] }, "imageLink": null, "icon": "fa-mobile-alt", "category": "qa", "link": "UITestAutomation/", "tags": ["Selenium", "Java", "Maven", "JUnit"] },
-            { "id": 3, "title": "QA Snippets", "description": "Curated collection of QA automation snippets and useful code utilities. Includes locator strategies, assertion helpers, and common automation patterns.", "longDescription": { "description": "A well-organized repository of reusable code snippets and automation utilities for QA engineers. Includes common patterns, utilities, and best practices.", "points": ["XPath and CSS selector strategies", "Custom assertion methods and matchers", "Wait condition utilities", "Test data builders and fixtures", "Common automation design patterns", "Debugging and troubleshooting helpers"] }, "imageLink": null, "icon": "fa-scissors", "category": "qa", "link": "qasnipper/index.html", "tags": ["Code Snippets", "QA Tools", "Utilities"] },
-            { "id": 4, "title": "Learn Automation", "description": "Interactive learning platform demonstrating automation techniques. Includes practice examples with alerts, dropdowns, iframes, drag-drop, and form handling.", "longDescription": { "description": "Comprehensive interactive learning platform with hands-on automation examples. Perfect for beginners learning automation fundamentals and intermediate testers improving their skills.", "points": ["Alert handling and dialog popups", "Dropdown and multi-select elements", "iframe and nested frame handling", "Drag and drop interactions", "File upload scenarios", "Form filling and validation", "Window and tab management"] }, "imageLink": null, "icon": "fa-graduation-cap", "category": "qa", "link": "learn.automation/index.html", "tags": ["Learning", "Practice", "Web Elements"] },
-            { "id": 5, "title": "REST Assured Framework", "description": "REST API testing framework showcasing API validation, response parsing, and endpoint testing. Ideal for API-first testing strategies.", "longDescription": { "description": "Java-based REST API testing framework using REST Assured library. Comprehensive examples of API testing, validation, and assertion strategies.", "points": ["GET, POST, PUT, DELETE endpoint testing", "Request/response validation and parsing", "Authentication and authorization testing", "Header and body assertion", "JSON Path and XML Path queries", "API response schema validation", "Test data setup and teardown"] }, "imageLink": null, "icon": "fa-network-wired", "category": "qa", "link": "restassuredframework/index.html", "tags": ["API Testing", "REST", "Java"] },
+            { "id": 2, "title": "UI Test Automation", "date": "Nov 2025", "description": "Selenium-based UI test automation framework with Maven build system. Comprehensive test suite with JUnit integration and cross-browser testing capabilities.", "longDescription": { "description": "Enterprise-grade UI automation framework using Selenium WebDriver and Java. Designed with best practices for maintainability, scalability, and parallel test execution.", "points": ["Maven-based project structure with dependency management", "Page Object Model (POM) design pattern", "JUnit test runner with comprehensive assertions", "Cross-browser compatibility (Chrome, Firefox, Safari, Edge)", "Parallel test execution and comprehensive reporting", "CI/CD pipeline integration"] }, "imageLink": null, "icon": "fa-mobile-alt", "category": "qa", "link": "UITestAutomation/", "tags": ["Selenium", "Java", "Maven", "JUnit"] },
+            { "id": 3, "title": "QA Snippets", "date": "Sep 2025", "description": "Curated collection of QA automation snippets and useful code utilities. Includes locator strategies, assertion helpers, and common automation patterns.", "longDescription": { "description": "A well-organized repository of reusable code snippets and automation utilities for QA engineers. Includes common patterns, utilities, and best practices.", "points": ["XPath and CSS selector strategies", "Custom assertion methods and matchers", "Wait condition utilities", "Test data builders and fixtures", "Common automation design patterns", "Debugging and troubleshooting helpers"] }, "imageLink": null, "icon": "fa-scissors", "category": "qa", "link": "qasnipper/index.html", "tags": ["Code Snippets", "QA Tools", "Utilities"] },
+            { "id": 4, "title": "Learn Automation", "date": "July 2025", "description": "Interactive learning platform demonstrating automation techniques. Includes practice examples with alerts, dropdowns, iframes, drag-drop, and form handling.", "longDescription": { "description": "Comprehensive interactive learning platform with hands-on automation examples. Perfect for beginners learning automation fundamentals and intermediate testers improving their skills.", "points": ["Alert handling and dialog popups", "Dropdown and multi-select elements", "iframe and nested frame handling", "Drag and drop interactions", "File upload scenarios", "Form filling and validation", "Window and tab management"] }, "imageLink": null, "icon": "fa-graduation-cap", "category": "qa", "link": "learn.automation/index.html", "tags": ["Learning", "Practice", "Web Elements"] },
+            { "id": 5, "title": "REST Assured Framework", "date": "May 2025", "description": "REST API testing framework showcasing API validation, response parsing, and endpoint testing. Ideal for API-first testing strategies.", "longDescription": { "description": "Java-based REST API testing framework using REST Assured library. Comprehensive examples of API testing, validation, and assertion strategies.", "points": ["GET, POST, PUT, DELETE endpoint testing", "Request/response validation and parsing", "Authentication and authorization testing", "Header and body assertion", "JSON Path and XML Path queries", "API response schema validation", "Test data setup and teardown"] }, "imageLink": null, "icon": "fa-network-wired", "category": "qa", "link": "restassuredframework/index.html", "tags": ["API Testing", "REST", "Java"] },
             { "id": 6, "title": "Test Report", "description": "Professional test report dashboard showcasing test metrics, execution statistics, and detailed test results visualization with interactive charts.", "longDescription": { "description": "Interactive test reporting dashboard with comprehensive metrics visualization. Displays test execution statistics, pass/fail rates, and detailed test results with beautiful charts.", "points": ["Real-time test metrics display", "Pass/fail/skip statistics visualization", "Execution timeline and duration analysis", "Test case categorization and filtering", "Detailed execution logs and screenshots", "Performance metrics and trends", "Interactive charts and graphs"] }, "imageLink": null, "icon": "fa-chart-line", "category": "qa", "link": "testreport/index.html", "tags": ["Reporting", "Analytics", "Dashboard"] },
             { "id": 7, "title": "Dummy Claim", "description": "Sample claims management application for testing purposes. Features user authentication, claim submission, dashboard analytics, and file upload capabilities.", "longDescription": { "description": "Full-featured claims management web application designed for testing and training. Includes authentication, data management, and reporting features.", "points": ["User login and session management", "Claim submission and tracking", "Document upload and verification", "Claims analytics dashboard", "Status tracking and notifications", "Admin and user role separation", "Search and filtering capabilities"] }, "imageLink": null, "icon": "fa-file-invoice", "category": "qa", "link": "dummyclaim/index.html", "tags": ["Test Application", "Claims", "Web App"] },
             { "id": 8, "title": "BioGen", "description": "Biodata generation and management tool with theme switching. Includes profile photo management, printing capabilities, and data export features.", "longDescription": { "description": "Professional biodata generation tool with rich editing features. Create, customize, and export biodata in multiple formats with theme support.", "points": ["Interactive biodata form with validation", "Photo upload and management", "Multiple theme options for custom styling", "Print to PDF functionality", "Data export in multiple formats", "Template customization", "Mobile-responsive design"] }, "imageLink": null, "icon": "fa-dna", "category": "dev", "link": "biogen/index.html", "tags": ["Data Management", "Biodata", "Web App"] },
@@ -187,10 +231,10 @@ const portfolioData = {
             { "id": 28, "title": "MathBee", "description": "Intelligent math learning platform with adaptive difficulty levels. Provides personalized problem sets and solution explanations for effective learning.", "longDescription": { "description": "AI-powered adaptive math learning platform with difficulty progression. Personalized learning paths with instant feedback and explanations.", "points": ["Adaptive difficulty progression", "Personalized problem generation", "Instant feedback and explanations", "Progress tracking and analytics", "Multiple math topics covered", "Timed practice sessions", "Performance-based recommendations"] }, "imageLink": null, "icon": "fa-lightbulb", "category": "ai", "link": "mathbee/v2/index.html", "tags": ["AI", "Learning", "Math", "Adaptive"] }
         ],
         "categories": [
-            { "id": "qa", "name": "QA & Automation Engineering", "description": "Testing frameworks, automation utilities, and QA tools", "icon": "fa fa-robot", "color": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" },
-            { "id": "dev", "name": "Development & Scripting", "description": "Interactive applications, games, editors, and learning platforms", "icon": "fa fa-code", "color": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" },
-            { "id": "utils", "name": "Utilities & Tools", "description": "Practical calculators and utility applications", "icon": "fa fa-toolbox", "color": "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)" },
-            { "id": "ai", "name": "AI & Machine Learning", "description": "Intelligent learning and analysis tools", "icon": "fa fa-brain", "color": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)" }
+            { "id": "qa", "name": "QA & Automation Engineering", "description": "Testing frameworks, automation utilities, and QA tools", "icon": "fa fa-robot", "color": "linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)" },
+            { "id": "dev", "name": "Development & Scripting", "description": "Interactive applications, games, editors, and learning platforms", "icon": "fa fa-code", "color": "linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%)" },
+            { "id": "utils", "name": "Utilities & Tools", "description": "Practical calculators and utility applications", "icon": "fa fa-toolbox", "color": "linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%)" },
+            { "id": "ai", "name": "AI & Machine Learning", "description": "Intelligent learning and analysis tools", "icon": "fa fa-brain", "color": "linear-gradient(135deg, var(--tertiary-color) 0%, var(--secondary-color) 100%)" }
         ]
     },
 
@@ -198,27 +242,31 @@ const portfolioData = {
         {
             title: "Dream Team Award",
             issuer: "Client Organisation (PwC)",
-            year: "Oct 2022, Mar 2023",
+            month: "Mar",
+            year: "2023",
             icon: "fas fa-trophy",
             description: "Recognized as a core team member for outstanding collaboration and significant contributions to project success"
         },
         {
             title: "Star R&R Award",
             issuer: "PwC",
-            year: "Nov 2022",
+            month: "Nov",
+            year: "2022",
             icon: "fas fa-star",
             description: "Awarded for delivering exceptional results and recognition for remarkable performance and dedication"
         },
         {
             title: "Spot Award",
             issuer: "Client Organisation (PwC)",
-            year: "Aug 2022, Oct 2022",
+            month: "Oct",
+            year: "2022",
             icon: "fas fa-medal",
             description: "Received multiple spot awards for immediate recognition of outstanding work and exceptional problem-solving"
         },
         {
             title: "Early Promotion to Associate",
             issuer: "Cognizant",
+            month: "Jun",
             year: "2021",
             icon: "fas fa-arrow-trend-up",
             description: "Promoted to Associate level ahead of schedule, demonstrating leadership and technical excellence"
@@ -228,14 +276,14 @@ const portfolioData = {
     education: [
         {
             institution: "Maulana Abul Kalam Azad University of Technology",
-            degree: "B.Tech Computer Science & Engineering",
+            degree: "B.Tech (EE)",
             field: "Bachelor of Technology",
             year: "2018",
             gpa: "84.70% (CGPA 9.22)",
             details: "Comprehensive understanding of software development, data structures, algorithms, and computer networks"
         },
         {
-            institution: "West Bengal Board of Secondary Education",
+            institution: "West Bengal Council of Secondary Education",
             degree: "12th Standard Science",
             field: "Science Stream",
             year: "2013",
@@ -243,7 +291,7 @@ const portfolioData = {
             details: "Strong foundation in Physics, Chemistry, and Mathematics"
         },
         {
-            institution: "West Bengal Council of Secondary Education",
+            institution: "West Bengal Board of Secondary <br>Education",
             degree: "10th Standard",
             field: "General",
             year: "2011",
@@ -307,14 +355,19 @@ function renderSkills() {
     const skillsGrid = document.getElementById('skillsGrid');
     skillsGrid.innerHTML = portfolioData.skills.map((skill, index) => `
                 <div class="skill-category" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <h3>
-                        <span class="skill-category-icon">
-                            <i class="${skill.icon}"></i>
-                        </span>
-                        ${skill.category}
-                    </h3>
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon-bg">
+                            <i class="fa ${skill.icon}"></i>
+                        </div>
+                        <h3>${skill.category}</h3>
+                    </div>
                     <div class="skills-list">
-                        ${skill.items.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+                        ${skill.items.map(s => `
+                            <div class="skill-item">
+                                <span class="skill-name">${s.name}</span>
+                                <span class="skill-duration-tag">${s.duration}</span>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             `).join('');
@@ -374,28 +427,42 @@ function renderProjects() {
                             <p>${category.description}</p>
                         </div>
                         <div class="category-projects-grid">
-                            ${categoryProjects.map(project => `
+                            ${categoryProjects.map((project, idx) => `
                                 <div class="project-card" data-category="${project.category}" data-id="${project.id}">
                                     <div class="project-header-card" style="background: ${category.color};">
-                                        <div class="project-header-icon">
+                                        <div class="project-number-badge">#${idx + 1}</div>
+                                        <!--  <div class="project-header-icon">
                                             ${project.imageLink ? `<img src="${project.imageLink}" alt="${project.title}" />` : `<i class="fa ${project.icon}"></i>`}
+                                        </div> -->
+                                        <div class="project-title-area">
+                                            <h3>${project.title}</h3>
+                                            <span class="project-date-tag"><i class="far fa-calendar-alt"></i> ${project.date || 'Mar 2026'}</span>
                                         </div>
-                                        <h3>${project.title}</h3>
                                         <a href="${project.link}" class="project-header-link" target="_blank">
-                                            Visit Project <i class="fas fa-external-link-alt"></i>
+                                            <i class="fas fa-external-link-alt"></i>
                                         </a>
                                     </div>
                                     <div class="project-card-content">
                                         <p class="project-description">${project.description}</p>
                                         
-                                        <div class="project-details">
-                                            <ul class="features-list">
-                                                ${project.longDescription.points.map(point => `<li>${point}</li>`).join('')}
-                                            </ul>
-                                        </div>
-                                        
-                                        <div class="project-tags">
-                                            ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                        <div class="collapsible-wrapper">
+                                            <button class="collapsible-trigger" onclick="toggleProjectCollapse(this)">
+                                                <span><i class="fas fa-info-circle"></i> Project Details</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                            <div class="collapsible-content">
+                                                <div class="project-details">
+                                                    <ul class="features-list">
+                                                        ${project.longDescription.points.map(point => `<li><i class="fas fa-check"></i> ${point}</li>`).join('')}
+                                                    </ul>
+                                                </div>
+                                                <div class="project-tech-inline">
+                                                    <div class="tech-label"><i class="fas fa-microchip"></i> Technologies</div>
+                                                    <div class="project-tags">
+                                                        ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -404,6 +471,17 @@ function renderProjects() {
                     </div>
                 `;
     }).join('');
+}
+
+// ===== TOGGLE PROJECT COLLAPSE =====
+function toggleProjectCollapse(button) {
+    button.classList.toggle('active');
+    const content = button.nextElementSibling;
+    if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+    } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+    }
 }
 
 // ===== INITIALIZE PROJECT FILTERS =====
@@ -504,10 +582,25 @@ function renderAwards() {
     const awardsGrid = document.getElementById('awardsGrid');
     awardsGrid.innerHTML = portfolioData.awards.map((award, index) => `
                 <div class="award-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <div class="award-icon"><i class="${award.icon}"></i></div>
-                    <h3>${award.title}</h3>
-                    <p>${award.description}</p>
-                    <p class="award-year"><strong>${award.issuer}</strong> • ${award.year}</p>
+                    <div class="award-badge-ribbon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="award-icon-container">
+                        <div class="award-icon-circle">
+                            <i class="${award.icon}"></i>
+                        </div>
+                    </div>
+                    <div class="award-content">
+                        <div class="award-date-bubble">
+                            <span class="award-month">${award.month}</span>
+                            <span class="award-year">${award.year}</span>
+                        </div>
+                        <h3>${award.title}</h3>
+                        <p class="award-issuer">
+                            <i class="fas fa-building"></i> ${award.issuer}
+                        </p>
+                        <p class="award-description">${award.description}</p>
+                    </div>
                 </div>
             `).join('');
 }
@@ -517,11 +610,32 @@ function renderAcademics() {
     const academicsGrid = document.getElementById('academicsGrid');
     academicsGrid.innerHTML = portfolioData.education.map((academic, index) => `
                 <div class="academic-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <h3>${academic.institution}</h3>
-                    <p class="degree"><strong>${academic.degree}</strong></p>
-                    <p class="degree">${academic.field}</p>
-                    <p class="period"><i class="fas fa-calendar"></i> ${academic.year}</p>
-                    <p>${academic.details}</p>
+                    <div class="academic-leaf-decor">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="academic-header">
+                        <div class="academic-icon-box">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="academic-titles">
+                            <h3>${academic.institution}</h3>
+                            <p class="degree-main">${academic.degree}</p>
+                        </div>
+                    </div>
+                    <div class="academic-body">
+                        <div class="academic-info-row">
+                            <span class="info-tag"><i class="fas fa-book-open"></i> ${academic.field}</span>
+                            <span class="info-tag"><i class="fas fa-calendar-alt"></i> ${academic.year}</span>
+                        </div>
+                        <div class="academic-gpa-container">
+                            <div class="gpa-label">Academic Achievement</div>
+                            <div class="gpa-value">${academic.gpa}</div>
+                        </div>
+                        <p class="academic-details">${academic.details}</p>
+                    </div>
+                    <div class="academic-footer-seal">
+                        <i class="fas fa-stamp"></i>
+                    </div>
                 </div>
             `).join('');
 }
