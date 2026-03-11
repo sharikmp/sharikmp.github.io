@@ -199,7 +199,7 @@ const portfolioData = {
                 "imageLink": null, 
                 "icon": "fa-play", 
                 "category": "qa", 
-                "link": "PlaywrightUtilities/index.html", 
+                "link": "PlaywrightFramework/", 
                 "tags": ["Playwright", "Test Automation", "UI Testing"] 
             },
             { "id": 2, "title": "UI Test Automation", "date": "Nov 2025", "description": "Selenium-based UI test automation framework with Maven build system. Comprehensive test suite with JUnit integration and cross-browser testing capabilities.", "longDescription": { "description": "Enterprise-grade UI automation framework using Selenium WebDriver and Java. Designed with best practices for maintainability, scalability, and parallel test execution.", "points": ["Maven-based project structure with dependency management", "Page Object Model (POM) design pattern", "JUnit test runner with comprehensive assertions", "Cross-browser compatibility (Chrome, Firefox, Safari, Edge)", "Parallel test execution and comprehensive reporting", "CI/CD pipeline integration"] }, "imageLink": null, "icon": "fa-mobile-alt", "category": "qa", "link": "UITestAutomation/index.html", "tags": ["Selenium", "Java", "Maven", "JUnit"] },

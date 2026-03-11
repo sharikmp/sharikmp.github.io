@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selenium Framework - UITestAutomation</title>
+    <title>Playwright Framework - Advanced Test Automation</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* ===== CSS VARIABLES ===== */
         :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
+            --primary-color: #2d9cdb;
+            --secondary-color: #0066cc;
             --accent-color: #4facfe;
             --success-color: #2ecc71;
             --warning-color: #f39c12;
@@ -81,6 +81,7 @@
 
         .navbar-brand i {
             font-size: 1.8rem;
+            color: var(--primary-color);
         }
 
         .nav-menu {
@@ -215,7 +216,7 @@
         .hero-icon-box {
             width: 350px;
             height: 350px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(45, 156, 219, 0.1) 0%, rgba(0, 102, 204, 0.1) 100%);
             border-radius: 30px;
             display: flex;
             align-items: center;
@@ -308,10 +309,10 @@
         }
 
         .overview-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(79, 172, 254, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(45, 156, 219, 0.05) 0%, rgba(79, 172, 254, 0.05) 100%);
             padding: 40px;
             border-radius: 20px;
-            border: 1px solid rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(45, 156, 219, 0.1);
             transition: var(--transition);
             text-align: center;
         }
@@ -465,10 +466,10 @@
         }
 
         .architecture-diagram {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+            background: linear-gradient(135deg, rgba(45, 156, 219, 0.08) 0%, rgba(0, 102, 204, 0.08) 100%);
             padding: 40px;
             border-radius: 15px;
-            border: 2px solid rgba(102, 126, 234, 0.2);
+            border: 2px solid rgba(45, 156, 219, 0.2);
         }
 
         .diagram-box {
@@ -526,7 +527,7 @@
             color: var(--white);
             font-size: 1.5rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(45, 156, 219, 0.3);
         }
 
         .feature-content h4 {
@@ -562,7 +563,7 @@
         }
 
         .scenario-card {
-            background: linear-gradient(135deg, rgba(240, 147, 251, 0.08) 0%, rgba(79, 172, 254, 0.08) 100%);
+            background: linear-gradient(135deg, rgba(45, 156, 219, 0.08) 0%, rgba(79, 172, 254, 0.08) 100%);
             padding: 30px;
             border-radius: 15px;
             border-left: 5px solid var(--primary-color);
@@ -729,6 +730,10 @@
             color: var(--text-dark);
         }
 
+        .tree-extension {
+            color: var(--text-dark);
+        }
+
         .tree-comment {
             color: var(--text-light);
             font-style: italic;
@@ -737,6 +742,8 @@
         .tree-connector {
             color: var(--text-dark);
         }
+
+        /* ===== FOOTER ===== */
         footer {
             background: var(--bg-dark);
             color: var(--white);
@@ -804,8 +811,8 @@
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
-                <i class="fas fa-robot"></i>
-                UITestAutomation
+                <i class="fas fa-spider"></i>
+                Playwright Framework
             </div>
             <ul class="nav-menu">
                 <li><a href="#overview" class="nav-link">Overview</a></li>
@@ -823,9 +830,9 @@
     <section id="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1>Selenium Framework</h1>
-                <div class="subtitle">Robust UI Test Automation</div>
-                <p>A comprehensive, production-ready test automation framework built with Selenium and Java. Implements Page Object Model pattern, BDD with Cucumber, and enterprise-grade best practices for reliable UI testing.</p>
+                <h1>Playwright Framework</h1>
+                <div class="subtitle">Modern Web Test Automation</div>
+                <p>A comprehensive, next-generation test automation framework built with Playwright, TypeScript, and modern DevOps practices. Supports multiple browsers, parallel execution, and provides powerful debugging capabilities for reliable end-to-end testing.</p>
                 <div class="hero-cta">
                     <a href="#overview" class="btn btn-primary">
                         <i class="fas fa-arrow-down"></i> Explore
@@ -837,7 +844,7 @@
             </div>
             <div class="hero-image">
                 <div class="hero-icon-box">
-                    <i class="fas fa-flask-vial"></i>
+                    <i class="fas fa-play"></i>
                 </div>
             </div>
         </div>
@@ -850,24 +857,24 @@
             <div class="overview-grid">
                 <div class="overview-card fade-in">
                     <div class="overview-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-rocket"></i>
                     </div>
-                    <h3>Scalable Architecture</h3>
-                    <p>Built on proven patterns like Page Object Model and Component-Based testing, ensuring maintainability and scalability as your test suite grows.</p>
+                    <h3>Modern Architecture</h3>
+                    <p>Built on latest Playwright APIs with TypeScript support, modern async/await patterns, and fixture-based test organization for clean, maintainable test code.</p>
                 </div>
                 <div class="overview-card fade-in">
                     <div class="overview-icon">
-                        <i class="fas fa-gears"></i>
+                        <i class="fas fa-browser"></i>
                     </div>
-                    <h3>BDD Framework</h3>
-                    <p>Cucumber-driven test scenarios that bridge business requirements and technical implementation, making tests readable for both QA and business stakeholders.</p>
+                    <h3>Multi-Browser Testing</h3>
+                    <p>Test across Chromium, Firefox, and WebKit simultaneously with parallel test execution, automatic screenshot and video recording for comprehensive coverage.</p>
                 </div>
                 <div class="overview-card fade-in">
                     <div class="overview-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Production Ready</h3>
-                    <p>Enterprise-grade utilities including configuration management, screenshot capture, Excel data handling, and comprehensive error logging for production environments.</p>
+                    <h3>Lightning Fast</h3>
+                    <p>Leverage Playwright's efficient DevTools Protocol connection, intelligent waits, and network interception for fast, reliable test execution and reduced flakiness.</p>
                 </div>
             </div>
         </div>
@@ -880,38 +887,38 @@
             <div class="tech-grid">
                 <div class="tech-card">
                     <div class="tech-icon">
-                        <i class="fab fa-java"></i>
+                        <i class="fab fa-js"></i>
                     </div>
-                    <h4>Java</h4>
-                    <p>Core language for robust, type-safe test automation</p>
+                    <h4>TypeScript</h4>
+                    <p>Type-safe automation code with modern language features</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">
-                        <i class="fab fa-firefox"></i>
+                        <i class="fas fa-spider"></i>
                     </div>
-                    <h4>Selenium WebDriver</h4>
-                    <p>Browser automation and element interaction</p>
-                </div>
-                <div class="tech-card">
-                    <div class="tech-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h4>Cucumber BDD</h4>
-                    <p>Behavior-driven testing with Gherkin syntax</p>
+                    <h4>Playwright</h4>
+                    <p>Modern cross-browser automation library</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">
                         <i class="fas fa-cube"></i>
                     </div>
-                    <h4>Maven</h4>
-                    <p>Build automation and dependency management</p>
+                    <h4>Playwright Test</h4>
+                    <p>Built-in test runner with parallel execution</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">
-                        <i class="fas fa-file-excel"></i>
+                        <i class="fab fa-npm"></i>
                     </div>
-                    <h4>Apache POI</h4>
-                    <p>Excel data-driven testing support</p>
+                    <h4>npm</h4>
+                    <p>Package management and script execution</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <h4>Allure Reports</h4>
+                    <p>Beautiful test reporting with detailed analytics</p>
                 </div>
             </div>
         </div>
@@ -925,26 +932,26 @@
                 <div class="architecture-text">
                     <h3>Design Patterns & Structure</h3>
                     <ul class="architecture-list">
-                        <li><strong>Page Object Model:</strong> Encapsulates page elements and actions in separate classes for better maintainability</li>
-                        <li><strong>Component-Based Testing:</strong> Reusable UI component abstractions (Button, TextField, Dropdown, etc.)</li>
-                        <li><strong>BDD with Cucumber:</strong> Feature files describe scenarios in plain language, step definitions implement the logic</li>
-                        <li><strong>Configuration Management:</strong> Externalized config for environment and driver settings</li>
-                        <li><strong>Utility Layer:</strong> Centralized utilities for common operations, screenshot capture, and data handling</li>
-                        <li><strong>Hooks & Lifecycle:</strong> Setup/teardown logic for test initialization and cleanup</li>
+                        <li><strong>Page Object Model:</strong> Encapsulates page elements and actions in separate page classes for better maintainability</li>
+                        <li><strong>Fixture-Based Setup:</strong> Playwright-native fixtures for test setup/teardown and resource management</li>
+                        <li><strong>Base Page Class:</strong> Common page operations and element interaction methods inherited by all page objects</li>
+                        <li><strong>Configuration Management:</strong> Externalized settings for browsers, environments, and test parameters</li>
+                        <li><strong>Utility Layer:</strong> Helpers for element actions, data handling, assertions, and reporting</li>
+                        <li><strong>Parallel Execution:</strong> Built-in support for running tests across multiple workers and browsers</li>
                     </ul>
                 </div>
                 <div class="architecture-diagram">
                     <div class="diagram-box">
                         <strong>Test Layer</strong>
-                        <p>Step Definitions & Hooks</p>
+                        <p>Test Cases & Fixtures</p>
                     </div>
                     <div class="diagram-box">
                         <strong>Page Layer</strong>
-                        <p>Page Objects & Components</p>
+                        <p>Page Objects & Base Page</p>
                     </div>
                     <div class="diagram-box">
                         <strong>Utility Layer</strong>
-                        <p>WebDriver, Config, Utils</p>
+                        <p>Helpers & Common Methods</p>
                     </div>
                     <div class="diagram-box">
                         <strong>Application</strong>
@@ -965,8 +972,8 @@
                         <i class="fas fa-cube"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Reusable Components</h4>
-                        <p>AppButton, AppLink, AppText, AppTextInput, AppDropDown, AppCart, AppHamburgerMenu - all extending a base Component class for consistent behavior</p>
+                        <h4>Page Object Abstractions</h4>
+                        <p>LoginPage, HomePage, ProductPage, CartPage, CheckoutPage with consistent selectors and action methods</p>
                     </div>
                 </div>
                 <div class="feature-item">
@@ -974,8 +981,8 @@
                         <i class="fas fa-layer-group"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Multi-Layer Organization</h4>
-                        <p>Clear separation between test logic, page objects, components, and utilities ensuring easy navigation and maintenance</p>
+                        <h4>Test Organization</h4>
+                        <p>Organized test structure with separate files for different features and page-specific test suites</p>
                     </div>
                 </div>
                 <div class="feature-item">
@@ -983,26 +990,26 @@
                         <i class="fas fa-cog"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Configuration Management</h4>
-                        <p>Environment-specific configurations for different browsers, environments, and test data sources via properties files</p>
+                        <h4>Multi-Browser Support</h4>
+                        <p>Seamlessly test across Chromium, Firefox, WebKit browsers with parallel execution capability</p>
                     </div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon-box">
-                        <i class="fas fa-database"></i>
+                        <i class="fas fa-video"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Data-Driven Testing</h4>
-                        <p>Excel file support for parameterized test execution with multiple data sets</p>
+                        <h4>Video & Screenshot Recording</h4>
+                        <p>Automatic video recording and screenshot capture on failure for comprehensive debugging</p>
                     </div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon-box">
-                        <i class="fas fa-camera"></i>
+                        <i class="fas fa-network-wired"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Screenshot Capture</h4>
-                        <p>Automated screenshot utilities for failure analysis and evidence collection</p>
+                        <h4>Network Interception</h4>
+                        <p>Mock API responses and intercept network requests for end-to-end testing without backend dependencies</p>
                     </div>
                 </div>
                 <div class="feature-item">
@@ -1010,8 +1017,8 @@
                         <i class="fas fa-scroll"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Scenario Context</h4>
-                        <p>ScenarioContext utility for sharing data across step definitions within a test scenario</p>
+                        <h4>Intelligent Waits</h4>
+                        <p>Auto-waiting for elements and network idle states, reducing test flakiness and improving reliability</p>
                     </div>
                 </div>
             </div>
@@ -1026,57 +1033,57 @@
                 <div class="scenario-card">
                     <h4>
                         <i class="fas fa-sign-in-alt"></i>
-                        User Login
+                        Authentication Tests
                         <span class="scenario-badge">Critical</span>
                     </h4>
                     <ul class="scenario-steps">
                         <li>Navigate to login page</li>
-                        <li>Enter valid credentials</li>
-                        <li>Click login button</li>
+                        <li>Enter credentials and submit form</li>
                         <li>Verify successful authentication</li>
-                        <li>Confirm redirect to inventory page</li>
+                        <li>Confirm redirect to dashboard</li>
+                        <li>Validate session persistence</li>
                     </ul>
                 </div>
                 <div class="scenario-card">
                     <h4>
                         <i class="fas fa-shopping-bag"></i>
-                        Product Browsing
+                        Product Catalog Tests
                         <span class="scenario-badge">Functional</span>
                     </h4>
                     <ul class="scenario-steps">
-                        <li>Access inventory page</li>
-                        <li>Verify product list loads</li>
-                        <li>Filter/sort products</li>
-                        <li>View product details</li>
-                        <li>Confirm accurate product information</li>
+                        <li>Load product listing page</li>
+                        <li>Verify product cards display correctly</li>
+                        <li>Test filtering and sorting</li>
+                        <li>Validate product details page</li>
+                        <li>Check image loading and responsiveness</li>
                     </ul>
                 </div>
                 <div class="scenario-card">
                     <h4>
                         <i class="fas fa-cart-plus"></i>
-                        Add to Cart
+                        Shopping Cart Tests
                         <span class="scenario-badge">Functional</span>
                     </h4>
                     <ul class="scenario-steps">
-                        <li>Select product from inventory</li>
-                        <li>Click add to cart button</li>
-                        <li>Verify item added to cart</li>
-                        <li>Check cart count updates</li>
-                        <li>Navigate to cart view</li>
+                        <li>Add products to cart</li>
+                        <li>Verify cart updates correctly</li>
+                        <li>Remove items and update quantities</li>
+                        <li>Validate price calculations</li>
+                        <li>Test cart persistence</li>
                     </ul>
                 </div>
                 <div class="scenario-card">
                     <h4>
                         <i class="fas fa-credit-card"></i>
-                        Checkout Process
+                        Checkout Tests
                         <span class="scenario-badge">Critical</span>
                     </h4>
                     <ul class="scenario-steps">
-                        <li>Review items in cart</li>
-                        <li>Proceed to checkout</li>
+                        <li>Access checkout from cart</li>
                         <li>Enter shipping information</li>
-                        <li>Confirm payment details</li>
-                        <li>Complete purchase successfully</li>
+                        <li>Select payment method</li>
+                        <li>Complete order successfully</li>
+                        <li>Validate order confirmation</li>
                     </ul>
                 </div>
             </div>
@@ -1088,68 +1095,66 @@
         <div class="section-container">
             <h2 class="section-title">Directory Structure</h2>
             <div class="file-tree-container">
-                <div class="file-tree-line"><span class="tree-folder">/UITestAutomation/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">file-tree.txt</span></div>
-                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">index.html</span></div>
-                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">pom.xml</span></div>
+                <div class="file-tree-line"><span class="tree-folder">PlaywrightFramework/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├─</span> <span class="tree-folder">.github/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  └──</span> <span class="tree-folder">workflows/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│     └──</span> <span class="tree-file">playwright.yml</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">.gitignore</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">README.md</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-folder">configs/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-file">global-hooks.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-file">global-setup.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  └──</span> <span class="tree-file">global-teardown.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-folder">core/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-file">base-app.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-folder">ui/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  ├──</span> <span class="tree-file">base-page.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  └──</span> <span class="tree-file">page-actions.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  └──</span> <span class="tree-folder">utils/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│     ├──</span> <span class="tree-file">data-generation-util.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│     ├──</span> <span class="tree-file">environment-util.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│     ├──</span> <span class="tree-file">fixture-util.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│     ├──</span> <span class="tree-file">json-util.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│     ├──</span> <span class="tree-file">jsonpath-util.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│     └──</span> <span class="tree-file">test-data-util.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-folder">environments/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-file">default.env</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-file">env-variables-dev.env</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-file">env-variables-qa.env</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  └──</span> <span class="tree-file">env-variables-staging.env</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">eslint.config.mjs</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">package-lock.json</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">package.json</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">playwright.config.ts</span></div>
                 <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-folder">src/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   ├──</span> <span class="tree-folder">main/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   ├──</span> <span class="tree-folder">java/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │   └──</span> <span class="tree-folder">org/example/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       ├──</span> <span class="tree-folder">application/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   ├──</span> <span class="tree-folder">Selectors/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   └──</span> <span class="tree-file">CommonSelectors.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   ├──</span> <span class="tree-folder">components/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   ├──</span> <span class="tree-file">AppButton.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   ├──</span> <span class="tree-file">AppCart.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   ├──</span> <span class="tree-file">AppDropDown.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   ├──</span> <span class="tree-file">AppHamburgerMenu.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   ├──</span> <span class="tree-file">AppLink.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   ├──</span> <span class="tree-file">AppText.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   ├──</span> <span class="tree-file">AppTextInput.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   │   └──</span> <span class="tree-file">Component.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   └──</span> <span class="tree-folder">pages/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │       ├──</span> <span class="tree-file">CartPage.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │       ├──</span> <span class="tree-file">CheckoutPage.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │       ├──</span> <span class="tree-file">InventoryPage.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │       └──</span> <span class="tree-file">LoginPage.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       ├──</span> <span class="tree-folder">config/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   └──</span> <span class="tree-file">ConfigReader.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       ├──</span> <span class="tree-folder">drivers/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   └──</span> <span class="tree-file">WebDriverManager.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       ├──</span> <span class="tree-folder">enums/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   ├──</span> <span class="tree-file">DriverType.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       │   └──</span> <span class="tree-file">EnvironmentType.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │       └──</span> <span class="tree-folder">utilities/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │           ├──</span> <span class="tree-file">Element.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │           ├──</span> <span class="tree-file">ExcelReader.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │           ├──</span> <span class="tree-file">PropertyReader.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │           ├──</span> <span class="tree-file">ScenarioContext.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   │           └──</span> <span class="tree-file">ScreenshotUtils.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │   └──</span> <span class="tree-folder">resources/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │       ├──</span> <span class="tree-file">config.properties</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │       ├──</span> <span class="tree-folder">drivers/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │       │   └──</span> <span class="tree-file">chromedriver.exe</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   │       └──</span> <span class="tree-file">testdata.xlsx</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│   └──</span> <span class="tree-folder">test/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       ├──</span> <span class="tree-folder">java/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │   └──</span> <span class="tree-folder">org/example/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │       ├──</span> <span class="tree-folder">features/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │       │   └──</span> <span class="tree-file">Tests.feature</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │       ├──</span> <span class="tree-folder">hooks/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │       │   └──</span> <span class="tree-file">Hooks.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │       ├──</span> <span class="tree-folder">runners/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │       │   ├──</span> <span class="tree-file">SmokeTestRunner.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │       │   └──</span> <span class="tree-file">TestRunner.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │       └──</span> <span class="tree-folder">stepDefinitions/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │           ├──</span> <span class="tree-file">CartPageSteps.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │           ├──</span> <span class="tree-file">CheckoutSteps.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │           ├──</span> <span class="tree-file">CommonSteps.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │           ├──</span> <span class="tree-file">InventoryPageSteps.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       │           └──</span> <span class="tree-file">LoginSteps.java</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│       └──</span> <span class="tree-folder">resources/</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│           ├──</span> <span class="tree-file">config.properties</span></div>
-                <div class="file-tree-line"><span class="tree-connector">│           └──</span> <span class="tree-file">testdata.xlsx</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-folder">app1/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  ├──</span> <span class="tree-folder">api/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  │  ├──</span> <span class="tree-file">api-index.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  │  └──</span> <span class="tree-folder">apis/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  │     └──</span> <span class="tree-file">user-api.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  ├──</span> <span class="tree-file">app-index.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  ├──</span> <span class="tree-folder">data/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  │  └──</span> <span class="tree-file">test-data.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  └──</span> <span class="tree-folder">ui/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     ├──</span> <span class="tree-folder">components/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     │  └──</span> <span class="tree-file">hamburger.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     ├──</span> <span class="tree-folder">pages/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     │  ├──</span> <span class="tree-file">cart-page.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     │  ├──</span> <span class="tree-file">checkout-page.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     │  ├──</span> <span class="tree-file">inventory-page.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     │  └──</span> <span class="tree-file">login-page.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     └──</span> <span class="tree-file">pom-index.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  └──</span> <span class="tree-file">index.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-folder">tests/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  ├──</span> <span class="tree-folder">app1/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  ├──</span> <span class="tree-folder">regression/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  │  └──</span> <span class="tree-file">e2e-test.spec.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │  └──</span> <span class="tree-folder">smoke/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  │     └──</span> <span class="tree-file">login-test.spec.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│  └──</span> <span class="tree-folder">app2/</span></div>
+                <div class="file-tree-line"><span class="tree-connector">│     └──</span> <span class="tree-file">demo-search.spec.ts</span></div>
+                <div class="file-tree-line"><span class="tree-connector">├──</span> <span class="tree-file">test-runner.sh</span></div>
+                <div class="file-tree-line"><span class="tree-connector">└──</span> <span class="tree-file">tsconfig.json</span></div>
             </div>
         </div>
     </section>
@@ -1161,76 +1166,76 @@
             <div class="components-grid">
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-file-alt"></i> Page Objects
+                        <i class="fas fa-file-alt"></i> Pages
                     </div>
                     <ul class="component-list">
+                        <li>BasePage</li>
                         <li>LoginPage</li>
-                        <li>InventoryPage</li>
+                        <li>HomePage</li>
+                        <li>ProductPage</li>
                         <li>CartPage</li>
                         <li>CheckoutPage</li>
-                        <li>CommonSelectors</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-cube"></i> UI Components
+                        <i class="fas fa-cube"></i> Tests
                     </div>
                     <ul class="component-list">
-                        <li>AppButton</li>
-                        <li>AppLink</li>
-                        <li>AppText</li>
-                        <li>AppTextInput</li>
-                        <li>AppDropDown</li>
-                        <li>AppCart</li>
-                        <li>AppHamburgerMenu</li>
+                        <li>auth.spec.ts</li>
+                        <li>products.spec.ts</li>
+                        <li>cart.spec.ts</li>
+                        <li>checkout.spec.ts</li>
+                        <li>integration.spec.ts</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-tools"></i> Core Utilities
+                        <i class="fas fa-tools"></i> Utilities
                     </div>
                     <ul class="component-list">
-                        <li>WebDriverManager</li>
-                        <li>ConfigReader</li>
-                        <li>PropertyReader</li>
-                        <li>ExcelReader</li>
-                        <li>ScreenshotUtils</li>
-                        <li>ScenarioContext</li>
-                        <li>Element Utilities</li>
+                        <li>BrowserManager</li>
+                        <li>ConfigManager</li>
+                        <li>TestDataHelper</li>
+                        <li>AssertionHelper</li>
+                        <li>ReportHelper</li>
+                        <li>LoggerUtil</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-play"></i> Test Definitions
+                        <i class="fas fa-cog"></i> Fixtures
                     </div>
                     <ul class="component-list">
-                        <li>LoginSteps</li>
-                        <li>InventoryPageSteps</li>
-                        <li>CartPageSteps</li>
-                        <li>CheckoutSteps</li>
-                        <li>CommonSteps</li>
+                        <li>Browser Fixtures</li>
+                        <li>Page Fixtures</li>
+                        <li>Setup/Teardown</li>
+                        <li>Data Fixtures</li>
+                        <li>API Fixtures</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-cog"></i> Configuration
+                        <i class="fas fa-file-code"></i> Config
                     </div>
                     <ul class="component-list">
-                        <li>config.properties</li>
-                        <li>testdata.xlsx</li>
-                        <li>DriverType Enum</li>
-                        <li>EnvironmentType Enum</li>
+                        <li>playwright.config.ts</li>
+                        <li>env.config.ts</li>
+                        <li>test.config.ts</li>
+                        <li>.env files</li>
+                        <li>Custom Reporters</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-check-square"></i> Test Runners
+                        <i class="fas fa-check-square"></i> Support
                     </div>
                     <ul class="component-list">
-                        <li>TestRunner</li>
-                        <li>SmokeTestRunner</li>
-                        <li>Hooks (Setup/Teardown)</li>
-                        <li>Feature Files</li>
+                        <li>Test Hooks</li>
+                        <li>Global Setup</li>
+                        <li>Global Teardown</li>
+                        <li>Allure Reports</li>
+                        <li>GitHub Actions</li>
                     </ul>
                 </div>
             </div>
@@ -1240,10 +1245,10 @@
     <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-content">
-            <h3 style="margin-bottom: 20px; font-size: 1.3rem;">UITestAutomation Framework</h3>
+            <h3 style="margin-bottom: 20px; font-size: 1.3rem;">Playwright Framework</h3>
             <p class="footer-text">
-                A professional-grade Selenium test automation framework designed with enterprise best practices. 
-                Built for maintainability, scalability, and reliability in production test environments.
+                A modern, production-ready Playwright test automation framework designed for contemporary QA practices. 
+                Built with TypeScript for type safety and maintainability in cloud-native testing environments.
             </p>
             <div class="footer-links">
                 <a href="#overview" class="footer-link">
@@ -1264,7 +1269,7 @@
             </div>
         </div>
         <div class="footer-divider">
-            <p>&copy; 2026 UITestAutomation Framework. Engineered for quality assurance excellence.</p>
+            <p>&copy; 2026 Playwright Framework. Engineered for modern test automation excellence.</p>
         </div>
     </footer>
 

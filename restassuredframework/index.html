@@ -445,6 +445,7 @@
             font-size: 0.95rem;
             color: var(--text-light);
             line-height: 1.6;
+            flex-wrap: wrap;
         }
 
         .architecture-list li::before {
@@ -453,6 +454,14 @@
             font-weight: 700;
             font-size: 1.2rem;
             min-width: 25px;
+            flex-shrink: 0;
+        }
+
+        .architecture-list li strong {
+            font-weight: 600;
+            color: var(--text-dark);
+            display: inline;
+            white-space: nowrap;
         }
 
         .architecture-diagram {

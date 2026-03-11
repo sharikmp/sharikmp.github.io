@@ -1,0 +1,64 @@
+/UITestAutomation/
+├── file-tree.txt
+├── index.html
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── org/
+│   │   │       └── example/
+│   │   │           ├── application/
+│   │   │           │   ├── Selectors/
+│   │   │           │   │   └── CommonSelectors.java
+│   │   │           │   ├── components/
+│   │   │           │   │   ├── AppButton.java
+│   │   │           │   │   ├── AppCart.java
+│   │   │           │   │   ├── AppDropDown.java
+│   │   │           │   │   ├── AppHamburgerMenu.java
+│   │   │           │   │   ├── AppLink.java
+│   │   │           │   │   ├── AppText.java
+│   │   │           │   │   ├── AppTextInput.java
+│   │   │           │   │   └── Component.java
+│   │   │           │   └── pages/
+│   │   │           │       ├── CartPage.java
+│   │   │           │       ├── CheckoutPage.java
+│   │   │           │       ├── InventoryPage.java
+│   │   │           │       └── LoginPage.java
+│   │   │           ├── config/
+│   │   │           │   └── ConfigReader.java
+│   │   │           ├── drivers/
+│   │   │           │   └── WebDriverManager.java
+│   │   │           ├── enums/
+│   │   │           │   ├── DriverType.java
+│   │   │           │   └── EnvironmentType.java
+│   │   │           └── utilities/
+│   │   │               ├── Element.java
+│   │   │               ├── ExcelReader.java
+│   │   │               ├── PropertyReader.java
+│   │   │               ├── ScenarioContext.java
+│   │   │               └── ScreenshotUtils.java
+│   │   └── resources/
+│   │       ├── config.properties
+│   │       ├── drivers/
+│   │       │   └── chromedriver.exe
+│   │       └── testdata.xlsx
+│   └── test/
+│       ├── java/
+│       │   └── org/
+│       │       └── example/
+│       │           ├── features/
+│       │           │   └── Tests.feature
+│       │           ├── hooks/
+│       │           │   └── Hooks.java
+│       │           ├── runners/
+│       │           │   ├── SmokeTestRunner.java
+│       │           │   └── TestRunner.java
+│       │           └── stepDefinitions/
+│       │               ├── CartPageSteps.java
+│       │               ├── CheckoutSteps.java
+│       │               ├── CommonSteps.java
+│       │               ├── InventoryPageSteps.java
+│       │               └── LoginSteps.java
+│       └── resources/
+│           ├── config.properties
+│           └── testdata.xlsx

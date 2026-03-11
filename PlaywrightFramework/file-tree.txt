@@ -1,0 +1,62 @@
+PlaywrightFramework/
+├─] node_modules/ (ignored)
+├── .github/
+│   └── workflows/
+│       └── playwright.yml
+├── .gitignore
+├── README.md
+├── configs/
+│   ├── global-hooks.ts
+│   ├── global-setup.ts
+│   └── global-teardown.ts
+├── core/
+│   ├── base-app.ts
+│   ├── ui/
+│   │   ├── base-page.ts
+│   │   └── page-actions.ts
+│   └── utils/
+│       ├── data-generation-util.ts
+│       ├── environment-util.ts
+│       ├── fixture-util.ts
+│       ├── json-util.ts
+│       ├── jsonpath-util.ts
+│       └── test-data-util.ts
+├── environments/
+│   ├── default.env
+│   ├── env-variables-dev.env
+│   ├── env-variables-qa.env
+│   └── env-variables-staging.env
+├── eslint.config.mjs
+├── package-lock.json
+├── package.json
+├── playwright.config.ts
+├── src/
+│   ├── app1/
+│   │   ├── api/
+│   │   │   ├── api-index.ts
+│   │   │   └── apis/
+│   │   │       └── user-api.ts
+│   │   ├── app-index.ts
+│   │   ├── data/
+│   │   │   └── test-data.ts
+│   │   └── ui/
+│   │       ├── components/
+│   │       │   └── hamburger.ts
+│   │       ├── pages/
+│   │       │   ├── cart-page.ts
+│   │       │   ├── checkout-page.ts
+│   │       │   ├── inventory-page.ts
+│   │       │   └── login-page.ts
+│   │       └── pom-index.ts
+│   └── index.ts
+├─] test-results/ (ignored)
+├── test-runner.sh
+├── tests/
+│   ├── app1/
+│   │   ├── regression/
+│   │   │   └── e2e-test.spec.ts
+│   │   └── smoke/
+│   │       └── login-test.spec.ts
+│   └── app2/
+│       └── demo-search.spec.ts
+└── tsconfig.json
