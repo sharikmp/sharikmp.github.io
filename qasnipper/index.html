@@ -1,125 +1,854 @@
 <!DOCTYPE html>
-<html>
-   <head>
-		<link rel="icon" href="img/capture_icon.png" type="image/gif" sizes="16x16">
-      <title>QA Snip</title>
-      <style>a {
-         color: black;
-         }
-         a:hover {
-         color: blue;
-         }
-         ul {
-         list-style-image: url("https://sharikmp.github.io/htmlbuilder/images/listarrow.png");
-         }
-         #postcontenttitle {
-         border: 1px solid #ddd; 
-         padding:5px 5px 5px 5px;
-         background:#6792EF;
-         background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(132, 189, 255, 0.804359243697479) 100%);
-         font-family: arial;
-         }
-         #postcontent {
-         background:rgb(255, 255, 255);
-         //background:linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(132, 189, 255, 0.804359243697479) 100%);
-         border:1px solid #ddd;
-         padding:20px;
-         font-family: arial;
-         font-size:12px;
-         color:black;
-         line-height: 25px;
-         }
-         #maincontainer {
-         padding-right:20px;
-         padding-bottom:50px;
-         padding-left:20px;
-         }
-         .footer {
-         left:0;
-         bottom:5px;
-         width:100%!important;
-         min-width:300px;
-         background:#6792EF;
-         background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(132, 189, 255, 0.804359243697479) 100%);
-         border: 1px solid #ddd;
-         color:black;
-         text-align:center;
-         padding-top:10px;
-         padding-bottom:10px;
-         font-family: arial;
-         }
-         .footer a {
-         color:black;
-         text-decoration:underline;
-         font-weight:bold;
-         }
-      </style>
-   </head>
-   <body>
-      <div id="postcontent">
-         <br/>
-         <div id="postcontenttitle" style="text-align: center;">
-            <h3>QA Snip</h3>
-         </div>
-         <br/><br/><br/>
-         <div>While executing test cases <b>manually</b>, we generally use excel for recording execution status of the test cases and a word file for keeping track of screenshots.</div>
-         <div><br></div>
-         <div style="color:red">With large number of test cases it becomes quit difficult to keep track of screenshots for all the test cases. It's also very difficult to refer those screenshots later on.&nbsp;</div>
-         <div><br></div>
-         <div>This java tool overcomes the problem. <b>Coded in java swing, the application with one click performs the following:&nbsp;</b></div>
-         
-         <div>&nbsp;&nbsp;&nbsp;&nbsp;1. It takes screenshot of the current screen.</div>
-         <div>&nbsp;&nbsp;&nbsp;&nbsp;2. Saves the screenshot to user defined directory. (This directory is taken as input when the tool starts)&nbsp;</div>
-         <div>&nbsp;&nbsp;&nbsp;&nbsp;3. Copies screenshot path to clipboard. Tester can directly paste the screenshot path in excel sheet against a particular test case or test step.&nbsp;</div>
-         <div>&nbsp;&nbsp;&nbsp;&nbsp;4. Creates an html file to view all the screenshots present in the directory.</div>
-         <div><br></div>
-         <div><br></div>
-         <div><b><u>Steps to use the application:&nbsp;</u></b></div>
-         <div><br></div>
-         <div>
-            <div><b>Step 1:&nbsp;</b>Double click on the&nbsp;<a href="https://drive.google.com/file/d/1ggc94I5PgDlmEA8WYTQ0NcYL1zdUSQij/view?usp=sharing">jar</a>&nbsp;to start the application.</div>
-            <div><img src="img/1.png" width="163" height="auto" style="border: 1px solid #6792EF; "></div>
-            <div><br></div>
-            <div>
-               <div><b>Step 2:&nbsp;</b>Enter valid directory for saving screenshots.</div>
-               <div><img src="img/2.png" width="344" height="auto" style="border: 1px solid #6792EF; "></div>
-               <div><br></div>
-               <div>
-                  <div><b>Step 3:&nbsp;</b>Enter your project name (Project name will reflect in html file).</div>
-                  <div><img src="img/3.png" width="341" height="auto" style="border: 1px solid #6792EF; "></div>
-                  <div><br></div>
-                  <div>
-                     <div><b>Step 4:&nbsp;</b>Enter tester name (It will also reflect in html file).</div>
-                     <div><img src="img/4.png" width="337" height="auto" style="border: 1px solid #6792EF; "></div>
-                     <div><br></div>
-                     <div><b>Step 5: </b>Untick the checkbox if you don't want to give description to the screenshot.&nbsp;</div>
-                     <div><img src="img/5.png" width="294" height="auto" style="border: 1px solid #6792EF; "></div>
-                     <div><br></div>
-                     <div>
-                        <div><b>Step 6: </b>Take few screenshots.&nbsp;Open the directory (provided in step 2) and view the screenshots via "index.html" file.</div>
-                     </div>
-                     <div><img src="img/6.png" width="204" height="auto" style="border: 1px solid #6792EF; "></div>
-                     <div><br></div>
-                     <div><br></div>
-                  </div>
-               </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Sniper - Screenshot Management Tool</title>
+    <link rel="icon" href="img/capture_icon.png" type="image/gif" sizes="16x16">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #4facfe;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --bg-light: #f8f9fa;
+            --bg-dark: #2c3e50;
+            --text-dark: #2c3e50;
+            --text-light: #666;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-color: #e0e0e0;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand i {
+            font-size: 1.8rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-dark) !important;
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+        }
+
+        /* ===== HERO SECTION ===== */
+        #hero {
+            background: linear-gradient(135deg, var(--white) 0%, var(--bg-light) 100%);
+            padding: 100px 20px;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .hero-content p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-icon-box {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: var(--primary-color);
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            animation: floatBox 3s ease-in-out infinite;
+        }
+
+        @keyframes floatBox {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-icon-box {
+                width: 250px;
+                height: 250px;
+                font-size: 5rem;
+            }
+        }
+
+        /* ===== SECTION GENERAL ===== */
+        section {
+            padding: 80px 20px;
+            transition: var(--transition);
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 30px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== OVERVIEW SECTION ===== */
+        #overview {
+            background: var(--white);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .overview-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(79, 172, 254, 0.05) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            transition: var(--transition);
+        }
+
+        .overview-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+
+        .overview-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .overview-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .overview-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        #features {
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--white) 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 25px;
+        }
+
+        .feature-icon-box {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-content h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .feature-content p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ===== STEPS SECTION ===== */
+        #steps {
+            background: var(--white);
+        }
+
+        .steps-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            padding-top: 10px;
+        }
+
+        .step-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .step-content p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .step-image {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .step-image:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, var(--primary-color), transparent);
+            left: 40px;
+            top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .step-item {
+                grid-template-columns: 1fr;
+            }
+
+            .step-item::after {
+                display: none;
+            }
+
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ===== CTA SECTION ===== */
+        #cta {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+        }
+
+        .cta-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-light {
+            background: var(--white);
+            color: var(--primary-color);
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+        }
+
+        .btn-light:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--bg-dark);
+            color: var(--white);
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+
+        .footer-text {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-link:hover {
+            color: var(--white);
+            gap: 12px;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 25px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <i class="fas fa-camera"></i>
+                QA Sniper
             </div>
-         </div>
-         <div>Thus, we saved all the screenshots at one place and created a&nbsp;<a href="QASnips\index.html">Html file</a>&nbsp;for viewing those.</div>
-         <div><br></div>
-         <div><br></div>
-         <div><i><b>Download runnable jar for the tool:&nbsp;</b></i><a href="https://drive.google.com/file/d/1ggc94I5PgDlmEA8WYTQ0NcYL1zdUSQij/view?usp=sharing">Click here</a></div>
-         <div><br></div>
-         <div><br></div>
-         <div><a href="https://sharikmp.github.io/"><i><b>Click here to view more projects</b></i></a></div>
-         <div><br></div>
-         <div><br></div>
-         <div><br></div>
-         <br/><br/><br/><br/>
-         <div class="footer">
-            <address>Contact: <a id="developer" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a>.<br> The City Of Joy, West Bengal,<br> With Love From India </address>
-         </div>
-      </div>
-      <br/>
+            <ul class="nav-menu">
+                <li><a href="#overview" class="nav-link">Overview</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#steps" class="nav-link">How It Works</a></li>
+                <li><a href="#cta" class="nav-link">Download</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>QA Sniper</h1>
+                <div class="subtitle">Smart Screenshot Management Tool</div>
+                <p>Stop wasting time managing screenshots across multiple files. QA Sniper automatically captures, organizes, and generates HTML galleries for efficient test documentation.</p>
+                <div class="hero-cta">
+                    <a href="#cta" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download Now
+                    </a>
+                    <a href="#steps" class="btn btn-secondary">
+                        <i class="fas fa-book"></i> Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-icon-box">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== OVERVIEW SECTION ===== -->
+    <section id="overview">
+        <div class="section-container">
+            <h2 class="section-title">Why QA Sniper?</h2>
+            <div class="overview-grid">
+                <div class="overview-card fade-in">
+                    <div class="overview-icon">
+                        <i class="fas fa-problem-solving"></i>
+                    </div>
+                    <h3>Solves Real Problems</h3>
+                    <p>Manual test execution requires tracking screenshots across Excel files and Word documents. QA Sniper centralizes all screenshots in one organized location with automatic indexing.</p>
+                </div>
+                <div class="overview-card fade-in">
+                    <div class="overview-icon">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                    <h3>One-Click Operation</h3>
+                    <p>Designed for speed and efficiency. A single click captures screenshots, saves them, copies paths to clipboard, and generates an HTML gallery - all automatically.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section id="features">
+        <div class="section-container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Automatic Screenshot Capture</h4>
+                        <p>Captures the current screen with a single click and saves it to your configured directory instantly.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-copy"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Clipboard Integration</h4>
+                        <p>Automatically copies screenshot path to clipboard for instant pasting into Excel or test documentation.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Smart Organization</h4>
+                        <p>Saves all screenshots to user-defined directories with structured organization for easy reference.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>HTML Gallery Generation</h4>
+                        <p>Automatically creates an interactive HTML file to view all screenshots in a browsable gallery format.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-pencil"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Optional Descriptions</h4>
+                        <p>Add descriptions to screenshots for better documentation. Toggle description prompt as needed for your workflow.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Easy Configuration</h4>
+                        <p>Simple setup wizard to configure project name, tester name, directory location, and preferences on startup.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STEPS SECTION ===== -->
+    <section id="steps">
+        <div class="steps-container">
+            <h2 class="section-title">Get Started in 6 Steps</h2>
+
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Download & Launch</h3>
+                    <p>Download the QA Sniper jar file and double-click it to start the application. The intuitive interface will greet you with a configuration wizard.</p>
+                    <img src="img/1.png" alt="Step 1 - Launch Application" class="step-image">
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Configure Screenshot Directory</h3>
+                    <p>Enter a valid directory path where you want to save all your screenshots. This is where QA Sniper will organize and store captured images.</p>
+                    <img src="img/2.png" alt="Step 2 - Configure Directory" class="step-image">
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Set Project Name</h3>
+                    <p>Enter your project name. This will be displayed in the generated HTML gallery and helps organize screenshots by project.</p>
+                    <img src="img/3.png" alt="Step 3 - Project Name" class="step-image">
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Enter Tester Name</h3>
+                    <p>Provide your name as the tester. This information will also be reflected in the generated HTML gallery for tracking purposes.</p>
+                    <img src="img/4.png" alt="Step 4 - Tester Name" class="step-image">
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Configure Description Option</h3>
+                    <p>Decide whether you want to add descriptions to screenshots. Uncheck the box if you prefer quick captures without descriptions.</p>
+                    <img src="img/5.png" alt="Step 5 - Description Option" class="step-image">
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <h3>Start Capturing & View Results</h3>
+                    <p>Start taking screenshots during your test execution. Open the generated "index.html" file in the configured directory to view your screenshot gallery with all metadata.</p>
+                    <img src="img/6.png" alt="Step 6 - View Gallery" class="step-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA SECTION ===== -->
+    <section id="cta">
+        <div class="cta-content">
+            <h2><i class="fas fa-rocket"></i> Ready to Streamline Your Test Documentation?</h2>
+            <p>Download QA Sniper now and experience efficient screenshot management. Perfect for manual testers who want to spend less time organizing and more time testing.</p>
+            <div class="cta-buttons">
+                <a href="https://drive.google.com/file/d/1ggc94I5PgDlmEA8WYTQ0NcYL1zdUSQij/view?usp=sharing" class="btn-light">
+                    <i class="fas fa-download"></i> Download JAR File
+                </a>
+                <a href="https://sharikmp.github.io/" class="btn-light">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="margin-bottom: 20px; font-size: 1.3rem;">QA Sniper - Screenshot Management Tool</h3>
+            <p class="footer-text">
+                Simplify test documentation and screenshot management. QA Sniper helps testers organize, track, and reference screenshots efficiently during manual test execution.
+            </p>
+        </div>
+        <div class="footer-divider">
+            <p>&copy; 2024-2026 QA Sniper. Engineered for efficient test documentation.</p>
+            <div class="footer-credit">
+                <p>Created with <span style="color: #ff6b6b;"><i class="fas fa-heart"></i></span> for QA Engineers</p>
+                <p>The City Of Joy, West Bengal | With Love From India</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add fade-in animation to cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.overview-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
    </body>
 </html>
