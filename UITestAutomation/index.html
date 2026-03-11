@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rest Assured Framework - API Automation Suite</title>
+    <title>Selenium Framework - UITestAutomation</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -534,72 +534,59 @@
             line-height: 1.6;
         }
 
-        /* ===== UI SECTION ===== */
-        #ui-showcase {
+        /* ===== TEST SCENARIOS SECTION ===== */
+        #scenarios {
             background: var(--white);
         }
 
-        .ui-intro {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 50px;
-            font-size: 1.05rem;
-            color: var(--text-light);
-            line-height: 1.8;
-        }
-
-        .ui-sections {
+        .scenarios-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 50px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
             margin-top: 50px;
         }
 
-        .ui-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
         @media (max-width: 768px) {
-            .ui-section {
+            .scenarios-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .ui-section.reverse {
-            direction: rtl;
+        .scenario-card {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.08) 0%, rgba(79, 172, 254, 0.08) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-color);
+            transition: var(--transition);
         }
 
-        .ui-section.reverse > * {
-            direction: ltr;
+        .scenario-card:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-md);
         }
 
-        .ui-content h3 {
+        .scenario-card h4 {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-dark);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
-        .ui-content h3 i {
-            color: var(--primary-color);
-            font-size: 2rem;
+        .scenario-badge {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .ui-content p {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .ui-features {
+        .scenario-steps {
             list-style: none;
             padding: 0;
             margin: 0;
@@ -608,42 +595,23 @@
             gap: 12px;
         }
 
-        .ui-features li {
+        .scenario-steps li {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: flex-start;
             font-size: 0.9rem;
             color: var(--text-light);
+            line-height: 1.5;
         }
 
-        .ui-features li::before {
+        .scenario-steps li::before {
             content: '→';
             color: var(--primary-color);
             font-weight: 700;
             min-width: 20px;
         }
 
-        .ui-image {
-            position: relative;
-        }
-
-        .ui-image-wrapper {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid rgba(102, 126, 234, 0.2);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .ui-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            display: block;
-            border: 1px solid var(--border-color);
-        }
-
-        /* ===== COMPONENTS SECTION ===== */
+        /* ===== COMPONENTS/STRUCTURE SECTION ===== */
         #components {
             background: linear-gradient(135deg, var(--bg-light) 0%, var(--white) 100%);
         }
@@ -768,10 +736,6 @@
             font-size: 0.9rem;
         }
 
-        .footer-credit {
-            margin-top: 15px;
-        }
-
         /* ===== SCROLL ANIMATIONS ===== */
         .fade-in {
             opacity: 0;
@@ -790,15 +754,15 @@
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
-                <i class="fas fa-plug"></i>
-                Rest Assured Framework
+                <i class="fas fa-robot"></i>
+                UITestAutomation
             </div>
             <ul class="nav-menu">
                 <li><a href="#overview" class="nav-link">Overview</a></li>
                 <li><a href="#technologies" class="nav-link">Tech Stack</a></li>
                 <li><a href="#architecture" class="nav-link">Architecture</a></li>
                 <li><a href="#features" class="nav-link">Features</a></li>
-                <li><a href="#ui-showcase" class="nav-link">UI Showcase</a></li>
+                <li><a href="#scenarios" class="nav-link">Test Cases</a></li>
                 <li><a href="#components" class="nav-link">Components</a></li>
             </ul>
         </div>
@@ -808,9 +772,9 @@
     <section id="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1>Rest Assured Framework</h1>
-                <div class="subtitle">API Automation Suite with UI</div>
-                <p>A comprehensive, production-ready API test automation framework with Java Swing UI. Leverage Rest Assured for powerful API testing, Excel-driven data management, and an intuitive graphical interface for test execution and validation.</p>
+                <h1>Selenium Framework</h1>
+                <div class="subtitle">Robust UI Test Automation</div>
+                <p>A comprehensive, production-ready test automation framework built with Selenium and Java. Implements Page Object Model pattern, BDD with Cucumber, and enterprise-grade best practices for reliable UI testing.</p>
                 <div class="hero-cta">
                     <a href="#overview" class="btn btn-primary">
                         <i class="fas fa-arrow-down"></i> Explore
@@ -822,7 +786,7 @@
             </div>
             <div class="hero-image">
                 <div class="hero-icon-box">
-                    <i class="fas fa-server"></i>
+                    <i class="fas fa-flask-vial"></i>
                 </div>
             </div>
         </div>
@@ -835,24 +799,24 @@
             <div class="overview-grid">
                 <div class="overview-card fade-in">
                     <div class="overview-icon">
-                        <i class="fas fa-rocket"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>REST API Testing</h3>
-                    <p>Built on Rest Assured library, enabling powerful, intuitive API testing with built-in assertions, request/response validation, and extensive HTTP method support.</p>
+                    <h3>Scalable Architecture</h3>
+                    <p>Built on proven patterns like Page Object Model and Component-Based testing, ensuring maintainability and scalability as your test suite grows.</p>
                 </div>
                 <div class="overview-card fade-in">
                     <div class="overview-icon">
-                        <i class="fas fa-desktop"></i>
+                        <i class="fas fa-gears"></i>
                     </div>
-                    <h3>Java Swing UI</h3>
-                    <p>Intuitive graphical interface for test execution, configuration management, and result visualization making API testing accessible to non-technical users.</p>
+                    <h3>BDD Framework</h3>
+                    <p>Cucumber-driven test scenarios that bridge business requirements and technical implementation, making tests readable for both QA and business stakeholders.</p>
                 </div>
                 <div class="overview-card fade-in">
                     <div class="overview-icon">
-                        <i class="fas fa-database"></i>
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Data-Driven Testing</h3>
-                    <p>Excel-based test data management enabling parameterized API testing with multiple endpoints, headers, payloads, and expected responses from centralized configuration files.</p>
+                    <h3>Production Ready</h3>
+                    <p>Enterprise-grade utilities including configuration management, screenshot capture, Excel data handling, and comprehensive error logging for production environments.</p>
                 </div>
             </div>
         </div>
@@ -868,35 +832,35 @@
                         <i class="fab fa-java"></i>
                     </div>
                     <h4>Java</h4>
-                    <p>Core language for robust API automation</p>
+                    <p>Core language for robust, type-safe test automation</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">
-                        <i class="fas fa-cloud"></i>
+                        <i class="fab fa-firefox"></i>
                     </div>
-                    <h4>Rest Assured</h4>
-                    <p>Powerful library for REST API testing</p>
+                    <h4>Selenium WebDriver</h4>
+                    <p>Browser automation and element interaction</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">
-                        <i class="fas fa-window-restore"></i>
+                        <i class="fas fa-leaf"></i>
                     </div>
-                    <h4>Java Swing</h4>
-                    <p>Desktop UI for test execution</p>
+                    <h4>Cucumber BDD</h4>
+                    <p>Behavior-driven testing with Gherkin syntax</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">
                         <i class="fas fa-cube"></i>
                     </div>
                     <h4>Maven</h4>
-                    <p>Build automation and dependencies</p>
+                    <p>Build automation and dependency management</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">
                         <i class="fas fa-file-excel"></i>
                     </div>
                     <h4>Apache POI</h4>
-                    <p>Excel data configuration management</p>
+                    <p>Excel data-driven testing support</p>
                 </div>
             </div>
         </div>
@@ -908,36 +872,32 @@
             <h2 class="section-title">Framework Architecture</h2>
             <div class="architecture-content">
                 <div class="architecture-text">
-                    <h3>Design Architecture & Patterns</h3>
+                    <h3>Design Patterns & Structure</h3>
                     <ul class="architecture-list">
-                        <li><strong>Layered Architecture:</strong> Clear separation between API layer, business logic, UI, and utilities</li>
-                        <li><strong>Data-Driven Model:</strong> Excel configuration for endpoints, parameters, and validation rules</li>
-                        <li><strong>Modular Utilities:</strong> Reusable components for API calls, response validation, and data handling</li>
-                        <li><strong>Configuration Management:</strong> Centralized properties for environments, credentials, and API endpoints</li>
-                        <li><strong>Swing UI Layer:</strong> Desktop application interface for test execution and visualization</li>
-                        <li><strong>Report Generation:</strong> Automated test result documentation and logging</li>
+                        <li><strong>Page Object Model:</strong> Encapsulates page elements and actions in separate classes for better maintainability</li>
+                        <li><strong>Component-Based Testing:</strong> Reusable UI component abstractions (Button, TextField, Dropdown, etc.)</li>
+                        <li><strong>BDD with Cucumber:</strong> Feature files describe scenarios in plain language, step definitions implement the logic</li>
+                        <li><strong>Configuration Management:</strong> Externalized config for environment and driver settings</li>
+                        <li><strong>Utility Layer:</strong> Centralized utilities for common operations, screenshot capture, and data handling</li>
+                        <li><strong>Hooks & Lifecycle:</strong> Setup/teardown logic for test initialization and cleanup</li>
                     </ul>
                 </div>
                 <div class="architecture-diagram">
                     <div class="diagram-box">
-                        <strong>UI Layer</strong>
-                        <p>Java Swing Interface</p>
+                        <strong>Test Layer</strong>
+                        <p>Step Definitions & Hooks</p>
                     </div>
                     <div class="diagram-box">
-                        <strong>Test Execution Layer</strong>
-                        <p>Test Runners & Validators</p>
-                    </div>
-                    <div class="diagram-box">
-                        <strong>API Layer</strong>
-                        <p>Rest Assured Wrappers</p>
+                        <strong>Page Layer</strong>
+                        <p>Page Objects & Components</p>
                     </div>
                     <div class="diagram-box">
                         <strong>Utility Layer</strong>
-                        <p>Configuration & Data Handlers</p>
+                        <p>WebDriver, Config, Utils</p>
                     </div>
                     <div class="diagram-box">
-                        <strong>API Endpoints</strong>
-                        <p>External REST Services</p>
+                        <strong>Application</strong>
+                        <p>Web Application Under Test</p>
                     </div>
                 </div>
             </div>
@@ -951,209 +911,204 @@
             <div class="features-grid">
                 <div class="feature-item">
                     <div class="feature-icon-box">
-                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-cube"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>HTTP Method Support</h4>
-                        <p>Full support for GET, POST, PUT, DELETE, PATCH, and other HTTP methods with request/response validation</p>
+                        <h4>Reusable Components</h4>
+                        <p>AppButton, AppLink, AppText, AppTextInput, AppDropDown, AppCart, AppHamburgerMenu - all extending a base Component class for consistent behavior</p>
                     </div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon-box">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-layer-group"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Request/Response Validation</h4>
-                        <p>Comprehensive assertion framework for status codes, headers, body content, and response time validations</p>
+                        <h4>Multi-Layer Organization</h4>
+                        <p>Clear separation between test logic, page objects, components, and utilities ensuring easy navigation and maintenance</p>
                     </div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon-box">
-                        <i class="fas fa-lock"></i>
+                        <i class="fas fa-cog"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Authentication Support</h4>
-                        <p>Built-in support for Basic Auth, OAuth, Bearer tokens, and custom header authentication</p>
+                        <h4>Configuration Management</h4>
+                        <p>Environment-specific configurations for different browsers, environments, and test data sources via properties files</p>
                     </div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon-box">
-                        <i class="fas fa-ban"></i>
+                        <i class="fas fa-database"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Error Handling</h4>
-                        <p>Comprehensive error scenarios and edge case handling with detailed logging and reporting</p>
+                        <h4>Data-Driven Testing</h4>
+                        <p>Excel file support for parameterized test execution with multiple data sets</p>
                     </div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon-box">
-                        <i class="fas fa-chart-bar"></i>
+                        <i class="fas fa-camera"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Test Reporting</h4>
-                        <p>Detailed test execution reports with pass/fail status, response times, and error details</p>
+                        <h4>Screenshot Capture</h4>
+                        <p>Automated screenshot utilities for failure analysis and evidence collection</p>
                     </div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon-box">
-                        <i class="fas fa-cogs"></i>
+                        <i class="fas fa-scroll"></i>
                     </div>
                     <div class="feature-content">
-                        <h4>Environment Configuration</h4>
-                        <p>Multi-environment support for development, staging, and production API endpoints</p>
+                        <h4>Scenario Context</h4>
+                        <p>ScenarioContext utility for sharing data across step definitions within a test scenario</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== UI SHOWCASE SECTION ===== -->
-    <section id="ui-showcase">
+    <!-- ===== TEST SCENARIOS SECTION ===== -->
+    <section id="scenarios">
         <div class="section-container">
-            <h2 class="section-title">UI Showcase</h2>
-            <div class="ui-intro">
-                The Rest Assured Framework includes a Java Swing desktop application that provides an intuitive interface for executing API tests, configuring endpoints, and viewing real-time results without writing code.
-            </div>
-
-            <div class="ui-sections">
-                <!-- Menu Get API -->
-                <div class="ui-section">
-                    <div class="ui-content">
-                        <h3>
-                            <i class="fas fa-bars"></i>
-                            Store Menu API
-                        </h3>
-                        <p>Retrieve and validate menu information for a given store. This API allows testers to fetch menu details through the UI without manual request construction.</p>
-                        <ul class="ui-features">
-                            <li>Query store menu by ID</li>
-                            <li>Validate menu structure and content</li>
-                            <li>Response time monitoring</li>
-                            <li>Export results to Excel</li>
-                        </ul>
-                    </div>
-                    <div class="ui-image">
-                        <div class="ui-image-wrapper">
-                            <img src="img/3.png" alt="Store Menu API UI">
-                        </div>
-                    </div>
+            <h2 class="section-title">Test Scenarios</h2>
+            <div class="scenarios-grid">
+                <div class="scenario-card">
+                    <h4>
+                        <i class="fas fa-sign-in-alt"></i>
+                        User Login
+                        <span class="scenario-badge">Critical</span>
+                    </h4>
+                    <ul class="scenario-steps">
+                        <li>Navigate to login page</li>
+                        <li>Enter valid credentials</li>
+                        <li>Click login button</li>
+                        <li>Verify successful authentication</li>
+                        <li>Confirm redirect to inventory page</li>
+                    </ul>
                 </div>
-
-                <!-- Menu Validation API -->
-                <div class="ui-section reverse">
-                    <div class="ui-content">
-                        <h3>
-                            <i class="fas fa-check-double"></i>
-                            Menu Validation API
-                        </h3>
-                        <p>Comprehensive validation of menu data against predefined rules. Ensures menu items, pricing, and availability are correct before store operations.</p>
-                        <ul class="ui-features">
-                            <li>Validate menu completeness</li>
-                            <li>Check pricing accuracy</li>
-                            <li>Verify item availability status</li>
-                            <li>Generate validation reports</li>
-                        </ul>
-                    </div>
-                    <div class="ui-image">
-                        <div class="ui-image-wrapper">
-                            <img src="img/4.png" alt="Menu Validation API UI">
-                        </div>
-                    </div>
+                <div class="scenario-card">
+                    <h4>
+                        <i class="fas fa-shopping-bag"></i>
+                        Product Browsing
+                        <span class="scenario-badge">Functional</span>
+                    </h4>
+                    <ul class="scenario-steps">
+                        <li>Access inventory page</li>
+                        <li>Verify product list loads</li>
+                        <li>Filter/sort products</li>
+                        <li>View product details</li>
+                        <li>Confirm accurate product information</li>
+                    </ul>
                 </div>
-
-                <!-- Order Push API -->
-                <div class="ui-section">
-                    <div class="ui-content">
-                        <h3>
-                            <i class="fas fa-paper-plane"></i>
-                            Test Order Push API
-                        </h3>
-                        <p>Push test orders into the store system. Validates order creation, processing, and database updates through API endpoints with real-time feedback.</p>
-                        <ul class="ui-features">
-                            <li>Create test orders with multiple items</li>
-                            <li>Validate order acceptance</li>
-                            <li>Monitor order status updates</li>
-                            <li>Batch test order execution</li>
-                        </ul>
-                    </div>
-                    <div class="ui-image">
-                        <div class="ui-image-wrapper">
-                            <img src="img/5.png" alt="Test Order Push API UI">
-                        </div>
-                    </div>
+                <div class="scenario-card">
+                    <h4>
+                        <i class="fas fa-cart-plus"></i>
+                        Add to Cart
+                        <span class="scenario-badge">Functional</span>
+                    </h4>
+                    <ul class="scenario-steps">
+                        <li>Select product from inventory</li>
+                        <li>Click add to cart button</li>
+                        <li>Verify item added to cart</li>
+                        <li>Check cart count updates</li>
+                        <li>Navigate to cart view</li>
+                    </ul>
+                </div>
+                <div class="scenario-card">
+                    <h4>
+                        <i class="fas fa-credit-card"></i>
+                        Checkout Process
+                        <span class="scenario-badge">Critical</span>
+                    </h4>
+                    <ul class="scenario-steps">
+                        <li>Review items in cart</li>
+                        <li>Proceed to checkout</li>
+                        <li>Enter shipping information</li>
+                        <li>Confirm payment details</li>
+                        <li>Complete purchase successfully</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== COMPONENTS SECTION ===== -->
+    <!-- ===== COMPONENTS/STRUCTURE SECTION ===== -->
     <section id="components">
         <div class="section-container">
             <h2 class="section-title">Project Structure</h2>
             <div class="components-grid">
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-file-code"></i> API Endpoints
+                        <i class="fas fa-file-alt"></i> Page Objects
                     </div>
                     <ul class="component-list">
-                        <li>Menu Get APIs</li>
-                        <li>Menu Validation APIs</li>
-                        <li>Order Push APIs</li>
-                        <li>Custom Endpoints</li>
+                        <li>LoginPage</li>
+                        <li>InventoryPage</li>
+                        <li>CartPage</li>
+                        <li>CheckoutPage</li>
+                        <li>CommonSelectors</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-desktop"></i> UI Components
+                        <i class="fas fa-cube"></i> UI Components
                     </div>
                     <ul class="component-list">
-                        <li>Main Dashboard</li>
-                        <li>API Configuration Panel</li>
-                        <li>Test Execution View</li>
-                        <li>Results Panel</li>
+                        <li>AppButton</li>
+                        <li>AppLink</li>
+                        <li>AppText</li>
+                        <li>AppTextInput</li>
+                        <li>AppDropDown</li>
+                        <li>AppCart</li>
+                        <li>AppHamburgerMenu</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-tools"></i> Test Utilities
+                        <i class="fas fa-tools"></i> Core Utilities
                     </div>
                     <ul class="component-list">
-                        <li>API Request Builder</li>
-                        <li>Response Validator</li>
-                        <li>ExcelReader/Writer</li>
+                        <li>WebDriverManager</li>
                         <li>ConfigReader</li>
+                        <li>PropertyReader</li>
+                        <li>ExcelReader</li>
+                        <li>ScreenshotUtils</li>
+                        <li>ScenarioContext</li>
+                        <li>Element Utilities</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-database"></i> Data Management
+                        <i class="fas fa-play"></i> Test Definitions
+                    </div>
+                    <ul class="component-list">
+                        <li>LoginSteps</li>
+                        <li>InventoryPageSteps</li>
+                        <li>CartPageSteps</li>
+                        <li>CheckoutSteps</li>
+                        <li>CommonSteps</li>
+                    </ul>
+                </div>
+                <div class="component-box">
+                    <div class="component-title">
+                        <i class="fas fa-cog"></i> Configuration
                     </div>
                     <ul class="component-list">
                         <li>config.properties</li>
                         <li>testdata.xlsx</li>
-                        <li>API Endpoints Config</li>
-                        <li>Validation Rules</li>
+                        <li>DriverType Enum</li>
+                        <li>EnvironmentType Enum</li>
                     </ul>
                 </div>
                 <div class="component-box">
                     <div class="component-title">
-                        <i class="fas fa-play-circle"></i> Test Runners
+                        <i class="fas fa-check-square"></i> Test Runners
                     </div>
                     <ul class="component-list">
-                        <li>Main Application</li>
-                        <li>API Test Runner</li>
-                        <li>Batch Executor</li>
-                        <li>Report Generator</li>
-                    </ul>
-                </div>
-                <div class="component-box">
-                    <div class="component-title">
-                        <i class="fas fa-book"></i> Documentation
-                    </div>
-                    <ul class="component-list">
-                        <li>Integration Guide</li>
-                        <li>API Reference</li>
-                        <li>Configuration Guide</li>
-                        <li>Usage Examples</li>
+                        <li>TestRunner</li>
+                        <li>SmokeTestRunner</li>
+                        <li>Hooks (Setup/Teardown)</li>
+                        <li>Feature Files</li>
                     </ul>
                 </div>
             </div>
@@ -1163,10 +1118,10 @@
     <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-content">
-            <h3 style="margin-bottom: 20px; font-size: 1.3rem;">Rest Assured Framework</h3>
+            <h3 style="margin-bottom: 20px; font-size: 1.3rem;">UITestAutomation Framework</h3>
             <p class="footer-text">
-                A professional-grade REST API test automation framework designed with enterprise best practices. 
-                Features an intuitive Java Swing UI for accessible API testing and comprehensive Excel-driven data management.
+                A professional-grade Selenium test automation framework designed with enterprise best practices. 
+                Built for maintainability, scalability, and reliability in production test environments.
             </p>
             <div class="footer-links">
                 <a href="#overview" class="footer-link">
@@ -1175,8 +1130,8 @@
                 <a href="#architecture" class="footer-link">
                     <i class="fas fa-sitemap"></i> Architecture
                 </a>
-                <a href="#ui-showcase" class="footer-link">
-                    <i class="fas fa-images"></i> UI Showcase
+                <a href="#features" class="footer-link">
+                    <i class="fas fa-star"></i> Features
                 </a>
                 <a href="#components" class="footer-link">
                     <i class="fas fa-puzzle-piece"></i> Components
@@ -1184,11 +1139,7 @@
             </div>
         </div>
         <div class="footer-divider">
-            <p>&copy; 2026 Rest Assured Framework. Engineered for API testing excellence.</p>
-            <div class="footer-credit">
-                <p>Posted on: 28/02/2021 | By <a style="color: var(--accent-color); text-decoration: underline;" href="mailto:sharik.madhyapradeshi@gmail.com">Sharik Madhyapradeshi</a></p>
-                <p>The City Of Joy, West Bengal | With Love From India</p>
-            </div>
+            <p>&copy; 2026 UITestAutomation Framework. Engineered for quality assurance excellence.</p>
         </div>
     </footer>
 
