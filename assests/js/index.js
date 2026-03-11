@@ -5,10 +5,6 @@ const portfolioData = {
         title: "Sr. SDET and Test Architecture Lead",
         summary: "Passionate Software Development Engineer in Test (SDET) with 8+ years of comprehensive experience in automation tools (Selenium, Playwright, Cucumber, Rest Assured, Soap UI, and Postman) with Java and Python. Proven track record in full SDLC testing, framework architecture, API automation, and leading quality engineering initiatives.",
         location: "Kolkata, West Bengal, India",
-        email: "Sharik.madhyapradeshi@gmail.com",
-        phone: "+91-(0)-8697908892",
-        linkedin: "https://linkedin.com",
-        github: "https://github.com",
         image: "./assests/images/me.jpeg"
     },
 
@@ -290,7 +286,7 @@ const portfolioData = {
             details: "Comprehensive understanding of software development, data structures, algorithms, and computer networks"
         },
         {
-            institution: "West Bengal Council of Secondary Education",
+            institution: "West Bengal Council of Secondary <br> Education",
             degree: "12th Standard Science",
             field: "Science Stream",
             year: "2013",
@@ -308,8 +304,6 @@ const portfolioData = {
     ],
 
     contact: {
-        email: "sharik@example.com",
-        phone: "+91-9876543210",
         location: "India",
         github: "https://github.com/sharikmp",
         linkedin: "https://linkedin.com"
@@ -458,7 +452,7 @@ function renderProjects(sortBy = 'relevance') {
                     <table class="projects-table">
                         <thead>
                             <tr>
-                                <th style="width: 5%;">Project #</th>
+                                <th style="width: 5%;"> #</th>
                                 <th style="width: 18%;">Title</th>
                                 <th style="width: 45%;">Description</th>
                                 <th style="width: 10%;">Link</th>
@@ -703,18 +697,7 @@ function renderAcademics() {
 function renderFooter() {
     // Social Links
     const socialLinks = document.getElementById('socialLinks');
-    const profile = portfolioData.profile;
-    const socials = [
-        { url: profile.linkedin, icon: 'fab fa-linkedin-in', label: 'LinkedIn' },
-        { url: profile.github, icon: 'fab fa-github', label: 'GitHub' },
-        { url: `mailto:${profile.email}`, icon: 'fas fa-envelope', label: 'Email' }
-    ];
-
-    socialLinks.innerHTML = socials.map(link => `
-                <a href="${link.url}" target="_blank" class="social-link" title="${link.label}">
-                    <i class="${link.icon}"></i>
-                </a>
-            `).join('');
+    socialLinks.innerHTML = '';
 
     // Footer Links
     const footerLinks = document.getElementById('footerLinks');
@@ -727,9 +710,8 @@ function renderFooter() {
 
     // Contact Info
     const contactInfo = document.getElementById('contactInfo');
+    const profile = portfolioData.profile;
     contactInfo.innerHTML = `
-                <li><a href="mailto:${profile.email}"><i class="fas fa-envelope"></i> ${profile.email}</a></li>
-                <li><a href="tel:${profile.phone}"><i class="fas fa-phone"></i> ${profile.phone}</a></li>
                 <li><i class="fas fa-map-marker-alt"></i> ${profile.location}</li>
             `;
 }

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Playwright Automation | Industry Level Course</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        playwright: {
+                            green: '#2EAD33', // Playwright Green
+                            dark: '#1F2023',  // Dark BG
+                            card: '#2D2E32',  // Card BG
+                            accent: '#E95420', // Orange Accent
+                            text: '#EFEFEF'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #1F2023;
+            color: #EFEFEF;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #45ba4b 0%, #2EAD33 50%, #3b82f6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Card Hover Effects */
+        .hover-card {
+            transition: all 0.3s ease;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(46, 173, 51, 0.3);
+            border-left: 4px solid #2EAD33;
+        }
+
+        /* Session Card Styles */
+        .session-card {
+            background-color: #26272b;
+            border: 1px solid #3f4045;
+            transition: all 0.2s ease;
+        }
+
+        .session-card:hover {
+            border-color: #2EAD33;
+            background-color: #2D2E32;
+        }
+
+        /* --- PRINT STYLES --- */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            html, body {
+                width: 210mm;
+                height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+                background-color: #1F2023 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body {
+                display: block !important;
+                font-size: 10pt;
+            }
+
+            /* Hide interactive elements */
+            .no-print {
+                display: none !important;
+            }
+
+            #content {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* Each .print-page = one physical page */
+            .print-page {
+                position: relative;
+                width: 210mm;
+                min-height: 297mm; /* Full A4 height */
+                height: 297mm;     /* Force height */
+                box-sizing: border-box;
+                padding: 10mm 15mm !important; /* Adjusted padding for fit */
+                margin: 0;
+                page-break-after: always;
+                break-after: page;
+                overflow: hidden; /* Clean cut */
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+
+            /* Compact Styles for Print to fit Page 2 */
+            .print-page .text-4xl { font-size: 1.8rem !important; }
+            .print-page .text-2xl { font-size: 1.25rem !important; }
+            .print-page .text-xl { font-size: 1.1rem !important; }
+            .print-page h3 { font-size: 1rem !important; margin-bottom: 0.25rem !important; }
+            
+            /* Compact Cards */
+            .print-page .session-card {
+                padding: 0.5rem !important;
+            }
+            .print-page .session-card h4 {
+                font-size: 0.9rem !important;
+            }
+            .print-page .session-card p {
+                font-size: 0.75rem !important;
+                line-height: 1.1 !important;
+            }
+            
+            /* Compact Grid Gaps */
+            .print-page .grid {
+                gap: 0.5rem !important;
+            }
+            .print-page .space-y-4 > * + * {
+                margin-top: 0.5rem !important;
+            }
+            .print-page .mb-10 { margin-bottom: 1.5rem !important; }
+            .print-page .mb-12 { margin-bottom: 1rem !important; }
+            .print-page .mb-6 { margin-bottom: 0.75rem !important; }
+            
+            /* Specific fix for heavy Module sections */
+            .module {
+                margin-bottom: 0.75rem !important;
+            }
+            
+            /* Ensure expert grid fits */
+            .expert-grid {
+                display: flex;
+                gap: 1rem;
+            }
+            .expert-grid > div {
+                flex: 1;
+            }
+
+            /* Force background colors in print */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* Reset shadows for flat print */
+            .shadow-lg, .hover-card {
+                box-shadow: none !important;
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col items-center py-10">
+
+    <!-- Print Button (Hidden in Print Mode) -->
+    <div class="fixed top-6 right-6 z-50 no-print animate-fade-in">
+        <button onclick="window.print()"
+            class="flex items-center gap-2 bg-playwright-green hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105">
+            <i class="fa-solid fa-file-pdf"></i> Download PDF
+        </button>
+    </div>
+
+    <main id="content" class="container max-w-4xl mx-auto px-6">
+
+        <!-- PAGE 1 -->
+        <div class="print-page">
+            <!-- Header Section -->
+            <header class="text-center mb-12 animate-slide-up">
+                <div class="inline-block p-3 rounded-full bg-playwright-card border border-gray-700 mb-4 no-print">
+                    <span class="text-playwright-green font-mono text-sm tracking-wider">BATCH ENROLLING NOW</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
+                    Master <span class="text-gradient">Playwright</span><br>Automation
+                </h1>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-6">
+                    From Scratch to Framework Design. Industry-Standard End-to-End Testing.
+                </p>
+
+                <!-- Quote -->
+                <div
+                    class="border-l-4 border-playwright-accent bg-playwright-card p-4 rounded-r-lg max-w-2xl mx-auto italic text-gray-300">
+                    <p>"Innovation is the ability to see change as an opportunity - not a threat."</p>
+                    <span class="block text-right text-sm font-bold text-playwright-accent mt-2">— Steve Jobs</span>
+                </div>
+            </header>
+
+            <!-- Instructor / Expert Profile -->
+            <section class="mb-10 animate-slide-up" style="animation-delay: 0.1s;">
+                <div class="bg-playwright-card rounded-2xl p-8 border border-gray-700 relative overflow-hidden">
+                    <!-- Background Icon decoration -->
+                    <i class="fa-solid fa-code absolute -right-10 -bottom-10 text-9xl text-white opacity-5"></i>
+
+                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-user-tie text-playwright-green"></i> The Expert
+                    </h2>
+
+                    <div class="grid md:grid-cols-3 gap-8 expert-grid">
+                        <!-- Stat 1 -->
+                        <div class="text-center md:text-left">
+                            <div class="text-5xl font-bold text-white mb-1">8+</div>
+                            <div class="text-sm text-playwright-green font-bold uppercase tracking-wide">Years Exp</div>
+                            <div class="text-gray-400 text-sm mt-2">Automation Testing<br>(CMMI Level 1 Product Co.)
+                            </div>
+                        </div>
+
+                        <!-- Bio & Skills -->
+                        <div class="md:col-span-2 space-y-4">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-playwright-green mt-1"></i>
+                                <p class="text-gray-300"><strong>4 Years Specialized in Playwright:</strong> Deep
+                                    expertise
+                                    in both JavaScript & TypeScript implementation.</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-playwright-green mt-1"></i>
+                                <p class="text-gray-300"><strong>Developer Mindset:</strong> 2 Years prior experience as
+                                    a
+                                    Web Developer, bridging the gap between Dev and QA.</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-playwright-green mt-1"></i>
+                                <p class="text-gray-300"><strong>Tech Stack:</strong> Selenium, Java, Python, Rest
+                                    Assured,
+                                    Postman, CI/CD.</p>
+                            </div>
+
+                            <!-- Skill Chips -->
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span
+                                    class="px-3 py-1 bg-gray-700 rounded-full text-xs font-mono text-blue-300">JavaScript</span>
+                                <span
+                                    class="px-3 py-1 bg-gray-700 rounded-full text-xs font-mono text-blue-300">TypeScript</span>
+                                <span
+                                    class="px-3 py-1 bg-gray-700 rounded-full text-xs font-mono text-green-300">Playwright</span>
+                                <span
+                                    class="px-3 py-1 bg-gray-700 rounded-full text-xs font-mono text-orange-300">CI/CD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- The Curriculum Breakdown -->
+            <section class="mb-10 animate-slide-up" style="animation-delay: 0.2s;">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold flex items-center gap-3">
+                        <i class="fa-solid fa-layer-group text-playwright-accent"></i> What You Will Get
+                    </h2>
+                    <span class="px-4 py-1 bg-playwright-green text-black font-bold rounded-full text-sm">30 Hours
+                        Total</span>
+                </div>
+
+                <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
+
+                    <!-- Programming Base -->
+                    <div class="bg-playwright-card p-6 rounded-xl border border-gray-700 hover-card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">Programming Foundation</h3>
+                                <p class="text-gray-400 text-sm">JavaScript/TypeScript Logic Building</p>
+                            </div>
+                            <i class="fa-brands fa-js text-yellow-400 text-3xl"></i>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <i class="fa-regular fa-clock text-gray-500"></i>
+                            <span class="font-mono font-bold text-playwright-green">4 Hours</span>
+                        </div>
+                    </div>
+
+                    <!-- Playwright Core -->
+                    <div
+                        class="bg-playwright-card p-6 rounded-xl border border-gray-700 hover-card relative overflow-hidden group">
+                        <div
+                            class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-playwright-green to-transparent opacity-20">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">Playwright Mastery</h3>
+                                <p class="text-gray-400 text-sm">UI Automation, API Automation & Framework</p>
+                            </div>
+                            <i class="fa-solid fa-robot text-playwright-green text-3xl"></i>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-regular fa-clock text-gray-500"></i>
+                                <span class="font-mono font-bold text-playwright-green">20 Hours</span>
+                            </div>
+                            <span class="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-600">2 Real
+                                Projects</span>
+                        </div>
+                    </div>
+
+                    <!-- Ecosystem Tools -->
+                    <div class="bg-playwright-card p-6 rounded-xl border border-gray-700 hover-card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">DevOps & Version Control</h3>
+                                <p class="text-gray-400 text-sm">GitHub, Actions & CI/CD Pipelines</p>
+                            </div>
+                            <i class="fa-solid fa-code-branch text-purple-400 text-3xl"></i>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <i class="fa-regular fa-clock text-gray-500"></i>
+                            <span class="font-mono font-bold text-playwright-green">3 Hours</span>
+                        </div>
+                    </div>
+
+                    <!-- API Basics -->
+                    <div class="bg-playwright-card p-6 rounded-xl border border-gray-700 hover-card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">API Fundamentals</h3>
+                                <p class="text-gray-400 text-sm">Postman & Backend Testing Concepts</p>
+                            </div>
+                            <i class="fa-solid fa-rocket text-orange-500 text-3xl"></i>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <i class="fa-regular fa-clock text-gray-500"></i>
+                            <span class="font-mono font-bold text-playwright-green">3 Hour</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE 2 -->
+        <div class="print-page">
+            <!-- Detailed Curriculum Section -->
+            <section class="mb-10 animate-slide-up detail-curriculum-section" style="animation-delay: 0.2s;">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold flex items-center gap-3">
+                        <i class="fa-solid fa-list-check text-playwright-accent"></i> 30-Hour Detailed Curriculum
+                    </h2>
+                    <span
+                        class="px-3 py-1 bg-gray-800 border border-gray-600 rounded text-xs text-gray-300 font-mono">15
+                        Sessions x 2Hrs</span>
+                </div>
+
+                <!-- JavaScript Block -->
+                <div class="mb-6 module">
+                    <h3 class="text-lg font-bold text-blue-400 mb-3 border-b border-gray-700 pb-2">JS Foundation for QA
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 session-grid">
+                        <!-- Session 1 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 01</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">JavaScript Basics</h4>
+                            <p class="text-sm text-gray-400">Variables, Data Types, Operators, Loops, Functions & Arrow
+                                Functions.</p>
+                        </div>
+                        <!-- Session 2 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 02</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Async JS & Objects</h4>
+                            <p class="text-sm text-gray-400">Arrays, Objects, Async/Await, Promises. <span
+                                    class="text-playwright-accent block mt-1 text-xs font-bold">+ Take Home
+                                    Assignment</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 1 -->
+                <div class="mb-6 module">
+                    <h3 class="text-lg font-bold text-playwright-green mb-3 border-b border-gray-700 pb-2">Module 1:
+                        Playwright Core (10 Hrs)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 session-grid">
+                        <!-- Session 3 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 03</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Environment Setup</h4>
+                            <p class="text-sm text-gray-400">Node.js, VSCode, GitHub Repo Setup, Config Walkthrough,
+                                First
+                                Test Run.</p>
+                        </div>
+                        <!-- Session 4 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 04</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Mastering Locators</h4>
+                            <p class="text-sm text-gray-400">CSS Selectors, XPath, Playwright Built-in Locators,
+                                Filtering &
+                                Chaining.</p>
+                        </div>
+                        <!-- Session 5 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 05</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Element Interactions I</h4>
+                            <p class="text-sm text-gray-400">Click, Fill, Radio Buttons, Checkboxes, Dropdowns,
+                                Assertions.
+                            </p>
+                        </div>
+                        <!-- Session 6 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 06</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Element Interactions II</h4>
+                            <p class="text-sm text-gray-400">Drag & Drop, Uploads, Iframes, Alerts, New Tabs,
+                                Keyboard/Mouse
+                                Actions.</p>
+                        </div>
+                        <!-- Session 7 -->
+                        <div
+                            class="session-card p-4 rounded-lg relative overflow-hidden border-l-4 border-playwright-green">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 07</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Project 1 & Config</h4>
+                            <p class="text-sm text-gray-400">Playwright Config Deep Dive followed by <span
+                                    class="text-white font-bold">Real Website Automation Project</span>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="mb-6 module">
+                    <h3 class="text-lg font-bold text-orange-400 mb-3 border-b border-gray-700 pb-2">Module 2: Advanced
+                        Framework (10 Hrs)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 session-grid">
+                        <!-- Session 8 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 08</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">POM Implementation</h4>
+                            <p class="text-sm text-gray-400">Designing Page Object Model structure. Creating Base Pages
+                                and
+                                Locators strategies.</p>
+                        </div>
+                        <!-- Session 9 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 09</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Data & Env Handling</h4>
+                            <p class="text-sm text-gray-400">Reading JSON/CSV data. Managing Environments (.env) within
+                                the
+                                framework.</p>
+                        </div>
+                        <!-- Session 10 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 10</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Reporting & Utilities</h4>
+                            <p class="text-sm text-gray-400">Allure Report Integration, HTML Reports, Screenshot on
+                                Failure,
+                                Utility functions.</p>
+                        </div>
+                        <!-- Session 11 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 11</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Fixtures & Hooks</h4>
+                            <p class="text-sm text-gray-400">Deep dive into Custom Fixtures to optimize tests. Global
+                                Setup/Teardown.</p>
+                        </div>
+                        <!-- Session 12 -->
+                        <div class="session-card p-4 rounded-lg relative overflow-hidden border-l-4 border-orange-500">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 12</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Project 2: E2E Framework</h4>
+                            <p class="text-sm text-gray-400">Finalizing the framework architecture and implementing
+                                <span class="text-white font-bold">End-to-End Project Flow</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Page 3 -->
+        <div class="print-page">
+            <!-- Detailed Curriculum Section -->
+            <section class="mb-10 animate-slide-up detail-curriculum-section" style="animation-delay: 0.2s;">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold flex items-center gap-3">
+                        <i class="fa-solid fa-list-check text-playwright-accent"></i> 30-Hour Detailed Curriculum
+                    </h2>
+                    <span
+                        class="px-3 py-1 bg-gray-800 border border-gray-600 rounded text-xs text-gray-300 font-mono">15
+                        Sessions x 2Hrs</span>
+                </div>
+
+                <!-- Ecosystem -->
+                <div class="mb-6 module">
+                    <h3 class="text-lg font-bold text-purple-400 mb-3 border-b border-gray-700 pb-2">Ecosystem: Git &
+                        API (6
+                        Hrs)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 session-grid">
+                        <!-- Session 13 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 13</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">Git & CI/CD</h4>
+                            <p class="text-sm text-gray-400">Git commands (Push/Pull/Branch). Setting up GitHub Actions
+                                workflow.</p>
+                        </div>
+                        <!-- Session 14 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 14</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">API Testing: Basics</h4>
+                            <p class="text-sm text-gray-400">HTTP Methods, Status Codes, Postman Collections & Runner.
+                            </p>
+                        </div>
+                        <!-- Session 15 -->
+                        <div class="session-card p-4 rounded-lg">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-playwright-green font-bold font-mono text-xs">SESSION 15</span>
+                                <span class="text-gray-500 text-xs">2 Hours</span>
+                            </div>
+                            <h4 class="font-bold text-white mb-1">API with Playwright</h4>
+                            <p class="text-sm text-gray-400">API Request Context, Assertions, Auth handling, Hybrid
+                                Testing
+                                (UI + API).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Pricing & Batch Details -->
+            <section class="grid md:grid-cols-5 gap-6 mb-12 animate-slide-up" style="animation-delay: 0.3s;">
+
+                <!-- Batch Info -->
+                <div
+                    class="md:col-span-3 bg-gray-800 rounded-xl p-6 border-l-4 border-blue-500 flex flex-col justify-center">
+                    <h3 class="text-xl font-bold mb-3">Premium Micro-Batch</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-users text-blue-400"></i>
+                            <span class="text-gray-300">Limited to <strong class="text-white">2-3 persons</strong> per
+                                group</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-hand-holding-medical text-blue-400"></i>
+                            <span class="text-gray-300">1-on-1 personalized doubt clearing</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-video text-blue-400"></i>
+                            <span class="text-gray-300">Live Code, Live Content & Full Recordings</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-video text-blue-400"></i>
+                            <span class="text-gray-300">Slides and PDF for further learning</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-video text-blue-400"></i>
+                            <span class="text-gray-300">Lifetime access to our LMS system</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Fees -->
+                <div
+                    class="md:col-span-2 bg-gradient-to-br from-playwright-green to-green-900 rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-lg transform transition hover:scale-105">
+                    <h3 class="text-green-100 font-medium uppercase tracking-widest text-sm mb-2">Total Course Fees</h3>
+                    <div class="text-4xl font-extrabold text-white mb-2">₹30,000 ($350)</div>
+                    <div class="h-1 w-16 bg-white/30 rounded-full mb-4"></div>
+                    <p class="text-green-100 text-xs">50% after 1 session, 50% after half course complete • Lifetime
+                        Access
+                        to Recordings</p>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="text-center border-t border-gray-800 pt-8 pb-4 text-gray-500 text-sm">
+                <p>&copy; 2023 Automation Mastery. All rights reserved.</p>
+                <p class="mt-2 text-xs">Designed for future SDETs.</p>
+            </footer>
+        </div>
+
+    </main>
+
+    <script>
+        // Simple script to handle print layout adjustments dynamically if needed
+        window.onbeforeprint = function () {
+            // Optional: Expand details elements if you had any
+        };
+    </script>
+</body>
+
+</html>
