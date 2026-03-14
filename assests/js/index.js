@@ -15,8 +15,8 @@ const portfolioData = {
             items: [
                 { name: "Java (Core & Advance)", duration: "8y" },
                 { name: "Python", duration: "5y" },
-                { name: "JavaScript", duration: "4y" },
-                { name: "TypeScript", duration: "2y" },
+                { name: "JavaScript", duration: "5y" },
+                { name: "TypeScript", duration: "4y" },
                 { name: "HTML", duration: "8y" },
                 { name: "CSS", duration: "8y" }
             ] 
@@ -25,8 +25,8 @@ const portfolioData = {
             category: "Automation Frameworks", 
             icon: "fa-robot", 
             items: [
-                { name: "Selenium Webdriver", duration: "7y" },
-                { name: "Playwright", duration: "2y" },
+                { name: "Selenium Webdriver", duration: "8y" },
+                { name: "Playwright", duration: "4y" },
                 { name: "Cucumber (BDD)", duration: "6y" },
                 { name: "Rest Assured", duration: "5y" },
                 { name: "SoapUI", duration: "4y" },
@@ -38,10 +38,10 @@ const portfolioData = {
             icon: "fa-vial", 
             items: [
                 { name: "System & Integration", duration: "8y" },
-                { name: "API Automation", duration: "6y" },
+                { name: "API Automation", duration: "8y" },
                 { name: "Regression Testing", duration: "8y" },
                 { name: "Mulesoft Testing", duration: "3y" },
-                { name: "Azure Integration", duration: "2y" }
+                { name: "Azure Integration", duration: "3y" }
             ] 
         },
         { 
@@ -51,8 +51,8 @@ const portfolioData = {
                 { name: "Maven", duration: "7y" },
                 { name: "Jenkins", duration: "5y" },
                 { name: "Microsoft TFS", duration: "4y" },
-                { name: "JIRA", duration: "6y" },
-                { name: "Postman", duration: "6y" },
+                { name: "JIRA", duration: "8y" },
+                { name: "Postman", duration: "8y" },
                 { name: "Excel Apache POI", duration: "5y" }
             ] 
         }
