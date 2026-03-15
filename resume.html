@@ -30,8 +30,34 @@
             font-size: 11px; /* Base font size to fit everything on A4 */
             line-height: 1.4;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding: 20px 0;
+        }
+
+        /* Print Button */
+        .print-button-container {
+            margin-bottom: 15px;
+        }
+
+        .print-button {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .print-button:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        .print-button:active {
+            transform: scale(0.98);
         }
 
         /* A4 Page Container */
@@ -390,6 +416,10 @@
                 size: A4;
                 margin: 0; /* Remove default browser margins for first page */
             }
+            /* Hide print button on print */
+            .print-button-container {
+                display: none !important;
+            }
             /* Force background colors to print */
             * {
                 -webkit-print-color-adjust: exact !important;
@@ -399,6 +429,10 @@
     </style>
 </head>
 <body>
+
+<div class="print-button-container">
+    <button class="print-button" onclick="window.print()">🖨️ Print Resume</button>
+</div>
 
 <div class="a4-page">
 
