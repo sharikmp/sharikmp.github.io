@@ -199,6 +199,12 @@
             flex-direction: column;
         }
 
+        .job-section {
+            display: flex;
+            flex-direction: column;
+            page-break-inside: avoid;
+        }
+
         .job-entry {
             display: flex;
             width: 100%;
@@ -377,7 +383,12 @@
             }
             @page {
                 size: A4;
-                margin: 0; /* Remove default browser margins to let .a4-page padding handle it */
+                margin: 0;
+                margin-top: 30mm; /* Add top margin for pages 2+ */
+            }
+            @page :first {
+                size: A4;
+                margin: 0; /* Remove default browser margins for first page */
             }
             /* Force background colors to print */
             * {
@@ -508,16 +519,56 @@
     <!-- Professional Experience Section -->
      <br>
     <h2 class="section-title">Professional Experience</h2>
-    <div class="divider"></div>
+    <!-- <div class="divider"></div> -->
 
     <div class="experience-list">
         
-        <!-- Job 1 -->
-        <div class="job-entry">
+        <!-- Job 1 - WTW -->
+        <div class="job-section">
+            <div class="divider-light"></div>
+            <div class="job-entry">
+            <div class="job-col-left">
+                <div class="company-name">WTW</div>
+                <div class="job-title">Sr. SDET & Test Architecture Lead</div>
+                <div class="job-dates">Dec 2024 - Mar 2026</div>
+                <div class="job-location">Remote</div>
+            </div>
+            
+            <div class="job-col-mid">
+                <div class="project-block">
+                    <strong>Project 1:</strong> Test Automation Architecture & Framework Design (3m)<br>
+                    <strong>Domain:</strong> Enterprise Software<br>
+                    <strong>Tech stack:</strong> Playwright, TypeScript, Selenium C#, Java, RestAssured, JIRA, Jenkins, GitHub Actions.
+                </div>
+            </div>
+            
+            <div class="job-col-right">
+                <ul class="checkmark-list">
+                    <li>Architected scalable Playwright TypeScript test automation frameworks.</li>
+                    <li>Designed and maintained Selenium C# automation frameworks.</li>
+                    <li>Conducted knowledge sharing sessions on automation best practices.</li>
+                    <li>Developed AI-powered BUG RCA Analyzer agent using Copilot.</li>
+                    <li>Created Copilot-powered test result analysis and insights tool.</li>
+                </ul>
+            </div>
+            
+            <div class="job-col-far-right">
+                <strong>AI Initiatives</strong>
+                <br> - BUG RCA Analyzer with intelligent insights
+                <br> - Copilot-powered automation run result analysis.
+                <br> - Test website development and Playwright suite.
+            </div>
+        </div>
+        </div>
+
+        <!-- Job 2 - Veeva -->
+        <div class="job-section">
+            <div class="divider-light"></div>
+            <div class="job-entry">
             <div class="job-col-left">
                 <div class="company-name">Veeva<br>Systems</div>
                 <div class="job-title">Sr. SDET</div>
-                <div class="job-dates">Jul 2023 - Present</div>
+                <div class="job-dates">Jul 2023 - Dec 2024</div>
                 <div class="job-location">Hyderabad<br>(Remote)</div>
             </div>
             
@@ -525,34 +576,36 @@
                 <div class="project-block">
                     <strong>Project 1:</strong> Clinical Research Applications Web and API automation (1y 5m)<br>
                     <strong>Domain:</strong> Healthcare<br>
-                    <strong>Tech stack:</strong> Selenium, TestNG, Cucumber, Rest Assured, Java, Postman, JIRA, Jenkins, Gitlab, AWS S3, Elastic, Kibana for reporting.
+                    <strong>Tech stack:</strong> Selenium Java, TestNG, Cucumber, Rest Assured, Playwright, Postman, JIRA, Jenkins, Gitlab, AWS S3, Elastic, Kibana.
                 </div>
             </div>
             
             <div class="job-col-right">
                 <ul class="checkmark-list">
-                    <li>Automated test scripts using Selenium and Java, 70% reduction in testing time.</li>
-                    <li>Enhanced test coverage by automating test cases for critical functionalities.</li>
-                    <li>Conducted code reviews to ensure test script quality and coding standards.</li>
-                    <li>Collaborated with cross-functional teams to identify and resolve software defects.</li>
-                    <li>Worked on CI-CD with Jenkins, AWS and Kibana elastic for test result storing</li>
+                    <li>Enhanced Selenium Java framework achieving healthcare testing excellence standards.</li>
+                    <li>Implemented REST Assured API automation validating complex endpoints.</li>
+                    <li>Introduced Playwright framework for modern web application testing.</li>
+                    <li>Developed F.A.T. browser extension reducing failure triage time dramatically.</li>
+                    <li>Conducted code reviews ensuring quality and coding standards compliance.</li>
                 </ul>
             </div>
             
             <div class="job-col-far-right">
                 <strong>Failure Analysis Tool</strong>
-                <br> - A custom browser extension that helps classifying failures based on failure reason. 
-                <br> - Reduced the failure triage time from 45min to 45 sec.
+                <br> - Custom browser extension analyzing test failures real-time.
+                <br> - Reduced failure triage from 45 minutes to 45 seconds.
+                <br> - Integrated with Jenkins pipeline.
             </div>
         </div>
+        </div>
 
-        <div class="divider-light"></div>
-
-        <!-- Job 2 -->
-        <div class="job-entry">
+        <!-- Job 3 - PwC -->
+        <div class="job-section">
+            <div class="divider-light"></div>
+            <div class="job-entry">
             <div class="job-col-left">
                 <div class="company-name">PwC</div>
-                <div class="job-title">Associate</div>
+                <div class="job-title">Automation Engineer</div>
                 <div class="job-dates">Jul 2021 - Jul 2023</div>
                 <div class="job-location">Kolkata</div>
             </div>
@@ -561,16 +614,17 @@
                 <div class="project-block">
                     <strong>Project 1:</strong> Migration from Salesforce to Microsoft Dynamics 365 CRM (2 years)<br>
                     <strong>Domain:</strong> CRM<br>
-                    <strong>Tech stack:</strong> Selenium, TestNG, Cucumber, Rest Assured, Java, postman, Azure API automation, MSD365 CRM, JIRA
+                    <strong>Tech stack:</strong> Selenium WebDriver, TestNG, Cucumber BDD, Rest Assured, Java, Azure, MSD365 CRM, JIRA
                 </div>
             </div>
             
             <div class="job-col-right">
                 <ul class="checkmark-list">
-                    <li>Involved in System, Integration, functional, end-to-end and regression testing.</li>
-                    <li>Experience in Selenium UI Automation for Microsoft Dynamics 365 CRM</li>
-                    <li>Microsoft Dynamics 365 APIs Automation.</li>
-                    <li>Azure Function Integration Testing Automation framework development with Cucumber, Rest Assured.</li>
+                    <li>Executed system, integration, functional and regression testing comprehensively.</li>
+                    <li>Developed Selenium WebDriver automation for Microsoft Dynamics 365 CRM.</li>
+                    <li>Built Azure Function integration testing framework with Cucumber, Rest Assured.</li>
+                    <li>Implemented BDD framework improving collaboration and test clarity.</li>
+                    <li>Performed end-to-end testing covering critical user journeys.</li>
                 </ul>
             </div>
             
@@ -578,58 +632,45 @@
                 <div class="award-line"><strong>Spot Award</strong> - Client (Aug 2022)</div>
                 <div class="award-line"><strong>Spot Award</strong> - Client (Oct 2022)</div>
                 <div class="award-line"><strong>Star R&R Award</strong> - PwC (Nov 2022)</div>
-                <div class="award-line"><strong>Dream Team Award</strong> - Client (Oct 2022 & Mar 2023)</div>
+                <div class="award-line"><strong>Dream Team Award</strong> - Client (Mar 2023)</div>
             </div>
         </div>
+        </div>
 
-        <div class="divider-light"></div>
-
-        <!-- Job 3 -->
-        <div class="job-entry">
+        <!-- Job 4 - Cognizant -->
+        <div class="job-section">
+            <div class="divider-light"></div>
+            <div class="job-entry">
             <div class="job-col-left">
                 <div class="company-name">Cognizant</div>
-                <div class="job-title">Associate - Projects</div>
+                <div class="job-title">Associate - Projects (QA)</div>
                 <div class="job-dates">Jul 2018 - Jul 2021</div>
                 <div class="job-location">Kolkata</div>
             </div>
             
             <div class="job-col-mid">
                 <div class="project-block">
-                    <strong>Project 1: </strong> (E-commerce) : MNC Restaurant web automation (3months)<br>
+                    <strong>Projects: </strong> (E-commerce) Multiple MNC Restaurant web and API automation projects (3 years)<br>
                     
-                    <strong>Tech stack:</strong> Selenium, TestNG, Java
-                </div>
-                <div class="project-block">
-                    <strong>Project 2: </strong> (E-commerce) : MNC Restaurants aggregator integration via Mule soft (1.5 years)<br>
-                    
-                    <strong>Tech Stack:</strong> Selenium, Java, SoapUI automation
-                </div>
-                <div class="project-block">
-                    <strong>Project 3: </strong> (E-commerce) : MNC Restaurants integration with Workday, solaris, mulesoft APIs (9 months )<br>
-                    
-                    <strong>Tech Stack:</strong> Selenium, Java, Rest Assured, MySQL, SoapUI.
-                </div>
-                <div class="project-block">
-                    <strong>Project 4: </strong> (E-commerce) : Restaurants web application automation and API automation (6 months)<br>
-                    
-                    <strong>Tech Stack:</strong> Selenium, Java, Rest Assured, Postman, SoapUI
+                    <strong>Tech Stack:</strong> Selenium WebDriver, Java, TestNG, REST Assured, SoapUI, Postman, MySQL, Apache POI.
                 </div>
             </div>
             
             <div class="job-col-right">
                 <ul class="checkmark-list">
-                    <li>Hands-on experience in selenium automation.</li>
-                    <li>Hands-on experience in API automation with Rest Assured, SoapUI.</li>
-                    <li>Experience of automation framework development from scratch.</li>
-                    <li>Worked on Mulesoft middleware application testing.</li>
-                    <li>Payment Integration Testing</li>
+                    <li>Developed web automation frameworks from scratch using Page Object Model.</li>
+                    <li>Implemented API automation with REST Assured and SoapUI successfully.</li>
+                    <li>Specialized in Mulesoft middleware application testing and validation.</li>
+                    <li>Conducted payment integration testing for e-commerce platforms.</li>
+                    <li>Received early promotion for exceptional performance and dedication.</li>
                 </ul>
             </div>
             
             <div class="job-col-far-right">
-                <div style="margin-bottom: 8px;">"Early promotion from Programmer Analyst to Associate - Projects for extra-ordinary effort and dedicated performance in project."</div>
+                <div style="margin-bottom: 8px;">"Early promotion for extraordinary effort and dedicated performance in project."</div>
                 <div style="text-align: right; font-weight: bold;">Sr. Project Manager<br>QE&A, Cognizant</div>
             </div>
+        </div>
         </div>
 
     </div>
