@@ -99,16 +99,16 @@
 
         /* Active nav link style */
         .nav-link.active {
-            color: #3b82f6;
-            /* text-blue-500 */
-            border-bottom: 2px solid #3b82f6;
+            color: #a0a0a0;
+            /* text-gray-400 */
+            border-bottom: 2px solid #a0a0a0;
             font-weight: 600;
         }
 
         .dark .nav-link.active {
-            color: #60a5fa;
-            /* text-blue-400 */
-            border-bottom: 2px solid #60a5fa;
+            color: #d4d4d4;
+            /* text-gray-200 */
+            border-bottom: 2px solid #d4d4d4;
         }
 
         /* Typography tweaks */
@@ -116,38 +116,63 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
+        /* Glossy gradient theme for black and grey */
+        .dark .glossy-badge {
+            background: linear-gradient(135deg, rgba(80, 80, 90, 0.4) 0%, rgba(60, 60, 70, 0.25) 100%);
+            border: 1px solid rgba(120, 120, 130, 0.3);
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.12);
+        }
+
+        /* Enhanced heading colors for glossy black/grey theme */
+        .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+            color: #f5f5f5;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Enhanced text colors for better contrast on gradient */
+        .dark p, .dark li {
+            color: #d0d0d0;
+        }
+
+        /* Glossy code block enhancement */
+        pre[class*="language-"] {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a30 50%, #1f1f25 100%) !important;
+            border: 1px solid rgba(100, 100, 110, 0.2) !important;
+            box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+        }
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800 dark:bg-slate-900 dark:text-gray-200 transition-colors duration-200">
+<body class="bg-gray-50 text-gray-800 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-gray-200 transition-colors duration-200">
 
     <!-- Sticky Navbar -->
     <nav
-        class="fixed top-0 w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-200 dark:border-slate-800 z-50 shadow-sm">
+        class="fixed top-0 w-full bg-white/90 dark:bg-gradient-to-r dark:from-slate-950/95 dark:via-slate-900/90 dark:to-slate-950/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800/40 z-50 shadow-sm dark:shadow-black/50">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 font-bold text-xl tracking-tight text-blue-600 dark:text-blue-400">
+                <div class="flex-shrink-0 font-bold text-xl tracking-tight text-gray-700 dark:text-gray-100">
                     Sharik M.
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-6 overflow-x-auto">
                         <a href="#linear-searching"
-                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors whitespace-nowrap">Linear
+                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100 transition-colors whitespace-nowrap">Linear
                             Search</a>
                         <a href="#binary-searching"
-                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors whitespace-nowrap">Binary
+                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100 transition-colors whitespace-nowrap">Binary
                             Search</a>
                         <a href="#selection-sort"
-                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors whitespace-nowrap">Selection
+                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100 transition-colors whitespace-nowrap">Selection
                             Sort</a>
                         <a href="#insertion-sort"
-                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors whitespace-nowrap">Insertion
+                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100 transition-colors whitespace-nowrap">Insertion
                             Sort</a>
                         <a href="#merge-sort"
-                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors whitespace-nowrap">Merge
+                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100 transition-colors whitespace-nowrap">Merge
                             Sort</a>
                         <a href="#builtin-sorting"
-                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors whitespace-nowrap">Built-in
+                            class="nav-link px-1 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100 transition-colors whitespace-nowrap">Built-in
                             Sorting</a>
                     </div>
                 </div>
@@ -155,7 +180,7 @@
         </div>
         <!-- Mobile scrollable nav -->
         <div
-            class="md:hidden overflow-x-auto border-t border-gray-100 dark:border-slate-800 flex py-2 px-4 space-x-4 pb-3 no-scrollbar">
+            class="md:hidden overflow-x-auto border-t border-gray-800/40 dark:border-gray-800/40 flex py-2 px-4 space-x-4 pb-3 no-scrollbar">
             <a href="#linear-searching"
                 class="nav-link text-xs font-medium text-gray-600 dark:text-gray-300 whitespace-nowrap">Linear</a>
             <a href="#binary-searching"
@@ -178,7 +203,7 @@
         <div class="text-center space-y-4">
             <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">Searching &
                 Sorting in Python</h1>
-            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">A fundamental guide for Computer
+            <p class="text-lg text-slate-600 dark:text-gray-300 max-w-2xl mx-auto">A fundamental guide for Computer
                 Science students to understand the mechanics, efficiency, and implementation of core algorithms.</p>
         </div>
 
@@ -186,16 +211,16 @@
         <section id="linear-searching" class="scroll-mt-32">
             <div class="flex items-center space-x-3 mb-6">
                 <span
-                    class="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">Lesson
+                    class="glossy-badge bg-gradient-to-br from-gray-600/40 to-gray-700/25 text-gray-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-gray-500/30">Lesson
                     8.1</span>
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Linear Searching</h2>
             </div>
 
             <div class="space-y-6">
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Concept & Approach</h3>
-                    <p class="leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p class="leading-relaxed text-slate-700 dark:text-gray-300">
                         Linear search is the most basic searching algorithm. It sequentially checks each element of the
                         list until a match is found or the whole list has been searched.
                         <strong>Approach:</strong> Start at the first index (0). Compare the current item with the
@@ -205,7 +230,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Python Implementation</h3>
                     <pre><code class="language-python">def linear_search(arr, target):
     """
@@ -220,8 +245,8 @@
                 </div>
 
                 <div
-                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 shadow-sm">
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-4">
+                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700/30 shadow-sm">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-4">
                         Analysis</h3>
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -232,7 +257,7 @@
                                 <span
                                     class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-900/30 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800/50">O(n)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">In the worst-case scenario, the target
+                            <p class="text-sm text-slate-600 dark:text-gray-300">In the worst-case scenario, the target
                                 is at the very end of the list or not present at all, requiring checking all <em>n</em>
                                 elements.</p>
                         </div>
@@ -243,12 +268,12 @@
                                 <span
                                     class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900/30 dark:text-green-300 border border-green-200 dark:border-green-800/50">O(1)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Uses a constant amount of extra memory
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Uses a constant amount of extra memory
                                 regardless of the input size.</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-slate-700">
+                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-gray-700/30">
                         <div>
                             <h4 class="text-sm font-semibold text-green-600 dark:text-green-400 mb-2 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -256,7 +281,7 @@
                                         d="M5 13l4 4L19 7"></path>
                                 </svg> Pros
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Extremely simple to implement.</li>
                                 <li>Works on <strong>unsorted</strong> data.</li>
                                 <li>Efficient for very small datasets.</li>
@@ -269,7 +294,7 @@
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg> Cons
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Very slow for large datasets.</li>
                                 <li>Inefficient if multiple searches are needed on the same data.</li>
                             </ul>
@@ -283,16 +308,16 @@
         <section id="binary-searching" class="scroll-mt-32">
             <div class="flex items-center space-x-3 mb-6">
                 <span
-                    class="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">Lesson
+                    class="glossy-badge bg-gradient-to-br from-gray-600/40 to-gray-700/25 text-gray-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-gray-500/30">Lesson
                     8.2</span>
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Binary Searching</h2>
             </div>
 
             <div class="space-y-6">
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Concept & Approach</h3>
-                    <p class="leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p class="leading-relaxed text-slate-700 dark:text-gray-300">
                         Binary search is a highly efficient "divide and conquer" algorithm that finds the position of a
                         target value within a <strong>sorted</strong> array.
                         <strong>Approach:</strong> Compare the target value to the middle element of the array. If they
@@ -302,7 +327,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Python Implementation</h3>
                     <pre><code class="language-python">def binary_search(arr, target):
     """
@@ -325,8 +350,8 @@
                 </div>
 
                 <div
-                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 shadow-sm">
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-4">
+                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700/30 shadow-sm">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-4">
                         Analysis</h3>
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -338,7 +363,7 @@
                                     class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900/30 dark:text-green-300 border border-green-200 dark:border-green-800/50">O(log
                                     n)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Because the search area is halved with
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Because the search area is halved with
                                 every iteration, it takes at most log₂(n) steps to find the element.</p>
                         </div>
                         <div>
@@ -348,12 +373,12 @@
                                 <span
                                     class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900/30 dark:text-green-300 border border-green-200 dark:border-green-800/50">O(1)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Iterative implementation requires only
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Iterative implementation requires only
                                 a few pointer variables (`low`, `high`, `mid`).</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-slate-700">
+                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-gray-700/30">
                         <div>
                             <h4 class="text-sm font-semibold text-green-600 dark:text-green-400 mb-2 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -361,7 +386,7 @@
                                         d="M5 13l4 4L19 7"></path>
                                 </svg> Pros
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Incredibly fast for large datasets.</li>
                                 <li>Scales beautifully (searching 1 million items takes max ~20 steps).</li>
                             </ul>
@@ -373,7 +398,7 @@
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg> Cons
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li><strong>Requires the data to be sorted</strong> first.</li>
                                 <li>Requires fast random access (arrays, not linked lists).</li>
                             </ul>
@@ -387,16 +412,16 @@
         <section id="selection-sort" class="scroll-mt-32">
             <div class="flex items-center space-x-3 mb-6">
                 <span
-                    class="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">Lesson
+                    class="glossy-badge bg-gradient-to-br from-gray-600/40 to-gray-700/25 text-gray-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-gray-500/30">Lesson
                     8.3</span>
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Selection Sort</h2>
             </div>
 
             <div class="space-y-6">
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Concept & Approach</h3>
-                    <p class="leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p class="leading-relaxed text-slate-700 dark:text-gray-300">
                         Selection sort divides the list into two parts: a sorted front portion and an unsorted back
                         portion.
                         <strong>Approach:</strong> Initially, the sorted part is empty. Iterate through the unsorted
@@ -407,7 +432,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Python Implementation</h3>
                     <pre><code class="language-python">def selection_sort(arr):
     """
@@ -432,8 +457,8 @@
                 </div>
 
                 <div
-                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 shadow-sm">
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-4">
+                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700/30 shadow-sm">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-4">
                         Analysis</h3>
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -444,7 +469,7 @@
                                 <span
                                     class="bg-red-100 text-red-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900/30 dark:text-red-300 border border-red-200 dark:border-red-800/50">O(n²)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Contains two nested loops. Even if the
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Contains two nested loops. Even if the
                                 array is already sorted, it still scans the remaining elements to verify the minimum.
                             </p>
                         </div>
@@ -455,12 +480,12 @@
                                 <span
                                     class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900/30 dark:text-green-300 border border-green-200 dark:border-green-800/50">O(1)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">It is an "in-place" sorting algorithm,
+                            <p class="text-sm text-slate-600 dark:text-gray-300">It is an "in-place" sorting algorithm,
                                 requiring no extra memory proportional to input size.</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-slate-700">
+                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-gray-700/30">
                         <div>
                             <h4 class="text-sm font-semibold text-green-600 dark:text-green-400 mb-2 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -468,7 +493,7 @@
                                         d="M5 13l4 4L19 7"></path>
                                 </svg> Pros
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Minimizes the number of swaps (max <em>O(n)</em> swaps), good when memory writing is
                                     costly.</li>
                                 <li>Simple conceptual model.</li>
@@ -481,7 +506,7 @@
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg> Cons
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Very inefficient on large arrays.</li>
                                 <li>Not an "adaptive" sort (it doesn't exit early if sorted).</li>
                             </ul>
@@ -495,16 +520,16 @@
         <section id="insertion-sort" class="scroll-mt-32">
             <div class="flex items-center space-x-3 mb-6">
                 <span
-                    class="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">Lesson
+                    class="glossy-badge bg-gradient-to-br from-gray-600/40 to-gray-700/25 text-gray-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-gray-500/30">Lesson
                     8.4</span>
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Insertion Sort</h2>
             </div>
 
             <div class="space-y-6">
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Concept & Approach</h3>
-                    <p class="leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p class="leading-relaxed text-slate-700 dark:text-gray-300">
                         Insertion sort builds the final sorted array one item at a time. It behaves much like how you
                         might sort playing cards in your hands.
                         <strong>Approach:</strong> Assume the first element is already sorted. Pick the next element
@@ -514,7 +539,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Python Implementation</h3>
                     <pre><code class="language-python">def insertion_sort(arr):
     """
@@ -538,8 +563,8 @@
                 </div>
 
                 <div
-                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 shadow-sm">
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-4">
+                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700/30 shadow-sm">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-4">
                         Analysis</h3>
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -550,7 +575,7 @@
                                 <span
                                     class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-900/30 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800/50">O(n²)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Worst/Average case is O(n²). However,
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Worst/Average case is O(n²). However,
                                 <strong>Best case is O(n)</strong> if the array is already mostly sorted.</p>
                         </div>
                         <div>
@@ -560,12 +585,12 @@
                                 <span
                                     class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900/30 dark:text-green-300 border border-green-200 dark:border-green-800/50">O(1)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Like selection sort, it operates
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Like selection sort, it operates
                                 completely in-place.</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-slate-700">
+                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-gray-700/30">
                         <div>
                             <h4 class="text-sm font-semibold text-green-600 dark:text-green-400 mb-2 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -573,7 +598,7 @@
                                         d="M5 13l4 4L19 7"></path>
                                 </svg> Pros
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Extremely efficient for small arrays or "nearly sorted" data.</li>
                                 <li>Stable sort (maintains relative order of equal items).</li>
                             </ul>
@@ -585,7 +610,7 @@
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg> Cons
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Poor performance on large, randomly distributed datasets.</li>
                                 <li>Terrible performance on reverse-sorted data.</li>
                             </ul>
@@ -599,16 +624,16 @@
         <section id="merge-sort" class="scroll-mt-32">
             <div class="flex items-center space-x-3 mb-6">
                 <span
-                    class="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">Lesson
+                    class="glossy-badge bg-gradient-to-br from-gray-600/40 to-gray-700/25 text-gray-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-gray-500/30">Lesson
                     8.5</span>
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Merge Sort</h2>
             </div>
 
             <div class="space-y-6">
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Concept & Approach</h3>
-                    <p class="leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p class="leading-relaxed text-slate-700 dark:text-gray-300">
                         Merge Sort is an advanced, recursive "divide and conquer" algorithm.
                         <strong>Approach:</strong> First, recursively divide the list into equal halves until you have
                         sublists containing 1 item (a single item is technically sorted). Then, repeatedly
@@ -618,7 +643,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Python Implementation</h3>
                     <pre><code class="language-python">def merge_sort(arr):
     if len(arr) > 1:
@@ -656,8 +681,8 @@
                 </div>
 
                 <div
-                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 shadow-sm">
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-4">
+                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700/30 shadow-sm">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-4">
                         Analysis</h3>
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -669,7 +694,7 @@
                                     class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900/30 dark:text-green-300 border border-green-200 dark:border-green-800/50">O(n
                                     log n)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Guaranteed O(n log n) in best, worst,
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Guaranteed O(n log n) in best, worst,
                                 and average cases. Halving takes log(n) levels, and merging takes O(n) work per level.
                             </p>
                         </div>
@@ -680,12 +705,12 @@
                                 <span
                                     class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-900/30 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800/50">O(n)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Requires additional memory to hold the
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Requires additional memory to hold the
                                 temporary split sublists during the merging process.</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-slate-700">
+                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-gray-700/30">
                         <div>
                             <h4 class="text-sm font-semibold text-green-600 dark:text-green-400 mb-2 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -693,7 +718,7 @@
                                         d="M5 13l4 4L19 7"></path>
                                 </svg> Pros
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Excellent and consistent performance on large datasets.</li>
                                 <li>Stable sort.</li>
                             </ul>
@@ -705,7 +730,7 @@
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg> Cons
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Consumes O(n) extra space, which can be problematic for massive arrays in
                                     constrained environments.</li>
                                 <li>Slight overhead for recursive function calls.</li>
@@ -720,16 +745,16 @@
         <section id="builtin-sorting" class="scroll-mt-32 mb-10">
             <div class="flex items-center space-x-3 mb-6">
                 <span
-                    class="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">Lesson
+                    class="glossy-badge bg-gradient-to-br from-gray-600/40 to-gray-700/25 text-gray-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-gray-500/30">Lesson
                     8.6</span>
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Built-in Sorting</h2>
             </div>
 
             <div class="space-y-6">
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Concept & Approach</h3>
-                    <p class="leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p class="leading-relaxed text-slate-700 dark:text-gray-300">
                         In the real world, you rarely write your own sorting algorithms. Python provides highly
                         optimized, built-in sorting capabilities based on an algorithm called <strong>Timsort</strong>
                         (a brilliant hybrid of Merge Sort and Insertion Sort designed to perform exceptionally well on
@@ -738,7 +763,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-2">
                         Python Implementation</h3>
                     <pre><code class="language-python"># Method 1: list.sort()
 # Modifies the original list directly (in-place)
@@ -759,8 +784,8 @@ sorted_by_len = sorted(words, key=len) # Sort by string length</code></pre>
                 </div>
 
                 <div
-                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 shadow-sm">
-                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mb-4">
+                    class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700/30 shadow-sm">
+                    <h3 class="text-sm uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-300 mb-4">
                         Analysis</h3>
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -772,7 +797,7 @@ sorted_by_len = sorted(words, key=len) # Sort by string length</code></pre>
                                     class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900/30 dark:text-green-300 border border-green-200 dark:border-green-800/50">O(n
                                     log n)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Worst/Average case is O(n log n). The
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Worst/Average case is O(n log n). The
                                 Best case (if data is already mostly sorted) is an incredibly fast O(n).</p>
                         </div>
                         <div>
@@ -782,12 +807,12 @@ sorted_by_len = sorted(words, key=len) # Sort by string length</code></pre>
                                 <span
                                     class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-900/30 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800/50">O(n)</span>
                             </div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Timsort uses auxiliary memory (up to
+                            <p class="text-sm text-slate-600 dark:text-gray-300">Timsort uses auxiliary memory (up to
                                 n/2) to achieve its speed.</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-slate-700">
+                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100 dark:border-gray-700/30">
                         <div>
                             <h4 class="text-sm font-semibold text-green-600 dark:text-green-400 mb-2 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -795,7 +820,7 @@ sorted_by_len = sorted(words, key=len) # Sort by string length</code></pre>
                                         d="M5 13l4 4L19 7"></path>
                                 </svg> Pros
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Professionally implemented in C (extremely fast).</li>
                                 <li>Stable sort and very adaptive.</li>
                                 <li>Zero risk of implementation bugs on your part.</li>
@@ -808,7 +833,7 @@ sorted_by_len = sorted(words, key=len) # Sort by string length</code></pre>
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg> Cons
                             </h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+                            <ul class="text-sm text-slate-600 dark:text-gray-300 space-y-1 list-disc pl-4">
                                 <li>Hides algorithmic mechanics (bad for learning, great for production).</li>
                             </ul>
                         </div>
