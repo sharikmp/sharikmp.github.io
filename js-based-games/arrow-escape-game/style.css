@@ -665,26 +665,6 @@ tr.highlight {
     overflow: hidden;
 }
 
-#countdown-bus {
-    position: absolute;
-    width: 130px;
-    height: auto;
-    top: 55%;
-    left: -20%;
-    /* flip so bus faces the direction it travels (right) */
-    transform: translateY(-50%) scaleX(-1);
-    filter: drop-shadow(0 6px 24px rgba(56, 189, 248, 0.65));
-}
-
-#countdown-bus.driving {
-    animation: busDrive 3.2s linear forwards;
-}
-
-@keyframes busDrive {
-    0%   { left: -20%; }
-    100% { left: 115%; }
-}
-
 #countdown-number {
     font-size: clamp(90px, 20vw, 240px);
     font-weight: 700;

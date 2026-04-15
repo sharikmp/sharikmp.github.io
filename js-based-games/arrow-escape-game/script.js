@@ -382,15 +382,9 @@ function escapeHTML(str) {
 // ─── COUNTDOWN ───────────────────────────────────────────────────────────────
 function showCountdown(callback) {
     const overlay = document.getElementById('countdown-overlay');
-    const busEl = document.getElementById('countdown-bus');
     const numEl = document.getElementById('countdown-number');
 
     overlay.classList.remove('hidden');
-
-    // Reset bus to start position before animating
-    busEl.classList.remove('driving');
-    void busEl.offsetWidth;
-    busEl.classList.add('driving');
 
     function flash(text, isGo) {
         numEl.classList.remove('count-pop', 'go-text');
