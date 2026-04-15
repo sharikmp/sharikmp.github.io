@@ -4,6 +4,11 @@ const STAGES_PER_LEVEL = 3;
 const STAGE_BUS_INCREMENT = 5;
 const LEADERBOARD_SIZE = 10;
 
+// --- SOUND ---
+let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+const beepBeepAudio = document.getElementById('beep-beep-audio');
+const incorrectAudio = document.getElementById('incorrect-audio');
+
 const LEVELS = [
     { id: 'easy', name: 'Easy', time: 30, cols: 10, rows: 10, buses: 50 },
     { id: 'medium', name: 'Medium', time: 45, cols: 13, rows: 13, buses: 100 },
@@ -326,6 +331,34 @@ function hideAllModals() {
     });
 }
 
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    localStorage.setItem('soundEnabled', soundEnabled);
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundEnabled) {
+        soundToggle.classList.remove('muted');
+        soundToggle.textContent = '🔊';
+    } else {
+        soundToggle.classList.add('muted');
+        soundToggle.textContent = '🔇';
+    }
+}
+
+function playSound(type) {
+    if (!soundEnabled) return;
+    try {
+        if (type === 'correct') {
+            beepBeepAudio.currentTime = 0;
+            beepBeepAudio.play().catch(() => {});
+        } else if (type === 'incorrect') {
+            incorrectAudio.currentTime = 0;
+            incorrectAudio.play().catch(() => {});
+        }
+    } catch (e) {
+        // Silently handle sound errors
+    }
+}
+
 function setHeaderInfo(levelName, stage) {
     const lvlEl = document.getElementById('header-level-name');
     const sep1 = document.getElementById('header-sep');
@@ -512,10 +545,16 @@ function handleTap(x, y, wrapper, bus) {
         grid[y][x] = null;
         activeBuses--;
         clearedCount++;
-        bus.startEngine();
-        animateFlyOut(wrapper, dir, bus);
+        playSound('correct');
+        // Visual feedback: enlarge and vibrate on tap
+        wrapper.classList.add('bus-tap');
+        // Start engine after tap animation starts
+        setTimeout(() => bus.startEngine(), 15);
+        // Fly out after tap animation ends
+        setTimeout(() => animateFlyOut(wrapper, dir, bus), 250);
         if (activeBuses === 0) handleStageWin();
     } else {
+        playSound('incorrect');
         wrapper.classList.remove('shake');
         void wrapper.offsetWidth;
         wrapper.classList.add('shake');
@@ -531,6 +570,7 @@ function animateFlyOut(wrapper, dir, bus) {
     wrapper.style.height = `${rect.height}px`;
     document.body.appendChild(wrapper);
     wrapper.classList.add('flying');
+    wrapper.classList.remove('bus-tap');
     requestAnimationFrame(() => {
         const dist = Math.max(window.innerWidth, window.innerHeight) * 1.5;
         if (dir === 'U') wrapper.style.top = `${rect.top - dist}px`;
@@ -702,4 +742,15 @@ window.addEventListener('resize', () => {
 });
 
 // ─── BOOT ─────────────────────────────────────────────────────────────────────
+// Initialize sound toggle state
+const soundToggle = document.getElementById('sound-toggle');
+if (soundEnabled) {
+    soundToggle.classList.remove('muted');
+    soundToggle.textContent = '🔊';
+} else {
+    soundToggle.classList.add('muted');
+    soundToggle.textContent = '🔇';
+}
+
+// Start the app
 buildLevelCards();

@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div id="sound-toggle" class="sound-toggle" onclick="toggleSound()">🔊</div>
 
     <div id="header">
         <span id="header-level-name" class="hidden"></span>
@@ -28,8 +29,7 @@
         <p>Tap a bus to release it &mdash; only if its path to the edge is clear.<br>Clear all buses before time runs
             out!</p>
         <div id="level-cards"></div>
-        <button onclick="showLeaderboardModal()"
-            style="background:transparent;border-color:#111;color:#334155;font-size:0.85rem;margin-top:14px;">LEADERBOARD</button>
+        <button class="leaderboard-btn" onclick="showLeaderboardModal()">LEADERBOARD</button>
     </div>
 
     <div id="result-modal" class="modal-overlay hidden">
@@ -81,6 +81,13 @@
         <div id="lb-tabs"></div>
         <button onclick="resetToStart()">MAIN MENU</button>
     </div>
+
+    <audio id="beep-beep-audio" src="beep-beep.mp3"></audio>
+    <audio id="incorrect-audio" src="incorrect.mp3"></audio>
+
+    <footer id="footer">
+        <p>Made with ❤️ and code by <strong>Sharik</strong></p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
