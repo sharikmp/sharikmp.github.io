@@ -98,6 +98,10 @@
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
             z-index: 1;
+            /* Add variables for rotation and scale to keep orientation during animations */
+            --rot: 0deg;
+            --scl: 1;
+            transform: rotate(var(--rot)) scaleX(var(--scl));
         }
 
         .bus-canvas {
@@ -115,10 +119,10 @@
         }
 
         /* Orientations: Base drawing faces LEFT */
-        .dir-L { transform: rotate(0deg); }
-        .dir-U { transform: rotate(90deg); }
-        .dir-R { transform: rotate(180deg); }
-        .dir-D { transform: rotate(270deg); }
+        .dir-L { --rot: 0deg; --scl: 1; }
+        .dir-U { --rot: 90deg; --scl: 1; }
+        .dir-R { --rot: 0deg; --scl: -1; } /* Flip horizontally instead of rotating 180deg */
+        .dir-D { --rot: -90deg; --scl: 1; }
 
         /* Animations */
         .shake {
@@ -130,11 +134,12 @@
         }
 
         @keyframes vibrate {
-            0%, 100% { transform: translate(0, 0); }
-            20% { transform: translate(-3px, 0px); }
-            40% { transform: translate(3px, -2px); }
-            60% { transform: translate(-3px, 2px); }
-            80% { transform: translate(3px, 0px); }
+            /* Preserve the bus orientation while translating */
+            0%, 100% { transform: translate(0, 0) rotate(var(--rot)) scaleX(var(--scl)); }
+            20% { transform: translate(-3px, 0px) rotate(var(--rot)) scaleX(var(--scl)); }
+            40% { transform: translate(3px, -2px) rotate(var(--rot)) scaleX(var(--scl)); }
+            60% { transform: translate(-3px, 2px) rotate(var(--rot)) scaleX(var(--scl)); }
+            80% { transform: translate(3px, 0px) rotate(var(--rot)) scaleX(var(--scl)); }
         }
 
         .flying {
