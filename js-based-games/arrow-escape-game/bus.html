@@ -378,90 +378,157 @@
                 const ctx = this.ctx;
                 const canvas = this.canvas;
                 const dpr = window.devicePixelRatio || 1;
-                
+
                 const w = 180;
                 const h = 100;
-                
-                // Calculate scale to fit within canvas bounds safely
-                const scale = Math.min(canvas.width / dpr / 220, canvas.height / dpr / 140);
-                
+
+                // 3D top-view config: tvH = how many px of roof are visible above body
+                // tvX = how much the far (rear) corners shift inward for perspective
+                const tvH = 32;
+                const tvX = 5;
+
+                // Scale to fit canvas including front overhang (25px) and roof (tvH)
+                const scale = Math.min(canvas.width / dpr / 225, canvas.height / dpr / 175);
+
                 const centerX = (canvas.width / dpr) / 2;
                 const centerY = (canvas.height / dpr) / 2;
-                
+
                 // Engine Physics
                 const time = Date.now() / 1000;
                 const bounce = this.isEngineOn ? Math.sin(time * 25) * 3 : 0;
-                this.wheelRotation -= this.speed * 0.4; // Spin forward (leftward)
+                this.wheelRotation -= this.speed * 0.4;
 
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
+
                 ctx.save();
                 ctx.scale(dpr, dpr);
                 ctx.translate(centerX, centerY + bounce * scale);
                 ctx.scale(scale, scale);
-                
-                // Draw Bus Geometry (Base drawing faces LEFT)
+
+                // Coordinate aliases — bus faces LEFT, front is on the left
+                const front  = -w/2 - 25;  // front bumper X  (-115)
+                const bodyL  = -w/2;        // body left X      (-90)
+                const bodyR  =  w/2;        // body right X     (+90)
+                const bodyT  = -h/2;        // body top Y       (-50)
+                const bodyB  =  h/2;        // body bottom Y    (+50)
+
+                // Roof "far" edge (the edge you see from above, going back into perspective)
+                const rfY      = bodyT - tvH;       //  -82
+                const rfFrontX = front  - tvX;      // -120  (front-far corner)
+                const rfRearX  = bodyR  - tvX;      //  +85  (rear-far corner)
+
                 // 1. Shadow
                 ctx.beginPath();
-                ctx.ellipse(10, h/2 + 15, 80 + (this.isEngineOn ? 5 : 0), 15, 0, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0,0,0,0.15)';
+                ctx.ellipse(10, bodyB + 15, 80 + (this.isEngineOn ? 5 : 0), 14, 0, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0,0,0,0.18)';
                 ctx.fill();
 
-                // 2. Wheels Back
-                this.drawWheel(-45, h/2 + 5, 20, this.wheelRotation);
-                this.drawWheel(45, h/2 + 5, 20, this.wheelRotation);
-
-                // 3. Body Side
-                const mainGrad = ctx.createLinearGradient(0, -h/2, 0, h/2);
-                mainGrad.addColorStop(0, this.theme.main);
-                mainGrad.addColorStop(1, this.theme.dark);
-                
-                ctx.fillStyle = mainGrad;
-                ctx.beginPath();
-                ctx.roundRect(-w/2, -h/2, w, h, 15);
-                ctx.fill();
-
-                // 4. Front Face (Left side)
+                // 2. Rear face — dark sliver on the right edge for 3D depth
+                ctx.globalAlpha = 0.45;
                 ctx.fillStyle = this.theme.dark;
                 ctx.beginPath();
-                ctx.moveTo(-w/2, -h/2 + 5);
-                ctx.lineTo(-w/2 - 25, -h/2 + 15);
-                ctx.lineTo(-w/2 - 25, h/2 - 5);
-                ctx.lineTo(-w/2, h/2 - 5);
+                ctx.moveTo(bodyR,    bodyT);
+                ctx.lineTo(rfRearX,  rfY);
+                ctx.lineTo(rfRearX,  rfY + h);
+                ctx.lineTo(bodyR,    bodyB);
+                ctx.closePath();
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+
+                // 3. Wheels Back
+                this.drawWheel(-45, bodyB + 5, 20, this.wheelRotation);
+                this.drawWheel(45,  bodyB + 5, 20, this.wheelRotation);
+
+                // 4. Body Side (main visible face)
+                const mainGrad = ctx.createLinearGradient(0, bodyT, 0, bodyB);
+                mainGrad.addColorStop(0, this.theme.main);
+                mainGrad.addColorStop(1, this.theme.dark);
+                ctx.fillStyle = mainGrad;
+                ctx.beginPath();
+                ctx.roundRect(bodyL, bodyT, w, h, 15);
+                ctx.fill();
+
+                // 5. Front Face (the cab / nose)
+                ctx.fillStyle = this.theme.dark;
+                ctx.beginPath();
+                ctx.moveTo(bodyL,  bodyT + 5);
+                ctx.lineTo(front,  bodyT + 15);
+                ctx.lineTo(front,  bodyB - 5);
+                ctx.lineTo(bodyL,  bodyB - 5);
                 ctx.closePath();
                 ctx.fill();
 
-                // Windshield Front
+                // Windshield
                 ctx.fillStyle = this.theme.window;
                 ctx.beginPath();
-                ctx.moveTo(-w/2 - 5, -h/2 + 15);
-                ctx.lineTo(-w/2 - 20, -h/2 + 22);
-                ctx.lineTo(-w/2 - 20, h/2 - 45);
-                ctx.lineTo(-w/2 - 5, h/2 - 45);
+                ctx.moveTo(bodyL - 5,  bodyT + 15);
+                ctx.lineTo(front + 10, bodyT + 22);
+                ctx.lineTo(front + 10, bodyB - 45);
+                ctx.lineTo(bodyL - 5,  bodyB - 45);
                 ctx.fill();
 
-                // 5. Roof
-                ctx.fillStyle = this.theme.light;
+                // 6. TOP SURFACE (roof) — drawn after body so it visually overhangs the side panel
+                const roofGrad = ctx.createLinearGradient(0, bodyT, 0, rfY);
+                roofGrad.addColorStop(0, this.theme.light);  // near edge: brightest (sun-lit)
+                roofGrad.addColorStop(1, this.theme.main);   // far edge: same hue, slightly darker
+                ctx.fillStyle = roofGrad;
                 ctx.beginPath();
-                ctx.moveTo(-w/2 + 15, -h/2);
-                ctx.lineTo(w/2 - 15, -h/2);
-                ctx.lineTo(w/2 - 35, -h/2 - 20);
-                ctx.lineTo(-w/2 - 5, -h/2 - 20);
+                ctx.moveTo(front,    bodyT);   // near-front corner
+                ctx.lineTo(bodyR,    bodyT);   // near-rear corner
+                ctx.lineTo(rfRearX,  rfY);     // far-rear corner
+                ctx.lineTo(rfFrontX, rfY);     // far-front corner
                 ctx.closePath();
                 ctx.fill();
 
-                // Windows Side
+                // Roof fold line (crease where sidewall meets roof)
+                ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(front, bodyT);
+                ctx.lineTo(bodyR, bodyT);
+                ctx.stroke();
+
+                // Roof far-edge highlight
+                ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(rfFrontX, rfY);
+                ctx.lineTo(rfRearX,  rfY);
+                ctx.stroke();
+
+                // Roof detail: AC unit visible from above (perspective-correct box)
+                ctx.fillStyle = this.theme.dark;
+                ctx.globalAlpha = 0.4;
+                const acNX = bodyL + 25, acNW = 55;
+                const acFX = acNX - tvX * 0.6;
+                ctx.beginPath();
+                ctx.moveTo(acNX,        bodyT - 2);
+                ctx.lineTo(acNX + acNW, bodyT - 2);
+                ctx.lineTo(acFX + acNW, rfY   + 3);
+                ctx.lineTo(acFX,        rfY   + 3);
+                ctx.closePath();
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+
+                // Roof centre longitudinal stripe
+                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                ctx.lineWidth = 5;
+                ctx.beginPath();
+                ctx.moveTo((front + bodyR) / 2,       bodyT);
+                ctx.lineTo((rfFrontX + rfRearX) / 2,  rfY);
+                ctx.stroke();
+
+                // 7. Side Windows
                 ctx.fillStyle = this.theme.window;
                 for(let i=0; i<3; i++) {
                     ctx.beginPath();
-                    ctx.roundRect(-w/2 + 25 + i*45, -h/2 + 15, 35, 35, 6);
+                    ctx.roundRect(bodyL + 25 + i*45, bodyT + 15, 35, 35, 6);
                     ctx.fill();
-                    // Shine
                     ctx.strokeStyle = 'rgba(255,255,255,0.4)';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.moveTo(-w/2 + 30 + i*45, -h/2 + 22);
-                    ctx.lineTo(-w/2 + 42 + i*45, -h/2 + 22);
+                    ctx.moveTo(bodyL + 30 + i*45, bodyT + 22);
+                    ctx.lineTo(bodyL + 42 + i*45, bodyT + 22);
                     ctx.stroke();
                 }
 
@@ -470,7 +537,7 @@
                 ctx.shadowBlur = this.isEngineOn ? 10 : 0;
                 ctx.shadowColor = '#fff';
                 ctx.beginPath();
-                ctx.arc(-w/2 - 15, h/2 - 25, 6, 0, Math.PI * 2);
+                ctx.arc(bodyL - 15, bodyB - 25, 6, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.shadowBlur = 0;
 
@@ -480,16 +547,16 @@
                 ctx.lineCap = 'round';
                 for(let i=0; i<3; i++) {
                     ctx.beginPath();
-                    ctx.moveTo(-w/2 - 18, h/2 - 12 + i*4);
-                    ctx.lineTo(-w/2 - 5, h/2 - 12 + i*4);
+                    ctx.moveTo(bodyL - 18, bodyB - 12 + i*4);
+                    ctx.lineTo(bodyL - 5,  bodyB - 12 + i*4);
                     ctx.stroke();
                 }
-                
+
                 // Exhaust Particles
                 if(this.isEngineOn && Math.random() > 0.4) {
                     this.particles.push({
-                        x: w/2,
-                        y: h/2 - 10,
+                        x: bodyR,
+                        y: bodyB - 10,
                         size: Math.random() * 8 + 4,
                         vx: Math.random() * 2 + 1,
                         vy: -(Math.random() * 1.5),
@@ -687,7 +754,7 @@
                         wrapper.className = `bus-wrapper dir-${cellData.dir}`;
                         
                         const canvas = document.createElement('canvas');
-                        canvas.className = 'bus-canvas';
+                        canvas.className = 'bus-canvas';    
                         
                         const dpr = window.devicePixelRatio || 1;
                         canvas.width = cellSize * dpr;
