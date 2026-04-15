@@ -4,711 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Arrow Escape</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
-
-        :root {
-            --bg-color: #050505;
-            --arrow-color: #ffffff;
-            --error-color: #ff3333;
-            --ui-bg: rgba(20, 20, 20, 0.95);
-            --primary: #4CAF50;
-        }
-
-        * {
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: white;
-            font-family: 'Courier Prime', monospace;
-            overflow: hidden;
-            /* Prevent scrolling */
-            touch-action: none;
-            /* Prevent swipe-to-refresh on mobile */
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            width: 100vw;
-        }
-
-        /* Header / Timer */
-        #header {
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            border-bottom: 1px solid #333;
-            background: #000;
-            z-index: 10;
-        }
-
-        #timer {
-            color: var(--arrow-color);
-        }
-
-        #timer.warning {
-            color: var(--error-color);
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        /* Game Grid Container */
-        #game-area {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        #grid {
-            display: grid;
-            gap: 0px;
-            /* Reduced to 0 for a connected maze look */
-            position: relative;
-        }
-
-        .cell {
-            position: relative;
-        }
-
-        /* Arrow Styles */
-        .arrow-container {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .arrow-svg {
-            width: 100%;
-            /* Increased to touch edges */
-            height: 100%;
-            stroke: var(--arrow-color);
-            stroke-width: 2;
-            /* Thinner for dense look */
-            fill: none;
-            stroke-linecap: square;
-            /* Square lines connect cleanly */
-            stroke-linejoin: miter;
-            transition: stroke 0.2s ease;
-        }
-
-        /* Orientations */
-        .dir-U .arrow-svg {
-            transform: rotate(0deg);
-        }
-
-        .dir-R .arrow-svg {
-            transform: rotate(90deg);
-        }
-
-        .dir-D .arrow-svg {
-            transform: rotate(180deg);
-        }
-
-        .dir-L .arrow-svg {
-            transform: rotate(270deg);
-        }
-
-        /* Animations */
-        .shake {
-            animation: vibrate 0.25s linear both;
-        }
-
-        .shake .arrow-svg {
-            stroke: var(--error-color);
-        }
-
-        @keyframes vibrate {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            20% {
-                transform: translate(-3px, 0px);
-            }
-
-            40% {
-                transform: translate(3px, -2px);
-            }
-
-            60% {
-                transform: translate(-3px, 2px);
-            }
-
-            80% {
-                transform: translate(3px, 0px);
-            }
-        }
-
-        .flying {
-            position: fixed !important;
-            z-index: 1000;
-            pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.5, 0, 1, 0.5);
-            /* Accelerate out */
-        }
-
-        /* Modals */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: var(--ui-bg);
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        h1 {
-            margin-top: 0;
-            font-size: 2rem;
-            text-transform: uppercase;
-        }
-
-        p {
-            font-size: 1.2rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        button {
-            background: var(--arrow-color);
-            color: #000;
-            border: none;
-            padding: 12px 24px;
-            font-size: 1.2rem;
-            font-family: inherit;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-top: 15px;
-            transition: transform 0.1s;
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
-
-        button.primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            font-size: 1.2rem;
-            font-family: inherit;
-            border: 2px solid #555;
-            background: #000;
-            color: white;
-            border-radius: 4px;
-            text-align: center;
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--primary);
-        }
-
-        /* Leaderboard Table */
-        .leaderboard-container {
-            width: 100%;
-            max-width: 400px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            max-height: 50vh;
-            overflow-y: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #222;
-        }
-
-        th {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        td.time-col {
-            text-align: right;
-            color: var(--primary);
-        }
-
-        tr.highlight {
-            background: rgba(76, 175, 80, 0.2);
-            font-weight: bold;
-        }
-    </style>
+    <title>Bus Escape</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Header / Timer -->
     <div id="header">
-        <span id="timer">60.0s</span>
+        <span id="header-level-name" class="hidden"></span>
+        <span id="header-sep" class="hdot hidden"> &middot; </span>
+        <span id="header-stage-label" class="hidden"></span>
+        <span id="header-sep2" class="hdot hidden"> &middot; &#9201;&nbsp;</span>
+        <span id="timer">--</span>
     </div>
 
-    <!-- Game Area -->
     <div id="game-area">
         <div id="grid"></div>
     </div>
 
-    <!-- Start Modal -->
     <div id="start-modal" class="modal-overlay">
-        <h1>Arrow Escape</h1>
-        <p>Tap arrows to release them.<br>An arrow can only fly if its path is clear to the edge.<br>Clear the board
-            before time runs out!</p>
-        <button onclick="startGame()">PLAY GAME</button>
-        <button onclick="showLeaderboardModal()" style="background: #333; color: white;">LEADERBOARD</button>
+        <img id="start-bus-img" src="bus.png" alt="Bus">
+        <h1>Bus Escape</h1>
+        <p>Tap a bus to release it &mdash; only if its path to the edge is clear.<br>Clear all buses before time runs
+            out!</p>
+        <div id="level-cards"></div>
+        <button onclick="showLeaderboardModal()"
+            style="background:transparent;border-color:#111;color:#334155;font-size:0.85rem;margin-top:14px;">LEADERBOARD</button>
     </div>
 
-    <!-- Game Over Modal -->
-    <div id="lose-modal" class="modal-overlay hidden">
-        <h1 style="color: var(--error-color)">Time's Up!</h1>
-        <p>You didn't clear the board in time.</p>
-        <button onclick="resetToStart()">TRY AGAIN</button>
+    <div id="result-modal" class="modal-overlay hidden">
+        <h1 id="result-title"></h1>
+        <div class="result-stats">
+            <div class="stat-row">
+                <span class="stat-label">Cleared</span>
+                <span id="stat-cleared" class="stat-value">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Remaining</span>
+                <span id="stat-remaining" class="stat-value">0</span>
+            </div>
+            <div class="stat-row pct-row">
+                <span class="stat-label">% Cleared</span>
+                <div class="pct-ring-wrap">
+                    <svg class="pct-ring" viewBox="0 0 84 84">
+                        <circle class="pct-bg" cx="42" cy="42" r="31.5" />
+                        <circle id="pct-arc" class="pct-arc" cx="42" cy="42" r="31.5" />
+                    </svg>
+                    <span id="stat-pct" class="pct-label">0%</span>
+                </div>
+            </div>
+        </div>
+        <!-- Video placeholder: remove "hidden" from div below and set iframe src to activate -->
+        <div id="result-video" class="hidden">
+            <!-- <iframe src="" frameborder="0" allowfullscreen height="180"></iframe> -->
+        </div>
+        <div id="result-name-row" class="hidden">
+            <input type="text" id="player-name" placeholder="Enter your name" maxlength="15" autocomplete="off">
+        </div>
+        <div id="result-buttons"></div>
     </div>
 
-    <!-- Win Modal -->
-    <div id="win-modal" class="modal-overlay hidden">
-        <h1 style="color: var(--primary)">Puzzle Cleared!</h1>
-        <p>Time: <span id="win-time"></span> seconds</p>
-        <input type="text" id="player-name" placeholder="Enter your name" maxlength="15" autocomplete="off">
-        <button class="primary" onclick="submitScore()">SUBMIT SCORE</button>
-    </div>
-
-    <!-- Leaderboard Modal -->
     <div id="leaderboard-modal" class="modal-overlay hidden">
-        <h1>Top 10</h1>
+        <h1>Top Drivers &mdash; <span id="lb-level-name" style="color:var(--accent)"></span></h1>
         <div class="leaderboard-container">
             <table>
                 <thead>
                     <tr>
                         <th>Rank</th>
                         <th>Name</th>
-                        <th style="text-align: right;">Time (s)</th>
+                        <th style="text-align:right;">Time (s)</th>
                     </tr>
                 </thead>
-                <tbody id="leaderboard-body">
-                    <!-- Data injected here -->
-                </tbody>
+                <tbody id="leaderboard-body"></tbody>
             </table>
         </div>
+        <div id="lb-tabs"></div>
         <button onclick="resetToStart()">MAIN MENU</button>
     </div>
 
-    <script>
-        // --- GAME CONFIGURATION ---
-        const COLS = 20; // Increased for denser grid
-        const ROWS = 30; // Increased for denser grid
-        const TOTAL_TIME = 60; // seconds
-        const DENSITY = 0.90; // Higher density for more arrows
-
-        // --- VISUAL TEMPLATES ---
-        const svgTemplates = {
-            straight: `<svg class="arrow-svg" viewBox="0 0 24 24"><path d="M12 24 L12 4 M12 4 L7 9 M12 4 L17 9" /></svg>`,
-            bendLeft: `<svg class="arrow-svg" viewBox="0 0 24 24"><path d="M0 12 L12 12 L12 4 M12 4 L7 9 M12 4 L17 9" /></svg>`,
-            bendRight: `<svg class="arrow-svg" viewBox="0 0 24 24"><path d="M24 12 L12 12 L12 4 M12 4 L7 9 M12 4 L17 9" /></svg>`,
-            snakeLeft: `<svg class="arrow-svg" viewBox="0 0 24 24"><path d="M6 24 L6 14 L12 14 L12 4 M12 4 L7 9 M12 4 L17 9" /></svg>`,
-            snakeRight: `<svg class="arrow-svg" viewBox="0 0 24 24"><path d="M18 24 L18 14 L12 14 L12 4 M12 4 L7 9 M12 4 L17 9" /></svg>`
-        };
-        const shapes = ['straight', 'bendLeft', 'bendRight', 'snakeLeft', 'snakeRight'];
-
-        // --- STATE ---
-        let grid = [];
-        let activeArrows = 0;
-        let isPlaying = false;
-        let startTime = 0;
-        let timerInterval = null;
-        let currentRunTime = 0;
-
-        // Dummy Data for Leaderboard
-        const defaultLeaderboard = [
-            { name: "Neo", time: 18.4 },
-            { name: "Trinity", time: 22.1 },
-            { name: "Morpheus", time: 26.5 },
-            { name: "Cipher", time: 31.0 },
-            { name: "Smith", time: 35.8 },
-            { name: "Oracle", time: 42.3 },
-            { name: "Link", time: 48.9 },
-            { name: "Dozer", time: 53.2 },
-            { name: "Tank", time: 57.5 },
-            { name: "Mouse", time: 59.9 }
-        ];
-
-        // --- DOM ELEMENTS ---
-        const uiTimer = document.getElementById('timer');
-        const gridEl = document.getElementById('grid');
-        const startModal = document.getElementById('start-modal');
-        const loseModal = document.getElementById('lose-modal');
-        const winModal = document.getElementById('win-modal');
-        const lbModal = document.getElementById('leaderboard-modal');
-        const winTimeSpan = document.getElementById('win-time');
-        const playerNameInput = document.getElementById('player-name');
-        const lbBody = document.getElementById('leaderboard-body');
-
-        // --- INITIALIZATION ---
-        function resetToStart() {
-            loseModal.classList.add('hidden');
-            winModal.classList.add('hidden');
-            lbModal.classList.add('hidden');
-            startModal.classList.remove('hidden');
-            gridEl.innerHTML = '';
-            uiTimer.innerText = `${TOTAL_TIME.toFixed(1)}s`;
-            uiTimer.classList.remove('warning');
-        }
-
-        function startGame() {
-            startModal.classList.add('hidden');
-            generateSolvablePuzzle();
-            renderGrid();
-
-            isPlaying = true;
-            startTime = Date.now();
-            uiTimer.classList.remove('warning');
-
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(updateTimer, 50); // High frequency for smooth decimal update
-        }
-
-        // --- CORE LOGIC: Reverse-Drop Generation ---
-        function generateSolvablePuzzle() {
-            // Initialize empty grid
-            grid = Array(ROWS).fill().map(() => Array(COLS).fill(null));
-            const totalCells = COLS * ROWS;
-            const targetArrows = Math.floor(totalCells * DENSITY);
-            activeArrows = 0;
-
-            let attempts = 0;
-            const maxAttempts = targetArrows * 20;
-
-            while (activeArrows < targetArrows && attempts < maxAttempts) {
-                attempts++;
-
-                // Pick random empty cell
-                let x = Math.floor(Math.random() * COLS);
-                let y = Math.floor(Math.random() * ROWS);
-                if (grid[y][x] !== null) continue;
-
-                // Check which directions have a clear path to the edge
-                let validDirs = [];
-                if (isPathClear(x, y, 0, -1)) validDirs.push('U');
-                if (isPathClear(x, y, 0, 1)) validDirs.push('D');
-                if (isPathClear(x, y, -1, 0)) validDirs.push('L');
-                if (isPathClear(x, y, 1, 0)) validDirs.push('R');
-
-                if (validDirs.length > 0) {
-                    let isBorder = (x === 0 || x === COLS - 1 || y === 0 || y === ROWS - 1);
-                    let outsideDirs = [];
-                    let insideDirs = [];
-
-                    // Separate directions pointing out of the board from those pointing inwards/along
-                    validDirs.forEach(d => {
-                        if (x === 0 && d === 'L') outsideDirs.push(d);
-                        else if (x === COLS - 1 && d === 'R') outsideDirs.push(d);
-                        else if (y === 0 && d === 'U') outsideDirs.push(d);
-                        else if (y === ROWS - 1 && d === 'D') outsideDirs.push(d);
-                        else insideDirs.push(d);
-                    });
-
-                    let chosenDir;
-                    // 80% chance to force border arrows to point inwards/along the edge if possible
-                    if (isBorder && insideDirs.length > 0 && Math.random() < 0.8) {
-                        chosenDir = insideDirs[Math.floor(Math.random() * insideDirs.length)];
-                    } else {
-                        chosenDir = validDirs[Math.floor(Math.random() * validDirs.length)];
-                    }
-
-                    // Assign direction and random visual shape
-                    grid[y][x] = {
-                        dir: chosenDir,
-                        shape: shapes[Math.floor(Math.random() * shapes.length)]
-                    };
-                    activeArrows++;
-                }
-            }
-        }
-
-        function isPathClear(x, y, dx, dy) {
-            let cx = x + dx;
-            let cy = y + dy;
-            while (cy >= 0 && cy < ROWS && cx >= 0 && cx < COLS) {
-                if (grid[cy][cx] !== null) return false;
-                cx += dx;
-                cy += dy;
-            }
-            return true;
-        }
-
-        // --- RENDER LOGIC ---
-        function renderGrid() {
-            gridEl.innerHTML = '';
-            gridEl.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
-            gridEl.style.gridTemplateRows = `repeat(${ROWS}, 1fr)`;
-
-            // Calculate responsive cell size
-            const gameArea = document.getElementById('game-area');
-            const padding = 20;
-            const maxWidth = gameArea.clientWidth - padding;
-            const maxHeight = gameArea.clientHeight - padding;
-
-            const cellSize = Math.floor(Math.min(maxWidth / COLS, maxHeight / ROWS));
-
-            gridEl.style.width = `${cellSize * COLS}px`;
-            gridEl.style.height = `${cellSize * ROWS}px`;
-
-            for (let y = 0; y < ROWS; y++) {
-                for (let x = 0; x < COLS; x++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-
-                    if (grid[y][x]) {
-                        const cellData = grid[y][x];
-                        const arrow = document.createElement('div');
-                        arrow.className = `arrow-container dir-${cellData.dir}`;
-                        arrow.innerHTML = svgTemplates[cellData.shape];
-
-                        // Use pointerdown for instant mobile touch response without delay
-                        arrow.onpointerdown = (e) => {
-                            e.preventDefault();
-                            handleTap(x, y, arrow);
-                        };
-
-                        cell.appendChild(arrow);
-                    }
-                    gridEl.appendChild(cell);
-                }
-            }
-        }
-
-        // --- GAMEPLAY INTERACTION ---
-        function handleTap(x, y, element) {
-            if (!isPlaying) return;
-            const cellData = grid[y][x];
-            if (!cellData) return;
-            const dir = cellData.dir;
-
-            let dx = 0, dy = 0;
-            if (dir === 'U') dy = -1;
-            if (dir === 'D') dy = 1;
-            if (dir === 'L') dx = -1;
-            if (dir === 'R') dx = 1;
-
-            if (isPathClear(x, y, dx, dy)) {
-                // Success - Remove from logical grid
-                grid[y][x] = null;
-                activeArrows--;
-
-                // Animate visually
-                animateFlyOut(element, dir);
-
-                // Check Win
-                if (activeArrows === 0) {
-                    handleWin();
-                }
-            } else {
-                // Blocked - Vibrate
-                element.classList.remove('shake');
-                void element.offsetWidth; // trigger reflow to restart animation
-                element.classList.add('shake');
-            }
-        }
-
-        function animateFlyOut(element, dir) {
-            // Get exact current position relative to viewport
-            const rect = element.getBoundingClientRect();
-
-            // Clone it to detach from CSS grid formatting
-            const clone = element.cloneNode(true);
-            clone.className = `arrow-container dir-${dir} flying`;
-            clone.style.left = `${rect.left}px`;
-            clone.style.top = `${rect.top}px`;
-            clone.style.width = `${rect.width}px`;
-            clone.style.height = `${rect.height}px`;
-
-            // Snap the arrow straight before flying out
-            clone.innerHTML = svgTemplates.straight;
-
-            document.body.appendChild(clone);
-            element.remove(); // Remove original from grid
-
-            // Force reflow and set end transform for CSS transition
-            requestAnimationFrame(() => {
-                const distance = Math.max(window.innerWidth, window.innerHeight);
-                if (dir === 'U') clone.style.top = `${rect.top - distance}px`;
-                if (dir === 'D') clone.style.top = `${rect.top + distance}px`;
-                if (dir === 'L') clone.style.left = `${rect.left - distance}px`;
-                if (dir === 'R') clone.style.left = `${rect.left + distance}px`;
-            });
-
-            // Cleanup DOM after transition
-            setTimeout(() => {
-                if (clone.parentNode) clone.remove();
-            }, 500);
-        }
-
-        // --- TIMER & END GAME ---
-        function updateTimer() {
-            if (!isPlaying) return;
-
-            const elapsed = (Date.now() - startTime) / 1000;
-            const timeLeft = Math.max(0, TOTAL_TIME - elapsed);
-
-            uiTimer.innerText = `${timeLeft.toFixed(1)}s`;
-
-            if (timeLeft <= 10 && !uiTimer.classList.contains('warning')) {
-                uiTimer.classList.add('warning');
-            }
-
-            if (timeLeft === 0) {
-                handleLose();
-            }
-        }
-
-        function handleWin() {
-            isPlaying = false;
-            clearInterval(timerInterval);
-            currentRunTime = ((Date.now() - startTime) / 1000).toFixed(1);
-            winTimeSpan.innerText = currentRunTime;
-            playerNameInput.value = '';
-            setTimeout(() => { winModal.classList.remove('hidden'); }, 300); // slight delay to enjoy the empty board
-        }
-
-        function handleLose() {
-            isPlaying = false;
-            clearInterval(timerInterval);
-            uiTimer.innerText = "0.0s";
-            loseModal.classList.remove('hidden');
-        }
-
-        // --- LEADERBOARD LOGIC ---
-        function getLeaderboard() {
-            const stored = localStorage.getItem('arrowEscapeLB');
-            if (stored) {
-                return JSON.parse(stored);
-            }
-            // First time playing, save default
-            localStorage.setItem('arrowEscapeLB', JSON.stringify(defaultLeaderboard));
-            return [...defaultLeaderboard];
-        }
-
-        function submitScore() {
-            let name = playerNameInput.value.trim();
-            if (!name) name = "Anonymous";
-
-            let lb = getLeaderboard();
-            const newEntry = { name: name, time: parseFloat(currentRunTime), isPlayer: true };
-            lb.push(newEntry);
-
-            // Sort ascending (lowest time is best)
-            lb.sort((a, b) => a.time - b.time);
-
-            // Keep top 10
-            lb = lb.slice(0, 10);
-
-            // Remove 'isPlayer' flag before saving so it only highlights on this session
-            const toSave = lb.map(entry => ({ name: entry.name, time: entry.time }));
-            localStorage.setItem('arrowEscapeLB', JSON.stringify(toSave));
-
-            winModal.classList.add('hidden');
-            renderLeaderboard(lb); // pass lb with isPlayer flag for highlighting
-            lbModal.classList.remove('hidden');
-        }
-
-        function showLeaderboardModal() {
-            startModal.classList.add('hidden');
-            renderLeaderboard(getLeaderboard());
-            lbModal.classList.remove('hidden');
-        }
-
-        function renderLeaderboard(data) {
-            lbBody.innerHTML = '';
-            data.forEach((entry, index) => {
-                const tr = document.createElement('tr');
-                if (entry.isPlayer) tr.classList.add('highlight');
-
-                tr.innerHTML = `
-                    <td>#${index + 1}</td>
-                    <td>${escapeHTML(entry.name)}</td>
-                    <td class="time-col">${entry.time.toFixed(1)}</td>
-                `;
-                lbBody.appendChild(tr);
-            });
-        }
-
-        // Security utility
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g,
-                tag => ({
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    "'": '&#39;',
-                    '"': '&quot;'
-                }[tag] || tag)
-            );
-        }
-
-        // Handle window resize dynamically to adjust grid
-        window.addEventListener('resize', () => {
-            if (isPlaying || gridEl.innerHTML !== '') {
-                renderGrid(); // Re-render visually, state remains intact
-            }
-        });
-
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
