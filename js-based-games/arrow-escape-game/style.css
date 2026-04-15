@@ -652,3 +652,88 @@ tr.highlight {
     color: var(--accent);
     font-weight: bold;
 }
+
+/* ─── COUNTDOWN OVERLAY ─────────────────────────────────────────── */
+#countdown-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    overflow: hidden;
+}
+
+#countdown-bus {
+    position: absolute;
+    width: 130px;
+    height: auto;
+    top: 55%;
+    left: -20%;
+    /* flip so bus faces the direction it travels (right) */
+    transform: translateY(-50%) scaleX(-1);
+    filter: drop-shadow(0 6px 24px rgba(56, 189, 248, 0.65));
+}
+
+#countdown-bus.driving {
+    animation: busDrive 3.2s linear forwards;
+}
+
+@keyframes busDrive {
+    0%   { left: -20%; }
+    100% { left: 115%; }
+}
+
+#countdown-number {
+    font-size: clamp(90px, 20vw, 240px);
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow:
+        0 0 40px rgba(56, 189, 248, 0.9),
+        0 0 90px rgba(56, 189, 248, 0.35);
+    letter-spacing: -4px;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.count-pop {
+    animation: countPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes countPop {
+    0%   { transform: scale(2.2); opacity: 0; }
+    100% { transform: scale(1);   opacity: 1; }
+}
+
+#countdown-number.go-text {
+    color: #4ade80;
+    font-size: clamp(55px, 13vw, 160px);
+    letter-spacing: 0;
+    text-shadow:
+        0 0 40px rgba(74, 222, 128, 0.85),
+        0 0 80px rgba(74, 222, 128, 0.3);
+}
+
+/* ─── TIMER ENTRANCE (big → settles) ────────────────────────────── */
+.timer-enter {
+    animation: timerEnter 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes timerEnter {
+    0%   { transform: scale(5);    opacity: 0; }
+    55%  { transform: scale(1.18); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* ─── TIMER CRITICAL POP (last 5 s) ─────────────────────────────── */
+.timer-critical-pop {
+    animation: timerCritical 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes timerCritical {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(2.1); }
+    100% { transform: scale(1); }
+}

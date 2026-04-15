@@ -306,6 +306,7 @@ let currentLevel = null;   // reference into LEVELS[]
 let currentStage = 0;      // 0-based, 0..STAGES_PER_LEVEL-1
 let clearedCount = 0;
 let totalBusesForStage = 0;
+let criticalPopShown = false;
 
 // ─── DEFAULT LEADERBOARD DATA ─────────────────────────────────────────────────
 const DEFAULT_LEADERBOARD = [
@@ -378,6 +379,37 @@ function escapeHTML(str) {
         tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
 }
 
+// ─── COUNTDOWN ───────────────────────────────────────────────────────────────
+function showCountdown(callback) {
+    const overlay = document.getElementById('countdown-overlay');
+    const busEl = document.getElementById('countdown-bus');
+    const numEl = document.getElementById('countdown-number');
+
+    overlay.classList.remove('hidden');
+
+    // Reset bus to start position before animating
+    busEl.classList.remove('driving');
+    void busEl.offsetWidth;
+    busEl.classList.add('driving');
+
+    function flash(text, isGo) {
+        numEl.classList.remove('count-pop', 'go-text');
+        void numEl.offsetWidth;
+        numEl.textContent = text;
+        if (isGo) numEl.classList.add('go-text');
+        numEl.classList.add('count-pop');
+    }
+
+    flash('3', false);
+    setTimeout(() => flash('2', false), 1000);
+    setTimeout(() => flash('1', false), 2000);
+    setTimeout(() => flash('GO!', true), 3000);
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+        callback();
+    }, 3350);
+}
+
 // ─── LEVEL SELECT ─────────────────────────────────────────────────────────────
 function buildLevelCards() {
     const container = document.getElementById('level-cards');
@@ -414,10 +446,11 @@ function startGame(levelIndex) {
     currentLevel = LEVELS[levelIndex];
     currentStage = 0;
     hideAllModals();
-    startStage();
+    showCountdown(() => startStage());
 }
 
 function startStage() {
+    criticalPopShown = false;
     totalBusesForStage = currentLevel.buses + currentStage * STAGE_BUS_INCREMENT;
     clearedCount = 0;
     activeBuses = totalBusesForStage;
@@ -426,7 +459,12 @@ function startStage() {
     setHeaderInfo(currentLevel.name, currentStage);
     isPlaying = true;
     startTime = Date.now();
-    document.getElementById('timer').classList.remove('warning');
+    // Timer entrance: appears big then quickly settles to normal size
+    const timerEl = document.getElementById('timer');
+    timerEl.classList.remove('warning', 'timer-enter', 'timer-critical-pop');
+    void timerEl.offsetWidth;
+    timerEl.classList.add('timer-enter');
+    setTimeout(() => timerEl.classList.remove('timer-enter'), 700);
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(updateTimer, 50);
 }
@@ -588,8 +626,16 @@ function updateTimer() {
     const timeLeft = Math.max(0, currentLevel.time - elapsed);
     const timerEl = document.getElementById('timer');
     timerEl.innerText = `${timeLeft.toFixed(1)}s`;
-    if (timeLeft <= 10 && !timerEl.classList.contains('warning'))
+    if (timeLeft <= 5 && !timerEl.classList.contains('warning')) {
         timerEl.classList.add('warning');
+        if (!criticalPopShown) {
+            criticalPopShown = true;
+            timerEl.classList.remove('timer-critical-pop');
+            void timerEl.offsetWidth;
+            timerEl.classList.add('timer-critical-pop');
+            setTimeout(() => timerEl.classList.remove('timer-critical-pop'), 600);
+        }
+    }
     if (timeLeft <= 0) handleLose();
 }
 
