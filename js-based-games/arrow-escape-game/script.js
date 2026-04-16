@@ -381,27 +381,83 @@ function escapeHTML(str) {
 
 // ─── COUNTDOWN ───────────────────────────────────────────────────────────────
 function showCountdown(callback) {
-    const overlay = document.getElementById('countdown-overlay');
-    const numEl = document.getElementById('countdown-number');
+    const overlay   = document.getElementById('countdown-overlay');
+    const intro     = document.getElementById('countdown-intro');
+    const busWrap   = document.getElementById('countdown-bus-wrap');
+    const busCanvas = document.getElementById('countdown-bus-canvas');
+    const startLbl  = document.getElementById('countdown-start-label');
+    const numEl     = document.getElementById('countdown-number');
 
+    // Size canvas responsively
+    const size = Math.min(window.innerWidth * 0.46, 210);
+    const dpr  = window.devicePixelRatio || 1;
+    busCanvas.width  = size * dpr;
+    busCanvas.height = size * dpr;
+    busCanvas.style.width  = `${size}px`;
+    busCanvas.style.height = `${size}px`;
+    // Flip so bus faces right (towards where it will fly)
+    busCanvas.style.transform = 'scaleX(-1)';
+
+    // Draw a random-themed bus
+    const bus = new CartoonBus(busCanvas, Math.floor(Math.random() * busThemes.length));
+    bus.draw();
+
+    // Reset classes
+    busWrap.classList.remove('countdown-bus-tap', 'countdown-bus-fly');
+    startLbl.classList.remove('label-fade-out');
+    intro.classList.remove('hidden');
+    numEl.classList.add('hidden');
+    numEl.textContent = '';
     overlay.classList.remove('hidden');
 
-    function flash(text, isGo) {
-        numEl.classList.remove('count-pop', 'go-text');
-        void numEl.offsetWidth;
-        numEl.textContent = text;
-        if (isGo) numEl.classList.add('go-text');
-        numEl.classList.add('count-pop');
-    }
+    // Tap handler
+    busWrap.onpointerdown = () => {
+        busWrap.onpointerdown = null; // prevent double-fire
 
-    flash('3', false);
-    setTimeout(() => flash('2', false), 1000);
-    setTimeout(() => flash('1', false), 2000);
-    setTimeout(() => flash('GO!', true), 3000);
-    setTimeout(() => {
-        overlay.classList.add('hidden');
-        callback();
-    }, 3350);
+        // Step 1: enlarge pop on tap
+        busWrap.classList.add('countdown-bus-tap');
+
+        // Step 2: start engine at half speed (slower than in-game)
+        setTimeout(() => {
+            bus.isEngineOn = true;
+            bus.speed = 0.6;
+            bus.loop();
+        }, 40);
+
+        // Step 3: fly off right + fade label
+        setTimeout(() => {
+            busWrap.classList.remove('countdown-bus-tap');
+            busWrap.classList.add('countdown-bus-fly');
+            startLbl.classList.add('label-fade-out');
+        }, 360);
+
+        // Step 4: switch to countdown numbers
+        setTimeout(() => {
+            bus.stopEngine();
+            intro.classList.add('hidden');
+            numEl.classList.remove('hidden');
+            startNumbers();
+        }, 1150);
+    };
+
+    function startNumbers() {
+        function flash(text, isGo) {
+            numEl.classList.remove('count-pop', 'go-text');
+            void numEl.offsetWidth;
+            numEl.textContent = text;
+            if (isGo) numEl.classList.add('go-text');
+            numEl.classList.add('count-pop');
+        }
+        flash('3', false);
+        setTimeout(() => flash('2', false), 1000);
+        setTimeout(() => flash('1', false), 2000);
+        setTimeout(() => flash('GO!', true), 3000);
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            numEl.classList.add('hidden');
+            callback();
+        }, 3350);
+    }
 }
 
 // ─── LEVEL SELECT ─────────────────────────────────────────────────────────────
