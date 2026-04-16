@@ -577,7 +577,7 @@ function renderGrid() {
     gridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
     const gameArea = document.getElementById('game-area');
-    const padding = 16;
+    const padding = 104; // matches 52px CSS padding on each side
     const maxWidth = gameArea.clientWidth - padding;
     const maxHeight = gameArea.clientHeight - padding;
     const cellSize = Math.floor(Math.min(maxWidth / cols, maxHeight / rows));
