@@ -417,19 +417,19 @@ function showCountdown(callback) {
         // Step 1: enlarge pop on tap
         busWrap.classList.add('countdown-bus-tap');
 
-        // Step 2: start engine at half speed (slower than in-game)
+        // Step 2: engine starts after pop settles — visible rev-up before moving
         setTimeout(() => {
             bus.isEngineOn = true;
-            bus.speed = 0.6;
+            bus.speed = 0.35;
             bus.loop();
-        }, 40);
+        }, 350);
 
-        // Step 3: fly off right + fade label
+        // Step 3: fly off right + fade label (after engine has been visibly running)
         setTimeout(() => {
             busWrap.classList.remove('countdown-bus-tap');
             busWrap.classList.add('countdown-bus-fly');
             startLbl.classList.add('label-fade-out');
-        }, 360);
+        }, 950);
 
         // Step 4: switch to countdown numbers
         setTimeout(() => {
@@ -437,7 +437,7 @@ function showCountdown(callback) {
             intro.classList.add('hidden');
             numEl.classList.remove('hidden');
             startNumbers();
-        }, 1150);
+        }, 1750);
     };
 
     function startNumbers() {
