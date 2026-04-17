@@ -20,10 +20,10 @@ const incorrectAudio = document.getElementById('incorrect-audio');
 // ─────────────────────────────────────────────────────────────────────────────
 
 const LEVELS = [
-    { id: 'easy',   name: 'Easy',   time: 60, cols: 15, rows: 15, buses: 100  },
-    { id: 'medium', name: 'Medium', time: 60, cols: 15, rows: 15, buses: 120 },
-    { id: 'hard',   name: 'Hard',   time: 60, cols: 15, rows: 15, buses: 150 },
-    { id: 'pro',    name: 'Pro',    time: 60, cols: 15, rows: 15, buses: 200 },
+    { id: 'easy',   name: 'Easy',   time: 60, cols: 12, rows: 20, buses: 100  },
+    { id: 'medium', name: 'Medium', time: 60, cols: 12, rows: 20, buses: 120 },
+    { id: 'hard',   name: 'Hard',   time: 60, cols: 12, rows: 20, buses: 150 },
+    { id: 'pro',    name: 'Pro',    time: 60, cols: 12, rows: 20, buses: 200 },
 ];
 
 // --- SHAPE LIBRARY ---

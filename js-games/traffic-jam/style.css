@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+/* Shared design tokens, fonts, buttons, modals, leaderboard */
+@import url('../shared.css');
 
 :root {
     --bg-color: #000000;
@@ -472,7 +473,6 @@ input[type="text"]:focus {
     border-radius: 20px;
     padding: 1.5px;
     background: linear-gradient(135deg, rgba(56,189,248,0.5), rgba(56,189,248,0.1) 50%, rgba(56,189,248,0.4));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;

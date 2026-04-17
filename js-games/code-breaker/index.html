@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coder Breaker</title>
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Sound toggle -->
+    <div id="sound-toggle" class="sound-toggle" onclick="toggleSound()">🔊</div>
+
+    <!-- ── HEADER ──────────────────────────────────────────────── -->
+    <div id="header">
+        <span id="header-level-name" class="hidden"></span>
+        <span id="header-sep"  class="hdot hidden"> &middot; </span>
+        <span id="header-word-label" class="hidden"></span>
+        <span id="header-sep2" class="hdot hidden"> &middot; &#9201;&nbsp;</span>
+        <span id="header-timer">--</span>
+    </div>
+
+    <!-- ── WORD TIMER BAR (full-width, just below header) ───── -->
+    <div id="word-timer-wrap" class="hidden">
+        <div id="word-timer-bar"></div>
+    </div>
+
+    <!-- ── START MODAL ────────────────────────────────────────── -->
+    <div id="start-modal" class="modal-overlay">
+        <div id="start-logo">🔐</div>
+        <h1>Coder Breaker</h1>
+        <p>Decode each word using the animal cipher.<br>Tap a symbol, then tap its slot. Guess early for max points!</p>
+        <div id="level-cards"></div>
+        <button class="leaderboard-btn" onclick="showLeaderboardModal()">LEADERBOARD</button>
+    </div>
+
+    <!-- ── GAME AREA ──────────────────────────────────────────── -->
+    <div id="game-area" class="hidden">
+
+        <!-- Reference panel: always visible -->
+        <div id="ref-panel">
+            <div id="ref-panel-title">CIPHER KEY</div>
+            <div id="ref-grid"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <!-- Letter slots (always 12 boxes) -->
+        <div id="slots-section">
+            <div id="slots-row"></div>
+        </div>
+
+        <!-- Hint text -->
+        <div id="hint-text" class="hidden"></div>
+        
+        <br>
+        <br>
+        <br>
+
+        <!-- Multiple-choice buttons -->
+        <div id="mc-section">
+            <div id="mc-grid"></div>
+        </div>
+
+        <!-- Score display -->
+        <div id="score-display">
+            <span id="score-label">SCORE</span>
+            <span id="score-value">0</span>
+        </div>
+
+    </div>
+
+    <!-- ── RESULT MODAL ───────────────────────────────────────── -->
+    <div id="result-modal" class="modal-overlay hidden">
+        <div id="result-card">
+            <div id="result-card-header">
+                <span id="result-card-game">🔐 Coder Breaker</span>
+                <span id="result-card-level"></span>
+            </div>
+            <div id="result-title-wrap">
+                <span id="result-icon"></span>
+                <h1 id="result-title"></h1>
+            </div>
+            <div class="result-stats">
+                <div class="stat-col">
+                    <span class="stat-value" id="stat-solved">0</span>
+                    <span class="stat-label">Words Solved</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-col">
+                    <div class="pct-ring-wrap">
+                        <svg class="pct-ring" viewBox="0 0 84 84">
+                            <circle class="pct-bg" cx="42" cy="42" r="31.5"/>
+                            <circle id="pct-arc"  class="pct-arc" cx="42" cy="42" r="31.5"/>
+                        </svg>
+                        <span id="stat-pct" class="pct-label">0%</span>
+                    </div>
+                    <span class="stat-label">Efficiency</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-col">
+                    <span class="stat-value" id="stat-score">0</span>
+                    <span class="stat-label">Total Score</span>
+                </div>
+            </div>
+            <div id="result-time-row">
+                <span id="result-time-icon">⏱</span>
+                <span id="result-time-label">Total time</span>
+                <span id="result-time-value">--</span>
+            </div>
+        </div>
+
+        <div id="result-name-row" class="hidden">
+            <input type="text" id="player-name" placeholder="Enter your name" maxlength="15" autocomplete="off">
+        </div>
+        <div id="result-buttons"></div>
+    </div>
+
+    <!-- ── LEADERBOARD MODAL ──────────────────────────────────── -->
+    <div id="leaderboard-modal" class="modal-overlay hidden">
+        <h1>Top Decoders &mdash; <span id="lb-level-name" style="color:var(--accent)"></span></h1>
+        <div class="leaderboard-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th style="text-align:right;">Score</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+            </table>
+        </div>
+        <div id="lb-tabs"></div>
+        <button onclick="resetToStart()">MAIN MENU</button>
+    </div>
+
+    <!-- ── RULES OVERLAY ─────────────────────────────────────────── -->
+    <div id="rules-overlay" class="hidden">
+        <div id="rules-card">
+            <div id="rules-icon">🔐</div>
+            <div id="rules-level-name"></div>
+            <h2>How to Play</h2>
+            <ul id="rules-list">
+                <li>A secret cipher maps each <b>animal symbol</b> to a letter — shown in the <b>CIPHER KEY</b>.</li>
+                <li>Each round presents a coded word as animal symbols in letter slots.</li>
+                <li>Tap an animal in the cipher key to <b>select</b> it, then tap an empty slot to <b>place</b> the letter.</li>
+                <li>Use the <b>4 multiple-choice options</b> to guess the entire word at once.</li>
+                <li>Guess early before the timer runs out for <b>maximum points!</b></li>
+                <li>Wrong multiple-choice guess: <b style="color:#ef4444">−20 points</b> and word advances.</li>
+                <li>Decode <b>5 words</b> per sprint. Best score wins!</li>
+            </ul>
+            <button id="rules-start-btn">START</button>
+            <button id="rules-back-btn">← Back</button>
+        </div>
+    </div>
+
+    <!-- ── COUNTDOWN OVERLAY ─────────────────────────────────────── -->
+    <div id="countdown-overlay" class="hidden">
+        <div id="countdown-number"></div>
+    </div>
+
+    <!-- Audio -->
+    <audio id="correct-audio"   src="../traffic-jam/correct.mp3"   preload="auto"></audio>
+    <audio id="incorrect-audio" src="../traffic-jam/incorrect.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
