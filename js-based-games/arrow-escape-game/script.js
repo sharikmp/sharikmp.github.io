@@ -9,11 +9,21 @@ let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
 const beepBeepAudio = document.getElementById('beep-beep-audio');
 const incorrectAudio = document.getElementById('incorrect-audio');
 
+// ── GAME RULES ───────────────────────────────────────────────────────────────
+// 1. The grid is filled with buses. Each bus faces one direction: U / D / L / R.
+// 2. A bus can escape when every active cell along its path to the grid edge is empty.
+// 3. The player taps an escapable bus to clear it from the grid.
+// 4. EXACTLY 1 bus is escapable at any point in time (guaranteed by pre-computation).
+// 5. Win by clearing all buses before the timer reaches zero.
+// 6. Difficulty scales via: more buses on screen, denser grid shapes, and less time.
+// 7. A 2-second idle hint glows the one escapable bus when the player is inactive.
+// ─────────────────────────────────────────────────────────────────────────────
+
 const LEVELS = [
-    { id: 'easy',   name: 'Easy',   time: 30, cols: 10, rows: 10, buses: 50,  chainDensity: 0.15, maxChainDepth: 2, maxFree: 6 },
-    { id: 'medium', name: 'Medium', time: 45, cols: 13, rows: 13, buses: 100, chainDensity: 0.35, maxChainDepth: 3, maxFree: 4 },
-    { id: 'hard',   name: 'Hard',   time: 60, cols: 15, rows: 15, buses: 150, chainDensity: 0.55, maxChainDepth: 4, maxFree: 3 },
-    { id: 'pro',    name: 'Pro',    time: 60, cols: 17, rows: 17, buses: 200, chainDensity: 0.70, maxChainDepth: 5, maxFree: 2 },
+    { id: 'easy',   name: 'Easy',   time: 60, cols: 15, rows: 15, buses: 100  },
+    { id: 'medium', name: 'Medium', time: 60, cols: 15, rows: 15, buses: 120 },
+    { id: 'hard',   name: 'Hard',   time: 60, cols: 15, rows: 15, buses: 150 },
+    { id: 'pro',    name: 'Pro',    time: 60, cols: 15, rows: 15, buses: 200 },
 ];
 
 // --- SHAPE LIBRARY ---
@@ -573,7 +583,7 @@ let shapeGrid = [];          // boolean[][] — active cell mask for current sta
 let currentShapeName = '';  // name of the active shape (e.g. "A", "❤")
 
 // ─── HINT / NO-ESCAPE STATE ──────────────────────────────────────────────────
-const IDLE_HINT_DELAY = 5000;          // ms of inactivity before showing hint
+const IDLE_HINT_DELAY = 2000;          // ms of inactivity before showing hint
 let idleHintTimer    = null;           // setTimeout handle
 let hintedWrapper    = null;           // DOM wrapper currently glowing as hint
 let hintedBusObj     = null;           // CartoonBus of the hinted bus
@@ -773,23 +783,51 @@ function startGame(levelIndex) {
 }
 
 // ─── SHAPE SELECTION ──────────────────────────────────────────────────────────
-function selectShapeForStage(cols, rows) {
-    // For Easy (10×10), only use shapes that produce enough active cells to be fun.
-    // For all other levels the full library is available.
-    const MIN_ACTIVE_EASY = 25;
-    const isEasy = (cols <= 10 && rows <= 10);
 
-    let pool = SHAPE_LIBRARY;
-    if (isEasy) {
-        // Filter to shapes/digits/letters that produce ≥ MIN_ACTIVE_EASY cells at Easy scale
-        pool = SHAPE_LIBRARY.filter(s => {
-            const mask = s.buildMask(cols, rows);
-            return mask.flat().filter(Boolean).length >= MIN_ACTIVE_EASY;
-        });
-        // Fallback to full library if nothing passes (shouldn't happen)
-        if (pool.length === 0) pool = SHAPE_LIBRARY;
+// Returns a pool of shapes appropriate for the given mode at the given grid size.
+// Easy  → fewer active cells (below-median density) — simpler / less cluttered
+// Medium → mid-range density
+// Hard   → higher density shapes
+// Pro    → densest shapes only
+function getShapesForMode(modeId, cols, rows) {
+    // Pre-compute active cell counts for every shape at this grid size
+    const withCounts = SHAPE_LIBRARY.map(s => ({
+        shape: s,
+        cells: s.buildMask(cols, rows).flat().filter(Boolean).length,
+    }));
+    // Sort ascending by cell count
+    withCounts.sort((a, b) => a.cells - b.cells);
+    const total = withCounts.length;
+
+    let pool;
+    switch (modeId) {
+        case 'easy':
+            // Bottom third of density — shapes with fewer active cells
+            pool = withCounts.slice(0, Math.ceil(total * 0.35)).map(e => e.shape);
+            break;
+        case 'medium':
+            // Middle third
+            pool = withCounts.slice(Math.floor(total * 0.30), Math.ceil(total * 0.70)).map(e => e.shape);
+            break;
+        case 'hard':
+            // Upper half
+            pool = withCounts.slice(Math.floor(total * 0.50)).map(e => e.shape);
+            break;
+        case 'pro':
+            // Top quarter — densest shapes only
+            pool = withCounts.slice(Math.floor(total * 0.75)).map(e => e.shape);
+            break;
+        default:
+            pool = SHAPE_LIBRARY;
     }
 
+    // Fallback: ensure pool is never empty
+    return pool.length > 0 ? pool : SHAPE_LIBRARY;
+}
+
+function selectShapeForStage(cols, rows) {
+    const modeId = currentLevel ? currentLevel.id : 'easy';
+    const pool = getShapesForMode(modeId, cols, rows);
     const shape = pool[Math.floor(Math.random() * pool.length)];
     shapeGrid = shape.buildMask(cols, rows);
     currentShapeName = shape.name;
@@ -815,7 +853,6 @@ function startStage() {
     generateSolvablePuzzle(currentLevel.cols, currentLevel.rows, effectiveBuses);
     // totalBusesForStage & activeBuses may be higher now if chain pass added blockers
     renderGrid();
-    if (currentLevel.id === 'easy') refreshFreeIndicators();
     setHeaderInfo(currentLevel.name, currentStage);
     isPlaying = true;
     startTime = Date.now();
@@ -880,10 +917,139 @@ function generateSolvablePuzzle(cols, rows, targetBuses) {
         }
     }
 
-    // Apply chain pass to create dependency chains
-    applyChainPass(currentLevel.chainDensity, currentLevel.maxChainDepth);
-    // Enforce the maximum number of simultaneously free buses
-    reduceFreeBuses(currentLevel.maxFree);
+    // Pre-compute a valid solve sequence guaranteeing exactly 1 escapable bus at all times
+    precomputeValidGrid(cols, rows);
+}
+
+// ─── PRE-COMPUTATION ─────────────────────────────────────────────────────────
+// Simulates the entire game on a grid clone, enforcing EXACTLY 1 escapable bus
+// per step. All direction changes are tracked in dirAdjustments and written back
+// to the live grid at the end — including buses that escaped early in simulation
+// (fixes the bug where early-escapers kept their original free direction).
+function precomputeValidGrid(cols, rows) {
+    const DIRS = ['U', 'D', 'L', 'R'];
+    const MAX_ITERS = 800;
+
+    // Clone grid for simulation
+    const simGrid = grid.map(row =>
+        row.map(cell => cell ? { dir: cell.dir, themeIndex: cell.themeIndex, busInstance: null } : null)
+    );
+
+    // Every direction change is recorded here so early-escaped buses are also
+    // updated when results are written back to the live grid.
+    const dirAdjustments = new Map();
+
+    function setDir(x, y, dir) {
+        simGrid[y][x].dir = dir;
+        dirAdjustments.set(`${x},${y}`, dir);
+    }
+
+    function pathClear(x, y, dx, dy) {
+        let cx = x + dx, cy = y + dy;
+        while (cy >= 0 && cy < rows && cx >= 0 && cx < cols) {
+            if (!shapeGrid[cy][cx]) { cx += dx; cy += dy; continue; }
+            if (simGrid[cy][cx] !== null) return false;
+            cx += dx; cy += dy;
+        }
+        return true;
+    }
+
+    function getEscapable() {
+        const free = [];
+        for (let y = 0; y < rows; y++)
+            for (let x = 0; x < cols; x++) {
+                if (!simGrid[y][x]) continue;
+                const { dx, dy } = dirVec(simGrid[y][x].dir);
+                if (pathClear(x, y, dx, dy)) free.push({ x, y });
+            }
+        return free;
+    }
+
+    // Point bus at (bx, by) into an existing bus so it is no longer escapable.
+    // Includes deadlock guard to prevent A↔B cycles.
+    function rotateToBlocked(bx, by) {
+        for (const d of shuffle([...DIRS])) {
+            const { dx, dy } = dirVec(d);
+            if (pathClear(bx, by, dx, dy)) continue; // still free — skip
+            // Find the first bus blocking in direction d
+            let cx = bx + dx, cy = by + dy, fx = -1, fy = -1;
+            while (cx >= 0 && cy >= 0 && cx < cols && cy < rows) {
+                if (!shapeGrid[cy][cx]) { cx += dx; cy += dy; continue; }
+                if (simGrid[cy][cx]) { fx = cx; fy = cy; break; }
+                cx += dx; cy += dy;
+            }
+            if (fx === -1) continue; // no blocker bus — path hits edge
+            // Deadlock guard: skip if that bus points straight back at us
+            const { dx: odx, dy: ody } = dirVec(simGrid[fy][fx].dir);
+            let rx = fx + odx, ry = fy + ody, cycle = false;
+            while (rx >= 0 && ry >= 0 && rx < cols && ry < rows) {
+                if (!shapeGrid[ry][rx]) { rx += odx; ry += ody; continue; }
+                if (rx === bx && ry === by) { cycle = true; break; }
+                if (simGrid[ry][rx]) break;
+                rx += odx; ry += ody;
+            }
+            if (!cycle) { setDir(bx, by, d); return true; }
+        }
+        return false;
+    }
+
+    // Point bus at (bx, by) toward any clear escape path.
+    function rotateToFree(bx, by) {
+        for (const d of shuffle([...DIRS])) {
+            const { dx, dy } = dirVec(d);
+            if (pathClear(bx, by, dx, dy)) { setDir(bx, by, d); return true; }
+        }
+        return false;
+    }
+
+    // ── Main simulation loop ─────────────────────────────────────────────────
+    for (let iter = 0; iter < MAX_ITERS; iter++) {
+        let remaining = 0;
+        for (let y = 0; y < rows; y++)
+            for (let x = 0; x < cols; x++)
+                if (simGrid[y][x]) remaining++;
+        if (remaining === 0) break;
+
+        let escapable = getEscapable();
+
+        // Guarantee at least 1 escape: try outer (border) buses first, then any bus
+        if (escapable.length === 0) {
+            const candidates = [];
+            for (let y = 0; y < rows; y++)
+                for (let x = 0; x < cols; x++)
+                    if (simGrid[y][x])
+                        candidates.push({ x, y, outer: isOnShapeBorder(x, y, cols, rows) });
+            candidates.sort((a, b) => (b.outer ? 1 : 0) - (a.outer ? 1 : 0));
+            let unlocked = false;
+            for (const b of candidates) {
+                if (rotateToFree(b.x, b.y)) { unlocked = true; break; }
+            }
+            if (!unlocked) break; // truly stuck — stop gracefully
+            escapable = getEscapable();
+        }
+
+        // Cap to exactly 1: rotate all excess escapable buses to blocked directions
+        let capAttempts = 0;
+        while (escapable.length > 1 && capAttempts++ < 30) {
+            const toBlock = shuffle([...escapable]).slice(1); // keep index 0 free, block rest
+            for (const b of toBlock) rotateToBlocked(b.x, b.y);
+            escapable = getEscapable();
+        }
+
+        if (escapable.length === 0) continue; // safety — shouldn't happen
+
+        // Remove one bus from simulation (simulate the player escaping it)
+        const pick = escapable[0];
+        simGrid[pick.y][pick.x] = null;
+    }
+
+    // ── Write all recorded direction changes back to the live grid ───────────
+    // Using dirAdjustments (not simGrid) ensures buses that escaped mid-simulation
+    // also get their adjusted directions applied to the live grid.
+    for (const [key, dir] of dirAdjustments) {
+        const [x, y] = key.split(',').map(Number);
+        if (grid[y] && grid[y][x]) grid[y][x].dir = dir;
+    }
 }
 
 // Returns true if (x,y) is on the border of the active shape (has at least one inactive neighbour or grid edge)
@@ -917,7 +1083,7 @@ function isPathClear(x, y, dx, dy, cols, rows) {
     return true; // reached grid edge = open exit
 }
 
-// ─── CHAIN PASS ───────────────────────────────────────────────────────────────
+// ─── BUS UTILITIES ───────────────────────────────────────────────────────────
 function getAllFreeBuses() {
     const free = [];
     const cols = currentLevel.cols, rows = currentLevel.rows;
@@ -944,125 +1110,7 @@ function shuffle(arr) {
 function dirVec(dir) {
     return { dx: dir==='R'?1:dir==='L'?-1:0, dy: dir==='D'?1:dir==='U'?-1:0 };
 }
-function antiDir(dir) { return { U:'D', D:'U', L:'R', R:'L' }[dir]; }
 
-function tryPlaceBlocker(targetBus) {
-    const cols = currentLevel.cols, rows = currentLevel.rows;
-    const tDir = grid[targetBus.y][targetBus.x].dir;
-    const { dx, dy } = dirVec(tDir);
-
-    // Collect empty active cells along the target bus's escape path (skip inactive gaps)
-    const candidates = [];
-    let cx = targetBus.x + dx, cy = targetBus.y + dy;
-    while (cy >= 0 && cy < rows && cx >= 0 && cx < cols) {
-        if (!shapeGrid[cy][cx]) { cx += dx; cy += dy; continue; } // skip inactive gaps
-        if (grid[cy][cx] !== null) break; // stop at first bus
-        candidates.push({ x: cx, y: cy });
-        cx += dx; cy += dy;
-    }
-    shuffle(candidates);
-
-    const DIRS = ['U','D','L','R'];
-    const forbidden = antiDir(tDir); // blocker must NOT face toward the target (unnecessary constraint avoided)
-
-    for (const { x, y } of candidates) {
-        const validDirs = DIRS.filter(d => {
-            if (d === forbidden) return false;
-            const { dx: bdx, dy: bdy } = dirVec(d);
-            return isPathClear(x, y, bdx, bdy, cols, rows);
-        });
-        if (validDirs.length === 0) continue;
-
-        const chosenDir = validDirs[Math.floor(Math.random() * validDirs.length)];
-        grid[y][x] = {
-            dir: chosenDir,
-            themeIndex: Math.floor(Math.random() * busThemes.length),
-            busInstance: null
-        };
-        activeBuses++;
-        totalBusesForStage++;
-        return { x, y };
-    }
-    return null;
-}
-
-// Re-orients excess free buses to point into existing buses, keeping at most
-// targetFreeCount buses free simultaneously. Avoids A↔B deadlock cycles.
-function reduceFreeBuses(targetFreeCount) {
-    const cols = currentLevel.cols, rows = currentLevel.rows;
-    const DIRS = ['U', 'D', 'L', 'R'];
-
-    let freeBuses = getAllFreeBuses();
-    if (freeBuses.length <= targetFreeCount) return;
-
-    // Process outer (border) buses first — they are the most obviously tappable
-    freeBuses.sort((a, b) =>
-        (isOnShapeBorder(b.x, b.y, cols, rows) ? 1 : 0) -
-        (isOnShapeBorder(a.x, a.y, cols, rows) ? 1 : 0));
-
-    let toBlock = freeBuses.length - targetFreeCount;
-
-    for (const bus of freeBuses) {
-        if (toBlock <= 0) break;
-        const cell = grid[bus.y][bus.x];
-
-        // Find directions (other than the current clear one) that hit an existing bus
-        const blockedDirs = DIRS.filter(d => {
-            if (d === cell.dir) return false; // already the free direction — skip
-            const { dx, dy } = dirVec(d);
-            let cx = bus.x + dx, cy = bus.y + dy;
-            let firstBusX = -1, firstBusY = -1;
-            while (cx >= 0 && cy >= 0 && cx < cols && cy < rows) {
-                if (!shapeGrid[cy][cx]) { cx += dx; cy += dy; continue; }
-                if (grid[cy][cx] !== null) { firstBusX = cx; firstBusY = cy; break; }
-                cx += dx; cy += dy;
-            }
-            if (firstBusX === -1) return false; // no bus in this direction
-
-            // Guard: skip if the first bus in this direction points back at us (A↔B deadlock)
-            const other = grid[firstBusY][firstBusX];
-            const { dx: odx, dy: ody } = dirVec(other.dir);
-            let rx = firstBusX + odx, ry = firstBusY + ody;
-            while (rx >= 0 && ry >= 0 && rx < cols && ry < rows) {
-                if (!shapeGrid[ry][rx]) { rx += odx; ry += ody; continue; }
-                if (rx === bus.x && ry === bus.y) return false; // direct cycle
-                if (grid[ry][rx] !== null) break; // other bus hits something else first
-                rx += odx; ry += ody;
-            }
-            return true;
-        });
-
-        if (blockedDirs.length > 0) {
-            cell.dir = blockedDirs[Math.floor(Math.random() * blockedDirs.length)];
-            toBlock--;
-        }
-    }
-}
-
-function applyChainPass(density, maxDepth) {
-    let candidates = shuffle(getAllFreeBuses());
-    let lastPlaced = null;
-
-    for (let depth = 0; depth < maxDepth && candidates.length > 0; depth++) {
-        const nextWave = [];
-        for (const bus of candidates) {
-            if (Math.random() > density) continue;
-            const blocker = tryPlaceBlocker(bus);
-            if (blocker) {
-                nextWave.push(blocker);
-                lastPlaced = blocker;
-            }
-        }
-        candidates = nextWave;
-    }
-
-    // Safety: ensure at least 1 free bus exists after the chain pass
-    if (getAllFreeBuses().length === 0 && lastPlaced) {
-        grid[lastPlaced.y][lastPlaced.x] = null;
-        activeBuses--;
-        totalBusesForStage--;
-    }
-}
 
 
 // ─── RENDER ───────────────────────────────────────────────────────────────────
@@ -1302,7 +1350,6 @@ function rotateOuterBusesUntilFree(delay) {
         }, delay);
 
         function done() {
-            if (currentLevel.id === 'easy') refreshFreeIndicators();
             resolve();
         }
     });
@@ -1371,8 +1418,6 @@ function handleTap(x, y, wrapper, bus) {
         setTimeout(() => bus.startEngine(), 15);
         // Fly out after tap animation ends
         setTimeout(() => animateFlyOut(wrapper, dir, bus), 250);
-        // Update free-bus indicators on Easy only
-        if (currentLevel.id === 'easy') refreshFreeIndicators();
         if (activeBuses === 0) {
             handleStageWin();
         } else {
