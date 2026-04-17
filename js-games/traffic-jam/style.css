@@ -116,7 +116,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 52px;
+    padding: 52px 16px;
     overflow: hidden;
     position: relative;
 }

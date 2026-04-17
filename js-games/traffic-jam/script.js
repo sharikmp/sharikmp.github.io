@@ -581,6 +581,8 @@ let totalBusesForStage = 0;
 let criticalPopShown = false;
 let shapeGrid = [];          // boolean[][] — active cell mask for current stage
 let currentShapeName = '';  // name of the active shape (e.g. "A", "❤")
+let stageCols = 15;          // actual grid columns for current stage (≤15)
+let stageRows = 15;          // actual grid rows for current stage (≤15)
 
 // ─── HINT / NO-ESCAPE STATE ──────────────────────────────────────────────────
 const IDLE_HINT_DELAY = 2000;          // ms of inactivity before showing hint
@@ -784,6 +786,44 @@ function startGame(levelIndex) {
 
 // ─── SHAPE SELECTION ──────────────────────────────────────────────────────────
 
+// Determines the tightest cols×rows grid (max 15×15, min 8×8) that matches the
+// natural aspect ratio of a shape, so the shape fills its grid with minimal
+// empty border cells.
+function getOptimalGridSize(shape, MAX = 15, MIN = 8) {
+    // Build at MAX×MAX to measure the content bounding box
+    const fullMask = shape.buildMask(MAX, MAX);
+    let minR = MAX, maxR = -1, minC = MAX, maxC = -1;
+    for (let r = 0; r < MAX; r++) {
+        for (let c = 0; c < MAX; c++) {
+            if (fullMask[r][c]) {
+                if (r < minR) minR = r;
+                if (r > maxR) maxR = r;
+                if (c < minC) minC = c;
+                if (c > maxC) maxC = c;
+            }
+        }
+    }
+    if (maxR === -1) return { cols: MAX, rows: MAX }; // empty mask fallback
+
+    const contentCols = maxC - minC + 1;
+    const contentRows = maxR - minR + 1;
+
+    // Scale to fit within MAX×MAX preserving the content aspect ratio
+    let optCols, optRows;
+    if (contentCols >= contentRows) {
+        optCols = MAX;
+        optRows = Math.round(MAX * contentRows / contentCols);
+    } else {
+        optRows = MAX;
+        optCols = Math.round(MAX * contentCols / contentRows);
+    }
+
+    return {
+        cols: Math.max(MIN, Math.min(MAX, optCols)),
+        rows: Math.max(MIN, Math.min(MAX, optRows)),
+    };
+}
+
 // Returns a pool of shapes appropriate for the given mode at the given grid size.
 // Easy  → fewer active cells (below-median density) — simpler / less cluttered
 // Medium → mid-range density
@@ -825,11 +865,16 @@ function getShapesForMode(modeId, cols, rows) {
     return pool.length > 0 ? pool : SHAPE_LIBRARY;
 }
 
-function selectShapeForStage(cols, rows) {
+function selectShapeForStage() {
     const modeId = currentLevel ? currentLevel.id : 'easy';
-    const pool = getShapesForMode(modeId, cols, rows);
+    // Pick from mode-appropriate pool at max grid size
+    const pool = getShapesForMode(modeId, 15, 15);
     const shape = pool[Math.floor(Math.random() * pool.length)];
-    shapeGrid = shape.buildMask(cols, rows);
+    // Compute the optimal grid dimensions for this shape
+    const { cols, rows } = getOptimalGridSize(shape);
+    stageCols = cols;
+    stageRows = rows;
+    shapeGrid = shape.buildMask(stageCols, stageRows);
     currentShapeName = shape.name;
     return shapeGrid.flat().filter(Boolean).length; // return active cell count
 }
@@ -844,13 +889,13 @@ function startStage() {
     timerFrozen = false;
     // Compute initial bus target for this stage
     const baseBuses = currentLevel.buses + currentStage * STAGE_BUS_INCREMENT;
-    // Select a shape and cap buses to 82% of its active cell count
-    const activeCellCount = selectShapeForStage(currentLevel.cols, currentLevel.rows);
+    // Select a shape — this sets stageCols/stageRows to fit the shape
+    const activeCellCount = selectShapeForStage();
     const effectiveBuses = Math.min(baseBuses, Math.floor(activeCellCount * 0.82));
     totalBusesForStage = effectiveBuses;
     clearedCount = 0;
     activeBuses = effectiveBuses;
-    generateSolvablePuzzle(currentLevel.cols, currentLevel.rows, effectiveBuses);
+    generateSolvablePuzzle(stageCols, stageRows, effectiveBuses);
     // totalBusesForStage & activeBuses may be higher now if chain pass added blockers
     renderGrid();
     setHeaderInfo(currentLevel.name, currentStage);
@@ -1067,8 +1112,7 @@ function leadsToExit(x, y, dir) {
     const dx = dir === 'R' ? 1 : dir === 'L' ? -1 : 0;
     const dy = dir === 'D' ? 1 : dir === 'U' ? -1 : 0;
     const nx = x + dx, ny = y + dy;
-    const cols = currentLevel.cols, rows = currentLevel.rows;
-    if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) return true;
+    if (nx < 0 || ny < 0 || nx >= stageCols || ny >= stageRows) return true;
     return !shapeGrid[ny][nx];
 }
 
@@ -1086,14 +1130,13 @@ function isPathClear(x, y, dx, dy, cols, rows) {
 // ─── BUS UTILITIES ───────────────────────────────────────────────────────────
 function getAllFreeBuses() {
     const free = [];
-    const cols = currentLevel.cols, rows = currentLevel.rows;
-    for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < stageRows; y++) {
+        for (let x = 0; x < stageCols; x++) {
             if (!grid[y][x]) continue;
             const dir = grid[y][x].dir;
             const dx = dir === 'R' ? 1 : dir === 'L' ? -1 : 0;
             const dy = dir === 'D' ? 1 : dir === 'U' ? -1 : 0;
-            if (isPathClear(x, y, dx, dy, cols, rows)) free.push({ x, y });
+            if (isPathClear(x, y, dx, dy, stageCols, stageRows)) free.push({ x, y });
         }
     }
     return free;
@@ -1117,15 +1160,14 @@ function dirVec(dir) {
 function renderGrid() {
     if (!currentLevel || shapeGrid.length === 0) return;
     gridEl.innerHTML = '';
-    const cols = currentLevel.cols;
-    const rows = currentLevel.rows;
+    const cols = stageCols;
+    const rows = stageRows;
     gridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     gridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
     const gameArea = document.getElementById('game-area');
-    const padding = 104; // matches 52px CSS padding on each side
-    const maxWidth = gameArea.clientWidth - padding;
-    const maxHeight = gameArea.clientHeight - padding;
+    const maxWidth = gameArea.clientWidth - 32;   // 16px left + 16px right
+    const maxHeight = gameArea.clientHeight - 104; // 52px top + 52px bottom
     const cellSize = Math.floor(Math.min(maxWidth / cols, maxHeight / rows));
 
     gridEl.style.width = `${cellSize * cols}px`;
@@ -1172,7 +1214,7 @@ function renderGrid() {
 
 // Highlight free buses (Easy mode only)
 function refreshFreeIndicators() {
-    const cols = currentLevel.cols, rows = currentLevel.rows;
+    const cols = stageCols, rows = stageRows;
     const wrappers = gridEl.querySelectorAll('.bus-wrapper');
     wrappers.forEach(wrapper => {
         const x = parseInt(wrapper.dataset.x, 10);
@@ -1300,7 +1342,7 @@ function unfreezeTimer() {
 // Returns a promise that resolves when all animations complete.
 function rotateOuterBusesUntilFree(delay) {
     return new Promise(resolve => {
-        const cols = currentLevel.cols, rows = currentLevel.rows;
+        const cols = stageCols, rows = stageRows;
 
         // Collect outer buses (shape-border)
         const outerBuses = [];
@@ -1403,7 +1445,7 @@ function handleTap(x, y, wrapper, bus) {
     if (dir === 'L') dx = -1;
     if (dir === 'R') dx = 1;
 
-    if (isPathClear(x, y, dx, dy, currentLevel.cols, currentLevel.rows)) {
+    if (isPathClear(x, y, dx, dy, stageCols, stageRows)) {
         // If this was the hinted bus, clear the hint before flying it out
         if (hintedWrapper === wrapper) clearHint();
         else clearHint();
