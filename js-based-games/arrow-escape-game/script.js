@@ -710,8 +710,38 @@ function showResultModal(isWin, isLastStage) {
     const total = totalBusesForStage;
     const pct = total > 0 ? Math.round((cleared / total) * 100) : 0;
 
-    document.getElementById('result-title').innerText = isWin ? 'Stage Clear!' : "Time's Up!";
-    document.getElementById('result-title').style.color = isWin ? 'var(--accent)' : 'var(--error-color)';
+    // Title & icon
+    const titleEl = document.getElementById('result-title');
+    const iconEl  = document.getElementById('result-icon');
+    titleEl.innerText = isWin ? 'Stage Clear!' : "Time's Up!";
+    titleEl.style.color = isWin ? 'var(--accent)' : 'var(--error-color)';
+    iconEl.innerText = isWin ? '🏆' : '💥';
+
+    // Card win/lose class
+    const cardEl = document.getElementById('result-card');
+    cardEl.classList.toggle('result-lose', !isWin);
+
+    // Level label on card
+    const levelLabelEl = document.getElementById('result-card-level');
+    if (currentLevel) {
+        levelLabelEl.innerText = `${currentLevel.name} · Stage ${currentStage + 1}/${STAGES_PER_LEVEL}`;
+    }
+
+    // Time row
+    const timeRowEl   = document.getElementById('result-time-row');
+    const timeLabelEl = document.getElementById('result-time-label');
+    const timeValueEl = document.getElementById('result-time-value');
+    if (isWin) {
+        timeLabelEl.innerText = 'Time Taken';
+        timeValueEl.innerText = `${currentRunTime}s`;
+        timeRowEl.classList.remove('result-time-timeout');
+        timeRowEl.classList.add('result-time-win');
+    } else {
+        timeLabelEl.innerText = 'Time Limit';
+        timeValueEl.innerText = currentLevel ? `${currentLevel.time}s` : '--';
+        timeRowEl.classList.remove('result-time-win');
+        timeRowEl.classList.add('result-time-timeout');
+    }
 
     // Reset animated values
     document.getElementById('stat-cleared').innerText = '0';
@@ -736,6 +766,10 @@ function showResultModal(isWin, isLastStage) {
     if (!isWin) {
         addBtn(btnBox, 'RETRY STAGE', 'primary', () => { hideAllModals(); startStage(); });
     }
+
+    // Share button
+    addBtn(btnBox, '📤 SHARE RESULT', 'share-btn', () => shareResult(isWin, pct));
+
     addBtn(btnBox, 'MAIN MENU', '', resetToStart);
 
     document.getElementById('result-modal').classList.remove('hidden');
@@ -747,6 +781,186 @@ function showResultModal(isWin, isLastStage) {
         animateCounter(document.getElementById('stat-pct'), 0, pct, 900, '%');
         animatePctRing(pct);
     }, 200);
+}
+
+// ─── SHARE RESULT AS IMAGE ────────────────────────────────────────────────────
+function shareResult(isWin, pct) {
+    const card = document.getElementById('result-card');
+
+    // Use html2canvas-like approach via built-in OffscreenCanvas + DOM snapshot isn't available
+    // without a library, so we draw a nice card onto a <canvas> directly.
+    const DPR   = Math.min(window.devicePixelRatio || 1, 3);
+    const CW    = 420;
+    const CH    = 320;
+    const canvas = document.createElement('canvas');
+    canvas.width  = CW * DPR;
+    canvas.height = CH * DPR;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(DPR, DPR);
+
+    // --- Background ---
+    const bg = ctx.createLinearGradient(0, 0, CW, CH);
+    bg.addColorStop(0, '#0a0a14');
+    bg.addColorStop(1, '#0c1428');
+    ctx.fillStyle = bg;
+    roundRectFill(ctx, 0, 0, CW, CH, 20);
+
+    // Border glow
+    ctx.save();
+    ctx.strokeStyle = isWin ? 'rgba(56,189,248,0.55)' : 'rgba(239,68,68,0.55)';
+    ctx.lineWidth = 2.5;
+    roundRectStroke(ctx, 1.5, 1.5, CW - 3, CH - 3, 19);
+    ctx.restore();
+
+    // --- Top bar ---
+    ctx.fillStyle = isWin ? 'rgba(56,189,248,0.08)' : 'rgba(239,68,68,0.08)';
+    roundRectFill(ctx, 0, 0, CW, 54, { tl: 20, tr: 20, bl: 0, br: 0 });
+
+    ctx.font = 'bold 18px "Courier New", monospace';
+    ctx.fillStyle = isWin ? '#38bdf8' : '#ef4444';
+    ctx.textAlign = 'left';
+    ctx.fillText('🚌 Bus Escape', 20, 33);
+
+    if (currentLevel) {
+        ctx.font = '13px "Courier New", monospace';
+        ctx.fillStyle = '#64748b';
+        ctx.textAlign = 'right';
+        ctx.fillText(`${currentLevel.name} · Stage ${currentStage + 1}/${STAGES_PER_LEVEL}`, CW - 20, 33);
+    }
+
+    // --- Result title ---
+    ctx.textAlign = 'center';
+    const titleIcon = isWin ? '🏆' : '💥';
+    ctx.font = 'bold 28px "Courier New", monospace';
+    ctx.fillStyle = isWin ? '#38bdf8' : '#ef4444';
+    ctx.shadowColor = isWin ? 'rgba(56,189,248,0.6)' : 'rgba(239,68,68,0.6)';
+    ctx.shadowBlur = 18;
+    ctx.fillText(`${titleIcon}  ${isWin ? 'Stage Clear!' : "Time's Up!"}`, CW / 2, 100);
+    ctx.shadowBlur = 0;
+
+    // --- Stats row ---
+    const statY = 140;
+    const cols = [
+        { label: 'Cleared',   value: String(clearedCount) },
+        { label: 'Remaining', value: String(activeBuses) },
+        { label: '% Done',    value: `${pct}%` },
+    ];
+    const colW = CW / 3;
+    cols.forEach((col, i) => {
+        const cx = colW * i + colW / 2;
+        // stat card bg
+        ctx.fillStyle = 'rgba(255,255,255,0.04)';
+        roundRectFill(ctx, colW * i + 12, statY - 28, colW - 24, 68, 12);
+
+        ctx.font = 'bold 26px "Courier New", monospace';
+        ctx.fillStyle = '#38bdf8';
+        ctx.textAlign = 'center';
+        ctx.fillText(col.value, cx, statY + 10);
+
+        ctx.font = '10px "Courier New", monospace';
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText(col.label.toUpperCase(), cx, statY + 28);
+    });
+
+    // --- Dividers between stats ---
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 1;
+    [1, 2].forEach(i => {
+        ctx.beginPath();
+        ctx.moveTo(colW * i, statY - 20);
+        ctx.lineTo(colW * i, statY + 36);
+        ctx.stroke();
+    });
+
+    // --- Time row ---
+    const timeY = 238;
+    ctx.fillStyle = isWin ? 'rgba(74,222,128,0.1)' : 'rgba(239,68,68,0.1)';
+    roundRectFill(ctx, 20, timeY - 22, CW - 40, 44, 12);
+
+    const timeIcon = '⏱';
+    const timeLabel = isWin ? 'Time Taken' : 'Time Limit';
+    const timeVal   = isWin
+        ? `${currentRunTime}s`
+        : (currentLevel ? `${currentLevel.time}s` : '--');
+
+    ctx.font = '13px "Courier New", monospace';
+    ctx.fillStyle = '#64748b';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${timeIcon}  ${timeLabel}`, 36, timeY + 4);
+
+    ctx.font = 'bold 17px "Courier New", monospace';
+    ctx.fillStyle = isWin ? '#4ade80' : '#ef4444';
+    ctx.textAlign = 'right';
+    ctx.fillText(timeVal, CW - 36, timeY + 4);
+
+    // --- Footer branding ---
+    ctx.font = '11px "Courier New", monospace';
+    ctx.fillStyle = '#334155';
+    ctx.textAlign = 'center';
+    ctx.fillText('sharikmp.github.io · Bus Escape', CW / 2, CH - 16);
+
+    // --- Export ---
+    canvas.toBlob(async (blob) => {
+        const file = new File([blob], 'bus-escape-result.png', { type: 'image/png' });
+        const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+
+        if (isMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    title: 'Bus Escape Result',
+                    text: isWin
+                        ? `🏆 Stage Clear! ${pct}% buses cleared in ${currentRunTime}s — Bus Escape`
+                        : `💥 Time's Up! Cleared ${pct}% — Bus Escape`,
+                    files: [file],
+                });
+                return;
+            } catch (err) {
+                if (err.name !== 'AbortError') console.warn('Share failed, falling back to download', err);
+                else return; // user cancelled
+            }
+        }
+
+        // Fallback: download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'bus-escape-result.png';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }, 'image/png');
+}
+
+function roundRectFill(ctx, x, y, w, h, r) {
+    const radii = typeof r === 'number'
+        ? { tl: r, tr: r, bl: r, br: r }
+        : { tl: r.tl ?? 0, tr: r.tr ?? 0, bl: r.bl ?? 0, br: r.br ?? 0 };
+    ctx.beginPath();
+    ctx.moveTo(x + radii.tl, y);
+    ctx.lineTo(x + w - radii.tr, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + radii.tr);
+    ctx.lineTo(x + w, y + h - radii.br);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - radii.br, y + h);
+    ctx.lineTo(x + radii.bl, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - radii.bl);
+    ctx.lineTo(x, y + radii.tl);
+    ctx.quadraticCurveTo(x, y, x + radii.tl, y);
+    ctx.closePath();
+    ctx.fill();
+}
+
+function roundRectStroke(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    ctx.stroke();
 }
 
 function addBtn(container, label, cls, fn) {
