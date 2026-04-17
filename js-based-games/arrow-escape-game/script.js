@@ -10,10 +10,10 @@ const beepBeepAudio = document.getElementById('beep-beep-audio');
 const incorrectAudio = document.getElementById('incorrect-audio');
 
 const LEVELS = [
-    { id: 'easy',   name: 'Easy',   time: 30, cols: 10, rows: 10, buses: 50,  chainDensity: 0.15, maxChainDepth: 2 },
-    { id: 'medium', name: 'Medium', time: 45, cols: 13, rows: 13, buses: 100, chainDensity: 0.35, maxChainDepth: 3 },
-    { id: 'hard',   name: 'Hard',   time: 60, cols: 15, rows: 15, buses: 150, chainDensity: 0.55, maxChainDepth: 4 },
-    { id: 'pro',    name: 'Pro',    time: 60, cols: 17, rows: 17, buses: 200, chainDensity: 0.70, maxChainDepth: 5 },
+    { id: 'easy',   name: 'Easy',   time: 30, cols: 10, rows: 10, buses: 50,  chainDensity: 0.15, maxChainDepth: 2, maxFree: 6 },
+    { id: 'medium', name: 'Medium', time: 45, cols: 13, rows: 13, buses: 100, chainDensity: 0.35, maxChainDepth: 3, maxFree: 4 },
+    { id: 'hard',   name: 'Hard',   time: 60, cols: 15, rows: 15, buses: 150, chainDensity: 0.55, maxChainDepth: 4, maxFree: 3 },
+    { id: 'pro',    name: 'Pro',    time: 60, cols: 17, rows: 17, buses: 200, chainDensity: 0.70, maxChainDepth: 5, maxFree: 2 },
 ];
 
 // --- SHAPE LIBRARY ---
@@ -572,6 +572,15 @@ let criticalPopShown = false;
 let shapeGrid = [];          // boolean[][] — active cell mask for current stage
 let currentShapeName = '';  // name of the active shape (e.g. "A", "❤")
 
+// ─── HINT / NO-ESCAPE STATE ──────────────────────────────────────────────────
+const IDLE_HINT_DELAY = 5000;          // ms of inactivity before showing hint
+let idleHintTimer    = null;           // setTimeout handle
+let hintedWrapper    = null;           // DOM wrapper currently glowing as hint
+let hintedBusObj     = null;           // CartoonBus of the hinted bus
+let timerFrozen      = false;          // true while no-escape rotation is playing
+let frozenTimeLeft   = 0;             // remaining time saved when timer froze
+let noEscapeOverlayActive = false;     // true while no-escape overlay is showing
+
 // ─── DEFAULT LEADERBOARD DATA ─────────────────────────────────────────────────
 const DEFAULT_LEADERBOARD = [
     { name: 'Neo', time: 18.4 },
@@ -789,6 +798,12 @@ function selectShapeForStage(cols, rows) {
 
 function startStage() {
     criticalPopShown = false;
+    // Reset hint / freeze state from any previous stage
+    stopHintSystem();
+    // Dismiss no-escape overlay immediately if it was open
+    const _ov = document.getElementById('no-escape-overlay');
+    if (_ov) { _ov.classList.add('hidden'); _ov.classList.remove('noe-enter','noe-exit'); }
+    timerFrozen = false;
     // Compute initial bus target for this stage
     const baseBuses = currentLevel.buses + currentStage * STAGE_BUS_INCREMENT;
     // Select a shape and cap buses to 82% of its active cell count
@@ -806,12 +821,14 @@ function startStage() {
     startTime = Date.now();
     // Timer entrance: appears big then quickly settles to normal size
     const timerEl = document.getElementById('timer');
-    timerEl.classList.remove('warning', 'timer-enter', 'timer-critical-pop');
+    timerEl.classList.remove('warning', 'timer-enter', 'timer-critical-pop', 'timer-frozen');
     void timerEl.offsetWidth;
     timerEl.classList.add('timer-enter');
     setTimeout(() => timerEl.classList.remove('timer-enter'), 700);
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(updateTimer, 50);
+    // Start the idle hint timer right away
+    resetIdleHint();
 }
 
 
@@ -865,6 +882,8 @@ function generateSolvablePuzzle(cols, rows, targetBuses) {
 
     // Apply chain pass to create dependency chains
     applyChainPass(currentLevel.chainDensity, currentLevel.maxChainDepth);
+    // Enforce the maximum number of simultaneously free buses
+    reduceFreeBuses(currentLevel.maxFree);
 }
 
 // Returns true if (x,y) is on the border of the active shape (has at least one inactive neighbour or grid edge)
@@ -965,6 +984,59 @@ function tryPlaceBlocker(targetBus) {
         return { x, y };
     }
     return null;
+}
+
+// Re-orients excess free buses to point into existing buses, keeping at most
+// targetFreeCount buses free simultaneously. Avoids A↔B deadlock cycles.
+function reduceFreeBuses(targetFreeCount) {
+    const cols = currentLevel.cols, rows = currentLevel.rows;
+    const DIRS = ['U', 'D', 'L', 'R'];
+
+    let freeBuses = getAllFreeBuses();
+    if (freeBuses.length <= targetFreeCount) return;
+
+    // Process outer (border) buses first — they are the most obviously tappable
+    freeBuses.sort((a, b) =>
+        (isOnShapeBorder(b.x, b.y, cols, rows) ? 1 : 0) -
+        (isOnShapeBorder(a.x, a.y, cols, rows) ? 1 : 0));
+
+    let toBlock = freeBuses.length - targetFreeCount;
+
+    for (const bus of freeBuses) {
+        if (toBlock <= 0) break;
+        const cell = grid[bus.y][bus.x];
+
+        // Find directions (other than the current clear one) that hit an existing bus
+        const blockedDirs = DIRS.filter(d => {
+            if (d === cell.dir) return false; // already the free direction — skip
+            const { dx, dy } = dirVec(d);
+            let cx = bus.x + dx, cy = bus.y + dy;
+            let firstBusX = -1, firstBusY = -1;
+            while (cx >= 0 && cy >= 0 && cx < cols && cy < rows) {
+                if (!shapeGrid[cy][cx]) { cx += dx; cy += dy; continue; }
+                if (grid[cy][cx] !== null) { firstBusX = cx; firstBusY = cy; break; }
+                cx += dx; cy += dy;
+            }
+            if (firstBusX === -1) return false; // no bus in this direction
+
+            // Guard: skip if the first bus in this direction points back at us (A↔B deadlock)
+            const other = grid[firstBusY][firstBusX];
+            const { dx: odx, dy: ody } = dirVec(other.dir);
+            let rx = firstBusX + odx, ry = firstBusY + ody;
+            while (rx >= 0 && ry >= 0 && rx < cols && ry < rows) {
+                if (!shapeGrid[ry][rx]) { rx += odx; ry += ody; continue; }
+                if (rx === bus.x && ry === bus.y) return false; // direct cycle
+                if (grid[ry][rx] !== null) break; // other bus hits something else first
+                rx += odx; ry += ody;
+            }
+            return true;
+        });
+
+        if (blockedDirs.length > 0) {
+            cell.dir = blockedDirs[Math.floor(Math.random() * blockedDirs.length)];
+            toBlock--;
+        }
+    }
 }
 
 function applyChainPass(density, maxDepth) {
@@ -1069,12 +1141,214 @@ function refreshFreeIndicators() {
     });
 }
 
+// ─── HINT SYSTEM ─────────────────────────────────────────────────────────────
+
+// Remove hint glow/vibrate from whatever bus is currently highlighted
+function clearHint() {
+    if (hintedWrapper) {
+        hintedWrapper.classList.remove('bus-hint');
+        if (hintedBusObj) { hintedBusObj.stopEngine(); }
+        hintedWrapper = null;
+        hintedBusObj  = null;
+    }
+}
+
+// Show hint on a single free bus (glow + engine + vibrate)
+function showHint() {
+    clearHint();
+    const free = getAllFreeBuses();
+    if (free.length === 0) return;
+    const pick = free[Math.floor(Math.random() * free.length)];
+    const wrapper = gridEl.querySelector(`.bus-wrapper[data-x="${pick.x}"][data-y="${pick.y}"]`);
+    if (!wrapper) return;
+    const cellData = grid[pick.y][pick.x];
+    if (!cellData || !cellData.busInstance) return;
+    hintedWrapper = wrapper;
+    hintedBusObj  = cellData.busInstance;
+    wrapper.classList.add('bus-hint');
+    cellData.busInstance.startEngine();
+}
+
+// Reset the 5-second idle hint timer (call on every tap attempt)
+function resetIdleHint() {
+    clearTimeout(idleHintTimer);
+    idleHintTimer = null;
+    if (!isPlaying || timerFrozen) return;
+    idleHintTimer = setTimeout(() => {
+        if (isPlaying && !timerFrozen) showHint();
+    }, IDLE_HINT_DELAY);
+}
+
+// Stop and clean up all hint-related state (call on stage end / start)
+function stopHintSystem() {
+    clearTimeout(idleHintTimer);
+    idleHintTimer = null;
+    clearHint();
+}
+
+// ─── NO-ESCAPE HANDLER ───────────────────────────────────────────────────────
+
+// Show the full-screen overlay and return a promise that resolves after `ms`
+function showNoEscapeOverlay(ms) {
+    return new Promise(resolve => {
+        const el = document.getElementById('no-escape-overlay');
+        if (!el) { setTimeout(resolve, ms); return; }
+        el.classList.remove('hidden', 'noe-exit');
+        // Force reflow then add enter class to trigger transition
+        void el.offsetWidth;
+        el.classList.add('noe-enter');
+        setTimeout(resolve, ms);
+    });
+}
+
+function hideNoEscapeOverlay() {
+    return new Promise(resolve => {
+        const el = document.getElementById('no-escape-overlay');
+        if (!el) { resolve(); return; }
+        el.classList.remove('noe-enter');
+        el.classList.add('noe-exit');
+        setTimeout(() => {
+            el.classList.add('hidden');
+            el.classList.remove('noe-exit');
+            resolve();
+        }, 420);
+    });
+}
+
+// Animate timer to "frozen" state (amber, bigger, pulsing)
+function freezeTimer() {
+    if (timerFrozen) return;
+    timerFrozen = true;
+    const elapsed = (Date.now() - startTime) / 1000;
+    frozenTimeLeft = Math.max(0, currentLevel.time - elapsed);
+    const timerEl = document.getElementById('timer');
+    timerEl.innerText = `${frozenTimeLeft.toFixed(1)}s`;
+    // Play freeze-in animation, then switch to hold pulse
+    timerEl.classList.remove('timer-frozen', 'timer-frozen-hold', 'timer-resume');
+    void timerEl.offsetWidth;
+    timerEl.classList.add('timer-frozen');
+    setTimeout(() => {
+        if (!timerFrozen) return;
+        timerEl.classList.remove('timer-frozen');
+        timerEl.classList.add('timer-frozen-hold');
+    }, 460);
+}
+
+// Animate timer resuming (green bounce back to normal)
+function unfreezeTimer() {
+    if (!timerFrozen) return;
+    timerFrozen = false;
+    // Adjust startTime so remaining time matches where we froze
+    startTime = Date.now() - (currentLevel.time - frozenTimeLeft) * 1000;
+    const timerEl = document.getElementById('timer');
+    timerEl.classList.remove('timer-frozen', 'timer-frozen-hold');
+    void timerEl.offsetWidth;
+    timerEl.classList.add('timer-resume');
+    setTimeout(() => timerEl.classList.remove('timer-resume'), 600);
+}
+
+// Rotate outer buses (data only) and animate them.
+// `delay` = ms to wait before starting animations (overlay already visible by then).
+// Returns a promise that resolves when all animations complete.
+function rotateOuterBusesUntilFree(delay) {
+    return new Promise(resolve => {
+        const cols = currentLevel.cols, rows = currentLevel.rows;
+
+        // Collect outer buses (shape-border)
+        const outerBuses = [];
+        for (let y = 0; y < rows; y++)
+            for (let x = 0; x < cols; x++)
+                if (grid[y][x] && isOnShapeBorder(x, y, cols, rows))
+                    outerBuses.push({ x, y });
+
+        const DIRS = ['U', 'D', 'L', 'R'];
+        const rotated = [];
+        let attempts = 0;
+
+        while (getAllFreeBuses().length === 0 && attempts < 40) {
+            attempts++;
+            const shuffled = shuffle([...outerBuses]);
+            const toRotate = shuffled.slice(0, Math.min(3, shuffled.length));
+            for (const bus of toRotate) {
+                const clearDirs = DIRS.filter(d => {
+                    const { dx, dy } = dirVec(d);
+                    return isPathClear(bus.x, bus.y, dx, dy, cols, rows);
+                });
+                if (clearDirs.length > 0) {
+                    grid[bus.y][bus.x].dir = clearDirs[Math.floor(Math.random() * clearDirs.length)];
+                    if (!rotated.some(r => r.x === bus.x && r.y === bus.y)) rotated.push(bus);
+                }
+            }
+        }
+
+        if (rotated.length === 0) { setTimeout(resolve, delay); return; }
+
+        // After `delay` ms, play the animation on each rotated bus
+        setTimeout(() => {
+            let pending = rotated.length;
+            rotated.forEach(bus => {
+                const wrapper = gridEl.querySelector(`.bus-wrapper[data-x="${bus.x}"][data-y="${bus.y}"]`);
+                if (!wrapper) { if (--pending === 0) done(); return; }
+
+                wrapper.classList.add('bus-rotate-reveal');
+                setTimeout(() => {
+                    wrapper.classList.remove('bus-rotate-reveal');
+                    // Update direction class and redraw
+                    wrapper.className = wrapper.className.replace(/\bdir-[UDLR]\b/, `dir-${grid[bus.y][bus.x].dir}`);
+                    if (grid[bus.y][bus.x].busInstance) grid[bus.y][bus.x].busInstance.draw();
+                    if (--pending === 0) done();
+                }, 1050);
+            });
+        }, delay);
+
+        function done() {
+            if (currentLevel.id === 'easy') refreshFreeIndicators();
+            resolve();
+        }
+    });
+}
+
+// Called after each successful bus escape
+async function checkAndHintAfterEscape() {
+    clearHint();
+    if (!isPlaying) return;
+
+    if (getAllFreeBuses().length > 0) {
+        resetIdleHint();
+        return;
+    }
+
+    // ── No free buses: begin the no-escape sequence ──────────────────────────
+    stopHintSystem();
+
+    // T=0: freeze timer + show overlay simultaneously
+    freezeTimer();
+    await showNoEscapeOverlay(500);  // overlay fades in over 0.35 s, hold for 0.5 s total
+
+    // T=0.5s: buses rotate (animation plays over ~1.05 s); overlay stays visible
+    await rotateOuterBusesUntilFree(0);  // zero delay — we're already in the right window
+
+    // T≈1.6s: wait a beat so player can see the settled buses before overlay leaves
+    await new Promise(r => setTimeout(r, 500));
+
+    // T≈2.1s: hide overlay, unfreeze timer with bounce animation
+    await hideNoEscapeOverlay();
+    unfreezeTimer();
+
+    // Now highlight the newly-freed bus and restart idle-hint timer
+    showHint();
+    resetIdleHint();
+}
+
 // ─── GAMEPLAY ─────────────────────────────────────────────────────────────────
 function handleTap(x, y, wrapper, bus) {
-    if (!isPlaying) return;
+    if (!isPlaying || timerFrozen) return;
     const cellData = grid[y][x];
     if (!cellData) return;
     const dir = cellData.dir;
+
+    // Every tap attempt resets the idle hint timer
+    resetIdleHint();
 
     let dx = 0, dy = 0;
     if (dir === 'U') dy = -1;
@@ -1083,6 +1357,10 @@ function handleTap(x, y, wrapper, bus) {
     if (dir === 'R') dx = 1;
 
     if (isPathClear(x, y, dx, dy, currentLevel.cols, currentLevel.rows)) {
+        // If this was the hinted bus, clear the hint before flying it out
+        if (hintedWrapper === wrapper) clearHint();
+        else clearHint();
+
         grid[y][x] = null;
         activeBuses--;
         clearedCount++;
@@ -1095,7 +1373,12 @@ function handleTap(x, y, wrapper, bus) {
         setTimeout(() => animateFlyOut(wrapper, dir, bus), 250);
         // Update free-bus indicators on Easy only
         if (currentLevel.id === 'easy') refreshFreeIndicators();
-        if (activeBuses === 0) handleStageWin();
+        if (activeBuses === 0) {
+            handleStageWin();
+        } else {
+            // Check for free buses and hint / rotate as needed
+            checkAndHintAfterEscape();
+        }
     } else {
         playSound('incorrect');
         wrapper.classList.remove('shake');
@@ -1126,7 +1409,7 @@ function animateFlyOut(wrapper, dir, bus) {
 
 // ─── TIMER ────────────────────────────────────────────────────────────────────
 function updateTimer() {
-    if (!isPlaying) return;
+    if (!isPlaying || timerFrozen) return;
     const elapsed = (Date.now() - startTime) / 1000;
     const timeLeft = Math.max(0, currentLevel.time - elapsed);
     const timerEl = document.getElementById('timer');
@@ -1145,17 +1428,32 @@ function updateTimer() {
 }
 
 // ─── WIN / LOSE ───────────────────────────────────────────────────────────────
+function _dismissNoEscapeOverlay() {
+    const ov = document.getElementById('no-escape-overlay');
+    if (ov) { ov.classList.add('hidden'); ov.classList.remove('noe-enter', 'noe-exit'); }
+}
+
 function handleStageWin() {
     isPlaying = false;
+    stopHintSystem();
+    _dismissNoEscapeOverlay();
+    timerFrozen = false;
     clearInterval(timerInterval);
+    const timerEl = document.getElementById('timer');
+    timerEl.classList.remove('timer-frozen', 'timer-frozen-hold', 'timer-resume');
     currentRunTime = ((Date.now() - startTime) / 1000).toFixed(1);
     showResultModal(true, currentStage >= STAGES_PER_LEVEL - 1);
 }
 
 function handleLose() {
     isPlaying = false;
+    stopHintSystem();
+    _dismissNoEscapeOverlay();
+    timerFrozen = false;
     clearInterval(timerInterval);
-    document.getElementById('timer').innerText = '0.0s';
+    const timerEl = document.getElementById('timer');
+    timerEl.classList.remove('timer-frozen', 'timer-frozen-hold', 'timer-resume');
+    timerEl.innerText = '0.0s';
     showResultModal(false, false);
 }
 
