@@ -10,11 +10,273 @@ const beepBeepAudio = document.getElementById('beep-beep-audio');
 const incorrectAudio = document.getElementById('incorrect-audio');
 
 const LEVELS = [
-    { id: 'easy', name: 'Easy', time: 30, cols: 10, rows: 10, buses: 50 },
-    { id: 'medium', name: 'Medium', time: 45, cols: 13, rows: 13, buses: 100 },
-    { id: 'hard', name: 'Hard', time: 60, cols: 15, rows: 15, buses: 150 },
-    { id: 'pro', name: 'Pro', time: 60, cols: 17, rows: 17, buses: 200 },
+    { id: 'easy',   name: 'Easy',   time: 30, cols: 10, rows: 10, buses: 50,  chainDensity: 0.15, maxChainDepth: 2 },
+    { id: 'medium', name: 'Medium', time: 45, cols: 13, rows: 13, buses: 100, chainDensity: 0.35, maxChainDepth: 3 },
+    { id: 'hard',   name: 'Hard',   time: 60, cols: 15, rows: 15, buses: 150, chainDensity: 0.55, maxChainDepth: 4 },
+    { id: 'pro',    name: 'Pro',    time: 60, cols: 17, rows: 17, buses: 200, chainDensity: 0.70, maxChainDepth: 5 },
 ];
+
+// --- SHAPE LIBRARY ---
+// Each entry: { id, name, tags, minCells, buildMask(cols, rows) → boolean[][] }
+// Tags: 'shape' | 'letter' | 'digit'
+const SHAPE_LIBRARY = (() => {
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function emptyMask(cols, rows) {
+        return Array.from({ length: rows }, () => new Array(cols).fill(false));
+    }
+
+    // Point-in-convex-polygon test (vertices as [x,y] in 0..1 space)
+    function polyMask(verts, cols, rows) {
+        const mask = emptyMask(cols, rows);
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const px = (c + 0.5) / cols;
+                const py = (r + 0.5) / rows;
+                let inside = false;
+                const n = verts.length;
+                for (let i = 0, j = n - 1; i < n; j = i++) {
+                    const [xi, yi] = verts[i], [xj, yj] = verts[j];
+                    if (((yi > py) !== (yj > py)) &&
+                        (px < (xj - xi) * (py - yi) / (yj - yi) + xi)) {
+                        inside = !inside;
+                    }
+                }
+                if (inside) mask[r][c] = true;
+            }
+        }
+        return mask;
+    }
+
+    // Pixel-font: scale a 5×7 bitmap (row-major, left-to-right) into cols×rows
+    function letterMask(bitmap5x7, cols, rows) {
+        const mask = emptyMask(cols, rows);
+        const scale = Math.max(1, Math.min(3, Math.floor(cols / 5), Math.floor(rows / 7)));
+        const bw = 5 * scale, bh = 7 * scale;
+        const offC = Math.floor((cols - bw) / 2);
+        const offR = Math.floor((rows - bh) / 2);
+        for (let sr = 0; sr < 7; sr++) {
+            for (let sc = 0; sc < 5; sc++) {
+                if (!bitmap5x7[sr][sc]) continue;
+                for (let dr = 0; dr < scale; dr++) {
+                    for (let dc = 0; dc < scale; dc++) {
+                        const rr = offR + sr * scale + dr;
+                        const cc = offC + sc * scale + dc;
+                        if (rr >= 0 && rr < rows && cc >= 0 && cc < cols) mask[rr][cc] = true;
+                    }
+                }
+            }
+        }
+        return mask;
+    }
+
+    function countCells(mask) { return mask.flat().filter(Boolean).length; }
+
+    // ── 5×7 Pixel bitmaps (row 0 = top) ─────────────────────────────────────
+    const GLYPHS = {
+        A: [[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1]],
+        B: [[1,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,0]],
+        C: [[0,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[0,1,1,1,1]],
+        D: [[1,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,0]],
+        E: [[1,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,0],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,1]],
+        F: [[1,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0]],
+        G: [[0,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0],[1,0,1,1,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,1]],
+        H: [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1]],
+        I: [[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[1,1,1,1,1]],
+        J: [[0,0,0,0,1],[0,0,0,0,1],[0,0,0,0,1],[0,0,0,0,1],[0,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],
+        K: [[1,0,0,0,1],[1,0,0,1,0],[1,0,1,0,0],[1,1,0,0,0],[1,0,1,0,0],[1,0,0,1,0],[1,0,0,0,1]],
+        L: [[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,1]],
+        M: [[1,0,0,0,1],[1,1,0,1,1],[1,0,1,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1]],
+        N: [[1,0,0,0,1],[1,1,0,0,1],[1,0,1,0,1],[1,0,0,1,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1]],
+        O: [[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],
+        P: [[1,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0]],
+        Q: [[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,1,0],[0,1,1,0,1]],
+        R: [[1,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,0],[1,0,1,0,0],[1,0,0,1,0],[1,0,0,0,1]],
+        S: [[0,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0],[0,1,1,1,0],[0,0,0,0,1],[0,0,0,0,1],[1,1,1,1,0]],
+        T: [[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
+        U: [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],
+        V: [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,0,1,0],[0,1,0,1,0],[0,0,1,0,0]],
+        W: [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,1,0,1],[1,1,0,1,1],[1,0,0,0,1]],
+        X: [[1,0,0,0,1],[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1],[1,0,0,0,1]],
+        Y: [[1,0,0,0,1],[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
+        Z: [[1,1,1,1,1],[0,0,0,0,1],[0,0,0,1,0],[0,0,1,0,0],[0,1,0,0,0],[1,0,0,0,0],[1,1,1,1,1]],
+        0: [[0,1,1,1,0],[1,0,0,1,1],[1,0,1,0,1],[1,0,1,0,1],[1,1,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],
+        1: [[0,0,1,0,0],[0,1,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,1,1,1,0]],
+        2: [[0,1,1,1,0],[1,0,0,0,1],[0,0,0,0,1],[0,0,0,1,0],[0,0,1,0,0],[0,1,0,0,0],[1,1,1,1,1]],
+        3: [[1,1,1,1,0],[0,0,0,0,1],[0,0,0,0,1],[0,1,1,1,0],[0,0,0,0,1],[0,0,0,0,1],[1,1,1,1,0]],
+        4: [[0,0,0,1,0],[0,0,1,1,0],[0,1,0,1,0],[1,0,0,1,0],[1,1,1,1,1],[0,0,0,1,0],[0,0,0,1,0]],
+        5: [[1,1,1,1,1],[1,0,0,0,0],[1,1,1,1,0],[0,0,0,0,1],[0,0,0,0,1],[0,0,0,0,1],[1,1,1,1,0]],
+        6: [[0,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],
+        7: [[1,1,1,1,1],[0,0,0,0,1],[0,0,0,1,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
+        8: [[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]],
+        9: [[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,1],[0,0,0,0,1],[0,0,0,0,1],[0,1,1,1,0]],
+    };
+
+    // ── Build entries ─────────────────────────────────────────────────────────
+    const entries = [];
+
+    // Letters A–Z
+    for (const ch of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+        entries.push({
+            id: `letter_${ch}`, name: ch, tags: ['letter'],
+            buildMask: (c, r) => letterMask(GLYPHS[ch], c, r),
+        });
+    }
+    // Digits 0–9
+    for (const d of '0123456789') {
+        entries.push({
+            id: `digit_${d}`, name: d, tags: ['digit'],
+            buildMask: (c, r) => letterMask(GLYPHS[d], c, r),
+        });
+    }
+
+    // ── Geometric shapes ─────────────────────────────────────────────────────
+
+    // Heart
+    entries.push({ id: 'heart', name: '❤', tags: ['shape'], buildMask(cols, rows) {
+        const mask = emptyMask(cols, rows);
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                // Normalise to [-1.3, 1.3] x [-1.0, 1.5]
+                const x = (c + 0.5) / cols * 2.6 - 1.3;
+                const y = (r + 0.5) / rows * 2.5 - 1.0;
+                // Heart curve: (x²+y²-1)³ - x²y³ ≤ 0
+                const v = x*x + y*y - 1;
+                if (v*v*v - x*x*y*y*y <= 0) mask[r][c] = true;
+            }
+        }
+        return mask;
+    }});
+
+    // Triangle (equilateral, pointing up)
+    entries.push({ id: 'triangle', name: '▲', tags: ['shape'], buildMask(cols, rows) {
+        const margin = 0.1;
+        const verts = [
+            [0.5, margin],
+            [1 - margin, 1 - margin],
+            [margin, 1 - margin],
+        ];
+        return polyMask(verts, cols, rows);
+    }});
+
+    // Diamond
+    entries.push({ id: 'diamond', name: '◆', tags: ['shape'], buildMask(cols, rows) {
+        const mask = emptyMask(cols, rows);
+        const cx = (cols - 1) / 2, cy = (rows - 1) / 2;
+        const rx = cols / 2 - 0.5, ry = rows / 2 - 0.5;
+        for (let r = 0; r < rows; r++)
+            for (let c = 0; c < cols; c++)
+                if (Math.abs(c - cx) / rx + Math.abs(r - cy) / ry <= 1) mask[r][c] = true;
+        return mask;
+    }});
+
+    // 5-pointed Star
+    entries.push({ id: 'star', name: '★', tags: ['shape'], buildMask(cols, rows) {
+        const verts = [];
+        const outerR = 0.46, innerR = 0.19;
+        const cx = 0.5, cy = 0.5;
+        for (let i = 0; i < 10; i++) {
+            const angle = (i * Math.PI / 5) - Math.PI / 2;
+            const r = i % 2 === 0 ? outerR : innerR;
+            verts.push([cx + r * Math.cos(angle), cy + r * Math.sin(angle)]);
+        }
+        return polyMask(verts, cols, rows);
+    }});
+
+    // Cross / Plus
+    entries.push({ id: 'cross', name: '✚', tags: ['shape'], buildMask(cols, rows) {
+        const mask = emptyMask(cols, rows);
+        const armW = Math.max(2, Math.floor(Math.min(cols, rows) * 0.28));
+        const cC = Math.floor(cols / 2), cR = Math.floor(rows / 2);
+        for (let r = 0; r < rows; r++)
+            for (let c = 0; c < cols; c++)
+                if (Math.abs(c - cC) <= armW || Math.abs(r - cR) <= armW) mask[r][c] = true;
+        return mask;
+    }});
+
+    // Arrow (pointing right)
+    entries.push({ id: 'arrow', name: '➡', tags: ['shape'], buildMask(cols, rows) {
+        const verts = [
+            [0.1, 0.35],[0.55, 0.35],[0.55, 0.1],[0.95, 0.5],
+            [0.55, 0.9],[0.55, 0.65],[0.1, 0.65],
+        ];
+        return polyMask(verts, cols, rows);
+    }});
+
+    // Pentagon
+    entries.push({ id: 'pentagon', name: '⬠', tags: ['shape'], buildMask(cols, rows) {
+        const verts = [];
+        for (let i = 0; i < 5; i++) {
+            const a = (i * 2 * Math.PI / 5) - Math.PI / 2;
+            verts.push([0.5 + 0.45 * Math.cos(a), 0.5 + 0.45 * Math.sin(a)]);
+        }
+        return polyMask(verts, cols, rows);
+    }});
+
+    // Hexagon
+    entries.push({ id: 'hexagon', name: '⬡', tags: ['shape'], buildMask(cols, rows) {
+        const verts = [];
+        for (let i = 0; i < 6; i++) {
+            const a = (i * Math.PI / 3) - Math.PI / 6;
+            verts.push([0.5 + 0.46 * Math.cos(a), 0.5 + 0.46 * Math.sin(a)]);
+        }
+        return polyMask(verts, cols, rows);
+    }});
+
+    // Circle
+    entries.push({ id: 'circle', name: '●', tags: ['shape'], buildMask(cols, rows) {
+        const mask = emptyMask(cols, rows);
+        const cx = (cols - 1) / 2, cy = (rows - 1) / 2;
+        const r = Math.min(cols, rows) / 2 - 0.5;
+        for (let row = 0; row < rows; row++)
+            for (let col = 0; col < cols; col++)
+                if ((col - cx) ** 2 + (row - cy) ** 2 <= r * r) mask[row][col] = true;
+        return mask;
+    }});
+
+    // Ring (donut)
+    entries.push({ id: 'ring', name: '◯', tags: ['shape'], buildMask(cols, rows) {
+        const mask = emptyMask(cols, rows);
+        const cx = (cols - 1) / 2, cy = (rows - 1) / 2;
+        const rOuter = Math.min(cols, rows) / 2 - 0.5;
+        const rInner = rOuter * 0.52;
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const d2 = (col - cx) ** 2 + (row - cy) ** 2;
+                if (d2 <= rOuter * rOuter && d2 >= rInner * rInner) mask[row][col] = true;
+            }
+        }
+        return mask;
+    }});
+
+    // Crescent (Moon)
+    entries.push({ id: 'moon', name: '🌙', tags: ['shape'], buildMask(cols, rows) {
+        const mask = emptyMask(cols, rows);
+        const cx = (cols - 1) / 2 - cols * 0.05;
+        const cy = (rows - 1) / 2;
+        const rOuter = Math.min(cols, rows) / 2 - 0.5;
+        const cx2 = cx + rOuter * 0.42, cy2 = cy - rOuter * 0.08;
+        const rInner = rOuter * 0.78;
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const inOuter = (col - cx) ** 2 + (row - cy) ** 2 <= rOuter * rOuter;
+                const inInner = (col - cx2) ** 2 + (row - cy2) ** 2 <= rInner * rInner;
+                if (inOuter && !inInner) mask[row][col] = true;
+            }
+        }
+        return mask;
+    }});
+
+    // Lightning bolt (zigzag slash)
+    entries.push({ id: 'lightning', name: '⚡', tags: ['shape'], buildMask(cols, rows) {
+        const verts = [
+            [0.55, 0.05],[0.25, 0.50],[0.50, 0.45],
+            [0.45, 0.95],[0.75, 0.50],[0.50, 0.55],
+        ];
+        return polyMask(verts, cols, rows);
+    }});
+
+    return entries;
+})();
 
 // --- THEMES ---
 const busThemes = [
@@ -307,6 +569,8 @@ let currentStage = 0;      // 0-based, 0..STAGES_PER_LEVEL-1
 let clearedCount = 0;
 let totalBusesForStage = 0;
 let criticalPopShown = false;
+let shapeGrid = [];          // boolean[][] — active cell mask for current stage
+let currentShapeName = '';  // name of the active shape (e.g. "A", "❤")
 
 // ─── DEFAULT LEADERBOARD DATA ─────────────────────────────────────────────────
 const DEFAULT_LEADERBOARD = [
@@ -499,13 +763,44 @@ function startGame(levelIndex) {
     showCountdown(() => startStage());
 }
 
+// ─── SHAPE SELECTION ──────────────────────────────────────────────────────────
+function selectShapeForStage(cols, rows) {
+    // For Easy (10×10), only use shapes that produce enough active cells to be fun.
+    // For all other levels the full library is available.
+    const MIN_ACTIVE_EASY = 25;
+    const isEasy = (cols <= 10 && rows <= 10);
+
+    let pool = SHAPE_LIBRARY;
+    if (isEasy) {
+        // Filter to shapes/digits/letters that produce ≥ MIN_ACTIVE_EASY cells at Easy scale
+        pool = SHAPE_LIBRARY.filter(s => {
+            const mask = s.buildMask(cols, rows);
+            return mask.flat().filter(Boolean).length >= MIN_ACTIVE_EASY;
+        });
+        // Fallback to full library if nothing passes (shouldn't happen)
+        if (pool.length === 0) pool = SHAPE_LIBRARY;
+    }
+
+    const shape = pool[Math.floor(Math.random() * pool.length)];
+    shapeGrid = shape.buildMask(cols, rows);
+    currentShapeName = shape.name;
+    return shapeGrid.flat().filter(Boolean).length; // return active cell count
+}
+
 function startStage() {
     criticalPopShown = false;
-    totalBusesForStage = currentLevel.buses + currentStage * STAGE_BUS_INCREMENT;
+    // Compute initial bus target for this stage
+    const baseBuses = currentLevel.buses + currentStage * STAGE_BUS_INCREMENT;
+    // Select a shape and cap buses to 82% of its active cell count
+    const activeCellCount = selectShapeForStage(currentLevel.cols, currentLevel.rows);
+    const effectiveBuses = Math.min(baseBuses, Math.floor(activeCellCount * 0.82));
+    totalBusesForStage = effectiveBuses;
     clearedCount = 0;
-    activeBuses = totalBusesForStage;
-    generateSolvablePuzzle(currentLevel.cols, currentLevel.rows, totalBusesForStage);
+    activeBuses = effectiveBuses;
+    generateSolvablePuzzle(currentLevel.cols, currentLevel.rows, effectiveBuses);
+    // totalBusesForStage & activeBuses may be higher now if chain pass added blockers
     renderGrid();
+    if (currentLevel.id === 'easy') refreshFreeIndicators();
     setHeaderInfo(currentLevel.name, currentStage);
     isPlaying = true;
     startTime = Date.now();
@@ -519,6 +814,7 @@ function startStage() {
     timerInterval = setInterval(updateTimer, 50);
 }
 
+
 // ─── PUZZLE GENERATION ────────────────────────────────────────────────────────
 function generateSolvablePuzzle(cols, rows, targetBuses) {
     grid = Array(rows).fill(null).map(() => Array(cols).fill(null));
@@ -526,10 +822,23 @@ function generateSolvablePuzzle(cols, rows, targetBuses) {
     let attempts = 0;
     const maxAttempts = targetBuses * 20;
 
+    // Collect active cells from the shape mask to pick placement positions
+    const activeCells = [];
+    for (let r = 0; r < rows; r++)
+        for (let c = 0; c < cols; c++)
+            if (shapeGrid[r][c]) activeCells.push({ x: c, y: r });
+
+    // Fisher-Yates shuffle for the active cell pool
+    for (let i = activeCells.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [activeCells[i], activeCells[j]] = [activeCells[j], activeCells[i]];
+    }
+
     while (activeBuses < targetBuses && attempts < maxAttempts) {
         attempts++;
-        const x = Math.floor(Math.random() * cols);
-        const y = Math.floor(Math.random() * rows);
+        // Pick from the shape-masked active cells only
+        const pick = activeCells[Math.floor(Math.random() * activeCells.length)];
+        const { x, y } = pick;
         if (grid[y][x] !== null) continue;
 
         const validDirs = [];
@@ -539,13 +848,10 @@ function generateSolvablePuzzle(cols, rows, targetBuses) {
         if (isPathClear(x, y, 1, 0, cols, rows)) validDirs.push('R');
 
         if (validDirs.length > 0) {
-            const isBorder = (x === 0 || x === cols - 1 || y === 0 || y === rows - 1);
-            const insideDirs = validDirs.filter(d =>
-                !((x === 0 && d === 'L') || (x === cols - 1 && d === 'R') ||
-                    (y === 0 && d === 'U') || (y === rows - 1 && d === 'D')));
-
-            const pool = (isBorder && insideDirs.length > 0 && Math.random() < 0.8)
-                ? insideDirs : validDirs;
+            // Prefer directions that escape the shape (toward an inactive or edge cell)
+            const isShapeBorder = isOnShapeBorder(x, y, cols, rows);
+            const escapePool = isShapeBorder ? validDirs.filter(d => leadsToExit(x, y, d)) : [];
+            const pool = (escapePool.length > 0 && Math.random() < 0.8) ? escapePool : validDirs;
             const chosenDir = pool[Math.floor(Math.random() * pool.length)];
 
             grid[y][x] = {
@@ -556,20 +862,140 @@ function generateSolvablePuzzle(cols, rows, targetBuses) {
             activeBuses++;
         }
     }
+
+    // Apply chain pass to create dependency chains
+    applyChainPass(currentLevel.chainDensity, currentLevel.maxChainDepth);
+}
+
+// Returns true if (x,y) is on the border of the active shape (has at least one inactive neighbour or grid edge)
+function isOnShapeBorder(x, y, cols, rows) {
+    for (const [dx, dy] of [[0,-1],[0,1],[-1,0],[1,0]]) {
+        const nx = x + dx, ny = y + dy;
+        if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) return true;
+        if (!shapeGrid[ny][nx]) return true;
+    }
+    return false;
+}
+
+// Returns true if the direction from (x,y) leads directly to an escape (inactive cell or edge)
+function leadsToExit(x, y, dir) {
+    const dx = dir === 'R' ? 1 : dir === 'L' ? -1 : 0;
+    const dy = dir === 'D' ? 1 : dir === 'U' ? -1 : 0;
+    const nx = x + dx, ny = y + dy;
+    const cols = currentLevel.cols, rows = currentLevel.rows;
+    if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) return true;
+    return !shapeGrid[ny][nx];
 }
 
 function isPathClear(x, y, dx, dy, cols, rows) {
     let cx = x + dx, cy = y + dy;
     while (cy >= 0 && cy < rows && cx >= 0 && cx < cols) {
-        if (grid[cy][cx] !== null) return false;
+        if (!shapeGrid[cy][cx]) { cx += dx; cy += dy; continue; } // inactive gap: passable
+        if (grid[cy][cx] !== null) return false; // active cell with a bus: blocked
         cx += dx;
         cy += dy;
     }
-    return true;
+    return true; // reached grid edge = open exit
 }
+
+// ─── CHAIN PASS ───────────────────────────────────────────────────────────────
+function getAllFreeBuses() {
+    const free = [];
+    const cols = currentLevel.cols, rows = currentLevel.rows;
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+            if (!grid[y][x]) continue;
+            const dir = grid[y][x].dir;
+            const dx = dir === 'R' ? 1 : dir === 'L' ? -1 : 0;
+            const dy = dir === 'D' ? 1 : dir === 'U' ? -1 : 0;
+            if (isPathClear(x, y, dx, dy, cols, rows)) free.push({ x, y });
+        }
+    }
+    return free;
+}
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function dirVec(dir) {
+    return { dx: dir==='R'?1:dir==='L'?-1:0, dy: dir==='D'?1:dir==='U'?-1:0 };
+}
+function antiDir(dir) { return { U:'D', D:'U', L:'R', R:'L' }[dir]; }
+
+function tryPlaceBlocker(targetBus) {
+    const cols = currentLevel.cols, rows = currentLevel.rows;
+    const tDir = grid[targetBus.y][targetBus.x].dir;
+    const { dx, dy } = dirVec(tDir);
+
+    // Collect empty active cells along the target bus's escape path (skip inactive gaps)
+    const candidates = [];
+    let cx = targetBus.x + dx, cy = targetBus.y + dy;
+    while (cy >= 0 && cy < rows && cx >= 0 && cx < cols) {
+        if (!shapeGrid[cy][cx]) { cx += dx; cy += dy; continue; } // skip inactive gaps
+        if (grid[cy][cx] !== null) break; // stop at first bus
+        candidates.push({ x: cx, y: cy });
+        cx += dx; cy += dy;
+    }
+    shuffle(candidates);
+
+    const DIRS = ['U','D','L','R'];
+    const forbidden = antiDir(tDir); // blocker must NOT face toward the target (unnecessary constraint avoided)
+
+    for (const { x, y } of candidates) {
+        const validDirs = DIRS.filter(d => {
+            if (d === forbidden) return false;
+            const { dx: bdx, dy: bdy } = dirVec(d);
+            return isPathClear(x, y, bdx, bdy, cols, rows);
+        });
+        if (validDirs.length === 0) continue;
+
+        const chosenDir = validDirs[Math.floor(Math.random() * validDirs.length)];
+        grid[y][x] = {
+            dir: chosenDir,
+            themeIndex: Math.floor(Math.random() * busThemes.length),
+            busInstance: null
+        };
+        activeBuses++;
+        totalBusesForStage++;
+        return { x, y };
+    }
+    return null;
+}
+
+function applyChainPass(density, maxDepth) {
+    let candidates = shuffle(getAllFreeBuses());
+    let lastPlaced = null;
+
+    for (let depth = 0; depth < maxDepth && candidates.length > 0; depth++) {
+        const nextWave = [];
+        for (const bus of candidates) {
+            if (Math.random() > density) continue;
+            const blocker = tryPlaceBlocker(bus);
+            if (blocker) {
+                nextWave.push(blocker);
+                lastPlaced = blocker;
+            }
+        }
+        candidates = nextWave;
+    }
+
+    // Safety: ensure at least 1 free bus exists after the chain pass
+    if (getAllFreeBuses().length === 0 && lastPlaced) {
+        grid[lastPlaced.y][lastPlaced.x] = null;
+        activeBuses--;
+        totalBusesForStage--;
+    }
+}
+
 
 // ─── RENDER ───────────────────────────────────────────────────────────────────
 function renderGrid() {
+    if (!currentLevel || shapeGrid.length === 0) return;
     gridEl.innerHTML = '';
     const cols = currentLevel.cols;
     const rows = currentLevel.rows;
@@ -588,12 +1014,17 @@ function renderGrid() {
     for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
             const cell = document.createElement('div');
-            cell.className = 'cell';
 
-            if (grid[y][x]) {
+            if (!shapeGrid[y][x]) {
+                // Inactive cell — not part of the current shape
+                cell.className = 'cell cell-inactive';
+            } else if (grid[y][x]) {
+                cell.className = 'cell';
                 const cellData = grid[y][x];
                 const wrapper = document.createElement('div');
                 wrapper.className = `bus-wrapper dir-${cellData.dir}`;
+                wrapper.dataset.x = x;
+                wrapper.dataset.y = y;
 
                 const canvas = document.createElement('canvas');
                 canvas.className = 'bus-canvas';
@@ -610,10 +1041,32 @@ function renderGrid() {
                 wrapper.appendChild(canvas);
                 wrapper.onpointerdown = (e) => { e.preventDefault(); handleTap(x, y, wrapper, bus); };
                 cell.appendChild(wrapper);
+            } else {
+                // Active but empty cell — show faint dot to reveal shape outline
+                cell.className = 'cell cell-empty';
             }
             gridEl.appendChild(cell);
         }
     }
+}
+
+// Highlight free buses (Easy mode only)
+function refreshFreeIndicators() {
+    const cols = currentLevel.cols, rows = currentLevel.rows;
+    const wrappers = gridEl.querySelectorAll('.bus-wrapper');
+    wrappers.forEach(wrapper => {
+        const x = parseInt(wrapper.dataset.x, 10);
+        const y = parseInt(wrapper.dataset.y, 10);
+        if (isNaN(x) || isNaN(y)) return;
+        const cell = grid[y] && grid[y][x];
+        if (!cell) { wrapper.classList.remove('bus-free'); return; }
+        const { dx, dy } = dirVec(cell.dir);
+        if (isPathClear(x, y, dx, dy, cols, rows)) {
+            wrapper.classList.add('bus-free');
+        } else {
+            wrapper.classList.remove('bus-free');
+        }
+    });
 }
 
 // ─── GAMEPLAY ─────────────────────────────────────────────────────────────────
@@ -640,6 +1093,8 @@ function handleTap(x, y, wrapper, bus) {
         setTimeout(() => bus.startEngine(), 15);
         // Fly out after tap animation ends
         setTimeout(() => animateFlyOut(wrapper, dir, bus), 250);
+        // Update free-bus indicators on Easy only
+        if (currentLevel.id === 'easy') refreshFreeIndicators();
         if (activeBuses === 0) handleStageWin();
     } else {
         playSound('incorrect');

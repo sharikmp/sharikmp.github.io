@@ -898,3 +898,32 @@ tr.highlight {
     40%  { transform: scale(2.1); }
     100% { transform: scale(1); }
 }
+
+/* ─── SHAPED GRID CELLS ─────────────────────────────────────────── */
+
+/* Cells outside the active shape — completely invisible and non-interactive */
+.cell-inactive {
+    background: transparent;
+    pointer-events: none;
+    /* ensure no hover/tap bleed from adjacent buses */
+    z-index: 0;
+}
+
+/* Active but empty cells — faint dot to reveal the shape outline */
+.cell-empty {
+    background:
+        radial-gradient(circle, rgba(255,255,255,0.055) 1.5px, transparent 1.5px)
+        center / 5px 5px no-repeat;
+}
+
+/* ─── FREE-BUS GLOW (Easy mode only) ────────────────────────────── */
+.bus-free .bus-canvas {
+    filter: drop-shadow(0 0 5px rgba(74, 222, 128, 0.75));
+    animation: freePulse 1.8s ease-in-out infinite;
+}
+
+@keyframes freePulse {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.5)); }
+    50%       { filter: drop-shadow(0 0 11px rgba(74, 222, 128, 1.0)); }
+}
+

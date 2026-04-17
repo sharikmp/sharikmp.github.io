@@ -78,3 +78,26 @@ To activate: remove `hidden` class and set `src` on the inner `<iframe>`:
 - Difficulty scaling within Pro (more stages)
 - Combo multiplier for consecutive fast taps
 - All numbers adjustable via constants only
+
+## Implemented Features (April 2026)
+
+### Shaped Grids ✅
+- `SHAPE_LIBRARY` constant with 36 pixel-font letter/digit bitmaps (5×7, nearest-neighbour scaled) + 12 geometric shapes (Heart, Triangle, Diamond, Star, Cross, Arrow, Pentagon, Hexagon, Circle, Ring, Moon, Lightning)
+- `selectShapeForStage(cols, rows)` picks a random shape, builds `shapeGrid` boolean mask
+- Easy (10×10) filtered to shapes generating ≥ 25 active cells
+- Bus count capped to 82% of active cells — leaves room for chain-pass insertions
+- `isPathClear` treats inactive cells as open exits (shape boundary = escape)
+- `renderGrid` assigns `cell-inactive` / `cell-empty` CSS classes; inactive cells get `pointer-events: none`
+- `bus-wrapper` elements get `data-x` / `data-y` attributes for indicator lookups
+
+### Chain Dependency Puzzles ✅
+- `LEVELS` extended with `chainDensity` (0.15–0.70) and `maxChainDepth` (2–5)
+- `applyChainPass(density, maxDepth)`: wave-based algorithm places blocker buses on escape paths; each blocker is itself immediately escapable → solvability guaranteed
+- `getAllFreeBuses()`: returns all currently-free buses (used by chain pass and indicators)
+- `tryPlaceBlocker(targetBus)`: scans escape path for valid insertion candidate
+- Safety guard: if chain pass produces zero free buses, last placement is undone
+
+### Easy Mode Free-Bus Glow ✅
+- `refreshFreeIndicators()`: adds/removes `.bus-free` CSS class on live wrappers
+- Called after each successful tap (Easy only) and on stage start
+- Green pulsing `drop-shadow` animation — no text labels anywhere
