@@ -367,3 +367,89 @@ tr.highlight    { background: rgba(56,189,248,0.08); }
 }
 .floating-score.positive { color: var(--success); }
 .floating-score.negative { color: var(--error-color); }
+
+/* ─── SHARED GAME NAV BAR ────────────────────────────────────────── */
+/* Used on individual game pages (traffic-jam, code-breaker, etc.)   */
+/* Sits above the game #header when playing, hidden during gameplay   */
+.game-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5000;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-dim);
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 10px;
+    flex-shrink: 0;
+    font-family: var(--font);
+}
+.game-nav a {
+    color: #475569;
+    text-decoration: none;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.game-nav a:hover { color: var(--accent); }
+.game-nav .gn-brand {
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-right: auto;
+    text-decoration: none;
+    background: linear-gradient(110deg, #e2e8f0 0%, #38bdf8 55%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: opacity 0.2s;
+}
+.game-nav .gn-brand:hover { opacity: 0.75; }
+.game-nav .gn-brand img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(56,189,248,0.7));
+}
+.game-nav .gn-sep {
+    color: #1e293b;
+    font-size: 0.7rem;
+}
+
+/* Shift the game area down to clear the nav bar */
+.game-page { padding-top: 44px; }
+
+/* ─── SHARED GAME FOOTER ─────────────────────────────────────────── */
+/* Thin footer shown inside game modal overlays                       */
+.game-footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px 16px 6px;
+    font-family: var(--font);
+    font-size: 0.6rem;
+    color: #1e293b;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border-dim);
+    margin-top: auto;
+    flex-shrink: 0;
+}
+.game-footer a {
+    color: #334155;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+.game-footer a:hover { color: var(--accent); }

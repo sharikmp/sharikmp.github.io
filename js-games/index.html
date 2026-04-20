@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Labs · JS Games</title>
+    <title>Neural Minds · Brain Training Games</title>
 
     <!-- Fonts pre-connect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,54 +60,76 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 58px;
+            height: 62px;
+            gap: 16px;
         }
         .nav-logo {
             font-family: var(--font);
             font-weight: 700;
             font-size: 1rem;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #fff;
             text-decoration: none;
-        }
-        .nav-logo-box {
-            width: 26px; height: 26px;
-            border: 2px solid var(--primary);
-            border-radius: 6px;
-            position: relative;
             flex-shrink: 0;
+            background: linear-gradient(110deg, #e2e8f0 0%, #38bdf8 55%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: opacity 0.2s;
         }
-        .nav-logo-box::after {
-            content: '';
-            position: absolute;
-            top: 4px; left: 4px;
-            width: 10px; height: 10px;
-            background: var(--accent);
-            border-radius: 2px;
+        .nav-logo:hover { opacity: 0.75; }
+        .nav-logo img {
+            width: 28px; height: 28px;
+            object-fit: contain;
+            flex-shrink: 0;
+            filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(56,189,248,0.7));
         }
-        .nav-status {
-            font-family: var(--font);
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .nav-links {
             display: flex;
             align-items: center;
             gap: 6px;
+            margin-left: auto;
         }
-        .status-dot {
-            width: 7px; height: 7px;
-            background: var(--success);
-            border-radius: 50%;
-            flex-shrink: 0;
-            animation: dotPulse 2.2s ease-in-out infinite;
+        .nav-links a {
+            font-family: var(--font);
+            font-size: 0.68rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #475569;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: color 0.15s, background 0.15s;
         }
-        @keyframes dotPulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
-            50%       { opacity: 0.6; box-shadow: 0 0 0 6px rgba(74,222,128,0); }
+        .nav-links a:hover { color: var(--accent); background: rgba(56,189,248,0.06); }
+        .nav-links a.nav-cta {
+            background: rgba(59,130,246,0.12);
+            border: 1px solid rgba(59,130,246,0.3);
+            color: var(--accent);
+        }
+        .nav-links a.nav-cta:hover {
+            background: rgba(59,130,246,0.22);
+        }
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px;
+            border: none;
+            background: none;
+        }
+        .nav-hamburger span {
+            display: block; width: 20px; height: 2px;
+            background: #475569; border-radius: 2px;
+            transition: background 0.15s;
+        }
+        .nav-hamburger:hover span { background: var(--accent); }
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
         }
 
         /* ─── HERO ───────────────────────────────────────────────────────── */
@@ -464,16 +486,130 @@
         }
 
         /* ─── FOOTER ─────────────────────────────────────────────────────── */
-        footer {
-            background: #000;
+        .site-footer {
+            background: #020408;
             border-top: 1px solid var(--border-dim);
-            padding: 2rem 1.5rem;
-            text-align: center;
+            padding: 4rem 1.5rem 2rem;
+            font-family: var(--font-sans);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border-dim);
+        }
+        .footer-brand .fb-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
             font-family: var(--font);
-            font-size: 0.68rem;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            margin-bottom: 14px;
+            background: linear-gradient(110deg, #e2e8f0 0%, #38bdf8 55%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: opacity 0.2s;
+        }
+        .footer-brand .fb-logo:hover { opacity: 0.75; }
+        .footer-brand .fb-logo img {
+            width: 26px; height: 26px;
+            flex-shrink: 0;
+            filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(56,189,248,0.6));
+        }
+        .footer-brand p {
+            font-size: 0.82rem;
+            color: #334155;
+            line-height: 1.7;
+            margin: 0 0 18px;
+            max-width: 280px;
+        }
+        .fb-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .fb-badge {
+            font-family: var(--font);
+            font-size: 0.58rem;
+            padding: 3px 9px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-dim);
+            color: #334155;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .footer-col h4 {
+            font-family: var(--font);
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: #475569;
+            text-transform: uppercase;
+            margin: 0 0 16px;
+        }
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .footer-col ul li a {
+            font-size: 0.82rem;
+            color: #334155;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-col ul li a:hover { color: var(--accent); }
+        .footer-col ul li .soon-tag {
+            font-family: var(--font);
+            font-size: 0.55rem;
+            color: #1e293b;
+            border: 1px solid #1e293b;
+            padding: 1px 5px;
+            border-radius: 3px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .footer-credit {
+            font-size: 0.75rem;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .footer-credit .heart { color: #ef4444; }
+        .footer-credit a {
+            color: #475569;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-credit a:hover { color: var(--accent); }
+        .footer-legal {
+            font-family: var(--font);
+            font-size: 0.6rem;
             color: #1e293b;
             letter-spacing: 2px;
             text-transform: uppercase;
+        }
+        @media (max-width: 860px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        }
+        @media (max-width: 500px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
 
         /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
@@ -497,12 +633,18 @@
         <div class="page-wrap">
             <div class="inner">
                 <a class="nav-logo" href=".">
-                    <div class="nav-logo-box"></div>
-                    NEURAL_LABS
+                    <img src="https://www.clipartmax.com/png/small/213-2136486_brain-free-icon-icon-brain.png" alt="Neural Minds brain logo">
+                    NEURAL_MINDS
                 </a>
-                <span class="nav-status">
-                    <span class="status-dot"></span>2 GAMES LIVE
-                </span>
+                <nav class="nav-links">
+                    <a href="#games">Games</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#games" class="nav-cta">Play Now →</a>
+                </nav>
+                <button class="nav-hamburger" aria-label="Menu" onclick="this.closest('nav.site-nav').querySelector('.nav-links').classList.toggle('nav-open')">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
     </nav>
@@ -512,7 +654,7 @@
         <canvas id="bg-canvas"></canvas>
         <div class="hero-content">
             <span class="hero-eyebrow">[ Instant Brain Training ]</span>
-            <h1>Level Up<br>Your Mind</h1>
+            <h1>Train Your<br>Neural Minds</h1>
             <p class="hero-sub">Fast-paced IQ challenges built for quick sessions. No sign-up, no tracking — just pure logic, language, and speed.</p>
             <div class="hero-stats">
                 <span class="hero-stat">2 Games Live</span>
@@ -692,10 +834,112 @@
         </span>
     </div>
 
-    <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
-    <footer>
+    <!-- ── ABOUT SECTION ─────────────────────────────────────────────── -->
+    <section id="about" class="page-section">
         <div class="page-wrap">
-            NEURAL_LABS &nbsp;·&nbsp; JS GAMES &nbsp;·&nbsp; NO TRACKERS &nbsp;·&nbsp; PLAY &amp; LEVEL UP
+            <div class="section-head">
+                <span class="section-label">// ABOUT</span>
+                <h2 class="section-title">What is Neural Minds?</h2>
+                <p class="section-sub">A passion project turned brain-training platform. No ads, no sign-ups, no nonsense — just hand-crafted games designed to sharpen your mind in minutes a day.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;max-width:860px;margin:0 auto">
+                <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-dim);border-radius:16px;padding:1.5rem">
+                    <div style="font-size:1.8rem;margin-bottom:10px">🧠</div>
+                    <div style="font-weight:700;font-size:0.9rem;color:#e2e8f0;margin-bottom:6px">Cognitive Focus</div>
+                    <div style="font-size:0.8rem;color:#475569;line-height:1.6">Each game targets a measurable cognitive skill — spatial reasoning, pattern recognition, or linguistic decoding.</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-dim);border-radius:16px;padding:1.5rem">
+                    <div style="font-size:1.8rem;margin-bottom:10px">⚡</div>
+                    <div style="font-weight:700;font-size:0.9rem;color:#e2e8f0;margin-bottom:6px">Quick Sessions</div>
+                    <div style="font-size:0.8rem;color:#475569;line-height:1.6">Designed for 2–5 minute micro-sessions. Perfect for office breaks, travel, or warming up your brain before deep work.</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-dim);border-radius:16px;padding:1.5rem">
+                    <div style="font-size:1.8rem;margin-bottom:10px">🔓</div>
+                    <div style="font-weight:700;font-size:0.9rem;color:#e2e8f0;margin-bottom:6px">Always Free</div>
+                    <div style="font-size:0.8rem;color:#475569;line-height:1.6">No paywalls, no subscriptions. Neural Minds will always be free. More games are added regularly.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CONTACT SECTION ───────────────────────────────────────────── -->
+    <section id="contact" class="page-section trust-section">
+        <div class="page-wrap">
+            <div class="section-head" style="margin-bottom:2rem">
+                <span class="section-label">// CONTACT</span>
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="section-sub">Have a game idea, found a bug, or just want to say hi? Drop a message.</p>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+                <a href="mailto:sharik@example.com" style="display:flex;align-items:center;gap:10px;background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2);border-radius:12px;padding:14px 24px;color:var(--accent);text-decoration:none;font-family:var(--font);font-size:0.8rem;letter-spacing:1px;transition:background 0.2s;">✉ sharik@example.com</a>
+                <a href="https://github.com/sharikmp" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border-dim);border-radius:12px;padding:14px 24px;color:#64748b;text-decoration:none;font-family:var(--font);font-size:0.8rem;letter-spacing:1px;transition:background 0.2s;">⌥ github.com/sharikmp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── BIG FOOTER ────────────────────────────────────────────────── -->
+    <footer class="site-footer">
+        <div class="page-wrap">
+            <div class="footer-grid">
+
+                <!-- Brand col -->
+                <div class="footer-brand">
+                    <a class="fb-logo" href=".">
+                        <img src="https://www.clipartmax.com/png/small/213-2136486_brain-free-icon-icon-brain.png" alt="Neural Minds">
+                        NEURAL_MINDS
+                    </a>
+                    <p>A free, open-source collection of browser-based cognitive games. No accounts. No tracking. Just brain training.</p>
+                    <div class="fb-badges">
+                        <span class="fb-badge">Vanilla JS</span>
+                        <span class="fb-badge">No Backend</span>
+                        <span class="fb-badge">Open Source</span>
+                        <span class="fb-badge">Mobile Ready</span>
+                    </div>
+                </div>
+
+                <!-- Games col -->
+                <div class="footer-col">
+                    <h4>Games</h4>
+                    <ul>
+                        <li><a href="traffic-jam/index.html">🚌 Bus Escape</a></li>
+                        <li><a href="code-breaker/index.html">🔐 Code Breaker</a></li>
+                        <li><a href="#games">🧩 Entropy Grid <span class="soon-tag">SOON</span></a></li>
+                        <li><a href="#games">🎯 Turing Lock <span class="soon-tag">SOON</span></a></li>
+                    </ul>
+                </div>
+
+                <!-- Navigate col -->
+                <div class="footer-col">
+                    <h4>Navigate</h4>
+                    <ul>
+                        <li><a href=".">Home</a></li>
+                        <li><a href="#games">All Games</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Privacy col -->
+                <div class="footer-col">
+                    <h4>Privacy</h4>
+                    <ul>
+                        <li><a href="#">No data collected</a></li>
+                        <li><a href="#">Local scores only</a></li>
+                        <li><a href="#">No cookies</a></li>
+                        <li><a href="#">No third-parties</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-credit">
+                    Made with <span class="heart">♥</span> and code by
+                    <a href="mailto:sharik@example.com">Sharik</a>
+                    &nbsp;·&nbsp; &copy; 2026 Neural Minds
+                </div>
+                <div class="footer-legal">Neural Minds &nbsp;·&nbsp; No Trackers &nbsp;·&nbsp; Play &amp; Level Up</div>
+            </div>
         </div>
     </footer>
 
