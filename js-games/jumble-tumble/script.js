@@ -231,8 +231,8 @@ const WORDS = {
 
 // ─── STATE ──────────────────────────────────────────────────────────
 const ROUNDS             = 5;       // rounds per game
-const ROUND_TIME         = 2;      // seconds per round
-const HINT_AFTER_SECS    = 0;       // reveal hint this many seconds after round starts
+const ROUND_TIME         = 30;      // seconds per round
+const HINT_AFTER_SECS    = 3;       // reveal hint this many seconds after round starts
 const CELEBRATE_HOLD_MS  = 5000;    // ms to show correct word before advancing
 const WIN_THRESHOLD      = 0.6;     // fraction of rounds correct needed to win
 const AUTO_FILL_RATIO    = 0.30;    // fraction of remaining letters to auto-fill
@@ -980,11 +980,17 @@ function autoFillHint() {
     state.autoFilled = true;
     const word  = state.currentWord;
     const count = Math.ceil(word.length * AUTO_FILL_RATIO);
-    const k     = state.lastTypedLength; // chars user has already typed
 
-    // Pick from positions the user hasn't "claimed" yet (positions k..end)
-    const available = [];
-    for (let i = k; i < word.length; i++) available.push(i);
+    // Build the ordered list of word-positions the user still needs to type
+    // (positions that are not already autofilled, in word-index order).
+    // The first `state.lastTypedLength` of these are already "claimed" by the
+    // user's typed characters, so skip them and only pick from the rest.
+    const nonAutofillPositions = [];
+    for (let i = 0; i < word.length; i++) {
+        if (state.autoFillMap[i] === undefined) nonAutofillPositions.push(i);
+    }
+    // positions available to autofill = those not yet claimed by typed chars
+    const available = nonAutofillPositions.slice(state.lastTypedLength);
     if (available.length === 0) return;
 
     // Fisher-Yates shuffle, take first 'count' positions
@@ -1048,14 +1054,16 @@ function handleInputChange() {
     // Detect newly added character (not a delete/backspace)
     if (typed.length > state.lastTypedLength) {
         const newChar = typed[typed.length - 1];
-        // Check against remaining letters the user still needs to type (excluding autofill)
-        const expected = computeExpectedInput();
-        const remaining = expected.split('');
+        // Build a frequency map of letters the user still needs to type
+        // (word letters at non-autofill positions, minus what's already been typed)
+        const expected = computeExpectedInput(); // letters user must type, in word-pos order
+        const freq = {};
+        expected.split('').forEach(c => { freq[c] = (freq[c] || 0) + 1; });
+        // Remove already-typed chars (all but the latest one)
         typed.slice(0, typed.length - 1).split('').forEach(c => {
-            const idx = remaining.indexOf(c);
-            if (idx > -1) remaining.splice(idx, 1);
+            if (freq[c] > 0) freq[c]--;
         });
-        if (!remaining.includes(newChar)) playSound('snd-incorrect');
+        if (!freq[newChar]) playSound('snd-incorrect');
     }
 
     state.lastTypedLength = typed.length;
