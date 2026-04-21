@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jumble Tumble — Neural Minds</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="game-page">
+
+    <!-- ── NAV ──────────────────────────────────────────────────────── -->
+    <nav class="game-nav">
+        <a class="gn-brand" href="../index.html">
+            <img src="https://www.clipartmax.com/png/small/213-2136486_brain-free-icon-icon-brain.png" alt="Neural Minds">
+            NEURAL MINDS
+        </a>
+        <span class="gn-sep">&middot;</span>
+        <a href="../index.html">Home</a>
+        <a href="../index.html#games">All Games</a>
+    </nav>
+
+    <!-- ── SOUND TOGGLE ──────────────────────────────────────────────── -->
+    <div id="sound-toggle" class="sound-toggle" onclick="toggleSound()">🔊</div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!--   START MODAL                                                  -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div id="start-modal" class="modal-overlay">
+        <div class="start-icon">🔤</div>
+        <h1 class="start-title">Jumble Tumble</h1>
+        <p class="start-subtitle">Unscramble the word before time runs out.<br>A hint reveals itself at the 10-second mark.</p>
+
+        <div id="level-cards" class="level-cards-wrap">
+            <div class="level-card lc-easy"  onclick="startGame('easy')">
+                <div class="lc-name">EASY</div>
+                <div class="lc-detail">Common words · 30 s</div>
+            </div>
+            <div class="level-card lc-med"   onclick="startGame('medium')">
+                <div class="lc-name">MEDIUM</div>
+                <div class="lc-detail">Mixed vocab · 30 s</div>
+            </div>
+            <div class="level-card lc-hard"  onclick="startGame('hard')">
+                <div class="lc-name">HARD</div>
+                <div class="lc-detail">Tricky terms · 30 s</div>
+            </div>
+            <div class="level-card lc-pro"   onclick="startGame('pro')">
+                <div class="lc-name">PRO</div>
+                <div class="lc-detail">Expert words · 30 s</div>
+            </div>
+        </div>
+
+        <button class="leaderboard-open-btn" onclick="showLeaderboardModal()">LEADERBOARD</button>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!--   GAME SCREEN                                                  -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div id="game-screen" class="hidden">
+
+        <!-- Top HUD -->
+        <div id="game-hud">
+            <span id="hud-level"></span>
+            <span class="hud-sep">&middot;</span>
+            <span id="hud-round">Round 1 / 10</span>
+            <span class="hud-sep">&middot;</span>
+            <span id="hud-score">Score: 0</span>
+        </div>
+
+        <!-- Timer bar -->
+        <div id="timer-wrap">
+            <div id="timer-bar"></div>
+            <span id="timer-label">30</span>
+        </div>
+
+        <!-- Scrambled word tiles -->
+        <div id="tiles-area">
+            <div id="jumbled-word"></div>
+        </div>
+
+        <!-- Hint area (hidden until 10s mark) -->
+        <div id="hint-area" class="hidden">
+            <span class="hint-icon">💡</span>
+            <span id="hint-text"></span>
+        </div>
+
+        <!-- Input -->
+        <div id="input-area">
+            <input
+                id="answer-input"
+                type="text"
+                placeholder="Type the word…"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                maxlength="30"
+            >
+            <button id="submit-btn" onclick="handleSubmit()">SUBMIT</button>
+        </div>
+
+        <!-- Feedback flash (correct / wrong) -->
+        <div id="feedback" class="hidden"></div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!--   RESULT MODAL                                                 -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div id="result-modal" class="modal-overlay hidden">
+
+        <!-- Shareable card -->
+        <div id="result-card">
+            <div id="result-card-header">
+                <span id="result-card-game">🔤 Jumble Tumble</span>
+                <span id="result-card-level"></span>
+            </div>
+
+            <div id="result-title-wrap">
+                <span id="result-icon"></span>
+                <h1 id="result-title"></h1>
+            </div>
+
+            <div class="result-stats">
+                <div class="stat-col">
+                    <span class="stat-value" id="stat-score">0</span>
+                    <span class="stat-label">Score</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-col">
+                    <span class="stat-value" id="stat-correct">0/10</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-col">
+                    <div class="pct-ring-wrap">
+                        <svg class="pct-ring" viewBox="0 0 84 84">
+                            <circle class="pct-bg"  cx="42" cy="42" r="31.5" />
+                            <circle id="pct-arc" class="pct-arc" cx="42" cy="42" r="31.5" />
+                        </svg>
+                        <span id="stat-pct" class="pct-label">0%</span>
+                    </div>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+            </div>
+
+            <div id="result-score-row">
+                <span class="rst-icon">⭐</span>
+                <span id="rst-score-label">Final Score</span>
+                <span id="rst-score-value"></span>
+            </div>
+        </div>
+
+        <div id="result-buttons"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!--   LEADERBOARD MODAL                                            -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div id="leaderboard-modal" class="modal-overlay hidden">
+        <h1>Top Scores &mdash; <span id="lb-level-name" style="color:var(--accent)"></span></h1>
+        <div class="leaderboard-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th style="text-align:right;">Score</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+            </table>
+        </div>
+        <div id="lb-tabs"></div>
+        <button onclick="resetToStart()">MAIN MENU</button>
+    </div>
+
+    <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+    <footer class="game-footer">
+        <a href="../index.html">Neural Minds</a> &nbsp;&middot;&nbsp;
+        Made with <span style="color:#ef4444">♥</span> and code by
+        <a href="mailto:sharik@example.com">Sharik</a>
+    </footer>
+
+    <!-- ── AUDIO ─────────────────────────────────────────────────────── -->
+    <audio id="snd-correct"   src="../assets/sounds/correct.mp3"   preload="auto"></audio>
+    <audio id="snd-incorrect" src="../assets/sounds/incorrect.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

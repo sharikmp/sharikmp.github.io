@@ -332,9 +332,11 @@
         .card-bus    { --c-accent: #38bdf8; --c-glow: rgba(56,189,248,0.15); }
         .card-cipher { --c-accent: #818cf8; --c-glow: rgba(129,140,248,0.15); }
         .card-sudoku { --c-accent: #4ade80; --c-glow: rgba(74,222,128,0.15); }
+        .card-jumble { --c-accent: #fb923c; --c-glow: rgba(251,146,60,0.15); }
         .card-soon   { cursor: default; opacity: 0.45; }
         .card-soon:hover { transform: none; border-color: var(--border-dim); box-shadow: none; }
         .card-soon:hover::after { opacity: 0; }
+        .badge-jumble { background: rgba(251,146,60,0.1); color: #fb923c; border: 1px solid rgba(251,146,60,0.28); }
 
         .card-icon { font-size: 2.6rem; line-height: 1; }
         .card-top-row {
@@ -659,7 +661,7 @@
             <h1>Train Your<br>Neural Minds</h1>
             <p class="hero-sub">Fast-paced IQ challenges built for quick sessions. No sign-up, no tracking — just pure logic, language, and speed.</p>
             <div class="hero-stats">
-                <span class="hero-stat">2 Games Live</span>
+                <span class="hero-stat">Games Live</span>
                 <span class="hero-stat">4 Difficulty Levels Each</span>
                 <span class="hero-stat">100% Offline-Capable</span>
                 <span class="hero-stat">Local Leaderboard</span>
@@ -668,6 +670,46 @@
             <div class="scroll-tag">
                 <div class="scroll-line"></div>
                 SCROLL
+            </div>
+        </div>
+    </section>
+
+    <!-- ── TRUST ──────────────────────────────────────────────────────── -->
+    <section class="page-section trust-section">
+        <div class="page-wrap">
+            <div class="section-head" style="margin-bottom:2.5rem">
+                <span class="section-label">// PRIVACY &amp; TRUST</span>
+                <h2 class="section-title">Built to Respect You</h2>
+            </div>
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon">🔒</div>
+                    <div>
+                        <div class="trust-title">Privacy First</div>
+                        <div class="trust-desc">No personal data is collected. No accounts, no email, no tracking pixels.</div>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">💾</div>
+                    <div>
+                        <div class="trust-title">Local Only</div>
+                        <div class="trust-desc">Scores live in your browser's localStorage — never sent to any server.</div>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">📴</div>
+                    <div>
+                        <div class="trust-title">Works Offline</div>
+                        <div class="trust-desc">All games run entirely in the browser. No internet required after first load.</div>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">⚡</div>
+                    <div>
+                        <div class="trust-title">Zero Dependencies</div>
+                        <div class="trust-desc">Pure vanilla HTML, CSS, and JS. No frameworks, no trackers, no bloat.</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -773,67 +815,36 @@
                     </div>
                 </a>
 
-                <!-- ─ MODULE 04: Coming Soon ─ -->
-                <div class="game-card card-soon">
-                    <div class="card-icon" style="opacity:0.25">🎯</div>
+                <!-- ─ MODULE 04: Jumble Tumble ─ -->
+                <a class="game-card card-jumble" href="jumble-tumble/index.html">
+                    <div class="card-icon">🔤</div>
                     <div class="card-top-row">
                         <div>
                             <div class="card-id">MODULE_04</div>
-                            <h3 class="card-title" style="color:#334155">Turing Lock</h3>
+                            <h3 class="card-title">Jumble Tumble</h3>
                         </div>
-                        <span class="type-badge badge-soon">COMING SOON</span>
+                        <span class="type-badge badge-jumble">WORD SCRAMBLE</span>
                     </div>
-                    <p class="card-desc" style="color:#1e293b">Chain logic gates to unlock the sequence. An algorithmic puzzle that tests pure deductive reasoning under time pressure.</p>
+                    <p class="card-desc">A word is scrambled before your eyes — unscramble it before the 30-second timer hits zero. A hint sneaks in at the 10-second mark. Score big by solving it fast, without peeking at the hint!</p>
                     <div class="card-tags">
-                        <span class="tag">Logic Gates</span>
-                        <span class="tag">Deduction</span>
-                        <span class="tag">Algorithmic</span>
+                        <span class="tag">Word Scramble</span>
+                        <span class="tag">Speed Typing</span>
+                        <span class="tag">Hint System</span>
+                        <span class="tag">Vocabulary</span>
+                        <span class="tag">Timed Rounds</span>
                     </div>
                     <div class="card-footer">
-                        <span style="font-family:var(--font);font-size:0.65rem;color:#1e293b;letter-spacing:2px">— IN DEVELOPMENT —</span>
+                        <div class="level-pips">
+                            <div class="pip pip-easy" title="Easy"></div>
+                            <div class="pip pip-med"  title="Medium"></div>
+                            <div class="pip pip-hard" title="Hard"></div>
+                            <div class="pip pip-pro"  title="Pro"></div>
+                            <span class="pip-label">4 LEVELS</span>
+                        </div>
+                        <span class="play-btn" style="background:#fb923c;">PLAY &rarr;</span>
                     </div>
-                </div>
+                </a>
 
-            </div>
-        </div>
-    </section>
-
-    <!-- ── TRUST ──────────────────────────────────────────────────────── -->
-    <section class="page-section trust-section">
-        <div class="page-wrap">
-            <div class="section-head" style="margin-bottom:2.5rem">
-                <span class="section-label">// PRIVACY &amp; TRUST</span>
-                <h2 class="section-title">Built to Respect You</h2>
-            </div>
-            <div class="trust-grid">
-                <div class="trust-item">
-                    <div class="trust-icon">🔒</div>
-                    <div>
-                        <div class="trust-title">Privacy First</div>
-                        <div class="trust-desc">No personal data is collected. No accounts, no email, no tracking pixels.</div>
-                    </div>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon">💾</div>
-                    <div>
-                        <div class="trust-title">Local Only</div>
-                        <div class="trust-desc">Scores live in your browser's localStorage — never sent to any server.</div>
-                    </div>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon">📴</div>
-                    <div>
-                        <div class="trust-title">Works Offline</div>
-                        <div class="trust-desc">All games run entirely in the browser. No internet required after first load.</div>
-                    </div>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon">⚡</div>
-                    <div>
-                        <div class="trust-title">Zero Dependencies</div>
-                        <div class="trust-desc">Pure vanilla HTML, CSS, and JS. No frameworks, no trackers, no bloat.</div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -915,7 +926,7 @@
                         <li><a href="traffic-jam/index.html">🚌 Bus Escape</a></li>
                         <li><a href="code-breaker/index.html">🔐 Code Breaker</a></li>
                         <li><a href="sudoku/index.html">🔢 Sudoku</a></li>
-                        <li><a href="#games">🎯 Turing Lock <span class="soon-tag">SOON</span></a></li>
+                        <li><a href="jumble-tumble/index.html">🔤 Jumble Tumble</a></li>
                     </ul>
                 </div>
 
