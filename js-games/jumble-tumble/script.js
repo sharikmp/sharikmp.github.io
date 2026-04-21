@@ -500,7 +500,8 @@ function startRound() {
     input.disabled = false;
     input.maxLength = 999;
     input.classList.remove('input-correct', 'input-wrong');
-    input.focus();
+    // Only focus on non-touch devices to avoid opening keyboard automatically on mobile
+    if (!('ontouchstart' in window)) input.focus();
 
     document.getElementById('hint-area').classList.add('hidden');
     document.getElementById('feedback').classList.add('hidden');

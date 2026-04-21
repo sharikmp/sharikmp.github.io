@@ -305,23 +305,6 @@
 #answer-input.input-correct { border-color: var(--jt-success); box-shadow: 0 0 0 3px rgba(74,222,128,0.15); }
 #answer-input.input-wrong   { border-color: var(--jt-error);   box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
 
-#submit-btn {
-    font-family: var(--font);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    background: var(--jt-accent);
-    color: #000;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 20px;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.15s;
-    flex-shrink: 0;
-}
-#submit-btn:hover  { opacity: 0.85; transform: scale(1.04); }
-#submit-btn:active { transform: scale(0.97); }
-
 /* ─── FEEDBACK FLASH ─────────────────────────────────────────────── */
 #feedback {
     position: fixed;
@@ -596,7 +579,6 @@
 @media (max-width: 420px) {
     .letter-tile { gap: 5px; }
     #input-area  { flex-direction: column; }
-    #submit-btn  { width: 100%; }
     .level-cards-wrap { gap: 8px; }
     .level-card { flex: 1 1 120px; }
 }
