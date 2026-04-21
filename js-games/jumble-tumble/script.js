@@ -231,9 +231,15 @@ const WORDS = {
 
 // ─── STATE ──────────────────────────────────────────────────────────
 const ROUNDS             = 5;       // rounds per game
-const ROUND_TIME         = 30;      // seconds per round
+const ROUND_TIME         = 2;      // seconds per round
 const HINT_AFTER_SECS    = 0;       // reveal hint this many seconds after round starts
 const CELEBRATE_HOLD_MS  = 5000;    // ms to show correct word before advancing
+const WIN_THRESHOLD      = 0.6;     // fraction of rounds correct needed to win
+const AUTO_FILL_RATIO    = 0.30;    // fraction of remaining letters to auto-fill
+const MIN_PTS_NO_HINT    = 30;      // minimum points for correct answer without hint
+const MIN_PTS_HINT       = 10;      // minimum points for correct answer with hint
+const WARN_TIME_RATIO    = 2 / 3;   // timer turns warn colour below this fraction of ROUND_TIME
+const CRIT_TIME_RATIO    = 1 / 3;   // timer turns crit colour below this fraction
 
 let state = {
     difficulty:      null,
@@ -341,8 +347,8 @@ function startTimer() {
         label.textContent = Math.ceil(state.timeRemaining);
 
         // colour transitions
-        bar.classList.toggle('warn', state.timeRemaining <= 20 && state.timeRemaining > 10);
-        bar.classList.toggle('crit', state.timeRemaining <= 10);
+        bar.classList.toggle('warn', state.timeRemaining <= ROUND_TIME * WARN_TIME_RATIO && state.timeRemaining > ROUND_TIME * CRIT_TIME_RATIO);
+        bar.classList.toggle('crit', state.timeRemaining <= ROUND_TIME * CRIT_TIME_RATIO);
 
         // hint reveal: after HINT_AFTER_SECS seconds elapsed
         const elapsed = ROUND_TIME - state.timeRemaining;
@@ -377,13 +383,12 @@ function revealHint() {
 
 // ─── SCORING ─────────────────────────────────────────────────────────
 function calcPoints() {
-    // Full time = 30s, answered instantly (30s remaining) → max pts
-    // hintShown halves the multiplier
+    // Full time answered instantly → max pts; hintShown halves the multiplier
     const t = state.timeRemaining;
     if (state.hintShown) {
-        return Math.max(10, Math.round((t / ROUND_TIME) * 50));
+        return Math.max(MIN_PTS_HINT, Math.round((t / ROUND_TIME) * 50));
     }
-    return Math.max(30, Math.round((t / ROUND_TIME) * 100));
+    return Math.max(MIN_PTS_NO_HINT, Math.round((t / ROUND_TIME) * 100));
 }
 
 // ─── SUBMIT / VALIDATE ───────────────────────────────────────────────
@@ -564,7 +569,7 @@ function showResult() {
     document.getElementById('result-card-level').textContent = DIFF_LABELS[state.difficulty];
     document.getElementById('result-card-game').textContent  = '🔤 Jumble Tumble';
 
-    const won = state.correctCount >= Math.ceil(ROUNDS * 0.6); // 60% correct = win
+    const won = state.correctCount >= Math.ceil(ROUNDS * WIN_THRESHOLD);
     document.getElementById('result-icon').textContent  = won ? '🏆' : '🔄';
     document.getElementById('result-title').textContent = won ? 'Well played!' : 'Keep practising!';
 
@@ -618,8 +623,8 @@ function shareResult() {
     const ctx = canvas.getContext('2d');
     ctx.scale(DPR, DPR);
 
-    const won     = state.correctCount >= Math.ceil(ROUNDS * 0.6);
-    const pct     = Math.round((state.correctCount / ROUNDS) * 100);
+    const won     = state.correctCount >= Math.ceil(ROUNDS_COUNT * WIN_THRESHOLD);
+    const pct     = Math.round((state.correctCount / ROUNDS_COUNT) * 100);
     const ACCENT  = '#fb923c';
     const SUCCESS = '#4ade80';
     const ERROR   = '#ef4444';
@@ -650,7 +655,7 @@ function shareResult() {
     ctx.font      = `12px ${MONO}`;
     ctx.fillStyle = '#64748b';
     ctx.textAlign = 'right';
-    ctx.fillText(`${DIFF_LABELS[state.difficulty]}  |  ${ROUNDS} ROUNDS`, CW - 20, 34);
+    ctx.fillText(`${DIFF_LABELS[state.difficulty]}  |  ${ROUNDS_COUNT} ROUNDS`, CW - 20, 34);
 
     // Result title
     ctx.textAlign  = 'center';
@@ -665,7 +670,7 @@ function shareResult() {
     const statY = 115;
     [
         { label: 'SCORE',   value: String(state.score) },
-        { label: 'CORRECT', value: `${state.correctCount}/${ROUNDS}` },
+        { label: 'CORRECT', value: `${state.correctCount}/${ROUNDS_COUNT}` },
         { label: 'RATING',  value: `${pct}%` },
     ].forEach((col, i) => {
         const cw3 = CW / 3;
@@ -681,22 +686,22 @@ function shareResult() {
         ctx.fillText(col.label, cx, statY + 30);
     });
 
-    // Score bar (10 coloured blocks)
-    const filled = Math.round(pct / 10);
-    const segW   = 27;
-    const segH   = 11;
-    const segGap = 4;
-    const barW   = 10 * segW + 9 * segGap;
-    const barX   = (CW - barW) / 2;
-    const barY   = 188;
-    for (let s = 0; s < 10; s++) {
-        ctx.fillStyle = s < filled ? ACCENT : '#1e293b';
+    // Score bar — one block per round: green = correct, red = wrong
+    const segH    = 14;
+    const segGap  = 5;
+    const maxBarW = CW - 40;
+    const segW    = Math.min(48, Math.floor((maxBarW - (ROUNDS_COUNT - 1) * segGap) / ROUNDS_COUNT));
+    const barW    = ROUNDS_COUNT * segW + (ROUNDS_COUNT - 1) * segGap;
+    const barX    = (CW - barW) / 2;
+    const barY    = 188;
+    state.roundHistory.forEach((r, s) => {
+        ctx.fillStyle = r.correct ? SUCCESS : ERROR;
         rrFill(ctx, barX + s * (segW + segGap), barY, segW, segH, 3);
-    }
+    });
     ctx.font      = `9px ${MONO}`;
     ctx.fillStyle = MUTED;
     ctx.textAlign = 'center';
-    ctx.fillText(`${pct}% ACCURACY`, CW / 2, barY + segH + 13);
+    ctx.fillText(`${pct}% ACCURACY  (${state.correctCount}/${ROUNDS_COUNT} correct)`, CW / 2, barY + segH + 13);
 
     // Divider
     ctx.strokeStyle = 'rgba(255,255,255,0.06)';
@@ -762,8 +767,8 @@ function shareResult() {
                 await navigator.share({
                     title: 'Jumble Tumble Result',
                     text: won
-                        ? `WELL PLAYED! ${state.correctCount}/${ROUNDS} correct, ${state.score} pts`
-                        : `Keep practising! ${state.correctCount}/${ROUNDS} correct, ${state.score} pts`,
+                        ? `WELL PLAYED! ${state.correctCount}/${ROUNDS_COUNT} correct, ${state.score} pts`
+                        : `Keep practising! ${state.correctCount}/${ROUNDS_COUNT} correct, ${state.score} pts`,
                     files: [file],
                 });
                 return;
@@ -852,7 +857,7 @@ function loadLeaderboard() {
 function saveScore() {
     const lb = loadLeaderboard();
     if (!lb[state.difficulty]) lb[state.difficulty] = [];
-    lb[state.difficulty].push({ score: state.score, correct: state.correctCount, date: Date.now() });
+    lb[state.difficulty].push({ score: state.score, correct: state.correctCount, rounds: ROUNDS, date: Date.now() });
     lb[state.difficulty].sort((a, b) => b.score - a.score);
     lb[state.difficulty] = lb[state.difficulty].slice(0, 10); // keep top 10
     localStorage.setItem(LB_KEY, JSON.stringify(lb));
@@ -882,7 +887,7 @@ function showLeaderboardModal(diff) {
             const medal = i === 0 ? 'lb-rank-gold' : i === 1 ? 'lb-rank-silver' : i === 2 ? 'lb-rank-bronze' : '';
             return `<tr>
                 <td class="${medal}">${i + 1}</td>
-                <td>${e.correct}/${ROUNDS} correct</td>
+                <td>${e.correct}/${e.rounds ?? ROUNDS} correct</td>
                 <td style="text-align:right;color:var(--jt-accent)">${e.score}</td>
             </tr>`;
         }).join('');
@@ -974,7 +979,7 @@ function autoFillHint() {
     if (!state.roundActive || state.autoFilled) return;
     state.autoFilled = true;
     const word  = state.currentWord;
-    const count = Math.ceil(word.length * 0.30);
+    const count = Math.ceil(word.length * AUTO_FILL_RATIO);
     const k     = state.lastTypedLength; // chars user has already typed
 
     // Pick from positions the user hasn't "claimed" yet (positions k..end)
