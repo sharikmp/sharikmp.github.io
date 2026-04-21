@@ -389,15 +389,12 @@ function calcPoints() {
 // ─── SUBMIT / VALIDATE ───────────────────────────────────────────────
 function handleSubmit() {
     if (!state.roundActive) return;
-    const input = document.getElementById('answer-input');
-    const typed = input.value.trim().toLowerCase();
-    if (!typed && Object.keys(state.autoFillMap).length === 0) return;
-
-    const full = assembleAnswer(typed);
+    const full = assembleAnswerFromTiles();
+    if (!full.replace(/_/g, '')) return;               // nothing typed yet
     if (full === state.currentWord) {
         onCorrect(calcPoints(), full);
     } else {
-        onWrong(typed || '—');
+        onWrong(full);
     }
 }
 
@@ -422,13 +419,12 @@ function onCorrect(pts, guess) {
     animateScore(prevScore, state.score);
     showScoreGain(pts);
 
-    const input = document.getElementById('answer-input');
-    input.classList.add('input-correct');
-    input.disabled = true;
-
-    // flash all tiles correct
-    document.querySelectorAll('#jumbled-word .letter-tile, #answer-tiles .answer-tile')
-        .forEach(t => t.classList.add('tile-correct'));
+    // Disable tile inputs and flash them correct
+    document.querySelectorAll('#answer-tiles .answer-tile-input').forEach(inp => {
+        inp.disabled = true;
+        inp.classList.add('tile-correct');
+    });
+    document.querySelectorAll('#jumbled-word .letter-tile').forEach(t => t.classList.add('tile-correct'));
 
     burstCrackers();
     // after short pause, show correct word for CELEBRATE_HOLD_MS then advance
@@ -441,9 +437,10 @@ function onWrong(guess) {
     state.roundActive = false;
     stopTimer();
 
-    const typedGuess = (typeof guess === 'string' && guess !== '')
+    const assembled = assembleAnswerFromTiles().replace(/_/g, '');
+    const typedGuess = (typeof guess === 'string' && guess !== '' && guess !== '_'.repeat(state.currentWord.length))
         ? guess
-        : (document.getElementById('answer-input').value.toLowerCase() || '–');
+        : (assembled || '–');
 
     state.roundHistory.push({
         scrambled: state.scrambledWord,
@@ -462,9 +459,10 @@ function onWrong(guess) {
         t.classList.add('tile-jiggle');
     });
 
-    const input = document.getElementById('answer-input');
-    input.classList.add('input-wrong');
-    input.disabled = true;
+    // Disable all tile inputs
+    document.querySelectorAll('#answer-tiles .answer-tile-input').forEach(inp => {
+        inp.disabled = true;
+    });
 
     // after jiggle settles, reveal correct word as tiles
     setTimeout(() => renderCorrectWord(), 450);
@@ -495,15 +493,9 @@ function startRound() {
     state.autoFillMap     = {};
 
     // reset UI
-    const input = document.getElementById('answer-input');
-    input.value = '';
-    input.disabled = false;
-    input.maxLength = 999;
-    input.classList.remove('input-correct', 'input-wrong');
-    input.focus();
-
     document.getElementById('hint-area').classList.add('hidden');
     document.getElementById('feedback').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('keyboard-visible');
     const ansLabel = document.querySelector('.tiles-label-answer');
     if (ansLabel) ansLabel.textContent = 'YOUR ANSWER';
 
@@ -516,7 +508,6 @@ function startRound() {
     state.currentWord   = entry.word.toLowerCase();
     state.currentHint   = entry.hint;
     state.scrambledWord = shuffleWord(state.currentWord);
-    input.maxLength     = state.currentWord.length;
 
     renderTiles(state.scrambledWord);
     initAnswerTiles();
@@ -907,17 +898,151 @@ document.addEventListener('keydown', e => {
         if (gameVisible) handleSubmit();
     }
 });
+
+// ─── TILE INPUT HANDLERS ─────────────────────────────────────────────────
+function onTileInput(e) {
+    if (!state.roundActive) { e.target.value = ''; return; }
+    const inp = e.target;
+    const pos = parseInt(inp.dataset.pos);
+
+    // Mobile soft-keyboard backspace fires as input event
+    if (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward') {
+        inp.value = '';
+        inp.classList.add('answer-tile-empty');
+        updateJumbledHighlights();
+        if (e.inputType === 'deleteContentBackward') focusPrevTile(pos);
+        return;
+    }
+
+    // Normalize to a single lowercase letter
+    let val = inp.value.toLowerCase().replace(/[^a-z]/g, '');
+    if (!val) { inp.value = ''; inp.classList.add('answer-tile-empty'); return; }
+    val = val.slice(-1);                       // take last char if paste / autocorrect
+    inp.value = val.toUpperCase();
+    inp.classList.remove('answer-tile-empty');
+
+    // Wrong-letter sound: char not in remaining word letters
+    const remaining = state.currentWord.split('');
+    Object.values(state.autoFillMap).forEach(c => {
+        const idx = remaining.indexOf(c);
+        if (idx > -1) remaining.splice(idx, 1);
+    });
+    if (!remaining.includes(val)) playSound('snd-incorrect');
+
+    state.lastTypedLength = Array.from(
+        document.querySelectorAll('#answer-tiles .answer-tile-input')
+    ).filter(i => !i.disabled && i.value).length;
+
+    updateJumbledHighlights();
+    focusNextTile(pos);
+    checkAutoSubmit();
+}
+
+function onTileKeydown(e) {
+    const inp = e.target;
+    const pos = parseInt(inp.dataset.pos);
+
+    if (e.key === 'Backspace') {
+        e.preventDefault();
+        if (inp.value) {
+            inp.value = '';
+            inp.classList.add('answer-tile-empty');
+            updateJumbledHighlights();
+        } else {
+            focusPrevTile(pos);
+        }
+    } else if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSubmit();
+    } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        focusNextTile(pos);
+    } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        focusPrevTile(pos);
+    } else if (e.key === 'Tab') {
+        e.preventDefault();
+        if (e.shiftKey) focusPrevTile(pos); else focusNextTile(pos);
+    }
+}
+
+let tileBlurTimer = null;
+
+function onTileFocus() {
+    clearTimeout(tileBlurTimer);
+    showTapHint(false);
+    document.getElementById('game-screen').classList.add('keyboard-visible');
+}
+
+function onTileBlur() {
+    clearTimeout(tileBlurTimer);
+    tileBlurTimer = setTimeout(() => {
+        if (!document.querySelector('#answer-tiles .answer-tile-input:focus')) {
+            document.getElementById('game-screen').classList.remove('keyboard-visible');
+        }
+    }, 150);
+}
+
+function focusNextTile(fromPos) {
+    const inputs = Array.from(document.querySelectorAll('#answer-tiles .answer-tile-input'));
+    // First: next empty non-disabled tile after fromPos
+    for (const inp of inputs) {
+        if (parseInt(inp.dataset.pos) > fromPos && !inp.disabled && !inp.value) {
+            inp.focus();
+            return;
+        }
+    }
+    // Fallback: any empty non-disabled tile
+    for (const inp of inputs) {
+        if (!inp.disabled && !inp.value) { inp.focus(); return; }
+    }
+}
+
+function focusPrevTile(fromPos) {
+    const inputs = Array.from(document.querySelectorAll('#answer-tiles .answer-tile-input'));
+    for (let i = inputs.length - 1; i >= 0; i--) {
+        if (parseInt(inputs[i].dataset.pos) < fromPos && !inputs[i].disabled) {
+            inputs[i].focus();
+            return;
+        }
+    }
+}
+
+function checkAutoSubmit() {
+    if (!state.roundActive) return;
+    const inputs = Array.from(document.querySelectorAll('#answer-tiles .answer-tile-input'));
+    if (!inputs.every(inp => inp.disabled || inp.value)) return;
+    const full = assembleAnswerFromTiles();
+    if (full === state.currentWord) {
+        onCorrect(calcPoints(), full);
+    } else {
+        onWrong(full);
+    }
+}
+
+function assembleAnswerFromTiles() {
+    const inputs = document.querySelectorAll('#answer-tiles .answer-tile-input');
+    return Array.from(inputs).map(inp => (inp.value || '_').toLowerCase()).join('');
+}
+
+function showTapHint(show) {
+    const hint = document.getElementById('tap-hint');
+    if (!hint) return;
+    hint.classList.toggle('hidden', !show);
+}
+
 // ─── AUTO-FILL HINT ───────────────────────────────────────────────────────
 function autoFillHint() {
     if (!state.roundActive || state.autoFilled) return;
     state.autoFilled = true;
     const word  = state.currentWord;
     const count = Math.ceil(word.length * 0.30);
-    const k     = state.lastTypedLength; // chars user has already typed
 
-    // Pick from positions the user hasn't "claimed" yet (positions k..end)
-    const available = [];
-    for (let i = k; i < word.length; i++) available.push(i);
+    // Pick from tile inputs not yet filled
+    const tileInputs = Array.from(document.querySelectorAll('#answer-tiles .answer-tile-input'));
+    const available  = tileInputs
+        .filter(inp => !inp.disabled && !inp.value)
+        .map(inp => parseInt(inp.dataset.pos));
     if (available.length === 0) return;
 
     // Fisher-Yates shuffle, take first 'count' positions
@@ -925,100 +1050,55 @@ function autoFillHint() {
         const j = Math.floor(Math.random() * (i + 1));
         [available[i], available[j]] = [available[j], available[i]];
     }
-    available.slice(0, Math.min(count, available.length))
-             .forEach(pos => { state.autoFillMap[pos] = word[pos]; });
+    available.slice(0, Math.min(count, available.length)).forEach(pos => {
+        state.autoFillMap[pos] = word[pos];
+        const inp = tileInputs[pos];
+        if (!inp) return;
+        inp.value = word[pos].toUpperCase();
+        inp.disabled = true;
+        inp.classList.remove('answer-tile-empty');
+        inp.classList.add('tile-autofill');
+    });
 
-    // Shrink input maxLength to match remaining chars user must type
-    const input = document.getElementById('answer-input');
-    input.maxLength = computeExpectedInput().length;
-
-    // Refresh display
-    updateJumbledHighlights(input.value);
-    updateAnswerTiles(input.value);
+    updateJumbledHighlights();
     showFeedback('💡 AUTO FILL', true);
+    checkAutoSubmit();
 }
 
 // ─── AUTOFILL HELPERS ────────────────────────────────────────────────────────
-function computeExpectedInput() {
-    // Letters the user must type (word minus auto-filled positions)
-    const word = state.currentWord;
-    let result = '';
-    for (let i = 0; i < word.length; i++) {
-        if (state.autoFillMap[i] === undefined) result += word[i];
-    }
-    return result;
-}
-
-function buildDisplayAnswer(typed) {
-    // Per-position display: autofill chars take fixed positions; typed chars fill the rest
-    const word = state.currentWord;
-    const result = [];
-    let typedIdx = 0;
-    for (let i = 0; i < word.length; i++) {
-        if (state.autoFillMap[i] !== undefined) {
-            result.push({ char: state.autoFillMap[i], autofill: true });
-        } else {
-            result.push({ char: typed[typedIdx] || '_', autofill: false });
-            typedIdx++;
-        }
-    }
-    return result;
-}
-
-function assembleAnswer(typed) {
-    return buildDisplayAnswer(typed).map(d => d.char).join('');
-}
-
-// ─── INPUT LIVE MATCHING ───────────────────────────────────────────────────
-function handleInputChange() {
-    if (!state.roundActive) return;
-    const input = document.getElementById('answer-input');
-    // Restrict to letters only
-    const raw = input.value.toLowerCase().replace(/[^a-z]/g, '');
-    if (input.value !== raw) { input.value = raw; return; }
-    const typed = raw;
-
-    // Detect newly added character (not a delete/backspace)
-    if (typed.length > state.lastTypedLength) {
-        const newChar = typed[typed.length - 1];
-        // Check against remaining letters the user still needs to type (excluding autofill)
-        const expected = computeExpectedInput();
-        const remaining = expected.split('');
-        typed.slice(0, typed.length - 1).split('').forEach(c => {
-            const idx = remaining.indexOf(c);
-            if (idx > -1) remaining.splice(idx, 1);
-        });
-        if (!remaining.includes(newChar)) playSound('snd-incorrect');
-    }
-
-    state.lastTypedLength = typed.length;
-    updateJumbledHighlights(typed);
-    updateAnswerTiles(typed);
-
-    // Auto-submit when assembled answer equals correct word
-    const full = assembleAnswer(typed);
-    if (full === state.currentWord) {
-        onCorrect(calcPoints(), full);
-    }
-}
 
 function initAnswerTiles() {
     const container = document.getElementById('answer-tiles');
     container.innerHTML = '';
     for (let i = 0; i < state.currentWord.length; i++) {
-        const span = document.createElement('span');
-        span.className = 'letter-tile answer-tile answer-tile-blank';
-        span.textContent = '_';
-        container.appendChild(span);
+        const inp = document.createElement('input');
+        inp.type      = 'text';
+        inp.maxLength = 1;
+        inp.className = 'letter-tile answer-tile-input answer-tile-empty';
+        inp.dataset.pos = String(i);
+        inp.setAttribute('autocomplete', 'off');
+        inp.setAttribute('autocorrect',  'off');
+        inp.setAttribute('autocapitalize', 'off');
+        inp.setAttribute('spellcheck',   'false');
+        inp.setAttribute('inputmode',    'text');
+        inp.style.animationDelay = `${i * 55}ms`;
+        inp.addEventListener('input',   onTileInput);
+        inp.addEventListener('keydown', onTileKeydown);
+        inp.addEventListener('focus',   onTileFocus);
+        inp.addEventListener('blur',    onTileBlur);
+        container.appendChild(inp);
     }
+    showTapHint(true);
 }
 
-function updateJumbledHighlights(typed) {
-    const tiles    = document.querySelectorAll('#jumbled-word .letter-tile');
+function updateJumbledHighlights() {
+    const tiles     = document.querySelectorAll('#jumbled-word .letter-tile');
     const scrambled = state.scrambledWord.toLowerCase().split('');
 
-    // Include autofill chars so their scrambled tiles also highlight
-    const allTyped = Object.values(state.autoFillMap).join('') + typed;
+    // Collect typed chars from tile inputs + autofill
+    const tileInputs = document.querySelectorAll('#answer-tiles .answer-tile-input');
+    const userTyped  = Array.from(tileInputs).map(inp => inp.value.toLowerCase()).filter(v => v).join('');
+    const allTyped   = Object.values(state.autoFillMap).join('') + userTyped;
     const freq = {};
     allTyped.split('').forEach(c => { freq[c] = (freq[c] || 0) + 1; });
     const tempFreq = { ...freq };
@@ -1030,27 +1110,6 @@ function updateJumbledHighlights(typed) {
             tempFreq[letter]--;
         } else {
             tile.classList.remove('matched');
-        }
-    });
-}
-
-function updateAnswerTiles(typed) {
-    const tiles   = document.querySelectorAll('#answer-tiles .answer-tile');
-    const display = buildDisplayAnswer(typed);
-    tiles.forEach((tile, i) => {
-        if (i >= display.length) return;
-        const d = display[i];
-        if (d.autofill) {
-            tile.classList.remove('answer-tile-blank');
-            tile.classList.add('tile-autofill');
-            tile.textContent = d.char.toUpperCase();
-        } else if (d.char !== '_') {
-            tile.classList.remove('answer-tile-blank', 'tile-autofill');
-            tile.textContent = d.char.toUpperCase();
-        } else {
-            tile.classList.add('answer-tile-blank');
-            tile.classList.remove('tile-autofill');
-            tile.textContent = '_';
         }
     });
 }
@@ -1197,4 +1256,11 @@ function renderRoundHistory() {
 }
 
 // ─── INPUT EVENT LISTENER (bound once at page load) ───────────────────────
-document.getElementById('answer-input').addEventListener('input', handleInputChange);
+// ─── VIEWPORT LISTENER — detect virtual keyboard open on mobile ──────────
+if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+        const keyboardOpen = window.visualViewport.height < window.innerHeight * 0.75;
+        const gs = document.getElementById('game-screen');
+        if (gs) gs.classList.toggle('keyboard-visible', keyboardOpen);
+    });
+}

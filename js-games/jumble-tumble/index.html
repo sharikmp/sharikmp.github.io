@@ -86,20 +86,8 @@
             <div id="answer-tiles"></div>
         </div>
 
-        <!-- Input -->
-        <div id="input-area">
-            <input
-                id="answer-input"
-                type="text"
-                placeholder="Type the word…"
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-                maxlength="30"
-            >
-            <button id="submit-btn" onclick="handleSubmit()">SUBMIT</button>
-        </div>
+        <!-- Tap-to-type hint shown until the user first taps a tile -->
+        <div id="tap-hint">👆 Tap a letter box to start typing</div>
 
         <!-- Feedback flash (correct / wrong) -->
         <div id="feedback" class="hidden"></div>
