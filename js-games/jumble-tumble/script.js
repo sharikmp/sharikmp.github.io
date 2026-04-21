@@ -431,6 +431,7 @@ function onCorrect(pts, guess) {
         .forEach(t => t.classList.add('tile-correct'));
 
     burstCrackers();
+    setKeyboardEnabled(false);
     // after short pause, show correct word for CELEBRATE_HOLD_MS then advance
     setTimeout(() => showCorrectWordAndAdvance(pts), 800);
 }
@@ -468,6 +469,7 @@ function onWrong(guess) {
 
     // after jiggle settles, reveal correct word as tiles
     setTimeout(() => renderCorrectWord(), 450);
+    setKeyboardEnabled(false);
     showFeedback('✗', false);
     setTimeout(() => nextRound(), 2300);
 }
@@ -521,6 +523,7 @@ function startRound() {
 
     renderTiles(state.scrambledWord);
     initAnswerTiles();
+    renderKeyboard();
 
     startTimer();
 }
@@ -901,12 +904,70 @@ function resetToStart() {
     document.getElementById('start-modal').classList.remove('hidden');
 }
 
-// ─── KEYBOARD SUPPORT ────────────────────────────────────────────────
+// ─── KEYBOARD SUPPORT (physical keyboard + on-screen) ────────────────────
+const QWERTY_ROWS = [
+    ['Q','W','E','R','T','Y','U','I','O','P'],
+    ['A','S','D','F','G','H','J','K','L'],
+    ['\u232b','Z','X','C','V','B','N','M'],
+];
+
+function renderKeyboard() {
+    const kb = document.getElementById('qwerty-keyboard');
+    kb.innerHTML = '';
+    kb.classList.remove('hidden', 'kb-disabled');
+    QWERTY_ROWS.forEach(row => {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'qrow';
+        row.forEach(key => {
+            const btn = document.createElement('button');
+            const isBack = key === '\u232b';
+            btn.className = isBack ? 'qkey qkey-back' : 'qkey';
+            btn.textContent = key;
+            btn.type = 'button';
+            // prevent focus-steal so scrolling doesn't jump on mobile
+            btn.addEventListener('mousedown', e => e.preventDefault());
+            btn.addEventListener('click', () => {
+                if (isBack) handleKeyBackspace();
+                else handleKeyTap(key.toLowerCase());
+            });
+            rowEl.appendChild(btn);
+        });
+        kb.appendChild(rowEl);
+    });
+}
+
+function setKeyboardEnabled(enabled) {
+    const kb = document.getElementById('qwerty-keyboard');
+    if (!kb) return;
+    kb.classList.toggle('kb-disabled', !enabled);
+}
+
+function handleKeyTap(letter) {
+    if (!state.roundActive) return;
+    const input = document.getElementById('answer-input');
+    if (input.value.length >= input.maxLength) return;
+    input.value += letter;
+    handleInputChange();
+    // brief visual flash on the key button (physical keyboard)
+    const btn = Array.from(document.querySelectorAll('#qwerty-keyboard .qkey'))
+        .find(b => b.textContent === letter.toUpperCase());
+    if (btn) { btn.classList.add('pressed'); setTimeout(() => btn.classList.remove('pressed'), 100); }
+}
+
+function handleKeyBackspace() {
+    if (!state.roundActive) return;
+    const input = document.getElementById('answer-input');
+    if (!input.value.length) return;
+    input.value = input.value.slice(0, -1);
+    handleInputChange();
+}
+
 document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-        const gameVisible = !document.getElementById('game-screen').classList.contains('hidden');
-        if (gameVisible) handleSubmit();
-    }
+    const gameVisible = !document.getElementById('game-screen').classList.contains('hidden');
+    if (!gameVisible) return;
+    if (e.key === 'Enter') { e.preventDefault(); handleSubmit(); }
+    if (e.key === 'Backspace') { e.preventDefault(); handleKeyBackspace(); }
+    if (/^[a-zA-Z]$/.test(e.key)) handleKeyTap(e.key.toLowerCase());
 });
 // ─── AUTO-FILL HINT ───────────────────────────────────────────────────────
 function autoFillHint() {

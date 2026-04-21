@@ -88,8 +88,8 @@
             <div id="answer-tiles"></div>
         </div>
 
-        <!-- Input -->
-        <div id="input-area">
+        <!-- Input (hidden — keyboard taps populate it programmatically) -->
+        <div id="input-area" style="display:none">
             <input
                 id="answer-input"
                 type="text"
@@ -101,6 +101,9 @@
                 maxlength="30"
             >
         </div>
+
+        <!-- QWERTY on-screen keyboard -->
+        <div id="qwerty-keyboard" class="hidden"></div>
 
         <!-- Feedback flash (correct / wrong) -->
         <div id="feedback" class="hidden"></div>
