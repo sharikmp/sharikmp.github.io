@@ -230,23 +230,28 @@ const WORDS = {
    ═══════════════════════════════════════════════════════════════════ */
 
 // ─── STATE ──────────────────────────────────────────────────────────
-const ROUNDS        = 10;
-const ROUND_TIME    = 30;    // seconds
-const HINT_AT       = 10;    // reveal hint when this many seconds remain
+const ROUNDS             = 10;
+const ROUND_TIME         = 30;    // seconds per round
+const HINT_AFTER_SECS    = 0;    // reveal hint this many seconds after round starts
+const CELEBRATE_HOLD_MS  = 5000;  // ms to show correct word before advancing
 
 let state = {
-    difficulty:   null,
-    round:        0,
-    score:        0,
-    correctCount: 0,
-    usedIndices:  [],
-    currentWord:  '',
-    currentHint:  '',
-    timeRemaining: ROUND_TIME,
-    hintShown:    false,
-    timerInterval: null,
-    hintTimeout:  null,
-    soundOn:      true,
+    difficulty:      null,
+    round:           0,
+    score:           0,
+    correctCount:    0,
+    usedIndices:     [],
+    currentWord:     '',
+    currentHint:     '',
+    scrambledWord:   '',
+    timeRemaining:   ROUND_TIME,
+    hintShown:       false,
+    timerInterval:   null,
+    hintTimeout:     null,
+    soundOn:         true,
+    roundActive:     false,
+    lastTypedLength: 0,
+    roundHistory:    [],
 };
 
 // ─── AUDIO ──────────────────────────────────────────────────────────
@@ -337,8 +342,9 @@ function startTimer() {
         bar.classList.toggle('warn', state.timeRemaining <= 20 && state.timeRemaining > 10);
         bar.classList.toggle('crit', state.timeRemaining <= 10);
 
-        // hint reveal
-        if (!state.hintShown && state.timeRemaining <= HINT_AT) {
+        // hint reveal: after HINT_AFTER_SECS seconds elapsed
+        const elapsed = ROUND_TIME - state.timeRemaining;
+        if (!state.hintShown && elapsed >= HINT_AFTER_SECS) {
             revealHint();
         }
 
@@ -375,52 +381,74 @@ function calcPoints() {
 
 // ─── SUBMIT / VALIDATE ───────────────────────────────────────────────
 function handleSubmit() {
+    if (!state.roundActive) return;
     const input = document.getElementById('answer-input');
     const guess = input.value.trim().toLowerCase();
     if (!guess) return;
 
     if (guess === state.currentWord) {
-        const pts = calcPoints();
-        onCorrect(pts);
+        onCorrect(calcPoints(), guess);
     } else {
-        onWrong();
+        onWrong(guess);
     }
 }
 
 // ─── CORRECT ─────────────────────────────────────────────────────────
-function onCorrect(pts) {
+function onCorrect(pts, guess) {
+    if (!state.roundActive) return;
+    state.roundActive = false;
     stopTimer();
+
     state.score        += pts;
     state.correctCount += 1;
+    state.roundHistory.push({
+        scrambled: state.scrambledWord,
+        guess:     guess || state.currentWord,
+        answer:    state.currentWord,
+        correct:   true,
+        pts,
+    });
 
     playSound('snd-correct');
+    document.getElementById('hud-score').textContent = `Score: ${state.score}`;
 
-    // tiles flash green
-    document.querySelectorAll('.letter-tile').forEach(t => t.classList.add('tile-correct'));
-
-    // input highlight
     const input = document.getElementById('answer-input');
     input.classList.add('input-correct');
     input.disabled = true;
 
-    // feedback pop
-    showFeedback(`+${pts}`, true);
+    // flash all tiles correct
+    document.querySelectorAll('#jumbled-word .letter-tile, #answer-tiles .answer-tile')
+        .forEach(t => t.classList.add('tile-correct'));
 
-    // update HUD score
-    document.getElementById('hud-score').textContent = `Score: ${state.score}`;
-
-    setTimeout(() => nextRound(), 900);
+    burstCrackers();
+    // after short pause, show correct word for CELEBRATE_HOLD_MS then advance
+    setTimeout(() => showCorrectWordAndAdvance(pts), 800);
 }
 
 // ─── WRONG ───────────────────────────────────────────────────────────
-function onWrong() {
+function onWrong(guess) {
+    if (!state.roundActive) return;
+    state.roundActive = false;
     stopTimer();
+
+    const typedGuess = (typeof guess === 'string' && guess !== '')
+        ? guess
+        : (document.getElementById('answer-input').value.toLowerCase() || '–');
+
+    state.roundHistory.push({
+        scrambled: state.scrambledWord,
+        guess:     typedGuess,
+        answer:    state.currentWord,
+        correct:   false,
+        pts:       0,
+    });
+
     playSound('snd-incorrect');
 
-    // jiggle tiles
-    document.querySelectorAll('.letter-tile').forEach(t => {
+    // jiggle scrambled tiles
+    document.querySelectorAll('#jumbled-word .letter-tile').forEach(t => {
         t.classList.remove('tile-jiggle');
-        void t.offsetWidth; // reflow to restart animation
+        void t.offsetWidth;
         t.classList.add('tile-jiggle');
     });
 
@@ -428,15 +456,14 @@ function onWrong() {
     input.classList.add('input-wrong');
     input.disabled = true;
 
-    // briefly reveal correct word in input
-    input.value = state.currentWord;
-
+    // after jiggle settles, reveal correct word as tiles
+    setTimeout(() => renderCorrectWord(), 450);
     showFeedback('✗', false);
-    setTimeout(() => nextRound(), 1300);
+    setTimeout(() => nextRound(), 2300);
 }
 
 function handleTimeout() {
-    onWrong();
+    onWrong('');
 }
 
 // ─── FEEDBACK FLASH ──────────────────────────────────────────────────
@@ -451,7 +478,9 @@ function showFeedback(text, correct) {
 // ─── ROUND FLOW ──────────────────────────────────────────────────────
 function startRound() {
     state.round++;
-    state.hintShown = false;
+    state.hintShown       = false;
+    state.roundActive     = true;
+    state.lastTypedLength = 0;
 
     // reset UI
     const input = document.getElementById('answer-input');
@@ -464,16 +493,17 @@ function startRound() {
     document.getElementById('feedback').classList.add('hidden');
 
     // update HUD
-    document.getElementById('hud-round').textContent  = `Round ${state.round} / ${ROUNDS}`;
-    document.getElementById('hud-score').textContent  = `Score: ${state.score}`;
+    document.getElementById('hud-round').textContent = `Round ${state.round} / ${ROUNDS}`;
+    document.getElementById('hud-score').textContent = `Score: ${state.score}`;
 
     // pick + scramble word
     const entry = pickWord();
-    state.currentWord = entry.word.toLowerCase();
-    state.currentHint = entry.hint;
+    state.currentWord   = entry.word.toLowerCase();
+    state.currentHint   = entry.hint;
+    state.scrambledWord = shuffleWord(state.currentWord);
 
-    const scrambled = shuffleWord(state.currentWord);
-    renderTiles(scrambled);
+    renderTiles(state.scrambledWord);
+    initAnswerTiles();
 
     startTimer();
 }
@@ -493,6 +523,7 @@ function startGame(diff) {
     state.score        = 0;
     state.correctCount = 0;
     state.usedIndices  = [];
+    state.roundHistory = [];
 
     document.getElementById('hud-level').textContent = DIFF_LABELS[diff];
 
@@ -543,6 +574,9 @@ function showResult() {
 
     // save to leaderboard
     saveScore();
+
+    // render round breakdown
+    renderRoundHistory();
 
     // hide game, show result
     document.getElementById('game-screen').classList.add('hidden');
@@ -672,3 +706,181 @@ document.addEventListener('keydown', e => {
         if (gameVisible) handleSubmit();
     }
 });
+// ─── INPUT LIVE MATCHING ───────────────────────────────────────────────────
+function handleInputChange() {
+    if (!state.roundActive) return;
+    const input = document.getElementById('answer-input');
+    // Restrict to letters only
+    const raw = input.value.toLowerCase().replace(/[^a-z]/g, '');
+    if (input.value !== raw) { input.value = raw; return; }
+    const typed = raw;
+
+    // Detect newly added character (not a delete/backspace)
+    if (typed.length > state.lastTypedLength) {
+        const newChar = typed[typed.length - 1];
+        // Build remaining answer letters (subtract already-typed ones)
+        const remaining = state.currentWord.split('');
+        typed.slice(0, typed.length - 1).split('').forEach(c => {
+            const idx = remaining.indexOf(c);
+            if (idx > -1) remaining.splice(idx, 1);
+        });
+        if (!remaining.includes(newChar)) playSound('snd-incorrect');
+    }
+
+    state.lastTypedLength = typed.length;
+    updateJumbledHighlights(typed);
+    updateAnswerTiles(typed);
+
+    // Auto-submit when full correct word is typed
+    if (typed === state.currentWord) {
+        onCorrect(calcPoints(), typed);
+    }
+}
+
+function initAnswerTiles() {
+    const container = document.getElementById('answer-tiles');
+    container.innerHTML = '';
+    for (let i = 0; i < state.currentWord.length; i++) {
+        const span = document.createElement('span');
+        span.className = 'letter-tile answer-tile answer-tile-blank';
+        span.textContent = '_';
+        container.appendChild(span);
+    }
+}
+
+function updateJumbledHighlights(typed) {
+    const tiles    = document.querySelectorAll('#jumbled-word .letter-tile');
+    const scrambled = state.scrambledWord.toLowerCase().split('');
+
+    // Build frequency map of typed characters
+    const freq = {};
+    typed.split('').forEach(c => { freq[c] = (freq[c] || 0) + 1; });
+    const tempFreq = { ...freq };
+
+    // Greedily highlight tiles whose letter has been typed
+    tiles.forEach((tile, i) => {
+        const letter = scrambled[i];
+        if (tempFreq[letter] > 0) {
+            tile.classList.add('matched');
+            tempFreq[letter]--;
+        } else {
+            tile.classList.remove('matched');
+        }
+    });
+}
+
+function updateAnswerTiles(typed) {
+    const tiles = document.querySelectorAll('#answer-tiles .answer-tile');
+    tiles.forEach((tile, i) => {
+        if (i < typed.length) {
+            tile.classList.remove('answer-tile-blank');
+            tile.textContent = typed[i].toUpperCase();
+        } else {
+            tile.classList.add('answer-tile-blank');
+            tile.textContent = '_';
+        }
+    });
+}
+
+// ─── CRACKER ANIMATION ────────────────────────────────────────────────────
+function burstCrackers() {
+    const overlay = document.getElementById('cracker-overlay');
+    overlay.innerHTML = '';
+    const colors = ['#fb923c','#facc15','#4ade80','#38bdf8','#818cf8','#f472b6','#fb7185','#a3e635'];
+    const count  = 52;
+    for (let i = 0; i < count; i++) {
+        const p     = document.createElement('div');
+        p.className = 'cp';
+        const angle = (i / count) * 360 + (Math.random() - 0.5) * 25;
+        const dist  = 80 + Math.random() * 150;
+        const rad   = (angle * Math.PI) / 180;
+        const tx    = Math.cos(rad) * dist;
+        const ty    = Math.sin(rad) * dist;
+        const size  = 7 + Math.random() * 9;
+        const delay = Math.random() * 0.12;
+        const dur   = 0.7 + Math.random() * 0.55;
+        p.style.cssText = [
+            `left:50%`, `top:42%`,
+            `width:${size}px`, `height:${size}px`,
+            `background:${colors[i % colors.length]}`,
+            `border-radius:${Math.random() > 0.45 ? '50%' : '3px'}`,
+            `--tx:${tx}px`, `--ty:${ty}px`,
+            `animation:cpFly ${dur}s ease-out ${delay}s forwards`,
+        ].join(';');
+        overlay.appendChild(p);
+    }
+    setTimeout(() => { overlay.innerHTML = ''; }, 2400);
+}
+
+// ─── POST-CORRECT WORD REVEAL ──────────────────────────────────────────────
+function showCorrectWordAndAdvance(pts) {
+    // Animate the correct word into the scrambled tile row (green)
+    const jWrap = document.getElementById('jumbled-word');
+    jWrap.innerHTML = '';
+    state.currentWord.toUpperCase().split('').forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'letter-tile tile-correct tile-revealed';
+        span.textContent = ch;
+        span.style.animationDelay = `${i * 55}ms`;
+        jWrap.appendChild(span);
+    });
+
+    // Also confirm the answer tiles
+    const aWrap = document.getElementById('answer-tiles');
+    aWrap.innerHTML = '';
+    state.currentWord.toUpperCase().split('').forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'letter-tile answer-tile tile-correct tile-revealed';
+        span.textContent = ch;
+        span.style.animationDelay = `${i * 55 + 110}ms`;
+        aWrap.appendChild(span);
+    });
+
+    showFeedback(`+${pts}`, true);
+    setTimeout(() => nextRound(), CELEBRATE_HOLD_MS);
+}
+
+function renderCorrectWord() {
+    // Show correct word in neutral muted style (after wrong/timeout)
+    const jWrap = document.getElementById('jumbled-word');
+    jWrap.innerHTML = '';
+    state.currentWord.toUpperCase().split('').forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'letter-tile tile-revealed';
+        span.style.borderColor = 'rgba(148,163,184,0.3)';
+        span.style.color = '#64748b';
+        span.textContent = ch;
+        span.style.animationDelay = `${i * 40}ms`;
+        jWrap.appendChild(span);
+    });
+}
+
+// ─── ROUND HISTORY RENDERER ──────────────────────────────────────────────────
+function renderRoundHistory() {
+    const el = document.getElementById('round-history');
+    if (!el || state.roundHistory.length === 0) return;
+    el.innerHTML = `
+        <div class="rh-title">ROUND BREAKDOWN</div>
+        <div class="rh-table">
+            <div class="rh-head">
+                <span>#</span>
+                <span>JUMBLED</span>
+                <span>YOUR ANSWER</span>
+                <span></span>
+                <span>PTS</span>
+            </div>
+            ${state.roundHistory.map((r, i) => `
+                <div class="rh-row ${r.correct ? 'rh-ok' : 'rh-err'}">
+                    <span class="rh-num">${i + 1}</span>
+                    <span class="rh-word rh-scrambled">${r.scrambled.toUpperCase()}</span>
+                    <span class="rh-word ${r.correct ? 'rh-answer-ok' : 'rh-answer-err'}">${r.guess.toUpperCase()}</span>
+                    <span class="rh-icon">${r.correct ? '✓' : '✗'}</span>
+                    <span class="rh-pts">${r.pts > 0 ? '+' + r.pts : '—'}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// ─── INPUT EVENT LISTENER (bound once at page load) ───────────────────────
+document.getElementById('answer-input').addEventListener('input', handleInputChange);

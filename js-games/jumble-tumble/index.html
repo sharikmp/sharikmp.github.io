@@ -72,15 +72,18 @@
             <span id="timer-label">30</span>
         </div>
 
-        <!-- Scrambled word tiles -->
-        <div id="tiles-area">
-            <div id="jumbled-word"></div>
-        </div>
-
-        <!-- Hint area (hidden until 10s mark) -->
+        <!-- Hint area (auto-reveals 10s after round starts) -->
         <div id="hint-area" class="hidden">
             <span class="hint-icon">💡</span>
             <span id="hint-text"></span>
+        </div>
+
+        <!-- Scrambled word tiles + answer tiles -->
+        <div id="tiles-area">
+            <div class="tiles-label">SCRAMBLED</div>
+            <div id="jumbled-word"></div>
+            <div class="tiles-label tiles-label-answer">YOUR ANSWER</div>
+            <div id="answer-tiles"></div>
         </div>
 
         <!-- Input -->
@@ -150,6 +153,9 @@
             </div>
         </div>
 
+        <!-- Round-by-round breakdown -->
+        <div id="round-history"></div>
+
         <div id="result-buttons"></div>
     </div>
 
@@ -173,6 +179,9 @@
         <div id="lb-tabs"></div>
         <button onclick="resetToStart()">MAIN MENU</button>
     </div>
+
+    <!-- ── CRACKER OVERLAY ───────────────────────────────────────────── -->
+    <div id="cracker-overlay"></div>
 
     <!-- ── FOOTER ────────────────────────────────────────────────────── -->
     <footer class="game-footer">
