@@ -230,10 +230,10 @@ const WORDS = {
    ═══════════════════════════════════════════════════════════════════ */
 
 // ─── STATE ──────────────────────────────────────────────────────────
-const ROUNDS             = 10;
-const ROUND_TIME         = 30;    // seconds per round
-const HINT_AFTER_SECS    = 0;    // reveal hint this many seconds after round starts
-const CELEBRATE_HOLD_MS  = 5000;  // ms to show correct word before advancing
+const ROUNDS             = 5;       // rounds per game
+const ROUND_TIME         = 30;      // seconds per round
+const HINT_AFTER_SECS    = 0;       // reveal hint this many seconds after round starts
+const CELEBRATE_HOLD_MS  = 5000;    // ms to show correct word before advancing
 
 let state = {
     difficulty:      null,
@@ -399,6 +399,7 @@ function onCorrect(pts, guess) {
     state.roundActive = false;
     stopTimer();
 
+    const prevScore    = state.score;
     state.score        += pts;
     state.correctCount += 1;
     state.roundHistory.push({
@@ -410,7 +411,8 @@ function onCorrect(pts, guess) {
     });
 
     playSound('snd-correct');
-    document.getElementById('hud-score').textContent = `Score: ${state.score}`;
+    animateScore(prevScore, state.score);
+    showScoreGain(pts);
 
     const input = document.getElementById('answer-input');
     input.classList.add('input-correct');
@@ -491,6 +493,8 @@ function startRound() {
 
     document.getElementById('hint-area').classList.add('hidden');
     document.getElementById('feedback').classList.add('hidden');
+    const ansLabel = document.querySelector('.tiles-label-answer');
+    if (ansLabel) ansLabel.textContent = 'YOUR ANSWER';
 
     // update HUD
     document.getElementById('hud-round').textContent = `Round ${state.round} / ${ROUNDS}`;
@@ -782,6 +786,33 @@ function updateAnswerTiles(typed) {
     });
 }
 
+// ─── SCORE ANIMATION ─────────────────────────────────────────────────────
+function animateScore(from, to) {
+    const el = document.getElementById('hud-score');
+    el.classList.remove('score-pop');
+    void el.offsetWidth; // reflow to restart animation
+    el.classList.add('score-pop');
+    const diff     = to - from;
+    const duration = Math.min(700, Math.max(300, diff * 8));
+    const startTime = performance.now();
+    function step(now) {
+        const t      = Math.min((now - startTime) / duration, 1);
+        const eased  = 1 - Math.pow(1 - t, 3); // ease-out cubic
+        el.textContent = `Score: ${Math.round(from + diff * eased)}`;
+        if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
+function showScoreGain(pts) {
+    const hud = document.getElementById('game-hud');
+    const el  = document.createElement('div');
+    el.className   = 'score-gain';
+    el.textContent = `+${pts}`;
+    hud.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+}
+
 // ─── CRACKER ANIMATION ────────────────────────────────────────────────────
 function burstCrackers() {
     const overlay = document.getElementById('cracker-overlay');
@@ -814,45 +845,56 @@ function burstCrackers() {
 
 // ─── POST-CORRECT WORD REVEAL ──────────────────────────────────────────────
 function showCorrectWordAndAdvance(pts) {
-    // Animate the correct word into the scrambled tile row (green)
-    const jWrap = document.getElementById('jumbled-word');
-    jWrap.innerHTML = '';
-    state.currentWord.toUpperCase().split('').forEach((ch, i) => {
-        const span = document.createElement('span');
-        span.className = 'letter-tile tile-correct tile-revealed';
-        span.textContent = ch;
-        span.style.animationDelay = `${i * 55}ms`;
-        jWrap.appendChild(span);
-    });
+    // Keep scrambled tiles intact — just ensure they all show as correct (green)
+    document.querySelectorAll('#jumbled-word .letter-tile').forEach(t => t.classList.add('tile-correct'));
 
-    // Also confirm the answer tiles
+    // Rebuild answer tiles with the correct word + staggered reveal animation
     const aWrap = document.getElementById('answer-tiles');
     aWrap.innerHTML = '';
-    state.currentWord.toUpperCase().split('').forEach((ch, i) => {
+    const word = state.currentWord;
+    word.toUpperCase().split('').forEach((ch, i) => {
         const span = document.createElement('span');
         span.className = 'letter-tile answer-tile tile-correct tile-revealed';
         span.textContent = ch;
-        span.style.animationDelay = `${i * 55 + 110}ms`;
+        span.style.animationDelay = `${i * 60}ms`;
         aWrap.appendChild(span);
     });
+
+    // Shimmer wave after all tiles have animated in (keeps screen alive during the hold)
+    setTimeout(() => {
+        document.querySelectorAll('#answer-tiles .answer-tile').forEach((t, i) => {
+            t.style.animationDelay = `${i * 100}ms`;
+            t.classList.add('tile-shimmer');
+        });
+    }, word.length * 60 + 500);
 
     showFeedback(`+${pts}`, true);
     setTimeout(() => nextRound(), CELEBRATE_HOLD_MS);
 }
 
 function renderCorrectWord() {
-    // Show correct word in neutral muted style (after wrong/timeout)
-    const jWrap = document.getElementById('jumbled-word');
-    jWrap.innerHTML = '';
-    state.currentWord.toUpperCase().split('').forEach((ch, i) => {
+    // Show correct word in answer tiles (orange reveal), keep scrambled tiles untouched
+    const ansLabel = document.querySelector('.tiles-label-answer');
+    if (ansLabel) ansLabel.textContent = 'CORRECT ANSWER';
+
+    const aWrap = document.getElementById('answer-tiles');
+    aWrap.innerHTML = '';
+    const word = state.currentWord;
+    word.toUpperCase().split('').forEach((ch, i) => {
         const span = document.createElement('span');
-        span.className = 'letter-tile tile-revealed';
-        span.style.borderColor = 'rgba(148,163,184,0.3)';
-        span.style.color = '#64748b';
+        span.className = 'letter-tile tile-revealed tile-answer-reveal';
         span.textContent = ch;
-        span.style.animationDelay = `${i * 40}ms`;
-        jWrap.appendChild(span);
+        span.style.animationDelay = `${i * 50}ms`;
+        aWrap.appendChild(span);
     });
+
+    // Shimmer after tiles animate in to keep screen alive during the 2s wait
+    setTimeout(() => {
+        document.querySelectorAll('#answer-tiles .tile-answer-reveal').forEach((t, i) => {
+            t.style.animationDelay = `${i * 100}ms`;
+            t.classList.add('tile-shimmer-wrong');
+        });
+    }, word.length * 50 + 350);
 }
 
 // ─── ROUND HISTORY RENDERER ──────────────────────────────────────────────────

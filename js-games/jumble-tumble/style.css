@@ -746,3 +746,53 @@
 .rh-pts { text-align: right; font-size: 0.72rem; }
 .rh-ok  .rh-pts { color: var(--jt-accent); }
 .rh-err .rh-pts { color: #334155; }
+
+/* ─── SCORE ANIMATION ────────────────────────────────────────────── */
+#game-hud { position: relative; }
+.score-pop {
+    animation: scorePop 0.5s ease-out forwards;
+}
+@keyframes scorePop {
+    0%   { transform: scale(1);    color: #94a3b8; }
+    35%  { transform: scale(1.25); color: var(--jt-success); }
+    100% { transform: scale(1);    color: #94a3b8; }
+}
+.score-gain {
+    position: absolute;
+    right: 0;
+    top: -2px;
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--jt-success);
+    pointer-events: none;
+    animation: scoreGainFly 0.9s ease-out forwards;
+    white-space: nowrap;
+}
+@keyframes scoreGainFly {
+    0%   { opacity: 1; transform: translateY(0);     }
+    100% { opacity: 0; transform: translateY(-36px); }
+}
+
+/* ─── TILE SHIMMER (keeps screen alive during reveal hold) ───────── */
+.tile-shimmer {
+    animation: tileShimmer 1.4s ease-in-out infinite !important;
+}
+@keyframes tileShimmer {
+    0%, 100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+    50%       { box-shadow: 0 0 14px 3px rgba(74,222,128,0.4); opacity: 0.82; }
+}
+.tile-shimmer-wrong {
+    animation: tileShimmerWrong 1.4s ease-in-out infinite !important;
+}
+@keyframes tileShimmerWrong {
+    0%, 100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+    50%       { box-shadow: 0 0 14px 3px rgba(251,146,60,0.45); opacity: 0.82; }
+}
+
+/* ─── TILE ANSWER REVEAL (correct answer shown after wrong guess) ── */
+.tile-answer-reveal {
+    border-color: rgba(251,146,60,0.55) !important;
+    background:   rgba(251,146,60,0.09) !important;
+    color:        var(--jt-accent)      !important;
+}
