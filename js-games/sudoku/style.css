@@ -1,0 +1,371 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ *  sudoku/style.css
+ *  Imports shared tokens, fonts, modals, buttons, leaderboard from shared.css
+ * ───────────────────────────────────────────────────────────────────────── */
+@import url('../shared.css');
+
+/* ─── START LOGO ─────────────────────────────────────────────────── */
+#start-logo {
+    font-size: 4.5rem;
+    margin-bottom: 8px;
+    animation: logoEntrance 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    filter: drop-shadow(0 0 24px rgba(74, 222, 128, 0.55));
+}
+@keyframes logoEntrance {
+    0%   { transform: scale(4); opacity: 0; }
+    35%  { opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ─── GAME AREA ──────────────────────────────────────────────────── */
+#game-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 8px 6px;
+    overflow: hidden;
+}
+
+/* ─── SUDOKU GRID ────────────────────────────────────────────────── */
+#sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    width: min(calc(100vw - 24px), 420px);
+    aspect-ratio: 1 / 1;
+    border: 2px solid #64748b;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(74, 222, 128, 0.08);
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier Prime', monospace;
+    font-size: clamp(0.9rem, 4vw, 1.4rem);
+    font-weight: bold;
+    cursor: pointer;
+    border-right: 1px solid #1e293b;
+    border-bottom: 1px solid #1e293b;
+    background: #050810;
+    color: #e2e8f0;
+    transition: background 0.08s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Right edge cells — no right border */
+.cell:nth-child(9n) { border-right: none; }
+/* Bottom row cells — no bottom border */
+.cell:nth-child(n+73) { border-bottom: none; }
+
+/* Thick box dividers — right side (after col 3, col 6) */
+.cell[data-c="2"] { border-right: 2px solid #475569; }
+.cell[data-c="5"] { border-right: 2px solid #475569; }
+
+/* Thick box dividers — bottom (after row 3, row 6) */
+.cell[data-r="2"] { border-bottom: 2px solid #475569; }
+.cell[data-r="5"] { border-bottom: 2px solid #475569; }
+
+/* ─── CELL STATES ────────────────────────────────────────────────── */
+.cell.given {
+    color: #e2e8f0;
+    cursor: default;
+    font-weight: 700;
+}
+
+.cell.user-correct {
+    color: var(--accent);
+}
+
+.cell.wrong {
+    color: var(--error-color);
+    background: rgba(239, 68, 68, 0.12);
+    animation: wrongFlash 0.4s ease-out;
+}
+
+@keyframes wrongFlash {
+    0%, 100% { background: rgba(239, 68, 68, 0.12); }
+    50%       { background: rgba(239, 68, 68, 0.28); }
+}
+
+.cell.selected {
+    background: rgba(74, 222, 128, 0.18) !important;
+    outline: 2px solid var(--success);
+    outline-offset: -2px;
+    z-index: 1;
+}
+
+.cell.peer {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.cell.match {
+    background: rgba(74, 222, 128, 0.07);
+}
+
+/* Wrong cell doesn't fully override selected glow — keep it readable */
+.cell.wrong.selected {
+    background: rgba(239, 68, 68, 0.22) !important;
+    outline-color: var(--error-color);
+}
+
+/* ─── NUMBER PICKER OVERLAY ──────────────────────────────────────── */
+#num-picker {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#num-picker.hidden {
+    display: none;
+}
+
+#num-picker-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+}
+
+#num-picker-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(8, 12, 24, 0.97);
+    border: 1px solid #1e293b;
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 0 40px rgba(74, 222, 128, 0.15), 0 8px 32px rgba(0, 0, 0, 0.7);
+    animation: pickerIn 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pickerIn {
+    0%   { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1);    opacity: 1; }
+}
+
+#num-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.num-btn {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    color: #e2e8f0;
+    font-family: 'Courier Prime', monospace;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.1s, border-color 0.1s, transform 0.08s;
+    -webkit-tap-highlight-color: transparent;
+    margin-top: 0;
+    padding: 0;
+    letter-spacing: 0;
+}
+
+.num-btn:hover {
+    background: rgba(74, 222, 128, 0.12);
+    border-color: rgba(74, 222, 128, 0.4);
+    color: var(--success);
+}
+
+.num-btn:active {
+    transform: scale(0.9);
+}
+
+.erase-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 44px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.25);
+    color: var(--error-color);
+}
+
+.erase-btn:hover {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: var(--error-color);
+}
+
+/* ─── HEADER EXTRAS ──────────────────────────────────────────────── */
+#header-mistakes {
+    color: var(--error-color);
+    font-size: 0.9rem;
+}
+
+#header-timer {
+    color: var(--accent);
+}
+
+/* ─── RESULT — green accent for Sudoku ──────────────────────────── */
+#result-time-row.sudoku-score {
+    background: rgba(74, 222, 128, 0.08);
+    border-color: rgba(74, 222, 128, 0.2);
+}
+
+#result-time-row.sudoku-score #result-time-value {
+    color: var(--success);
+}
+
+/* ─── RULES OVERLAY (reuse code-breaker's pattern) ──────────────── */
+#rules-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.94);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3500;
+    padding: 20px;
+}
+
+#rules-overlay.hidden { display: none; }
+
+#rules-card {
+    background: linear-gradient(135deg, #080c18 0%, #0a1020 100%);
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    padding: 28px 24px 20px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: rulesIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes rulesIn {
+    0%   { transform: scale(0.88) translateY(16px); opacity: 0; }
+    100% { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+#rules-icon {
+    font-size: 3rem;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 0 16px rgba(74, 222, 128, 0.4));
+}
+
+#rules-level-name {
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    color: var(--success);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+#rules-card h2 {
+    font-size: 1.2rem;
+    margin: 0 0 14px;
+    color: #e2e8f0;
+    letter-spacing: 2px;
+}
+
+#rules-list {
+    text-align: left;
+    font-size: 0.82rem;
+    color: #64748b;
+    line-height: 1.75;
+    padding-left: 18px;
+    margin: 0 0 18px;
+}
+
+#rules-list li + li { margin-top: 6px; }
+#rules-list b { color: #94a3b8; }
+
+#rules-start-btn {
+    background: var(--success);
+    color: #000;
+    border-color: var(--success);
+    font-weight: 700;
+    width: 100%;
+    padding: 13px;
+    font-size: 1rem;
+    animation: startPulse 2s ease-in-out infinite;
+}
+#rules-start-btn:hover { background: #22c55e; border-color: #22c55e; color: #000; }
+
+@keyframes startPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+    50%       { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0.2); }
+}
+
+#rules-back-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    font-size: 0.85rem;
+    color: #334155;
+    border-color: #0f172a;
+}
+
+/* ─── COUNTDOWN OVERLAY ──────────────────────────────────────────── */
+#countdown-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4000;
+}
+
+#countdown-overlay.hidden { display: none; }
+
+#countdown-number {
+    font-family: 'Courier Prime', monospace;
+    font-size: 9rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(74, 222, 128, 0.6);
+    line-height: 1;
+}
+
+#countdown-number.count-pop {
+    animation: countPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#countdown-number.go-text {
+    color: var(--success);
+    font-size: 6rem;
+    text-shadow: 0 0 60px rgba(74, 222, 128, 0.9);
+}
+
+@keyframes countPop {
+    0%   { transform: scale(1.6); opacity: 0; }
+    40%  { opacity: 1; }
+    100% { transform: scale(1);   opacity: 1; }
+}
+
+/* ─── SHARE BUTTON ───────────────────────────────────────────────── */
+button.share-btn {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: rgba(74, 222, 128, 0.35);
+    color: var(--success);
+}
+
+button.share-btn:hover {
+    background: rgba(74, 222, 128, 0.2);
+    border-color: var(--success);
+    color: var(--success);
+}

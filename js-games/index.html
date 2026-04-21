@@ -331,6 +331,7 @@
         }
         .card-bus    { --c-accent: #38bdf8; --c-glow: rgba(56,189,248,0.15); }
         .card-cipher { --c-accent: #818cf8; --c-glow: rgba(129,140,248,0.15); }
+        .card-sudoku { --c-accent: #4ade80; --c-glow: rgba(74,222,128,0.15); }
         .card-soon   { cursor: default; opacity: 0.45; }
         .card-soon:hover { transform: none; border-color: var(--border-dim); box-shadow: none; }
         .card-soon:hover::after { opacity: 0; }
@@ -369,6 +370,7 @@
         }
         .badge-spatial { background: rgba(56,189,248,0.1);  color: #38bdf8;  border:1px solid rgba(56,189,248,0.25); }
         .badge-cipher  { background: rgba(129,140,248,0.1); color: #818cf8;  border:1px solid rgba(129,140,248,0.3); }
+        .badge-logic   { background: rgba(74,222,128,0.1);  color: #4ade80;  border:1px solid rgba(74,222,128,0.3); }
         .badge-soon    { background: rgba(71,85,105,0.1);   color: #334155;  border:1px solid #1e293b; }
         .card-desc {
             font-size: 0.87rem;
@@ -741,26 +743,35 @@
                     </div>
                 </a>
 
-                <!-- ─ MODULE 03: Coming Soon ─ -->
-                <div class="game-card card-soon">
-                    <div class="card-icon" style="opacity:0.25">🧩</div>
+                <!-- ─ MODULE 03: Sudoku ─ -->
+                <a class="game-card card-sudoku" href="sudoku/index.html">
+                    <div class="card-icon">🔢</div>
                     <div class="card-top-row">
                         <div>
                             <div class="card-id">MODULE_03</div>
-                            <h3 class="card-title" style="color:#334155">Entropy Grid</h3>
+                            <h3 class="card-title">Sudoku</h3>
                         </div>
-                        <span class="type-badge badge-soon">COMING SOON</span>
+                        <span class="type-badge badge-logic">LOGIC PUZZLE</span>
                     </div>
-                    <p class="card-desc" style="color:#1e293b">Rebuild a decaying pattern from memory before it vanishes. A brutal test of visuospatial reasoning and short-term recall.</p>
+                    <p class="card-desc">Fill a 9&times;9 grid so every row, column, and 3&times;3 box holds the digits 1&ndash;9 exactly once. A uniquely generated puzzle every time — four difficulty levels push your deductive reasoning to the limit.</p>
                     <div class="card-tags">
-                        <span class="tag">Pattern Memory</span>
-                        <span class="tag">Visual Recall</span>
-                        <span class="tag">Time Pressure</span>
+                        <span class="tag">Logic</span>
+                        <span class="tag">Deduction</span>
+                        <span class="tag">Grid Puzzle</span>
+                        <span class="tag">Number Fill</span>
+                        <span class="tag">Pattern</span>
                     </div>
                     <div class="card-footer">
-                        <span style="font-family:var(--font);font-size:0.65rem;color:#1e293b;letter-spacing:2px">— IN DEVELOPMENT —</span>
+                        <div class="level-pips">
+                            <div class="pip pip-easy" title="Easy"></div>
+                            <div class="pip pip-med"  title="Medium"></div>
+                            <div class="pip pip-hard" title="Hard"></div>
+                            <div class="pip pip-pro"  title="Pro"></div>
+                            <span class="pip-label">4 LEVELS</span>
+                        </div>
+                        <span class="play-btn" style="background:#4ade80;color:#000;">PLAY &rarr;</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- ─ MODULE 04: Coming Soon ─ -->
                 <div class="game-card card-soon">
@@ -903,7 +914,7 @@
                     <ul>
                         <li><a href="traffic-jam/index.html">🚌 Bus Escape</a></li>
                         <li><a href="code-breaker/index.html">🔐 Code Breaker</a></li>
-                        <li><a href="#games">🧩 Entropy Grid <span class="soon-tag">SOON</span></a></li>
+                        <li><a href="sudoku/index.html">🔢 Sudoku</a></li>
                         <li><a href="#games">🎯 Turing Lock <span class="soon-tag">SOON</span></a></li>
                     </ul>
                 </div>
