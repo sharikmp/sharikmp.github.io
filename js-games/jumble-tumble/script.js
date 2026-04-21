@@ -252,6 +252,8 @@ let state = {
     roundActive:     false,
     lastTypedLength: 0,
     roundHistory:    [],
+    autoFilled:      false,
+    autoFillMap:     {},   // position → char for auto-revealed letters
 };
 
 // ─── AUDIO ──────────────────────────────────────────────────────────
@@ -348,6 +350,11 @@ function startTimer() {
             revealHint();
         }
 
+        // auto-fill 30% of remaining letters once 50% of time has elapsed
+        if (!state.autoFilled && elapsed >= ROUND_TIME / 2) {
+            autoFillHint();
+        }
+
         if (state.timeRemaining <= 0) {
             clearInterval(state.timerInterval);
             handleTimeout();
@@ -383,13 +390,14 @@ function calcPoints() {
 function handleSubmit() {
     if (!state.roundActive) return;
     const input = document.getElementById('answer-input');
-    const guess = input.value.trim().toLowerCase();
-    if (!guess) return;
+    const typed = input.value.trim().toLowerCase();
+    if (!typed && Object.keys(state.autoFillMap).length === 0) return;
 
-    if (guess === state.currentWord) {
-        onCorrect(calcPoints(), guess);
+    const full = assembleAnswer(typed);
+    if (full === state.currentWord) {
+        onCorrect(calcPoints(), full);
     } else {
-        onWrong(guess);
+        onWrong(typed || '—');
     }
 }
 
@@ -483,11 +491,14 @@ function startRound() {
     state.hintShown       = false;
     state.roundActive     = true;
     state.lastTypedLength = 0;
+    state.autoFilled      = false;
+    state.autoFillMap     = {};
 
     // reset UI
     const input = document.getElementById('answer-input');
     input.value = '';
     input.disabled = false;
+    input.maxLength = 999;
     input.classList.remove('input-correct', 'input-wrong');
     input.focus();
 
@@ -505,6 +516,7 @@ function startRound() {
     state.currentWord   = entry.word.toLowerCase();
     state.currentHint   = entry.hint;
     state.scrambledWord = shuffleWord(state.currentWord);
+    input.maxLength     = state.currentWord.length;
 
     renderTiles(state.scrambledWord);
     initAnswerTiles();
@@ -571,7 +583,7 @@ function showResult() {
     // build buttons
     const btns = document.getElementById('result-buttons');
     btns.innerHTML = `
-        <button class="btn-share" onclick="shareResult()">📤 SHARE RESULT</button>
+        <button class="btn-share" onclick="shareResult()">SHARE</button>
         <button class="btn-again" onclick="startGame('${state.difficulty}')">PLAY AGAIN</button>
         <button class="btn-menu"  onclick="resetToStart()">MAIN MENU</button>
     `;
@@ -587,32 +599,217 @@ function showResult() {
     document.getElementById('result-modal').classList.remove('hidden');
 }
 
-// ─── SHARE RESULT ────────────────────────────────────────────────────
+// ─── SHARE RESULT AS IMAGE ──────────────────────────────────────────────────
 function shareResult() {
-    const pct  = Math.round((state.correctCount / ROUNDS) * 100);
-    const bar  = buildScoreBar(pct);
-    const diff = DIFF_LABELS[state.difficulty];
-    const url  = 'https://sharikmp.github.io/js-games/jumble-tumble/';
+    const DPR    = Math.min(window.devicePixelRatio || 1, 3);
+    const CW     = 420;
+    const ROUNDS_COUNT = state.roundHistory.length;
+    // Dynamic height: fixed sections (~265px) + per-round rows
+    const wrongCount = state.roundHistory.filter(r => !r.correct).length;
+    const CH = 265 + ROUNDS_COUNT * 26 + wrongCount * 11;
 
-    const text = [
-        `🔤 Jumble Tumble · ${diff}`,
-        `Round ${ROUNDS}/${ROUNDS} complete!`,
-        `Score: ${state.score}/${ROUNDS * 100}`,
-        `Correct: ${state.correctCount}/${ROUNDS}`,
-        bar,
-        `Play at: ${url}`,
-    ].join('\n');
+    const canvas = document.createElement('canvas');
+    canvas.width  = CW * DPR;
+    canvas.height = CH * DPR;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(DPR, DPR);
 
-    if (navigator.share) {
-        navigator.share({ text }).catch(() => copyToClipboard(text));
-    } else {
-        copyToClipboard(text);
+    const won     = state.correctCount >= Math.ceil(ROUNDS * 0.6);
+    const pct     = Math.round((state.correctCount / ROUNDS) * 100);
+    const ACCENT  = '#fb923c';
+    const SUCCESS = '#4ade80';
+    const ERROR   = '#ef4444';
+    const MUTED   = '#94a3b8';
+    const MONO    = '"Courier New", monospace';
+
+    // Background
+    const bg = ctx.createLinearGradient(0, 0, CW, CH);
+    bg.addColorStop(0, '#0a0a14');
+    bg.addColorStop(1, '#0c1428');
+    ctx.fillStyle = bg;
+    rrFill(ctx, 0, 0, CW, CH, 20);
+
+    // Border glow
+    ctx.save();
+    ctx.strokeStyle = won ? 'rgba(251,146,60,0.55)' : 'rgba(239,68,68,0.45)';
+    ctx.lineWidth   = 2;
+    rrStroke(ctx, 1, 1, CW - 2, CH - 2, 20);
+    ctx.restore();
+
+    // Header bar
+    ctx.fillStyle = won ? 'rgba(251,146,60,0.09)' : 'rgba(239,68,68,0.06)';
+    rrFill(ctx, 0, 0, CW, 54, { tl:20, tr:20, bl:0, br:0 });
+    ctx.font      = `bold 17px ${MONO}`;
+    ctx.fillStyle = ACCENT;
+    ctx.textAlign = 'left';
+    ctx.fillText('JUMBLE TUMBLE', 20, 34);
+    ctx.font      = `12px ${MONO}`;
+    ctx.fillStyle = '#64748b';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${DIFF_LABELS[state.difficulty]}  |  ${ROUNDS} ROUNDS`, CW - 20, 34);
+
+    // Result title
+    ctx.textAlign  = 'center';
+    ctx.font       = `bold 20px ${MONO}`;
+    ctx.fillStyle  = won ? ACCENT : ERROR;
+    ctx.shadowColor = won ? 'rgba(251,146,60,0.6)' : 'rgba(239,68,68,0.6)';
+    ctx.shadowBlur = 12;
+    ctx.fillText(won ? '>> WELL PLAYED! <<' : '>> KEEP PRACTISING <<', CW / 2, 86);
+    ctx.shadowBlur = 0;
+
+    // Stat boxes
+    const statY = 115;
+    [
+        { label: 'SCORE',   value: String(state.score) },
+        { label: 'CORRECT', value: `${state.correctCount}/${ROUNDS}` },
+        { label: 'RATING',  value: `${pct}%` },
+    ].forEach((col, i) => {
+        const cw3 = CW / 3;
+        const cx  = cw3 * i + cw3 / 2;
+        ctx.fillStyle = 'rgba(255,255,255,0.04)';
+        rrFill(ctx, cw3 * i + 12, statY - 22, cw3 - 24, 60, 10);
+        ctx.font      = `bold 24px ${MONO}`;
+        ctx.fillStyle = ACCENT;
+        ctx.textAlign = 'center';
+        ctx.fillText(col.value, cx, statY + 13);
+        ctx.font      = `9px ${MONO}`;
+        ctx.fillStyle = MUTED;
+        ctx.fillText(col.label, cx, statY + 30);
+    });
+
+    // Score bar (10 coloured blocks)
+    const filled = Math.round(pct / 10);
+    const segW   = 27;
+    const segH   = 11;
+    const segGap = 4;
+    const barW   = 10 * segW + 9 * segGap;
+    const barX   = (CW - barW) / 2;
+    const barY   = 188;
+    for (let s = 0; s < 10; s++) {
+        ctx.fillStyle = s < filled ? ACCENT : '#1e293b';
+        rrFill(ctx, barX + s * (segW + segGap), barY, segW, segH, 3);
     }
+    ctx.font      = `9px ${MONO}`;
+    ctx.fillStyle = MUTED;
+    ctx.textAlign = 'center';
+    ctx.fillText(`${pct}% ACCURACY`, CW / 2, barY + segH + 13);
+
+    // Divider
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.moveTo(20, 222);
+    ctx.lineTo(CW - 20, 222);
+    ctx.stroke();
+
+    // Round breakdown header
+    ctx.font      = `9px ${MONO}`;
+    ctx.fillStyle = '#334155';
+    ctx.textAlign = 'left';
+    ctx.fillText('ROUND BREAKDOWN', 22, 238);
+
+    // Round rows
+    let curY = 250;
+    state.roundHistory.forEach((r, i) => {
+        const rowH = r.correct ? 22 : 33;
+        ctx.fillStyle = r.correct ? 'rgba(74,222,128,0.04)' : 'rgba(239,68,68,0.04)';
+        rrFill(ctx, 16, curY, CW - 32, rowH - 2, 4);
+
+        ctx.font = `9px ${MONO}`;
+        // round number
+        ctx.fillStyle = '#334155';
+        ctx.textAlign = 'right';
+        ctx.fillText(String(i + 1).padStart(2, ' '), 34, curY + 13);
+        // scrambled
+        ctx.fillStyle = ACCENT;
+        ctx.textAlign = 'left';
+        ctx.fillText(r.scrambled.toUpperCase().slice(0, 12), 42, curY + 13);
+        // guess
+        ctx.fillStyle = r.correct ? SUCCESS : ERROR;
+        ctx.textAlign = 'center';
+        ctx.fillText((r.guess || '-').toUpperCase().slice(0, 12), CW / 2 + 20, curY + 13);
+        // correct answer (wrong rows only)
+        if (!r.correct) {
+            ctx.font      = `8px ${MONO}`;
+            ctx.fillStyle = SUCCESS;
+            ctx.fillText(r.answer.toUpperCase().slice(0, 12), CW / 2 + 20, curY + 25);
+            ctx.font = `9px ${MONO}`;
+        }
+        // pts
+        ctx.fillStyle = r.correct ? ACCENT : '#334155';
+        ctx.textAlign = 'right';
+        ctx.fillText(r.pts > 0 ? `+${r.pts}` : '--', CW - 20, curY + 13);
+
+        curY += rowH;
+    });
+
+    // Footer
+    ctx.font      = `10px ${MONO}`;
+    ctx.fillStyle = '#334155';
+    ctx.textAlign = 'center';
+    ctx.fillText('sharikmp.github.io  |  Jumble Tumble', CW / 2, CH - 12);
+
+    // Export / share
+    canvas.toBlob(async (blob) => {
+        const file     = new File([blob], 'jumble-tumble-result.png', { type: 'image/png' });
+        const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        if (isMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    title: 'Jumble Tumble Result',
+                    text: won
+                        ? `WELL PLAYED! ${state.correctCount}/${ROUNDS} correct, ${state.score} pts`
+                        : `Keep practising! ${state.correctCount}/${ROUNDS} correct, ${state.score} pts`,
+                    files: [file],
+                });
+                return;
+            } catch (err) {
+                if (err.name !== 'AbortError') console.warn('Share failed, falling back to download', err);
+                else return;
+            }
+        }
+        // Desktop / fallback: download the PNG
+        const url = URL.createObjectURL(blob);
+        const a   = document.createElement('a');
+        a.href     = url;
+        a.download = 'jumble-tumble-result.png';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        flashShareBtn('DOWNLOADED!');
+    }, 'image/png');
 }
 
-function buildScoreBar(pct) {
-    const filled = Math.round(pct / 10);
-    return '🟧'.repeat(filled) + '⬛'.repeat(10 - filled);
+function rrFill(ctx, x, y, w, h, r) {
+    const R = typeof r === 'number'
+        ? { tl:r, tr:r, bl:r, br:r }
+        : { tl:r.tl||0, tr:r.tr||0, bl:r.bl||0, br:r.br||0 };
+    ctx.beginPath();
+    ctx.moveTo(x + R.tl, y);
+    ctx.lineTo(x + w - R.tr, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + R.tr);
+    ctx.lineTo(x + w, y + h - R.br);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - R.br, y + h);
+    ctx.lineTo(x + R.bl, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - R.bl);
+    ctx.lineTo(x, y + R.tl);
+    ctx.quadraticCurveTo(x, y, x + R.tl, y);
+    ctx.closePath();
+    ctx.fill();
+}
+
+function rrStroke(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    ctx.stroke();
 }
 
 function copyToClipboard(text) {
@@ -710,6 +907,68 @@ document.addEventListener('keydown', e => {
         if (gameVisible) handleSubmit();
     }
 });
+// ─── AUTO-FILL HINT ───────────────────────────────────────────────────────
+function autoFillHint() {
+    if (!state.roundActive || state.autoFilled) return;
+    state.autoFilled = true;
+    const word  = state.currentWord;
+    const count = Math.ceil(word.length * 0.30);
+    const k     = state.lastTypedLength; // chars user has already typed
+
+    // Pick from positions the user hasn't "claimed" yet (positions k..end)
+    const available = [];
+    for (let i = k; i < word.length; i++) available.push(i);
+    if (available.length === 0) return;
+
+    // Fisher-Yates shuffle, take first 'count' positions
+    for (let i = available.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [available[i], available[j]] = [available[j], available[i]];
+    }
+    available.slice(0, Math.min(count, available.length))
+             .forEach(pos => { state.autoFillMap[pos] = word[pos]; });
+
+    // Shrink input maxLength to match remaining chars user must type
+    const input = document.getElementById('answer-input');
+    input.maxLength = computeExpectedInput().length;
+
+    // Refresh display
+    updateJumbledHighlights(input.value);
+    updateAnswerTiles(input.value);
+    showFeedback('💡 AUTO FILL', true);
+}
+
+// ─── AUTOFILL HELPERS ────────────────────────────────────────────────────────
+function computeExpectedInput() {
+    // Letters the user must type (word minus auto-filled positions)
+    const word = state.currentWord;
+    let result = '';
+    for (let i = 0; i < word.length; i++) {
+        if (state.autoFillMap[i] === undefined) result += word[i];
+    }
+    return result;
+}
+
+function buildDisplayAnswer(typed) {
+    // Per-position display: autofill chars take fixed positions; typed chars fill the rest
+    const word = state.currentWord;
+    const result = [];
+    let typedIdx = 0;
+    for (let i = 0; i < word.length; i++) {
+        if (state.autoFillMap[i] !== undefined) {
+            result.push({ char: state.autoFillMap[i], autofill: true });
+        } else {
+            result.push({ char: typed[typedIdx] || '_', autofill: false });
+            typedIdx++;
+        }
+    }
+    return result;
+}
+
+function assembleAnswer(typed) {
+    return buildDisplayAnswer(typed).map(d => d.char).join('');
+}
+
 // ─── INPUT LIVE MATCHING ───────────────────────────────────────────────────
 function handleInputChange() {
     if (!state.roundActive) return;
@@ -722,8 +981,9 @@ function handleInputChange() {
     // Detect newly added character (not a delete/backspace)
     if (typed.length > state.lastTypedLength) {
         const newChar = typed[typed.length - 1];
-        // Build remaining answer letters (subtract already-typed ones)
-        const remaining = state.currentWord.split('');
+        // Check against remaining letters the user still needs to type (excluding autofill)
+        const expected = computeExpectedInput();
+        const remaining = expected.split('');
         typed.slice(0, typed.length - 1).split('').forEach(c => {
             const idx = remaining.indexOf(c);
             if (idx > -1) remaining.splice(idx, 1);
@@ -735,9 +995,10 @@ function handleInputChange() {
     updateJumbledHighlights(typed);
     updateAnswerTiles(typed);
 
-    // Auto-submit when full correct word is typed
-    if (typed === state.currentWord) {
-        onCorrect(calcPoints(), typed);
+    // Auto-submit when assembled answer equals correct word
+    const full = assembleAnswer(typed);
+    if (full === state.currentWord) {
+        onCorrect(calcPoints(), full);
     }
 }
 
@@ -756,12 +1017,12 @@ function updateJumbledHighlights(typed) {
     const tiles    = document.querySelectorAll('#jumbled-word .letter-tile');
     const scrambled = state.scrambledWord.toLowerCase().split('');
 
-    // Build frequency map of typed characters
+    // Include autofill chars so their scrambled tiles also highlight
+    const allTyped = Object.values(state.autoFillMap).join('') + typed;
     const freq = {};
-    typed.split('').forEach(c => { freq[c] = (freq[c] || 0) + 1; });
+    allTyped.split('').forEach(c => { freq[c] = (freq[c] || 0) + 1; });
     const tempFreq = { ...freq };
 
-    // Greedily highlight tiles whose letter has been typed
     tiles.forEach((tile, i) => {
         const letter = scrambled[i];
         if (tempFreq[letter] > 0) {
@@ -774,13 +1035,21 @@ function updateJumbledHighlights(typed) {
 }
 
 function updateAnswerTiles(typed) {
-    const tiles = document.querySelectorAll('#answer-tiles .answer-tile');
+    const tiles   = document.querySelectorAll('#answer-tiles .answer-tile');
+    const display = buildDisplayAnswer(typed);
     tiles.forEach((tile, i) => {
-        if (i < typed.length) {
+        if (i >= display.length) return;
+        const d = display[i];
+        if (d.autofill) {
             tile.classList.remove('answer-tile-blank');
-            tile.textContent = typed[i].toUpperCase();
+            tile.classList.add('tile-autofill');
+            tile.textContent = d.char.toUpperCase();
+        } else if (d.char !== '_') {
+            tile.classList.remove('answer-tile-blank', 'tile-autofill');
+            tile.textContent = d.char.toUpperCase();
         } else {
             tile.classList.add('answer-tile-blank');
+            tile.classList.remove('tile-autofill');
             tile.textContent = '_';
         }
     });
@@ -915,7 +1184,10 @@ function renderRoundHistory() {
                 <div class="rh-row ${r.correct ? 'rh-ok' : 'rh-err'}">
                     <span class="rh-num">${i + 1}</span>
                     <span class="rh-word rh-scrambled">${r.scrambled.toUpperCase()}</span>
-                    <span class="rh-word ${r.correct ? 'rh-answer-ok' : 'rh-answer-err'}">${r.guess.toUpperCase()}</span>
+                    <span class="rh-word ${r.correct ? 'rh-answer-ok' : 'rh-answer-err'}">
+                        ${(r.guess || '—').toUpperCase()}
+                        ${!r.correct ? `<span class="rh-correct-below">${r.answer.toUpperCase()}</span>` : ''}
+                    </span>
                     <span class="rh-icon">${r.correct ? '✓' : '✗'}</span>
                     <span class="rh-pts">${r.pts > 0 ? '+' + r.pts : '—'}</span>
                 </div>
