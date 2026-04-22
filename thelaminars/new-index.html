@@ -379,10 +379,23 @@
                 <a href="#faculties" class="hover:text-blue-400 transition">Faculty</a>
                 <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
             </div>
-            <!-- Mobile Menu Icon (Visual Only) -->
-            <button class="md:hidden text-white focus:outline-none shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none shrink-0" aria-label="Toggle menu" aria-expanded="false">
+                <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
+        </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 bg-black/95 backdrop-blur-md">
+            <div class="flex flex-col px-6 py-4 space-y-4 text-sm font-semibold text-gray-300">
+                <a href="#hero"     class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Home</a>
+                <a href="#legacy"   class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Legacy</a>
+                <a href="#about"    class="hover:text-blue-400 transition" onclick="closeMobileMenu()">About Us</a>
+                <a href="#courses"  class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Courses</a>
+                <a href="#modes"    class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Modes</a>
+                <a href="#faculties" class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Faculty</a>
+                <a href="#contact"  class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Contact</a>
+            </div>
         </div>
     </nav>
 
@@ -494,7 +507,7 @@
          =================================================== -->
 
     <!-- Section 1: Academics -->
-    <section id="courses" class="py-16 md:py-24 bg-black border-t border-white/5">
+    <section id="courses" class="py-16 md:py-24 bg-black border-t border-white/5" data-section-num="1">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Master heading -->
             <div class="text-center mb-6">
@@ -618,7 +631,130 @@
         </div>
     </section>
 
-    <!-- Section 2: Technology & Skills -->
+    <!-- Section 2: Language & Communication -->
+    <section id="languages" class="py-16 md:py-24 bg-zinc-950 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-12 h-12 rounded-xl bg-pink-600/20 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-language text-pink-400 text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-pink-400 uppercase tracking-widest font-semibold">Section 2</p>
+                    <h3 class="text-2xl font-bold text-white font-['Poppins']">Language &amp; Communication</h3>
+                </div>
+                <div class="flex-1 h-px bg-white/10 ml-2"></div>
+            </div>
+
+            <div class="timeline">
+
+                <!-- Hindi Academic 9-12 -->
+                <div class="timeline-item left">
+                    <div class="timeline-card">
+                        <div class="flex items-start justify-between gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-orange-500 to-amber-600" style="transform:rotate(-10deg)">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                            <div class="flex flex-col gap-1 items-end">
+                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-orange-500/20 text-orange-300 border border-orange-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-school"></i> Class 9–12</span>
+                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-fire"></i> Board Focus</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#fef9c3,#fdba74);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Hindi – Academic</h3>
+                        <p class="text-gray-400 text-sm mb-3">Board-oriented Hindi coaching with deep focus on grammar, literature, and answer-writing for Classes 9–12.</p>
+                        <div class="timeline-details-panel">
+                            <ul class="space-y-2 mb-4">
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Board exam pattern coverage</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Answer writing techniques</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Grammar and literature clarity</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Expert guidance from senior faculty</li>
+                            </ul>
+                            <a href="pages/language-lab.html#hindi" class="inline-block px-4 py-1.5 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black rounded-lg text-sm transition font-semibold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hindi Basics - Any Age -->
+                <div class="timeline-item right">
+                    <div class="timeline-card">
+                        <div class="flex items-start justify-between gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-yellow-500 to-orange-400" style="transform:rotate(10deg)">
+                                <i class="fa-solid fa-spell-check"></i>
+                            </div>
+                            <div class="flex flex-col gap-1 items-end">
+                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-yellow-500/20 text-yellow-300 border border-yellow-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-users"></i> Any Age</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#fef9c3,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Hindi – Basics</h3>
+                        <p class="text-gray-400 text-sm mb-3">Foundational Hindi language skills for beginners of all ages — reading, writing, and spoken basics.</p>
+                        <div class="timeline-details-panel">
+                            <ul class="space-y-2 mb-4">
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Hindi alphabet and reading</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Basic grammar and vocabulary</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Conversational Hindi practice</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Suitable for non-Hindi speakers</li>
+                            </ul>
+                            <a href="pages/language-lab.html#hindi-basics" class="inline-block px-4 py-1.5 border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black rounded-lg text-sm transition font-semibold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- English Academic 9-12 -->
+                <div class="timeline-item left">
+                    <div class="timeline-card">
+                        <div class="flex items-start justify-between gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600" style="transform:rotate(-10deg)">
+                                <i class="fa-solid fa-pen-nib"></i>
+                            </div>
+                            <div class="flex flex-col gap-1 items-end">
+                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-school"></i> Class 9–12</span>
+                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-fire"></i> Board Focus</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent">English – Academic</h3>
+                        <p class="text-gray-400 text-sm mb-3">Literature, writing skills, and grammar coaching for Classes 9–12 with a sharp focus on board exam performance.</p>
+                        <div class="timeline-details-panel">
+                            <ul class="space-y-2 mb-4">
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Chapter-wise literature explanation</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Writing skills: letters, essays, stories</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Grammar and accuracy focus</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Board exam mock papers practice</li>
+                            </ul>
+                            <a href="pages/language-lab.html#english" class="inline-block px-4 py-1.5 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg text-sm transition font-semibold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- English Spoken - Any Age -->
+                <div class="timeline-item right">
+                    <div class="timeline-card">
+                        <div class="flex items-start justify-between gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-purple-500 to-pink-600" style="transform:rotate(10deg)">
+                                <i class="fa-solid fa-microphone"></i>
+                            </div>
+                            <div class="flex flex-col gap-1 items-end">
+                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-users"></i> All Ages</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#d8b4fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">English – Spoken</h3>
+                        <p class="text-gray-400 text-sm mb-3">Practical spoken English for students and adults — build confidence, fluency, and real communication skills.</p>
+                        <div class="timeline-details-panel">
+                            <ul class="space-y-2 mb-4">
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Practical speaking sessions</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Vocabulary and fluency building</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Confidence building activities</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Interactive group discussions</li>
+                            </ul>
+                            <a href="pages/language-lab.html#spoken" class="inline-block px-4 py-1.5 border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white rounded-lg text-sm transition font-semibold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Technology & Skills -->
     <section id="tech" class="py-16 md:py-24 bg-neutral-950 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
 
@@ -627,7 +763,7 @@
                     <i class="fa-solid fa-laptop-code text-cyan-400 text-xl"></i>
                 </div>
                 <div>
-                    <p class="text-xs text-cyan-400 uppercase tracking-widest font-semibold">Section 2</p>
+                    <p class="text-xs text-cyan-400 uppercase tracking-widest font-semibold">Section 3</p>
                     <h3 class="text-2xl font-bold text-white font-['Poppins']">Technology &amp; Skills</h3>
                 </div>
                 <div class="flex-1 h-px bg-white/10 ml-2"></div>
@@ -728,90 +864,6 @@
                                 <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Flexible / weekend batches</li>
                             </ul>
                             <a href="pages/career-launchpad.html" class="inline-block px-4 py-1.5 border border-green-500 text-green-400 hover:bg-green-500 hover:text-black rounded-lg text-sm transition font-semibold">View Details</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 3: Language & Communication -->
-    <section id="languages" class="py-16 md:py-24 bg-black border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="flex items-center gap-4 mb-10">
-                <div class="w-12 h-12 rounded-xl bg-pink-600/20 flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-language text-pink-400 text-xl"></i>
-                </div>
-                <div>
-                    <p class="text-xs text-pink-400 uppercase tracking-widest font-semibold">Section 3</p>
-                    <h3 class="text-2xl font-bold text-white font-['Poppins']">Language &amp; Communication</h3>
-                </div>
-                <div class="flex-1 h-px bg-white/10 ml-2"></div>
-            </div>
-
-            <!-- Single timeline for Language Lab with all 3 sub-programs inside ONE card -->
-            <div class="timeline">
-
-                <div class="timeline-item left">
-                    <div class="timeline-card">
-                        <div class="flex items-start justify-between gap-3 mb-4">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-pink-600 to-rose-600" style="transform:rotate(-10deg)">
-                                <i class="fa-solid fa-comments"></i>
-                            </div>
-                            <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-pink-500/20 text-pink-300 border border-pink-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-users"></i> Academic + All Ages</span>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#fbcfe8);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Laminars Language Lab</h3>
-                        <p class="text-gray-400 text-sm mb-4">Three specialized language programs under one roof — covering academic Hindi, academic English, and spoken communication skills.</p>
-
-                        <div class="timeline-details-panel space-y-5">
-
-                            <!-- Hindi Academic -->
-                            <div class="rounded-xl bg-white/[0.03] border border-white/10 p-4">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <i class="fa-solid fa-book text-orange-400"></i>
-                                    <p class="font-bold text-white text-sm">Hindi (Academic) &mdash; <span class="text-orange-400 font-normal text-xs">Class 9–12</span></p>
-                                </div>
-                                <p class="text-gray-400 text-xs mb-2 leading-relaxed">Board exam preparation with emphasis on writing skills, grammar, and literature clarity.</p>
-                                <ul class="space-y-1">
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Board-oriented preparation</li>
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Answer writing practice</li>
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Grammar and literature clarity</li>
-                                </ul>
-                            </div>
-
-                            <!-- English Academic -->
-                            <div class="rounded-xl bg-white/[0.03] border border-white/10 p-4">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <i class="fa-solid fa-pen-nib text-blue-400"></i>
-                                    <p class="font-bold text-white text-sm">English (Academic) &mdash; <span class="text-blue-400 font-normal text-xs">Class 9–12</span></p>
-                                </div>
-                                <p class="text-gray-400 text-xs mb-2 leading-relaxed">Comprehensive coaching in literature, grammar, and writing for board exam success.</p>
-                                <ul class="space-y-1">
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Literature explanation</li>
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Writing skills development</li>
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Grammar strengthening</li>
-                                </ul>
-                            </div>
-
-                            <!-- Spoken English -->
-                            <div class="rounded-xl bg-white/[0.03] border border-white/10 p-4">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <i class="fa-solid fa-microphone text-purple-400"></i>
-                                    <p class="font-bold text-white text-sm">Spoken English &mdash; <span class="text-purple-400 font-normal text-xs">All Ages</span></p>
-                                </div>
-                                <p class="text-gray-400 text-xs mb-2 leading-relaxed">Practical communication skills and spoken confidence for students and individuals in real-life situations.</p>
-                                <ul class="space-y-1">
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Practical speaking sessions</li>
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Vocabulary &amp; fluency building</li>
-                                    <li class="flex items-center gap-2 text-xs text-gray-300"><i class="fa-solid fa-circle-check text-green-400 shrink-0"></i>Interactive learning approach</li>
-                                </ul>
-                            </div>
-
-                            <a href="pages/language-lab.html" class="inline-block px-4 py-1.5 border border-pink-500 text-pink-400 hover:bg-pink-500 hover:text-white rounded-lg text-sm transition font-semibold">View Full Details</a>
                         </div>
                     </div>
                 </div>
@@ -1421,9 +1473,29 @@
                 [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
             }
 
+            // On mobile (≤ 768px) only show 10 particles: 5 icons + 5 words (1 per language min)
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+            let itemsToRender = allItems;
+            if (isMobile) {
+                // Pick 5 random icons
+                const iconPool = allItems.filter(i => i.type === 'icon');
+                const wordPool = allItems.filter(i => i.type === 'word');
+                const shuffle  = arr => { const a = [...arr]; for (let i = a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+                const icons5   = shuffle(iconPool).slice(0, 5);
+                // 5 words: pick 1 from each language first, then fill remainder randomly
+                const langs    = ['en','hi','bn','ur'];
+                const wordsByLang = {};
+                langs.forEach(l => { wordsByLang[l] = shuffle(wordPool.filter(w => w.lang === l)); });
+                const words5   = langs.map(l => wordsByLang[l][0]).filter(Boolean);
+                // add 1 more random from remaining
+                const usedLang = langs[Math.floor(Math.random()*langs.length)];
+                if (wordsByLang[usedLang].length > 1) words5.push(wordsByLang[usedLang][1]);
+                itemsToRender  = [...icons5, ...words5.slice(0,5)];
+            }
+
             const frag = document.createDocumentFragment();
 
-            allItems.forEach((item, idx) => {
+            itemsToRender.forEach((item, idx) => {
                 const el = document.createElement('span');
                 el.className = 'hero-particle';
 
@@ -1450,13 +1522,13 @@
 
                 if (item.type === 'icon') {
                     fontSize        = item.s + 'px';
-                    opacity         = (0.12 + Math.random() * 0.2).toFixed(2);
+                    opacity         = (0.07 + Math.random() * 0.1).toFixed(2);
                     const [r2, g, b] = item.rgb;
-                    colorStyle      = `color:rgba(${r2},${g},${b},0.85);`;
+                    colorStyle      = `color:rgba(${r2},${g},${b},0.75);`;
                     fontFamilyStyle = '';
                 } else {
                     fontSize        = (15 + Math.random() * 11).toFixed(0) + 'px';
-                    opacity         = (0.12 + Math.random() * 0.2).toFixed(2);
+                    opacity         = (0.07 + Math.random() * 0.1).toFixed(2);
                     const [r2, g, b] = wordColors[item.lang];
                     colorStyle      = `color:rgba(${r2},${g},${b},0.9);`;
                     fontFamilyStyle = item.lang === 'ur'
@@ -1485,6 +1557,22 @@
         }
 
         // ==========================================
+        // MOBILE MENU HELPER
+        // ==========================================
+        function closeMobileMenu() {
+            const mobileMenu    = document.getElementById('mobileMenu');
+            const menuIconOpen  = document.getElementById('menuIconOpen');
+            const menuIconClose = document.getElementById('menuIconClose');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen  && menuIconOpen.classList.remove('hidden');
+                menuIconClose && menuIconClose.classList.add('hidden');
+                mobileMenuBtn && mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        // ==========================================
         // INITIALIZATION
         // ==========================================
         document.addEventListener("DOMContentLoaded", () => {
@@ -1494,8 +1582,38 @@
             // Initialize floating educational particles in hero background
             initHeroParticles();
             
-            // Initialize Legacy Section animation sequence
-            runLegacySequence(legacyConfigs);
+            // Initialize Legacy Section animation — triggered when scrolled into view
+            const legacySection = document.getElementById('legacy');
+            if (legacySection) {
+                let legacyStarted = false;
+                const legacyObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !legacyStarted) {
+                            legacyStarted = true;
+                            runLegacySequence(legacyConfigs);
+                            legacyObserver.disconnect();
+                        }
+                    });
+                }, { root: null, rootMargin: '0px', threshold: 0.15 });
+                legacyObserver.observe(legacySection);
+            }
+
+            // ==========================================
+            // Mobile Menu Toggle
+            // ==========================================
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu    = document.getElementById('mobileMenu');
+            const menuIconOpen  = document.getElementById('menuIconOpen');
+            const menuIconClose = document.getElementById('menuIconClose');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    const isOpen = !mobileMenu.classList.contains('hidden');
+                    mobileMenu.classList.toggle('hidden', isOpen);
+                    menuIconOpen.classList.toggle('hidden', !isOpen);
+                    menuIconClose.classList.toggle('hidden', isOpen);
+                    mobileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+                });
+            }
 
             // ==========================================
             // Timeline Scroll Animation
