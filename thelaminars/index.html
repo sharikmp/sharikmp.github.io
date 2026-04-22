@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* CSS Variables */
+        /* CSS Variables - Centralized Theme Settings */
         :root {
             --primary-dark: #0f172a; /* Deep Navy */
             --primary-light: #1e3a8a; /* Trust Blue */
@@ -27,19 +27,37 @@
             --text-main: #334155;
             --text-muted: #64748b;
             --bg-light: #f8fafc;
+            --color-white: #ffffff;
+            --color-success: #10b981;
+            
+            /* Borders & Overlays */
+            --border-color: #e2e8f0;
+            --border-light: rgba(0,0,0,0.05);
+            --border-lighter: rgba(0,0,0,0.02);
+            --bg-white-10: rgba(255, 255, 255, 0.1);
+            --bg-white-20: rgba(255, 255, 255, 0.2);
+            --bg-primary-5: rgba(30, 58, 138, 0.05);
+            --bg-primary-10: rgba(30, 58, 138, 0.1);
+            
+            /* Typography & Shapes */
             --font-heading: 'Poppins', sans-serif;
             --font-body: 'Inter', sans-serif;
             --border-radius-lg: 16px;
             --border-radius-md: 10px;
+            
+            /* Shadows */
             --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
             --shadow-hover: 0 20px 40px -10px rgba(0,0,0,0.12);
+            --shadow-custom: 0 10px 20px rgba(0,0,0,0.2);
+            --shadow-btn-accent: 0 4px 15px rgba(249, 115, 22, 0.3);
+            --shadow-btn-accent-hover: 0 6px 20px rgba(249, 115, 22, 0.4);
         }
 
         /* Global Styles */
         body {
             font-family: var(--font-body);
             color: var(--text-main);
-            background-color: #ffffff;
+            background-color: var(--color-white);
             overflow-x: hidden;
         }
 
@@ -49,6 +67,10 @@
 
         section {
             overflow: hidden;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
         }
 
         .section-title {
@@ -69,34 +91,34 @@
         /* Buttons */
         .btn-custom-accent {
             background-color: var(--accent-color);
-            color: #ffffff;
+            color: var(--color-white);
             font-weight: 600;
             padding: 12px 28px;
             border-radius: 50px;
             border: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+            box-shadow: var(--shadow-btn-accent);
         }
 
         .btn-custom-accent:hover {
             background-color: var(--accent-hover);
-            color: #ffffff;
+            color: var(--color-white);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+            box-shadow: var(--shadow-btn-accent-hover);
         }
 
         .btn-custom-outline {
             background-color: transparent;
-            color: #ffffff;
+            color: var(--color-white);
             font-weight: 600;
             padding: 12px 28px;
             border-radius: 50px;
-            border: 2px solid #ffffff;
+            border: 2px solid var(--color-white);
             transition: all 0.3s ease;
         }
 
         .btn-custom-outline:hover {
-            background-color: #ffffff;
+            background-color: var(--color-white);
             color: var(--primary-light);
             transform: translateY(-2px);
         }
@@ -109,8 +131,8 @@
         }
 
         .navbar.scrolled {
-            background-color: #ffffff !important;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            background-color: var(--color-white) !important;
+            box-shadow: 0 4px 20px var(--border-light);
             padding: 0.7rem 0;
         }
 
@@ -126,7 +148,7 @@
         .navbar-brand {
             font-weight: 800;
             font-size: 1.5rem;
-            color: #ffffff;
+            color: var(--color-white);
             letter-spacing: -0.5px;
         }
 
@@ -164,7 +186,7 @@
 
         .shape {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--bg-white-10);
             border-radius: 50%;
             animation: float 10s infinite ease-in-out;
         }
@@ -177,7 +199,7 @@
         .hero-content {
             position: relative;
             z-index: 1;
-            color: #ffffff;
+            color: var(--color-white);
         }
 
         .hero-title {
@@ -200,6 +222,26 @@
             z-index: 1;
             animation: float 8s infinite ease-in-out reverse;
         }
+        
+        .hero-graphic-main {
+            width: 350px; 
+            height: 350px; 
+            background: var(--bg-white-10); 
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            backdrop-filter: blur(10px); 
+            border: 2px solid var(--bg-white-20);
+        }
+        
+        .hero-graphic-icon-1 {
+            position: absolute; top: 40px; right: 50px; background: var(--accent-color); padding: 15px; border-radius: 15px; box-shadow: var(--shadow-custom); animation: float 4s infinite ease-in-out;
+        }
+        
+        .hero-graphic-icon-2 {
+            position: absolute; bottom: 60px; left: 40px; background: var(--color-success); padding: 15px; border-radius: 15px; box-shadow: var(--shadow-custom); animation: float 6s infinite ease-in-out reverse;
+        }
 
         /* Features Section */
         .features-section {
@@ -208,14 +250,14 @@
         }
 
         .feature-card {
-            background: #ffffff;
+            background: var(--color-white);
             border-radius: var(--border-radius-lg);
             padding: 40px 30px;
             height: 100%;
             box-shadow: var(--shadow-soft);
             transition: all 0.3s ease;
             text-align: center;
-            border: 1px solid rgba(0,0,0,0.02);
+            border: 1px solid var(--border-lighter);
         }
 
         .feature-card:hover {
@@ -227,7 +269,7 @@
         .feature-icon {
             width: 70px;
             height: 70px;
-            background: rgba(30, 58, 138, 0.05);
+            background: var(--bg-primary-5);
             color: var(--primary-light);
             border-radius: 50%;
             display: flex;
@@ -240,7 +282,7 @@
 
         .feature-card:hover .feature-icon {
             background: var(--primary-light);
-            color: #ffffff;
+            color: var(--color-white);
         }
 
         /* Courses Section */
@@ -249,7 +291,7 @@
         }
 
         .course-card {
-            background: #ffffff;
+            background: var(--color-white);
             border-radius: var(--border-radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow-soft);
@@ -272,7 +314,7 @@
             color: var(--primary-light);
             font-size: 4rem;
             opacity: 0.8;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-light);
         }
 
         .course-content {
@@ -308,7 +350,7 @@
         }
 
         .mode-card {
-            background: #ffffff;
+            background: var(--color-white);
             border-radius: var(--border-radius-lg);
             padding: 50px 40px;
             box-shadow: var(--shadow-soft);
@@ -356,7 +398,7 @@
         }
 
         .mode-list li i {
-            color: #10b981; /* Success Green */
+            color: var(--color-success);
             font-size: 1.1rem;
         }
 
@@ -371,15 +413,15 @@
         }
 
         .why-list li {
-            background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.05);
+            background: var(--color-white);
+            border: 1px solid var(--border-light);
             padding: 20px 25px;
             border-radius: var(--border-radius-md);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 10px var(--border-lighter);
             transition: all 0.3s ease;
         }
 
@@ -401,20 +443,82 @@
             font-size: 1.2rem;
             flex-shrink: 0;
         }
-
-        /* Testimonials Section */
-        .testimonials-section {
+        
+        /* Owner & Faculty Sections */
+        .owner-section {
+            padding: 80px 0;
+            background-color: var(--color-white);
+        }
+        
+        .owner-img-wrapper {
+            width: 300px; 
+            height: 300px; 
+            margin: 0 auto; 
+            background: var(--bg-light); 
+            border-radius: 50%; 
+            overflow: hidden; 
+            border: 5px solid var(--color-white); 
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .owner-placeholder {
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: var(--gradient-main); 
+            color: var(--color-white); 
+            font-size: 5rem;
+        }
+        
+        .faculties-section {
             padding: 100px 0;
             background-color: var(--bg-light);
         }
 
+        .faculty-card {
+            background-color: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 30px;
+            text-align: center;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        
+        .faculty-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .faculty-img-wrapper {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 20px auto;
+            box-shadow: var(--shadow-custom);
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 100px 0;
+            background-color: var(--color-white);
+        }
+
         .testimonial-card {
-            background: #ffffff;
+            background: var(--bg-light);
             padding: 40px;
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-soft);
             height: 100%;
             position: relative;
+            border: 1px solid var(--border-lighter);
         }
 
         .quote-icon {
@@ -422,7 +526,7 @@
             top: 30px;
             right: 30px;
             font-size: 3rem;
-            color: rgba(30, 58, 138, 0.05);
+            color: var(--bg-primary-5);
         }
 
         .testimonial-text {
@@ -444,7 +548,7 @@
             height: 60px;
             border-radius: 50%;
             background: var(--gradient-main);
-            color: #ffffff;
+            color: var(--color-white);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -455,10 +559,11 @@
         /* Enquiry Form Section */
         .contact-section {
             padding: 100px 0;
+            background-color: var(--bg-light);
         }
 
         .contact-wrapper {
-            background: #ffffff;
+            background: var(--color-white);
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-hover);
             overflow: hidden;
@@ -466,7 +571,7 @@
 
         .contact-info {
             background: var(--gradient-main);
-            color: #ffffff;
+            color: var(--color-white);
             padding: 50px;
             height: 100%;
         }
@@ -478,16 +583,16 @@
         .form-control, .form-select {
             padding: 12px 20px;
             border-radius: var(--border-radius-md);
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-color);
             margin-bottom: 20px;
             font-size: 1rem;
             background-color: var(--bg-light);
         }
 
         .form-control:focus, .form-select:focus {
-            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
+            box-shadow: 0 0 0 4px var(--bg-primary-10);
             border-color: var(--primary-light);
-            background-color: #ffffff;
+            background-color: var(--color-white);
         }
 
         .form-label {
@@ -498,8 +603,8 @@
 
         .success-message {
             display: none;
-            background: #10b981;
-            color: #ffffff;
+            background: var(--color-success);
+            color: var(--color-white);
             padding: 20px;
             border-radius: var(--border-radius-md);
             text-align: center;
@@ -516,14 +621,14 @@
             background: var(--gradient-main);
             padding: 80px 0;
             text-align: center;
-            color: #ffffff;
+            color: var(--color-white);
             position: relative;
         }
 
         /* Footer */
         .footer {
             background-color: var(--primary-dark);
-            color: #e2e8f0;
+            color: var(--border-color);
             padding: 80px 0 30px 0;
         }
 
@@ -531,14 +636,14 @@
             font-family: var(--font-heading);
             font-weight: 800;
             font-size: 1.8rem;
-            color: #ffffff;
+            color: var(--color-white);
             margin-bottom: 20px;
             display: block;
             text-decoration: none;
         }
 
         .footer-heading {
-            color: #ffffff;
+            color: var(--color-white);
             font-weight: 600;
             margin-bottom: 25px;
             font-size: 1.2rem;
@@ -570,8 +675,8 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            color: #ffffff;
+            background: var(--bg-white-10);
+            color: var(--color-white);
             margin-right: 10px;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -585,7 +690,7 @@
         .footer-bottom {
             margin-top: 60px;
             padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid var(--bg-white-10);
             text-align: center;
             color: #64748b;
         }
@@ -656,13 +761,13 @@
                     <div class="hero-image-wrapper text-center">
                         <!-- Abstract/Iconic Hero Graphic using FontAwesome & CSS styling -->
                         <div style="position: relative; width: 100%; height: 400px; display: flex; align-items: center; justify-content: center;">
-                            <div style="width: 350px; height: 350px; background: rgba(255,255,255,0.1); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.2);">
-                                <i class="fa-solid fa-user-graduate" style="font-size: 8rem; color: #ffffff; text-shadow: 0 10px 20px rgba(0,0,0,0.2);"></i>
+                            <div class="hero-graphic-main">
+                                <i class="fa-solid fa-user-graduate" style="font-size: 8rem; color: var(--color-white); text-shadow: var(--shadow-custom);"></i>
                             </div>
-                            <div style="position: absolute; top: 40px; right: 50px; background: var(--accent-color); padding: 15px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: float 4s infinite ease-in-out;">
+                            <div class="hero-graphic-icon-1">
                                 <i class="fa-solid fa-book-open text-white fs-2"></i>
                             </div>
-                            <div style="position: absolute; bottom: 60px; left: 40px; background: #10b981; padding: 15px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: float 6s infinite ease-in-out reverse;">
+                            <div class="hero-graphic-icon-2">
                                 <i class="fa-solid fa-microscope text-white fs-2"></i>
                             </div>
                         </div>
@@ -871,6 +976,87 @@
             </div>
         </div>
     </section>
+    
+    <!-- Owner / Director Section -->
+    <section id="director" class="owner-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5 text-center">
+                    <div class="owner-img-wrapper">
+                        <!-- Placeholder Image (Icon-based to keep styling intact without external asset dependencies) -->
+                        <div class="owner-placeholder">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h2 class="section-title">Message from the Director</h2>
+                    <h3 class="mb-3 fw-bold text-dark">Mr. R. K. Sharma</h3>
+                    <p class="text-muted fs-5 mb-4">"Education is not just the learning of facts, but the training of the mind to think. At The Laminars, our vision is to cultivate an environment where students are encouraged to ask questions, explore concepts, and discover their true potential. We are committed to shaping not just successful students, but confident leaders of tomorrow."</p>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="fw-bold text-dark">M.Sc. Physics, B.Ed.</span>
+                        <span class="text-muted">| 15+ Years Experience</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faculties Section -->
+    <section id="faculties" class="faculties-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Expert Faculty</h2>
+                <p class="section-subtitle">Learn from the best minds dedicated to your academic success.</p>
+            </div>
+            <div class="row g-4">
+                <!-- Faculty 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="faculty-card">
+                        <div class="faculty-img-wrapper">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h4 class="fw-bold mb-1">Dr. S. Kumar</h4>
+                        <p class="text-primary fw-medium mb-2" style="color: var(--primary-light);">Science Department</p>
+                        <p class="text-muted small mb-0">Ph.D. in Physics, IIT Delhi<br>10+ Years Experience</p>
+                    </div>
+                </div>
+                <!-- Faculty 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="faculty-card">
+                        <div class="faculty-img-wrapper">
+                            <i class="fa-solid fa-language"></i>
+                        </div>
+                        <h4 class="fw-bold mb-1">Mrs. A. Verma</h4>
+                        <p class="text-primary fw-medium mb-2" style="color: var(--primary-light);">Hindi & English</p>
+                        <p class="text-muted small mb-0">M.A. in Linguistics, JNU<br>12+ Years Experience</p>
+                    </div>
+                </div>
+                <!-- Faculty 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="faculty-card">
+                        <div class="faculty-img-wrapper">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h4 class="fw-bold mb-1">Mr. T. Reddy</h4>
+                        <p class="text-primary fw-medium mb-2" style="color: var(--primary-light);">Technical Subjects</p>
+                        <p class="text-muted small mb-0">M.Tech in CS, NIT<br>8+ Years Experience</p>
+                    </div>
+                </div>
+                <!-- Faculty 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="faculty-card">
+                        <div class="faculty-img-wrapper">
+                            <i class="fa-solid fa-flask"></i>
+                        </div>
+                        <h4 class="fw-bold mb-1">Ms. P. Desai</h4>
+                        <p class="text-primary fw-medium mb-2" style="color: var(--primary-light);">Chemistry Expert</p>
+                        <p class="text-muted small mb-0">M.Sc. Chemistry, DU<br>6+ Years Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Testimonials Section -->
     <section class="testimonials-section">
@@ -879,33 +1065,9 @@
                 <h2 class="section-title">Student Success Stories</h2>
                 <p class="section-subtitle">Hear what our students have to say about their learning journey.</p>
             </div>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="testimonial-card">
-                        <i class="fa-solid fa-quote-right quote-icon"></i>
-                        <p class="testimonial-text">"The Science and Math concepts that used to terrify me are now my strongest subjects. The teachers at The Laminars break down complex topics so easily. The personalized attention made all the difference."</p>
-                        <div class="client-info">
-                            <div class="client-avatar">R</div>
-                            <div>
-                                <h5 class="mb-0 fw-bold">Rohan S.</h5>
-                                <span class="text-muted small">Class 10 Student</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="testimonial-card">
-                        <i class="fa-solid fa-quote-right quote-icon"></i>
-                        <p class="testimonial-text">"I opted for their online classes, and the experience has been seamless. The interactive digital tools and the patience of the instructors have helped me excel in English and Technical subjects beyond my expectations."</p>
-                        <div class="client-info">
-                            <div class="client-avatar">A</div>
-                            <div>
-                                <h5 class="mb-0 fw-bold">Ayesha M.</h5>
-                                <span class="text-muted small">Class 12 Student</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Testimonials populated by JavaScript from JSON -->
+            <div class="row g-4" id="testimonials-container">
+                <!-- Dynamic content will go here -->
             </div>
         </div>
     </section>
@@ -1047,7 +1209,7 @@
                     <h5 class="footer-heading">Newsletter</h5>
                     <p class="text-muted mb-3">Subscribe for educational tips and institute updates.</p>
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email address" aria-label="Email" style="background: rgba(255,255,255,0.1); border:none; color:white;">
+                        <input type="email" class="form-control" placeholder="Email address" aria-label="Email" style="background: var(--bg-white-10); border:none; color:var(--color-white);">
                         <button class="btn btn-custom-accent" type="button">Subscribe</button>
                     </div>
                 </div>
@@ -1066,6 +1228,44 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
+            // 0. Render JSON Data (Testimonials)
+            const testimonialsData = [
+                {
+                    quote: "The Science and Math concepts that used to terrify me are now my strongest subjects. The teachers at The Laminars break down complex topics so easily. The personalized attention made all the difference.",
+                    initial: "R",
+                    name: "Rohan S.",
+                    role: "Class 10 Student"
+                },
+                {
+                    quote: "I opted for their online classes, and the experience has been seamless. The interactive digital tools and the patience of the instructors have helped me excel in English and Technical subjects beyond my expectations.",
+                    initial: "A",
+                    name: "Ayesha M.",
+                    role: "Class 12 Student"
+                }
+            ];
+
+            const testimonialsContainer = document.getElementById('testimonials-container');
+            if (testimonialsContainer) {
+                testimonialsData.forEach(t => {
+                    const cardHTML = `
+                        <div class="col-md-6">
+                            <div class="testimonial-card">
+                                <i class="fa-solid fa-quote-right quote-icon"></i>
+                                <p class="testimonial-text">"${t.quote}"</p>
+                                <div class="client-info">
+                                    <div class="client-avatar">${t.initial}</div>
+                                    <div>
+                                        <h5 class="mb-0 fw-bold">${t.name}</h5>
+                                        <span class="text-muted small">${t.role}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    testimonialsContainer.innerHTML += cardHTML;
+                });
+            }
+
             // 1. Navbar Scroll Effect
             const navbar = document.getElementById('navbar');
             
