@@ -295,9 +295,10 @@
 
         .timeline {
             position: relative;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 60px 0;
+            perspective: 2000px;
         }
 
         .timeline::after {
@@ -319,21 +320,25 @@
             background-color: inherit;
             width: 50%;
             opacity: 0;
-            transform: translateY(60px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
         }
-
-        .timeline-item.in-view {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        
         .timeline-item.left {
             left: 0;
+            transform: translateX(-50px) rotateY(-30deg) translateY(80px);
+            transform-origin: right center;
         }
 
         .timeline-item.right {
             left: 50%;
+            transform: translateX(50px) rotateY(30deg) translateY(80px);
+            transform-origin: left center;
+        }
+
+        .timeline-item.in-view {
+            opacity: 1;
+            transform: translate(0) rotateY(0) rotateX(0) scale(1);
         }
 
         .timeline-item::after {
@@ -362,23 +367,39 @@
         }
 
         .timeline-content {
-            padding: 40px;
-            background: var(--color-white);
+            padding: 35px;
+            background: linear-gradient(to bottom right, var(--color-white), #f8faff);
             position: relative;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s ease;
-            border-top: 5px solid var(--primary-light);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 2;
+            overflow: hidden;
+            border-left: 1px solid rgba(0,0,0,0.02);
+            border-right: 1px solid rgba(0,0,0,0.02);
+            border-bottom: 1px solid rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transform: scale(0.6);
+            opacity: 0;
+            transition-delay: 0.3s;
+        }
+
+        .timeline-item.in-view .timeline-content {
+            transform: scale(1);
+            opacity: 1;
         }
 
         .timeline-item:nth-child(even) .timeline-content {
             border-top-color: var(--accent-color);
+            transition-delay: 0.4s;
         }
 
         .timeline-content:hover {
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px) scale(1.02) !important;
+            transition-delay: 0s;
         }
 
         /* Connecting arrows */
@@ -452,12 +473,57 @@
         }
 
         .timeline-title {
-            font-size: 1.7rem;
+            font-size: 1.85rem;
             font-weight: 800;
             color: var(--primary-dark);
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             letter-spacing: -0.5px;
+            font-family: var(--font-heading);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
+        .timeline-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .timeline-header-wrap {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .timeline-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
+        }
+        
+        .badge-primary { background: linear-gradient(135deg, rgba(30, 58, 138, 0.08) 0%, rgba(30, 58, 138, 0.15) 100%); color: var(--primary-light); }
+        .badge-accent { background: linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(249, 115, 22, 0.15) 100%); color: var(--accent-hover); }
+        .badge-success { background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.15) 100%); color: #059669; }
         
         .timeline-details {
             max-height: 0;
@@ -517,6 +583,12 @@
 
             .timeline-item.left, .timeline-item.right {
                 left: 0;
+                transform: translateX(30px) rotateY(-20deg) translateY(60px);
+                transform-origin: left center;
+            }
+
+            .timeline-item.in-view {
+                transform: translate(0) rotateY(0) scale(1);
             }
 
             .timeline-item.left::after, .timeline-item.right::after {
@@ -1062,11 +1134,21 @@
                 <!-- Science -->
                 <div class="timeline-item left">
                     <div class="timeline-content">
-                        <div class="timeline-icon">
-                            <i class="fa-solid fa-flask-vial"></i>
+                        <div class="timeline-header-wrap flex-column flex-sm-row">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="timeline-icon">
+                                    <i class="fa-solid fa-flask-vial"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-badges">
+                                <span class="timeline-badge badge-primary"><i class="fa-solid fa-graduation-cap me-2"></i>Class 9th - 12th</span>
+                                <span class="timeline-badge badge-success"><i class="fa-solid fa-microscope me-2"></i>Lab Focus</span>
+                            </div>
                         </div>
-                        <h3 class="timeline-title">Science</h3>
-                        <p class="text-muted mb-0">In-depth coverage of Physics, Chemistry, and Biology.</p>
+                        <div>
+                            <h3 class="timeline-title">Science</h3>
+                            <p class="timeline-subtitle">In-depth coverage of Physics, Chemistry, and Biology.</p>
+                        </div>
                         
                         <div class="timeline-details">
                             <ul class="timeline-features">
@@ -1074,6 +1156,10 @@
                                 <li><i class="fa-solid fa-check"></i> Complex concept simplification</li>
                                 <li><i class="fa-solid fa-check"></i> Lab-oriented logical thinking</li>
                             </ul>
+                            <div class="mt-4 pt-3 border-top">
+                                <h6 class="fw-bold mb-2">More Details:</h6>
+                                <p class="text-muted small mb-0">Our science modules are structured carefully to prepare students not just for boards, but also for competitive examinations by focusing heavily on numericals and analytical reasoning.</p>
+                            </div>
                             <a href="#contact" class="btn btn-outline-primary btn-sm mt-3">Learn More</a>
                         </div>
                     </div>
@@ -1082,11 +1168,20 @@
                 <!-- Hindi -->
                 <div class="timeline-item right">
                     <div class="timeline-content">
-                        <div class="timeline-icon">
-                            <i class="fa-solid fa-book"></i>
+                        <div class="timeline-header-wrap flex-column flex-sm-row">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="timeline-icon">
+                                    <i class="fa-solid fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-badges">
+                                <span class="timeline-badge badge-accent"><i class="fa-solid fa-language me-2"></i>All Classes</span>
+                            </div>
                         </div>
-                        <h3 class="timeline-title">Hindi</h3>
-                        <p class="text-muted mb-0">Mastering grammar, literature, and superior writing skills.</p>
+                        <div>
+                            <h3 class="timeline-title">Hindi</h3>
+                            <p class="timeline-subtitle">Mastering grammar, literature, and superior writing skills.</p>
+                        </div>
                         
                         <div class="timeline-details">
                             <ul class="timeline-features">
@@ -1094,6 +1189,10 @@
                                 <li><i class="fa-solid fa-check"></i> Deep cultural understanding</li>
                                 <li><i class="fa-solid fa-check"></i> Focus on expression & vocabulary</li>
                             </ul>
+                            <div class="mt-4 pt-3 border-top">
+                                <h6 class="fw-bold mb-2">More Details:</h6>
+                                <p class="text-muted small mb-0">From foundational grammar rules to advanced essay and letter writing, our Hindi curriculum ensures students can express complex ideas articulately and score maximum marks.</p>
+                            </div>
                             <a href="#contact" class="btn btn-outline-primary btn-sm mt-3">Learn More</a>
                         </div>
                     </div>
@@ -1102,11 +1201,21 @@
                 <!-- English -->
                 <div class="timeline-item left">
                     <div class="timeline-content">
-                        <div class="timeline-icon">
-                            <i class="fa-solid fa-pen-nib"></i>
+                        <div class="timeline-header-wrap flex-column flex-sm-row">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="timeline-icon">
+                                    <i class="fa-solid fa-pen-nib"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-badges">
+                                <span class="timeline-badge badge-primary"><i class="fa-solid fa-school me-2"></i>School Level</span>
+                                <span class="timeline-badge badge-accent"><i class="fa-solid fa-briefcase me-2"></i>Professionals</span>
+                            </div>
                         </div>
-                        <h3 class="timeline-title">English</h3>
-                        <p class="text-muted mb-0">Comprehensive English grammar and spoken fluency.</p>
+                        <div>
+                            <h3 class="timeline-title">English</h3>
+                            <p class="timeline-subtitle">Comprehensive English grammar and spoken fluency.</p>
+                        </div>
                         
                         <div class="timeline-details">
                             <ul class="timeline-features">
@@ -1114,6 +1223,10 @@
                                 <li><i class="fa-solid fa-check"></i> Boosted confidence & speech</li>
                                 <li><i class="fa-solid fa-check"></i> Advanced communication skills</li>
                             </ul>
+                            <div class="mt-4 pt-3 border-top">
+                                <h6 class="fw-bold mb-2">More Details:</h6>
+                                <p class="text-muted small mb-0">Tailored programs combining academic English for students with business communication, interview preparation, and personality development for working professionals.</p>
+                            </div>
                             <a href="#contact" class="btn btn-outline-primary btn-sm mt-3">Learn More</a>
                         </div>
                     </div>
@@ -1122,11 +1235,21 @@
                 <!-- Technical subjects -->
                 <div class="timeline-item right">
                     <div class="timeline-content">
-                        <div class="timeline-icon">
-                            <i class="fa-solid fa-code"></i>
+                        <div class="timeline-header-wrap flex-column flex-sm-row">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="timeline-icon">
+                                    <i class="fa-solid fa-code"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-badges">
+                                <span class="timeline-badge badge-primary"><i class="fa-solid fa-laptop-code me-2"></i>Tech Enthusiasts</span>
+                                <span class="timeline-badge badge-success"><i class="fa-solid fa-bolt me-2"></i>High Demand</span>
+                            </div>
                         </div>
-                        <h3 class="timeline-title">Technical Subjects</h3>
-                        <p class="text-muted mb-0">Foundational computer science and modern programming.</p>
+                        <div>
+                            <h3 class="timeline-title">Technical Subjects</h3>
+                            <p class="timeline-subtitle">Foundational computer science and modern programming.</p>
+                        </div>
                         
                         <div class="timeline-details">
                             <ul class="timeline-features">
@@ -1134,6 +1257,10 @@
                                 <li><i class="fa-solid fa-check"></i> Basics of modern tech stacks</li>
                                 <li><i class="fa-solid fa-check"></i> Innovators of tomorrow framework</li>
                             </ul>
+                            <div class="mt-4 pt-3 border-top">
+                                <h6 class="fw-bold mb-2">More Details:</h6>
+                                <p class="text-muted small mb-0">Dedicated tracks for learning Python, Web Development, and essential IT skills. We focus on project-based learning where students build real applications during their coursework.</p>
+                            </div>
                             <a href="#contact" class="btn btn-outline-primary btn-sm mt-3">Learn More</a>
                         </div>
                     </div>
