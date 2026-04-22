@@ -1124,27 +1124,81 @@
             const container = document.getElementById('hero-particles-layer');
             if (!container) return;
 
-            const emojiItems = [
-                { c: '📚', s: 30 }, { c: '📖', s: 26 }, { c: '✏️', s: 24 }, { c: '🖊️', s: 22 },
-                { c: '🔬', s: 28 }, { c: '🧪', s: 26 }, { c: '📐', s: 24 }, { c: '🧮', s: 26 },
-                { c: '💡', s: 28 }, { c: '🎓', s: 32 }, { c: '📝', s: 24 }, { c: '🔭', s: 28 },
-                { c: '⚗️', s: 26 }, { c: '📊', s: 24 }, { c: '🧠', s: 28 }, { c: '📏', s: 22 },
-                { c: '🏫', s: 30 }, { c: '📈', s: 24 }, { c: '🖋️', s: 22 }, { c: '📓', s: 26 }
+            // Font Awesome icon items: [FA class string, [R,G,B] color, size px]
+            const iconItems = [
+                // Books / Reading
+                { cls: 'fa-solid fa-book',               rgb: [147, 197, 253], s: 36 },
+                { cls: 'fa-solid fa-book-open',          rgb: [147, 197, 253], s: 34 },
+                { cls: 'fa-solid fa-book-bookmark',      rgb: [147, 197, 253], s: 30 },
+                { cls: 'fa-regular fa-bookmark',         rgb: [147, 197, 253], s: 28 },
+                // Writing tools
+                { cls: 'fa-solid fa-pen',                rgb: [253, 186, 116], s: 30 },
+                { cls: 'fa-solid fa-pencil',             rgb: [253, 186, 116], s: 30 },
+                { cls: 'fa-solid fa-pen-nib',            rgb: [253, 186, 116], s: 32 },
+                { cls: 'fa-solid fa-pen-fancy',          rgb: [253, 186, 116], s: 30 },
+                { cls: 'fa-solid fa-highlighter',        rgb: [253, 224,  71], s: 28 },
+                { cls: 'fa-solid fa-file-pen',           rgb: [253, 186, 116], s: 32 },
+                // Science / Lab
+                { cls: 'fa-solid fa-microscope',         rgb: [103, 232, 249], s: 36 },
+                { cls: 'fa-solid fa-flask',              rgb: [103, 232, 249], s: 32 },
+                { cls: 'fa-solid fa-vial',               rgb: [103, 232, 249], s: 30 },
+                { cls: 'fa-solid fa-atom',               rgb: [103, 232, 249], s: 34 },
+                { cls: 'fa-solid fa-dna',                rgb: [103, 232, 249], s: 32 },
+                { cls: 'fa-solid fa-flask-vial',         rgb: [103, 232, 249], s: 30 },
+                // Maths / Geometry
+                { cls: 'fa-solid fa-calculator',         rgb: [134, 239, 172], s: 32 },
+                { cls: 'fa-solid fa-ruler',              rgb: [134, 239, 172], s: 30 },
+                { cls: 'fa-solid fa-drafting-compass',   rgb: [134, 239, 172], s: 32 },
+                { cls: 'fa-solid fa-infinity',           rgb: [134, 239, 172], s: 30 },
+                { cls: 'fa-solid fa-square-root-variable', rgb: [134, 239, 172], s: 28 },
+                // Achievement / Institution
+                { cls: 'fa-solid fa-graduation-cap',     rgb: [253, 224,  71], s: 38 },
+                { cls: 'fa-solid fa-school',             rgb: [253, 224,  71], s: 36 },
+                { cls: 'fa-solid fa-trophy',             rgb: [253, 224,  71], s: 32 },
+                { cls: 'fa-solid fa-medal',              rgb: [253, 224,  71], s: 30 },
+                { cls: 'fa-solid fa-award',              rgb: [253, 224,  71], s: 30 },
+                { cls: 'fa-solid fa-star',               rgb: [253, 224,  71], s: 26 },
+                // Mind / Ideas
+                { cls: 'fa-solid fa-brain',              rgb: [216, 180, 254], s: 34 },
+                { cls: 'fa-solid fa-lightbulb',          rgb: [253, 224,  71], s: 32 },
+                // Tech / Digital
+                { cls: 'fa-solid fa-laptop-code',        rgb: [216, 180, 254], s: 32 },
+                { cls: 'fa-solid fa-chalkboard',         rgb: [147, 197, 253], s: 32 },
+                { cls: 'fa-solid fa-chart-line',         rgb: [134, 239, 172], s: 30 },
+                { cls: 'fa-solid fa-globe',              rgb: [103, 232, 249], s: 30 },
             ];
 
             const wordItems = [
+                // English
                 { c: 'Learn',       lang: 'en' }, { c: 'Wisdom',     lang: 'en' },
                 { c: 'Excel',       lang: 'en' }, { c: 'Achieve',    lang: 'en' },
                 { c: 'Grow',        lang: 'en' }, { c: 'Inspire',    lang: 'en' },
+                { c: 'Study',       lang: 'en' }, { c: 'Focus',      lang: 'en' },
+                { c: 'Think',       lang: 'en' }, { c: 'Logic',      lang: 'en' },
+                { c: 'Explore',     lang: 'en' }, { c: 'Discover',   lang: 'en' },
+                { c: 'Master',      lang: 'en' }, { c: 'Rise',       lang: 'en' },
+                { c: 'Create',      lang: 'en' }, { c: 'Succeed',    lang: 'en' },
+                // Hindi
                 { c: 'ज्ञान',      lang: 'hi' }, { c: 'शिक्षा',    lang: 'hi' },
                 { c: 'विद्या',     lang: 'hi' }, { c: 'सफलता',     lang: 'hi' },
                 { c: 'पढ़ाई',      lang: 'hi' }, { c: 'ध्यान',     lang: 'hi' },
+                { c: 'उन्नति',     lang: 'hi' }, { c: 'मेहनत',     lang: 'hi' },
+                { c: 'लक्ष्य',     lang: 'hi' }, { c: 'बुद्धि',    lang: 'hi' },
+                { c: 'कौशल',       lang: 'hi' }, { c: 'अभ्यास',    lang: 'hi' },
+                // Bengali
                 { c: 'জ্ঞান',      lang: 'bn' }, { c: 'শিক্ষা',    lang: 'bn' },
                 { c: 'বিদ্যা',     lang: 'bn' }, { c: 'সফলতা',     lang: 'bn' },
                 { c: 'পড়াশোনা',   lang: 'bn' }, { c: 'স্বপ্ন',    lang: 'bn' },
+                { c: 'উন্নতি',     lang: 'bn' }, { c: 'মেধা',      lang: 'bn' },
+                { c: 'লক্ষ্য',     lang: 'bn' }, { c: 'পরিশ্রম',   lang: 'bn' },
+                { c: 'শেখা',       lang: 'bn' }, { c: 'সাফল্য',    lang: 'bn' },
+                // Urdu
                 { c: 'علم',        lang: 'ur' }, { c: 'تعلیم',     lang: 'ur' },
                 { c: 'ترقی',       lang: 'ur' }, { c: 'کامیابی',   lang: 'ur' },
-                { c: 'محنت',       lang: 'ur' }, { c: 'فکر',       lang: 'ur' }
+                { c: 'محنت',       lang: 'ur' }, { c: 'فکر',       lang: 'ur' },
+                { c: 'ہمت',        lang: 'ur' }, { c: 'کوشش',      lang: 'ur' },
+                { c: 'منزل',       lang: 'ur' }, { c: 'ارادہ',     lang: 'ur' },
+                { c: 'عقل',        lang: 'ur' }, { c: 'حصول',      lang: 'ur' },
             ];
 
             const wordColors = {
@@ -1156,7 +1210,7 @@
 
             const anims = ['heroFloat1', 'heroFloat2', 'heroFloat3', 'heroFloat4'];
             const allItems = [
-                ...emojiItems.map(i => ({ ...i, type: 'emoji' })),
+                ...iconItems.map(i => ({ ...i, type: 'icon' })),
                 ...wordItems.map(i => ({ ...i, type: 'word' }))
             ];
 
@@ -1193,14 +1247,15 @@
 
                 let fontSize, opacity, colorStyle, fontFamilyStyle;
 
-                if (item.type === 'emoji') {
+                if (item.type === 'icon') {
                     fontSize        = item.s + 'px';
                     opacity         = (0.12 + Math.random() * 0.2).toFixed(2);
-                    colorStyle      = '';
+                    const [r2, g, b] = item.rgb;
+                    colorStyle      = `color:rgba(${r2},${g},${b},0.85);`;
                     fontFamilyStyle = '';
                 } else {
-                    fontSize        = (11 + Math.random() * 10).toFixed(0) + 'px';
-                    opacity         = (0.1 + Math.random() * 0.18).toFixed(2);
+                    fontSize        = (15 + Math.random() * 11).toFixed(0) + 'px';
+                    opacity         = (0.12 + Math.random() * 0.2).toFixed(2);
                     const [r2, g, b] = wordColors[item.lang];
                     colorStyle      = `color:rgba(${r2},${g},${b},0.9);`;
                     fontFamilyStyle = item.lang === 'ur'
@@ -1215,7 +1270,13 @@
                     `animation:${anim} ${dur}s ${delay}s ease-in-out infinite;` +
                     `filter:blur(0.3px);white-space:nowrap;`;
 
-                el.textContent = item.c;
+                if (item.type === 'icon') {
+                    const i = document.createElement('i');
+                    i.className = item.cls;
+                    el.appendChild(i);
+                } else {
+                    el.textContent = item.c;
+                }
                 frag.appendChild(el);
             });
 
