@@ -381,13 +381,15 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            transform: scale(0.6);
+            transform: scale(0.6) translateZ(0);
             opacity: 0;
             transition-delay: 0.15s;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         .timeline-item.in-view .timeline-content {
-            transform: scale(1);
+            transform: scale(1) translateZ(0);
             opacity: 1;
         }
 
@@ -398,7 +400,7 @@
 
         .timeline-content:hover {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            transform: translateY(-5px) scale(1.01) !important;
+            transform: translateY(-5px) scale(1) translateZ(0) !important;
             transition-delay: 0s;
         }
 
@@ -714,6 +716,67 @@
             flex-shrink: 0;
         }
         
+        /* Highlighting Points Section */
+        .highlights-section {
+            background: linear-gradient(135deg, var(--bg-primary-5) 0%, transparent 100%);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .highlight-box {
+            background: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            padding: 30px;
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-light);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .highlight-box:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-left-color: var(--accent-color);
+        }
+        
+        .highlight-box-icon {
+            font-size: 1.8rem;
+            color: var(--primary-light);
+            background: var(--bg-primary-10);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .highlight-box:hover .highlight-box-icon {
+            color: var(--color-white);
+            background: var(--accent-color);
+            transform: scale(1.05) rotate(3deg);
+        }
+        
+        .highlight-box-content h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+        }
+        
+        .highlight-box-content p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
         /* Owner & Faculty Sections */
         .owner-section {
             padding: 80px 0;
@@ -1362,6 +1425,98 @@
             </div>
         </div>
     </section>
+
+    <!-- Highlights & Milestones Section -->
+    <section id="highlights" class="highlights-section py-5">
+        <div class="container py-lg-4">
+            <div class="text-center mb-5 pb-3">
+                <span class="badge bg-primary-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold">Why We Stand Out</span>
+                <h2 class="section-title">The Laminars Legacy</h2>
+                <p class="section-subtitle">Dedicated to pioneering academic excellence and fostering future leaders.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                
+                <!-- Point 1 -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="highlight-box">
+                        <div class="highlight-box-icon">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="highlight-box-content">
+                            <h4>40+ Years of Excellence</h4>
+                            <p>Spearheaded by our Director, bringing over four decades of unmatched, proven teaching experience.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Point 2 -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="highlight-box">
+                        <div class="highlight-box-icon">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="highlight-box-content">
+                            <h4>A Director's Dream Project</h4>
+                            <p>Built passionately on a lifelong vision to cultivate true learning and empower young minds in our community.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Point 3 -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="highlight-box">
+                        <div class="highlight-box-icon">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <div class="highlight-box-content">
+                            <h4>First Coding Coaching in GR</h4>
+                            <p>Proudly pioneering modern technical education and professional coding instruction in Garden Reach.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Point 4 -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="highlight-box">
+                        <div class="highlight-box-icon">
+                            <i class="fa-brands fa-python"></i>
+                        </div>
+                        <div class="highlight-box-content">
+                            <h4>First Python for Kids</h4>
+                            <p>Introducing "Python for Kids (5th Std onwards)" in GR to build a strong logical foundation early on.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Point 5 -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="highlight-box">
+                        <div class="highlight-box-icon">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <div class="highlight-box-content">
+                            <h4>Multidisciplinary Expertise</h4>
+                            <p>Comprehensive learning spanning from Languages (Hindi, English) to Academic Sciences to Industrial Tech Experts.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Point 6 (Suggested) -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="highlight-box">
+                        <div class="highlight-box-icon">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <div class="highlight-box-content">
+                            <h4>Industry-Aligned Logic Building</h4>
+                            <p>Moving beyond rote memorization by connecting core academic concepts with real-world technical skills.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
     
     <!-- Owner / Director Section -->
     <section id="director" class="owner-section">
@@ -1381,7 +1536,7 @@
                     <p class="text-muted fs-5 mb-4">"Education is not just the learning of facts, but the training of the mind to think. At The Laminars, our vision is to cultivate an environment where students are encouraged to ask questions, explore concepts, and discover their true potential. We are committed to shaping not just successful students, but confident leaders of tomorrow."</p>
                     <div class="d-flex align-items-center gap-3">
                         <span class="fw-bold text-dark">M.Sc. Physics, B.Ed.</span>
-                        <span class="text-muted">| 15+ Years Experience</span>
+                        <span class="text-muted">| 40+ Years Experience</span>
                     </div>
                 </div>
             </div>
