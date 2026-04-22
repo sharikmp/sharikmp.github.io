@@ -315,24 +315,24 @@
         }
 
         .timeline-item {
-            padding: 10px 40px;
+            padding: 8px 30px;
             position: relative;
             background-color: inherit;
             width: 50%;
             opacity: 0;
-            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
             transform-style: preserve-3d;
         }
         
         .timeline-item.left {
             left: 0;
-            transform: translateX(-50px) rotateY(-30deg) translateY(80px);
+            transform: translateX(-40px) rotateY(-15deg) translateY(40px);
             transform-origin: right center;
         }
 
         .timeline-item.right {
             left: 50%;
-            transform: translateX(50px) rotateY(30deg) translateY(80px);
+            transform: translateX(40px) rotateY(15deg) translateY(40px);
             transform-origin: left center;
         }
 
@@ -344,35 +344,35 @@
         .timeline-item::after {
             content: '';
             position: absolute;
-            width: 24px;
-            height: 24px;
-            right: -12px;
+            width: 20px;
+            height: 20px;
+            right: -10px;
             background-color: var(--color-white);
-            border: 4px solid var(--accent-color);
-            top: 35px;
+            border: 3px solid var(--accent-color);
+            top: 40px;
             border-radius: 50%;
             z-index: 1;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
         }
 
         .timeline-item.right::after {
-            left: -12px;
+            left: -10px;
         }
 
         .timeline-item:hover::after {
             background-color: var(--accent-color);
-            transform: scale(1.3);
-            box-shadow: 0 0 15px var(--accent-color), 0 0 0 6px rgba(249, 115, 22, 0.3);
+            transform: scale(1.2);
+            box-shadow: 0 0 12px var(--accent-color), 0 0 0 5px rgba(249, 115, 22, 0.2);
         }
 
         .timeline-content {
-            padding: 35px;
+            padding: 18px 20px;
             background: linear-gradient(to bottom right, var(--color-white), #f8faff);
             position: relative;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: opacity 0.5s ease-out, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
             z-index: 2;
             overflow: hidden;
             border-left: 1px solid rgba(0,0,0,0.02);
@@ -380,10 +380,10 @@
             border-bottom: 1px solid rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 8px;
             transform: scale(0.6);
             opacity: 0;
-            transition-delay: 0.3s;
+            transition-delay: 0.15s;
         }
 
         .timeline-item.in-view .timeline-content {
@@ -393,12 +393,12 @@
 
         .timeline-item:nth-child(even) .timeline-content {
             border-top-color: var(--accent-color);
-            transition-delay: 0.4s;
+            transition-delay: 0.25s;
         }
 
         .timeline-content:hover {
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
-            transform: translateY(-8px) scale(1.02) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px) scale(1.01) !important;
             transition-delay: 0s;
         }
 
@@ -406,9 +406,9 @@
         .timeline-item.left .timeline-content::before {
             content: '';
             position: absolute;
-            top: 30px;
-            right: -14px;
-            border-width: 14px 0 14px 14px;
+            top: 25px;
+            right: -12px;
+            border-width: 12px 0 12px 12px;
             border-style: solid;
             border-color: transparent transparent transparent var(--color-white);
             z-index: 1;
@@ -417,41 +417,44 @@
         .timeline-item.right .timeline-content::before {
             content: '';
             position: absolute;
-            top: 30px;
-            left: -14px;
-            border-width: 14px 14px 14px 0;
+            top: 25px;
+            left: -12px;
+            border-width: 12px 12px 12px 0;
             border-style: solid;
             border-color: transparent var(--color-white) transparent transparent;
             z-index: 1;
         }
 
         .timeline-item.left .timeline-content {
-            margin-right: 25px;
+            margin-right: 18px;
+            border-top: 4px solid var(--primary-light);
         }
 
         .timeline-item.right .timeline-content {
-            margin-left: 25px;
+            margin-left: 18px;
+            border-top: 4px solid var(--primary-light);
         }
 
         .timeline-icon {
-            font-size: 2.5rem;
+            font-size: 1.4rem;
             color: var(--color-white);
-            margin-bottom: 25px;
+            margin-bottom: 0;
             background: var(--gradient-main);
-            width: 80px;
-            height: 80px;
+            width: 48px;
+            height: 48px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 20px;
+            border-radius: 12px;
             transform: rotate(-10deg);
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+            box-shadow: 0 6px 15px rgba(30, 58, 138, 0.2);
+            flex-shrink: 0;
         }
         
         .timeline-item:nth-child(even) .timeline-icon {
             background: linear-gradient(135deg, var(--accent-color) 0%, #ea580c 100%);
-            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.2);
+            box-shadow: 0 6px 15px rgba(249, 115, 22, 0.2);
             transform: rotate(10deg);
         }
 
@@ -473,10 +476,10 @@
         }
 
         .timeline-title {
-            font-size: 1.85rem;
+            font-size: 1.35rem;
             font-weight: 800;
             color: var(--primary-dark);
-            margin-bottom: 5px;
+            margin-bottom: 2px;
             letter-spacing: -0.5px;
             font-family: var(--font-heading);
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
@@ -485,9 +488,9 @@
         }
 
         .timeline-subtitle {
-            font-size: 1.05rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.3;
             font-weight: 500;
             margin-bottom: 0;
         }
@@ -496,27 +499,27 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 5px;
+            gap: 12px;
+            margin-bottom: 0px;
         }
 
         .timeline-badges {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
             align-items: flex-end;
         }
 
         .timeline-badge {
             display: inline-flex;
             align-items: center;
-            padding: 5px 12px;
-            font-size: 0.8rem;
+            padding: 4px 10px;
+            font-size: 0.75rem;
             font-weight: 700;
             border-radius: 6px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.04);
             border: 1px solid rgba(255, 255, 255, 0.4);
             white-space: nowrap;
         }
@@ -529,7 +532,7 @@
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-out;
+            transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease-out;
             margin-top: 0;
             border-top: 1px solid var(--border-light);
         }
@@ -537,47 +540,50 @@
         .timeline-item.in-view .timeline-details {
             max-height: 400px;
             opacity: 1;
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 10px;
+            padding-top: 10px;
         }
         
         .timeline-features {
             list-style: none;
             padding-left: 0;
-            margin-top: 15px;
+            margin-top: 5px;
+            margin-bottom: 0;
         }
         
         .timeline-features li {
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             color: var(--text-main);
             display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.05rem;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.85rem;
+            line-height: 1.3;
         }
         
         .timeline-features li i {
             color: var(--color-white);
             background: var(--color-success);
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 18px;
+            height: 18px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.55rem;
             flex-shrink: 0;
+            margin-top: 3px;
         }
 
         /* Timeline Responsive */
         @media screen and (max-width: 768px) {
             .timeline::after {
-                left: 31px;
+                left: 10px;
             }
 
             .timeline-item {
                 width: 100%;
-                padding-left: 70px;
+                /* padding-left: 70px; */
                 padding-right: 15px;
             }
 
@@ -592,7 +598,7 @@
             }
 
             .timeline-item.left::after, .timeline-item.right::after {
-                left: 19px;
+                left: 0px;
             }
 
             .timeline-item.left .timeline-content, .timeline-item.right .timeline-content {
@@ -1141,7 +1147,7 @@
                                 </div>
                             </div>
                             <div class="timeline-badges">
-                                <span class="timeline-badge badge-primary"><i class="fa-solid fa-graduation-cap me-2"></i>Class 9th - 12th</span>
+                                <span class="timeline-badge badge-primary"><i class="fa-solid fa-graduation-cap me-2"></i>Class 1-12th</span>
                                 <span class="timeline-badge badge-success"><i class="fa-solid fa-microscope me-2"></i>Lab Focus</span>
                             </div>
                         </div>
@@ -1156,11 +1162,11 @@
                                 <li><i class="fa-solid fa-check"></i> Complex concept simplification</li>
                                 <li><i class="fa-solid fa-check"></i> Lab-oriented logical thinking</li>
                             </ul>
-                            <div class="mt-4 pt-3 border-top">
-                                <h6 class="fw-bold mb-2">More Details:</h6>
-                                <p class="text-muted small mb-0">Our science modules are structured carefully to prepare students not just for boards, but also for competitive examinations by focusing heavily on numericals and analytical reasoning.</p>
+                            <div class="mt-2 pt-2 border-top">
+                                <h6 class="fw-bold " style="font-size: 0.9rem; margin-bottom: 2px;">More Details:</h6>
+                                <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.3;">Our science modules are structured carefully to prepare students not just for boards, but also for competitive examinations by focusing heavily on numericals and analytical reasoning.</p>
                             </div>
-                            <a href="#contact" class="btn btn-outline-primary btn-sm mt-3">Learn More</a>
+                            <a href="#contact" class="btn btn-outline-primary btn-sm mt-2">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -1189,11 +1195,11 @@
                                 <li><i class="fa-solid fa-check"></i> Deep cultural understanding</li>
                                 <li><i class="fa-solid fa-check"></i> Focus on expression & vocabulary</li>
                             </ul>
-                            <div class="mt-4 pt-3 border-top">
-                                <h6 class="fw-bold mb-2">More Details:</h6>
-                                <p class="text-muted small mb-0">From foundational grammar rules to advanced essay and letter writing, our Hindi curriculum ensures students can express complex ideas articulately and score maximum marks.</p>
+                            <div class="mt-2 pt-2 border-top">
+                                <h6 class="fw-bold " style="font-size: 0.9rem; margin-bottom: 2px;">More Details:</h6>
+                                <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.3;">From foundational grammar rules to advanced essay and letter writing, our Hindi curriculum ensures students can express complex ideas articulately and score maximum marks.</p>
                             </div>
-                            <a href="#contact" class="btn btn-outline-primary btn-sm mt-3">Learn More</a>
+                            <a href="#contact" class="btn btn-outline-primary btn-sm mt-2">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -1223,11 +1229,11 @@
                                 <li><i class="fa-solid fa-check"></i> Boosted confidence & speech</li>
                                 <li><i class="fa-solid fa-check"></i> Advanced communication skills</li>
                             </ul>
-                            <div class="mt-4 pt-3 border-top">
-                                <h6 class="fw-bold mb-2">More Details:</h6>
-                                <p class="text-muted small mb-0">Tailored programs combining academic English for students with business communication, interview preparation, and personality development for working professionals.</p>
+                            <div class="mt-2 pt-2 border-top">
+                                <h6 class="fw-bold " style="font-size: 0.9rem; margin-bottom: 2px;">More Details:</h6>
+                                <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.3;">Tailored programs combining academic English for students with business communication, interview preparation, and personality development for working professionals.</p>
                             </div>
-                            <a href="#contact" class="btn btn-outline-primary btn-sm mt-3">Learn More</a>
+                            <a href="#contact" class="btn btn-outline-primary btn-sm mt-2">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -1257,11 +1263,11 @@
                                 <li><i class="fa-solid fa-check"></i> Basics of modern tech stacks</li>
                                 <li><i class="fa-solid fa-check"></i> Innovators of tomorrow framework</li>
                             </ul>
-                            <div class="mt-4 pt-3 border-top">
-                                <h6 class="fw-bold mb-2">More Details:</h6>
-                                <p class="text-muted small mb-0">Dedicated tracks for learning Python, Web Development, and essential IT skills. We focus on project-based learning where students build real applications during their coursework.</p>
+                            <div class="mt-2 pt-2 border-top">
+                                <h6 class="fw-bold " style="font-size: 0.9rem; margin-bottom: 2px;">More Details:</h6>
+                                <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.3;">Dedicated tracks for learning Python, Web Development, and essential IT skills. We focus on project-based learning where students build real applications during their coursework.</p>
                             </div>
-                            <a href="#contact" class="btn btn-outline-primary btn-sm mt-3">Learn More</a>
+                            <a href="#contact" class="btn btn-outline-primary btn-sm mt-2">Learn More</a>
                         </div>
                     </div>
                 </div>
