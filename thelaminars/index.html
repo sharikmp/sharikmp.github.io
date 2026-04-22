@@ -290,25 +290,27 @@
         .courses-section {
             padding: 100px 0;
             overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #eaf0f6 100%);
         }
 
         .timeline {
             position: relative;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 0;
+            padding: 60px 0;
         }
 
         .timeline::after {
             content: '';
             position: absolute;
             width: 4px;
-            background-color: var(--primary-light);
+            background: var(--gradient-main);
             top: 0;
             bottom: 0;
             left: 50%;
             margin-left: -2px;
             border-radius: 2px;
+            box-shadow: 0 0 10px rgba(30, 58, 138, 0.3);
         }
 
         .timeline-item {
@@ -342,10 +344,11 @@
             right: -12px;
             background-color: var(--color-white);
             border: 4px solid var(--accent-color);
-            top: 30px;
+            top: 35px;
             border-radius: 50%;
             z-index: 1;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
         }
 
         .timeline-item.right::after {
@@ -355,63 +358,121 @@
         .timeline-item:hover::after {
             background-color: var(--accent-color);
             transform: scale(1.3);
-            box-shadow: 0 0 10px var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-color), 0 0 0 6px rgba(249, 115, 22, 0.3);
         }
 
         .timeline-content {
-            padding: 30px;
+            padding: 40px;
             background: var(--color-white);
             position: relative;
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-soft);
-            transition: all 0.3s ease;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border-top: 5px solid var(--primary-light);
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-top-color: var(--accent-color);
         }
 
         .timeline-content:hover {
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+        }
+
+        /* Connecting arrows */
+        .timeline-item.left .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            right: -14px;
+            border-width: 14px 0 14px 14px;
+            border-style: solid;
+            border-color: transparent transparent transparent var(--color-white);
+            z-index: 1;
+        }
+
+        .timeline-item.right .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: -14px;
+            border-width: 14px 14px 14px 0;
+            border-style: solid;
+            border-color: transparent var(--color-white) transparent transparent;
+            z-index: 1;
         }
 
         .timeline-item.left .timeline-content {
-            margin-right: 20px;
+            margin-right: 25px;
         }
 
         .timeline-item.right .timeline-content {
-            margin-left: 20px;
+            margin-left: 25px;
         }
 
         .timeline-icon {
             font-size: 2.5rem;
-            color: var(--primary-light);
-            margin-bottom: 20px;
-            background: var(--bg-light);
-            width: 70px;
-            height: 70px;
+            color: var(--color-white);
+            margin-bottom: 25px;
+            background: var(--gradient-main);
+            width: 80px;
+            height: 80px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            border-radius: 20px;
+            transform: rotate(-10deg);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-icon {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #ea580c 100%);
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.2);
+            transform: rotate(10deg);
+        }
+
+        .timeline-content:hover .timeline-icon {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .timeline-icon i {
+            transform: rotate(10deg);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-icon i {
+            transform: rotate(-10deg);
+        }
+
+        .timeline-content:hover .timeline-icon i {
+            transform: rotate(0deg);
         }
 
         .timeline-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.7rem;
+            font-weight: 800;
             color: var(--primary-dark);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
         }
         
         .timeline-details {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: max-height 0.8s ease-out, opacity 0.8s ease-out;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-out;
             margin-top: 0;
+            border-top: 1px solid var(--border-light);
         }
 
         .timeline-item.in-view .timeline-details {
-            max-height: 300px;
+            max-height: 400px;
             opacity: 1;
-            margin-top: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
         }
         
         .timeline-features {
@@ -421,15 +482,25 @@
         }
         
         .timeline-features li {
-            margin-bottom: 8px;
-            color: var(--text-muted);
+            margin-bottom: 12px;
+            color: var(--text-main);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 1.05rem;
         }
         
         .timeline-features li i {
-            color: var(--color-success);
+            color: var(--color-white);
+            background: var(--color-success);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            flex-shrink: 0;
         }
 
         /* Timeline Responsive */
@@ -454,6 +525,13 @@
 
             .timeline-item.left .timeline-content, .timeline-item.right .timeline-content {
                 margin: 0;
+            }
+            
+            .timeline-item.left .timeline-content::before, .timeline-item.right .timeline-content::before {
+                left: -14px;
+                right: auto;
+                border-width: 14px 14px 14px 0;
+                border-color: transparent var(--color-white) transparent transparent;
             }
         }
 
@@ -744,6 +822,39 @@
             background-color: var(--primary-dark);
             color: var(--border-color);
             padding: 80px 0 30px 0;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            background: var(--bg-white-10);
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .newsletter-form input {
+            background: transparent;
+            border: none;
+            color: var(--color-white);
+            padding: 12px 20px;
+            width: 100%;
+            outline: none;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .newsletter-form input:focus {
+            box-shadow: none;
+            background: transparent;
+            color: var(--color-white);
+        }
+        
+        .newsletter-form button {
+            margin: 0;
+            padding: 12px 25px;
+            flex-shrink: 0;
         }
 
         .footer-brand {
@@ -1350,10 +1461,10 @@
                 <div class="col-lg-4 col-md-6">
                     <h5 class="footer-heading">Newsletter</h5>
                     <p class="text-muted mb-3">Subscribe for educational tips and institute updates.</p>
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email address" aria-label="Email" style="background: var(--bg-white-10); border:none; color:var(--color-white);">
-                        <button class="btn btn-custom-accent" type="button">Subscribe</button>
-                    </div>
+                    <form class="newsletter-form mb-3" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="Email address" aria-label="Email" required>
+                        <button class="btn btn-custom-accent" type="submit">Subscribe</button>
+                    </form>
                 </div>
             </div>
             
