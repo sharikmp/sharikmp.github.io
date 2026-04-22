@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Laminars - Coaching Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Updated Google Fonts to include Poppins and additional Lato weights for the new section -->
+    <link href="https://fonts.googleapis.com/css?family=Khula:700|Lato:300,400,700|Poppins:300,400,800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           CORE ANIMATION STYLES (Scoped for reusability)
+           ========================================= */
+
+        /* --- Animation 1: Neon Shimmer --- */
+        .ta-neon-wrapper {
+            --spotlight-color: orange;
+            overflow: hidden;
+            position: relative;
+            background-color: black; 
+            max-width: 100%;
+        }
+        
+        .ta-neon-wrapper::before, .ta-neon-wrapper::after,
+        .ta-neon-text::before, .ta-neon-text::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .ta-neon-wrapper::before {
+            animation: shimmer 5s infinite linear;
+            background: 
+                radial-gradient(circle, var(--spotlight-color), transparent 25%) 0 0 / 25% 25%,
+                radial-gradient(circle, var(--spotlight-color), black 25%) 50% 50% / 12.5% 12.5%;
+            inset-block-start: -100%;
+            inset-inline-start: -100%;
+            mix-blend-mode: color-dodge;
+            z-index: 3;
+        }
+
+        .ta-neon-wrapper::after {
+            backdrop-filter: brightness(90%) contrast(150%);
+            z-index: 4;
+        }
+
+        @keyframes shimmer {
+            100% { transform: translate3d(50%, 50%, 0); }
+        }
+
+        .ta-neon-text {
+            --background-color: black;
+            --text-color: white;
+            --angle: 5deg;
+            --color-1: hsl(163, 100%, 51%);
+            --color-2: hsl(295, 88%, 32%);
+            --color-3: hsl(59, 100%, 50%);
+
+            color: transparent;
+            text-shadow: 
+                0 0 0.03em var(--background-color),
+                0 0 0.03em var(--text-color);
+            
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            line-height: 1.1;
+            text-transform: uppercase;
+            text-align: center;
+            margin: 0;
+            word-wrap: break-word;
+        }
+
+        .ta-neon-text::before {
+            backdrop-filter: brightness(150%) contrast(200%);
+            z-index: 1;
+        }
+
+        .ta-neon-text::after {
+            background: linear-gradient(var(--angle), var(--color-1), var(--color-2), var(--color-3));
+            mix-blend-mode: color-dodge;
+            z-index: 2;
+        }
+
+        /* --- Animation 2: Typing Console --- */
+        .ta-console-container {
+            font-family: 'Khula', sans-serif;
+            text-align: center;
+            display: inline-block;
+            color: white;
+            line-height: 1.2;
+        }
+        .ta-console-text {
+            transition: color 0.3s ease;
+        }
+        .ta-console-underscore {
+            display: inline-block;
+            position: relative;
+            top: -0.05em;
+            left: 5px;
+        }
+        .ta-console-hidden {
+            opacity: 0;
+        }
+
+        .bg-neon-dark {
+            background-color: black;
+        }
+
+        /* --- Animation 3: Legacy Sequence (New Section) --- */
+        .legacy-box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .legacy-title .legacy-block {
+            width: 0%;
+            height: 100%;
+            background: var(--title-color, #ffb510);
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: legMainBlock 2s cubic-bezier(.74, .06, .4, .92) forwards;
+            z-index: 1;
+        }
+
+        .legacy-title h1 {
+            animation: legMainFadeIn 2s forwards;
+            animation-delay: 1.6s;
+            opacity: 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .legacy-role .legacy-block {
+            width: 0%;
+            height: 100%;
+            background: var(--role-color, #e91e63);
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: legSecBlock 2s cubic-bezier(.74, .06, .4, .92) forwards;
+            animation-delay: 2s;
+            z-index: 1;
+        }
+
+        .legacy-role p {
+            animation: legSecFadeIn 2s forwards;
+            animation-delay: 3.2s;
+            opacity: 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .legacy-point {
+            opacity: 0;
+            transform: translateX(30px); /* Reduced for better mobile handling */
+            display: flex;
+            align-items: flex-start; /* Prevents text wrap alignment issues */
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(4px);
+            color: #eee;
+            font-family: 'Lato', sans-serif;
+            border-left: 3px solid var(--title-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .legacy-point.show { animation: legSlideIn 0.9s ease forwards; }
+
+        .legacy-fade-out {
+            opacity: 0;
+            transform: translateY(-10px);
+            filter: blur(2px);
+            transition: all 1s ease-in-out;
+        }
+
+        @keyframes legSlideIn { to { opacity: 1; transform: translateX(0); } }
+
+        @keyframes legMainBlock {
+            0% { width: 0%; left: 0; }
+            50% { width: 100%; left: 0; }
+            100% { width: 0; left: 100%; }
+        }
+
+        @keyframes legSecBlock {
+            0% { width: 0%; left: 0; }
+            50% { width: 100%; left: 0; }
+            100% { width: 0; left: 100%; }
+        }
+
+        @keyframes legMainFadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes legSecFadeIn { 0% { opacity: 0; } 100% { opacity: 0.9; } }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+            <div class="font-bold text-xl md:text-2xl tracking-widest text-white shrink-0">THE <span class="text-blue-500">LAMINARS</span></div>
+            <div class="hidden md:flex space-x-8 text-sm font-semibold text-gray-300">
+                <a href="#hero" class="hover:text-blue-400 transition">Home</a>
+                <a href="#legacy" class="hover:text-blue-400 transition">Legacy</a>
+                <a href="#about" class="hover:text-blue-400 transition">About Us</a>
+                <a href="#courses" class="hover:text-blue-400 transition">Courses</a>
+                <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
+            </div>
+            <!-- Mobile Menu Icon (Visual Only) -->
+            <button class="md:hidden text-white focus:outline-none shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen bg-black flex flex-col justify-center items-center px-4 md:px-8 relative pt-20">
+        <div class="z-10 flex flex-col items-center justify-center space-y-6 text-center w-full max-w-5xl">
+            
+            <!-- Unified Neon Title Container -->
+            <!-- Adjusted clamp for better fit on extremely small devices -->
+            <div id="hero-title" class="text-[clamp(2.5rem,12vw,10rem)] leading-none mb-4 w-full"></div>
+            
+            <p class="text-lg md:text-2xl text-gray-400 max-w-2xl font-light px-2">
+                Empowering minds for a brighter tomorrow. Join the premier institute for Engineering and Medical entrance examinations.
+            </p>
+
+            <!-- Buttons stack on mobile, row on desktop -->
+            <div class="mt-8 flex flex-col md:flex-row gap-4 w-full md:w-auto px-6 md:px-0">
+                <a href="#courses" class="w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition shadow-[0_0_15px_rgba(59,130,246,0.5)] text-center">Explore Courses</a>
+                <a href="#contact" class="w-full md:w-auto px-8 py-3 bg-transparent border border-gray-500 hover:border-white text-white font-bold rounded-full transition text-center">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Legacy Highlight Section -->
+    <section id="legacy" class="py-16 md:py-24 bg-gray-950 border-t border-white/5 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center mb-10 md:mb-16 px-2">
+                <h2 class="text-[clamp(1.8rem,5vw,3.5rem)] font-bold mb-4 text-white font-['Poppins'] leading-tight">Why we stand out - The Laminars Legacy</h2>
+                <div class="w-24 h-1 bg-blue-500 mx-auto rounded mb-6"></div>
+                <p class="text-gray-400 text-base md:text-xl font-light max-w-3xl mx-auto">Dedicated to pioneering academic excellence and fostering future leaders.</p>
+            </div>
+
+            <!-- Merged Animation Container -->
+            <div class="w-full min-h-[450px] md:min-h-[550px] flex justify-center items-center relative bg-black/40 rounded-3xl border border-white/10 p-5 md:p-12 shadow-2xl backdrop-blur-sm">
+                <div class="legacy-box w-full max-w-4xl" id="legacyAnimatedBox">
+                    
+                    <!-- Title block now uses auto height (w-fit max-w-full) instead of fixed pixels -->
+                    <div class="legacy-title relative w-fit max-w-full">
+                        <div class="legacy-block"></div>
+                        <h1 id="legacyHeadingText" class="font-['Poppins'] text-white font-extrabold text-[clamp(1.5rem,6vw,4.5rem)] leading-snug py-1 md:py-2 px-1"></h1>
+                    </div>
+                    
+                    <!-- Role block uses auto height as well -->
+                    <div class="legacy-role relative w-fit max-w-full mt-3">
+                        <div class="legacy-block"></div>
+                        <p id="legacySubheadingText" class="font-['Lato'] text-white text-[clamp(1rem,4vw,1.5rem)] tracking-wide py-1 md:py-2 px-1"></p>
+                    </div>
+                    
+                    <!-- Points container gaps adjusted for mobile -->
+                    <div class="legacy-points mt-6 md:mt-10 flex flex-col gap-3 md:gap-4 w-full" id="legacyPointsContainer"></div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="about" class="py-16 md:py-24 bg-gray-900 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Why Choose The Laminars?</h2>
+                <div class="w-24 h-1 bg-blue-500 mx-auto rounded"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                <!-- Feature 1 -->
+                <div class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 text-blue-400 shrink-0">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Expert Faculty</h3>
+                    <p class="text-gray-400 text-sm md:text-base">Learn from top-tier educators with decades of experience in competitive exam preparation.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
+                    <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 text-purple-400 shrink-0">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Performance Tracking</h3>
+                    <p class="text-gray-400 text-sm md:text-base">Regular AI-driven assessments to track your progress and highlight areas for improvement.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
+                    <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center mb-6 text-green-400 shrink-0">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Structured Material</h3>
+                    <p class="text-gray-400 text-sm md:text-base">Comprehensive study guides, formula sheets, and mock papers updated with the latest syllabus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="py-16 md:py-24 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Our Flagship Programs</h2>
+                <div class="w-24 h-1 bg-blue-500 mx-auto rounded"></div>
+                <p class="text-gray-400 mt-6 max-w-2xl mx-auto text-sm md:text-base">We offer specialized coaching batches tailored to guarantee success in the country's toughest examinations.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Course 1 -->
+                <div class="group relative bg-gray-900 rounded-2xl overflow-hidden border border-white/10 hover:border-blue-500 transition duration-300 flex flex-col">
+                    <div class="h-48 bg-gradient-to-br from-blue-900 to-black p-6 flex flex-col justify-end relative overflow-hidden shrink-0">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+                        <h3 class="text-2xl font-bold text-white relative z-10">JEE Main & Advanced</h3>
+                        <p class="text-blue-300 font-medium relative z-10">Engineering Foundation</p>
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col grow">
+                        <ul class="space-y-2 text-gray-400 text-sm grow">
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Comprehensive PCM Coverage</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Weekly Mock CBT Tests</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Advanced Problem Solving</li>
+                        </ul>
+                        <button class="w-full py-3 mt-4 bg-white/5 hover:bg-blue-600 text-white rounded-lg transition font-semibold">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="group relative bg-gray-900 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500 transition duration-300 flex flex-col">
+                    <div class="h-48 bg-gradient-to-br from-purple-900 to-black p-6 flex flex-col justify-end relative overflow-hidden shrink-0">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+                        <h3 class="text-2xl font-bold text-white relative z-10">NEET (UG)</h3>
+                        <p class="text-purple-300 font-medium relative z-10">Medical Preparation</p>
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col grow">
+                        <ul class="space-y-2 text-gray-400 text-sm grow">
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> In-depth PCB Modules</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> NCERT Focused Curriculum</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Daily Practice Papers (DPP)</li>
+                        </ul>
+                        <button class="w-full py-3 mt-4 bg-white/5 hover:bg-purple-600 text-white rounded-lg transition font-semibold">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="group relative bg-gray-900 rounded-2xl overflow-hidden border border-white/10 hover:border-green-500 transition duration-300 flex flex-col">
+                    <div class="h-48 bg-gradient-to-br from-green-900 to-black p-6 flex flex-col justify-end relative overflow-hidden shrink-0">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+                        <h3 class="text-2xl font-bold text-white relative z-10">Foundation (IX & X)</h3>
+                        <p class="text-green-300 font-medium relative z-10">Early Edge Program</p>
+                    </div>
+                    <div class="p-6 space-y-4 flex flex-col grow">
+                        <ul class="space-y-2 text-gray-400 text-sm grow">
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Board Exam Excellence</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> NTSE & Olympiad Focus</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Base Building for JEE/NEET</li>
+                        </ul>
+                        <button class="w-full py-3 mt-4 bg-white/5 hover:bg-green-600 text-white rounded-lg transition font-semibold">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-gray-900 border-t border-white/10 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 mb-12">
+            <div>
+                <div class="font-bold text-2xl tracking-widest text-white mb-4">THE <span class="text-blue-500">LAMINARS</span></div>
+                <p class="text-gray-400 text-sm md:text-base">Building strong foundations for tomorrow's leaders in engineering and medical sciences. Join us to transform your academic journey.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-gray-400 text-sm md:text-base">
+                    <li><a href="#about" class="hover:text-white transition">About Us</a></li>
+                    <li><a href="#courses" class="hover:text-white transition">Our Courses</a></li>
+                    <li><a href="#" class="hover:text-white transition">Admissions</a></li>
+                    <li><a href="#" class="hover:text-white transition">Student Portal</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg mb-4">Contact Us</h4>
+                <ul class="space-y-2 text-gray-400 text-sm md:text-base">
+                    <li class="flex items-start"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> <span>123 Education Hub, Knowledge City</span></li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> <span>+1 (555) 123-4567</span></li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span>info@thelaminars.edu</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 text-center border-t border-white/5 pt-8 text-gray-500 text-xs md:text-sm">
+            &copy; 2026 The Laminars Coaching Institute. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * TextAnimations Library (Neon & Typing core scripts preserved)
+         */
+        const TextAnimations = {
+            _intervals: {},
+            _prepareContainer: function(id) {
+                const el = document.getElementById(id);
+                if (!el) return null;
+                if (this._intervals[id]) this._intervals[id].forEach(clearInterval);
+                this._intervals[id] = [];
+                el.innerHTML = '';
+                return el;
+            },
+            neon: function(targetId, text, editable = false) {
+                const target = this._prepareContainer(targetId);
+                if (!target) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'ta-neon-wrapper';
+                const h1 = document.createElement('h1');
+                h1.className = 'ta-neon-text';
+                h1.textContent = text;
+                if (editable) {
+                    h1.setAttribute('contenteditable', 'true');
+                    h1.style.outline = 'none';
+                }
+                wrapper.appendChild(h1);
+                target.appendChild(wrapper);
+            },
+            typing: function(targetId, words, colors = ['#fff']) {
+                const target = this._prepareContainer(targetId);
+                if (!target) return;
+                const container = document.createElement('div');
+                container.className = 'ta-console-container';
+                const textSpan = document.createElement('span');
+                textSpan.className = 'ta-console-text';
+                textSpan.style.color = colors[0];
+                const underscore = document.createElement('div');
+                underscore.className = 'ta-console-underscore';
+                underscore.innerHTML = '&#95;';
+                container.appendChild(textSpan);
+                container.appendChild(underscore);
+                target.appendChild(container);
+
+                let visible = true; let letterCount = 1; let x = 1;
+                let waiting = false; let currentWordIndex = 0; let currentColorIndex = 0;
+
+                const typeInterval = window.setInterval(() => {
+                    if (letterCount === 0 && waiting === false) {
+                        waiting = true;
+                        textSpan.innerHTML = words[currentWordIndex].substring(0, letterCount);
+                        window.setTimeout(() => {
+                            currentColorIndex = (currentColorIndex + 1) % colors.length;
+                            currentWordIndex = (currentWordIndex + 1) % words.length;
+                            x = 1; textSpan.style.color = colors[currentColorIndex];
+                            letterCount += x; waiting = false;
+                        }, 1000);
+                    } else if (letterCount === words[currentWordIndex].length + 1 && waiting === false) {
+                        waiting = true;
+                        window.setTimeout(() => { x = -1; letterCount += x; waiting = false; }, 1000);
+                    } else if (waiting === false) {
+                        textSpan.innerHTML = words[currentWordIndex].substring(0, letterCount);
+                        letterCount += x;
+                    }
+                }, 120);
+
+                const blinkInterval = window.setInterval(() => {
+                    if (visible === true) {
+                        underscore.className = 'ta-console-underscore ta-console-hidden';
+                        visible = false;
+                    } else {
+                        underscore.className = 'ta-console-underscore';
+                        visible = true;
+                    }
+                }, 400);
+
+                this._intervals[targetId].push(typeInterval, blinkInterval);
+            }
+        };
+
+        // ==========================================
+        // NEW: Legacy Sequence Data and Logic
+        // ==========================================
+        const legacyConfigs = [
+            {
+                heading: "40+ Years of Excellence",
+                subheading: "Decades of proven teaching mastery led by visionary leadership",
+                titleColor: "#ffb510", roleColor: "#e91e63",
+                points: ["Over four decades of academic expertise", "Consistent student success across generations", "Deep understanding of learning psychology", "Refined teaching methodologies"]
+            },
+            {
+                heading: "A Director's Dream Project",
+                subheading: "Built with passion to transform education in the community",
+                titleColor: "#00d4ff", roleColor: "#00ff9d",
+                points: ["Vision-driven educational approach", "Focus on meaningful learning outcomes", "Community-first mindset", "Empowering young minds with purpose"]
+            },
+            {
+                heading: "First Coding Coaching in GR",
+                subheading: "Pioneering modern tech education in Garden Reach",
+                titleColor: "#ff4ecd", roleColor: "#ffa600",
+                points: ["Introduced structured coding education locally", "Industry-relevant curriculum", "Hands-on project-based learning", "Bridging academics with technology"]
+            },
+            {
+                heading: "First Python for Kids",
+                subheading: "Building logical thinking from an early stage",
+                titleColor: "#00c2ff", roleColor: "#ff6f61",
+                points: ["Python introduced from 5th standard", "Focus on logic over memorization", "Interactive and fun learning approach", "Strong foundation for future tech skills"]
+            },
+            {
+                heading: "Multidisciplinary Expertise",
+                subheading: "Comprehensive education across subjects and domains",
+                titleColor: "#8e44ad", roleColor: "#2ecc71",
+                points: ["Languages, sciences, and technology", "Experienced subject matter experts", "Holistic academic development", "Balanced curriculum design"]
+            },
+            {
+                heading: "Industry-Aligned Logic Building",
+                subheading: "Connecting academics with real-world applications",
+                titleColor: "#f39c12", roleColor: "#1abc9c",
+                points: ["Focus on practical understanding", "Real-world problem solving", "Beyond rote memorization", "Preparing students for future careers"]
+            }
+        ];
+
+        function runLegacySequence(configs) {
+            let box = document.getElementById("legacyAnimatedBox");
+            if (!box) return;
+            let index = 0;
+            const roleEnd = 3500;
+
+            function resetAnimation() {
+                const parent = box.parentNode;
+                const newBox = box.cloneNode(true);
+                newBox.classList.remove("legacy-fade-out");
+                parent.replaceChild(newBox, box);
+                box = newBox;
+                void newBox.offsetWidth; // Force Reflow
+                return newBox;
+            }
+
+            function showPoints(container, points) {
+                container.innerHTML = "";
+                const stagger = 800;
+                points.forEach((p, i) => {
+                    const el = document.createElement("div");
+                    el.className = "legacy-point text-sm md:text-base";
+                    el.innerHTML = `
+                        <span style="color: var(--title-color); font-weight: bold; font-size: 1.5rem; line-height: 1; margin-top: 2px;" class="shrink-0">›</span>
+                        <span>${p}</span>
+                    `;
+                    container.appendChild(el);
+                    setTimeout(() => { el.classList.add("show"); }, i * stagger);
+                });
+            }
+
+            function showNext() {
+                const config = configs[index];
+                const newBox = resetAnimation();
+                
+                const heading = newBox.querySelector("#legacyHeadingText");
+                const subheading = newBox.querySelector("#legacySubheadingText");
+                const pointsContainer = newBox.querySelector("#legacyPointsContainer");
+
+                pointsContainer.innerHTML = "";
+                heading.textContent = config.heading;
+                subheading.textContent = config.subheading;
+
+                newBox.style.setProperty("--title-color", config.titleColor);
+                newBox.style.setProperty("--role-color", config.roleColor);
+
+                const points = config.points || [];
+                const pointStagger = 800;
+                const pointAnim = 900;
+                const pointsDuration = (points.length * pointStagger) + pointAnim;
+
+                const pointsStart = roleEnd + 500;
+                const fadeStartDelay = pointsStart + pointsDuration + 1500;
+                const totalCycle = fadeStartDelay + 1500;
+
+                setTimeout(() => { showPoints(pointsContainer, points); }, pointsStart);
+                setTimeout(() => { newBox.classList.add("legacy-fade-out"); }, fadeStartDelay);
+                
+                setTimeout(() => {
+                    index = (index + 1) % configs.length;
+                    showNext();
+                }, totalCycle);
+            }
+
+            if (configs && configs.length > 0) showNext();
+        }
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize Hero Section Neon effect
+            TextAnimations.neon('hero-title', 'The Laminars');
+            
+            // Initialize Legacy Section animation sequence
+            runLegacySequence(legacyConfigs);
+        });
+    </script>
+</body>
+</html>
