@@ -331,6 +331,37 @@
                 border-color: transparent rgba(255,255,255,0.04) transparent transparent;
             }
         }
+
+        /* --- Hero Floating Educational Particles --- */
+        .hero-particle {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            will-change: transform;
+            line-height: 1;
+        }
+        @keyframes heroFloat1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25%       { transform: translate(14px, -22px) rotate(7deg); }
+            50%       { transform: translate(-10px, -38px) rotate(-4deg); }
+            75%       { transform: translate(18px, -18px) rotate(9deg); }
+        }
+        @keyframes heroFloat2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33%       { transform: translate(-18px, -28px) rotate(-9deg); }
+            66%       { transform: translate(12px, -46px) rotate(6deg); }
+        }
+        @keyframes heroFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50%       { transform: translate(10px, -30px) scale(1.07) rotate(-7deg); }
+        }
+        @keyframes heroFloat4 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            20%       { transform: translate(-12px, -18px) rotate(5deg); }
+            40%       { transform: translate(18px, -34px) rotate(-7deg); }
+            60%       { transform: translate(-6px, -50px) rotate(4deg); }
+            80%       { transform: translate(14px, -24px) rotate(-3deg); }
+        }
     </style>
 </head>
 <body class="bg-neutral-950 text-white font-sans antialiased overflow-x-hidden">
@@ -356,16 +387,27 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="min-h-screen bg-black flex flex-col justify-center items-center px-4 md:px-8 relative pt-20">
+    <section id="hero" class="min-h-screen bg-black flex flex-col justify-center items-center px-4 md:px-8 relative pt-20 overflow-hidden">
+        <!-- Floating educational particles layer (populated by JS) -->
+        <div id="hero-particles-layer" aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;"></div>
+
         <div class="z-10 flex flex-col items-center justify-center space-y-6 text-center w-full max-w-5xl">
             
             <!-- Unified Neon Title Container -->
             <!-- Adjusted clamp for better fit on extremely small devices -->
             <div id="hero-title" class="text-[clamp(2.5rem,12vw,8rem)] leading-none mb-4 w-full"></div>
             
-            <p class="text-lg md:text-2xl text-gray-400 max-w-2xl font-light px-2">
-                Empowering minds for a brighter tomorrow. Join the premier institute for Engineering and Medical entrance examinations.
-            </p>
+            <div class="max-w-3xl px-2 space-y-3 text-center">
+                <p class="text-xl md:text-2xl leading-relaxed font-light text-gray-300">
+                    Where <span class="text-blue-400 font-semibold">knowledge meets ambition</span> &mdash; your journey to excellence in
+                    <span class="text-orange-400 font-semibold">Science</span>,
+                    <span class="text-green-400 font-semibold">Technology</span>,
+                    <span class="text-purple-400 font-semibold">Languages</span> &amp; beyond starts here.
+                </p>
+                <p class="text-sm md:text-base text-gray-500 tracking-wider">
+                    Trusted by <span class="text-gray-300 font-medium">500+ students</span>&ensp;&middot;&ensp;Expert Faculty&ensp;&middot;&ensp;Proven Results&ensp;&middot;&ensp;40+ Years of Excellence
+                </p>
+            </div>
 
             <!-- Buttons stack on mobile, row on desktop -->
             <div class="mt-8 flex flex-col md:flex-row gap-4 w-full md:w-auto px-6 md:px-0">
@@ -1076,11 +1118,119 @@
         }
 
         // ==========================================
+        // Hero Floating Particles
+        // ==========================================
+        function initHeroParticles() {
+            const container = document.getElementById('hero-particles-layer');
+            if (!container) return;
+
+            const emojiItems = [
+                { c: '📚', s: 30 }, { c: '📖', s: 26 }, { c: '✏️', s: 24 }, { c: '🖊️', s: 22 },
+                { c: '🔬', s: 28 }, { c: '🧪', s: 26 }, { c: '📐', s: 24 }, { c: '🧮', s: 26 },
+                { c: '💡', s: 28 }, { c: '🎓', s: 32 }, { c: '📝', s: 24 }, { c: '🔭', s: 28 },
+                { c: '⚗️', s: 26 }, { c: '📊', s: 24 }, { c: '🧠', s: 28 }, { c: '📏', s: 22 },
+                { c: '🏫', s: 30 }, { c: '📈', s: 24 }, { c: '🖋️', s: 22 }, { c: '📓', s: 26 }
+            ];
+
+            const wordItems = [
+                { c: 'Learn',       lang: 'en' }, { c: 'Wisdom',     lang: 'en' },
+                { c: 'Excel',       lang: 'en' }, { c: 'Achieve',    lang: 'en' },
+                { c: 'Grow',        lang: 'en' }, { c: 'Inspire',    lang: 'en' },
+                { c: 'ज्ञान',      lang: 'hi' }, { c: 'शिक्षा',    lang: 'hi' },
+                { c: 'विद्या',     lang: 'hi' }, { c: 'सफलता',     lang: 'hi' },
+                { c: 'पढ़ाई',      lang: 'hi' }, { c: 'ध्यान',     lang: 'hi' },
+                { c: 'জ্ঞান',      lang: 'bn' }, { c: 'শিক্ষা',    lang: 'bn' },
+                { c: 'বিদ্যা',     lang: 'bn' }, { c: 'সফলতা',     lang: 'bn' },
+                { c: 'পড়াশোনা',   lang: 'bn' }, { c: 'স্বপ্ন',    lang: 'bn' },
+                { c: 'علم',        lang: 'ur' }, { c: 'تعلیم',     lang: 'ur' },
+                { c: 'ترقی',       lang: 'ur' }, { c: 'کامیابی',   lang: 'ur' },
+                { c: 'محنت',       lang: 'ur' }, { c: 'فکر',       lang: 'ur' }
+            ];
+
+            const wordColors = {
+                en: [147, 197, 253],  // blue-300
+                hi: [253, 186, 116],  // orange-300
+                bn: [134, 239, 172],  // green-300
+                ur: [216, 180, 254]   // purple-300
+            };
+
+            const anims = ['heroFloat1', 'heroFloat2', 'heroFloat3', 'heroFloat4'];
+            const allItems = [
+                ...emojiItems.map(i => ({ ...i, type: 'emoji' })),
+                ...wordItems.map(i => ({ ...i, type: 'word' }))
+            ];
+
+            // Fisher-Yates shuffle for natural distribution
+            for (let i = allItems.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
+            }
+
+            const frag = document.createDocumentFragment();
+
+            allItems.forEach((item, idx) => {
+                const el = document.createElement('span');
+                el.className = 'hero-particle';
+
+                // Zone-based placement: keep edges, avoid dense center
+                const zone = idx % 8;
+                let x, y;
+                const rn = () => Math.random();
+                switch (zone) {
+                    case 0: x = rn() * 20;          y = rn() * 100; break;   // far left
+                    case 1: x = 80 + rn() * 20;     y = rn() * 100; break;   // far right
+                    case 2: x = rn() * 100;          y = rn() * 16;  break;   // top strip
+                    case 3: x = rn() * 100;          y = 84 + rn() * 16; break; // bottom strip
+                    case 4: x = 20 + rn() * 13;      y = rn() * 42;  break;   // inner-left top
+                    case 5: x = 67 + rn() * 13;      y = rn() * 42;  break;   // inner-right top
+                    case 6: x = 20 + rn() * 13;      y = 58 + rn() * 42; break; // inner-left btm
+                    default: x = 67 + rn() * 13;     y = 58 + rn() * 42; break; // inner-right btm
+                }
+
+                const dur   = (12 + Math.random() * 18).toFixed(1);
+                const delay = (-(Math.random() * parseFloat(dur))).toFixed(1);
+                const anim  = anims[Math.floor(Math.random() * anims.length)];
+
+                let fontSize, opacity, colorStyle, fontFamilyStyle;
+
+                if (item.type === 'emoji') {
+                    fontSize        = item.s + 'px';
+                    opacity         = (0.12 + Math.random() * 0.2).toFixed(2);
+                    colorStyle      = '';
+                    fontFamilyStyle = '';
+                } else {
+                    fontSize        = (11 + Math.random() * 10).toFixed(0) + 'px';
+                    opacity         = (0.1 + Math.random() * 0.18).toFixed(2);
+                    const [r2, g, b] = wordColors[item.lang];
+                    colorStyle      = `color:rgba(${r2},${g},${b},0.9);`;
+                    fontFamilyStyle = item.lang === 'ur'
+                        ? "font-family:'Noto Naskh Arabic','Segoe UI',serif;"
+                        : "font-family:'Lato',sans-serif;";
+                }
+
+                el.style.cssText =
+                    `left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;` +
+                    `font-size:${fontSize};opacity:${opacity};` +
+                    colorStyle + fontFamilyStyle +
+                    `animation:${anim} ${dur}s ${delay}s ease-in-out infinite;` +
+                    `filter:blur(0.3px);white-space:nowrap;`;
+
+                el.textContent = item.c;
+                frag.appendChild(el);
+            });
+
+            container.appendChild(frag);
+        }
+
+        // ==========================================
         // INITIALIZATION
         // ==========================================
         document.addEventListener("DOMContentLoaded", () => {
             // Initialize Hero Section Neon effect
             TextAnimations.neon('hero-title', 'The Laminars');
+
+            // Initialize floating educational particles in hero background
+            initHeroParticles();
             
             // Initialize Legacy Section animation sequence
             runLegacySequence(legacyConfigs);
