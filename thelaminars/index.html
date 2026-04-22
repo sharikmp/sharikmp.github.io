@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Laminars | Excellence in Education</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-dark: #0f172a; /* Deep Navy */
+            --primary-light: #1e3a8a; /* Trust Blue */
+            --gradient-main: linear-gradient(135deg, #1e3a8a 0%, #6d28d9 100%);
+            --accent-color: #f97316; /* Vibrant Orange */
+            --accent-hover: #ea580c;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --border-radius-lg: 16px;
+            --border-radius-md: 10px;
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 40px -10px rgba(0,0,0,0.12);
+        }
+
+        /* Global Styles */
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .navbar-brand, .btn {
+            font-family: var(--font-heading);
+        }
+
+        section {
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+
+        /* Buttons */
+        .btn-custom-accent {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+
+        .btn-custom-accent:hover {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-custom-outline {
+            background-color: transparent;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: 2px solid #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom-outline:hover {
+            background-color: #ffffff;
+            color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            background-color: transparent;
+        }
+
+        .navbar.scrolled {
+            background-color: #ffffff !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 0.7rem 0;
+        }
+
+        .navbar.scrolled .nav-link,
+        .navbar.scrolled .navbar-brand {
+            color: var(--primary-dark) !important;
+        }
+        
+        .navbar.scrolled .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px; /* Offset for navbar */
+        }
+
+        .hero-bg-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            z-index: 1;
+            animation: float 8s infinite ease-in-out reverse;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+
+        .feature-card {
+            background: #ffffff;
+            border-radius: var(--border-radius-lg);
+            padding: 40px 30px;
+            height: 100%;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(30, 58, 138, 0.05);
+            color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 20px auto;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--primary-light);
+            color: #ffffff;
+        }
+
+        /* Courses Section */
+        .courses-section {
+            padding: 100px 0;
+        }
+
+        .course-card {
+            background: #ffffff;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .course-img-placeholder {
+            height: 200px;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            font-size: 4rem;
+            opacity: 0.8;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .course-content {
+            padding: 30px;
+        }
+
+        .course-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .course-link {
+            color: var(--primary-light);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s ease;
+        }
+
+        .course-card:hover .course-link {
+            gap: 12px;
+            color: var(--accent-color);
+        }
+
+        /* Learning Modes Section */
+        .modes-section {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+
+        .mode-card {
+            background: #ffffff;
+            border-radius: var(--border-radius-lg);
+            padding: 50px 40px;
+            box-shadow: var(--shadow-soft);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-main);
+        }
+
+        .mode-card.online::before {
+            background: var(--accent-color);
+        }
+
+        .mode-icon {
+            font-size: 2.5rem;
+            color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+        
+        .mode-card.online .mode-icon {
+            color: var(--accent-color);
+        }
+
+        .mode-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
+        }
+
+        .mode-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-main);
+        }
+
+        .mode-list li i {
+            color: #10b981; /* Success Green */
+            font-size: 1.1rem;
+        }
+
+        /* Why Choose Us Section */
+        .why-us-section {
+            padding: 100px 0;
+        }
+
+        .why-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .why-list li {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 20px 25px;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        .why-list li:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .why-icon {
+            background: var(--bg-light);
+            color: var(--primary-light);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+
+        .testimonial-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-soft);
+            height: 100%;
+            position: relative;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 3rem;
+            color: rgba(30, 58, 138, 0.05);
+        }
+
+        .testimonial-text {
+            font-size: 1.05rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Enquiry Form Section */
+        .contact-section {
+            padding: 100px 0;
+        }
+
+        .contact-wrapper {
+            background: #ffffff;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+        }
+
+        .contact-info {
+            background: var(--gradient-main);
+            color: #ffffff;
+            padding: 50px;
+            height: 100%;
+        }
+
+        .contact-form-container {
+            padding: 50px;
+        }
+
+        .form-control, .form-select {
+            padding: 12px 20px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            background-color: var(--bg-light);
+        }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
+            border-color: var(--primary-light);
+            background-color: #ffffff;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .success-message {
+            display: none;
+            background: #10b981;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: var(--gradient-main);
+            padding: 80px 0;
+            text-align: center;
+            color: #ffffff;
+            position: relative;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-dark);
+            color: #e2e8f0;
+            padding: 80px 0 30px 0;
+        }
+
+        .footer-brand {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-heading {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+            margin-right: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #64748b;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 991px) {
+            .navbar { background-color: var(--primary-dark) !important; padding: 10px 0;}
+            .hero-title { font-size: 2.5rem; }
+            .hero-section { text-align: center; padding-top: 120px; padding-bottom: 60px;}
+            .hero-image-wrapper { margin-top: 50px; }
+            .contact-info { padding: 40px 30px; }
+            .contact-form-container { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="100">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-layer-group me-2"></i>The Laminars</a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="d-flex mt-3 mt-lg-0">
+                    <a href="#contact" class="btn btn-custom-accent w-100">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero-section">
+        <!-- Abstract Background Shapes -->
+        <div class="hero-bg-shapes">
+            <div class="shape" style="width: 300px; height: 300px; top: 10%; left: -5%;"></div>
+            <div class="shape" style="width: 400px; height: 400px; bottom: -10%; right: 10%; animation-delay: 2s;"></div>
+            <div class="shape" style="width: 150px; height: 150px; top: 20%; right: 40%; animation-delay: 4s;"></div>
+        </div>
+
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <span class="badge bg-white text-primary mb-3 py-2 px-3 rounded-pill fw-bold">#1 Coaching Center in Town</span>
+                    <h1 class="hero-title">Build Strong Foundations.<br>Achieve Academic Excellence.</h1>
+                    <p class="hero-subtitle">Personalized coaching in Science, Hindi, English & Technical subjects — Available Online & Offline to fit your learning style.</p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                        <a href="#contact" class="btn btn-custom-accent">Join Now</a>
+                        <a href="#contact" class="btn btn-custom-outline">Book Free Demo</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="hero-image-wrapper text-center">
+                        <!-- Abstract/Iconic Hero Graphic using FontAwesome & CSS styling -->
+                        <div style="position: relative; width: 100%; height: 400px; display: flex; align-items: center; justify-content: center;">
+                            <div style="width: 350px; height: 350px; background: rgba(255,255,255,0.1); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.2);">
+                                <i class="fa-solid fa-user-graduate" style="font-size: 8rem; color: #ffffff; text-shadow: 0 10px 20px rgba(0,0,0,0.2);"></i>
+                            </div>
+                            <div style="position: absolute; top: 40px; right: 50px; background: var(--accent-color); padding: 15px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: float 4s infinite ease-in-out;">
+                                <i class="fa-solid fa-book-open text-white fs-2"></i>
+                            </div>
+                            <div style="position: absolute; bottom: 60px; left: 40px; background: #10b981; padding: 15px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: float 6s infinite ease-in-out reverse;">
+                                <i class="fa-solid fa-microscope text-white fs-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Value Proposition</h2>
+                <p class="section-subtitle">Why students and parents trust The Laminars for achieving exceptional academic results.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-users-rays"></i>
+                        </div>
+                        <h4 class="mb-3">Personalized Attention</h4>
+                        <p class="text-muted mb-0">Small batch sizes ensuring every student gets the focus they need to thrive.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h4 class="mb-3">Expert Tutors</h4>
+                        <p class="text-muted mb-0">Learn from highly qualified educators with years of proven teaching experience.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-laptop-house"></i>
+                        </div>
+                        <h4 class="mb-3">Flexible Learning</h4>
+                        <p class="text-muted mb-0">Choose between engaging offline classrooms or interactive live online sessions.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h4 class="mb-3">Concept Clarity</h4>
+                        <p class="text-muted mb-0">Focus on fundamental understanding rather than rote memorization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="courses-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Programs We Offer</h2>
+                <p class="section-subtitle">Comprehensive curriculum designed to build mastery across core academic disciplines.</p>
+            </div>
+            <div class="row g-4">
+                <!-- Science -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="course-card">
+                        <div class="course-img-placeholder">
+                            <i class="fa-solid fa-flask-vial"></i>
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Science</h3>
+                            <p class="text-muted mb-4">In-depth coverage of Physics, Chemistry, and Biology. Practical examples and real-world applications to clear complex concepts.</p>
+                            <a href="#contact" class="course-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hindi -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="course-card">
+                        <div class="course-img-placeholder">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Hindi</h3>
+                            <p class="text-muted mb-4">Mastery over grammar, literature, and writing skills. Enhancing linguistic proficiency and cultural understanding.</p>
+                            <a href="#contact" class="course-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- English -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="course-card">
+                        <div class="course-img-placeholder">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">English</h3>
+                            <p class="text-muted mb-4">Comprehensive English grammar, spoken fluency, and literature analysis to boost confidence and communication skills.</p>
+                            <a href="#contact" class="course-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Technical -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="course-card">
+                        <div class="course-img-placeholder">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Technical Subjects</h3>
+                            <p class="text-muted mb-4">Foundational computer science, programming basics, and logic building for the innovators of tomorrow.</p>
+                            <a href="#contact" class="course-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Modes Section -->
+    <section class="modes-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-12 text-center mb-4">
+                    <h2 class="section-title">Learn Your Way</h2>
+                    <p class="section-subtitle">We provide flexible modes of education tailored to student comfort and geographic needs.</p>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mode-card">
+                        <i class="fa-solid fa-school mode-icon"></i>
+                        <h3>Offline Classes</h3>
+                        <p class="text-muted mt-3">Experience traditional, immersive learning in our well-equipped modern classrooms with direct teacher interaction.</p>
+                        <ul class="mode-list">
+                            <li><i class="fa-solid fa-circle-check"></i> Interactive peer environment</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Zero digital distractions</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Access to physical library & labs</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Immediate face-to-face doubt clearing</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mode-card online">
+                        <i class="fa-solid fa-globe mode-icon"></i>
+                        <h3>Online Classes</h3>
+                        <p class="text-muted mt-3">High-quality live interactive sessions from the comfort of your home, utilizing state-of-the-art educational tech.</p>
+                        <ul class="mode-list">
+                            <li><i class="fa-solid fa-circle-check"></i> Learn from anywhere safely</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Recorded lectures for revision</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Digital whiteboards and materials</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Save travel time & energy</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-us-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5 order-2 order-lg-1">
+                    <ul class="why-list">
+                        <li>
+                            <div class="why-icon"><i class="fa-solid fa-compress"></i></div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Small Batch Sizes</h5>
+                                <p class="mb-0 text-muted fs-6">Ensures high teacher-to-student ratio.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="why-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Personalized Mentorship</h5>
+                                <p class="mb-0 text-muted fs-6">Custom study plans based on student pace.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="why-icon"><i class="fa-solid fa-file-signature"></i></div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Regular Assessments</h5>
+                                <p class="mb-0 text-muted fs-6">Weekly tests to track and boost performance.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="why-icon"><i class="fa-solid fa-comments"></i></div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Doubt-Solving Sessions</h5>
+                                <p class="mb-0 text-muted fs-6">Dedicated extra time just for clearing hurdles.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-7 order-1 order-lg-2">
+                    <div class="ps-lg-5">
+                        <h2 class="section-title">The Laminars Advantage</h2>
+                        <h3 class="mb-4 fw-bold text-dark">Empowering students to unlock their true potential.</h3>
+                        <p class="text-muted fs-5 mb-4">We believe that every student has the capacity to excel. Our unique methodology bridges the gap between theoretical knowledge and practical application, ensuring education is engaging and deeply understood.</p>
+                        <p class="text-muted fs-5">By fostering a supportive environment, we not only improve grades but build lifelong confidence and critical thinking skills.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Student Success Stories</h2>
+                <p class="section-subtitle">Hear what our students have to say about their learning journey.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="testimonial-card">
+                        <i class="fa-solid fa-quote-right quote-icon"></i>
+                        <p class="testimonial-text">"The Science and Math concepts that used to terrify me are now my strongest subjects. The teachers at The Laminars break down complex topics so easily. The personalized attention made all the difference."</p>
+                        <div class="client-info">
+                            <div class="client-avatar">R</div>
+                            <div>
+                                <h5 class="mb-0 fw-bold">Rohan S.</h5>
+                                <span class="text-muted small">Class 10 Student</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="testimonial-card">
+                        <i class="fa-solid fa-quote-right quote-icon"></i>
+                        <p class="testimonial-text">"I opted for their online classes, and the experience has been seamless. The interactive digital tools and the patience of the instructors have helped me excel in English and Technical subjects beyond my expectations."</p>
+                        <div class="client-info">
+                            <div class="client-avatar">A</div>
+                            <div>
+                                <h5 class="mb-0 fw-bold">Ayesha M.</h5>
+                                <span class="text-muted small">Class 12 Student</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Enquiry Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="row g-0">
+                    <!-- Contact Info -->
+                    <div class="col-lg-5">
+                        <div class="contact-info">
+                            <h3 class="fw-bold mb-4">Get In Touch</h3>
+                            <p class="mb-5 opacity-75">Ready to start your journey towards academic excellence? Fill out the form, and our academic counselor will get back to you shortly.</p>
+                            
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="fs-3 me-3 text-white"><i class="fa-solid fa-location-dot"></i></div>
+                                <div>
+                                    <h6 class="mb-1 fw-bold text-white">Visit Us</h6>
+                                    <p class="mb-0 opacity-75 small">123 Education Hub, Knowledge City, 456001</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="fs-3 me-3 text-white"><i class="fa-solid fa-phone"></i></div>
+                                <div>
+                                    <h6 class="mb-1 fw-bold text-white">Call Us</h6>
+                                    <p class="mb-0 opacity-75 small">+91 98765 43210</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="fs-3 me-3 text-white"><i class="fa-solid fa-envelope"></i></div>
+                                <div>
+                                    <h6 class="mb-1 fw-bold text-white">Email Us</h6>
+                                    <p class="mb-0 opacity-75 small">admissions@thelaminars.edu</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Form -->
+                    <div class="col-lg-7">
+                        <div class="contact-form-container">
+                            <h3 class="fw-bold text-dark mb-4">Enquire Now</h3>
+                            
+                            <div id="successMessage" class="success-message mb-4">
+                                <i class="fa-solid fa-circle-check fs-4 mb-2 d-block"></i>
+                                <h5 class="mb-1">Thank you!</h5>
+                                <p class="mb-0 small">Your enquiry has been received. We will contact you soon.</p>
+                            </div>
+
+                            <form id="enquiryForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Full Name *</label>
+                                        <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email Address *</label>
+                                        <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Phone Number *</label>
+                                        <input type="tel" class="form-control" id="phone" placeholder="10-digit number" pattern="[0-9]{10}" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Subject Interested *</label>
+                                        <select class="form-select" id="subject" required>
+                                            <option value="" selected disabled>Select Subject</option>
+                                            <option value="science">Science</option>
+                                            <option value="hindi">Hindi</option>
+                                            <option value="english">English</option>
+                                            <option value="technical">Technical Subjects</option>
+                                            <option value="multiple">Multiple Subjects</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mb-4">
+                                        <label class="form-label">Message (Optional)</label>
+                                        <textarea class="form-control" id="message" rows="3" placeholder="Tell us about your learning goals..."></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-custom-accent w-100 py-3" id="submitBtn">
+                                            <span>Send Enquiry</span> <i class="fa-solid fa-paper-plane ms-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta-banner">
+        <div class="container">
+            <h2 class="fw-bold mb-4">Start Your Learning Journey Today</h2>
+            <p class="fs-5 mb-5 opacity-75 max-w-75 mx-auto">Join hundreds of students who have transformed their academic results with The Laminars.</p>
+            <a href="#contact" class="btn btn-custom-outline btn-lg px-5">Enroll Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <a href="#" class="footer-brand"><i class="fa-solid fa-layer-group me-2"></i>The Laminars</a>
+                    <p class="text-muted mb-4 pe-lg-4">Providing top-tier educational coaching to help students achieve concept clarity and academic excellence in Science, Languages, and Technical subjects.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">About Us</a></li>
+                        <li><a href="#courses">Our Courses</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Subjects</h5>
+                    <ul class="footer-links">
+                        <li><a href="#courses">Science</a></li>
+                        <li><a href="#courses">Hindi</a></li>
+                        <li><a href="#courses">English</a></li>
+                        <li><a href="#courses">Technical</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-heading">Newsletter</h5>
+                    <p class="text-muted mb-3">Subscribe for educational tips and institute updates.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email address" aria-label="Email" style="background: rgba(255,255,255,0.1); border:none; color:white;">
+                        <button class="btn btn-custom-accent" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="mb-0">&copy; 2026 The Laminars Education. All Rights Reserved. Designed for Excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Navbar Scroll Effect
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // 2. Smooth Scrolling for Anchor Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    
+                    if(targetId === '#') return; // Ignore pure # links
+                    
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        e.preventDefault();
+                        
+                        // Close mobile menu if open
+                        const navbarToggler = document.querySelector('.navbar-toggler');
+                        const navbarCollapse = document.querySelector('.navbar-collapse');
+                        if (navbarCollapse.classList.contains('show')) {
+                            navbarToggler.click();
+                        }
+
+                        // Smooth scroll with offset for sticky navbar
+                        const headerOffset = 70;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    }
+                });
+            });
+
+            // 3. Form Validation & Mock Submission
+            const form = document.getElementById('enquiryForm');
+            const successMessage = document.getElementById('successMessage');
+            const submitBtn = document.getElementById('submitBtn');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Basic validation is handled by HTML5 attributes (required, pattern)
+                if (form.checkValidity()) {
+                    
+                    // Show loading state
+                    const originalBtnText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+                    submitBtn.disabled = true;
+
+                    // Mock API call delay (1.5 seconds)
+                    setTimeout(() => {
+                        // Hide form, show success message
+                        form.style.display = 'none';
+                        successMessage.style.display = 'block';
+                        
+                        // Optional: Reset form in background for future use
+                        form.reset();
+                        
+                        // Optional: Re-show form after 5 seconds
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                            form.style.display = 'block';
+                            submitBtn.innerHTML = originalBtnText;
+                            submitBtn.disabled = false;
+                        }, 5000);
+                        
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
