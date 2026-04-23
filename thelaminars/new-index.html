@@ -333,6 +333,41 @@
         }
 
         /* --- Hero Floating Educational Particles --- */
+        /* ── Quote Component ─────────────────────────────────── */
+        .educational-quote {
+            position: relative;
+            padding: 2rem 2rem 2rem 3rem;
+            border-left: 3px solid rgba(251,191,36,0.55);
+            background: linear-gradient(100deg, rgba(251,191,36,0.04) 0%, transparent 70%);
+        }
+        .educational-quote::before {
+            content: '\201C';
+            position: absolute;
+            top: -0.15em;
+            left: 0.3rem;
+            font-size: 5rem;
+            line-height: 1;
+            color: rgba(251,191,36,0.18);
+            font-family: Georgia, serif;
+            pointer-events: none;
+        }
+        .educational-quote blockquote {
+            font-family: 'Lato', sans-serif;
+            font-style: italic;
+            color: #d1d5db;      /* gray-300 */
+            line-height: 1.75;
+            margin: 0 0 0.75rem 0;
+        }
+        .educational-quote cite {
+            font-style: normal;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(251,191,36,0.75);
+        }
+        /* ─────────────────────────────────────────────────────────── */
+
         .hero-particle {
             position: absolute;
             pointer-events: none;
@@ -426,6 +461,12 @@
                 </p>
             </div>
 
+            <!-- Quote 1 -->
+            <div class="educational-quote mt-6 max-w-xl text-left mx-6 md:mx-0">
+                <blockquote>"Dream, dream, dream. Dreams transform into thoughts and thoughts result in action."</blockquote>
+                <cite>— Dr. A.P.J. Abdul Kalam</cite>
+            </div>
+
             <!-- Buttons stack on mobile, row on desktop -->
             <div class="mt-8 flex flex-col md:flex-row gap-4 w-full md:w-auto px-6 md:px-0">
                 <a href="#courses" class="w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition shadow-[0_0_15px_rgba(59,130,246,0.5)] text-center">Explore Courses</a>
@@ -505,6 +546,16 @@
             </div>
         </div>
     </section>
+
+    <!-- Quote 2 — separator after About -->
+    <div class="bg-black border-t border-white/5 py-10">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="educational-quote">
+                <blockquote>"Excellence is a continuous process and not an accident."</blockquote>
+                <cite>— Dr. A.P.J. Abdul Kalam</cite>
+            </div>
+        </div>
+    </div>
 
     <!-- ===================================================
          PROGRAMS WE OFFER — 3 Sub-Sections
@@ -635,6 +686,16 @@
         </div>
     </section>
 
+    <!-- Quote 3 — separator between Academics & Languages -->
+    <div class="bg-zinc-950 border-t border-white/5 py-10">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="educational-quote">
+                <blockquote>"Learning gives creativity, creativity leads to thinking, thinking provides knowledge, knowledge makes you great."</blockquote>
+                <cite>— Dr. A.P.J. Abdul Kalam</cite>
+            </div>
+        </div>
+    </div>
+
     <!-- Section 2: Language & Communication -->
     <section id="languages" class="py-16 md:py-24 bg-zinc-950 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
@@ -757,6 +818,16 @@
             </div>
         </div>
     </section>
+
+    <!-- Quote 4 — before Tech / Coding section -->
+    <div class="bg-neutral-950 border-t border-white/5 py-10">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="educational-quote">
+                <blockquote>"You have to dream before your dreams can come true."</blockquote>
+                <cite>— Dr. A.P.J. Abdul Kalam</cite>
+            </div>
+        </div>
+    </div>
 
     <!-- Section 3: Technology & Skills -->
     <section id="tech" class="py-16 md:py-24 bg-neutral-950 border-t border-white/5">
@@ -1057,6 +1128,16 @@
     </section>
 
     <!-- CTA Banner -->
+    <!-- Quote 5 — above final CTA -->
+    <div class="bg-black border-t border-white/5 py-10">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="educational-quote">
+                <blockquote>"If you want to shine like a sun, first burn like a sun."</blockquote>
+                <cite>— Dr. A.P.J. Abdul Kalam</cite>
+            </div>
+        </div>
+    </div>
+
     <section class="py-20 md:py-28 bg-gradient-to-r from-blue-900 via-blue-800 to-purple-900 border-t border-white/5 text-center relative overflow-hidden">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none"></div>
         <div class="max-w-4xl mx-auto px-6 relative z-10">
@@ -1181,8 +1262,12 @@
                 </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-6 text-center border-t border-white/5 pt-8 text-gray-500 text-xs md:text-sm">
-            &copy; 2026 The Laminars Coaching Institute. All rights reserved.
+        <div class="max-w-7xl mx-auto px-6 text-center border-t border-white/5 pt-8">
+            <p class="text-gray-600 text-xs italic mb-3">
+                &ldquo;Great dreams of great dreamers are always transcended.&rdquo;
+                <span class="not-italic font-semibold text-yellow-700/60">&nbsp;— Dr. A.P.J. Abdul Kalam</span>
+            </p>
+            <p class="text-gray-500 text-xs md:text-sm">&copy; 2026 The Laminars Coaching Institute. All rights reserved.</p>
         </div>
     </footer>
 
