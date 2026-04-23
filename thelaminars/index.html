@@ -668,7 +668,9 @@
 
             <!-- Merged Animation Container -->
             <div
-                class="w-full min-h-[550px] md:min-h-[650px] flex justify-center items-center relative bg-black/40 rounded-3xl border border-white/10 p-5 md:p-12 shadow-2xl backdrop-blur-sm">
+                class="w-full min-h-[550px] md:min-h-[650px] flex justify-center items-center relative bg-black/40 rounded-3xl border border-white/10 p-5 md:p-12 shadow-2xl backdrop-blur-sm"
+                id="legacyCarousel" tabindex="0" aria-label="Legacy highlights carousel">
+
                 <div class="legacy-box w-full max-w-4xl" id="legacyAnimatedBox">
 
                     <!-- Title block now uses auto height (w-fit max-w-full) instead of fixed pixels -->
@@ -692,6 +694,22 @@
                         id="legacyPointsContainer"></div>
 
                 </div>
+
+                <!-- Bottom nav: prev | dots | next -->
+                <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
+                    <button id="legacyPrev"
+                        class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 flex items-center justify-center transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 shrink-0"
+                        aria-label="Previous highlight">
+                        <i class="fa-solid fa-chevron-left text-white/70 text-xs"></i>
+                    </button>
+                    <div id="legacyDots" class="flex gap-2"></div>
+                    <button id="legacyNext"
+                        class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 flex items-center justify-center transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 shrink-0"
+                        aria-label="Next highlight">
+                        <i class="fa-solid fa-chevron-right text-white/70 text-xs"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
     </section>
@@ -803,7 +821,7 @@
                             <div class="flex flex-col gap-1 items-end">
                                 <span
                                     class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-yellow-500/20 text-yellow-300 border border-yellow-500/20 uppercase tracking-wide whitespace-nowrap"><i
-                                        class="fa-solid fa-child"></i> Class 1–5</span>
+                                        class="fa-solid fa-child"></i> Class 1-5</span>
                             </div>
                         </div>
                         <h3 class="text-xl font-extrabold mb-1"
@@ -856,7 +874,7 @@
                             <div class="flex flex-col gap-1 items-end">
                                 <span
                                     class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i
-                                        class="fa-solid fa-graduation-cap"></i> Class 6–8</span>
+                                        class="fa-solid fa-graduation-cap"></i> Class 6-8</span>
                             </div>
                         </div>
                         <h3 class="text-xl font-extrabold mb-1"
@@ -908,7 +926,7 @@
                             <div class="flex flex-col gap-1 items-end">
                                 <span
                                     class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/20 uppercase tracking-wide whitespace-nowrap"><i
-                                        class="fa-solid fa-school"></i> Class 9–12</span>
+                                        class="fa-solid fa-school"></i> Class 9-12</span>
                                 <span
                                     class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-pink-500/20 text-pink-300 border border-pink-500/20 uppercase tracking-wide whitespace-nowrap"><i
                                         class="fa-solid fa-fire"></i> Board Focus</span>
@@ -982,7 +1000,7 @@
                             <div class="flex flex-col gap-1 items-end">
                                 <span
                                     class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-orange-500/20 text-orange-300 border border-orange-500/20 uppercase tracking-wide whitespace-nowrap"><i
-                                        class="fa-solid fa-school"></i> Class 9–12</span>
+                                        class="fa-solid fa-school"></i> Class 9-12</span>
                                 <span
                                     class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/20 uppercase tracking-wide whitespace-nowrap"><i
                                         class="fa-solid fa-fire"></i> Board Focus</span>
@@ -990,9 +1008,9 @@
                         </div>
                         <h3 class="text-xl font-extrabold mb-1"
                             style="background:linear-gradient(135deg,#fef9c3,#fdba74);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
-                            Hindi – Academic</h3>
+                            Hindi - Academic</h3>
                         <p class="text-gray-400 text-sm mb-3">Board-oriented Hindi coaching with deep focus on grammar,
-                            literature, and answer-writing for Classes 9–12.</p>
+                            literature, and answer-writing for Classes 9-12.</p>
                         <div class="timeline-details-panel">
                             <ul class="space-y-2 mb-4">
                                 <li class="flex items-start gap-2 text-sm text-gray-300"><span
@@ -1032,7 +1050,7 @@
                         </div>
                         <h3 class="text-xl font-extrabold mb-1"
                             style="background:linear-gradient(135deg,#fef9c3,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
-                            Hindi – Basics</h3>
+                            Hindi - Basics</h3>
                         <p class="text-gray-400 text-sm mb-3">Foundational Hindi language skills for beginners of all
                             ages — reading, writing, and spoken basics.</p>
                         <div class="timeline-details-panel">
@@ -1068,7 +1086,7 @@
                             <div class="flex flex-col gap-1 items-end">
                                 <span
                                     class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i
-                                        class="fa-solid fa-school"></i> Class 9–12</span>
+                                        class="fa-solid fa-school"></i> Class 9-12</span>
                                 <span
                                     class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 uppercase tracking-wide whitespace-nowrap"><i
                                         class="fa-solid fa-fire"></i> Board Focus</span>
@@ -1076,9 +1094,9 @@
                         </div>
                         <h3 class="text-xl font-extrabold mb-1"
                             style="background:linear-gradient(135deg,#e2e8f0,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
-                            English – Academic</h3>
+                            English - Academic</h3>
                         <p class="text-gray-400 text-sm mb-3">Literature, writing skills, and grammar coaching for
-                            Classes 9–12 with a sharp focus on board exam performance.</p>
+                            Classes 9-12 with a sharp focus on board exam performance.</p>
                         <div class="timeline-details-panel">
                             <ul class="space-y-2 mb-4">
                                 <li class="flex items-start gap-2 text-sm text-gray-300"><span
@@ -1119,7 +1137,7 @@
                         </div>
                         <h3 class="text-xl font-extrabold mb-1"
                             style="background:linear-gradient(135deg,#e2e8f0,#d8b4fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
-                            English – Spoken</h3>
+                            English - Spoken</h3>
                         <p class="text-gray-400 text-sm mb-3">Practical spoken English for students and adults — build
                             confidence, fluency, and real communication skills.</p>
                         <div class="timeline-details-panel">
@@ -1516,27 +1534,25 @@
                     <p class="text-amber-400 font-medium text-sm mb-2">Hindi Faculty</p>
                     <p class="text-gray-500 text-xs leading-relaxed">M.A. Hindi, M.A. Pol. Sci<br>B.Ed, BTC<br>40+ Years Experience</p>
                 </div>
-                <!-- English Faculty -->
-                <div
-                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-blue-500/40 transition duration-300 group">
-                    <div
-                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
-                        <i class="fa-solid fa-language text-white text-2xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white text-base mb-1">Mrs. A. Verma</h4>
-                    <p class="text-blue-400 font-medium text-sm mb-2">English Faculty</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">M.A. in Linguistics, JNU<br>12+ Years Experience</p>
-                </div>
                 <!-- Science Faculty -->
                 <div
                     class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-green-500/40 transition duration-300 group">
-                    <div
-                        class="w-20 h-20 rounded-full bg-gradient-to-br from-green-900 to-teal-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
-                        <i class="fa-solid fa-atom text-white text-2xl"></i>
-                    </div>
+                    <img src="img/science-faculty.jpeg" alt="Tamkeenat Naaz Akhtar"
+                        class="w-24 h-24 rounded-full object-cover mx-auto mb-5 group-hover:scale-105 transition duration-300 ring-2 ring-green-500/30"
+                        style="object-position: center 10%;">
                     <h4 class="font-bold text-white text-base mb-1">Tamkeenat Naaz Akhtar</h4>
                     <p class="text-green-400 font-medium text-sm mb-2">Science Faculty</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">B.Sc. – Maths, Ex-Byju's<br>10+ Years Experience</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">B.Sc. - Maths, Ex-Byju's<br>10+ Years Experience</p>
+                </div>
+                <!-- Technology Faculty -->
+                <div
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-cyan-500/40 transition duration-300 group">
+                    <img src="img/sharik.png" alt="Sharik M."
+                        class="w-24 h-24 rounded-full object-cover mx-auto mb-5 group-hover:scale-105 transition duration-300 ring-2 ring-cyan-500/30"
+                        style="object-position: center 10%;">
+                    <h4 class="font-bold text-white text-base mb-1">Sharik M.</h4>
+                    <p class="text-cyan-400 font-medium text-sm mb-2">Technology Faculty</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">Engineer - CS &amp; Technical Trainer<br>10+ Years Experience</p>
                 </div>
                 <!-- Physics & Chemistry Faculty -->
                 <div
@@ -1548,15 +1564,16 @@
                     <p class="text-violet-400 font-medium text-sm mb-2">Physics &amp; Chemistry</p>
                     <p class="text-gray-500 text-xs leading-relaxed">B.Tech CSE<br>Jadavpur University</p>
                 </div>
-                <!-- Technology Faculty -->
+                <!-- English Faculty -->
                 <div
-                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-cyan-500/40 transition duration-300 group">
-                    <img src="img/sharik.png" alt="Sharik M."
-                        class="w-24 h-24 rounded-full object-cover mx-auto mb-5 group-hover:scale-105 transition duration-300 ring-2 ring-cyan-500/30"
-                        style="object-position: center 10%;">
-                    <h4 class="font-bold text-white text-base mb-1">Sharik M.</h4>
-                    <p class="text-cyan-400 font-medium text-sm mb-2">Technology Faculty</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">Engineer – CS &amp; Technical Trainer<br>10+ Years Experience</p>
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-blue-500/40 transition duration-300 group">
+                    <div
+                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
+                        <i class="fa-solid fa-language text-white text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base mb-1">Mrs. A. Verma</h4>
+                    <p class="text-blue-400 font-medium text-sm mb-2">English Faculty</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">M.A. in Linguistics, JNU<br>12+ Years Experience</p>
                 </div>
             </div>
         </div>
@@ -1896,8 +1913,39 @@
         function runLegacySequence(configs) {
             let box = document.getElementById("legacyAnimatedBox");
             if (!box) return;
+
             let index = 0;
             const roleEnd = 3500;
+            // Collect all pending timers so we can cancel on manual nav
+            let timers = [];
+            let animating = false;
+
+            // Build dot indicators
+            const dotsEl = document.getElementById('legacyDots');
+            if (dotsEl) {
+                dotsEl.innerHTML = '';
+                configs.forEach((_, i) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'legacy-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/50 transition duration-200 focus:outline-none';
+                    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+                    dot.addEventListener('click', () => goTo(i));
+                    dotsEl.appendChild(dot);
+                });
+            }
+
+            function updateDots() {
+                if (!dotsEl) return;
+                Array.from(dotsEl.children).forEach((d, i) => {
+                    d.className = i === index
+                        ? 'legacy-dot w-2 h-2 rounded-full bg-blue-400 transition duration-200 focus:outline-none'
+                        : 'legacy-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/50 transition duration-200 focus:outline-none';
+                });
+            }
+
+            function clearTimers() {
+                timers.forEach(clearTimeout);
+                timers = [];
+            }
 
             function resetAnimation() {
                 const parent = box.parentNode;
@@ -1905,7 +1953,7 @@
                 newBox.classList.remove("legacy-fade-out");
                 parent.replaceChild(newBox, box);
                 box = newBox;
-                void newBox.offsetWidth; // Force Reflow
+                void newBox.offsetWidth;
                 return newBox;
             }
 
@@ -1920,11 +1968,16 @@
                         <span>${p}</span>
                     `;
                     container.appendChild(el);
-                    setTimeout(() => { el.classList.add("show"); }, i * stagger);
+                    timers.push(setTimeout(() => { el.classList.add("show"); }, i * stagger));
                 });
             }
 
-            function showNext() {
+            function showSlide(i, autoAdvance) {
+                clearTimers();
+                animating = true;
+                index = ((i % configs.length) + configs.length) % configs.length;
+                updateDots();
+
                 const config = configs[index];
                 const newBox = resetAnimation();
 
@@ -1935,7 +1988,6 @@
                 pointsContainer.innerHTML = "";
                 heading.textContent = config.heading;
                 subheading.textContent = config.subheading;
-
                 newBox.style.setProperty("--title-color", config.titleColor);
                 newBox.style.setProperty("--role-color", config.roleColor);
 
@@ -1943,21 +1995,47 @@
                 const pointStagger = 800;
                 const pointAnim = 900;
                 const pointsDuration = (points.length * pointStagger) + pointAnim;
-
                 const pointsStart = roleEnd + 500;
                 const fadeStartDelay = pointsStart + pointsDuration + 1500;
                 const totalCycle = fadeStartDelay + 1500;
 
-                setTimeout(() => { showPoints(pointsContainer, points); }, pointsStart);
-                setTimeout(() => { newBox.classList.add("legacy-fade-out"); }, fadeStartDelay);
+                timers.push(setTimeout(() => { showPoints(pointsContainer, points); }, pointsStart));
 
-                setTimeout(() => {
-                    index = (index + 1) % configs.length;
-                    showNext();
-                }, totalCycle);
+                if (autoAdvance) {
+                    timers.push(setTimeout(() => { newBox.classList.add("legacy-fade-out"); }, fadeStartDelay));
+                    timers.push(setTimeout(() => {
+                        animating = false;
+                        showSlide(index + 1, true);
+                    }, totalCycle));
+                } else {
+                    animating = false;
+                }
             }
 
-            if (configs && configs.length > 0) showNext();
+            function goTo(i) {
+                showSlide(i, false);
+                // Resume auto-advance after a pause so manual nav doesn't feel rushed
+                timers.push(setTimeout(() => {
+                    if (!animating) showSlide(index + 1, true);
+                }, 6000));
+            }
+
+            // Arrow buttons
+            const prevBtn = document.getElementById('legacyPrev');
+            const nextBtn = document.getElementById('legacyNext');
+            if (prevBtn) prevBtn.addEventListener('click', () => goTo(index - 1));
+            if (nextBtn) nextBtn.addEventListener('click', () => goTo(index + 1));
+
+            // Arrow key support (when carousel or its children are focused)
+            const carousel = document.getElementById('legacyCarousel');
+            if (carousel) {
+                carousel.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(index - 1); }
+                    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(index + 1); }
+                });
+            }
+
+            if (configs && configs.length > 0) showSlide(0, true);
         }
 
         // ==========================================
