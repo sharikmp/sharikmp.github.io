@@ -1474,24 +1474,39 @@
                 [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
             }
 
-            // On mobile (≤ 768px) only show 10 particles: 5 icons + 5 words (1 per language min)
+            // ---- Particle count config ----
+            const DESKTOP_TOTAL  = 20;   // total particles on desktop
+            const DESKTOP_ICONS  = Math.round(DESKTOP_TOTAL * 0.20);  // 20 % icons  → 4
+            const DESKTOP_WORDS  = DESKTOP_TOTAL - DESKTOP_ICONS;     // 80 % words  → 16
+            const MOBILE_TOTAL   = 10;   // total particles on mobile
+            const MOBILE_ICONS   = 5;    // 50 % icons
+            const MOBILE_WORDS   = 5;    // 50 % words (1 per language min)
+            // --------------------------------
+
             const isMobile = window.matchMedia('(max-width: 768px)').matches;
-            let itemsToRender = allItems;
+            const iconPool = allItems.filter(i => i.type === 'icon');
+            const wordPool = allItems.filter(i => i.type === 'word');
+            const shuffle  = arr => { const a = [...arr]; for (let i = a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+            const langs    = ['en','hi','bn','ur'];
+            const wordsByLang = {};
+            langs.forEach(l => { wordsByLang[l] = shuffle(wordPool.filter(w => w.lang === l)); });
+
+            let itemsToRender;
             if (isMobile) {
-                // Pick 5 random icons
-                const iconPool = allItems.filter(i => i.type === 'icon');
-                const wordPool = allItems.filter(i => i.type === 'word');
-                const shuffle  = arr => { const a = [...arr]; for (let i = a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
-                const icons5   = shuffle(iconPool).slice(0, 5);
-                // 5 words: pick 1 from each language first, then fill remainder randomly
-                const langs    = ['en','hi','bn','ur'];
-                const wordsByLang = {};
-                langs.forEach(l => { wordsByLang[l] = shuffle(wordPool.filter(w => w.lang === l)); });
-                const words5   = langs.map(l => wordsByLang[l][0]).filter(Boolean);
-                // add 1 more random from remaining
-                const usedLang = langs[Math.floor(Math.random()*langs.length)];
-                if (wordsByLang[usedLang].length > 1) words5.push(wordsByLang[usedLang][1]);
-                itemsToRender  = [...icons5, ...words5.slice(0,5)];
+                // Mobile: 5 icons + 5 words (1 per language min)
+                const icons = shuffle(iconPool).slice(0, MOBILE_ICONS);
+                const words = langs.map(l => wordsByLang[l][0]).filter(Boolean);
+                const usedLang = langs[Math.floor(Math.random() * langs.length)];
+                if (wordsByLang[usedLang].length > 1) words.push(wordsByLang[usedLang][1]);
+                itemsToRender = [...icons, ...words.slice(0, MOBILE_WORDS)];
+            } else {
+                // Desktop: DESKTOP_ICONS icons + DESKTOP_WORDS words, 1 word per lang guaranteed
+                const icons = shuffle(iconPool).slice(0, DESKTOP_ICONS);
+                const wordsGuaranteed = langs.map(l => wordsByLang[l][0]).filter(Boolean);
+                // fill remaining word slots from the shuffled pool, excluding already picked
+                const picked = new Set(wordsGuaranteed.map(w => w.c));
+                const extra  = shuffle(wordPool.filter(w => !picked.has(w.c))).slice(0, DESKTOP_WORDS - wordsGuaranteed.length);
+                itemsToRender = [...icons, ...wordsGuaranteed, ...extra];
             }
 
             const frag = document.createDocumentFragment();
