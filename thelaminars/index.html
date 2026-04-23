@@ -1469,27 +1469,24 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                 <!-- Avatar -->
                 <div class="flex justify-center">
-                    <div
-                        class="w-56 h-56 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center shadow-2xl shadow-blue-900/30 ring-4 ring-white/10">
-                        <i class="fa-solid fa-user-tie text-7xl md:text-8xl text-white/80"></i>
-                    </div>
+                    <img src="img/director.png" alt="Md Shahjahan Ansari"
+                        class="w-56 h-56 md:w-72 md:h-72 rounded-full object-cover shadow-2xl shadow-blue-900/30 ring-4 ring-white/20"
+                        style="object-position: center 10%;">
                 </div>
                 <!-- Content -->
                 <div>
                     <p class="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-3">Message from the
                         Director</p>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white font-['Poppins'] mb-2">Md Shajahan Ansari <br>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white font-['Poppins'] mb-2">Md Shahjahan Ansari <br>
                         (Hindi Sir)</h2>
                     <div class="w-16 h-1 bg-blue-500 rounded mb-6"></div>
-                    <blockquote
-                        class="text-gray-300 text-base md:text-lg italic leading-relaxed mb-6 border-l-4 border-blue-500/50 pl-5">
-                        "Education is not just the learning of facts, but the training of the mind to think. At The
-                        Laminars, our vision is to cultivate an environment where students are encouraged to ask
-                        questions, explore concepts, and discover their true potential. We are committed to shaping not
-                        just successful students, but confident leaders of tomorrow."
+                    <blockquote id="director-quote"
+                        class="text-gray-300 text-base md:text-lg italic leading-relaxed mb-6 border-l-4 border-blue-500/50 pl-5"
+                        style="transition: opacity 0.4s ease;">
+                        "शिक्षा केवल तथ्यों को सीखना नहीं है, बल्कि मन को सोचने के लिए प्रशिक्षित करना है। द लैमिनार्स में, हमारी दृष्टि एक ऐसा वातावरण बनाना है जहाँ छात्रों को प्रश्न पूछने, अवधारणाओं का पता लगाने और अपनी वास्तविक क्षमता की खोज करने के लिए प्रोत्साहित किया जाए। हम केवल सफल छात्रों को नहीं, बल्कि कल के आत्मविश्वासी नेताओं को आकार देने के लिए प्रतिबद्ध हैं।"
                     </blockquote>
                     <div class="flex items-center gap-3 text-sm flex-wrap">
-                        <span class="font-bold text-white">M.A. Hindi, M.A. Pol. Sci, B.Ed. BTC</span>
+                        <span class="font-bold text-white">M.A. Hindi, M.A. Pol. Sci, B.Ed, BTC</span>
                         <br>
                         <span class="text-gray-500">|</span>
                         <span class="text-gray-400">Dedicated 40+ years in teaching</span>
@@ -1508,48 +1505,58 @@
                 <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Learn from the best minds dedicated to
                     your academic success.</p>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                <!-- Hindi Faculty -->
                 <div
-                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
-                    <div
-                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
-                        <i class="fa-solid fa-chalkboard-user text-white text-2xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white text-lg mb-1">Dr. S. Kumar</h4>
-                    <p class="text-blue-400 font-medium text-sm mb-2">Science Department</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">Ph.D. in Physics, IIT Delhi<br>10+ Years Experience
-                    </p>
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-amber-500/40 transition duration-300 group">
+                    <img src="img/director.png" alt="Md Shahjahan Ansari"
+                        class="w-24 h-24 rounded-full object-cover mx-auto mb-5 group-hover:scale-105 transition duration-300 ring-2 ring-amber-500/30"
+                        style="object-position: center 10%;">
+                    <h4 class="font-bold text-white text-base mb-1">Md Shahjahan Ansari</h4>
+                    <p class="text-amber-400 font-medium text-sm mb-2">Hindi Faculty</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">M.A. Hindi, M.A. Pol. Sci<br>B.Ed, BTC<br>40+ Years Experience</p>
                 </div>
+                <!-- English Faculty -->
                 <div
-                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-blue-500/40 transition duration-300 group">
                     <div
                         class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
                         <i class="fa-solid fa-language text-white text-2xl"></i>
                     </div>
-                    <h4 class="font-bold text-white text-lg mb-1">Mrs. A. Verma</h4>
-                    <p class="text-blue-400 font-medium text-sm mb-2">Hindi &amp; English</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">M.A. in Linguistics, JNU<br>12+ Years Experience
-                    </p>
+                    <h4 class="font-bold text-white text-base mb-1">Mrs. A. Verma</h4>
+                    <p class="text-blue-400 font-medium text-sm mb-2">English Faculty</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">M.A. in Linguistics, JNU<br>12+ Years Experience</p>
                 </div>
+                <!-- Science Faculty -->
                 <div
-                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-green-500/40 transition duration-300 group">
                     <div
-                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
-                        <i class="fa-solid fa-laptop-code text-white text-2xl"></i>
+                        class="w-20 h-20 rounded-full bg-gradient-to-br from-green-900 to-teal-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
+                        <i class="fa-solid fa-atom text-white text-2xl"></i>
                     </div>
-                    <h4 class="font-bold text-white text-lg mb-1">Mr. T. Reddy</h4>
-                    <p class="text-blue-400 font-medium text-sm mb-2">Technical Subjects</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">M.Tech in CS, NIT<br>8+ Years Experience</p>
+                    <h4 class="font-bold text-white text-base mb-1">Tamkeenat Naaz Akhtar</h4>
+                    <p class="text-green-400 font-medium text-sm mb-2">Science Faculty</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">B.Sc. – Maths, Ex-Byju's<br>10+ Years Experience</p>
                 </div>
+                <!-- Physics & Chemistry Faculty -->
                 <div
-                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
-                    <div
-                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
-                        <i class="fa-solid fa-flask text-white text-2xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white text-lg mb-1">Ms. P. Desai</h4>
-                    <p class="text-blue-400 font-medium text-sm mb-2">Chemistry Expert</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">M.Sc. Chemistry, DU<br>6+ Years Experience</p>
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-violet-500/40 transition duration-300 group">
+                    <img src="img/phy-chem-sir.jpeg" alt="Tanzeem Aziz"
+                        class="w-24 h-24 rounded-full object-cover mx-auto mb-5 group-hover:scale-105 transition duration-300 ring-2 ring-violet-500/30"
+                        style="object-position: center 10%;">
+                    <h4 class="font-bold text-white text-base mb-1">Tanzeem Aziz</h4>
+                    <p class="text-violet-400 font-medium text-sm mb-2">Physics &amp; Chemistry</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">B.Tech CSE<br>Jadavpur University</p>
+                </div>
+                <!-- Technology Faculty -->
+                <div
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-center hover:border-cyan-500/40 transition duration-300 group">
+                    <img src="img/sharik.png" alt="Sharik M."
+                        class="w-24 h-24 rounded-full object-cover mx-auto mb-5 group-hover:scale-105 transition duration-300 ring-2 ring-cyan-500/30"
+                        style="object-position: center 10%;">
+                    <h4 class="font-bold text-white text-base mb-1">Sharik M.</h4>
+                    <p class="text-cyan-400 font-medium text-sm mb-2">Technology Faculty</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">Engineer – CS &amp; Technical Trainer<br>10+ Years Experience</p>
                 </div>
             </div>
         </div>
@@ -2299,6 +2306,27 @@
                 });
             }
         });
+
+        // ==========================================
+        // Director Quote — Hindi / English toggle
+        // ==========================================
+        (function () {
+            const quoteEl = document.getElementById('director-quote');
+            if (!quoteEl) return;
+            const texts = {
+                hi: '"शिक्षा केवल तथ्यों को सीखना नहीं है, बल्कि मन को सोचने के लिए प्रशिक्षित करना है। द लैमिनार्स में, हमारी दृष्टि एक ऐसा वातावरण बनाना है जहाँ छात्रों को प्रश्न पूछने, अवधारणाओं का पता लगाने और अपनी वास्तविक क्षमता की खोज करने के लिए प्रोत्साहित किया जाए। हम केवल सफल छात्रों को नहीं, बल्कि कल के आत्मविश्वासी नेताओं को आकार देने के लिए प्रतिबद्ध हैं।"',
+                en: '"Education is not just the learning of facts, but the training of the mind to think. At The Laminars, our vision is to cultivate an environment where students are encouraged to ask questions, explore concepts, and discover their true potential. We are committed to shaping not just successful students, but confident leaders of tomorrow."'
+            };
+            let lang = 'hi';
+            setInterval(function () {
+                quoteEl.style.opacity = '0';
+                setTimeout(function () {
+                    lang = lang === 'hi' ? 'en' : 'hi';
+                    quoteEl.textContent = texts[lang];
+                    quoteEl.style.opacity = '1';
+                }, 400);
+            }, 3000);
+        })();
     </script>
 </body>
 
