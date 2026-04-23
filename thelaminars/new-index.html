@@ -1501,18 +1501,24 @@
                 el.className = 'hero-particle';
 
                 // Zone-based placement: keep edges, avoid dense center
-                const zone = idx % 8;
                 let x, y;
                 const rn = () => Math.random();
-                switch (zone) {
-                    case 0: x = rn() * 20;          y = rn() * 100; break;   // far left
-                    case 1: x = 80 + rn() * 20;     y = rn() * 100; break;   // far right
-                    case 2: x = rn() * 100;          y = rn() * 16;  break;   // top strip
-                    case 3: x = rn() * 100;          y = 84 + rn() * 16; break; // bottom strip
-                    case 4: x = 20 + rn() * 13;      y = rn() * 42;  break;   // inner-left top
-                    case 5: x = 67 + rn() * 13;      y = rn() * 42;  break;   // inner-right top
-                    case 6: x = 20 + rn() * 13;      y = 58 + rn() * 42; break; // inner-left btm
-                    default: x = 67 + rn() * 13;     y = 58 + rn() * 42; break; // inner-right btm
+                if (isMobile) {
+                    // On mobile: top and bottom strips only, spread across full width
+                    x = 5 + rn() * 90;
+                    y = idx % 2 === 0 ? rn() * 20 : (80 + rn() * 20);
+                } else {
+                    const zone = idx % 8;
+                    switch (zone) {
+                        case 0: x = rn() * 20;          y = rn() * 100; break;   // far left
+                        case 1: x = 80 + rn() * 20;     y = rn() * 100; break;   // far right
+                        case 2: x = rn() * 100;          y = rn() * 16;  break;   // top strip
+                        case 3: x = rn() * 100;          y = 84 + rn() * 16; break; // bottom strip
+                        case 4: x = 20 + rn() * 13;      y = rn() * 42;  break;   // inner-left top
+                        case 5: x = 67 + rn() * 13;      y = rn() * 42;  break;   // inner-right top
+                        case 6: x = 20 + rn() * 13;      y = 58 + rn() * 42; break; // inner-left btm
+                        default: x = 67 + rn() * 13;     y = 58 + rn() * 42; break; // inner-right btm
+                    }
                 }
 
                 const dur   = (12 + Math.random() * 18).toFixed(1);
