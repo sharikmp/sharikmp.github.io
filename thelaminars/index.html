@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Laminars - Coaching Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Updated Google Fonts to include Poppins and additional Lato weights for the new section -->
-    <link href="https://fonts.googleapis.com/css?family=Khula:700|Lato:300,400,700|Poppins:300,400,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Khula:700|Lato:300,400,700|Poppins:300,400,800&display=swap"
+        rel="stylesheet">
     <!-- Font Awesome 6.4.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         /* =========================================
            CORE ANIMATION STYLES (Scoped for reusability)
@@ -21,12 +23,14 @@
             --spotlight-color: orange;
             overflow: hidden;
             position: relative;
-            background-color: black; 
+            background-color: black;
             max-width: 100%;
         }
-        
-        .ta-neon-wrapper::before, .ta-neon-wrapper::after,
-        .ta-neon-text::before, .ta-neon-text::after {
+
+        .ta-neon-wrapper::before,
+        .ta-neon-wrapper::after,
+        .ta-neon-text::before,
+        .ta-neon-text::after {
             content: "";
             position: absolute;
             inset: 0;
@@ -35,7 +39,7 @@
 
         .ta-neon-wrapper::before {
             animation: shimmer 5s infinite linear;
-            background: 
+            background:
                 radial-gradient(circle, var(--spotlight-color), transparent 25%) 0 0 / 25% 25%,
                 radial-gradient(circle, var(--spotlight-color), black 25%) 50% 50% / 12.5% 12.5%;
             inset-block-start: -100%;
@@ -50,7 +54,9 @@
         }
 
         @keyframes shimmer {
-            100% { transform: translate3d(50%, 50%, 0); }
+            100% {
+                transform: translate3d(50%, 50%, 0);
+            }
         }
 
         .ta-neon-text {
@@ -62,10 +68,10 @@
             --color-3: hsl(59, 100%, 50%);
 
             color: transparent;
-            text-shadow: 
+            text-shadow:
                 0 0 0.03em var(--background-color),
                 0 0 0.03em var(--text-color);
-            
+
             font-family: "Lato", sans-serif;
             font-weight: 700;
             line-height: 1.1;
@@ -94,15 +100,18 @@
             color: white;
             line-height: 1.2;
         }
+
         .ta-console-text {
             transition: color 0.3s ease;
         }
+
         .ta-console-underscore {
             display: inline-block;
             position: relative;
             top: -0.05em;
             left: 5px;
         }
+
         .ta-console-hidden {
             opacity: 0;
         }
@@ -160,21 +169,25 @@
 
         .legacy-point {
             opacity: 0;
-            transform: translateX(30px); /* Reduced for better mobile handling */
+            transform: translateX(30px);
+            /* Reduced for better mobile handling */
             display: flex;
-            align-items: flex-start; /* Prevents text wrap alignment issues */
+            align-items: flex-start;
+            /* Prevents text wrap alignment issues */
             gap: 12px;
             padding: 12px 16px;
             border-radius: 8px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(4px);
             color: #eee;
             font-family: 'Lato', sans-serif;
             border-left: 3px solid var(--title-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .legacy-point.show { animation: legSlideIn 0.9s ease forwards; }
+        .legacy-point.show {
+            animation: legSlideIn 0.9s ease forwards;
+        }
 
         .legacy-fade-out {
             opacity: 0;
@@ -183,22 +196,66 @@
             transition: all 1s ease-in-out;
         }
 
-        @keyframes legSlideIn { to { opacity: 1; transform: translateX(0); } }
+        @keyframes legSlideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
 
         @keyframes legMainBlock {
-            0% { width: 0%; left: 0; }
-            50% { width: 100%; left: 0; }
-            100% { width: 0; left: 100%; }
+            0% {
+                width: 0%;
+                left: 0;
+            }
+
+            50% {
+                width: 100%;
+                left: 0;
+            }
+
+            100% {
+                width: 0;
+                left: 100%;
+            }
         }
 
         @keyframes legSecBlock {
-            0% { width: 0%; left: 0; }
-            50% { width: 100%; left: 0; }
-            100% { width: 0; left: 100%; }
+            0% {
+                width: 0%;
+                left: 0;
+            }
+
+            50% {
+                width: 100%;
+                left: 0;
+            }
+
+            100% {
+                width: 0;
+                left: 100%;
+            }
         }
 
-        @keyframes legMainFadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
-        @keyframes legSecFadeIn { 0% { opacity: 0; } 100% { opacity: 0.9; } }
+        @keyframes legMainFadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes legSecFadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0.9;
+            }
+        }
 
         /* --- Timeline Animation (Courses Section) --- */
         .timeline {
@@ -208,127 +265,181 @@
             padding: 40px 0;
             perspective: 2000px;
         }
+
         .timeline::after {
             content: '';
             position: absolute;
             width: 3px;
             background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
-            top: 0; bottom: 0; left: 50%;
+            top: 0;
+            bottom: 0;
+            left: 50%;
             margin-left: -1.5px;
             border-radius: 2px;
-            box-shadow: 0 0 10px rgba(59,130,246,0.4);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
         }
+
         .timeline-item {
             padding: 8px 40px;
             position: relative;
             width: 50%;
             opacity: 0;
-            transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
             transform-style: preserve-3d;
         }
+
         .timeline-item.left {
             left: 0;
             transform: translateX(-40px) rotateY(-15deg) translateY(40px);
             transform-origin: right center;
         }
+
         .timeline-item.right {
             left: 50%;
             transform: translateX(40px) rotateY(15deg) translateY(40px);
             transform-origin: left center;
         }
+
         .timeline-item.in-view {
             opacity: 1;
             transform: translate(0) rotateY(0) rotateX(0) scale(1);
         }
+
         .timeline-item::after {
             content: '';
             position: absolute;
-            width: 18px; height: 18px;
+            width: 18px;
+            height: 18px;
             right: -9px;
             background: #0a0a0a;
             border: 3px solid #f97316;
             top: 32px;
             border-radius: 50%;
             z-index: 2;
-            transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-            box-shadow: 0 0 0 4px rgba(249,115,22,0.15);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
         }
-        .timeline-item.right::after { left: -9px; right: auto; }
+
+        .timeline-item.right::after {
+            left: -9px;
+            right: auto;
+        }
+
         .timeline-item:hover::after {
             background: #f97316;
             transform: scale(1.2);
-            box-shadow: 0 0 12px #f97316, 0 0 0 5px rgba(249,115,22,0.2);
+            box-shadow: 0 0 12px #f97316, 0 0 0 5px rgba(249, 115, 22, 0.2);
         }
+
         .timeline-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-top: 3px solid #3b82f6;
             border-radius: 16px;
             padding: 20px 22px;
             position: relative;
             transform: scale(0.6) translateZ(0);
             opacity: 0;
-            transition: transform 0.6s cubic-bezier(0.22,1,0.36,1) 0.15s, opacity 0.5s ease-out 0.15s, box-shadow 0.3s ease;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s, opacity 0.5s ease-out 0.15s, box-shadow 0.3s ease;
             backface-visibility: hidden;
             overflow: hidden;
         }
+
         .timeline-item.in-view .timeline-card {
             transform: scale(1) translateZ(0);
             opacity: 1;
         }
+
         .timeline-item:nth-child(even) .timeline-card {
             border-top-color: #f97316;
             transition-delay: 0.25s;
         }
+
         .timeline-card:hover {
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
             transform: translateY(-4px) scale(1) translateZ(0) !important;
             transition-delay: 0s !important;
         }
+
         .timeline-item.left .timeline-card::before {
             content: '';
             position: absolute;
-            top: 22px; right: -11px;
+            top: 22px;
+            right: -11px;
             border-width: 11px 0 11px 11px;
             border-style: solid;
-            border-color: transparent transparent transparent rgba(255,255,255,0.04);
+            border-color: transparent transparent transparent rgba(255, 255, 255, 0.04);
         }
+
         .timeline-item.right .timeline-card::before {
             content: '';
             position: absolute;
-            top: 22px; left: -11px;
+            top: 22px;
+            left: -11px;
             border-width: 11px 11px 11px 0;
             border-style: solid;
-            border-color: transparent rgba(255,255,255,0.04) transparent transparent;
+            border-color: transparent rgba(255, 255, 255, 0.04) transparent transparent;
         }
-        .timeline-item.left .timeline-card { margin-right: 18px; }
-        .timeline-item.right .timeline-card { margin-left: 18px; }
+
+        .timeline-item.left .timeline-card {
+            margin-right: 18px;
+        }
+
+        .timeline-item.right .timeline-card {
+            margin-left: 18px;
+        }
+
         .timeline-details-panel {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: max-height 0.6s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease-out;
+            transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease-out;
         }
+
         .timeline-item.in-view .timeline-details-panel {
             max-height: 400px;
             opacity: 1;
         }
+
         @media (max-width: 768px) {
-            .timeline::after { left: 12px; }
-            .timeline-item { width: 100%; padding-left: 48px; padding-right: 12px; }
-            .timeline-item.left, .timeline-item.right {
+            .timeline::after {
+                left: 12px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 48px;
+                padding-right: 12px;
+            }
+
+            .timeline-item.left,
+            .timeline-item.right {
                 left: 0;
                 transform: translateX(30px) rotateY(-10deg) translateY(40px);
                 transform-origin: left center;
             }
-            .timeline-item.in-view { transform: translate(0) rotateY(0) scale(1); }
-            .timeline-item.left::after, .timeline-item.right::after { left: 3px; right: auto; }
-            .timeline-item.left .timeline-card, .timeline-item.right .timeline-card { margin: 0; }
+
+            .timeline-item.in-view {
+                transform: translate(0) rotateY(0) scale(1);
+            }
+
+            .timeline-item.left::after,
+            .timeline-item.right::after {
+                left: 3px;
+                right: auto;
+            }
+
+            .timeline-item.left .timeline-card,
+            .timeline-item.right .timeline-card {
+                margin: 0;
+            }
+
             .timeline-item.left .timeline-card::before,
             .timeline-item.right .timeline-card::before {
-                left: -11px; right: auto;
+                left: -11px;
+                right: auto;
                 border-width: 11px 11px 11px 0;
-                border-color: transparent rgba(255,255,255,0.04) transparent transparent;
+                border-color: transparent rgba(255, 255, 255, 0.04) transparent transparent;
             }
         }
 
@@ -337,9 +448,10 @@
         .educational-quote {
             position: relative;
             padding: 2rem 2rem 2rem 3rem;
-            border-left: 3px solid rgba(251,191,36,0.55);
-            background: linear-gradient(100deg, rgba(251,191,36,0.04) 0%, transparent 70%);
+            border-left: 3px solid rgba(251, 191, 36, 0.55);
+            background: linear-gradient(100deg, rgba(251, 191, 36, 0.04) 0%, transparent 70%);
         }
+
         .educational-quote::before {
             content: '\201C';
             position: absolute;
@@ -347,25 +459,29 @@
             left: 0.3rem;
             font-size: 5rem;
             line-height: 1;
-            color: rgba(251,191,36,0.18);
+            color: rgba(251, 191, 36, 0.18);
             font-family: Georgia, serif;
             pointer-events: none;
         }
+
         .educational-quote blockquote {
             font-family: 'Lato', sans-serif;
             font-style: italic;
-            color: #d1d5db;      /* gray-300 */
+            color: #d1d5db;
+            /* gray-300 */
             line-height: 1.75;
             margin: 0 0 0.75rem 0;
         }
+
         .educational-quote cite {
             font-style: normal;
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: rgba(251,191,36,0.75);
+            color: rgba(251, 191, 36, 0.75);
         }
+
         /* ─────────────────────────────────────────────────────────── */
 
         .hero-particle {
@@ -375,36 +491,88 @@
             will-change: transform;
             line-height: 1;
         }
+
         @keyframes heroFloat1 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25%       { transform: translate(14px, -22px) rotate(7deg); }
-            50%       { transform: translate(-10px, -38px) rotate(-4deg); }
-            75%       { transform: translate(18px, -18px) rotate(9deg); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(14px, -22px) rotate(7deg);
+            }
+
+            50% {
+                transform: translate(-10px, -38px) rotate(-4deg);
+            }
+
+            75% {
+                transform: translate(18px, -18px) rotate(9deg);
+            }
         }
+
         @keyframes heroFloat2 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33%       { transform: translate(-18px, -28px) rotate(-9deg); }
-            66%       { transform: translate(12px, -46px) rotate(6deg); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(-18px, -28px) rotate(-9deg);
+            }
+
+            66% {
+                transform: translate(12px, -46px) rotate(6deg);
+            }
         }
+
         @keyframes heroFloat3 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            50%       { transform: translate(10px, -30px) scale(1.07) rotate(-7deg); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(10px, -30px) scale(1.07) rotate(-7deg);
+            }
         }
+
         @keyframes heroFloat4 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            20%       { transform: translate(-12px, -18px) rotate(5deg); }
-            40%       { transform: translate(18px, -34px) rotate(-7deg); }
-            60%       { transform: translate(-6px, -50px) rotate(4deg); }
-            80%       { transform: translate(14px, -24px) rotate(-3deg); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            20% {
+                transform: translate(-12px, -18px) rotate(5deg);
+            }
+
+            40% {
+                transform: translate(18px, -34px) rotate(-7deg);
+            }
+
+            60% {
+                transform: translate(-6px, -50px) rotate(4deg);
+            }
+
+            80% {
+                transform: translate(14px, -24px) rotate(-3deg);
+            }
         }
     </style>
 </head>
+
 <body class="bg-neutral-950 text-white font-sans antialiased overflow-x-hidden">
 
     <!-- Navbar -->
     <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 p-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
-            <div class="font-bold text-xl md:text-2xl tracking-widest text-white shrink-0">THE <span class="text-blue-500">LAMINARS</span></div>
+            <div class="font-bold text-xl md:text-2xl tracking-widest text-white shrink-0">THE <span
+                    class="text-blue-500">LAMINARS</span></div>
             <div class="hidden md:flex space-x-6 text-sm font-semibold text-gray-300">
                 <a href="#hero" class="hover:text-blue-400 transition">Home</a>
                 <a href="#legacy" class="hover:text-blue-400 transition">Legacy</a>
@@ -415,39 +583,49 @@
                 <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
             </div>
             <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none shrink-0" aria-label="Toggle menu" aria-expanded="false">
-                <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none shrink-0" aria-label="Toggle menu"
+                aria-expanded="false">
+                <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+                <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
             </button>
         </div>
         <!-- Mobile Dropdown Menu -->
         <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 bg-black/95 backdrop-blur-md">
             <div class="flex flex-col px-6 py-4 space-y-4 text-sm font-semibold text-gray-300">
-                <a href="#hero"     class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Home</a>
-                <a href="#legacy"   class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Legacy</a>
-                <a href="#about"    class="hover:text-blue-400 transition" onclick="closeMobileMenu()">About Us</a>
-                <a href="#courses"  class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Courses</a>
-                <a href="#modes"    class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Modes</a>
+                <a href="#hero" class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Home</a>
+                <a href="#legacy" class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Legacy</a>
+                <a href="#about" class="hover:text-blue-400 transition" onclick="closeMobileMenu()">About Us</a>
+                <a href="#courses" class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Courses</a>
+                <a href="#modes" class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Modes</a>
                 <a href="#faculties" class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Faculty</a>
-                <a href="#contact"  class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Contact</a>
+                <a href="#contact" class="hover:text-blue-400 transition" onclick="closeMobileMenu()">Contact</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="min-h-screen bg-black flex flex-col justify-center items-center px-4 md:px-8 relative pt-20 overflow-hidden">
+    <section id="hero"
+        class="min-h-screen bg-black flex flex-col justify-center items-center px-4 md:px-8 relative pt-20 overflow-hidden">
         <!-- Floating educational particles layer (populated by JS) -->
-        <div id="hero-particles-layer" aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;"></div>
+        <div id="hero-particles-layer" aria-hidden="true"
+            style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;"></div>
 
         <div class="z-10 flex flex-col items-center justify-center space-y-6 text-center w-full max-w-5xl">
-            
+
             <!-- Unified Neon Title Container -->
             <!-- Adjusted clamp for better fit on extremely small devices -->
             <div id="hero-title" class="text-[clamp(2.5rem,12vw,8rem)] leading-none mb-4 w-full"></div>
-            
+
             <div class="max-w-3xl px-2 space-y-3 text-center">
                 <p class="text-xl md:text-2xl leading-relaxed font-light text-gray-300">
-                    Where <span class="text-blue-400 font-semibold">knowledge meets ambition</span> - your journey to excellence in
+                    Where <span class="text-blue-400 font-semibold">knowledge meets ambition</span> - your journey to
+                    excellence in
                     <br>
                     <span class="text-orange-400 font-semibold">Science</span>
                     <br>
@@ -457,54 +635,67 @@
                     <br> &amp; beyond starts here.
                 </p>
                 <p class="text-sm md:text-base text-gray-500 tracking-wider">
-                    Trusted by <span class="text-gray-300 font-medium">500+ students</span>&ensp;&middot;&ensp;Expert Faculty&ensp;&middot;&ensp;Proven Results&ensp;&middot;&ensp;40+ Years of Excellence
+                    Trusted by <span class="text-gray-300 font-medium">500+ students</span>&ensp;&middot;&ensp;Expert
+                    Faculty&ensp;&middot;&ensp;Proven Results&ensp;&middot;&ensp;40+ Years of Excellence
                 </p>
-            </div>
-
-            <!-- Quote 1 -->
-            <div class="educational-quote mt-6 max-w-xl text-left mx-6 md:mx-0">
-                <blockquote>"Dream, dream, dream. Dreams transform into thoughts and thoughts result in action."</blockquote>
-                <cite>— Dr. A.P.J. Abdul Kalam</cite>
             </div>
 
             <!-- Buttons stack on mobile, row on desktop -->
             <div class="mt-8 flex flex-col md:flex-row gap-4 w-full md:w-auto px-6 md:px-0">
-                <a href="#courses" class="w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition shadow-[0_0_15px_rgba(59,130,246,0.5)] text-center">Explore Courses</a>
-                <a href="#contact" class="w-full md:w-auto px-8 py-3 bg-transparent border border-gray-500 hover:border-white text-white font-bold rounded-full transition text-center">Contact Us</a>
+                <a href="#courses"
+                    class="w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition shadow-[0_0_15px_rgba(59,130,246,0.5)] text-center">Explore
+                    Courses</a>
+                <a href="#contact"
+                    class="w-full md:w-auto px-8 py-3 bg-transparent border border-gray-500 hover:border-white text-white font-bold rounded-full transition text-center">Contact
+                    Us</a>
             </div>
         </div>
     </section>
 
+    <!-- Quote 1 -->
+    <div class="educational-quote mt-6 max-w-xl text-left mx-6 md:mx-0">
+        <blockquote>"Dream, dream, dream. Dreams transform into thoughts and thoughts result in action."</blockquote>
+        <cite>— Dr. A.P.J. Abdul Kalam</cite>
+    </div>
+
     <!-- NEW: Legacy Highlight Section -->
     <section id="legacy" class="py-16 md:py-24 bg-zinc-950 border-t border-white/5 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent pointer-events-none"></div>
-        
+
         <div class="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
             <!-- Section Header -->
             <div class="text-center mb-10 md:mb-16 px-2">
-                <h2 class="text-[clamp(1.8rem,5vw,3.5rem)] font-bold mb-4 text-white font-['Poppins'] leading-tight">Why we stand out - The Laminars Legacy</h2>
+                <h2 class="text-[clamp(1.8rem,5vw,3.5rem)] font-bold mb-4 text-white font-['Poppins'] leading-tight">Why
+                    we stand out - The Laminars Legacy</h2>
                 <div class="w-24 h-1 bg-blue-500 mx-auto rounded mb-6"></div>
-                <p class="text-gray-400 text-base md:text-xl font-light max-w-3xl mx-auto">Dedicated to pioneering academic excellence and fostering future leaders.</p>
+                <p class="text-gray-400 text-base md:text-xl font-light max-w-3xl mx-auto">Dedicated to pioneering
+                    academic excellence and fostering future leaders.</p>
             </div>
 
             <!-- Merged Animation Container -->
-            <div class="w-full min-h-[550px] md:min-h-[650px] flex justify-center items-center relative bg-black/40 rounded-3xl border border-white/10 p-5 md:p-12 shadow-2xl backdrop-blur-sm">
+            <div
+                class="w-full min-h-[550px] md:min-h-[650px] flex justify-center items-center relative bg-black/40 rounded-3xl border border-white/10 p-5 md:p-12 shadow-2xl backdrop-blur-sm">
                 <div class="legacy-box w-full max-w-4xl" id="legacyAnimatedBox">
-                    
+
                     <!-- Title block now uses auto height (w-fit max-w-full) instead of fixed pixels -->
                     <div class="legacy-title relative w-fit max-w-full">
                         <div class="legacy-block"></div>
-                        <h1 id="legacyHeadingText" class="font-['Poppins'] text-white font-extrabold text-[clamp(1.2rem,4vw,3rem)] leading-snug py-1 md:py-2 px-1"></h1>
+                        <h1 id="legacyHeadingText"
+                            class="font-['Poppins'] text-white font-extrabold text-[clamp(1.2rem,4vw,3rem)] leading-snug py-1 md:py-2 px-1">
+                        </h1>
                     </div>
-                    
+
                     <!-- Role block uses auto height as well -->
                     <div class="legacy-role relative w-fit max-w-full mt-3">
                         <div class="legacy-block"></div>
-                        <p id="legacySubheadingText" class="font-['Lato'] text-white text-[clamp(1rem,4vw,1.5rem)] tracking-wide py-1 md:py-2 px-1"></p>
+                        <p id="legacySubheadingText"
+                            class="font-['Lato'] text-white text-[clamp(1rem,4vw,1.5rem)] tracking-wide py-1 md:py-2 px-1">
+                        </p>
                     </div>
-                    
+
                     <!-- Points container gaps adjusted for mobile -->
-                    <div class="legacy-points mt-6 md:mt-10 flex flex-col gap-3 md:gap-4 w-full" id="legacyPointsContainer"></div>
+                    <div class="legacy-points mt-6 md:mt-10 flex flex-col gap-3 md:gap-4 w-full"
+                        id="legacyPointsContainer"></div>
 
                 </div>
             </div>
@@ -520,28 +711,48 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                 <!-- Feature 1 -->
-                <div class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
-                    <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 text-blue-400 shrink-0">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                <div
+                    class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
+                    <div
+                        class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 text-blue-400 shrink-0">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Expert Faculty</h3>
-                    <p class="text-gray-400 text-sm md:text-base">Learn from top-tier educators with decades of experience in competitive exam preparation.</p>
+                    <p class="text-gray-400 text-sm md:text-base">Learn from top-tier educators with decades of
+                        experience in competitive exam preparation.</p>
                 </div>
                 <!-- Feature 2 -->
-                <div class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
-                    <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 text-purple-400 shrink-0">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                <div
+                    class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
+                    <div
+                        class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 text-purple-400 shrink-0">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                            </path>
+                        </svg>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Performance Tracking</h3>
-                    <p class="text-gray-400 text-sm md:text-base">Regular AI-driven assessments to track your progress and highlight areas for improvement.</p>
+                    <p class="text-gray-400 text-sm md:text-base">Regular AI-driven assessments to track your progress
+                        and highlight areas for improvement.</p>
                 </div>
                 <!-- Feature 3 -->
-                <div class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
-                    <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center mb-6 text-green-400 shrink-0">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div
+                    class="bg-black/50 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition duration-300">
+                    <div
+                        class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center mb-6 text-green-400 shrink-0">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Structured Material</h3>
-                    <p class="text-gray-400 text-sm md:text-base">Comprehensive study guides, formula sheets, and mock papers updated with the latest syllabus.</p>
+                    <p class="text-gray-400 text-sm md:text-base">Comprehensive study guides, formula sheets, and mock
+                        papers updated with the latest syllabus.</p>
                 </div>
             </div>
         </div>
@@ -569,7 +780,8 @@
                 <p class="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-2">Programs We Offer</p>
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white font-['Poppins']">Find Your Path</h2>
                 <div class="w-24 h-1 bg-blue-500 mx-auto rounded mb-4"></div>
-                <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg">From foundational academics to career-ready tech skills — there's a program for every learner at The Laminars.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg">From foundational academics to
+                    career-ready tech skills — there's a program for every learner at The Laminars.</p>
             </div>
 
             <!-- Sub-section label -->
@@ -590,30 +802,51 @@
                 <div class="timeline-item left">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-yellow-500 to-orange-500" style="transform:rotate(-10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-yellow-500 to-orange-500"
+                                style="transform:rotate(-10deg)">
                                 <i class="fa-solid fa-star"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-yellow-500/20 text-yellow-300 border border-yellow-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-child"></i> Class 1–5</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-yellow-500/20 text-yellow-300 border border-yellow-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-child"></i> Class 1–5</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#fef9c3,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Laminars Little Minds</h3>
-                        <p class="text-gray-400 text-sm mb-3">Building strong academic foundations for young learners through personalized attention and engaging methods.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#fef9c3,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            Laminars Little Minds</h3>
+                        <p class="text-gray-400 text-sm mb-3">Building strong academic foundations for young learners
+                            through personalized attention and engaging methods.</p>
                         <div class="timeline-details-panel">
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Subjects</p>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Basic Science</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Mathematics</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">English</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Hindi</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Basic
+                                    Science</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Mathematics</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">English</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Hindi</span>
                             </div>
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Activity-based learning</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Individual attention</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Focus on concept clarity</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Supportive learning environment</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Activity-based learning</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Individual attention</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Focus on concept clarity</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Supportive learning environment</li>
                             </ul>
-                            <a href="pages/little-minds.html" class="inline-block px-4 py-1.5 border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/little-minds.html"
+                                class="inline-block px-4 py-1.5 border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -622,30 +855,50 @@
                 <div class="timeline-item right">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-blue-600 to-purple-700" style="transform:rotate(10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-blue-600 to-purple-700"
+                                style="transform:rotate(10deg)">
                                 <i class="fa-solid fa-book-open"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-graduation-cap"></i> Class 6–8</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-graduation-cap"></i> Class 6–8</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Laminars Foundation Academy</h3>
-                        <p class="text-gray-400 text-sm mb-3">Strengthening core concepts and preparing students for higher academic levels with analytical depth.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#e2e8f0,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            Laminars Foundation Academy</h3>
+                        <p class="text-gray-400 text-sm mb-3">Strengthening core concepts and preparing students for
+                            higher academic levels with analytical depth.</p>
                         <div class="timeline-details-panel">
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Subjects</p>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Science</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Mathematics</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">English</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Hindi</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Science</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Mathematics</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">English</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Hindi</span>
                             </div>
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Concept-driven teaching</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Regular assessments</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Doubt-clearing sessions</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Strong academic base building</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Concept-driven teaching</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Regular assessments</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Doubt-clearing sessions</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Strong academic base building</li>
                             </ul>
-                            <a href="pages/foundation-academy.html" class="inline-block px-4 py-1.5 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/foundation-academy.html"
+                                class="inline-block px-4 py-1.5 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -654,30 +907,51 @@
                 <div class="timeline-item left">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-purple-600 to-pink-600" style="transform:rotate(-10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-purple-600 to-pink-600"
+                                style="transform:rotate(-10deg)">
                                 <i class="fa-solid fa-flask-vial"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-school"></i> Class 9–12</span>
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-pink-500/20 text-pink-300 border border-pink-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-fire"></i> Board Focus</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-school"></i> Class 9–12</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-pink-500/20 text-pink-300 border border-pink-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-fire"></i> Board Focus</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#d8b4fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Laminars Senior Academy</h3>
-                        <p class="text-gray-400 text-sm mb-3">Result-oriented coaching for board classes with in-depth subject understanding and exam preparation.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#e2e8f0,#d8b4fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            Laminars Senior Academy</h3>
+                        <p class="text-gray-400 text-sm mb-3">Result-oriented coaching for board classes with in-depth
+                            subject understanding and exam preparation.</p>
                         <div class="timeline-details-panel">
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Subjects</p>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Science</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">English</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Hindi</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Science</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">English</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Hindi</span>
                             </div>
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Board-focused preparation</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Previous year question practice</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Personalized mentorship</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Performance tracking</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Board-focused preparation</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Previous year question practice</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Personalized mentorship</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Performance tracking</li>
                             </ul>
-                            <a href="pages/senior-academy.html" class="inline-block px-4 py-1.5 border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/senior-academy.html"
+                                class="inline-block px-4 py-1.5 border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -690,7 +964,8 @@
     <div class="bg-zinc-950 border-t border-white/5 py-10">
         <div class="max-w-3xl mx-auto px-6">
             <div class="educational-quote">
-                <blockquote>"Learning gives creativity, creativity leads to thinking, thinking provides knowledge, knowledge makes you great."</blockquote>
+                <blockquote>"Learning gives creativity, creativity leads to thinking, thinking provides knowledge,
+                    knowledge makes you great."</blockquote>
                 <cite>— Dr. A.P.J. Abdul Kalam</cite>
             </div>
         </div>
@@ -717,24 +992,43 @@
                 <div class="timeline-item left">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-orange-500 to-amber-600" style="transform:rotate(-10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-orange-500 to-amber-600"
+                                style="transform:rotate(-10deg)">
                                 <i class="fa-solid fa-book"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-orange-500/20 text-orange-300 border border-orange-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-school"></i> Class 9–12</span>
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-fire"></i> Board Focus</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-orange-500/20 text-orange-300 border border-orange-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-school"></i> Class 9–12</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-fire"></i> Board Focus</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#fef9c3,#fdba74);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Hindi – Academic</h3>
-                        <p class="text-gray-400 text-sm mb-3">Board-oriented Hindi coaching with deep focus on grammar, literature, and answer-writing for Classes 9–12.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#fef9c3,#fdba74);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            Hindi – Academic</h3>
+                        <p class="text-gray-400 text-sm mb-3">Board-oriented Hindi coaching with deep focus on grammar,
+                            literature, and answer-writing for Classes 9–12.</p>
                         <div class="timeline-details-panel">
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Board exam pattern coverage</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Answer writing techniques</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Grammar and literature clarity</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Expert guidance from senior faculty</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Board exam pattern coverage</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Answer writing techniques</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Grammar and literature clarity</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Expert guidance from senior faculty
+                                </li>
                             </ul>
-                            <a href="pages/hindi-academic.html" class="inline-block px-4 py-1.5 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/hindi-academic.html"
+                                class="inline-block px-4 py-1.5 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -743,23 +1037,39 @@
                 <div class="timeline-item right">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-yellow-500 to-orange-400" style="transform:rotate(10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-yellow-500 to-orange-400"
+                                style="transform:rotate(10deg)">
                                 <i class="fa-solid fa-spell-check"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-yellow-500/20 text-yellow-300 border border-yellow-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-users"></i> Any Age</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-yellow-500/20 text-yellow-300 border border-yellow-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-users"></i> Any Age</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#fef9c3,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Hindi – Basics</h3>
-                        <p class="text-gray-400 text-sm mb-3">Foundational Hindi language skills for beginners of all ages — reading, writing, and spoken basics.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#fef9c3,#fde68a);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            Hindi – Basics</h3>
+                        <p class="text-gray-400 text-sm mb-3">Foundational Hindi language skills for beginners of all
+                            ages — reading, writing, and spoken basics.</p>
                         <div class="timeline-details-panel">
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Hindi alphabet and reading</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Basic grammar and vocabulary</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Conversational Hindi practice</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Suitable for non-Hindi speakers</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Hindi alphabet and reading</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Basic grammar and vocabulary</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Conversational Hindi practice</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Suitable for non-Hindi speakers</li>
                             </ul>
-                            <a href="pages/hindi-basics.html" class="inline-block px-4 py-1.5 border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/hindi-basics.html"
+                                class="inline-block px-4 py-1.5 border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -768,24 +1078,44 @@
                 <div class="timeline-item left">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600" style="transform:rotate(-10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600"
+                                style="transform:rotate(-10deg)">
                                 <i class="fa-solid fa-pen-nib"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-school"></i> Class 9–12</span>
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-fire"></i> Board Focus</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-school"></i> Class 9–12</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-fire"></i> Board Focus</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent">English – Academic</h3>
-                        <p class="text-gray-400 text-sm mb-3">Literature, writing skills, and grammar coaching for Classes 9–12 with a sharp focus on board exam performance.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#e2e8f0,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            English – Academic</h3>
+                        <p class="text-gray-400 text-sm mb-3">Literature, writing skills, and grammar coaching for
+                            Classes 9–12 with a sharp focus on board exam performance.</p>
                         <div class="timeline-details-panel">
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Chapter-wise literature explanation</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Writing skills: letters, essays, stories</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Grammar and accuracy focus</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Board exam mock papers practice</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Chapter-wise literature explanation
+                                </li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Writing skills: letters, essays,
+                                    stories</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Grammar and accuracy focus</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Board exam mock papers practice</li>
                             </ul>
-                            <a href="pages/english-academic.html" class="inline-block px-4 py-1.5 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/english-academic.html"
+                                class="inline-block px-4 py-1.5 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -794,23 +1124,39 @@
                 <div class="timeline-item right">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-purple-500 to-pink-600" style="transform:rotate(10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-purple-500 to-pink-600"
+                                style="transform:rotate(10deg)">
                                 <i class="fa-solid fa-microphone"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-users"></i> All Ages</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-users"></i> All Ages</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#d8b4fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">English – Spoken</h3>
-                        <p class="text-gray-400 text-sm mb-3">Practical spoken English for students and adults — build confidence, fluency, and real communication skills.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#e2e8f0,#d8b4fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            English – Spoken</h3>
+                        <p class="text-gray-400 text-sm mb-3">Practical spoken English for students and adults — build
+                            confidence, fluency, and real communication skills.</p>
                         <div class="timeline-details-panel">
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Practical speaking sessions</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Vocabulary and fluency building</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Confidence building activities</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Interactive group discussions</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Practical speaking sessions</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Vocabulary and fluency building</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Confidence building activities</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Interactive group discussions</li>
                             </ul>
-                            <a href="pages/english-spoken.html" class="inline-block px-4 py-1.5 border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/english-spoken.html"
+                                class="inline-block px-4 py-1.5 border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -850,30 +1196,54 @@
                 <div class="timeline-item left">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-cyan-500 to-blue-600" style="transform:rotate(-10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-cyan-500 to-blue-600"
+                                style="transform:rotate(-10deg)">
                                 <i class="fa-solid fa-code"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-child"></i> Age 10+ / Up to Class 10</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-child"></i> Age 10+ / Up to Class 10</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Laminars Code Juniors</h3>
-                        <p class="text-gray-400 text-sm mb-3">Introducing students to programming and logical thinking in a structured and engaging way.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#e2e8f0,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            Laminars Code Juniors</h3>
+                        <p class="text-gray-400 text-sm mb-3">Introducing students to programming and logical thinking
+                            in a structured and engaging way.</p>
                         <div class="timeline-details-panel">
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Topics</p>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Python Basics</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Java Basics</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Logic Building</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Algorithms Intro</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Python
+                                    Basics</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Java
+                                    Basics</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Logic
+                                    Building</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Algorithms
+                                    Intro</span>
                             </div>
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Beginner-friendly approach</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Hands-on coding sessions</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Project-based learning</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Weekend batches available</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Beginner-friendly approach</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Hands-on coding sessions</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Project-based learning</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Weekend batches available</li>
                             </ul>
-                            <a href="pages/code-juniors.html" class="inline-block px-4 py-1.5 border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/code-juniors.html"
+                                class="inline-block px-4 py-1.5 border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -882,30 +1252,52 @@
                 <div class="timeline-item right">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-orange-500 to-red-600" style="transform:rotate(10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-orange-500 to-red-600"
+                                style="transform:rotate(10deg)">
                                 <i class="fa-solid fa-laptop-code"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-orange-500/20 text-orange-300 border border-orange-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-bolt"></i> Advanced Learners</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-orange-500/20 text-orange-300 border border-orange-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-bolt"></i> Advanced Learners</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#fdba74);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Laminars Tech Academy</h3>
-                        <p class="text-gray-400 text-sm mb-3">Advanced training in programming and software development for learners building strong technical skills.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#e2e8f0,#fdba74);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            Laminars Tech Academy</h3>
+                        <p class="text-gray-400 text-sm mb-3">Advanced training in programming and software development
+                            for learners building strong technical skills.</p>
                         <div class="timeline-details-panel">
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Courses</p>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Python</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Java</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Core Programming</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Software Dev Fundamentals</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Python</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Java</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Core
+                                    Programming</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Software
+                                    Dev Fundamentals</span>
                             </div>
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Practical coding experience</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Real-world problem solving</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Guided learning path</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Flexible schedules</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Practical coding experience</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Real-world problem solving</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Guided learning path</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Flexible schedules</li>
                             </ul>
-                            <a href="pages/tech-academy.html" class="inline-block px-4 py-1.5 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-white rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/tech-academy.html"
+                                class="inline-block px-4 py-1.5 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-white rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -914,31 +1306,57 @@
                 <div class="timeline-item left">
                     <div class="timeline-card">
                         <div class="flex items-start justify-between gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-green-600 to-emerald-700" style="transform:rotate(-10deg)">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0 shadow-lg bg-gradient-to-br from-green-600 to-emerald-700"
+                                style="transform:rotate(-10deg)">
                                 <i class="fa-solid fa-rocket"></i>
                             </div>
                             <div class="flex flex-col gap-1 items-end">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-green-500/20 text-green-300 border border-green-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-briefcase"></i> Job-Ready</span>
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-calendar-check"></i> Weekend Batches</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-green-500/20 text-green-300 border border-green-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-briefcase"></i> Job-Ready</span>
+                                <span
+                                    class="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide whitespace-nowrap"><i
+                                        class="fa-solid fa-calendar-check"></i> Weekend Batches</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-extrabold mb-1" style="background:linear-gradient(135deg,#e2e8f0,#6ee7b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Laminars Career Launchpad</h3>
-                        <p class="text-gray-400 text-sm mb-3">Job-ready technical skills and preparation for opportunities in the software and technology domain.</p>
+                        <h3 class="text-xl font-extrabold mb-1"
+                            style="background:linear-gradient(135deg,#e2e8f0,#6ee7b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                            Laminars Career Launchpad</h3>
+                        <p class="text-gray-400 text-sm mb-3">Job-ready technical skills and preparation for
+                            opportunities in the software and technology domain.</p>
                         <div class="timeline-details-panel">
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Programs Include</p>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Job-Oriented Courses</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Interview Prep</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Practical Projects</span>
-                                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Software Skills</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Job-Oriented
+                                    Courses</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Interview
+                                    Prep</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Practical
+                                    Projects</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300 text-xs">Software
+                                    Skills</span>
                             </div>
                             <ul class="space-y-2 mb-4">
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Industry-relevant curriculum</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Hands-on training</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Career-focused guidance</li>
-                                <li class="flex items-start gap-2 text-sm text-gray-300"><span class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i class="fa-solid fa-check"></i></span>Flexible / weekend batches</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Industry-relevant curriculum</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Hands-on training</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Career-focused guidance</li>
+                                <li class="flex items-start gap-2 text-sm text-gray-300"><span
+                                        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-[0.6rem] text-white"><i
+                                            class="fa-solid fa-check"></i></span>Flexible / weekend batches</li>
                             </ul>
-                            <a href="pages/career-launchpad.html" class="inline-block px-4 py-1.5 border border-green-500 text-green-400 hover:bg-green-500 hover:text-black rounded-lg text-sm transition font-semibold">View Details</a>
+                            <a href="pages/career-launchpad.html"
+                                class="inline-block px-4 py-1.5 border border-green-500 text-green-400 hover:bg-green-500 hover:text-black rounded-lg text-sm transition font-semibold">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -953,31 +1371,52 @@
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white font-['Poppins']">Learn Your Way</h2>
                 <div class="w-24 h-1 bg-blue-500 mx-auto rounded mb-6"></div>
-                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Flexible modes of education tailored to student comfort and geographic needs.</p>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Flexible modes of education tailored to
+                    student comfort and geographic needs.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Offline -->
-                <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 hover:border-blue-500/40 transition duration-300" style="border-left: 4px solid #3b82f6;">
+                <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 hover:border-blue-500/40 transition duration-300"
+                    style="border-left: 4px solid #3b82f6;">
                     <i class="fa-solid fa-school text-4xl text-blue-400 mb-5 block"></i>
                     <h3 class="text-2xl font-bold text-white mb-3">Offline Classes</h3>
-                    <p class="text-gray-400 mb-6">Experience traditional, immersive learning in our well-equipped modern classrooms with direct teacher interaction.</p>
+                    <p class="text-gray-400 mb-6">Experience traditional, immersive learning in our well-equipped modern
+                        classrooms with direct teacher interaction.</p>
                     <ul class="space-y-3">
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Interactive peer environment</li>
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Zero digital distractions</li>
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Access to physical library &amp; labs</li>
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Immediate face-to-face doubt clearing</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i
+                                class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Interactive peer
+                            environment</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i
+                                class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Zero digital
+                            distractions</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i
+                                class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Access to physical
+                            library &amp; labs</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i
+                                class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Immediate
+                            face-to-face doubt clearing</li>
                     </ul>
                 </div>
                 <!-- Online -->
-                <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 hover:border-orange-500/40 transition duration-300" style="border-left: 4px solid #f97316;">
+                <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 hover:border-orange-500/40 transition duration-300"
+                    style="border-left: 4px solid #f97316;">
                     <i class="fa-solid fa-globe text-4xl text-orange-400 mb-5 block"></i>
                     <h3 class="text-2xl font-bold text-white mb-3">Online Classes</h3>
-                    <p class="text-gray-400 mb-6">High-quality live interactive sessions from the comfort of your home, utilizing state-of-the-art educational tech.</p>
+                    <p class="text-gray-400 mb-6">High-quality live interactive sessions from the comfort of your home,
+                        utilizing state-of-the-art educational tech.</p>
                     <ul class="space-y-3">
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Learn from anywhere safely</li>
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Recorded lectures for revision</li>
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Digital whiteboards and materials</li>
-                        <li class="flex items-center gap-3 text-gray-300"><i class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Save travel time &amp; energy</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i
+                                class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Learn from
+                            anywhere safely</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i
+                                class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Recorded lectures
+                            for revision</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i
+                                class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Digital
+                            whiteboards and materials</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i
+                                class="fa-solid fa-circle-check text-green-400 text-lg shrink-0"></i> Save travel time
+                            &amp; energy</li>
                     </ul>
                 </div>
             </div>
@@ -992,7 +1431,8 @@
                 <div class="order-2 lg:order-1">
                     <ul class="space-y-6">
                         <li class="flex items-start gap-4">
-                            <div class="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 mt-1">
+                            <div
+                                class="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 mt-1">
                                 <i class="fa-solid fa-compress text-blue-400 text-lg"></i>
                             </div>
                             <div>
@@ -1001,7 +1441,8 @@
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 mt-1">
+                            <div
+                                class="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 mt-1">
                                 <i class="fa-solid fa-hand-holding-heart text-blue-400 text-lg"></i>
                             </div>
                             <div>
@@ -1010,7 +1451,8 @@
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 mt-1">
+                            <div
+                                class="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 mt-1">
                                 <i class="fa-solid fa-file-signature text-blue-400 text-lg"></i>
                             </div>
                             <div>
@@ -1019,7 +1461,8 @@
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 mt-1">
+                            <div
+                                class="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0 mt-1">
                                 <i class="fa-solid fa-comments text-blue-400 text-lg"></i>
                             </div>
                             <div>
@@ -1031,11 +1474,16 @@
                 </div>
                 <!-- Text block -->
                 <div class="order-1 lg:order-2">
-                    <p class="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-3">The Laminars Advantage</p>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white font-['Poppins'] mb-4 leading-tight">Empowering students to unlock their true potential.</h2>
+                    <p class="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-3">The Laminars Advantage
+                    </p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white font-['Poppins'] mb-4 leading-tight">Empowering
+                        students to unlock their true potential.</h2>
                     <div class="w-16 h-1 bg-blue-500 rounded mb-6"></div>
-                    <p class="text-gray-300 text-base md:text-lg mb-4 leading-relaxed">We believe that every student has the capacity to excel. Our unique methodology bridges the gap between theoretical knowledge and practical application, ensuring education is engaging and deeply understood.</p>
-                    <p class="text-gray-400 text-base leading-relaxed">By fostering a supportive environment, we not only improve grades but build lifelong confidence and critical thinking skills.</p>
+                    <p class="text-gray-300 text-base md:text-lg mb-4 leading-relaxed">We believe that every student has
+                        the capacity to excel. Our unique methodology bridges the gap between theoretical knowledge and
+                        practical application, ensuring education is engaging and deeply understood.</p>
+                    <p class="text-gray-400 text-base leading-relaxed">By fostering a supportive environment, we not
+                        only improve grades but build lifelong confidence and critical thinking skills.</p>
                 </div>
             </div>
         </div>
@@ -1047,17 +1495,24 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                 <!-- Avatar -->
                 <div class="flex justify-center">
-                    <div class="w-56 h-56 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center shadow-2xl shadow-blue-900/30 ring-4 ring-white/10">
+                    <div
+                        class="w-56 h-56 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center shadow-2xl shadow-blue-900/30 ring-4 ring-white/10">
                         <i class="fa-solid fa-user-tie text-7xl md:text-8xl text-white/80"></i>
                     </div>
                 </div>
                 <!-- Content -->
                 <div>
-                    <p class="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-3">Message from the Director</p>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white font-['Poppins'] mb-2">Md Shajahan Ansari <br> (Hindi Sir)</h2>
+                    <p class="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-3">Message from the
+                        Director</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white font-['Poppins'] mb-2">Md Shajahan Ansari <br>
+                        (Hindi Sir)</h2>
                     <div class="w-16 h-1 bg-blue-500 rounded mb-6"></div>
-                    <blockquote class="text-gray-300 text-base md:text-lg italic leading-relaxed mb-6 border-l-4 border-blue-500/50 pl-5">
-                        "Education is not just the learning of facts, but the training of the mind to think. At The Laminars, our vision is to cultivate an environment where students are encouraged to ask questions, explore concepts, and discover their true potential. We are committed to shaping not just successful students, but confident leaders of tomorrow."
+                    <blockquote
+                        class="text-gray-300 text-base md:text-lg italic leading-relaxed mb-6 border-l-4 border-blue-500/50 pl-5">
+                        "Education is not just the learning of facts, but the training of the mind to think. At The
+                        Laminars, our vision is to cultivate an environment where students are encouraged to ask
+                        questions, explore concepts, and discover their true potential. We are committed to shaping not
+                        just successful students, but confident leaders of tomorrow."
                     </blockquote>
                     <div class="flex items-center gap-3 text-sm flex-wrap">
                         <span class="font-bold text-white">M.A. Hindi, M.A. Pol. Sci, B.Ed. BTC</span>
@@ -1076,35 +1531,46 @@
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white font-['Poppins']">Our Expert Faculty</h2>
                 <div class="w-24 h-1 bg-blue-500 mx-auto rounded mb-6"></div>
-                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Learn from the best minds dedicated to your academic success.</p>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Learn from the best minds dedicated to
+                    your academic success.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
+                <div
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
+                    <div
+                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
                         <i class="fa-solid fa-chalkboard-user text-white text-2xl"></i>
                     </div>
                     <h4 class="font-bold text-white text-lg mb-1">Dr. S. Kumar</h4>
                     <p class="text-blue-400 font-medium text-sm mb-2">Science Department</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">Ph.D. in Physics, IIT Delhi<br>10+ Years Experience</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">Ph.D. in Physics, IIT Delhi<br>10+ Years Experience
+                    </p>
                 </div>
-                <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
+                <div
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
+                    <div
+                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
                         <i class="fa-solid fa-language text-white text-2xl"></i>
                     </div>
                     <h4 class="font-bold text-white text-lg mb-1">Mrs. A. Verma</h4>
                     <p class="text-blue-400 font-medium text-sm mb-2">Hindi &amp; English</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">M.A. in Linguistics, JNU<br>12+ Years Experience</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">M.A. in Linguistics, JNU<br>12+ Years Experience
+                    </p>
                 </div>
-                <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
+                <div
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
+                    <div
+                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
                         <i class="fa-solid fa-laptop-code text-white text-2xl"></i>
                     </div>
                     <h4 class="font-bold text-white text-lg mb-1">Mr. T. Reddy</h4>
                     <p class="text-blue-400 font-medium text-sm mb-2">Technical Subjects</p>
                     <p class="text-gray-500 text-xs leading-relaxed">M.Tech in CS, NIT<br>8+ Years Experience</p>
                 </div>
-                <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
+                <div
+                    class="bg-white/[0.04] border border-white/10 rounded-2xl p-8 text-center hover:border-blue-500/40 transition duration-300 group">
+                    <div
+                        class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition duration-300">
                         <i class="fa-solid fa-flask text-white text-2xl"></i>
                     </div>
                     <h4 class="font-bold text-white text-lg mb-1">Ms. P. Desai</h4>
@@ -1121,7 +1587,8 @@
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white font-['Poppins']">Student Success Stories</h2>
                 <div class="w-24 h-1 bg-blue-500 mx-auto rounded mb-6"></div>
-                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Hear what our students have to say about their learning journey.</p>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Hear what our students have to say about
+                    their learning journey.</p>
             </div>
             <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </div>
@@ -1138,12 +1605,19 @@
         </div>
     </div>
 
-    <section class="py-20 md:py-28 bg-gradient-to-r from-blue-900 via-blue-800 to-purple-900 border-t border-white/5 text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none"></div>
+    <section
+        class="py-20 md:py-28 bg-gradient-to-r from-blue-900 via-blue-800 to-purple-900 border-t border-white/5 text-center relative overflow-hidden">
+        <div
+            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none">
+        </div>
         <div class="max-w-4xl mx-auto px-6 relative z-10">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 font-['Poppins']">Start Your Learning Journey Today</h2>
-            <p class="text-blue-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto">Join hundreds of students who have transformed their academic results with The Laminars.</p>
-            <a href="#contact" class="inline-block px-10 py-4 border-2 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-blue-900 transition duration-300">Enroll Now</a>
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 font-['Poppins']">Start Your Learning Journey
+                Today</h2>
+            <p class="text-blue-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto">Join hundreds of students who have
+                transformed their academic results with The Laminars.</p>
+            <a href="#contact"
+                class="inline-block px-10 py-4 border-2 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-blue-900 transition duration-300">Enroll
+                Now</a>
         </div>
     </section>
 
@@ -1153,16 +1627,26 @@
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white font-['Poppins']">Get In Touch</h2>
                 <div class="w-24 h-1 bg-blue-500 mx-auto rounded mb-6"></div>
-                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Have questions? Fill out the form and our team will get back to you shortly.</p>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Have questions? Fill out the form and
+                    our team will get back to you shortly.</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
                 <!-- Contact Info -->
-                <div class="bg-gradient-to-br from-blue-900/40 to-purple-900/20 border border-blue-500/20 rounded-2xl p-8 md:p-10">
+                <div
+                    class="bg-gradient-to-br from-blue-900/40 to-purple-900/20 border border-blue-500/20 rounded-2xl p-8 md:p-10">
                     <h3 class="text-2xl font-bold text-white mb-8">Contact Information</h3>
                     <ul class="space-y-6">
                         <li class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <div
+                                class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Address</p>
@@ -1170,8 +1654,14 @@
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            <div
+                                class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                    </path>
+                                </svg>
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Phone</p>
@@ -1179,8 +1669,14 @@
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <div
+                                class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                    </path>
+                                </svg>
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Email</p>
@@ -1194,22 +1690,29 @@
                     <form id="enquiryForm" class="space-y-4" novalidate>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm text-gray-400 mb-1.5">Full Name <span class="text-red-400">*</span></label>
-                                <input type="text" name="name" required placeholder="Your name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
+                                <label class="block text-sm text-gray-400 mb-1.5">Full Name <span
+                                        class="text-red-400">*</span></label>
+                                <input type="text" name="name" required placeholder="Your name"
+                                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-400 mb-1.5">Email <span class="text-red-400">*</span></label>
-                                <input type="email" name="email" required placeholder="you@email.com" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
+                                <label class="block text-sm text-gray-400 mb-1.5">Email <span
+                                        class="text-red-400">*</span></label>
+                                <input type="email" name="email" required placeholder="you@email.com"
+                                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm text-gray-400 mb-1.5">Phone</label>
-                                <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
+                                <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX"
+                                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
                             </div>
                             <div>
                                 <label class="block text-sm text-gray-400 mb-1.5">Course Interest</label>
-                                <select name="subject" class="w-full border border-white/10 rounded-xl px-4 py-3 text-gray-300 focus:border-blue-500 focus:outline-none transition appearance-none" style="background-color:rgba(255,255,255,0.05);">
+                                <select name="subject"
+                                    class="w-full border border-white/10 rounded-xl px-4 py-3 text-gray-300 focus:border-blue-500 focus:outline-none transition appearance-none"
+                                    style="background-color:rgba(255,255,255,0.05);">
                                     <option value="" class="bg-zinc-900">Select a course</option>
                                     <option value="science" class="bg-zinc-900">Science</option>
                                     <option value="hindi" class="bg-zinc-900">Hindi</option>
@@ -1221,13 +1724,19 @@
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-400 mb-1.5">Message <span class="text-red-400">*</span></label>
-                            <textarea name="message" required rows="4" placeholder="Tell us about yourself and how we can help..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition resize-none"></textarea>
+                            <label class="block text-sm text-gray-400 mb-1.5">Message <span
+                                    class="text-red-400">*</span></label>
+                            <textarea name="message" required rows="4"
+                                placeholder="Tell us about yourself and how we can help..."
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition resize-none"></textarea>
                         </div>
-                        <button type="submit" id="submitBtn" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition duration-300 text-base">Send Enquiry</button>
+                        <button type="submit" id="submitBtn"
+                            class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition duration-300 text-base">Send
+                            Enquiry</button>
                     </form>
                     <!-- Success Message -->
-                    <div id="successMessage" class="hidden mt-4 p-6 bg-green-500/20 border border-green-500/30 rounded-xl text-center">
+                    <div id="successMessage"
+                        class="hidden mt-4 p-6 bg-green-500/20 border border-green-500/30 rounded-xl text-center">
                         <i class="fa-solid fa-circle-check text-green-400 text-4xl mb-3 block"></i>
                         <p class="text-green-300 font-semibold text-lg">Enquiry Sent Successfully!</p>
                         <p class="text-green-400/70 text-sm mt-1">We'll get back to you within 24 hours.</p>
@@ -1241,8 +1750,10 @@
     <footer class="bg-neutral-950 border-t border-white/10 pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 mb-12">
             <div>
-                <div class="font-bold text-2xl tracking-widest text-white mb-4">THE <span class="text-blue-500">LAMINARS</span></div>
-                <p class="text-gray-400 text-sm md:text-base">Building strong foundations for tomorrow's leaders in engineering and medical sciences. Join us to transform your academic journey.</p>
+                <div class="font-bold text-2xl tracking-widest text-white mb-4">THE <span
+                        class="text-blue-500">LAMINARS</span></div>
+                <p class="text-gray-400 text-sm md:text-base">Building strong foundations for tomorrow's leaders in
+                    engineering and medical sciences. Join us to transform your academic journey.</p>
             </div>
             <div>
                 <h4 class="text-white font-bold text-lg mb-4">Quick Links</h4>
@@ -1256,9 +1767,26 @@
             <div>
                 <h4 class="text-white font-bold text-lg mb-4">Contact Us</h4>
                 <ul class="space-y-2 text-gray-400 text-sm md:text-base">
-                    <li class="flex items-start"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> <span>123 Education Hub, Knowledge City</span></li>
-                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> <span>+1 (555) 123-4567</span></li>
-                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span>info@thelaminars.edu</span></li>
+                    <li class="flex items-start"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0 mt-0.5" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg> <span>123 Education Hub, Knowledge City</span></li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                            </path>
+                        </svg> <span>+1 (555) 123-4567</span></li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-blue-500 shrink-0" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
+                        </svg> <span>info@thelaminars.edu</span></li>
                 </ul>
             </div>
         </div>
@@ -1267,7 +1795,8 @@
                 &ldquo;Great dreams of great dreamers are always transcended.&rdquo;
                 <span class="not-italic font-semibold text-yellow-700/60">&nbsp;— Dr. A.P.J. Abdul Kalam</span>
             </p>
-            <p class="text-gray-500 text-xs md:text-sm">&copy; 2026 The Laminars Coaching Institute. All rights reserved.</p>
+            <p class="text-gray-500 text-xs md:text-sm">&copy; 2026 The Laminars Coaching Institute. All rights
+                reserved.</p>
         </div>
     </footer>
 
@@ -1277,7 +1806,7 @@
          */
         const TextAnimations = {
             _intervals: {},
-            _prepareContainer: function(id) {
+            _prepareContainer: function (id) {
                 const el = document.getElementById(id);
                 if (!el) return null;
                 if (this._intervals[id]) this._intervals[id].forEach(clearInterval);
@@ -1285,7 +1814,7 @@
                 el.innerHTML = '';
                 return el;
             },
-            neon: function(targetId, text, editable = false) {
+            neon: function (targetId, text, editable = false) {
                 const target = this._prepareContainer(targetId);
                 if (!target) return;
                 const wrapper = document.createElement('div');
@@ -1300,7 +1829,7 @@
                 wrapper.appendChild(h1);
                 target.appendChild(wrapper);
             },
-            typing: function(targetId, words, colors = ['#fff']) {
+            typing: function (targetId, words, colors = ['#fff']) {
                 const target = this._prepareContainer(targetId);
                 if (!target) return;
                 const container = document.createElement('div');
@@ -1427,7 +1956,7 @@
             function showNext() {
                 const config = configs[index];
                 const newBox = resetAnimation();
-                
+
                 const heading = newBox.querySelector("#legacyHeadingText");
                 const subheading = newBox.querySelector("#legacySubheadingText");
                 const pointsContainer = newBox.querySelector("#legacyPointsContainer");
@@ -1450,7 +1979,7 @@
 
                 setTimeout(() => { showPoints(pointsContainer, points); }, pointsStart);
                 setTimeout(() => { newBox.classList.add("legacy-fade-out"); }, fadeStartDelay);
-                
+
                 setTimeout(() => {
                     index = (index + 1) % configs.length;
                     showNext();
@@ -1470,78 +1999,78 @@
             // Font Awesome icon items: [FA class string, [R,G,B] color, size px]
             const iconItems = [
                 // Books / Reading
-                { cls: 'fa-solid fa-book',               rgb: [147, 197, 253], s: 36 },
-                { cls: 'fa-solid fa-book-open',          rgb: [147, 197, 253], s: 34 },
-                { cls: 'fa-solid fa-book-bookmark',      rgb: [147, 197, 253], s: 30 },
-                { cls: 'fa-regular fa-bookmark',         rgb: [147, 197, 253], s: 28 },
+                { cls: 'fa-solid fa-book', rgb: [147, 197, 253], s: 36 },
+                { cls: 'fa-solid fa-book-open', rgb: [147, 197, 253], s: 34 },
+                { cls: 'fa-solid fa-book-bookmark', rgb: [147, 197, 253], s: 30 },
+                { cls: 'fa-regular fa-bookmark', rgb: [147, 197, 253], s: 28 },
                 // Writing tools
-                { cls: 'fa-solid fa-pen',                rgb: [253, 186, 116], s: 30 },
-                { cls: 'fa-solid fa-pencil',             rgb: [253, 186, 116], s: 30 },
-                { cls: 'fa-solid fa-pen-nib',            rgb: [253, 186, 116], s: 32 },
-                { cls: 'fa-solid fa-pen-fancy',          rgb: [253, 186, 116], s: 30 },
-                { cls: 'fa-solid fa-highlighter',        rgb: [253, 224,  71], s: 28 },
-                { cls: 'fa-solid fa-file-pen',           rgb: [253, 186, 116], s: 32 },
+                { cls: 'fa-solid fa-pen', rgb: [253, 186, 116], s: 30 },
+                { cls: 'fa-solid fa-pencil', rgb: [253, 186, 116], s: 30 },
+                { cls: 'fa-solid fa-pen-nib', rgb: [253, 186, 116], s: 32 },
+                { cls: 'fa-solid fa-pen-fancy', rgb: [253, 186, 116], s: 30 },
+                { cls: 'fa-solid fa-highlighter', rgb: [253, 224, 71], s: 28 },
+                { cls: 'fa-solid fa-file-pen', rgb: [253, 186, 116], s: 32 },
                 // Science / Lab
-                { cls: 'fa-solid fa-microscope',         rgb: [103, 232, 249], s: 36 },
-                { cls: 'fa-solid fa-flask',              rgb: [103, 232, 249], s: 32 },
-                { cls: 'fa-solid fa-vial',               rgb: [103, 232, 249], s: 30 },
-                { cls: 'fa-solid fa-atom',               rgb: [103, 232, 249], s: 34 },
-                { cls: 'fa-solid fa-dna',                rgb: [103, 232, 249], s: 32 },
-                { cls: 'fa-solid fa-flask-vial',         rgb: [103, 232, 249], s: 30 },
+                { cls: 'fa-solid fa-microscope', rgb: [103, 232, 249], s: 36 },
+                { cls: 'fa-solid fa-flask', rgb: [103, 232, 249], s: 32 },
+                { cls: 'fa-solid fa-vial', rgb: [103, 232, 249], s: 30 },
+                { cls: 'fa-solid fa-atom', rgb: [103, 232, 249], s: 34 },
+                { cls: 'fa-solid fa-dna', rgb: [103, 232, 249], s: 32 },
+                { cls: 'fa-solid fa-flask-vial', rgb: [103, 232, 249], s: 30 },
                 // Maths / Geometry
-                { cls: 'fa-solid fa-calculator',         rgb: [134, 239, 172], s: 32 },
-                { cls: 'fa-solid fa-ruler',              rgb: [134, 239, 172], s: 30 },
-                { cls: 'fa-solid fa-drafting-compass',   rgb: [134, 239, 172], s: 32 },
-                { cls: 'fa-solid fa-infinity',           rgb: [134, 239, 172], s: 30 },
+                { cls: 'fa-solid fa-calculator', rgb: [134, 239, 172], s: 32 },
+                { cls: 'fa-solid fa-ruler', rgb: [134, 239, 172], s: 30 },
+                { cls: 'fa-solid fa-drafting-compass', rgb: [134, 239, 172], s: 32 },
+                { cls: 'fa-solid fa-infinity', rgb: [134, 239, 172], s: 30 },
                 { cls: 'fa-solid fa-square-root-variable', rgb: [134, 239, 172], s: 28 },
                 // Achievement / Institution
-                { cls: 'fa-solid fa-graduation-cap',     rgb: [253, 224,  71], s: 38 },
-                { cls: 'fa-solid fa-school',             rgb: [253, 224,  71], s: 36 },
-                { cls: 'fa-solid fa-trophy',             rgb: [253, 224,  71], s: 32 },
-                { cls: 'fa-solid fa-medal',              rgb: [253, 224,  71], s: 30 },
-                { cls: 'fa-solid fa-award',              rgb: [253, 224,  71], s: 30 },
-                { cls: 'fa-solid fa-star',               rgb: [253, 224,  71], s: 26 },
+                { cls: 'fa-solid fa-graduation-cap', rgb: [253, 224, 71], s: 38 },
+                { cls: 'fa-solid fa-school', rgb: [253, 224, 71], s: 36 },
+                { cls: 'fa-solid fa-trophy', rgb: [253, 224, 71], s: 32 },
+                { cls: 'fa-solid fa-medal', rgb: [253, 224, 71], s: 30 },
+                { cls: 'fa-solid fa-award', rgb: [253, 224, 71], s: 30 },
+                { cls: 'fa-solid fa-star', rgb: [253, 224, 71], s: 26 },
                 // Mind / Ideas
-                { cls: 'fa-solid fa-brain',              rgb: [216, 180, 254], s: 34 },
-                { cls: 'fa-solid fa-lightbulb',          rgb: [253, 224,  71], s: 32 },
+                { cls: 'fa-solid fa-brain', rgb: [216, 180, 254], s: 34 },
+                { cls: 'fa-solid fa-lightbulb', rgb: [253, 224, 71], s: 32 },
                 // Tech / Digital
-                { cls: 'fa-solid fa-laptop-code',        rgb: [216, 180, 254], s: 32 },
-                { cls: 'fa-solid fa-chalkboard',         rgb: [147, 197, 253], s: 32 },
-                { cls: 'fa-solid fa-chart-line',         rgb: [134, 239, 172], s: 30 },
-                { cls: 'fa-solid fa-globe',              rgb: [103, 232, 249], s: 30 },
+                { cls: 'fa-solid fa-laptop-code', rgb: [216, 180, 254], s: 32 },
+                { cls: 'fa-solid fa-chalkboard', rgb: [147, 197, 253], s: 32 },
+                { cls: 'fa-solid fa-chart-line', rgb: [134, 239, 172], s: 30 },
+                { cls: 'fa-solid fa-globe', rgb: [103, 232, 249], s: 30 },
             ];
 
             const wordItems = [
                 // English
-                { c: 'Learn',       lang: 'en' }, { c: 'Wisdom',     lang: 'en' },
-                { c: 'Excel',       lang: 'en' }, { c: 'Achieve',    lang: 'en' },
-                { c: 'Grow',        lang: 'en' }, { c: 'Inspire',    lang: 'en' },
-                { c: 'Study',       lang: 'en' }, { c: 'Focus',      lang: 'en' },
-                { c: 'Think',       lang: 'en' }, { c: 'Logic',      lang: 'en' },
-                { c: 'Explore',     lang: 'en' }, { c: 'Discover',   lang: 'en' },
-                { c: 'Master',      lang: 'en' }, { c: 'Rise',       lang: 'en' },
-                { c: 'Create',      lang: 'en' }, { c: 'Succeed',    lang: 'en' },
+                { c: 'Learn', lang: 'en' }, { c: 'Wisdom', lang: 'en' },
+                { c: 'Excel', lang: 'en' }, { c: 'Achieve', lang: 'en' },
+                { c: 'Grow', lang: 'en' }, { c: 'Inspire', lang: 'en' },
+                { c: 'Study', lang: 'en' }, { c: 'Focus', lang: 'en' },
+                { c: 'Think', lang: 'en' }, { c: 'Logic', lang: 'en' },
+                { c: 'Explore', lang: 'en' }, { c: 'Discover', lang: 'en' },
+                { c: 'Master', lang: 'en' }, { c: 'Rise', lang: 'en' },
+                { c: 'Create', lang: 'en' }, { c: 'Succeed', lang: 'en' },
                 // Hindi
-                { c: 'ज्ञान',      lang: 'hi' }, { c: 'शिक्षा',    lang: 'hi' },
-                { c: 'विद्या',     lang: 'hi' }, { c: 'सफलता',     lang: 'hi' },
-                { c: 'पढ़ाई',      lang: 'hi' }, { c: 'ध्यान',     lang: 'hi' },
-                { c: 'उन्नति',     lang: 'hi' }, { c: 'मेहनत',     lang: 'hi' },
-                { c: 'लक्ष्य',     lang: 'hi' }, { c: 'बुद्धि',    lang: 'hi' },
-                { c: 'कौशल',       lang: 'hi' }, { c: 'अभ्यास',    lang: 'hi' },
+                { c: 'ज्ञान', lang: 'hi' }, { c: 'शिक्षा', lang: 'hi' },
+                { c: 'विद्या', lang: 'hi' }, { c: 'सफलता', lang: 'hi' },
+                { c: 'पढ़ाई', lang: 'hi' }, { c: 'ध्यान', lang: 'hi' },
+                { c: 'उन्नति', lang: 'hi' }, { c: 'मेहनत', lang: 'hi' },
+                { c: 'लक्ष्य', lang: 'hi' }, { c: 'बुद्धि', lang: 'hi' },
+                { c: 'कौशल', lang: 'hi' }, { c: 'अभ्यास', lang: 'hi' },
                 // Bengali
-                { c: 'জ্ঞান',      lang: 'bn' }, { c: 'শিক্ষা',    lang: 'bn' },
-                { c: 'বিদ্যা',     lang: 'bn' }, { c: 'সফলতা',     lang: 'bn' },
-                { c: 'পড়াশোনা',   lang: 'bn' }, { c: 'স্বপ্ন',    lang: 'bn' },
-                { c: 'উন্নতি',     lang: 'bn' }, { c: 'মেধা',      lang: 'bn' },
-                { c: 'লক্ষ্য',     lang: 'bn' }, { c: 'পরিশ্রম',   lang: 'bn' },
-                { c: 'শেখা',       lang: 'bn' }, { c: 'সাফল্য',    lang: 'bn' },
+                { c: 'জ্ঞান', lang: 'bn' }, { c: 'শিক্ষা', lang: 'bn' },
+                { c: 'বিদ্যা', lang: 'bn' }, { c: 'সফলতা', lang: 'bn' },
+                { c: 'পড়াশোনা', lang: 'bn' }, { c: 'স্বপ্ন', lang: 'bn' },
+                { c: 'উন্নতি', lang: 'bn' }, { c: 'মেধা', lang: 'bn' },
+                { c: 'লক্ষ্য', lang: 'bn' }, { c: 'পরিশ্রম', lang: 'bn' },
+                { c: 'শেখা', lang: 'bn' }, { c: 'সাফল্য', lang: 'bn' },
                 // Urdu
-                { c: 'علم',        lang: 'ur' }, { c: 'تعلیم',     lang: 'ur' }, // Knowledge, Education
-                { c: 'ترقی',       lang: 'ur' }, { c: 'کامیابی',   lang: 'ur' }, // Progress, Success
-                { c: 'محنت',       lang: 'ur' }, { c: 'فکر',       lang: 'ur' }, // Hard work, Thought
-                { c: 'ہمت',        lang: 'ur' }, { c: 'کوشش',      lang: 'ur' }, // Courage, Effort
-                { c: 'منزل',       lang: 'ur' }, { c: 'ارادہ',     lang: 'ur' }, // Destination, Determination
-                { c: 'عقل',        lang: 'ur' }, { c: 'حصول',      lang: 'ur' }, // Wisdom, Achievement
+                { c: 'علم', lang: 'ur' }, { c: 'تعلیم', lang: 'ur' }, // Knowledge, Education
+                { c: 'ترقی', lang: 'ur' }, { c: 'کامیابی', lang: 'ur' }, // Progress, Success
+                { c: 'محنت', lang: 'ur' }, { c: 'فکر', lang: 'ur' }, // Hard work, Thought
+                { c: 'ہمت', lang: 'ur' }, { c: 'کوشش', lang: 'ur' }, // Courage, Effort
+                { c: 'منزل', lang: 'ur' }, { c: 'ارادہ', lang: 'ur' }, // Destination, Determination
+                { c: 'عقل', lang: 'ur' }, { c: 'حصول', lang: 'ur' }, // Wisdom, Achievement
             ];
 
             const wordColors = {
@@ -1564,19 +2093,19 @@
             }
 
             // ---- Particle count config ----
-            const DESKTOP_TOTAL  = 20;   // total particles on desktop
-            const DESKTOP_ICONS  = Math.round(DESKTOP_TOTAL * 0.20);  // 20 % icons  → 4
-            const DESKTOP_WORDS  = DESKTOP_TOTAL - DESKTOP_ICONS;     // 80 % words  → 16
-            const MOBILE_TOTAL   = 10;   // total particles on mobile
-            const MOBILE_ICONS   = 5;    // 50 % icons
-            const MOBILE_WORDS   = 5;    // 50 % words (1 per language min)
+            const DESKTOP_TOTAL = 20;   // total particles on desktop
+            const DESKTOP_ICONS = Math.round(DESKTOP_TOTAL * 0.20);  // 20 % icons  → 4
+            const DESKTOP_WORDS = DESKTOP_TOTAL - DESKTOP_ICONS;     // 80 % words  → 16
+            const MOBILE_TOTAL = 10;   // total particles on mobile
+            const MOBILE_ICONS = 5;    // 50 % icons
+            const MOBILE_WORDS = 5;    // 50 % words (1 per language min)
             // --------------------------------
 
             const isMobile = window.matchMedia('(max-width: 768px)').matches;
             const iconPool = allItems.filter(i => i.type === 'icon');
             const wordPool = allItems.filter(i => i.type === 'word');
-            const shuffle  = arr => { const a = [...arr]; for (let i = a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
-            const langs    = ['en','hi','bn','ur'];
+            const shuffle = arr => { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; };
+            const langs = ['en', 'hi', 'bn', 'ur'];
             const wordsByLang = {};
             langs.forEach(l => { wordsByLang[l] = shuffle(wordPool.filter(w => w.lang === l)); });
 
@@ -1594,7 +2123,7 @@
                 const wordsGuaranteed = langs.map(l => wordsByLang[l][0]).filter(Boolean);
                 // fill remaining word slots from the shuffled pool, excluding already picked
                 const picked = new Set(wordsGuaranteed.map(w => w.c));
-                const extra  = shuffle(wordPool.filter(w => !picked.has(w.c))).slice(0, DESKTOP_WORDS - wordsGuaranteed.length);
+                const extra = shuffle(wordPool.filter(w => !picked.has(w.c))).slice(0, DESKTOP_WORDS - wordsGuaranteed.length);
                 itemsToRender = [...icons, ...wordsGuaranteed, ...extra];
             }
 
@@ -1614,34 +2143,34 @@
                 } else {
                     const zone = idx % 8;
                     switch (zone) {
-                        case 0: x = rn() * 20;          y = rn() * 100; break;   // far left
-                        case 1: x = 80 + rn() * 20;     y = rn() * 100; break;   // far right
-                        case 2: x = rn() * 100;          y = rn() * 16;  break;   // top strip
-                        case 3: x = rn() * 100;          y = 84 + rn() * 16; break; // bottom strip
-                        case 4: x = 20 + rn() * 13;      y = rn() * 42;  break;   // inner-left top
-                        case 5: x = 67 + rn() * 13;      y = rn() * 42;  break;   // inner-right top
-                        case 6: x = 20 + rn() * 13;      y = 58 + rn() * 42; break; // inner-left btm
-                        default: x = 67 + rn() * 13;     y = 58 + rn() * 42; break; // inner-right btm
+                        case 0: x = rn() * 20; y = rn() * 100; break;   // far left
+                        case 1: x = 80 + rn() * 20; y = rn() * 100; break;   // far right
+                        case 2: x = rn() * 100; y = rn() * 16; break;   // top strip
+                        case 3: x = rn() * 100; y = 84 + rn() * 16; break; // bottom strip
+                        case 4: x = 20 + rn() * 13; y = rn() * 42; break;   // inner-left top
+                        case 5: x = 67 + rn() * 13; y = rn() * 42; break;   // inner-right top
+                        case 6: x = 20 + rn() * 13; y = 58 + rn() * 42; break; // inner-left btm
+                        default: x = 67 + rn() * 13; y = 58 + rn() * 42; break; // inner-right btm
                     }
                 }
 
-                const dur   = (12 + Math.random() * 18).toFixed(1);
+                const dur = (12 + Math.random() * 18).toFixed(1);
                 const delay = (-(Math.random() * parseFloat(dur))).toFixed(1);
-                const anim  = anims[Math.floor(Math.random() * anims.length)];
+                const anim = anims[Math.floor(Math.random() * anims.length)];
 
                 let fontSize, opacity, colorStyle, fontFamilyStyle;
 
                 if (item.type === 'icon') {
-                    fontSize        = item.s + 'px';
-                    opacity         = (0.07 + Math.random() * 0.1).toFixed(2);
+                    fontSize = item.s + 'px';
+                    opacity = (0.07 + Math.random() * 0.1).toFixed(2);
                     const [r2, g, b] = item.rgb;
-                    colorStyle      = `color:rgba(${r2},${g},${b},0.75);`;
+                    colorStyle = `color:rgba(${r2},${g},${b},0.75);`;
                     fontFamilyStyle = '';
                 } else {
-                    fontSize        = (15 + Math.random() * 11).toFixed(0) + 'px';
-                    opacity         = (0.07 + Math.random() * 0.1).toFixed(2);
+                    fontSize = (15 + Math.random() * 11).toFixed(0) + 'px';
+                    opacity = (0.07 + Math.random() * 0.1).toFixed(2);
                     const [r2, g, b] = wordColors[item.lang];
-                    colorStyle      = `color:rgba(${r2},${g},${b},0.9);`;
+                    colorStyle = `color:rgba(${r2},${g},${b},0.9);`;
                     fontFamilyStyle = item.lang === 'ur'
                         ? "font-family:'Noto Naskh Arabic','Segoe UI',serif;"
                         : "font-family:'Lato',sans-serif;";
@@ -1671,13 +2200,13 @@
         // MOBILE MENU HELPER
         // ==========================================
         function closeMobileMenu() {
-            const mobileMenu    = document.getElementById('mobileMenu');
-            const menuIconOpen  = document.getElementById('menuIconOpen');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIconOpen = document.getElementById('menuIconOpen');
             const menuIconClose = document.getElementById('menuIconClose');
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             if (mobileMenu) {
                 mobileMenu.classList.add('hidden');
-                menuIconOpen  && menuIconOpen.classList.remove('hidden');
+                menuIconOpen && menuIconOpen.classList.remove('hidden');
                 menuIconClose && menuIconClose.classList.add('hidden');
                 mobileMenuBtn && mobileMenuBtn.setAttribute('aria-expanded', 'false');
             }
@@ -1692,7 +2221,7 @@
 
             // Initialize floating educational particles in hero background
             initHeroParticles();
-            
+
             // Initialize Legacy Section animation — triggered when scrolled into view
             const legacySection = document.getElementById('legacy');
             if (legacySection) {
@@ -1713,8 +2242,8 @@
             // Mobile Menu Toggle
             // ==========================================
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mobileMenu    = document.getElementById('mobileMenu');
-            const menuIconOpen  = document.getElementById('menuIconOpen');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIconOpen = document.getElementById('menuIconOpen');
             const menuIconClose = document.getElementById('menuIconClose');
             if (mobileMenuBtn && mobileMenu) {
                 mobileMenuBtn.addEventListener('click', () => {
@@ -1785,7 +2314,7 @@
             const successMessage = document.getElementById('successMessage');
             const submitBtn = document.getElementById('submitBtn');
             if (enquiryForm) {
-                enquiryForm.addEventListener('submit', function(e) {
+                enquiryForm.addEventListener('submit', function (e) {
                     e.preventDefault();
                     if (enquiryForm.checkValidity()) {
                         const originalText = submitBtn.textContent;
@@ -1808,4 +2337,5 @@
         });
     </script>
 </body>
+
 </html>
