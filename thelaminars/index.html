@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -563,10 +563,423 @@
                 transform: translate(14px, -24px) rotate(-3deg);
             }
         }
+
+        /* ==============================================
+           LIGHT THEME OVERRIDES
+           Activated via data-theme="light" on <html>
+           ============================================== */
+
+        /* -- Page / section backgrounds ------------- */
+        [data-theme="light"] body            { background-color: #f0f5fc !important; color: #0f172a !important; }
+        [data-theme="light"] #legacy         { background-color: #e8eef9 !important; }
+        [data-theme="light"] #about          { background-color: #f4f7fd !important; }
+        [data-theme="light"] #courses        { background-color: #edf2f9 !important; }
+        [data-theme="light"] #languages      { background-color: #e8eef9 !important; }
+        [data-theme="light"] #tech           { background-color: #f0f5fc !important; }
+        [data-theme="light"] #modes          { background-color: #e8eef9 !important; }
+        [data-theme="light"] #advantage      { background-color: #edf2f9 !important; }
+        [data-theme="light"] #director       { background-color: #e8eef9 !important; }
+        [data-theme="light"] #faculties      { background-color: #f4f7fd !important; }
+        [data-theme="light"] #testimonials   { background-color: #e8eef9 !important; }
+        [data-theme="light"] #contact        { background-color: #f4f7fd !important; }
+        [data-theme="light"] footer          { background-color: #dce4f0 !important; }
+        /* Quote-divider divs (bg-black, not a section) */
+        [data-theme="light"] div.bg-black    { background-color: #edf2f9 !important; }
+        /* Remove dark gradient overlay inside legacy section */
+        [data-theme="light"] #legacy > .absolute { opacity: 0; }
+
+        /* -- Navbar --------------------------------- */
+        [data-theme="light"] nav.fixed {
+            background-color: rgba(255,255,255,0.93) !important;
+            border-bottom-color: rgba(15,23,42,0.10) !important;
+            box-shadow: 0 1px 8px rgba(15,23,42,0.07);
+        }
+        [data-theme="light"] #mobileMenu {
+            background-color: rgba(255,255,255,0.98) !important;
+            border-top-color: rgba(15,23,42,0.10) !important;
+        }
+        [data-theme="light"] #mobileMenuBtn { color: #0f172a !important; }
+        [data-theme="light"] #mobileMenu a  { color: #334155 !important; }
+        [data-theme="light"] nav a          { color: #334155 !important; }
+        [data-theme="light"] nav a:hover    { color: #1d4ed8 !important; }
+
+        /* -- Text overrides ------------------------- */
+        [data-theme="light"] .text-white       { color: #0f172a !important; }
+        [data-theme="light"] .text-gray-300    { color: #334155 !important; }
+        [data-theme="light"] .text-gray-400    { color: #475569 !important; }
+        [data-theme="light"] .text-gray-500    { color: #64748b !important; }
+        [data-theme="light"] .text-gray-600    { color: #64748b !important; }
+        /* Hero section — adapts to light mode */
+        [data-theme="light"] #hero              { background: linear-gradient(135deg, #dbeafe 0%, #ede9fe 60%, #e0f2fe 100%) !important; }
+        [data-theme="light"] #hero .text-white    { color: #0f172a !important; }
+        [data-theme="light"] #hero .text-gray-300 { color: #334155 !important; }
+        [data-theme="light"] #hero .text-gray-400 { color: #475569 !important; }
+        [data-theme="light"] #hero .text-gray-500 { color: #64748b !important; }
+        [data-theme="light"] #hero .text-blue-400   { color: #1d4ed8 !important; }
+        [data-theme="light"] #hero .text-orange-400 { color: #c2410c !important; }
+        [data-theme="light"] #hero .text-purple-400 { color: #7c3aed !important; }
+        [data-theme="light"] #hero .text-green-400  { color: #15803d !important; }
+        [data-theme="light"] #hero a.border-gray-500 { border-color: #334155 !important; }
+        /* CTA banner stays on dark gradient – preserve bright text */
+        [data-theme="light"] #cta .text-white { color: #ffffff !important; }
+        [data-theme="light"] #cta p           { color: #bfdbfe !important; }
+        [data-theme="light"] #cta a           { color: #ffffff !important; }
+
+        /* -- Borders -------------------------------- */
+        [data-theme="light"] .border-white\/10 { border-color: rgba(15,23,42,0.10) !important; }
+        [data-theme="light"] .border-white\/5  { border-color: rgba(15,23,42,0.06) !important; }
+
+        /* -- Cards & surfaces ----------------------- */
+        /* About feature cards */
+        [data-theme="light"] .bg-black\/50 {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 12px rgba(15,23,42,0.06);
+        }
+        /* Mode/Faculty/Testimonial cards (bg-white/[0.04]) */
+        [data-theme="light"] [class*="bg-white/["] {
+            background-color: #ffffff !important;
+        }
+        /* Chip / subtle surfaces (bg-white/5, bg-white/10) */
+        [data-theme="light"] .bg-white\/5  { background-color: rgba(15,23,42,0.05) !important; }
+        [data-theme="light"] .bg-white\/10 { background-color: rgba(15,23,42,0.08) !important; }
+
+        /* Timeline cards */
+        [data-theme="light"] .timeline-card {
+            background: #ffffff !important;
+            border-color: rgba(15,23,42,0.10) !important;
+            box-shadow: 0 4px 20px rgba(15,23,42,0.07);
+        }
+        [data-theme="light"] .timeline-item::after { background: #e0e9f5 !important; }
+        [data-theme="light"] .timeline-item.left  .timeline-card::before { border-left-color:  rgba(240,245,252,0.95) !important; }
+        [data-theme="light"] .timeline-item.right .timeline-card::before { border-right-color: rgba(240,245,252,0.95) !important; }
+        /* Timeline heading gradient text → solid dark in light mode */
+        [data-theme="light"] .timeline-card h3 {
+            -webkit-text-fill-color: #1e293b !important;
+            background: none !important;
+        }
+        /* Timeline/chip accent text — light shades → darker for readability */
+        [data-theme="light"] .text-yellow-300 { color: #a16207 !important; }
+        [data-theme="light"] .text-yellow-400 { color: #92400e !important; }
+        [data-theme="light"] .text-orange-300 { color: #c2410c !important; }
+        [data-theme="light"] .text-amber-300  { color: #b45309 !important; }
+
+        /* Legacy carousel */
+        [data-theme="light"] #legacyCarousel {
+            background: rgba(255,255,255,0.92) !important;
+            border-color: rgba(15,23,42,0.10) !important;
+            box-shadow: 0 8px 32px rgba(15,23,42,0.09) !important;
+        }
+        [data-theme="light"] #legacyPrev,
+        [data-theme="light"] #legacyNext {
+            background-color: rgba(15,23,42,0.06) !important;
+            border-color: rgba(15,23,42,0.12) !important;
+        }
+        [data-theme="light"] #legacyPrev i,
+        [data-theme="light"] #legacyNext i { color: #475569 !important; }
+
+        /* Legacy animated points */
+        [data-theme="light"] .legacy-point {
+            background: rgba(255,255,255,0.96) !important;
+            color: #1e293b !important;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.08) !important;
+        }
+
+        /* Quote component */
+        [data-theme="light"] .educational-quote blockquote { color: #334155 !important; }
+        [data-theme="light"] .educational-quote cite       { color: rgba(161,98,7,0.85) !important; }
+
+        /* Neon animation areas always stay dark */
+        [data-theme="light"] .ta-neon-wrapper { background-color: #000 !important; }
+        [data-theme="light"] .bg-neon-dark    { background-color: #000 !important; }
+
+        /* Section header hairline dividers */
+        [data-theme="light"] .flex-1.h-px { background-color: rgba(15,23,42,0.10) !important; }
+
+        /* Contact info gradient box */
+        [data-theme="light"] #contact .bg-gradient-to-br {
+            background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(124,58,237,0.05) 100%) !important;
+            border-color: rgba(59,130,246,0.20) !important;
+        }
+
+        /* Form elements */
+        [data-theme="light"] input,
+        [data-theme="light"] textarea {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border-color: rgba(15,23,42,0.15) !important;
+        }
+        [data-theme="light"] select {
+            background-color: #ffffff !important;
+            color: #334155 !important;
+            border-color: rgba(15,23,42,0.15) !important;
+        }
+        [data-theme="light"] input::placeholder,
+        [data-theme="light"] textarea::placeholder { color: #94a3b8 !important; }
+        [data-theme="light"] select option { background: #fff; color: #0f172a; }
+
+        /* Director section */
+        [data-theme="light"] #director-quote { color: #334155 !important; }
+
+        /* Footer links & subtle text */
+        [data-theme="light"] footer a        { color: #475569 !important; }
+        [data-theme="light"] footer a:hover  { color: #0f172a !important; }
+        [data-theme="light"] .text-yellow-700\/60 { color: rgba(161,98,7,0.75) !important; }
+
+        /* Theme toggle button appearance in light mode */
+        [data-theme="light"] #themeToggleBtn {
+            border-color: rgba(15,23,42,0.20) !important;
+            color: #475569;
+        }
+
+        /* ================================================
+           GRAND OPENING COUNTDOWN POPUP
+           ================================================ */
+        :root {
+            --go-overlay-bg:    rgba(0,0,0,0.72);
+            --go-card-bg:       #0f172a;
+            --go-card-border:   rgba(99,102,241,0.35);
+            --go-card-shadow:   0 24px 64px rgba(0,0,0,0.6);
+            --go-heading:       #ffffff;
+            --go-sub:           #94a3b8;
+            --go-accent1:       #6366f1;
+            --go-accent2:       #a855f7;
+            --go-digit-bg:      rgba(255,255,255,0.06);
+            --go-digit-border:  rgba(255,255,255,0.10);
+            --go-digit-text:    #ffffff;
+            --go-label-text:    #94a3b8;
+            --go-sep-text:      rgba(255,255,255,0.35);
+            --go-close-bg:      rgba(255,255,255,0.08);
+            --go-close-hover:   rgba(255,255,255,0.16);
+            --go-close-text:    #94a3b8;
+            --go-badge-bg:      linear-gradient(135deg,#6366f1,#a855f7);
+            --go-badge-text:    #fff;
+        }
+        [data-theme="light"] {
+            --go-overlay-bg:    rgba(15,23,42,0.60);
+            --go-card-bg:       #ffffff;
+            --go-card-border:   rgba(99,102,241,0.25);
+            --go-card-shadow:   0 24px 64px rgba(15,23,42,0.25);
+            --go-heading:       #0f172a;
+            --go-sub:           #475569;
+            --go-digit-bg:      rgba(15,23,42,0.05);
+            --go-digit-border:  rgba(15,23,42,0.12);
+            --go-digit-text:    #0f172a;
+            --go-label-text:    #64748b;
+            --go-sep-text:      rgba(15,23,42,0.30);
+            --go-close-bg:      rgba(15,23,42,0.07);
+            --go-close-hover:   rgba(15,23,42,0.14);
+            --go-close-text:    #475569;
+        }
+
+        #goPopupOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--go-overlay-bg);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 12px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        #goPopupOverlay.go-visible { opacity: 1; }
+        #goPopupOverlay.go-hidden  { opacity: 0; pointer-events: none; }
+
+        #goPopupCard {
+            background: var(--go-card-bg);
+            border: 1px solid var(--go-card-border);
+            box-shadow: var(--go-card-shadow);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 560px;
+            padding: clamp(20px, 5vw, 40px) clamp(16px, 5vw, 40px);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(10px, 2.5vw, 18px);
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+        #goPopupOverlay.go-visible #goPopupCard { transform: translateY(0); }
+
+        #goCloseBtn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: none;
+            background: var(--go-close-bg);
+            color: var(--go-close-text);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            line-height: 1;
+        }
+        #goCloseBtn:hover { background: var(--go-close-hover); }
+
+        .go-badge {
+            display: inline-block;
+            background: var(--go-badge-bg);
+            color: var(--go-badge-text);
+            font-size: clamp(9px, 2vw, 11px);
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 999px;
+        }
+
+        .go-heading {
+            color: var(--go-heading);
+            font-size: clamp(1.3rem, 5vw, 2rem);
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.2;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        .go-heading span {
+            background: linear-gradient(135deg, var(--go-accent1), var(--go-accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .go-sub {
+            color: var(--go-sub);
+            font-size: clamp(0.78rem, 2.5vw, 0.92rem);
+            text-align: center;
+            margin: 0;
+        }
+
+        .go-countdown {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: clamp(6px, 2.5vw, 16px);
+            width: 100%;
+        }
+
+        .go-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .go-digit-wrap {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            max-width: 88px;
+            background: var(--go-digit-bg);
+            border: 1px solid var(--go-digit-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .go-digit {
+            font-size: clamp(1.6rem, 8vw, 2.6rem);
+            font-weight: 800;
+            color: var(--go-digit-text);
+            font-variant-numeric: tabular-nums;
+            font-family: 'Lato', sans-serif;
+            line-height: 1;
+            position: relative;
+            transition: transform 0.18s cubic-bezier(0.22,1,0.36,1), opacity 0.18s ease;
+        }
+        .go-digit.go-flip-out {
+            transform: translateY(-40%) scale(0.85);
+            opacity: 0;
+        }
+        .go-digit.go-flip-in {
+            transform: translateY(40%) scale(0.85);
+            opacity: 0;
+        }
+
+        .go-label {
+            font-size: clamp(8px, 2vw, 11px);
+            font-weight: 600;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            color: var(--go-label-text);
+        }
+
+        .go-sep {
+            font-size: clamp(1.4rem, 6vw, 2.2rem);
+            font-weight: 700;
+            color: var(--go-sep-text);
+            padding-top: clamp(10px, 3vw, 20px);
+            user-select: none;
+        }
+
+        .go-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--go-card-border);
+            margin: 2px 0;
+        }
+
+        .go-date-line {
+            font-size: clamp(0.75rem, 2.5vw, 0.88rem);
+            color: var(--go-sub);
+            text-align: center;
+        }
+        .go-date-line strong {
+            color: var(--go-heading);
+        }
     </style>
 </head>
 
 <body class="bg-neutral-950 text-white font-sans antialiased overflow-x-hidden">
+
+    <!-- Grand Opening Countdown Popup -->
+    <div id="goPopupOverlay" role="dialog" aria-modal="true" aria-label="Grand Opening Countdown">
+        <div id="goPopupCard">
+            <button id="goCloseBtn" aria-label="Close popup">&times;</button>
+            <span class="go-badge">&#127881; Coming Soon</span>
+            <h2 class="go-heading">Grand <span>Opening</span></h2>
+            <p class="go-sub">The Laminars is officially launching. Be part of the beginning.</p>
+            <div class="go-divider"></div>
+            <div class="go-countdown" id="goCountdown">
+                <div class="go-unit">
+                    <div class="go-digit-wrap"><span class="go-digit" id="goDays">00</span></div>
+                    <span class="go-label">Days</span>
+                </div>
+                <div class="go-sep">:</div>
+                <div class="go-unit">
+                    <div class="go-digit-wrap"><span class="go-digit" id="goHours">00</span></div>
+                    <span class="go-label">Hours</span>
+                </div>
+                <div class="go-sep">:</div>
+                <div class="go-unit">
+                    <div class="go-digit-wrap"><span class="go-digit" id="goMins">00</span></div>
+                    <span class="go-label">Mins</span>
+                </div>
+                <div class="go-sep">:</div>
+                <div class="go-unit">
+                    <div class="go-digit-wrap"><span class="go-digit" id="goSecs">00</span></div>
+                    <span class="go-label">Secs</span>
+                </div>
+            </div>
+            <div class="go-divider"></div>
+            <p class="go-date-line"><strong>June 14, 2026</strong> &nbsp;&bull;&nbsp; 9:00 PM</p>
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 p-4">
@@ -584,6 +997,20 @@
                 <a href="#faculties" class="hover:text-blue-400 transition">Faculty</a>
                 <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
             </div>
+            <!-- Theme Toggle Button -->
+            <button id="themeToggleBtn"
+                class="flex items-center justify-center w-9 h-9 rounded-full border border-white/25 hover:border-white/60 text-gray-300 hover:text-white transition-all shrink-0"
+                aria-label="Toggle light/dark theme">
+                <!-- Sun icon: shown in dark mode — click to go light -->
+                <svg id="themeIconSun" class="w-[1.1rem] h-[1.1rem]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" stroke-width="2"/>
+                    <path stroke-linecap="round" stroke-width="2" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+                <!-- Moon icon: shown in light mode — click to go dark -->
+                <svg id="themeIconMoon" class="w-[1.1rem] h-[1.1rem] hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
             <!-- Mobile Menu Button -->
             <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none shrink-0" aria-label="Toggle menu"
                 aria-expanded="false">
@@ -1595,7 +2022,7 @@
     </section>
 
     <!-- CTA Banner -->
-    <section
+    <section id="cta"
         class="py-20 md:py-28 bg-gradient-to-r from-blue-900 via-blue-800 to-purple-900 border-t border-white/5 text-center relative overflow-hidden">
         <div
             class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none">
@@ -2408,6 +2835,127 @@
                     quoteEl.style.opacity = '1';
                 }, 400);
             }, 3000);
+        })();
+
+        // ==========================================
+        // Theme Toggle
+        // ==========================================
+        (function () {
+            const htmlEl = document.documentElement;
+            const btn     = document.getElementById('themeToggleBtn');
+            const sunIcon  = document.getElementById('themeIconSun');
+            const moonIcon = document.getElementById('themeIconMoon');
+
+            function applyTheme(theme) {
+                htmlEl.setAttribute('data-theme', theme);
+                localStorage.setItem('lam-theme', theme);
+                if (theme === 'light') {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                } else {
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                }
+            }
+
+            // Load saved preference (default: dark)
+            applyTheme(localStorage.getItem('lam-theme') || 'light');
+
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    applyTheme(htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+                });
+            }
+        })();
+
+        // ================================================
+        // GRAND OPENING COUNTDOWN POPUP
+        // ================================================
+        (function () {
+            const GRAND_OPENING = new Date('2026-06-14T21:00:00'); // June 14 2026, 9 PM local
+
+            const overlay  = document.getElementById('goPopupOverlay');
+            const closeBtn = document.getElementById('goCloseBtn');
+            const elDays   = document.getElementById('goDays');
+            const elHours  = document.getElementById('goHours');
+            const elMins   = document.getElementById('goMins');
+            const elSecs   = document.getElementById('goSecs');
+
+            if (!overlay) return;
+
+            // If event is already over, never show
+            if (Date.now() >= GRAND_OPENING.getTime()) {
+                overlay.remove();
+                return;
+            }
+
+            // Animate a digit change with flip effect
+            function setDigit(el, value) {
+                const padded = String(value).padStart(2, '0');
+                if (el.textContent === padded) return;
+                el.classList.add('go-flip-out');
+                setTimeout(function () {
+                    el.textContent = padded;
+                    el.classList.remove('go-flip-out');
+                    el.classList.add('go-flip-in');
+                    requestAnimationFrame(function () {
+                        requestAnimationFrame(function () {
+                            el.classList.remove('go-flip-in');
+                        });
+                    });
+                }, 180);
+            }
+
+            function tick() {
+                const diff = GRAND_OPENING.getTime() - Date.now();
+                if (diff <= 0) {
+                    setDigit(elDays, 0); setDigit(elHours, 0);
+                    setDigit(elMins, 0); setDigit(elSecs, 0);
+                    clearInterval(timer);
+                    return;
+                }
+                const days  = Math.floor(diff / 86400000);
+                const hours = Math.floor((diff % 86400000) / 3600000);
+                const mins  = Math.floor((diff % 3600000)  / 60000);
+                const secs  = Math.floor((diff % 60000)    / 1000);
+                setDigit(elDays,  days);
+                setDigit(elHours, hours);
+                setDigit(elMins,  mins);
+                setDigit(elSecs,  secs);
+            }
+
+            // Show popup
+            function showPopup() {
+                overlay.style.display = 'flex';
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        overlay.classList.add('go-visible');
+                    });
+                });
+            }
+
+            // Hide popup
+            function hidePopup() {
+                overlay.classList.remove('go-visible');
+                overlay.classList.add('go-hidden');
+                setTimeout(function () { overlay.style.display = 'none'; }, 400);
+            }
+
+            // Close on button or overlay click (not card click)
+            closeBtn.addEventListener('click', hidePopup);
+            overlay.addEventListener('click', function (e) {
+                if (e.target === overlay) hidePopup();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') hidePopup();
+            });
+
+            // Run initial tick immediately, then every second
+            tick();
+            var timer = setInterval(tick, 1000);
+
+            // Show after a short delay so page have rendered
+            setTimeout(showPopup, 600);
         })();
     </script>
 </body>
