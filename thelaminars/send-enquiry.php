@@ -1,6 +1,6 @@
 <?php
 /**
- * The Laminars — Enquiry Form Mailer
+ * The Laminars — Enquiry Form Mailer 
  * ------------------------------------
  * Receives a POST request from the contact form,
  * sanitizes input, and sends an email to all recipients.
@@ -37,9 +37,9 @@ $subject = clean($_POST['subject'] ?? '');
 $message = clean($_POST['message'] ?? '');
 
 // ── Basic server-side validation ──────────────────────────────────────────────
-if ($name === '' || $phone === '' || $message === '') {
+if ($name === '' || $phone === '') {
     http_response_code(400);
-    echo json_encode(['ok' => false, 'msg' => 'Name, phone, and message are required.']);
+    echo json_encode(['ok' => false, 'msg' => 'Name and phone are required.']);
     exit;
 }
 
@@ -49,8 +49,24 @@ if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
+// ── Map course page path → display name ──────────────────────────────────────
+$subjectMap = [
+    'pages/little-minds.html'        => 'Laminars Little Minds',
+    'pages/foundation-academy.html'  => 'Laminars Foundation Academy',
+    'pages/senior-academy.html'      => 'Laminars Senior Academy',
+    'pages/tech-academy.html'        => 'Laminars Tech Academy',
+    'pages/code-juniors.html'        => 'Laminars Code Juniors',
+    'pages/career-launchpad.html'    => 'Laminars Career Launchpad',
+    'pages/english-academic.html'    => 'English Academic',
+    'pages/english-spoken.html'      => 'English Spoken',
+    'pages/hindi-academic.html'      => 'Hindi Academic',
+    'pages/hindi-basics.html'        => 'Hindi Basics',
+    'pages/language-lab.html'        => 'Laminars Language Lab',
+];
+$subjectLabel = $subjectMap[$subject] ?? ($subject !== '' ? $subject : 'General Enquiry');
+
 // ── Build email ───────────────────────────────────────────────────────────────
-$mailSubject = 'New Enquiry: ' . ($subject !== '' ? $subject . ' — ' : '') . $name;
+$mailSubject = 'New Enquiry || ' . $name . ' || ' . $subjectLabel;
 
 $mailBody = '<!DOCTYPE html>
 <html lang="en">

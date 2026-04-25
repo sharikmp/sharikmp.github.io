@@ -2238,9 +2238,8 @@
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-400 mb-1.5">Message <span
-                                    class="text-red-400">*</span></label>
-                            <textarea name="message" required rows="4"
+                            <label class="block text-sm text-gray-400 mb-1.5">Message</label>
+                            <textarea name="message" rows="4"
                                 placeholder="Tell us about yourself and how we can help..."
                                 class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition resize-none"></textarea>
                             <p class="field-error hidden mt-1 text-xs text-red-400" id="errMessage"></p>
@@ -2981,8 +2980,8 @@
 
             if (fMsg) fMsg.addEventListener('blur', function() {
                 var v = fMsg.value.trim();
-                if (!v) { showErr('errMessage', 'Please enter a message.'); markField(fMsg, false); }
-                else    { clearErr('errMessage'); markField(fMsg, true); }
+                if (v) { clearErr('errMessage'); markField(fMsg, true); }
+                else   { clearErr('errMessage'); fMsg.classList.remove('border-red-500','border-green-500'); }
             });
 
             // ── Course Interest link ─────────────────────────────────────
@@ -3033,10 +3032,9 @@
                         else          { clearErr('errPhone'); markField(fPhone, true); }
                     }
 
-                    // Message
-                    if (!fMsg || !fMsg.value.trim()) {
-                        showErr('errMessage', 'Please enter a message.'); markField(fMsg, false); valid = false;
-                    } else { clearErr('errMessage'); markField(fMsg, true); }
+                    // Message (optional)
+                    if (fMsg && fMsg.value.trim()) { clearErr('errMessage'); markField(fMsg, true); }
+                    else if (fMsg) { clearErr('errMessage'); fMsg.classList.remove('border-red-500','border-green-500'); }
 
                     if (!valid) return;
 
