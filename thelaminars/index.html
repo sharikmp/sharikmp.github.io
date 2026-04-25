@@ -688,9 +688,46 @@
         [data-theme="light"] .educational-quote blockquote { color: #334155 !important; }
         [data-theme="light"] .educational-quote cite       { color: rgba(161,98,7,0.85) !important; }
 
-        /* Neon animation areas always stay dark */
+        /* Neon animation areas always stay dark (hero title handled separately below) */
         [data-theme="light"] .ta-neon-wrapper { background-color: #000 !important; }
         [data-theme="light"] .bg-neon-dark    { background-color: #000 !important; }
+
+        /* ── Hero neon title in light mode ──────────────────────────────────
+           The color-dodge blend relies on a black background.
+           In light mode we make the wrapper transparent and switch to a
+           pure text-shadow glow so the hero gradient shows through.        */
+        [data-theme="light"] #hero .ta-neon-wrapper {
+            background-color: transparent !important;
+        }
+        /* Hide the shimmer + blend pseudo-elements — they only work on black */
+        [data-theme="light"] #hero .ta-neon-wrapper::before,
+        [data-theme="light"] #hero .ta-neon-wrapper::after,
+        [data-theme="light"] #hero .ta-neon-text::after {
+            display: none !important;
+        }
+        /* Replace with text-shadow glow that works on any background */
+        [data-theme="light"] #hero .ta-neon-text {
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+            background: linear-gradient(135deg, #1e3a8a 0%, #4f46e5 45%, #7c3aed 75%, #be185d 100%) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            text-shadow: none !important;
+            filter:
+                drop-shadow(0 0 8px rgba(99,102,241,0.70))
+                drop-shadow(0 0 20px rgba(139,92,246,0.50))
+                drop-shadow(0 0 40px rgba(168,85,247,0.30)) !important;
+        }
+        /* Keep the contrast backdrop on ::before — it adds punch without needing black */
+        [data-theme="light"] #hero .ta-neon-text::before {
+            display: block !important;
+        }
+
+        /* ── Hero particles: boost visibility on the light background ───── */
+        [data-theme="light"] #hero-particles-layer .hero-particle {
+            opacity: 0.55 !important;
+            filter: saturate(1.6) blur(0.3px) !important;
+        }
 
         /* Section header hairline dividers */
         [data-theme="light"] .flex-1.h-px { background-color: rgba(15,23,42,0.10) !important; }
@@ -788,23 +825,31 @@
         #goPopupOverlay.go-visible { opacity: 1; }
         #goPopupOverlay.go-hidden  { opacity: 0; pointer-events: none; }
 
+        /* Wrapper: positions close-btn as sibling of card — avoids canvas stacking issue */
+        #goPopupWrap {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+        }
+
         #goPopupCard {
             background: var(--go-card-bg);
             border: 1px solid var(--go-card-border);
             box-shadow: var(--go-card-shadow);
             border-radius: 20px;
             width: 100%;
-            max-width: 560px;
             padding: clamp(20px, 5vw, 40px) clamp(16px, 5vw, 40px);
+            padding-top: calc(112px + clamp(10px, 2.5vw, 18px));
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: clamp(10px, 2.5vw, 18px);
-            transform: translateY(20px);
-            transition: transform 0.4s ease;
         }
         #goPopupOverlay.go-visible #goPopupCard { transform: translateY(0); }
+        /* Wrapper also needs the un-translate when visible */
+        #goPopupWrap { transform: translateY(20px); transition: transform 0.4s ease; }
+        #goPopupOverlay.go-visible #goPopupWrap { transform: translateY(0); }
 
         #goCloseBtn {
             position: absolute;
@@ -942,6 +987,31 @@
         .go-date-line strong {
             color: var(--go-heading);
         }
+
+        /* Fireworks canvas: full overlay, behind card */
+        #goFireworksCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Ribbon canvas: spans card width at top */
+        #goRibbonCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 112px;
+            border-radius: 20px 20px 0 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Card content must sit above the ribbon canvas */
+        #goPopupCard > *:not(#goRibbonCanvas) { position: relative; z-index: 1; }
+        /* Close button is a sibling of the card (inside #goPopupWrap) — no canvas stacking conflict */
+        #goCloseBtn { position: absolute !important; top: 12px; right: 12px; z-index: 10; }
     </style>
 </head>
 
@@ -949,9 +1019,14 @@
 
     <!-- Grand Opening Countdown Popup -->
     <div id="goPopupOverlay" role="dialog" aria-modal="true" aria-label="Grand Opening Countdown">
-        <div id="goPopupCard">
-            <button id="goCloseBtn" aria-label="Close popup">&times;</button>
-            <span class="go-badge">&#127881; Coming Soon</span>
+        <!-- Full-overlay fireworks canvas (behind card) -->
+        <canvas id="goFireworksCanvas"></canvas>
+        <!-- Wrapper lets close-btn be absolutely positioned above the card without fighting canvas z-index -->
+        <div id="goPopupWrap">
+            <div id="goPopupCard">
+                <!-- Ribbon + neon-title canvas sits across the card top -->
+                <canvas id="goRibbonCanvas"></canvas>
+                <span class="go-badge">&#127881; Coming Soon</span>
             <h2 class="go-heading">Grand <span>Opening</span></h2>
             <p class="go-sub">The Laminars is officially launching. Be part of the beginning.</p>
             <div class="go-divider"></div>
@@ -978,8 +1053,11 @@
             </div>
             <div class="go-divider"></div>
             <p class="go-date-line"><strong>June 14, 2026</strong> &nbsp;&bull;&nbsp; 9:00 PM</p>
-        </div>
-    </div>
+            </div><!-- /#goPopupCard -->
+            <!-- Close button is sibling of card — lives outside canvas stacking context -->
+            <button id="goCloseBtn" aria-label="Close popup">&times;</button>
+        </div><!-- /#goPopupWrap -->
+    </div><!-- /#goPopupOverlay -->
 
     <!-- Navbar -->
     <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 p-4">
@@ -2874,12 +2952,15 @@
         (function () {
             const GRAND_OPENING = new Date('2026-06-14T21:00:00'); // June 14 2026, 9 PM local
 
-            const overlay  = document.getElementById('goPopupOverlay');
-            const closeBtn = document.getElementById('goCloseBtn');
-            const elDays   = document.getElementById('goDays');
-            const elHours  = document.getElementById('goHours');
-            const elMins   = document.getElementById('goMins');
-            const elSecs   = document.getElementById('goSecs');
+            const overlay       = document.getElementById('goPopupOverlay');
+            const card          = document.getElementById('goPopupCard');
+            const closeBtn      = document.getElementById('goCloseBtn');
+            const elDays        = document.getElementById('goDays');
+            const elHours       = document.getElementById('goHours');
+            const elMins        = document.getElementById('goMins');
+            const elSecs        = document.getElementById('goSecs');
+            const fwCanvas      = document.getElementById('goFireworksCanvas');
+            const ribCanvas     = document.getElementById('goRibbonCanvas');
 
             if (!overlay) return;
 
@@ -2889,7 +2970,7 @@
                 return;
             }
 
-            // Animate a digit change with flip effect
+            // ── Digit flip animation ──────────────────────────────────────
             function setDigit(el, value) {
                 const padded = String(value).padStart(2, '0');
                 if (el.textContent === padded) return;
@@ -2899,63 +2980,370 @@
                     el.classList.remove('go-flip-out');
                     el.classList.add('go-flip-in');
                     requestAnimationFrame(function () {
-                        requestAnimationFrame(function () {
-                            el.classList.remove('go-flip-in');
-                        });
+                        requestAnimationFrame(function () { el.classList.remove('go-flip-in'); });
                     });
                 }, 180);
             }
 
             function tick() {
-                const diff = GRAND_OPENING.getTime() - Date.now();
+                var diff = GRAND_OPENING.getTime() - Date.now();
                 if (diff <= 0) {
-                    setDigit(elDays, 0); setDigit(elHours, 0);
-                    setDigit(elMins, 0); setDigit(elSecs, 0);
-                    clearInterval(timer);
+                    setDigit(elDays,0); setDigit(elHours,0);
+                    setDigit(elMins,0); setDigit(elSecs,0);
+                    clearInterval(countdownTimer);
                     return;
                 }
-                const days  = Math.floor(diff / 86400000);
-                const hours = Math.floor((diff % 86400000) / 3600000);
-                const mins  = Math.floor((diff % 3600000)  / 60000);
-                const secs  = Math.floor((diff % 60000)    / 1000);
-                setDigit(elDays,  days);
-                setDigit(elHours, hours);
-                setDigit(elMins,  mins);
-                setDigit(elSecs,  secs);
+                setDigit(elDays,  Math.floor(diff / 86400000));
+                setDigit(elHours, Math.floor((diff % 86400000) / 3600000));
+                setDigit(elMins,  Math.floor((diff % 3600000)  / 60000));
+                setDigit(elSecs,  Math.floor((diff % 60000)    / 1000));
             }
 
-            // Show popup
+            // ── Ribbon canvas ─────────────────────────────────────────────
+            var ribCtx, ribW, ribH, ribAnim;
+            var ribCut = false;      // becomes true when scissors reach centre
+            var scissorX = 0;        // current scissors x position
+            var ribbonLeft  = { x: 0 };  // curtain left edge
+            var ribbonRight = { x: 0 };  // curtain right edge
+
+            function initRibbon() {
+                ribW = card.offsetWidth;
+                ribH = 112;
+                ribCanvas.width  = ribW;
+                ribCanvas.height = ribH;
+                ribCtx = ribCanvas.getContext('2d');
+                scissorX    = 0;
+                ribCut      = false;
+                ribbonLeft  = { x: 0,    vx: 0 };
+                ribbonRight = { x: ribW, vx: 0 };
+                animateRibbon();
+            }
+
+            function drawScissors(ctx, x, y, size) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.strokeStyle = '#fde68a';
+                ctx.lineWidth   = size * 0.12;
+                ctx.lineCap     = 'round';
+                // upper blade
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(-size * 0.55, -size * 0.45);
+                ctx.stroke();
+                // lower blade
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(-size * 0.55,  size * 0.45);
+                ctx.stroke();
+                // handle rings
+                ctx.beginPath();
+                ctx.arc(-size * 0.68, -size * 0.55, size * 0.18, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(-size * 0.68,  size * 0.55, size * 0.18, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // Draw neon glowing title text on canvas
+            function drawNeonTitle(text, x, y) {
+                var fontSize = Math.max(14, Math.min(Math.round(ribW / 9.5), 28));
+                ribCtx.save();
+                ribCtx.font = '800 ' + fontSize + 'px Lato, sans-serif';
+                ribCtx.textAlign    = 'center';
+                ribCtx.textBaseline = 'middle';
+                var glows = [
+                    { color: '#818cf8', blur: 32 },
+                    { color: '#c084fc', blur: 18 },
+                    { color: '#f472b6', blur: 10 }
+                ];
+                for (var gi = 0; gi < glows.length; gi++) {
+                    ribCtx.shadowColor = glows[gi].color;
+                    ribCtx.shadowBlur  = glows[gi].blur;
+                    ribCtx.fillStyle   = '#fff';
+                    ribCtx.fillText(text, x, y, ribW * 0.90);
+                }
+                ribCtx.shadowBlur  = 0;
+                ribCtx.shadowColor = 'transparent';
+                ribCtx.fillStyle   = '#ffffff';
+                ribCtx.fillText(text, x, y, ribW * 0.90);
+                ribCtx.restore();
+            }
+
+            function animateRibbon() {
+                ribCtx.clearRect(0, 0, ribW, ribH);
+                // Ribbon band in lower portion (≈89px); title occupies upper portion
+                var midY = Math.round(ribH * 0.795);
+
+                // -- Dark header background for neon title --
+                ribCtx.save();
+                ribCtx.beginPath();
+                if (ribCtx.roundRect) {
+                    ribCtx.roundRect(0, 0, ribW, ribH, [20, 20, 0, 0]);
+                } else {
+                    ribCtx.rect(0, 0, ribW, ribH);
+                }
+                ribCtx.clip();
+                var bgGrad = ribCtx.createLinearGradient(0, 0, 0, midY - 12);
+                bgGrad.addColorStop(0,   '#060614');
+                bgGrad.addColorStop(0.7, '#0c0c28');
+                bgGrad.addColorStop(1,   'rgba(12,12,40,0.60)');
+                ribCtx.fillStyle = bgGrad;
+                ribCtx.fillRect(0, 0, ribW, midY - 12);
+                ribCtx.restore();
+
+                // -- Neon title (always visible) --
+                drawNeonTitle('THE LAMINARS', ribW / 2, ribH * 0.305);
+
+                if (!ribCut) {
+                    // Scissors travel from left → centre
+                    scissorX += (ribW * 0.5 - scissorX) * 0.04 + 1.2;
+                    if (scissorX >= ribW * 0.5 - 2) {
+                        ribCut = true;
+                        scissorX = ribW * 0.5;
+                        ribbonLeft.vx  = -3;
+                        ribbonRight.vx =  3;
+                    }
+
+                    // Full ribbon
+                    var rib = ribCtx.createLinearGradient(0, 0, ribW, 0);
+                    rib.addColorStop(0,    '#6366f1');
+                    rib.addColorStop(0.45, '#a855f7');
+                    rib.addColorStop(0.55, '#ec4899');
+                    rib.addColorStop(1,    '#f97316');
+                    ribCtx.fillStyle = rib;
+                    ribCtx.beginPath();
+                    ribCtx.roundRect(0, midY - 10, ribW, 20, 4);
+                    ribCtx.fill();
+
+                    // Sheen overlay
+                    var sheen = ribCtx.createLinearGradient(0, midY - 10, 0, midY + 10);
+                    sheen.addColorStop(0,   'rgba(255,255,255,0.30)');
+                    sheen.addColorStop(0.5, 'rgba(255,255,255,0.08)');
+                    sheen.addColorStop(1,   'rgba(0,0,0,0.15)');
+                    ribCtx.fillStyle = sheen;
+                    ribCtx.beginPath();
+                    ribCtx.roundRect(0, midY - 10, ribW, 20, 4);
+                    ribCtx.fill();
+
+                    // Central bow knot
+                    ribCtx.fillStyle = '#fde68a';
+                    ribCtx.beginPath();
+                    ribCtx.ellipse(ribW / 2, midY, 10, 7, 0, 0, Math.PI * 2);
+                    ribCtx.fill();
+
+                    drawScissors(ribCtx, scissorX, midY, 22);
+
+                } else {
+                    // Ribbon falls apart: both halves slide away
+                    ribbonLeft.x  += ribbonLeft.vx;
+                    ribbonRight.x += ribbonRight.vx;
+                    ribbonLeft.vx  = (ribbonLeft.vx  - 0.12) * 0.97;  // ease to stop
+                    ribbonRight.vx = (ribbonRight.vx + 0.12) * 0.97;
+
+                    var gone = Math.abs(ribbonLeft.x) > ribW * 0.55;
+                    if (!gone) {
+                        // Left half
+                        var lg1 = ribCtx.createLinearGradient(ribbonLeft.x, 0, ribW / 2 + ribbonLeft.x, 0);
+                        lg1.addColorStop(0, '#6366f1'); lg1.addColorStop(1, '#a855f7');
+                        ribCtx.fillStyle = lg1;
+                        ribCtx.beginPath();
+                        ribCtx.roundRect(ribbonLeft.x, midY - 10, ribW / 2, 20, [4, 0, 0, 4]);
+                        ribCtx.fill();
+                        // Right half
+                        var lg2 = ribCtx.createLinearGradient(ribW / 2 + ribbonRight.x - ribW / 2, 0, ribW + ribbonRight.x - ribW / 2, 0);
+                        lg2.addColorStop(0, '#ec4899'); lg2.addColorStop(1, '#f97316');
+                        ribCtx.fillStyle = lg2;
+                        ribCtx.beginPath();
+                        ribCtx.roundRect(ribW / 2 + (ribbonRight.x - ribW), midY - 10, ribW / 2, 20, [0, 4, 4, 0]);
+                        ribCtx.fill();
+                    } else {
+                        cancelAnimationFrame(ribAnim);
+                        // Keep the dark header + title visible during the pause
+                        ribCtx.clearRect(0, 0, ribW, ribH);
+                        var bgGrad2 = ribCtx.createLinearGradient(0, 0, 0, midY - 12);
+                        bgGrad2.addColorStop(0,   '#060614');
+                        bgGrad2.addColorStop(0.7, '#0c0c28');
+                        bgGrad2.addColorStop(1,   'rgba(12,12,40,0.60)');
+                        ribCtx.save();
+                        ribCtx.beginPath();
+                        if (ribCtx.roundRect) {
+                            ribCtx.roundRect(0, 0, ribW, ribH, [20, 20, 0, 0]);
+                        } else {
+                            ribCtx.rect(0, 0, ribW, ribH);
+                        }
+                        ribCtx.clip();
+                        ribCtx.fillStyle = bgGrad2;
+                        ribCtx.fillRect(0, 0, ribW, midY - 12);
+                        ribCtx.restore();
+                        drawNeonTitle('THE LAMINARS', ribW / 2, ribH * 0.305);
+                        // Restart ribbon after pause
+                        setTimeout(function () {
+                            scissorX    = 0;
+                            ribCut      = false;
+                            ribbonLeft  = { x: 0,    vx: 0 };
+                            ribbonRight = { x: ribW, vx: 0 };
+                            animateRibbon();
+                        }, 1200);
+                        return;
+                    }
+                }
+
+                ribAnim = requestAnimationFrame(animateRibbon);
+            }
+
+            // ── Fireworks canvas ──────────────────────────────────────────
+            var fwCtx, fwW, fwH, fwRaf;
+            var particles = [];
+            var fwRunning = false;
+
+            var FW_COLORS = [
+                '#6366f1','#a855f7','#ec4899','#f97316',
+                '#facc15','#34d399','#38bdf8','#fb7185'
+            ];
+
+            function initFireworks() {
+                fwW = overlay.offsetWidth  || window.innerWidth;
+                fwH = overlay.offsetHeight || window.innerHeight;
+                fwCanvas.width  = fwW;
+                fwCanvas.height = fwH;
+                fwCtx = fwCanvas.getContext('2d');
+            }
+
+            function spawnBurst(cx, cy) {
+                var count = 52 + Math.floor(Math.random() * 20);
+                for (var i = 0; i < count; i++) {
+                    var angle  = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+                    var speed  = 2.5 + Math.random() * 4.5;
+                    var color  = FW_COLORS[Math.floor(Math.random() * FW_COLORS.length)];
+                    var type   = Math.random() < 0.35 ? 'star' : 'circle';
+                    particles.push({
+                        x: cx, y: cy,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        alpha: 1,
+                        size:  1.8 + Math.random() * 2.5,
+                        color: color,
+                        type:  type,
+                        gravity: 0.06 + Math.random() * 0.04,
+                        decay:   0.016 + Math.random() * 0.010
+                    });
+                }
+            }
+
+            // Four corners with slight inset so bursts stay visible
+            var CORNERS = [
+                function() { return { x: fwW * 0.07, y: fwH * 0.10 }; },
+                function() { return { x: fwW * 0.93, y: fwH * 0.10 }; },
+                function() { return { x: fwW * 0.07, y: fwH * 0.90 }; },
+                function() { return { x: fwW * 0.93, y: fwH * 0.90 }; }
+            ];
+
+            function burstAllCorners() {
+                CORNERS.forEach(function(fn) {
+                    var p = fn();
+                    // Stagger corners by 120ms each for a sequential feel
+                    var idx = CORNERS.indexOf(fn);
+                    setTimeout(function() { spawnBurst(p.x, p.y); }, idx * 120);
+                });
+            }
+
+            function drawStar(ctx, x, y, r) {
+                var pts = 4, inner = r * 0.45;
+                ctx.beginPath();
+                for (var i = 0; i < pts * 2; i++) {
+                    var a = (Math.PI / pts) * i - Math.PI / 2;
+                    var radius = i % 2 === 0 ? r : inner;
+                    if (i === 0) ctx.moveTo(x + radius * Math.cos(a), y + radius * Math.sin(a));
+                    else         ctx.lineTo(x + radius * Math.cos(a), y + radius * Math.sin(a));
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            function fwLoop() {
+                if (!fwRunning) return;
+                fwCtx.clearRect(0, 0, fwW, fwH);
+                for (var i = particles.length - 1; i >= 0; i--) {
+                    var p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += p.gravity;
+                    p.vx *= 0.98;
+                    p.alpha -= p.decay;
+                    if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+                    fwCtx.globalAlpha = p.alpha;
+                    fwCtx.fillStyle   = p.color;
+                    if (p.type === 'star') {
+                        drawStar(fwCtx, p.x, p.y, p.size * 1.4);
+                    } else {
+                        fwCtx.beginPath();
+                        fwCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        fwCtx.fill();
+                    }
+                }
+                fwCtx.globalAlpha = 1;
+                fwRaf = requestAnimationFrame(fwLoop);
+            }
+
+            // ── Popup show / hide ─────────────────────────────────────────
             function showPopup() {
                 overlay.style.display = 'flex';
                 requestAnimationFrame(function () {
                     requestAnimationFrame(function () {
                         overlay.classList.add('go-visible');
+                        // Start canvases
+                        initFireworks();
+                        fwRunning = true;
+                        fwLoop();
+                        burstAllCorners();
+                        var fwInterval = setInterval(burstAllCorners, 3000);
+
+                        initRibbon();
+
+                        // Stop fireworks when popup closes
+                        overlay._stopFw = function() {
+                            fwRunning = false;
+                            cancelAnimationFrame(fwRaf);
+                            cancelAnimationFrame(ribAnim);
+                            clearInterval(fwInterval);
+                            particles = [];
+                        };
                     });
                 });
             }
 
-            // Hide popup
             function hidePopup() {
                 overlay.classList.remove('go-visible');
                 overlay.classList.add('go-hidden');
+                if (overlay._stopFw) overlay._stopFw();
                 setTimeout(function () { overlay.style.display = 'none'; }, 400);
             }
 
-            // Close on button or overlay click (not card click)
+            // Close on ×, backdrop, or Escape
             closeBtn.addEventListener('click', hidePopup);
             overlay.addEventListener('click', function (e) {
-                if (e.target === overlay) hidePopup();
+                if (e.target === overlay || e.target === fwCanvas) hidePopup();
             });
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') hidePopup();
             });
 
-            // Run initial tick immediately, then every second
-            tick();
-            var timer = setInterval(tick, 1000);
+            // Resize: re-init canvases
+            window.addEventListener('resize', function () {
+                if (overlay.classList.contains('go-visible')) {
+                    initFireworks();
+                    ribCanvas.width  = card.offsetWidth;
+                    ribCanvas.height = 112;
+                }
+            });
 
-            // Show after a short delay so page have rendered
-            setTimeout(showPopup, 600);
+            // Countdown tick
+            tick();
+            var countdownTimer = setInterval(tick, 1000);
+
+            // Show 5 seconds after page load
+            setTimeout(showPopup, 2000);
         })();
     </script>
 </body>
