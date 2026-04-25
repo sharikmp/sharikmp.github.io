@@ -2842,11 +2842,10 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
-                    } else {
-                        entry.target.classList.remove('in-view');
+                        timelineObserver.unobserve(entry.target); // one-shot: never remove in-view
                     }
                 });
-            }, { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.2 });
+            }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
             timelineItems.forEach(item => timelineObserver.observe(item));
 
             // ==========================================
@@ -3096,6 +3095,18 @@
                 hi: '"शिक्षा केवल तथ्यों को सीखना नहीं है, बल्कि मन को सोचने के लिए प्रशिक्षित करना है। द लैमिनार्स में, हमारी दृष्टि एक ऐसा वातावरण बनाना है जहाँ छात्रों को प्रश्न पूछने, अवधारणाओं का पता लगाने और अपनी वास्तविक क्षमता की खोज करने के लिए प्रोत्साहित किया जाए। हम केवल सफल छात्रों को नहीं, बल्कि कल के आत्मविश्वासी नेताओं को आकार देने के लिए प्रतिबद्ध हैं।"',
                 en: '"Education is not just the learning of facts, but the training of the mind to think. At The Laminars, our vision is to cultivate an environment where students are encouraged to ask questions, explore concepts, and discover their true potential. We are committed to shaping not just successful students, but confident leaders of tomorrow."'
             };
+
+            // Lock the blockquote height to the taller of the two texts so the
+            // section never reflows when the content swaps (fixes layout-shift jump).
+            var savedText = quoteEl.textContent;
+            var maxH = 0;
+            [texts.hi, texts.en].forEach(function(t) {
+                quoteEl.textContent = t;
+                if (quoteEl.offsetHeight > maxH) maxH = quoteEl.offsetHeight;
+            });
+            quoteEl.textContent = savedText;
+            if (maxH > 0) quoteEl.style.minHeight = maxH + 'px';
+
             let lang = 'hi';
             setInterval(function () {
                 quoteEl.style.opacity = '0';
@@ -3129,7 +3140,7 @@
             }
 
             // Load saved preference (default: dark)
-            applyTheme(localStorage.getItem('lam-theme') || 'light');
+            applyTheme(localStorage.getItem('lam-theme') || 'dark');
 
             if (btn) {
                 btn.addEventListener('click', function () {
