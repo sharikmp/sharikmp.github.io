@@ -2248,6 +2248,7 @@
                         <button type="submit" id="submitBtn"
                             class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition duration-300 text-base">Send
                             Enquiry</button>
+                        <p class="field-error hidden mt-2 text-sm text-red-400 text-center" id="errServer"></p>
                     </form>
                     <!-- Success Message -->
                     <div id="successMessage"
@@ -3040,23 +3041,47 @@
 
                     if (!valid) return;
 
+                    var errServer    = document.getElementById('errServer');
                     var originalText = submitBtn.textContent;
                     submitBtn.textContent = 'Sending...';
-                    submitBtn.disabled = true;
-                    setTimeout(function() {
-                        enquiryForm.style.display = 'none';
-                        successMessage.classList.remove('hidden');
-                        enquiryForm.reset();
-                        [fName, fEmail, fPhone, fMsg].forEach(function(f) {
-                            if (f) f.classList.remove('border-red-500','border-green-500');
-                        });
-                        setTimeout(function() {
-                            successMessage.classList.add('hidden');
-                            enquiryForm.style.display = 'block';
+                    submitBtn.disabled    = true;
+                    if (errServer) { errServer.textContent = ''; errServer.classList.add('hidden'); }
+
+                    var formData = new FormData(enquiryForm);
+                    fetch('send-enquiry.php', { method: 'POST', body: formData })
+                        .then(function(res) { return res.json(); })
+                        .then(function(data) {
+                            if (data.ok) {
+                                enquiryForm.style.display = 'none';
+                                successMessage.classList.remove('hidden');
+                                enquiryForm.reset();
+                                if (fCourse && courseLinkDiv) { courseLinkDiv.style.display = 'none'; }
+                                [fName, fEmail, fPhone, fMsg].forEach(function(f) {
+                                    if (f) f.classList.remove('border-red-500','border-green-500');
+                                });
+                                setTimeout(function() {
+                                    successMessage.classList.add('hidden');
+                                    enquiryForm.style.display = 'block';
+                                    submitBtn.textContent = originalText;
+                                    submitBtn.disabled    = false;
+                                }, 6000);
+                            } else {
+                                if (errServer) {
+                                    errServer.textContent = data.msg || 'Something went wrong. Please try again.';
+                                    errServer.classList.remove('hidden');
+                                }
+                                submitBtn.textContent = originalText;
+                                submitBtn.disabled    = false;
+                            }
+                        })
+                        .catch(function() {
+                            if (errServer) {
+                                errServer.textContent = 'Could not reach the server. Check your connection and try again.';
+                                errServer.classList.remove('hidden');
+                            }
                             submitBtn.textContent = originalText;
-                            submitBtn.disabled = false;
-                        }, 5000);
-                    }, 1500);
+                            submitBtn.disabled    = false;
+                        });
                 });
             }
         });
