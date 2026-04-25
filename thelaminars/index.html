@@ -750,6 +750,11 @@
             color: #334155 !important;
             border-color: rgba(15,23,42,0.15) !important;
         }
+        /* Override the .bg-white\/5 class which has higher specificity than element selectors */
+        [data-theme="light"] input.bg-white\/5,
+        [data-theme="light"] textarea.bg-white\/5 {
+            background-color: #ffffff !important;
+        }
         [data-theme="light"] input::placeholder,
         [data-theme="light"] textarea::placeholder { color: #94a3b8 !important; }
         [data-theme="light"] select option { background: #fff; color: #0f172a; }
@@ -2187,21 +2192,23 @@
                             <div>
                                 <label class="block text-sm text-gray-400 mb-1.5">Full Name <span
                                         class="text-red-400">*</span></label>
-                                <input type="text" name="name" required placeholder="Your name"
+                                <input type="text" name="name" id="fieldName" required placeholder="Your name"
                                     class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
+                                <p class="field-error hidden mt-1 text-xs text-red-400" id="errName"></p>
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-400 mb-1.5">Email <span
-                                        class="text-red-400">*</span></label>
-                                <input type="email" name="email" required placeholder="you@email.com"
+                                <label class="block text-sm text-gray-400 mb-1.5">Email</label>
+                                <input type="email" name="email" id="fieldEmail" placeholder="you@email.com"
                                     class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
+                                <p class="field-error hidden mt-1 text-xs text-red-400" id="errEmail"></p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm text-gray-400 mb-1.5">Phone</label>
-                                <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX"
+                                <label class="block text-sm text-gray-400 mb-1.5">Phone <span class="text-red-400">*</span></label>
+                                <input type="tel" name="phone" id="fieldPhone" required placeholder="10-digit mobile number (e.g. 9876543210)"
                                     class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition">
+                                <p class="field-error hidden mt-1 text-xs text-red-400" id="errPhone"></p>
                             </div>
                             <div>
                                 <label class="block text-sm text-gray-400 mb-1.5">Course Interest</label>
@@ -2224,6 +2231,7 @@
                             <textarea name="message" required rows="4"
                                 placeholder="Tell us about yourself and how we can help..."
                                 class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition resize-none"></textarea>
+                            <p class="field-error hidden mt-1 text-xs text-red-400" id="errMessage"></p>
                         </div>
                         <button type="submit" id="submitBtn"
                             class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition duration-300 text-base">Send
@@ -2868,28 +2876,156 @@
             // ==========================================
             // Enquiry Form Submission
             // ==========================================
-            const enquiryForm = document.getElementById('enquiryForm');
+            const enquiryForm   = document.getElementById('enquiryForm');
             const successMessage = document.getElementById('successMessage');
-            const submitBtn = document.getElementById('submitBtn');
+            const submitBtn      = document.getElementById('submitBtn');
+
+            // ── Form validation helpers ──────────────────────────────────
+            function showErr(id, msg) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                el.textContent = msg;
+                el.classList.remove('hidden');
+            }
+            function clearErr(id) {
+                var el = document.getElementById(id);
+                if (el) { el.textContent = ''; el.classList.add('hidden'); }
+            }
+            function markField(inputEl, valid) {
+                if (valid) {
+                    inputEl.classList.remove('border-red-500');
+                    inputEl.classList.add('border-green-500');
+                } else {
+                    inputEl.classList.remove('border-green-500');
+                    inputEl.classList.add('border-red-500');
+                }
+            }
+
+            // ── Indian phone validation ──────────────────────────────────
+            // Rules:
+            //   1. Exactly 10 digits (after stripping leading +91 / 0 / 91)
+            //   2. First digit >= 6
+            //   3. No four consecutive ascending or same digits
+            function validatePhone(raw) {
+                var digits = raw.replace(/[\s\-().]/g, '');
+                // Strip country code prefixes
+                if (/^(\+91|0091|91)/.test(digits)) {
+                    digits = digits.replace(/^(\+91|0091|91)/, '');
+                }
+                // Strip leading 0 (STD style)
+                digits = digits.replace(/^0/, '');
+
+                if (!/^\d{10}$/.test(digits)) {
+                    return { ok: false, msg: 'Enter a valid 10-digit Indian mobile number.' };
+                }
+                var first = parseInt(digits[0], 10);
+                if (first < 6) {
+                    return { ok: false, msg: 'Mobile number must start with 6, 7, 8, or 9.' };
+                }
+                // Check for 4+ consecutive same digits (e.g. 1111, 9999)
+                if (/([0-9])\1{3}/.test(digits)) {
+                    return { ok: false, msg: 'Number cannot contain 4 or more repeated digits.' };
+                }
+                // Check for 4+ sequential ascending digits (e.g. 1234, 5678)
+                for (var i = 0; i <= digits.length - 4; i++) {
+                    var a = parseInt(digits[i],   10);
+                    var b = parseInt(digits[i+1], 10);
+                    var c = parseInt(digits[i+2], 10);
+                    var d = parseInt(digits[i+3], 10);
+                    if (b === a+1 && c === a+2 && d === a+3) {
+                        return { ok: false, msg: 'Number cannot contain 4 sequential digits (e.g. 1234, 5678).' };
+                    }
+                }
+                return { ok: true };
+            }
+
+            // ── Live validation on blur ──────────────────────────────────
+            var fName  = document.getElementById('fieldName');
+            var fEmail = document.getElementById('fieldEmail');
+            var fPhone = document.getElementById('fieldPhone');
+            var fMsg   = enquiryForm && enquiryForm.querySelector('[name="message"]');
+
+            if (fName) fName.addEventListener('blur', function() {
+                var v = fName.value.trim();
+                if (!v) { showErr('errName', 'Full name is required.'); markField(fName, false); }
+                else    { clearErr('errName'); markField(fName, true); }
+            });
+
+            if (fEmail) fEmail.addEventListener('blur', function() {
+                var v = fEmail.value.trim();
+                if (!v) { clearErr('errEmail'); fEmail.classList.remove('border-red-500','border-green-500'); return; }
+                var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+                if (!ok) { showErr('errEmail', 'Enter a valid email address.'); markField(fEmail, false); }
+                else     { clearErr('errEmail'); markField(fEmail, true); }
+            });
+
+            if (fPhone) fPhone.addEventListener('blur', function() {
+                var v = fPhone.value.trim();
+                if (!v) { showErr('errPhone', 'Phone number is required.'); markField(fPhone, false); return; }
+                var res = validatePhone(v);
+                if (!res.ok) { showErr('errPhone', res.msg); markField(fPhone, false); }
+                else         { clearErr('errPhone'); markField(fPhone, true); }
+            });
+
+            if (fMsg) fMsg.addEventListener('blur', function() {
+                var v = fMsg.value.trim();
+                if (!v) { showErr('errMessage', 'Please enter a message.'); markField(fMsg, false); }
+                else    { clearErr('errMessage'); markField(fMsg, true); }
+            });
+
+            // ── Submit handler ───────────────────────────────────────────
             if (enquiryForm) {
                 enquiryForm.addEventListener('submit', function (e) {
                     e.preventDefault();
-                    if (enquiryForm.checkValidity()) {
-                        const originalText = submitBtn.textContent;
-                        submitBtn.textContent = 'Sending...';
-                        submitBtn.disabled = true;
-                        setTimeout(() => {
-                            enquiryForm.style.display = 'none';
-                            successMessage.classList.remove('hidden');
-                            enquiryForm.reset();
-                            setTimeout(() => {
-                                successMessage.classList.add('hidden');
-                                enquiryForm.style.display = 'block';
-                                submitBtn.textContent = originalText;
-                                submitBtn.disabled = false;
-                            }, 5000);
-                        }, 1500);
+                    var valid = true;
+
+                    // Name
+                    if (!fName || !fName.value.trim()) {
+                        showErr('errName', 'Full name is required.'); markField(fName, false); valid = false;
+                    } else { clearErr('errName'); markField(fName, true); }
+
+                    // Email (optional — validate format only if filled)
+                    if (fEmail && fEmail.value.trim()) {
+                        var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fEmail.value.trim());
+                        if (!emailOk) { showErr('errEmail', 'Enter a valid email address.'); markField(fEmail, false); valid = false; }
+                        else          { clearErr('errEmail'); markField(fEmail, true); }
+                    } else if (fEmail) {
+                        clearErr('errEmail'); fEmail.classList.remove('border-red-500','border-green-500');
                     }
+
+                    // Phone (required)
+                    if (!fPhone || !fPhone.value.trim()) {
+                        showErr('errPhone', 'Phone number is required.'); markField(fPhone, false); valid = false;
+                    } else {
+                        var pRes = validatePhone(fPhone.value.trim());
+                        if (!pRes.ok) { showErr('errPhone', pRes.msg); markField(fPhone, false); valid = false; }
+                        else          { clearErr('errPhone'); markField(fPhone, true); }
+                    }
+
+                    // Message
+                    if (!fMsg || !fMsg.value.trim()) {
+                        showErr('errMessage', 'Please enter a message.'); markField(fMsg, false); valid = false;
+                    } else { clearErr('errMessage'); markField(fMsg, true); }
+
+                    if (!valid) return;
+
+                    var originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Sending...';
+                    submitBtn.disabled = true;
+                    setTimeout(function() {
+                        enquiryForm.style.display = 'none';
+                        successMessage.classList.remove('hidden');
+                        enquiryForm.reset();
+                        [fName, fEmail, fPhone, fMsg].forEach(function(f) {
+                            if (f) f.classList.remove('border-red-500','border-green-500');
+                        });
+                        setTimeout(function() {
+                            successMessage.classList.add('hidden');
+                            enquiryForm.style.display = 'block';
+                            submitBtn.textContent = originalText;
+                            submitBtn.disabled = false;
+                        }, 5000);
+                    }, 1500);
                 });
             }
         });
