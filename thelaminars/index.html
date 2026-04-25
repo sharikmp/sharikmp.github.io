@@ -2212,17 +2212,29 @@
                             </div>
                             <div>
                                 <label class="block text-sm text-gray-400 mb-1.5">Course Interest</label>
-                                <select name="subject"
+                                <select name="subject" id="fieldCourse"
                                     class="w-full border border-white/10 rounded-xl px-4 py-3 text-gray-300 focus:border-blue-500 focus:outline-none transition appearance-none"
                                     style="background-color:rgba(255,255,255,0.05);">
                                     <option value="" class="bg-zinc-900">Select a course</option>
-                                    <option value="science" class="bg-zinc-900">Science</option>
-                                    <option value="hindi" class="bg-zinc-900">Hindi</option>
-                                    <option value="english" class="bg-zinc-900">English</option>
-                                    <option value="technical" class="bg-zinc-900">Technical Subjects</option>
-                                    <option value="jee" class="bg-zinc-900">JEE Main &amp; Advanced</option>
-                                    <option value="neet" class="bg-zinc-900">NEET (UG)</option>
+                                    <option value="pages/little-minds.html" class="bg-zinc-900">Laminars Little Minds</option>
+                                    <option value="pages/foundation-academy.html" class="bg-zinc-900">Laminars Foundation Academy</option>
+                                    <option value="pages/senior-academy.html" class="bg-zinc-900">Laminars Senior Academy</option>
+                                    <option value="pages/tech-academy.html" class="bg-zinc-900">Laminars Tech Academy</option>
+                                    <option value="pages/code-juniors.html" class="bg-zinc-900">Laminars Code Juniors</option>
+                                    <option value="pages/career-launchpad.html" class="bg-zinc-900">Laminars Career Launchpad</option>
+                                    <option value="pages/english-academic.html" class="bg-zinc-900">English Academic</option>
+                                    <option value="pages/english-spoken.html" class="bg-zinc-900">English Spoken</option>
+                                    <option value="pages/hindi-academic.html" class="bg-zinc-900">Hindi Academic</option>
+                                    <option value="pages/hindi-basics.html" class="bg-zinc-900">Hindi Basics</option>
+                                    <option value="pages/language-lab.html" class="bg-zinc-900">Laminars Language Lab</option>
                                 </select>
+                                <div id="courseLink" style="display:none;" class="mt-2">
+                                    <a id="courseLinkAnchor" href="#" target="_blank" rel="noopener noreferrer"
+                                        class="inline-flex items-center gap-1.5 text-sm text-blue-400 hover:text-blue-300 transition">
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                        <span id="courseLinkText">View Course Details</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -2972,6 +2984,25 @@
                 if (!v) { showErr('errMessage', 'Please enter a message.'); markField(fMsg, false); }
                 else    { clearErr('errMessage'); markField(fMsg, true); }
             });
+
+            // ── Course Interest link ─────────────────────────────────────
+            var fCourse         = document.getElementById('fieldCourse');
+            var courseLinkDiv   = document.getElementById('courseLink');
+            var courseLinkAnchor = document.getElementById('courseLinkAnchor');
+            var courseLinkText  = document.getElementById('courseLinkText');
+
+            if (fCourse && courseLinkDiv) {
+                fCourse.addEventListener('change', function() {
+                    var val = fCourse.value;
+                    if (val) {
+                        courseLinkAnchor.href = val;
+                        courseLinkText.textContent = fCourse.options[fCourse.selectedIndex].text + ' — View Details';
+                        courseLinkDiv.style.display = 'block';
+                    } else {
+                        courseLinkDiv.style.display = 'none';
+                    }
+                });
+            }
 
             // ── Submit handler ───────────────────────────────────────────
             if (enquiryForm) {
