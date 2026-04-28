@@ -4,19 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bus Escape</title>
+    <title>Bus Escape · Neural Minds</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 
 <body class="game-page">
     <nav class="game-nav">
-        <a class="gn-brand" href="../index.html">
-            <img src="https://www.clipartmax.com/png/small/213-2136486_brain-free-icon-icon-brain.png" alt="Neural Minds">
-            NEURAL MINDS
-        </a>
-        <span class="gn-sep">&middot;</span>
-        <a href="../index.html">Home</a>
-        <a href="../index.html#games">All Games</a>
+        <div class="inner">
+            <a class="gn-brand" href="../">
+                <canvas id="gn-logo-canvas" width="30" height="30" aria-hidden="true"></canvas>
+                NEURAL MINDS
+            </a>
+            <div class="gn-links">
+                <a href="../"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="../#games" class="gn-back"><i class="fa-solid fa-gamepad"></i> All Games</a>
+            </div>
+        </div>
     </nav>
     <div id="sound-toggle" class="sound-toggle" onclick="toggleSound()">🔊</div>
 
@@ -42,7 +46,7 @@
     </div>
 
     <div id="start-modal" class="modal-overlay">
-        <img id="start-bus-img" src="bus.png" alt="Bus">
+        <img id="start-bus-img" src="../assets/sounds/bus.png" alt="Bus">
         <h1>Bus Escape</h1>
         <p>Tap a bus to release it &mdash; only if its path to the edge is clear.<br>Clear all buses before time runs
             out!</p>
@@ -128,7 +132,7 @@
         <div id="countdown-number"></div>
     </div>
 
-    <audio id="beep-beep-audio" src="beep-beep.mp3"></audio>
+    <audio id="beep-beep-audio" src="../assets/sounds/beep-beep.mp3"></audio>
     <audio id="incorrect-audio" src="../assets/sounds/incorrect.mp3"></audio>
 
     <footer id="footer">
@@ -136,12 +140,50 @@
     </footer>
 
     <footer class="game-footer">
-        <a href="../index.html">Neural Minds</a> &nbsp;&middot;&nbsp;
+        <a href="../">Neural Minds</a> &nbsp;&middot;&nbsp;
         Made with <span style="color:#ef4444">♥</span> and code by
         <a href="mailto:sharik@example.com">Sharik</a>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        /* ── NAV CANVAS LOGO ── */
+        (function () {
+            const c = document.getElementById('gn-logo-canvas');
+            if (!c) return;
+            const size = c.width, ctx = c.getContext('2d');
+            const cx = size / 2, cy = size / 2, r = size * 0.42;
+            ctx.clearRect(0, 0, size, size);
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const a = (Math.PI / 3) * i - Math.PI / 6;
+                i === 0 ? ctx.moveTo(cx + r * Math.cos(a), cy + r * Math.sin(a))
+                        : ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+            }
+            ctx.closePath();
+            const hg = ctx.createLinearGradient(0, 0, size, size);
+            hg.addColorStop(0, 'rgba(59,130,246,0.25)'); hg.addColorStop(1, 'rgba(129,140,248,0.15)');
+            ctx.fillStyle = hg; ctx.fill();
+            ctx.strokeStyle = 'rgba(56,189,248,0.7)'; ctx.lineWidth = size * 0.06; ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx, cy, r * 0.28, 0, Math.PI * 2);
+            const ng = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 0.28);
+            ng.addColorStop(0, '#38bdf8'); ng.addColorStop(1, '#3b82f6');
+            ctx.fillStyle = ng; ctx.fill();
+            ctx.strokeStyle = 'rgba(56,189,248,0.9)'; ctx.lineWidth = size * 0.045; ctx.lineCap = 'round';
+            for (let i = 0; i < 3; i++) {
+                const a = (Math.PI / 3) * (i * 2) - Math.PI / 6;
+                ctx.beginPath(); ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + r * 0.72 * Math.cos(a), cy + r * 0.72 * Math.sin(a)); ctx.stroke();
+            }
+            ctx.fillStyle = 'rgba(129,140,248,0.9)';
+            for (let i = 0; i < 3; i++) {
+                const a = (Math.PI / 3) * (i * 2) - Math.PI / 6;
+                ctx.beginPath();
+                ctx.arc(cx + r * 0.72 * Math.cos(a), cy + r * 0.72 * Math.sin(a), size * 0.07, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        })();
+    </script>
 </body>
 
 </html>

@@ -752,7 +752,7 @@ function buildLevelCards() {
     LEVELS.forEach((level, i) => {
         const card = document.createElement('div');
         card.className = 'level-card';
-        const busImgs = Array(i + 1).fill('<img src="bus.png" alt="bus" class="lc-bus-img">').join('');
+        const busImgs = Array(i + 1).fill('<img src="../assets/sounds/bus.png" alt="bus" class="lc-bus-img">').join('');
         card.innerHTML = `
                     <div class="lc-name">${level.name}</div>
                     <div class="lc-buses">${busImgs}</div>`;
