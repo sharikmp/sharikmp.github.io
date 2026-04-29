@@ -1,14 +1,30 @@
 <?php
 /**
- * The Laminars — Enquiry Form Mailer 
+ * The Laminars — Enquiry Form Mailer
  * ------------------------------------
  * Receives a POST request from the contact form,
  * sanitizes input, and sends an email to all recipients.
  *
- * To add more recipients: just add their email to the $recipients array below.
+ * Sensitive config (recipients, keys) lives in ../config.php
+ * which is outside public_html and never web-accessible.
  */
 
 header('Content-Type: application/json; charset=utf-8');
+
+// ── Load config (one level above public_html, never browser-accessible) ───────
+$configPath = __DIR__ . '/../config.php';
+if (!file_exists($configPath)) {
+    // Fallback: inline defaults so local dev / preview still works.
+    // On the live server this block should never run.
+    define('MAIL_RECIPIENTS',   ['sharik.madhyapradeshi@gmail.com', 'info@thelaminars.com']);
+    define('MAIL_FROM_NAME',    'The Laminars');
+    define('MAIL_FROM_ADDRESS', 'info@thelaminars.com');
+    define('RATE_LIMIT_MAX',    3);
+    define('RATE_LIMIT_WINDOW', 300);
+    define('ALLOWED_ORIGINS',   ['https://www.thelaminars.com', 'https://thelaminars.com']);
+} else {
+    require_once $configPath;
+}
 
 // ── Only allow POST ───────────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -17,12 +33,54 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// ── Origin check (blocks cross-site form submissions) ────────────────────────
+$origin  = $_SERVER['HTTP_ORIGIN']  ?? '';
+$referer = $_SERVER['HTTP_REFERER'] ?? '';
+$allowedOrigins = ALLOWED_ORIGINS;
+$originOk = false;
+foreach ($allowedOrigins as $allowed) {
+    if ($origin === $allowed || str_starts_with($referer, $allowed)) {
+        $originOk = true;
+        break;
+    }
+}
+// Allow when running locally (no origin header) — remove in production if you prefer strict
+if ($origin === '' && $referer === '') {
+    $originOk = true;
+}
+if (!$originOk) {
+    http_response_code(403);
+    echo json_encode(['ok' => false, 'msg' => 'Forbidden.']);
+    exit;
+}
+
+// ── Honeypot: bots fill hidden fields, humans don't ──────────────────────────
+if (!empty($_POST['website'])) {
+    // Silently succeed so bots don't know they were blocked
+    echo json_encode(['ok' => true]);
+    exit;
+}
+
+// ── Rate limiting (file-based, no database needed) ───────────────────────────
+$ip       = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$rateFile = sys_get_temp_dir() . '/laminars_rl_' . md5($ip) . '.json';
+$now      = time();
+$window   = RATE_LIMIT_WINDOW;
+$maxHits  = RATE_LIMIT_MAX;
+
+$log = file_exists($rateFile) ? json_decode(file_get_contents($rateFile), true) : [];
+$log = array_values(array_filter($log, fn($t) => ($now - $t) < $window));
+
+if (count($log) >= $maxHits) {
+    http_response_code(429);
+    echo json_encode(['ok' => false, 'msg' => 'Too many requests. Please wait a few minutes and try again.']);
+    exit;
+}
+$log[] = $now;
+file_put_contents($rateFile, json_encode($log));
+
 // ── Recipients ────────────────────────────────────────────────────────────────
-// Add or remove email addresses here — one per line.
-$recipients = [
-    'sharik.madhyapradeshi@gmail.com',
-    'info@thelaminars.com',
-];
+$recipients = MAIL_RECIPIENTS;
 
 // ── Helper: sanitize a string ─────────────────────────────────────────────────
 function clean(string $value): string {
@@ -136,8 +194,8 @@ $mailBody = '<!DOCTYPE html>
 </body></html>';
 
 // ── Mail headers ──────────────────────────────────────────────────────────────
-$fromName    = 'The Laminars';
-$fromAddress = 'info@thelaminars.com';   // must match your hosting domain
+$fromName    = MAIL_FROM_NAME;
+$fromAddress = MAIL_FROM_ADDRESS;
 $replyTo     = $email !== '' ? $email : $fromAddress;
 
 $headers  = 'MIME-Version: 1.0' . "\r\n";

@@ -4,3 +4,6 @@ tradex/archive
 *.log
 *.tmp
 *.target/
+
+# PHP config files with sensitive values (upload manually to server, never commit)
+thelaminars/config.php
