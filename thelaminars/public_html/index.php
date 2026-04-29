@@ -1,3 +1,11 @@
+<?php
+// Load site config (lives outside public_html, never browser-accessible)
+if (file_exists(__DIR__ . '/../config.php')) {
+    require_once __DIR__ . '/../config.php';
+}
+// Defaults if config.php is absent (local preview / fresh install)
+if (!defined('SHOW_OPENING_POPUP')) define('SHOW_OPENING_POPUP', false);
+?>
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 
@@ -1169,7 +1177,7 @@
 <body class="bg-neutral-950 text-white font-sans antialiased overflow-x-hidden">
 
     <!-- Grand Opening Countdown Popup -->
-    <div id="goPopupOverlay" role="dialog" aria-modal="true" aria-label="Grand Opening Countdown">
+    <div id="goPopupOverlay" data-enabled="<?= SHOW_OPENING_POPUP ? '1' : '0' ?>" role="dialog" aria-modal="true" aria-label="Grand Opening Countdown">
         <!-- Full-overlay fireworks canvas (behind card) -->
         <canvas id="goFireworksCanvas"></canvas>
         <!-- Wrapper lets close-btn be absolutely positioned above the card without fighting canvas z-index -->
@@ -3319,6 +3327,12 @@
             const ribCanvas     = document.getElementById('goRibbonCanvas');
 
             if (!overlay) return;
+
+            // If disabled via config.php flag, remove and exit
+            if (overlay.dataset.enabled !== '1') {
+                overlay.remove();
+                return;
+            }
 
             // If event is already over, never show
             if (Date.now() >= GRAND_OPENING.getTime()) {
