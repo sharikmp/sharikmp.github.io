@@ -167,7 +167,7 @@ $mailBody = '<!DOCTYPE html>
               <tr>
                 <td style="padding-bottom:16px;">
                   <div style="font-weight:bold;color:#1d4ed8;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Course Interest</div>
-                  <div style="margin-top:4px;font-size:15px;color:#1a202c;">' . ($subject !== '' ? $subject : '<em style="color:#888888;">Not selected</em>') . '</div>
+                  <div style="margin-top:4px;font-size:15px;color:#1a202c;">' . ($subject !== '' ? $subjectLabel : '<em style="color:#888888;">Not selected</em>') . '</div>
                 </td>
               </tr>
               <tr>
