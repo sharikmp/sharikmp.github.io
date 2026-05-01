@@ -6,13 +6,14 @@
  * Creates one immutable visual frame snapshot.
  * Pure function — no side effects.
  */
-function mkFrame(arr, clrs, comp, sw, log) {
+function mkFrame(arr, clrs, comp, sw, log, animMeta) {
     return {
-        values: [...arr],
-        colors: [...clrs],
+        values:      [...arr],
+        colors:      [...clrs],
         comparisons: comp,
-        swaps: sw,
-        log: log
+        swaps:       sw,
+        log:         log,
+        animMeta:    animMeta || null
     };
 }
 
@@ -48,7 +49,7 @@ function* bubbleSortGen(arr, isDesc) {
                 yield mkFrame(arr, clrs, comp, sw, {
                     opName: 'Swap',
                     details: `Index [${j}] and Index [${j + 1}]`
-                });
+                }, { animType: 'swap', swapIndices: [j, j + 1] });
                 swapped = true;
             }
 
@@ -113,7 +114,7 @@ function* selectionSortGen(arr, isDesc) {
             yield mkFrame(arr, clrs, comp, sw, {
                 opName: 'Swap',
                 details: `Starting element [${i}] with target element [${minIdx}]`
-            });
+            }, { animType: 'swap', swapIndices: [i, minIdx] });
         }
         clrs[minIdx] = 'bar-default';
         clrs[i] = 'bar-sorted';
@@ -292,21 +293,22 @@ function* _quickPartitionGen(arr, low, high, clrs, stats, isDesc) {
             yield mkFrame(arr, clrs, stats.comp, stats.sw, {
                 opName: 'Swap',
                 details: `Value ${arr[j]} ${isDesc ? '>' : '<'} pivot. Swapping [${i}] & [${j}]`
-            });
+            }, { animType: 'swap', swapIndices: [i, j] });
             clrs[i] = 'bar-default';
         }
         clrs[j] = 'bar-default';
     }
 
-    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
-    clrs[i + 1] = 'bar-sorted';
+    const pivotFinalIdx = i + 1;
+    [arr[pivotFinalIdx], arr[high]] = [arr[high], arr[pivotFinalIdx]];
+    clrs[pivotFinalIdx] = 'bar-sorted';
     clrs[high] = 'bar-default';
     stats.sw++;
     yield mkFrame(arr, clrs, stats.comp, stats.sw, {
         opName: 'Place Pivot',
-        details: `Pivot (${pivot}) moved to correct position [${i + 1}]`
-    });
-    return i + 1;
+        details: `Pivot (${pivot}) moved to correct position [${pivotFinalIdx}]`
+    }, { animType: 'swap', swapIndices: [pivotFinalIdx, high] });
+    return pivotFinalIdx;
 }
 
 function* _quickHelperGen(arr, low, high, clrs, stats, isDesc) {
@@ -390,15 +392,78 @@ function collectFrames(algo, sourceArray, isDesc) {
     return result;
 }
 
+// ==========================================================================
+// SECTION 2a: ANIMATION HELPERS (Phase 2)
+// ==========================================================================
+
+/** Returns a Promise that resolves on the element's next transitionend event. */
+function waitForTransition(el) {
+    return new Promise(resolve =>
+        el.addEventListener('transitionend', resolve, { once: true })
+    );
+}
+
+/** Clamps a CSS transition duration so it never exceeds the frame delay or is too short. */
+function clampDur(ms) {
+    return Math.max(80, Math.min(ms, 500));
+}
+
+/**
+ * Slides bars at idxA and idxB across each other on the X-axis, then snaps
+ * them back to their correct DOM positions with the final frame state applied.
+ */
+async function animateSwap(idxA, idxB, frame) {
+    const barA = ui.bars[idxA].bar;
+    const barB = ui.bars[idxB].bar;
+    const rectA = barA.getBoundingClientRect();
+    const rectB = barB.getBoundingClientRect();
+    const dx  = rectB.left - rectA.left;
+    const dur = clampDur(delay * 0.6);
+
+    barA.style.transition = `transform ${dur}ms ease`;
+    barB.style.transition = `transform ${dur}ms ease`;
+    barA.style.transform  = `translateX(${dx}px)`;
+    barB.style.transform  = `translateX(${-dx}px)`;
+
+    await waitForTransition(barA);
+
+    // Snap: disable all transitions momentarily so height/colour snap is instant
+    barA.style.transition = 'none';
+    barB.style.transition = 'none';
+    barA.style.transform  = '';
+    barB.style.transform  = '';
+    ui.setBarHeight(idxA, frame.values[idxA]);
+    ui.setBarHeight(idxB, frame.values[idxB]);
+    ui.setBarColor(idxA,  frame.colors[idxA]);
+    ui.setBarColor(idxB,  frame.colors[idxB]);
+    // Force reflow so the snap is committed before transitions are re-enabled
+    barA.offsetHeight; // eslint-disable-line no-unused-expressions
+    barA.style.transition = '';
+    barB.style.transition = '';
+}
+
 /** Applies the frame at idx to DOM bars, stats and log. */
-function renderFrame(idx) {
+async function renderFrame(idx) {
     const frame = frames[idx];
     if (!frame) return;
 
-    for (let i = 0; i < ui.bars.length; i++) {
-        ui.setBarHeight(i, frame.values[i]);
-        ui.setBarColor(i, frame.colors[i]);
+    if (frame.animMeta?.animType === 'swap') {
+        const [idxA, idxB] = frame.animMeta.swapIndices;
+        // Run the sliding animation; it applies final heights/colours for idxA & idxB
+        await animateSwap(idxA, idxB, frame);
+        // Apply remaining bars (those not involved in the swap)
+        for (let i = 0; i < ui.bars.length; i++) {
+            if (i === idxA || i === idxB) continue;
+            ui.setBarHeight(i, frame.values[i]);
+            ui.setBarColor(i,  frame.colors[i]);
+        }
+    } else {
+        for (let i = 0; i < ui.bars.length; i++) {
+            ui.setBarHeight(i, frame.values[i]);
+            ui.setBarColor(i,  frame.colors[i]);
+        }
     }
+
     ui.updateStats(frame.comparisons, frame.swaps);
 
     // Replay log from frame 0 → idx so backward navigation works correctly
@@ -438,7 +503,7 @@ function playAuto() {
     animState = 'playing';
     updateButtonStates();
 
-    function tick() {
+    async function tick() {
         if (animState !== 'playing') return;
         const next = frameIndex + 1;
         if (next >= frames.length) {
@@ -446,7 +511,9 @@ function playAuto() {
             updateButtonStates();
             return;
         }
-        renderFrame(next);
+        await renderFrame(next);
+        // Re-check state after async animation (user may have paused during swap)
+        if (animState !== 'playing') return;
         if (next === frames.length - 1) {
             animState = 'done';
             updateButtonStates();
@@ -676,16 +743,16 @@ const ui = {
 
         this.sortBtn.addEventListener('click', togglePlay);
 
-        this.prevBtn.addEventListener('click', () => {
+        this.prevBtn.addEventListener('click', async () => {
             if (frameIndex > 0) {
-                renderFrame(frameIndex - 1);
+                await renderFrame(frameIndex - 1);
                 updateButtonStates();
             }
         });
 
-        this.nextBtn.addEventListener('click', () => {
+        this.nextBtn.addEventListener('click', async () => {
             if (frameIndex < frames.length - 1) {
-                renderFrame(frameIndex + 1);
+                await renderFrame(frameIndex + 1);
                 updateButtonStates();
             }
         });
