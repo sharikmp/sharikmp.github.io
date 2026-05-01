@@ -8,11 +8,11 @@
  */
 function mkFrame(arr, clrs, comp, sw, log) {
     return {
-        values:      [...arr],
-        colors:      [...clrs],
+        values: [...arr],
+        colors: [...clrs],
         comparisons: comp,
-        swaps:       sw,
-        log:         log
+        swaps: sw,
+        log: log
     };
 }
 
@@ -20,7 +20,7 @@ function mkFrame(arr, clrs, comp, sw, log) {
 // Bubble Sort Generator
 // --------------------------------------------------------------------------
 function* bubbleSortGen(arr, isDesc) {
-    const n    = arr.length;
+    const n = arr.length;
     const clrs = new Array(n).fill('bar-default');
     let comp = 0, sw = 0;
 
@@ -32,7 +32,7 @@ function* bubbleSortGen(arr, isDesc) {
     for (let i = 0; i < n - 1; i++) {
         let swapped = false;
         for (let j = 0; j < n - i - 1; j++) {
-            clrs[j]     = 'bar-comparing';
+            clrs[j] = 'bar-comparing';
             clrs[j + 1] = 'bar-comparing';
             yield mkFrame(arr, clrs, comp, sw, {
                 opName: 'Compare',
@@ -42,7 +42,7 @@ function* bubbleSortGen(arr, isDesc) {
 
             if (isDesc ? arr[j] < arr[j + 1] : arr[j] > arr[j + 1]) {
                 [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-                clrs[j]     = 'bar-swapping';
+                clrs[j] = 'bar-swapping';
                 clrs[j + 1] = 'bar-swapping';
                 sw++;
                 yield mkFrame(arr, clrs, comp, sw, {
@@ -52,7 +52,7 @@ function* bubbleSortGen(arr, isDesc) {
                 swapped = true;
             }
 
-            clrs[j]     = 'bar-default';
+            clrs[j] = 'bar-default';
             clrs[j + 1] = 'bar-default';
         }
         clrs[n - i - 1] = 'bar-sorted';
@@ -72,7 +72,7 @@ function* bubbleSortGen(arr, isDesc) {
 // Selection Sort Generator
 // --------------------------------------------------------------------------
 function* selectionSortGen(arr, isDesc) {
-    const n    = arr.length;
+    const n = arr.length;
     const clrs = new Array(n).fill('bar-default');
     let comp = 0, sw = 0;
 
@@ -96,7 +96,7 @@ function* selectionSortGen(arr, isDesc) {
 
             if (isDesc ? arr[j] > arr[minIdx] : arr[j] < arr[minIdx]) {
                 if (minIdx !== i) clrs[minIdx] = 'bar-default';
-                minIdx      = j;
+                minIdx = j;
                 clrs[minIdx] = 'bar-swapping';
                 yield mkFrame(arr, clrs, comp, sw, {
                     opName: 'New Target',
@@ -116,7 +116,7 @@ function* selectionSortGen(arr, isDesc) {
             });
         }
         clrs[minIdx] = 'bar-default';
-        clrs[i]      = 'bar-sorted';
+        clrs[i] = 'bar-sorted';
     }
     clrs[n - 1] = 'bar-sorted';
     yield mkFrame(arr, clrs, comp, sw, {
@@ -129,7 +129,7 @@ function* selectionSortGen(arr, isDesc) {
 // Insertion Sort Generator
 // --------------------------------------------------------------------------
 function* insertionSortGen(arr, isDesc) {
-    const n    = arr.length;
+    const n = arr.length;
     const clrs = new Array(n).fill('bar-default');
     let comp = 0, sw = 0;
 
@@ -141,8 +141,8 @@ function* insertionSortGen(arr, isDesc) {
 
     for (let i = 1; i < n; i++) {
         const key = arr[i];
-        let j     = i - 1;
-        clrs[i]   = 'bar-swapping';
+        let j = i - 1;
+        clrs[i] = 'bar-swapping';
         yield mkFrame(arr, clrs, comp, sw, {
             opName: 'Select',
             details: `Index [${i}] (value: ${key}) to insert into sorted sub-array`
@@ -154,9 +154,9 @@ function* insertionSortGen(arr, isDesc) {
             comp++;
 
             if (isDesc ? arr[j] < key : arr[j] > key) {
-                arr[j + 1]     = arr[j];
+                arr[j + 1] = arr[j];
                 sw++;
-                clrs[j + 1]    = 'bar-swapping';
+                clrs[j + 1] = 'bar-swapping';
                 yield mkFrame(arr, clrs, comp, sw, {
                     opName: 'Shift',
                     details: `Moving index [${j}] (value: ${arr[j]}) to [${j + 1}]`
@@ -169,8 +169,8 @@ function* insertionSortGen(arr, isDesc) {
             }
         }
 
-        arr[j + 1]   = key;
-        clrs[j + 1]  = 'bar-sorted';
+        arr[j + 1] = key;
+        clrs[j + 1] = 'bar-sorted';
         for (let k = 0; k <= i; k++) clrs[k] = 'bar-sorted';
         yield mkFrame(arr, clrs, comp, sw, {
             opName: 'Insert',
@@ -187,7 +187,7 @@ function* insertionSortGen(arr, isDesc) {
 // Merge Sort Generators
 // --------------------------------------------------------------------------
 function* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen) {
-    const L  = arr.slice(l, m + 1);
+    const L = arr.slice(l, m + 1);
     const Rv = arr.slice(m + 1, r + 1);
     let i = 0, j = 0, k = l;
 
@@ -197,7 +197,7 @@ function* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen) {
     });
 
     while (i < L.length && j < Rv.length) {
-        clrs[l + i]     = 'bar-comparing';
+        clrs[l + i] = 'bar-comparing';
         clrs[m + 1 + j] = 'bar-comparing';
         yield mkFrame(arr, clrs, stats.comp, stats.sw, null);
         stats.comp++;
@@ -211,13 +211,13 @@ function* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen) {
             details: `Value ${arr[k]} into index [${k}]`
         });
         clrs[k] = (r - l === totalLen - 1) ? 'bar-sorted' : 'bar-default';
-        if (l + i < totalLen)     clrs[l + i]     = 'bar-default';
+        if (l + i < totalLen) clrs[l + i] = 'bar-default';
         if (m + 1 + j < totalLen) clrs[m + 1 + j] = 'bar-default';
         k++;
     }
 
     while (i < L.length) {
-        arr[k]  = L[i];
+        arr[k] = L[i];
         clrs[k] = 'bar-swapping';
         stats.sw++;
         yield mkFrame(arr, clrs, stats.comp, stats.sw, {
@@ -229,7 +229,7 @@ function* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen) {
     }
 
     while (j < Rv.length) {
-        arr[k]  = Rv[j];
+        arr[k] = Rv[j];
         clrs[k] = 'bar-swapping';
         stats.sw++;
         yield mkFrame(arr, clrs, stats.comp, stats.sw, {
@@ -244,14 +244,14 @@ function* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen) {
 function* _mergeHelperGen(arr, l, r, clrs, stats, isDesc, totalLen) {
     if (l >= r) return;
     const m = l + Math.floor((r - l) / 2);
-    yield* _mergeHelperGen(arr, l,     m, clrs, stats, isDesc, totalLen);
+    yield* _mergeHelperGen(arr, l, m, clrs, stats, isDesc, totalLen);
     yield* _mergeHelperGen(arr, m + 1, r, clrs, stats, isDesc, totalLen);
     yield* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen);
 }
 
 function* mergeSortGen(arr, isDesc) {
-    const n     = arr.length;
-    const clrs  = new Array(n).fill('bar-default');
+    const n = arr.length;
+    const clrs = new Array(n).fill('bar-default');
     const stats = { comp: 0, sw: 0 };
 
     yield mkFrame(arr, clrs, stats.comp, stats.sw, {
@@ -271,7 +271,7 @@ function* mergeSortGen(arr, isDesc) {
 // --------------------------------------------------------------------------
 function* _quickPartitionGen(arr, low, high, clrs, stats, isDesc) {
     const pivot = arr[high];
-    clrs[high]  = 'bar-pivot';
+    clrs[high] = 'bar-pivot';
     yield mkFrame(arr, clrs, stats.comp, stats.sw, {
         opName: 'Partition',
         details: `Array [${low}-${high}], Pivot at [${high}] (value: ${pivot})`
@@ -300,7 +300,7 @@ function* _quickPartitionGen(arr, low, high, clrs, stats, isDesc) {
 
     [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
     clrs[i + 1] = 'bar-sorted';
-    clrs[high]  = 'bar-default';
+    clrs[high] = 'bar-default';
     stats.sw++;
     yield mkFrame(arr, clrs, stats.comp, stats.sw, {
         opName: 'Place Pivot',
@@ -312,16 +312,16 @@ function* _quickPartitionGen(arr, low, high, clrs, stats, isDesc) {
 function* _quickHelperGen(arr, low, high, clrs, stats, isDesc) {
     if (low < high) {
         const pi = yield* _quickPartitionGen(arr, low, high, clrs, stats, isDesc);
-        yield* _quickHelperGen(arr, low,     pi - 1, clrs, stats, isDesc);
-        yield* _quickHelperGen(arr, pi + 1,  high,   clrs, stats, isDesc);
+        yield* _quickHelperGen(arr, low, pi - 1, clrs, stats, isDesc);
+        yield* _quickHelperGen(arr, pi + 1, high, clrs, stats, isDesc);
     } else if (low >= 0 && low < arr.length) {
         clrs[low] = 'bar-sorted';
     }
 }
 
 function* quickSortGen(arr, isDesc) {
-    const n     = arr.length;
-    const clrs  = new Array(n).fill('bar-default');
+    const n = arr.length;
+    const clrs = new Array(n).fill('bar-default');
     const stats = { comp: 0, sw: 0 };
 
     yield mkFrame(arr, clrs, stats.comp, stats.sw, {
@@ -342,11 +342,11 @@ function* quickSortGen(arr, isDesc) {
 function* sortGenerator(algo, arr, isDesc) {
     const copy = [...arr];
     switch (algo) {
-        case 'bubble':    yield* bubbleSortGen(copy,    isDesc); break;
+        case 'bubble': yield* bubbleSortGen(copy, isDesc); break;
         case 'selection': yield* selectionSortGen(copy, isDesc); break;
         case 'insertion': yield* insertionSortGen(copy, isDesc); break;
-        case 'merge':     yield* mergeSortGen(copy,     isDesc); break;
-        case 'quick':     yield* quickSortGen(copy,     isDesc); break;
+        case 'merge': yield* mergeSortGen(copy, isDesc); break;
+        case 'quick': yield* quickSortGen(copy, isDesc); break;
     }
 }
 
@@ -355,12 +355,12 @@ function* sortGenerator(algo, arr, isDesc) {
 // SECTION 2: ANIMATION ENGINE
 // ==========================================================================
 
-let array      = [];      // source of truth: current bar values
-let frames     = [];      // pre-collected frame snapshots (drained from generator)
+let array = [];      // source of truth: current bar values
+let frames = [];      // pre-collected frame snapshots (drained from generator)
 let frameIndex = 0;       // current render position within frames[]
-let animState  = 'idle';  // 'idle' | 'playing' | 'paused' | 'done'
-let delay      = 1000;    // ms between auto-play ticks
-let playTimer  = null;    // setTimeout handle
+let animState = 'idle';  // 'idle' | 'playing' | 'paused' | 'done'
+let delay = 1000;    // ms between auto-play ticks
+let playTimer = null;    // setTimeout handle
 
 /**
  * Drains the generator for the given algo/array/order into a frames array.
@@ -372,10 +372,10 @@ function collectFrames(algo, sourceArray, isDesc) {
 
     // Frame 0: initial state — all bars default color, zero stats
     result.push({
-        values:      [...sourceArray],
-        colors:      new Array(sourceArray.length).fill('bar-default'),
+        values: [...sourceArray],
+        colors: new Array(sourceArray.length).fill('bar-default'),
         comparisons: 0,
-        swaps:       0,
+        swaps: 0,
         log: {
             opName: 'Ready',
             details: `Array of size ${sourceArray.length} loaded. Press Start or use ‹ › to step.`
@@ -383,7 +383,7 @@ function collectFrames(algo, sourceArray, isDesc) {
     });
 
     const gen = sortGenerator(algo, sourceArray, isDesc);
-    const t0  = performance.now();
+    const t0 = performance.now();
     for (const frame of gen) result.push(frame);
     result.runTimeMs = Math.round((performance.now() - t0) * 100) / 100;
 
@@ -397,7 +397,7 @@ function renderFrame(idx) {
 
     for (let i = 0; i < ui.bars.length; i++) {
         ui.setBarHeight(i, frame.values[i]);
-        ui.setBarColor(i,  frame.colors[i]);
+        ui.setBarColor(i, frame.colors[i]);
     }
     ui.updateStats(frame.comparisons, frame.swaps);
 
@@ -413,24 +413,24 @@ function renderFrame(idx) {
 /** Single source of truth for button enabled/label state. */
 function updateButtonStates() {
     const atStart = frameIndex === 0;
-    const atEnd   = frameIndex === frames.length - 1;
+    const atEnd = frameIndex === frames.length - 1;
 
     if (animState === 'playing') {
         ui.sortBtn.innerText = 'Pause';
-        ui.sortBtn.disabled  = false;
-        ui.prevBtn.disabled  = true;
-        ui.nextBtn.disabled  = true;
+        ui.sortBtn.disabled = false;
+        ui.prevBtn.disabled = true;
+        ui.nextBtn.disabled = true;
     } else if (animState === 'done') {
         ui.sortBtn.innerText = 'Start';
-        ui.sortBtn.disabled  = false;
-        ui.prevBtn.disabled  = atStart;
-        ui.nextBtn.disabled  = true;  // already at last frame
+        ui.sortBtn.disabled = false;
+        ui.prevBtn.disabled = atStart;
+        ui.nextBtn.disabled = true;  // already at last frame
     } else {
         // idle or paused
         ui.sortBtn.innerText = animState === 'paused' ? 'Resume' : 'Start';
-        ui.sortBtn.disabled  = false;
-        ui.prevBtn.disabled  = atStart;
-        ui.nextBtn.disabled  = atEnd;
+        ui.sortBtn.disabled = false;
+        ui.prevBtn.disabled = atStart;
+        ui.nextBtn.disabled = atEnd;
     }
 }
 
@@ -477,7 +477,7 @@ function togglePlay() {
 }
 
 function updateDelay() {
-    const speed          = parseInt(ui.speedSlider.value);
+    const speed = parseInt(ui.speedSlider.value);
     ui.speedLabel.innerText = speed;
     delay = speed === 100 ? 2 : 1000 / Math.pow(speed, 1.2);
 }
@@ -486,7 +486,7 @@ function updateDelay() {
 function reCollectFrames() {
     clearTimeout(playTimer);
     animState = 'idle';
-    const algo   = ui.algorithmSelect.value;
+    const algo = ui.algorithmSelect.value;
     const isDesc = ui.orderSelect.value === 'desc';
     frames = collectFrames(algo, array, isDesc);
     ui.statsRuntime.innerText = frames.runTimeMs;
@@ -524,29 +524,29 @@ function generateArray() {
 const ui = {
 
     // ---- DOM References ----
-    container:       document.getElementById('array-container'),
-    sizeSlider:      document.getElementById('size-slider'),
-    speedSlider:     document.getElementById('speed-slider'),
+    container: document.getElementById('array-container'),
+    sizeSlider: document.getElementById('size-slider'),
+    speedSlider: document.getElementById('speed-slider'),
     algorithmSelect: document.getElementById('algorithm-select'),
-    orderSelect:     document.getElementById('order-select'),
-    generateBtn:     document.getElementById('generate-btn'),
-    sortBtn:         document.getElementById('sort-btn'),
-    prevBtn:         document.getElementById('prev-btn'),
-    nextBtn:         document.getElementById('next-btn'),
-    sizeLabel:       document.getElementById('size-label'),
-    speedLabel:      document.getElementById('speed-label'),
-    statsComp:       document.getElementById('stats-comparisons'),
-    statsSwaps:      document.getElementById('stats-swaps'),
-    statsRuntime:    document.getElementById('stats-runtime'),
-    logContainer:    document.getElementById('operation-log-container'),
-    legend:          document.getElementById('legend'),
+    orderSelect: document.getElementById('order-select'),
+    generateBtn: document.getElementById('generate-btn'),
+    sortBtn: document.getElementById('sort-btn'),
+    prevBtn: document.getElementById('prev-btn'),
+    nextBtn: document.getElementById('next-btn'),
+    sizeLabel: document.getElementById('size-label'),
+    speedLabel: document.getElementById('speed-label'),
+    statsComp: document.getElementById('stats-comparisons'),
+    statsSwaps: document.getElementById('stats-swaps'),
+    statsRuntime: document.getElementById('stats-runtime'),
+    logContainer: document.getElementById('operation-log-container'),
+    legend: document.getElementById('legend'),
 
     // Metric modal
     metricModalBackdrop: document.getElementById('metric-modal-backdrop'),
-    metricModalBox:      document.getElementById('metric-modal-box'),
-    metricModalTitle:    document.getElementById('metric-modal-title'),
-    metricModalBody:     document.getElementById('metric-modal-body'),
-    metricModalClose:    document.getElementById('metric-modal-close'),
+    metricModalBox: document.getElementById('metric-modal-box'),
+    metricModalTitle: document.getElementById('metric-modal-title'),
+    metricModalBody: document.getElementById('metric-modal-body'),
+    metricModalClose: document.getElementById('metric-modal-close'),
 
     // ---- Bar State ----
     bars: [],   // array of { bar: HTMLElement, valSpan: HTMLElement }
@@ -560,7 +560,7 @@ const ui = {
             wrapper.className = 'bar-wrapper';
 
             const bar = document.createElement('div');
-            bar.className   = 'array-bar bar-default';
+            bar.className = 'array-bar bar-default';
             bar.style.height = '0%';
 
             const valSpan = document.createElement('span');
@@ -568,8 +568,8 @@ const ui = {
             bar.appendChild(valSpan);
 
             const idxSpan = document.createElement('span');
-            idxSpan.className  = 'bar-index';
-            idxSpan.innerText  = i;
+            idxSpan.className = 'bar-index';
+            idxSpan.innerText = i;
 
             wrapper.appendChild(bar);
             wrapper.appendChild(idxSpan);
@@ -580,7 +580,7 @@ const ui = {
 
     setBarHeight(i, value) {
         if (!this.bars[i]) return;
-        this.bars[i].bar.style.height  = `${value}%`;
+        this.bars[i].bar.style.height = `${value}%`;
         this.bars[i].valSpan.innerText = value;
     },
 
@@ -591,7 +591,7 @@ const ui = {
 
     // ---- Stats ----
     updateStats(comp, sw) {
-        this.statsComp.innerText  = comp;
+        this.statsComp.innerText = comp;
         this.statsSwaps.innerText = sw;
     },
 
@@ -610,11 +610,11 @@ const ui = {
 
     // ---- Legend ----
     algoLegendKeys: {
-        bubble:    ['unsorted', 'comparing', 'swapping', 'sorted'],
+        bubble: ['unsorted', 'comparing', 'swapping', 'sorted'],
         selection: ['unsorted', 'comparing', 'swapping', 'sorted'],
         insertion: ['unsorted', 'comparing', 'swapping', 'sorted'],
-        merge:     ['unsorted', 'comparing', 'swapping', 'sorted'],
-        quick:     ['unsorted', 'comparing', 'swapping', 'pivot', 'sorted'],
+        merge: ['unsorted', 'comparing', 'swapping', 'sorted'],
+        quick: ['unsorted', 'comparing', 'swapping', 'pivot', 'sorted'],
     },
 
     updateLegend(algo) {
@@ -628,15 +628,15 @@ const ui = {
     metricInfoData: {
         comparisons: {
             title: 'Comparisons',
-            body:  'The total number of times the algorithm compared two elements side-by-side to determine their order. A higher count reflects more work done. This maps directly to the algorithm\'s time complexity - Bubble Sort repeats many redundant comparisons, while Merge Sort is disciplined and consistent across all inputs.'
+            body: 'The total number of times the algorithm compared two elements side-by-side to determine their order. A higher count reflects more work done. This maps directly to the algorithm\'s time complexity - Bubble Sort repeats many redundant comparisons, while Merge Sort is disciplined and consistent across all inputs.'
         },
         swaps: {
             title: 'Writes / Swaps',
-            body:  'The total number of times an element was moved, shifted, or exchanged in the array. Selection Sort minimises writes (at most n-1 swaps total) making it ideal when write cost is high. Insertion Sort shifts elements rather than full swaps. Write count reflects how much the algorithm disturbs the array.'
+            body: 'The total number of times an element was moved, shifted, or exchanged in the array. Selection Sort minimises writes (at most n-1 swaps total) making it ideal when write cost is high. Insertion Sort shifts elements rather than full swaps. Write count reflects how much the algorithm disturbs the array.'
         },
         runtime: {
             title: 'Run Time (ms)',
-            body:  'The actual wall-clock time in milliseconds taken to drain the sort generator and pre-collect all frames. This excludes visual rendering and playback delay — it reflects raw algorithmic performance of this sort in your browser\'s JS runtime.'
+            body: 'The actual wall-clock time in milliseconds taken to drain the sort generator and pre-collect all frames. This excludes visual rendering and playback delay — it reflects raw algorithmic performance of this sort in your browser\'s JS runtime.'
         }
     },
 
@@ -644,7 +644,7 @@ const ui = {
         const d = this.metricInfoData[key];
         if (!d) return;
         this.metricModalTitle.innerText = d.title;
-        this.metricModalBody.innerText  = d.body;
+        this.metricModalBody.innerText = d.body;
         this.metricModalBackdrop.classList.remove('hidden');
         this.metricModalBox.classList.remove('hidden');
     },
@@ -694,7 +694,7 @@ const ui = {
         document.querySelectorAll('.info-icon').forEach(icon => {
             icon.addEventListener('click', () => this.openMetricModal(icon.dataset.infoKey));
         });
-        this.metricModalClose.addEventListener('click',    () => this.closeMetricModal());
+        this.metricModalClose.addEventListener('click', () => this.closeMetricModal());
         this.metricModalBackdrop.addEventListener('click', () => this.closeMetricModal());
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape' && !this.metricModalBackdrop.classList.contains('hidden')) {

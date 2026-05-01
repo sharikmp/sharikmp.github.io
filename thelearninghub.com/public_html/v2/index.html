@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SortVisualizer</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- Header -->
@@ -86,11 +88,21 @@
 
         <!-- Legend -->
         <div class="legend" id="legend">
-            <div class="legend-item" data-legend="unsorted"><div class="legend-color" style="background: var(--bar-default);"></div> Unsorted</div>
-            <div class="legend-item" data-legend="comparing"><div class="legend-color" style="background: var(--bar-comparing);"></div> Comparing</div>
-            <div class="legend-item" data-legend="swapping"><div class="legend-color" style="background: var(--bar-swapping);"></div> Swapping / Writing</div>
-            <div class="legend-item" data-legend="pivot"><div class="legend-color" style="background: var(--bar-pivot);"></div> Pivot</div>
-            <div class="legend-item" data-legend="sorted"><div class="legend-color" style="background: var(--bar-sorted);"></div> Sorted</div>
+            <div class="legend-item" data-legend="unsorted">
+                <div class="legend-color" style="background: var(--bar-default);"></div> Unsorted
+            </div>
+            <div class="legend-item" data-legend="comparing">
+                <div class="legend-color" style="background: var(--bar-comparing);"></div> Comparing
+            </div>
+            <div class="legend-item" data-legend="swapping">
+                <div class="legend-color" style="background: var(--bar-swapping);"></div> Swapping / Writing
+            </div>
+            <div class="legend-item" data-legend="pivot">
+                <div class="legend-color" style="background: var(--bar-pivot);"></div> Pivot
+            </div>
+            <div class="legend-item" data-legend="sorted">
+                <div class="legend-color" style="background: var(--bar-sorted);"></div> Sorted
+            </div>
         </div>
 
         <!-- Operation Log -->
@@ -113,4 +125,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
