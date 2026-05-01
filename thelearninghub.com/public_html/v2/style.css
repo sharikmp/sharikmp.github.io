@@ -1,0 +1,596 @@
+/* ==========================================================================
+           CSS Configuration & Themes
+========================================================================== */
+:root {
+    /* Dark Theme (Premium Black/Gold) - Default */
+    --bg-color: #0d0d0d;
+    --surface-color: #1a1a1a;
+    --surface-hover: #262626;
+    --text-primary: #f5f5f5;
+    --text-secondary: #a3a3a3;
+    --accent-gold: #d4af37;
+    --accent-gold-hover: #f1d570;
+    --accent-gold-dark: #aa8a29;
+    --border-color: #333333;
+    --log-bg: rgba(0, 0, 0, 0.3);
+
+    /* Bar Status Colors */
+    --bar-default: #404040;
+    --bar-comparing: #e74c3c;
+    --bar-swapping: #e67e22;
+    --bar-sorted: #2ecc71;
+    --bar-pivot: #9b59b6;
+
+    --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
+
+/* ==========================================================================
+           Reset & Base Styles
+========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, color 0.3s;
+    overflow-x: hidden;
+    /* Prevent body horizontal scroll */
+}
+
+/* ==========================================================================
+           Layout & Header
+           ========================================================================== */
+header {
+    background-color: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+}
+
+.logo span {
+    color: var(--accent-gold);
+}
+
+/* ==========================================================================
+           Main Content area & Panels
+           ========================================================================== */
+main {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+/* Desktop Layout (50% Width each for Controls & Metrics) */
+@media(min-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.panel-title {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+/* ==========================================================================
+           Controls inside Dashboard
+           ========================================================================== */
+.controls-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem 0.5rem;
+    align-items: end;
+    /* Aligns inputs, selects, and buttons by their bottom edge */
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+}
+
+.control-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button,
+select {
+    background-color: var(--surface-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    text-align: center;
+    height: 32px;
+    /* Fixed height to match inputs nicely */
+}
+
+button:hover,
+select:hover {
+    border-color: var(--accent-gold);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--border-color) !important;
+}
+
+#sort-btn {
+    background-color: var(--accent-gold);
+    color: #000;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+    font-size: 0.85rem;
+}
+
+#sort-btn:hover:not(:disabled) {
+    background-color: var(--accent-gold-hover);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+    padding: 0.5rem 0;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    margin-top: -5px;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+           Algo Metrics Panel
+           ========================================================================== */
+.algo-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    text-align: center;
+    height: 100%;
+    align-items: center;
+}
+
+.algo-metric-item {
+    background-color: var(--surface-hover);
+    padding: 0.65rem 0.4rem 0.4rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+}
+
+/* Info icon - click to open description modal */
+.info-icon {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    font-size: 0.68rem;
+    font-style: italic;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    color: var(--text-secondary);
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    line-height: 1;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.info-icon:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+.algo-metric-val {
+    font-family: var(--font-mono);
+    font-size: 1.3rem;
+    font-weight: bold;
+    line-height: 1.15;
+}
+
+.algo-metric-label {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    margin-top: 0.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Per-metric accent colors */
+.amc-red {
+    color: var(--bar-comparing);
+}
+
+.amc-orange {
+    color: var(--bar-swapping);
+}
+
+.amc-gold {
+    color: var(--accent-gold);
+}
+
+/* ==========================================================================
+           Metric Info Modal
+           ========================================================================== */
+.metric-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 900;
+}
+
+.metric-modal-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 901;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-top: 3px solid var(--accent-gold);
+    border-radius: 10px;
+    width: min(340px, 90vw);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    animation: metricModalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes metricModalIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.93);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.metric-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.metric-modal-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.metric-modal-close {
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.metric-modal-close:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+.metric-modal-body {
+    padding: 1rem;
+    font-size: 0.83rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.metric-modal-backdrop.hidden,
+.metric-modal-box.hidden {
+    display: none;
+}
+
+/* ==========================================================================
+           Operation Log Panel
+           ========================================================================== */
+.operation-log-panel {
+    border: 1px solid var(--accent-gold-dark);
+    border-left: 4px solid var(--accent-gold);
+    padding: 0.5rem 0.75rem;
+}
+
+.log-container {
+    height: 150px;
+    overflow-y: auto;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-primary);
+    padding: 0.4rem;
+}
+
+.log-entry {
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 2px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    /* keep horizontal scroll intact */
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-highlight {
+    color: var(--accent-gold);
+    font-weight: bold;
+    display: inline-block;
+    min-width: 75px;
+}
+
+/* ==========================================================================
+           Visualizer Canvas (Bars & Indices)
+           ========================================================================== */
+.canvas-container {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+    /* Handle Horizontal Overflow Gracefully */
+    overflow-x: auto;
+    width: 100%;
+}
+
+#array-container {
+    height: 30vh;
+    min-height: 200px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    padding-bottom: 20px;
+    /* Space for index numbers */
+    /* Trick to center when small, but prevent left-cutoff when large */
+    width: max-content;
+    min-width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    height: 100%;
+    min-width: 28px;
+    /* Ensure space for numbers */
+    max-width: 40px;
+    /* Cap the width of bars */
+    flex-grow: 1;
+}
+
+.array-bar {
+    width: 100%;
+    border-radius: 3px 3px 0 0;
+    transition: background-color 0.1s ease-in-out, height 0.1s ease-in-out;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 4px;
+}
+
+/* Value inside the bar */
+.bar-value {
+    font-size: 0.65rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    font-family: var(--font-mono);
+    writing-mode: horizontal-tb;
+}
+
+/* Index below the bar */
+.bar-index {
+    position: absolute;
+    bottom: -18px;
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+/* Color States */
+.bar-default {
+    background-color: var(--bar-default) !important;
+}
+
+.bar-comparing {
+    background-color: var(--bar-comparing) !important;
+}
+
+.bar-swapping {
+    background-color: var(--bar-swapping) !important;
+}
+
+.bar-sorted {
+    background-color: var(--bar-sorted) !important;
+}
+
+.bar-pivot {
+    background-color: var(--bar-pivot) !important;
+}
+
+/* ==========================================================================
+           Canvas Navigation (Prev/Next Step Buttons)
+           ========================================================================== */
+.canvas-nav-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 10px;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--accent-gold);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0;
+    opacity: 0.85;
+}
+
+.nav-btn-left {
+    left: 10px;
+}
+
+.nav-btn-right {
+    right: 10px;
+}
+
+.nav-btn:hover:not(:disabled) {
+    border-color: var(--accent-gold);
+    background: var(--surface-hover);
+}
+
+.nav-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    border-color: var(--border-color) !important;
+    background: transparent !important;
+}
+
+/* Canvas takes full width of the wrapper */
+.canvas-nav-wrapper .canvas-container {
+    width: 100%;
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* Legend hidden items */
+.legend-item.hidden {
+    display: none;
+}
