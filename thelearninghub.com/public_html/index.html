@@ -312,13 +312,12 @@
         }
 
         .log-container {
-            height: 90px;
+            height: 150px;
             overflow-y: auto;
+            overflow-x: hidden;
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            align-content: flex-start;
-            gap: 4px 8px;
+            flex-direction: column;
+            gap: 4px;
             font-family: var(--font-mono);
             font-size: 0.8rem;
             color: var(--text-primary);
@@ -326,14 +325,14 @@
         }
 
         .log-entry {
-            border-right: 1px dashed var(--border-color);
-            padding-right: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 2px;
             font-size: 0.7rem;
             white-space: nowrap;
         }
 
         .log-entry:last-child {
-            border-right: none;
+            border-bottom: none;
         }
 
         .log-highlight {
