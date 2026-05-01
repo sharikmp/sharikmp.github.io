@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Sorting Algorithm Visualizer</title>
+    <style>
+        /* ==========================================================================
+           CSS Configuration & Themes
+           ========================================================================== */
+        :root {
+            /* Dark Theme (Premium Black/Gold) - Default */
+            --bg-color: #0d0d0d;
+            --surface-color: #1a1a1a;
+            --surface-hover: #262626;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #f1d570;
+            --accent-gold-dark: #aa8a29;
+            --border-color: #333333;
+            --log-bg: rgba(0, 0, 0, 0.3);
+            
+            /* Bar Status Colors */
+            --bar-default: #404040;
+            --bar-comparing: #e74c3c;
+            --bar-swapping: #e67e22;
+            --bar-sorted: #2ecc71;
+            --bar-pivot: #9b59b6;
+            
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme (White/Dark Gold) */
+            --bg-color: #f0f0f0;
+            --surface-color: #ffffff;
+            --surface-hover: #e8e8e8;
+            --text-primary: #121212;
+            --text-secondary: #555555;
+            --accent-gold: #b8860b;
+            --accent-gold-hover: #d4a017;
+            --accent-gold-dark: #8b6508;
+            --border-color: #cccccc;
+            --log-bg: rgba(0, 0, 0, 0.05);
+            
+            /* Bar Status Colors */
+            --bar-default: #b3b3b3;
+            --bar-comparing: #e74c3c;
+            --bar-swapping: #e67e22;
+            --bar-sorted: #27ae60;
+            --bar-pivot: #8e44ad;
+        }
+
+        /* ==========================================================================
+           Reset & Base Styles
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden; /* Prevent body horizontal scroll */
+        }
+
+        /* ==========================================================================
+           Layout & Header
+           ========================================================================== */
+        header {
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            color: var(--accent-gold);
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            padding: 0;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+        
+        .theme-toggle:hover {
+            border-color: var(--accent-gold);
+        }
+
+        /* ==========================================================================
+           Main Content area & Panels
+           ========================================================================== */
+        main {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        /* Desktop Layout (50% Width each for Controls & Metrics) */
+        @media(min-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .panel {
+            /* background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px; */
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .panel-title {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        /* ==========================================================================
+           Controls inside Dashboard
+           ========================================================================== */
+        .controls-inner {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem 0.5rem;
+            align-items: end; /* Aligns inputs, selects, and buttons by their bottom edge */
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            text-align: center;
+        }
+
+        .control-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button, select {
+            background-color: var(--surface-hover);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 0.5rem;
+            border-radius: 4px;
+            font-family: var(--font-main);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: center;
+            height: 32px; /* Fixed height to match inputs nicely */
+        }
+
+        button:hover, select:hover {
+            border-color: var(--accent-gold);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: var(--border-color) !important;
+        }
+
+        #sort-btn {
+            background-color: var(--accent-gold);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+            font-size: 0.85rem;
+        }
+
+        #sort-btn:hover:not(:disabled) {
+            background-color: var(--accent-gold-hover);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            padding: 0.5rem 0;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            margin-top: -5px;
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           Merged Metrics Panel
+           ========================================================================== */
+        .merged-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.4rem;
+            text-align: center;
+            height: 100%;
+            align-items: center;
+        }
+        
+        @media(min-width: 1024px) {
+            .merged-metrics-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        .complexity-item {
+            background-color: var(--surface-hover);
+            padding: 0.4rem;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .complexity-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+        }
+        
+        .complexity-val {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+        
+        .text-best { color: var(--bar-sorted); }
+        .text-avg { color: var(--bar-swapping); }
+        .text-worst { color: var(--bar-comparing); }
+        .text-live { color: var(--text-primary); font-weight: bold; font-size: 1.1rem; }
+
+        /* ==========================================================================
+           Operation Log Panel
+           ========================================================================== */
+        .operation-log-panel {
+            border: 1px solid var(--accent-gold-dark);
+            border-left: 4px solid var(--accent-gold);
+            padding: 0.5rem 0.75rem;
+        }
+
+        .log-container {
+            height: 90px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 4px 8px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            padding: 0.4rem;
+        }
+
+        .log-entry {
+            border-right: 1px dashed var(--border-color);
+            padding-right: 8px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+
+        .log-entry:last-child {
+            border-right: none;
+        }
+
+        .log-highlight {
+            color: var(--accent-gold);
+            font-weight: bold;
+            display: inline-block;
+            min-width: 75px;
+        }
+
+        /* ==========================================================================
+           Visualizer Canvas (Bars & Indices)
+           ========================================================================== */
+        .canvas-container {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
+            /* Handle Horizontal Overflow Gracefully */
+            overflow-x: auto; 
+            width: 100%;
+        }
+
+        #array-container {
+            height: 30vh;
+            min-height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            padding-bottom: 20px; /* Space for index numbers */
+            /* Trick to center when small, but prevent left-cutoff when large */
+            width: max-content;
+            min-width: 100%;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+            height: 100%;
+            min-width: 28px; /* Ensure space for numbers */
+            max-width: 40px; /* Cap the width of bars */
+            flex-grow: 1;
+        }
+
+        .array-bar {
+            width: 100%;
+            border-radius: 3px 3px 0 0;
+            transition: background-color 0.1s ease-in-out, height 0.1s ease-in-out;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 4px;
+        }
+
+        /* Value inside the bar */
+        .bar-value {
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            font-family: var(--font-mono);
+            writing-mode: horizontal-tb;
+        }
+
+        /* Index below the bar */
+        .bar-index {
+            position: absolute;
+            bottom: -18px;
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        /* Color States */
+        .bar-default { background-color: var(--bar-default) !important; }
+        .bar-comparing { background-color: var(--bar-comparing) !important; }
+        .bar-swapping { background-color: var(--bar-swapping) !important; }
+        .bar-sorted { background-color: var(--bar-sorted) !important; }
+        .bar-pivot { background-color: var(--bar-pivot) !important; }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">Sort<span>Visualizer</span></div>
+            <button id="theme-btn" class="theme-toggle" title="Toggle Theme">☀️</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        
+        <!-- Dashboard (Controls, Metrics) -->
+        <div class="dashboard">
+            
+            <!-- Controls Panel -->
+            <div class="panel">
+                <!-- <h3 class="panel-title">Controls</h3> -->
+                <div class="controls-inner">
+                    <!-- Row 1 -->
+                    <div class="control-group">
+                        <label for="size-slider" class="control-label">Size: <span id="size-label">10</span></label>
+                        <input type="range" id="size-slider" min="5" max="100" value="10">
+                    </div>
+                    <div class="control-group">
+                        <label for="speed-slider" class="control-label">Speed: <span id="speed-label">1</span></label>
+                        <input type="range" id="speed-slider" min="1" max="100" value="1">
+                    </div>
+                    <div class="control-group">
+                        <!-- <label for="order-select" class="control-label">Order</label> -->
+                        <select id="order-select">
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <select id="algorithm-select">
+                        <option value="bubble">Bubble Sort</option>
+                        <option value="selection">Selection Sort</option>
+                        <option value="insertion">Insertion Sort</option>
+                        <option value="merge">Merge Sort</option>
+                        <option value="quick">Quick Sort</option>
+                    </select>
+                    <button id="generate-btn">New Array</button>
+                    <button id="sort-btn">Start Sorting!</button>
+                </div>
+
+            </div>
+
+
+            <!-- Merged Metrics Panel -->
+            <div class="panel">
+                <!-- <h3 class="panel-title" id="algo-name">Bubble Sort Metrics</h3> -->
+                <div class="merged-metrics-grid">
+                    <div class="complexity-item">
+                        <span class="complexity-label">Best</span>
+                        <span id="comp-best" class="complexity-val text-best">O(n)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Average</span>
+                        <span id="comp-avg" class="complexity-val text-avg">O(n²)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Worst</span>
+                        <span id="comp-worst" class="complexity-val text-worst">O(n²)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Comparisons</span>
+                        <span id="stats-comparisons" class="complexity-val text-live">0</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">Writes / Swaps</span>
+                        <span id="stats-swaps" class="complexity-val text-live">0</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Operation Log -->
+        <div class="panel operation-log-panel">
+            <!-- <h3 class="panel-title" style="text-align: left; margin-bottom: 0.4rem;">Live Operation Log</h3> -->
+            <div id="operation-log-container" class="log-container">
+                <!-- Logs appended here via JS -->
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item"><div class="legend-color" style="background: var(--bar-default);"></div> Unsorted</div>
+            <div class="legend-item"><div class="legend-color" style="background: var(--bar-comparing);"></div> Comparing</div>
+            <div class="legend-item"><div class="legend-color" style="background: var(--bar-swapping);"></div> Swapping / Writing</div>
+            <div class="legend-item"><div class="legend-color" style="background: var(--bar-pivot);"></div> Pivot</div>
+            <div class="legend-item"><div class="legend-color" style="background: var(--bar-sorted);"></div> Sorted</div>
+        </div>
+
+        <!-- Visualizer Canvas -->
+        <div class="canvas-container">
+            <div id="array-container"></div>
+        </div>
+
+    </main>
+
+    <script>
+        // ==========================================================================
+        // JS Logic & Algorithms
+        // ==========================================================================
+
+        // --- State Variables ---
+        let array = [];
+        let bars = [];
+        let delay = 1000; // Initial delay based on speed slider
+        let comparisons = 0;
+        let swaps = 0;
+        let isSorting = false;
+        let currentSortId = 0;
+        let isDesc = false; // Tracks ascending vs descending
+
+        // --- DOM Elements ---
+        const container = document.getElementById('array-container');
+        const sizeSlider = document.getElementById('size-slider');
+        const speedSlider = document.getElementById('speed-slider');
+        const orderSelect = document.getElementById('order-select');
+        const generateBtn = document.getElementById('generate-btn');
+        const sortBtn = document.getElementById('sort-btn');
+        const algorithmSelect = document.getElementById('algorithm-select');
+        const themeBtn = document.getElementById('theme-btn');
+        const body = document.documentElement;
+        
+        // Stats & UI
+        const statsComp = document.getElementById('stats-comparisons');
+        const statsSwaps = document.getElementById('stats-swaps');
+        const sizeLabel = document.getElementById('size-label');
+        const speedLabel = document.getElementById('speed-label');
+        const logContainer = document.getElementById('operation-log-container');
+        
+        // Complexity Info
+        const algoName = document.getElementById('algo-name');
+        const compBest = document.getElementById('comp-best');
+        const compAvg = document.getElementById('comp-avg');
+        const compWorst = document.getElementById('comp-worst');
+
+        // --- Complexity Data ---
+        const complexities = {
+            bubble: { name: 'Bubble Sort', best: 'O(n)', avg: 'O(n²)', worst: 'O(n²)' },
+            selection: { name: 'Selection Sort', best: 'O(n²)', avg: 'O(n²)', worst: 'O(n²)' },
+            insertion: { name: 'Insertion Sort', best: 'O(n)', avg: 'O(n²)', worst: 'O(n²)' },
+            merge: { name: 'Merge Sort', best: 'O(n log n)', avg: 'O(n log n)', worst: 'O(n log n)' },
+            quick: { name: 'Quick Sort', best: 'O(n log n)', avg: 'O(n log n)', worst: 'O(n²)' },
+        };
+
+        // --- Initialization ---
+        function init() {
+            updateComplexityInfo();
+            updateDelay();
+            clearLog();
+            logOp('Ready', 'Adjust controls and generate an array to begin.');
+            generateArray();
+            setupThemeToggle();
+        }
+
+        function setupThemeToggle() {
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = body.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    body.setAttribute('data-theme', 'light');
+                    themeBtn.innerText = '🌙';
+                } else {
+                    body.setAttribute('data-theme', 'dark');
+                    themeBtn.innerText = '☀️';
+                }
+            });
+        }
+
+        // --- Logging Function ---
+        function clearLog() {
+            logContainer.innerHTML = '';
+        }
+
+        function logOp(opName, details) {
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-highlight">${opName}:</span> ${details}`;
+            logContainer.appendChild(entry);
+            // Auto-scroll to bottom
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // --- Helper Functions ---
+        function generateArray() {
+            currentSortId++;
+            isSorting = false;
+            sortBtn.disabled = false;
+
+            const size = parseInt(sizeSlider.value);
+            sizeLabel.innerText = size;
+            array = [];
+            bars = [];
+            container.innerHTML = '';
+            
+            comparisons = 0;
+            swaps = 0;
+            updateStatsUI();
+            
+            clearLog();
+            logOp('Generate', `Created new array of size ${size}.`);
+
+            for (let i = 0; i < size; i++) {
+                const value = Math.floor(Math.random() * 96) + 5;
+                array.push(value);
+
+                // Bar Wrapper (Holds Bar + Index)
+                const wrapper = document.createElement('div');
+                wrapper.className = 'bar-wrapper';
+
+                // Actual Bar
+                const bar = document.createElement('div');
+                bar.className = 'array-bar bar-default';
+                bar.style.height = `${value}%`;
+
+                // Value Text inside bar
+                const valSpan = document.createElement('span');
+                valSpan.className = 'bar-value';
+                valSpan.innerText = value; 
+                bar.appendChild(valSpan);
+
+                // Index Text below bar
+                const idxSpan = document.createElement('span');
+                idxSpan.className = 'bar-index';
+                idxSpan.innerText = i;
+
+                wrapper.appendChild(bar);
+                wrapper.appendChild(idxSpan);
+                container.appendChild(wrapper);
+
+                // Store references
+                bars.push({ bar: bar, valSpan: valSpan });
+            }
+        }
+
+        function updateDelay() {
+            const speed = parseInt(speedSlider.value);
+            speedLabel.innerText = speed;
+            delay = 1000 / Math.pow(speed, 1.2); 
+            if(speed === 100) delay = 2;
+        }
+
+        function updateComplexityInfo() {
+            const algo = algorithmSelect.value;
+            const data = complexities[algo];
+            compBest.innerText = data.best;
+            compAvg.innerText = data.avg;
+            compWorst.innerText = data.worst;
+        }
+
+        function updateStatsUI() {
+            statsComp.innerText = comparisons;
+            statsSwaps.innerText = swaps;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function setBarColor(index, colorClass) {
+            if (bars[index]) {
+                bars[index].bar.className = `array-bar ${colorClass}`;
+            }
+        }
+
+        function setBarValue(index, height) {
+            if (bars[index]) {
+                bars[index].bar.style.height = `${height}%`;
+                bars[index].valSpan.innerText = height;
+            }
+        }
+
+        function isAborted(mySortId) {
+            return mySortId !== currentSortId;
+        }
+
+        // --- Sorting Algorithms ---
+
+        // 1. Bubble Sort
+        async function bubbleSort(mySortId) {
+            const n = array.length;
+            logOp('Start', `Bubble Sort Initiated (${isDesc ? 'Descending' : 'Ascending'})`);
+            for (let i = 0; i < n - 1; i++) {
+                let swapped = false;
+                for (let j = 0; j < n - i - 1; j++) {
+                    if (isAborted(mySortId)) return;
+
+                    logOp('Compare', `Index [${j}] (${array[j]}) with Index [${j+1}] (${array[j+1]})`);
+                    setBarColor(j, 'bar-comparing');
+                    setBarColor(j + 1, 'bar-comparing');
+                    await sleep(delay);
+
+                    comparisons++;
+                    updateStatsUI();
+
+                    if (isDesc ? array[j] < array[j + 1] : array[j] > array[j + 1]) {
+                        logOp('Swap', `Index [${j}] and Index [${j+1}]`);
+                        
+                        let temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+
+                        setBarValue(j, array[j]);
+                        setBarValue(j + 1, array[j + 1]);
+
+                        setBarColor(j, 'bar-swapping');
+                        setBarColor(j + 1, 'bar-swapping');
+                        
+                        swaps++;
+                        updateStatsUI();
+                        swapped = true;
+                        await sleep(delay);
+                    }
+
+                    setBarColor(j, 'bar-default');
+                    setBarColor(j + 1, 'bar-default');
+                }
+                setBarColor(n - i - 1, 'bar-sorted');
+                
+                if (!swapped) {
+                    for(let k = 0; k < n - i - 1; k++) {
+                        setBarColor(k, 'bar-sorted');
+                    }
+                    break;
+                }
+            }
+            setBarColor(0, 'bar-sorted');
+            logOp('Complete', 'Bubble Sort finished successfully.');
+        }
+
+        // 2. Selection Sort
+        async function selectionSort(mySortId) {
+            const n = array.length;
+            logOp('Start', `Selection Sort Initiated (${isDesc ? 'Descending' : 'Ascending'})`);
+            for (let i = 0; i < n - 1; i++) {
+                let minIdx = i;
+                setBarColor(i, 'bar-swapping'); 
+                logOp('Pass', `Iteration ${i}, assumed target at [${i}] (value: ${array[i]})`);
+
+                for (let j = i + 1; j < n; j++) {
+                    if (isAborted(mySortId)) return;
+
+                    setBarColor(j, 'bar-comparing');
+                    await sleep(delay);
+
+                    comparisons++;
+                    updateStatsUI();
+
+                    if (isDesc ? array[j] > array[minIdx] : array[j] < array[minIdx]) {
+                        logOp('New Target', `Found at index [${j}] (value: ${array[j]})`);
+                        if (minIdx !== i) setBarColor(minIdx, 'bar-default');
+                        minIdx = j;
+                        setBarColor(minIdx, 'bar-swapping');
+                    } else {
+                        setBarColor(j, 'bar-default');
+                    }
+                }
+
+                if (minIdx !== i) {
+                    logOp('Swap', `Starting element [${i}] with target element [${minIdx}]`);
+                    let temp = array[minIdx];
+                    array[minIdx] = array[i];
+                    array[i] = temp;
+
+                    setBarValue(minIdx, array[minIdx]);
+                    setBarValue(i, array[i]);
+
+                    swaps++;
+                    updateStatsUI();
+                    await sleep(delay);
+                }
+                
+                setBarColor(minIdx, 'bar-default');
+                setBarColor(i, 'bar-sorted');
+            }
+            setBarColor(n - 1, 'bar-sorted');
+            logOp('Complete', 'Selection Sort finished successfully.');
+        }
+
+        // 3. Insertion Sort
+        async function insertionSort(mySortId) {
+            const n = array.length;
+            logOp('Start', `Insertion Sort Initiated (${isDesc ? 'Descending' : 'Ascending'})`);
+            setBarColor(0, 'bar-sorted');
+
+            for (let i = 1; i < n; i++) {
+                if (isAborted(mySortId)) return;
+                
+                let key = array[i];
+                let j = i - 1;
+
+                logOp('Select', `Index [${i}] (value: ${key}) to insert into sorted sub-array`);
+                setBarColor(i, 'bar-swapping');
+                await sleep(delay);
+
+                while (j >= 0) {
+                    if (isAborted(mySortId)) return;
+                    
+                    setBarColor(j, 'bar-comparing');
+                    await sleep(delay);
+                    
+                    comparisons++;
+                    updateStatsUI();
+
+                    if (isDesc ? array[j] < key : array[j] > key) {
+                        logOp('Shift', `Moving index [${j}] (value: ${array[j]}) to [${j+1}]`);
+                        array[j + 1] = array[j];
+                        setBarValue(j + 1, array[j + 1]);
+                        
+                        swaps++; 
+                        updateStatsUI();
+
+                        setBarColor(j + 1, 'bar-swapping');
+                        await sleep(delay);
+                        
+                        setBarColor(j + 1, 'bar-sorted');
+                        j = j - 1;
+                    } else {
+                        setBarColor(j, 'bar-sorted');
+                        break;
+                    }
+                }
+                
+                logOp('Insert', `Key (${key}) placed at index [${j+1}]`);
+                array[j + 1] = key;
+                setBarValue(j + 1, array[j + 1]);
+                setBarColor(j + 1, 'bar-sorted');
+                
+                for(let k = 0; k <= i; k++) {
+                    setBarColor(k, 'bar-sorted');
+                }
+            }
+            logOp('Complete', 'Insertion Sort finished successfully.');
+        }
+
+        // 4. Merge Sort
+        async function merge(arr, l, m, r, mySortId) {
+            let n1 = m - l + 1;
+            let n2 = r - m;
+
+            let L = new Array(n1);
+            let R = new Array(n2);
+
+            for (let i = 0; i < n1; i++) L[i] = arr[l + i];
+            for (let j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+
+            let i = 0, j = 0, k = l;
+
+            logOp('Merge Phase', `Subarrays Left [${l}-${m}] & Right [${m+1}-${r}]`);
+
+            while (i < n1 && j < n2) {
+                if (isAborted(mySortId)) return;
+
+                setBarColor(l + i, 'bar-comparing');
+                setBarColor(m + 1 + j, 'bar-comparing');
+                await sleep(delay);
+
+                comparisons++;
+                updateStatsUI();
+
+                if (isDesc ? L[i] >= R[j] : L[i] <= R[j]) {
+                    arr[k] = L[i];
+                    i++;
+                } else {
+                    arr[k] = R[j];
+                    j++;
+                }
+                
+                logOp('Write', `Value ${arr[k]} into index [${k}]`);
+                setBarValue(k, arr[k]);
+                setBarColor(k, 'bar-swapping');
+                swaps++;
+                updateStatsUI();
+                await sleep(delay);
+                
+                if (r - l === array.length - 1) {
+                    setBarColor(k, 'bar-sorted');
+                } else {
+                    setBarColor(k, 'bar-default');
+                }
+                
+                setBarColor(l + i, 'bar-default');
+                if(m + 1 + j < array.length) setBarColor(m + 1 + j, 'bar-default');
+                
+                k++;
+            }
+
+            while (i < n1) {
+                if (isAborted(mySortId)) return;
+                arr[k] = L[i];
+                logOp('Copy', `Remaining Left element ${arr[k]} to [${k}]`);
+                setBarValue(k, arr[k]);
+                setBarColor(k, 'bar-swapping');
+                swaps++;
+                updateStatsUI();
+                await sleep(delay);
+                
+                if (r - l === array.length - 1) setBarColor(k, 'bar-sorted');
+                else setBarColor(k, 'bar-default');
+                
+                i++; k++;
+            }
+
+            while (j < n2) {
+                if (isAborted(mySortId)) return;
+                arr[k] = R[j];
+                logOp('Copy', `Remaining Right element ${arr[k]} to [${k}]`);
+                setBarValue(k, arr[k]);
+                setBarColor(k, 'bar-swapping');
+                swaps++;
+                updateStatsUI();
+                await sleep(delay);
+                
+                if (r - l === array.length - 1) setBarColor(k, 'bar-sorted');
+                else setBarColor(k, 'bar-default');
+                
+                j++; k++;
+            }
+        }
+
+        async function mergeSortHelper(arr, l, r, mySortId) {
+            if (l >= r) return;
+            let m = l + Math.floor((r - l) / 2);
+            await mergeSortHelper(arr, l, m, mySortId);
+            await mergeSortHelper(arr, m + 1, r, mySortId);
+            await merge(arr, l, m, r, mySortId);
+        }
+
+        async function mergeSort(mySortId) {
+            logOp('Start', `Merge Sort Initiated (${isDesc ? 'Descending' : 'Ascending'})`);
+            await mergeSortHelper(array, 0, array.length - 1, mySortId);
+            if(!isAborted(mySortId)) logOp('Complete', 'Merge Sort finished successfully.');
+        }
+
+        // 5. Quick Sort
+        async function partition(arr, low, high, mySortId) {
+            let pivot = arr[high];
+            logOp('Partition', `Array [${low}-${high}], Pivot at [${high}] (value: ${pivot})`);
+            setBarColor(high, 'bar-pivot'); 
+            await sleep(delay);
+            
+            let i = (low - 1);
+
+            for (let j = low; j <= high - 1; j++) {
+                if (isAborted(mySortId)) return;
+
+                setBarColor(j, 'bar-comparing');
+                await sleep(delay);
+
+                comparisons++;
+                updateStatsUI();
+
+                if (isDesc ? arr[j] > pivot : arr[j] < pivot) {
+                    i++;
+                    
+                    logOp('Swap', `Value ${arr[j]} ${isDesc ? '>' : '<'} pivot. Swapping [${i}] & [${j}]`);
+                    let temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+
+                    setBarValue(i, arr[i]);
+                    setBarValue(j, arr[j]);
+                    
+                    setBarColor(i, 'bar-swapping');
+                    setBarColor(j, 'bar-swapping');
+                    
+                    swaps++;
+                    updateStatsUI();
+                    await sleep(delay);
+
+                    setBarColor(i, 'bar-default');
+                }
+                setBarColor(j, 'bar-default');
+            }
+            
+            logOp('Place Pivot', `Pivot (${pivot}) moving to correct position [${i+1}]`);
+            let temp = arr[i + 1];
+            arr[i + 1] = arr[high];
+            arr[high] = temp;
+
+            setBarValue(i + 1, arr[i + 1]);
+            setBarValue(high, arr[high]);
+            
+            setBarColor(i + 1, 'bar-sorted');
+            setBarColor(high, 'bar-default');
+            
+            swaps++;
+            updateStatsUI();
+            await sleep(delay);
+
+            return (i + 1);
+        }
+
+        async function quickSortHelper(arr, low, high, mySortId) {
+            if (low < high) {
+                if (isAborted(mySortId)) return;
+                let pi = await partition(arr, low, high, mySortId);
+                await quickSortHelper(arr, low, pi - 1, mySortId);
+                await quickSortHelper(arr, pi + 1, high, mySortId);
+            } else if (low >= 0 && low < arr.length) {
+                setBarColor(low, 'bar-sorted'); 
+            }
+        }
+
+        async function quickSort(mySortId) {
+            logOp('Start', `Quick Sort Initiated (${isDesc ? 'Descending' : 'Ascending'})`);
+            await quickSortHelper(array, 0, array.length - 1, mySortId);
+            
+            if (!isAborted(mySortId)) {
+                for (let i = 0; i < array.length; i++) {
+                    setBarColor(i, 'bar-sorted');
+                }
+                logOp('Complete', 'Quick Sort finished successfully.');
+            }
+        }
+
+
+        // --- Event Listeners ---
+        generateBtn.addEventListener('click', generateArray);
+        
+        sizeSlider.addEventListener('input', () => {
+            sizeLabel.innerText = sizeSlider.value;
+            if (!isSorting) generateArray();
+        });
+        
+        speedSlider.addEventListener('input', () => {
+            speedLabel.innerText = speedSlider.value;
+            updateDelay();
+        });
+        
+        algorithmSelect.addEventListener('change', () => {
+            updateComplexityInfo();
+            if(!isSorting) generateArray();
+        });
+
+        sortBtn.addEventListener('click', async () => {
+            if (isSorting) return;
+            isSorting = true;
+            
+            sortBtn.disabled = true;
+
+            const algo = algorithmSelect.value;
+            isDesc = orderSelect.value === 'desc'; // Capture descending state
+            
+            currentSortId++;
+            const mySortId = currentSortId;
+
+            // Reset colors if already sorted but not generated new
+            for(let i=0; i<bars.length; i++) {
+                setBarColor(i, 'bar-default');
+            }
+            comparisons = 0;
+            swaps = 0;
+            updateStatsUI();
+            
+            clearLog();
+
+            switch (algo) {
+                case 'bubble': await bubbleSort(mySortId); break;
+                case 'selection': await selectionSort(mySortId); break;
+                case 'insertion': await insertionSort(mySortId); break;
+                case 'merge': await mergeSort(mySortId); break;
+                case 'quick': await quickSort(mySortId); break;
+            }
+
+            if (!isAborted(mySortId)) {
+                isSorting = false;
+            }
+        });
+
+        // Run setup on load
+        window.onload = init;
+
+    </script>
+</body>
+</html>
