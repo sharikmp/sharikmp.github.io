@@ -468,11 +468,12 @@ input[type=range]::-webkit-slider-thumb {
 .array-bar {
     width: 100%;
     border-radius: 3px 3px 0 0;
-    transition: background-color 0.1s ease-in-out, height 0.1s ease-in-out;
+    transition: background-color 0.1s ease-in-out, height 0.1s ease-in-out, transform 0.15s ease;
     display: flex;
     align-items: flex-end;
     justify-content: center;
     padding-bottom: 4px;
+    will-change: transform;
 }
 
 /* Value inside the bar */
@@ -501,18 +502,55 @@ input[type=range]::-webkit-slider-thumb {
 
 .bar-comparing {
     background-color: var(--bar-comparing) !important;
+    animation: bar-pulse 0.3s ease-in-out;
 }
 
 .bar-swapping {
     background-color: var(--bar-swapping) !important;
+    animation: bar-flash 0.25s ease-out;
 }
 
 .bar-sorted {
     background-color: var(--bar-sorted) !important;
+    animation: bar-sorted-lock 0.4s ease-out;
 }
 
 .bar-pivot {
     background-color: var(--bar-pivot) !important;
+    animation: bar-glow-pulse 1.2s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Phase 1: Bar State Keyframe Animations
+   -------------------------------------------------------------------------- */
+
+/* Compare: bar pops up slightly and back */
+@keyframes bar-pulse {
+    0%   { transform: scaleX(1)    scaleY(1); }
+    40%  { transform: scaleX(1.06) scaleY(1.04); }
+    100% { transform: scaleX(1)    scaleY(1); }
+}
+
+/* Swap: quick brightness flash then settle */
+@keyframes bar-flash {
+    0%   { filter: brightness(1); }
+    30%  { filter: brightness(1.7); }
+    100% { filter: brightness(1); }
+}
+
+/* Sorted: scale up then snap down + ripple */
+@keyframes bar-sorted-lock {
+    0%   { transform: scaleX(1)    scaleY(1);    filter: brightness(1); }
+    25%  { transform: scaleX(1.08) scaleY(1.05); filter: brightness(1.6); }
+    60%  { transform: scaleX(0.97) scaleY(0.98); filter: brightness(1.1); }
+    100% { transform: scaleX(1)    scaleY(1);    filter: brightness(1); }
+}
+
+/* Pivot: continuous soft glow throb */
+@keyframes bar-glow-pulse {
+    0%   { filter: brightness(1)   drop-shadow(0 0 2px var(--bar-pivot)); }
+    50%  { filter: brightness(1.4) drop-shadow(0 0 8px var(--bar-pivot)); }
+    100% { filter: brightness(1)   drop-shadow(0 0 2px var(--bar-pivot)); }
 }
 
 /* ==========================================================================
