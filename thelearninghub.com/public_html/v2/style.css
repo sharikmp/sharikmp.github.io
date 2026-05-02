@@ -437,8 +437,8 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #array-container {
-    height: 30vh;
-    min-height: 200px;
+    height: 22vh;
+    min-height: 150px;
     display: flex;
     align-items: flex-end;
     gap: 4px;
