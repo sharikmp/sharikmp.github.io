@@ -596,6 +596,8 @@ function generateArray() {
 // SECTION 3: UI LAYER
 // ==========================================================================
 
+const BAR_MAX_WIDTH_PX = 25;
+
 const ui = {
 
     // ---- DOM References ----
@@ -633,6 +635,7 @@ const ui = {
         for (let i = 0; i < size; i++) {
             const wrapper = document.createElement('div');
             wrapper.className = 'bar-wrapper';
+            wrapper.style.maxWidth = `${BAR_MAX_WIDTH_PX}px`;
 
             const bar = document.createElement('div');
             bar.className = 'array-bar bar-default';

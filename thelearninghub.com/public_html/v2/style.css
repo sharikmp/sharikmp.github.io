@@ -44,12 +44,11 @@ body {
     flex-direction: column;
     transition: background-color 0.3s, color 0.3s;
     overflow-x: hidden;
-    /* Prevent body horizontal scroll */
 }
 
 /* ==========================================================================
            Layout & Header
-           ========================================================================== */
+========================================================================== */
 header {
     background-color: var(--surface-color);
     border-bottom: 1px solid var(--border-color);
@@ -79,7 +78,7 @@ header {
 
 /* ==========================================================================
            Main Content area & Panels
-           ========================================================================== */
+========================================================================== */
 main {
     flex-grow: 1;
     width: 100%;
@@ -122,13 +121,12 @@ main {
 
 /* ==========================================================================
            Controls inside Dashboard
-           ========================================================================== */
+========================================================================== */
 .controls-inner {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem 0.5rem;
     align-items: end;
-    /* Aligns inputs, selects, and buttons by their bottom edge */
 }
 
 .control-group {
@@ -459,15 +457,13 @@ input[type=range]::-webkit-slider-thumb {
     position: relative;
     height: 100%;
     min-width: 28px;
-    max-width: 40px; /* overridden per-bar by BAR_MAX_WIDTH_PX in script.js */
+    max-width: 30px; /* overridden per-bar by BAR_MAX_WIDTH_PX in script.js */
     flex-grow: 1;
 }
 
 .array-bar {
     width: 100%;
     border-radius: 3px 3px 0 0;
-    /* No base transitions — height/colour changes must be instant at high speed.
-       transform transition is set inline by animateSwap for Phase 2 slide. */
     transition: none;
     display: flex;
     align-items: flex-end;
