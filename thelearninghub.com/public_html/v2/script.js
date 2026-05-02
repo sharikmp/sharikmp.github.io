@@ -554,7 +554,7 @@ function togglePlay() {
 function updateDelay() {
     const speed = parseInt(ui.speedSlider.value);
     ui.speedLabel.innerText = speed;
-    delay = speed === 100 ? 2 : 1000 / Math.pow(speed, 1.2);
+    delay = speed === 100 ? 2 : 1000 / Math.pow(speed, 0.85);
 }
 
 /** Re-collects frames for same array with new algo/order. Resets to frame 0. */
