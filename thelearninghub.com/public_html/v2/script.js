@@ -396,11 +396,19 @@ function collectFrames(algo, sourceArray, isDesc) {
 // SECTION 2a: ANIMATION HELPERS (Phase 2)
 // ==========================================================================
 
-/** Returns a Promise that resolves on the element's next transitionend event. */
-function waitForTransition(el) {
-    return new Promise(resolve =>
-        el.addEventListener('transitionend', resolve, { once: true })
-    );
+/**
+ * Returns a Promise that resolves on the element's next transitionend event.
+ * Falls back to resolving after timeoutMs if transitionend never fires
+ * (e.g. dx === 0, element hidden, browser skips transition).
+ */
+function waitForTransition(el, timeoutMs) {
+    return new Promise(resolve => {
+        const fallback = setTimeout(resolve, timeoutMs);
+        el.addEventListener('transitionend', () => {
+            clearTimeout(fallback);
+            resolve();
+        }, { once: true });
+    });
 }
 
 /** Clamps a CSS transition duration so it never exceeds the frame delay or is too short. */
@@ -425,7 +433,7 @@ async function animateSwap(idxA, idxB, frame) {
     barA.style.transform  = `translateX(${dx}px)`;
     barB.style.transform  = `translateX(${-dx}px)`;
 
-    await waitForTransition(barA);
+    await waitForTransition(barA, dur + 50);
 
     // Snap: disable all transitions momentarily so height/colour snap is instant
     barA.style.transition = 'none';

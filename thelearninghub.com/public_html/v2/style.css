@@ -468,7 +468,9 @@ input[type=range]::-webkit-slider-thumb {
 .array-bar {
     width: 100%;
     border-radius: 3px 3px 0 0;
-    transition: background-color 0.1s ease-in-out, height 0.1s ease-in-out, transform 0.15s ease;
+    /* No base transitions — height/colour changes must be instant at high speed.
+       transform transition is set inline by animateSwap for Phase 2 slide. */
+    transition: none;
     display: flex;
     align-items: flex-end;
     justify-content: center;
