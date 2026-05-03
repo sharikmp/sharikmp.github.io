@@ -470,7 +470,8 @@
             border-bottom: 1px dashed var(--border-color);
             color: var(--text-secondary);
             font-family: var(--font-mono);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: bold;
             text-align: left;
             padding-left: 10px;
             pointer-events: none;
@@ -484,8 +485,7 @@
             justify-content: flex-end;
             position: relative;
             height: 100%;
-            min-width: 28px;
-            max-width: 30px;
+            min-width: 18px;
             flex-grow: 1;
         }
 
@@ -709,7 +709,7 @@
                 <div class="controls-inner">
                     <div class="control-group">
                         <label for="size-slider" class="control-label">Size: <span id="size-label">10</span></label>
-                        <input type="range" id="size-slider" min="5" max="20" value="10">
+                        <input type="range" id="size-slider" min="5" max="100" value="10">
                     </div>
                     <div class="control-group">
                         <label for="speed-slider" class="control-label">Speed: <span id="speed-label">1</span></label>
@@ -1096,7 +1096,7 @@
             if (l >= r) return;
             const m = l + Math.floor((r - l) / 2);
 
-            const shiftAmt = Math.max(15, (4 - depth) * 15);
+            const shiftAmt = Math.max(5, (4 - depth) * 5);
             const leftOffset = parentOffset - shiftAmt;
             const rightOffset = parentOffset + shiftAmt;
 
@@ -1262,7 +1262,6 @@
             else if (frame.animMeta?.animType === 'orthogonal-divide') {
                 const meta = frame.animMeta;
                 const dur = clampDur(delay * 0.4);
-                ui.drawDepthLabel(meta.depth);
 
                 for (let i = 0; i < ui.bars.length; i++) {
                     if (meta.indices.includes(i)) continue;
@@ -1366,6 +1365,14 @@
             for (let i = 0; i <= idx; i++) {
                 if (frames[i].log) ui.appendLogEntry(frames[i].log.opName, frames[i].log.details);
             }
+
+            // Auto-sync depth labels visibility based on active elevations in the frame
+            const activeDepths = new Set();
+            frame.elevations.forEach(elev => {
+                if (elev > 0) activeDepths.add(Math.round(elev / DEPTH_STEP_PX));
+            });
+            ui.syncDepthLabels(activeDepths);
+
             frameIndex = idx;
         }
 
@@ -1475,7 +1482,6 @@
         // ==========================================================================
         // SECTION 4: UI LAYER
         // ==========================================================================
-        const BAR_MAX_WIDTH_PX = 30;
 
         const ui = {
             canvasWrapper: document.getElementById('canvas-container'),
@@ -1515,34 +1521,67 @@
                     this.container.style.paddingBottom = '20px';
                     this.canvasWrapper.style.maxHeight = '50vh';
                     this.canvasWrapper.style.overflowY = 'hidden';
-                    this.clearDepthLabels();
+                    this.syncDepthLabels(new Set()); // Instant clear
                 }
             },
 
-            drawDepthLabel(depth) {
-                if (this.depthLabels[depth] || depth === 0) return;
-                const label = document.createElement('div');
-                label.className = 'depth-label';
-                label.innerText = `Depth ${depth}`;
-                label.style.bottom = this.container.style.paddingBottom || '20px';
-                label.style.transform = `translateY(${depth * DEPTH_STEP_PX}px)`;
-                this.container.appendChild(label);
-                this.depthLabels[depth] = label;
+            syncDepthLabels(activeDepthsSet) {
+                // Remove labels no longer in use
+                for (const d of Object.keys(this.depthLabels)) {
+                    if (!activeDepthsSet.has(parseInt(d))) {
+                        this.depthLabels[d].remove();
+                        delete this.depthLabels[d];
+                    }
+                }
+                // Add new labels instantly dynamically
+                for (const d of activeDepthsSet) {
+                    if (d === 0) continue;
+                    if (!this.depthLabels[d]) {
+                        const label = document.createElement('div');
+                        label.className = 'depth-label';
+                        label.innerText = `(${d})`;
+                        label.style.bottom = this.container.style.paddingBottom || '20px';
+                        label.style.transform = `translateY(${d * DEPTH_STEP_PX}px)`;
+                        this.container.appendChild(label);
+                        this.depthLabels[d] = label;
+                    }
+                }
             },
 
-            clearDepthLabels() {
-                Object.values(this.depthLabels).forEach(el => el.remove());
-                this.depthLabels = {};
+            adjustConstraints(forceMobileMergeDefault = false) {
+                const algo = this.algorithmSelect.value;
+                const isMobile = window.innerWidth <= 768;
+                let changed = false;
+
+                if (algo === 'merge' && isMobile) {
+                    this.sizeSlider.max = 10;
+                    this.sizeSlider.min = 5;
+                    if (parseInt(this.sizeSlider.value) > 10 || forceMobileMergeDefault) {
+                        this.sizeSlider.value = 5;
+                        changed = true;
+                    }
+                } else {
+                    this.sizeSlider.max = 100;
+                    this.sizeSlider.min = 5;
+                }
+                this.sizeLabel.innerText = this.sizeSlider.value;
+                return changed;
             },
 
             buildBars(size) {
                 this.container.innerHTML = '';
                 this.bars = [];
-                this.depthLabels = {};
+                this.syncDepthLabels(new Set());
+
+                const algo = this.algorithmSelect.value;
+                const isMobile = window.innerWidth <= 768;
+                // Dynamically shrink bar thickness specifically for mobile depth map
+                const currentMaxWidth = (algo === 'merge' && isMobile) ? 15 : 30;
+
                 for (let i = 0; i < size; i++) {
                     const wrapper = document.createElement('div');
                     wrapper.className = 'bar-wrapper';
-                    wrapper.style.maxWidth = `${BAR_MAX_WIDTH_PX}px`;
+                    wrapper.style.maxWidth = `${currentMaxWidth}px`;
 
                     const bar = document.createElement('div');
                     bar.className = 'array-bar bar-default';
@@ -1663,25 +1702,50 @@
 
             bindEvents() {
                 this.generateBtn.addEventListener('click', generateArray);
+
                 this.sizeSlider.addEventListener('input', () => {
                     this.sizeLabel.innerText = this.sizeSlider.value;
                     if (animState !== 'playing') generateArray();
                 });
+
                 this.speedSlider.addEventListener('input', updateDelay);
+
                 this.algorithmSelect.addEventListener('change', () => {
                     this.updateLegend(this.algorithmSelect.value);
-                    if (animState !== 'playing') reCollectFrames();
+                    const isMobile = window.innerWidth <= 768;
+                    const changed = this.adjustConstraints(this.algorithmSelect.value === 'merge' && isMobile);
+                    if (changed) {
+                        if (animState !== 'playing') generateArray();
+                    } else {
+                        if (animState !== 'playing') reCollectFrames();
+                    }
                 });
+
+                let lastIsMobile = window.innerWidth <= 768;
+                window.addEventListener('resize', () => {
+                    const isMobile = window.innerWidth <= 768;
+                    if (isMobile !== lastIsMobile) {
+                        lastIsMobile = isMobile;
+                        if (animState !== 'playing') {
+                            this.adjustConstraints();
+                            generateArray(); // Force regeneration to apply correct bar thickness for the screen size
+                        }
+                    }
+                });
+
                 this.orderSelect.addEventListener('change', () => {
                     if (animState !== 'playing') reCollectFrames();
                 });
+
                 this.sortBtn.addEventListener('click', togglePlay);
+
                 this.prevBtn.addEventListener('click', async () => {
                     if (frameIndex > 0) {
                         await renderFrame(frameIndex - 1);
                         updateButtonStates();
                     }
                 });
+
                 this.nextBtn.addEventListener('click', async () => {
                     if (frameIndex < frames.length - 1) {
                         await renderFrame(frameIndex + 1);
@@ -1703,6 +1767,7 @@
         };
 
         function init() {
+            ui.adjustConstraints();
             ui.bindEvents();
             updateDelay();
             ui.updateLegend(ui.algorithmSelect.value);
