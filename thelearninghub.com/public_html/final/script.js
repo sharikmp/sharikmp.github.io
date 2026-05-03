@@ -357,7 +357,7 @@ function* sortGenerator(algo, arr, isDesc) {
 const profiler = {
     cache: {},
     // Array sizes to sample mathematically for the smooth profile curve
-    sizes: Array.from({ length: 10 }, (_, i) => i * 10),
+    sizes: Array.from({ length: 11 }, (_, i) => i * 10),
     samples: 3, // Samples per array size to ensure averages out outliers
 
     getProfile(algo, isDesc) {
