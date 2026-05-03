@@ -442,6 +442,8 @@
             width: 100%;
             /* Extra padding top so lifted items don't clip */
             padding-top: 60px;
+            /* Smooth transition for when we programmatically expand the container */
+            transition: padding-bottom 0.3s ease;
         }
 
         #array-container {
@@ -451,12 +453,12 @@
             align-items: flex-end;
             gap: 4px;
             padding-bottom: 20px;
-            /* Space for index numbers */
             /* Trick to center when small, but prevent left-cutoff when large */
             width: max-content;
             min-width: 100%;
             justify-content: center;
             margin: 0 auto;
+            transition: border-bottom 0.3s ease;
         }
 
         .bar-wrapper {
@@ -764,7 +766,7 @@
         <!-- Visualizer Canvas with Prev/Next Navigation -->
         <div class="canvas-nav-wrapper">
             <button id="prev-btn" class="nav-btn nav-btn-left" title="Previous Step" disabled>&#10094;</button>
-            <div class="canvas-container">
+            <div class="canvas-container" id="canvas-container">
                 <div id="array-container"></div>
             </div>
             <button id="next-btn" class="nav-btn nav-btn-right" title="Next Step" disabled>&#10095;</button>
@@ -938,7 +940,7 @@
         }
 
         // --------------------------------------------------------------------------
-        // Insertion Sort Generator (Updated with Lift/Shift/Drop Reusable Mechanics)
+        // Insertion Sort Generator
         // --------------------------------------------------------------------------
         function* insertionSortGen(arr, isDesc) {
             const n = arr.length;
@@ -962,7 +964,7 @@
                 yield mkFrame(arr, clrs, comp, sw, {
                     opName: 'Select & Lift',
                     details: `Index [${i}] (value: ${key}) lifted to find its sorted position`
-                }, { animType: 'lift', index: i }, elevs);
+                }, { animType: 'elevate', indices: [i] }, elevs);
 
                 while (j >= 0) {
                     clrs[j] = 'bar-comparing';
@@ -1000,7 +1002,7 @@
                 yield mkFrame(arr, clrs, comp, sw, {
                     opName: 'Drop',
                     details: `Key (${key}) dropped into correct sorted position [${j + 1}]`
-                }, { animType: 'drop', index: j + 1 }, elevs);
+                }, { animType: 'elevate', indices: [j + 1] }, elevs);
             }
 
             yield mkFrame(arr, clrs, comp, sw, {
@@ -1010,86 +1012,105 @@
         }
 
         // --------------------------------------------------------------------------
-        // Merge Sort Generators
+        // Merge Sort Generators (Updated to Assembly Line Visualization)
         // --------------------------------------------------------------------------
-        function* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen) {
+        function* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen, elevs) {
             const L = arr.slice(l, m + 1);
             const Rv = arr.slice(m + 1, r + 1);
+
+            // 1. Divide & Drop Phase
+            const dropRange = [];
+            for (let x = l; x <= r; x++) {
+                elevs[x] = 80; // Drop into "Auxiliary Memory" area
+                dropRange.push(x);
+            }
+            yield mkFrame(arr, clrs, stats.comp, stats.sw, {
+                opName: 'Divide & Drop',
+                details: `Subarrays [${l}-${m}] & [${m + 1}-${r}] dropped to aux memory.`
+            }, { animType: 'elevate', indices: dropRange }, elevs);
+
             let i = 0, j = 0, k = l;
 
-            yield mkFrame(arr, clrs, stats.comp, stats.sw, {
-                opName: 'Merge Phase',
-                details: `Subarrays Left [${l}-${m}] & Right [${m + 1}-${r}]`
-            });
-
+            // 2. Compare & Fly-Up Phase
             while (i < L.length && j < Rv.length) {
-                clrs[l + i] = 'bar-comparing';
-                clrs[m + 1 + j] = 'bar-comparing';
-                yield mkFrame(arr, clrs, stats.comp, stats.sw, null);
                 stats.comp++;
-
                 const takeLeft = isDesc ? L[i] >= Rv[j] : L[i] <= Rv[j];
-                if (takeLeft) { arr[k] = L[i]; i++; } else { arr[k] = Rv[j]; j++; }
+
+                if (takeLeft) {
+                    arr[k] = L[i];
+                    i++;
+                } else {
+                    arr[k] = Rv[j];
+                    j++;
+                }
                 stats.sw++;
+
+                elevs[k] = 0; // The chosen value flies back up into the main sorted row
                 clrs[k] = 'bar-swapping';
+
                 yield mkFrame(arr, clrs, stats.comp, stats.sw, {
-                    opName: 'Write',
-                    details: `Value ${arr[k]} into index [${k}]`
-                });
+                    opName: 'Merge & Fly',
+                    details: `Selected value ${arr[k]} flies up to index [${k}]`
+                }, { animType: 'elevate', indices: [k] }, elevs);
+
                 clrs[k] = (r - l === totalLen - 1) ? 'bar-sorted' : 'bar-default';
-                if (l + i < totalLen) clrs[l + i] = 'bar-default';
-                if (m + 1 + j < totalLen) clrs[m + 1 + j] = 'bar-default';
                 k++;
             }
 
+            // 3. Sweep Remaining (Fly-Up) Phase
             while (i < L.length) {
                 arr[k] = L[i];
-                clrs[k] = 'bar-swapping';
                 stats.sw++;
+                elevs[k] = 0;
+                clrs[k] = 'bar-swapping';
                 yield mkFrame(arr, clrs, stats.comp, stats.sw, {
-                    opName: 'Copy',
-                    details: `Remaining Left element ${arr[k]} to [${k}]`
-                });
+                    opName: 'Sweep & Fly',
+                    details: `Remaining Left value ${arr[k]} flies up to [${k}]`
+                }, { animType: 'elevate', indices: [k] }, elevs);
                 clrs[k] = (r - l === totalLen - 1) ? 'bar-sorted' : 'bar-default';
                 i++; k++;
             }
 
             while (j < Rv.length) {
                 arr[k] = Rv[j];
-                clrs[k] = 'bar-swapping';
                 stats.sw++;
+                elevs[k] = 0;
+                clrs[k] = 'bar-swapping';
                 yield mkFrame(arr, clrs, stats.comp, stats.sw, {
-                    opName: 'Copy',
-                    details: `Remaining Right element ${arr[k]} to [${k}]`
-                });
+                    opName: 'Sweep & Fly',
+                    details: `Remaining Right value ${arr[k]} flies up to [${k}]`
+                }, { animType: 'elevate', indices: [k] }, elevs);
                 clrs[k] = (r - l === totalLen - 1) ? 'bar-sorted' : 'bar-default';
                 j++; k++;
             }
         }
 
-        function* _mergeHelperGen(arr, l, r, clrs, stats, isDesc, totalLen) {
+        function* _mergeHelperGen(arr, l, r, clrs, stats, isDesc, totalLen, elevs) {
             if (l >= r) return;
             const m = l + Math.floor((r - l) / 2);
-            yield* _mergeHelperGen(arr, l, m, clrs, stats, isDesc, totalLen);
-            yield* _mergeHelperGen(arr, m + 1, r, clrs, stats, isDesc, totalLen);
-            yield* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen);
+            yield* _mergeHelperGen(arr, l, m, clrs, stats, isDesc, totalLen, elevs);
+            yield* _mergeHelperGen(arr, m + 1, r, clrs, stats, isDesc, totalLen, elevs);
+            yield* _mergeStepGen(arr, l, m, r, clrs, stats, isDesc, totalLen, elevs);
         }
 
         function* mergeSortGen(arr, isDesc) {
             const n = arr.length;
             const clrs = new Array(n).fill('bar-default');
+            const elevs = new Array(n).fill(0);
             const stats = { comp: 0, sw: 0 };
 
             yield mkFrame(arr, clrs, stats.comp, stats.sw, {
                 opName: 'Start',
                 details: `Merge Sort Initiated (${isDesc ? 'Descending' : 'Ascending'})`
-            });
-            yield* _mergeHelperGen(arr, 0, n - 1, clrs, stats, isDesc, n);
+            }, null, elevs);
+
+            yield* _mergeHelperGen(arr, 0, n - 1, clrs, stats, isDesc, n, elevs);
+
             for (let i = 0; i < n; i++) clrs[i] = 'bar-sorted';
             yield mkFrame(arr, clrs, stats.comp, stats.sw, {
                 opName: 'Complete',
                 details: 'Merge Sort finished successfully.'
-            });
+            }, null, elevs);
         }
 
         // --------------------------------------------------------------------------
@@ -1291,29 +1312,36 @@
                     ui.setBarColor(i, frame.colors[i]);
                     ui.setBarElevation(i, frame.elevations[i]);
                 }
-            } else if (frame.animMeta?.animType === 'lift' || frame.animMeta?.animType === 'drop') {
-                // Handle vertical physical transitions
-                const targetIdx = frame.animMeta.index;
-                const bar = ui.bars[targetIdx].bar;
+            } else if (frame.animMeta?.animType === 'elevate') {
+                // Handle vertical physical transitions (Lifts, Drops, Fly-Ups)
+                const meta = frame.animMeta;
+                const targetIndices = meta.indices ? meta.indices : [meta.index];
                 const dur = clampDur(delay * 0.4);
 
                 // Instantly sync the background matrix (elements not involved in transition)
                 for (let i = 0; i < ui.bars.length; i++) {
-                    if (i === targetIdx) continue;
+                    if (targetIndices.includes(i)) continue;
                     ui.setBarHeight(i, frame.values[i]);
                     ui.setBarColor(i, frame.colors[i]);
                     ui.setBarElevation(i, frame.elevations[i]);
                 }
 
-                // Apply new values to target, but enable smooth transition specifically for its Y-axis transform
-                ui.setBarHeight(targetIdx, frame.values[targetIdx]);
-                ui.setBarColor(targetIdx, frame.colors[targetIdx]);
-                bar.style.transition = `transform ${dur}ms ease`;
-                ui.setBarElevation(targetIdx, frame.elevations[targetIdx]);
+                const promises = [];
+                // Apply new values to targets, but enable smooth transition specifically for Y-axis transform
+                for (const targetIdx of targetIndices) {
+                    const bar = ui.bars[targetIdx].bar;
+                    ui.setBarHeight(targetIdx, frame.values[targetIdx]);
+                    ui.setBarColor(targetIdx, frame.colors[targetIdx]);
+                    bar.style.transition = `transform ${dur}ms ease`;
+                    ui.setBarElevation(targetIdx, frame.elevations[targetIdx]);
+                    promises.push(waitForTransition(bar, dur + 50));
+                }
 
                 // Pause the global render loop while lift/drop completes visually
-                await waitForTransition(bar, dur + 50);
-                bar.style.transition = 'none';
+                await Promise.all(promises);
+                for (const targetIdx of targetIndices) {
+                    ui.bars[targetIdx].bar.style.transition = 'none';
+                }
             } else {
                 // Standard State Change (Comparisons, color flips, static holds)
                 for (let i = 0; i < ui.bars.length; i++) {
@@ -1414,6 +1442,11 @@
             animState = 'idle';
             const algo = ui.algorithmSelect.value;
             const isDesc = ui.orderSelect.value === 'desc';
+
+            // Check if the current algorithm requires expanded canvas area
+            const needsExpansion = (algo === 'merge');
+            ui.setCanvasExpansion(needsExpansion);
+
             frames = collectFrames(algo, array, isDesc);
             ui.statsRuntime.innerText = frames.runTimeMs;
             frameIndex = 0;
@@ -1453,6 +1486,7 @@
         const ui = {
 
             // ---- DOM References ----
+            canvasWrapper: document.getElementById('canvas-container'),
             container: document.getElementById('array-container'),
             sizeSlider: document.getElementById('size-slider'),
             speedSlider: document.getElementById('speed-slider'),
@@ -1479,6 +1513,17 @@
 
             // ---- Bar State ----
             bars: [],   // array of { bar: HTMLElement, valSpan: HTMLElement }
+
+            // ---- Canvas Area Setup ----
+            setCanvasExpansion(isExpanded) {
+                if (isExpanded) {
+                    this.canvasWrapper.style.paddingBottom = '100px';
+                    this.container.style.borderBottom = '2px dashed var(--border-color)';
+                } else {
+                    this.canvasWrapper.style.paddingBottom = '0.75rem'; // reset to original padding
+                    this.container.style.borderBottom = 'none';
+                }
+            },
 
             // ---- Bar DOM Methods ----
             buildBars(size) {
@@ -1525,8 +1570,11 @@
                 const bar = this.bars[i].bar;
                 bar.dataset.elev = elev;
                 bar.style.transform = `translateY(${elev}px)`;
-                // If element is actively lifted (elev < 0), render it overlapping others.
-                bar.style.zIndex = elev < 0 ? '10' : '1';
+                // If element is actively lifted (elev < 0) or dropped (elev > 0), render it appropriately.
+                // Dropped items look better layered below the main row items crossing over them.
+                if (elev < 0) bar.style.zIndex = '10';
+                else if (elev > 0) bar.style.zIndex = '0';
+                else bar.style.zIndex = '1';
             },
 
             // ---- Stats ----
