@@ -16,7 +16,6 @@
             --surface-hover: #262626;
             --text-primary: #f5f5f5;
             --text-secondary: #a3a3a3;
-            --text-muted: #666666;
             --accent-gold: #d4af37;
             --accent-gold-hover: #f1d570;
             --accent-gold-dark: #aa8a29;
@@ -444,9 +443,9 @@
             /* Allow scrolling for deep depth maps */
         }
 
+
+
         #array-container {
-            /* CRITICAL FIX: box-sizing: content-box guarantees the 120px height is kept for the bars,
-       while the massive padding-bottom simply extends the scrollable area downwards */
             box-sizing: content-box;
             height: 120px;
             /* Fixed height for the base Depth 0 level */
@@ -463,13 +462,31 @@
             /* Crucial for absolute depth labels */
         }
 
+        /* Target the element to hide the scrollbar for */
+        #array-container,
+        .canvas-container {
+            /* Hides scrollbar for Firefox */
+            scrollbar-width: none;
+
+            /* Hides scrollbar for Internet Explorer and Legacy Edge */
+            -ms-overflow-style: none;
+        }
+
+        /* Hides scrollbar for Chrome, Safari, and newer Opera */
+        #array-container::-webkit-scrollbar,
+        .canvas-container::-webkit-scrollbar {
+            display: none;
+        }
+
         /* Merge Sort Depth Labels */
         .depth-label {
             position: absolute;
             left: 0;
+            top: 120px;
+            /* Aligns precisely with baseline of the bars at depth 0 */
             width: 100%;
             border-bottom: 1px dashed var(--border-color);
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-family: var(--font-mono);
             font-size: 0.85rem;
             font-weight: bold;
@@ -1226,6 +1243,22 @@
             const frame = frames[idx];
             if (!frame) return;
 
+            // Step 1: Calculate union of current and previous depths to PREVENT premature shrinking
+            const activeDepths = new Set();
+            frame.elevations.forEach(elev => {
+                if (elev > 0) activeDepths.add(Math.round(elev / DEPTH_STEP_PX));
+            });
+
+            const prevFrame = frames[idx - 1];
+            if (prevFrame) {
+                prevFrame.elevations.forEach(elev => {
+                    if (elev > 0) activeDepths.add(Math.round(elev / DEPTH_STEP_PX));
+                });
+            }
+
+            // Expand or hold the container size before animation starts
+            ui.syncDepthLabels(activeDepths);
+
             if (frame.animMeta?.animType === 'swap') {
                 const [idxA, idxB] = frame.animMeta.swapIndices;
                 await animateSwap(idxA, idxB, frame);
@@ -1361,18 +1394,18 @@
                 }
             }
 
+            // Step 2: After animations complete, sync strictly to current depths to allow safe shrinking
+            const finalDepths = new Set();
+            frame.elevations.forEach(elev => {
+                if (elev > 0) finalDepths.add(Math.round(elev / DEPTH_STEP_PX));
+            });
+            ui.syncDepthLabels(finalDepths);
+
             ui.updateStats(frame.comparisons, frame.swaps);
             ui.clearLog();
             for (let i = 0; i <= idx; i++) {
                 if (frames[i].log) ui.appendLogEntry(frames[i].log.opName, frames[i].log.details);
             }
-
-            // Auto-sync depth labels visibility based on active elevations in the frame
-            const activeDepths = new Set();
-            frame.elevations.forEach(elev => {
-                if (elev > 0) activeDepths.add(Math.round(elev / DEPTH_STEP_PX));
-            });
-            ui.syncDepthLabels(activeDepths);
 
             frameIndex = idx;
         }
@@ -1450,9 +1483,8 @@
             const algo = ui.algorithmSelect.value;
             const isDesc = ui.orderSelect.value === 'desc';
 
-            // Auto-expand canvas only for Merge Sort
-            const needsExpansion = (algo === 'merge');
-            ui.setCanvasExpansion(needsExpansion);
+            // Reset base styles
+            ui.setCanvasExpansion(true);
 
             frames = collectFrames(algo, array, isDesc);
             ui.statsRuntime.innerText = frames.runTimeMs;
@@ -1514,8 +1546,7 @@
 
             setCanvasExpansion(isExpanded) {
                 if (isExpanded) {
-                    // Room for up to 4 extra depth levels (4 * 150 = 600px + 20px padding)
-                    this.container.style.paddingBottom = '620px';
+                    this.container.style.paddingBottom = '20px'; // Reverts to base
                     this.canvasWrapper.style.maxHeight = 'none';
                     this.canvasWrapper.style.overflowY = 'visible';
                 } else {
@@ -1527,6 +1558,8 @@
             },
 
             syncDepthLabels(activeDepthsSet) {
+                let maxDepth = 0;
+
                 // Remove labels no longer in use
                 for (const d of Object.keys(this.depthLabels)) {
                     if (!activeDepthsSet.has(parseInt(d))) {
@@ -1534,18 +1567,24 @@
                         delete this.depthLabels[d];
                     }
                 }
+
                 // Add new labels instantly dynamically
                 for (const d of activeDepthsSet) {
+                    if (d > maxDepth) maxDepth = d;
                     if (d === 0) continue;
                     if (!this.depthLabels[d]) {
                         const label = document.createElement('div');
                         label.className = 'depth-label';
                         label.innerText = `(${d})`;
-                        label.style.bottom = this.container.style.paddingBottom || '20px';
                         label.style.transform = `translateY(${d * DEPTH_STEP_PX}px)`;
                         this.container.appendChild(label);
                         this.depthLabels[d] = label;
                     }
+                }
+
+                if (this.algorithmSelect.value === 'merge') {
+                    const requiredPadding = Math.max(20, maxDepth * DEPTH_STEP_PX + 40);
+                    this.container.style.paddingBottom = `${requiredPadding}px`;
                 }
             },
 
@@ -1561,9 +1600,14 @@
                         this.sizeSlider.value = 5;
                         changed = true;
                     }
-                } else {
-                    this.sizeSlider.max = 100;
+                }
+                else if (algo === 'merge' && !isMobile) {
+                    this.sizeSlider.max = 16;
                     this.sizeSlider.min = 5;
+                }
+                else {
+                    this.sizeSlider.max = 100;
+                    this.sizeSlider.min = 10;
                 }
                 this.sizeLabel.innerText = this.sizeSlider.value;
                 return changed;
@@ -1577,7 +1621,7 @@
                 const algo = this.algorithmSelect.value;
                 const isMobile = window.innerWidth <= 768;
                 // Dynamically shrink bar thickness specifically for mobile depth map
-                const currentMaxWidth = (algo === 'merge' && isMobile) ? 15 : 30;
+                const currentMaxWidth = (algo === 'merge' && isMobile) ? 15 : 20;
 
                 for (let i = 0; i < size; i++) {
                     const wrapper = document.createElement('div');
