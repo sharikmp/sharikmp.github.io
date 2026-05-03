@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SortVisualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">Sort<span>Visualizer</span></div>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="dashboard">
+            <div class="panel">
+                <div class="controls-inner">
+                    <div class="control-group">
+                        <label for="size-slider" class="control-label">Size: <span id="size-label">10</span></label>
+                        <input type="range" id="size-slider" min="5" max="100" value="10">
+                    </div>
+                    <div class="control-group">
+                        <label for="speed-slider" class="control-label">Speed: <span id="speed-label">1</span></label>
+                        <input type="range" id="speed-slider" min="1" max="5" value="1">
+                    </div>
+                    <div class="control-group">
+                        <select id="order-select">
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                    <select id="algorithm-select">
+                        <option value="bubble">Bubble Sort</option>
+                        <option value="selection">Selection Sort</option>
+                        <option value="insertion">Insertion Sort</option>
+                        <option value="merge">Merge Sort</option>
+                        <option value="quick">Quick Sort</option>
+                    </select>
+                    <button id="generate-btn">New Array</button>
+                    <button id="sort-btn">Start</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="algo-metrics-grid">
+                    <div class="algo-metric-item">
+                        <span class="info-icon" data-info-key="comparisons">i</span>
+                        <span id="stats-comparisons" class="algo-metric-val amc-red">0</span>
+                        <span class="algo-metric-label">Comparisons</span>
+                    </div>
+                    <div class="algo-metric-item">
+                        <span class="info-icon" data-info-key="swaps">i</span>
+                        <span id="stats-swaps" class="algo-metric-val amc-orange">0</span>
+                        <span class="algo-metric-label">Writes / Swaps</span>
+                    </div>
+                    <div class="algo-metric-item">
+                        <span class="info-icon" data-info-key="runtime">i</span>
+                        <span id="stats-runtime" class="algo-metric-val amc-gold">-</span>
+                        <span class="algo-metric-label">Run Time (ms)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-nav-wrapper">
+            <button id="prev-btn" class="nav-btn nav-btn-left" title="Previous Step" disabled>&#10094;</button>
+            <div class="canvas-container" id="canvas-container">
+                <div id="array-container"></div>
+            </div>
+            <button id="next-btn" class="nav-btn nav-btn-right" title="Next Step" disabled>&#10095;</button>
+        </div>
+
+        <div class="legend" id="legend">
+            <div class="legend-item" data-legend="unsorted">
+                <div class="legend-color" style="background: var(--bar-default);"></div> Unsorted
+            </div>
+            <div class="legend-item" data-legend="comparing">
+                <div class="legend-color" style="background: var(--bar-comparing);"></div> Comparing
+            </div>
+            <div class="legend-item" data-legend="swapping">
+                <div class="legend-color" style="background: var(--bar-swapping);"></div> Swapping / Writing
+            </div>
+            <div class="legend-item" data-legend="pivot">
+                <div class="legend-color" style="background: var(--bar-pivot);"></div> Pivot
+            </div>
+            <div class="legend-item" data-legend="sorted">
+                <div class="legend-color" style="background: var(--bar-sorted);"></div> Sorted
+            </div>
+        </div>
+
+        <!-- 2 Column Layout for Logs & Complexity Curve -->
+        <div class="bottom-panels">
+            <div class="panel operation-log-panel">
+                <div class="panel-title">Operation Log</div>
+                <div id="operation-log-container" class="log-container"></div>
+            </div>
+
+            <div class="panel curve-panel">
+                <div class="panel-title">
+                    Complexity Curve
+                    <span class="info-icon" data-info-key="curve"
+                        style="position: relative; right: auto; top: -1px; margin-left: 8px; border-color: var(--text-secondary);">i</span>
+                </div>
+                <div id="curve-container" style="height: 150px; position: relative;">
+                    <svg id="complexity-svg" width="100%" height="100%"></svg>
+                    <div id="curve-tooltip" class="curve-tooltip hidden"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Metric Info Modal -->
+    <div id="metric-modal-backdrop" class="metric-modal-backdrop hidden"></div>
+    <div id="metric-modal-box" class="metric-modal-box hidden">
+        <div class="metric-modal-header">
+            <span id="metric-modal-title" class="metric-modal-title"></span>
+            <button id="metric-modal-close" class="metric-modal-close" title="Close">&#10005;</button>
+        </div>
+        <p id="metric-modal-body" class="metric-modal-body"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
