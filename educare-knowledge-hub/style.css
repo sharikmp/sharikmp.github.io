@@ -1183,6 +1183,84 @@ button { cursor: pointer; font-family: inherit; }
 
 
 /* ==========================================================================
+   14b. COURSE GROUP LABELS, CLASS TAGS & FACULTY EXPERIENCE BADGE
+   ========================================================================== */
+
+/* Section dividers between Regular and Weekend course groups */
+.course-group-label { margin-bottom: 22px; }
+
+.course-group-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .78rem;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 50px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.weekday-tag {
+  background: rgba(59,79,206,.08);
+  color: var(--primary);
+  border: 1.5px solid rgba(59,79,206,.18);
+}
+
+.weekend-tag {
+  background: rgba(249,115,22,.08);
+  color: var(--orange);
+  border: 1.5px solid rgba(249,115,22,.2);
+}
+
+/* Grade / stream pill below course card title */
+.course-class-tag {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: rgba(59,79,206,.08);
+  padding: 3px 12px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  letter-spacing: .2px;
+}
+.course-class-tag.arts-tag   { color: var(--purple); background: rgba(139,92,246,.1); }
+.course-class-tag.teal-tag   { color: var(--teal);   background: rgba(20,184,166,.1);  }
+.course-class-tag.orange-tag { color: var(--orange);  background: rgba(249,115,22,.1); }
+
+/* Weekend badge pill — top-right corner of weekend course cards */
+.course-badge-weekend {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(249,115,22,.12);
+  color: var(--orange);
+  font-size: .64rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 50px;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
+
+/* Years-of-experience badge on faculty cards */
+.faculty-exp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .76rem;
+  font-weight: 600;
+  color: var(--teal);
+  background: rgba(20,184,166,.1);
+  padding: 4px 12px;
+  border-radius: 50px;
+  margin-bottom: 11px;
+}
+.faculty-exp i { font-size: .78rem; }
+
+
+/* ==========================================================================
    15. RESPONSIVE OVERRIDES
    ========================================================================== */
 
