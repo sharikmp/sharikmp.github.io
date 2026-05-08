@@ -19,125 +19,157 @@
 'use strict';
 
 /* =============================================================================
-   1. THREE.JS 3D MESH ANIMATION (ported from index2.html ThreeAnim)
+   1. HERO CANVAS ANIMATION
    -----------------------------------------------------------------------------
-   Mounts a rotating 3D interconnected knowledge-network on #canvas-container.
-   • WebGLRenderer with alpha:true — background is fully transparent so the
-     hero CSS background image (Layer 1) shows through underneath.
-   • Spherically-distributed white particles connected by semi-transparent lines.
-   • auto-rotation + smooth mouse/touch camera parallax.
+   Fluid, interactive abstract wave canvas injected into #canvas-container.
+   • Three layered bezier-curve waves animate continuously.
+   • Mouse / touch parallax warps the waves in real-time.
+   • Click / tap spawns an expanding liquid ripple.
+   • Pure Canvas 2D — no external libraries required.
    ============================================================================= */
-const ThreeAnim = (() => {
-  let container, scene, camera, renderer, group;
-  let mouseX = 0, mouseY = 0;
-  let halfW = window.innerWidth  / 2;
-  let halfH = window.innerHeight / 2;
+const HeroCanvas = (() => {
 
-  function init() {
-    container = document.getElementById('canvas-container');
-    if (!container || typeof THREE === 'undefined') return;
+  /**
+   * Initialises the interactive fluid canvas and appends it to parentElement.
+   * @param {HTMLElement} parentElement
+   */
+  function initAbstractHeroCanvas(parentElement) {
+    const canvas = document.createElement('canvas');
+    canvas.className = 'hero-canvas-bg';
+    parentElement.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
 
-    /* Scene */
-    scene = new THREE.Scene();
+    let width, height;
+    let animationFrameId;
+    let time = 0;
 
-    /* Camera */
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
-    camera.position.z = 800;
+    let mouse = { x: 0, y: 0, tx: 0, ty: 0, active: false };
+    let ripples = [];
 
-    /* Renderer — alpha:true keeps canvas transparent so bg image shows below */
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
+    const baseColor      = '#7585eb';
+    const wave1Start     = 'rgba(130, 147, 240, 0.9)';
+    const wave1End       = 'rgba(130, 147, 240, 0.0)';
+    const wave2Start     = 'rgba(153, 169, 248, 0.85)';
+    const wave2End       = 'rgba(153, 169, 248, 0.1)';
+    const wave3Start     = 'rgba(180, 195, 255, 0.6)';
+    const wave3End       = 'rgba(180, 195, 255, 0.0)';
 
-    /* Group that rotates each frame */
-    group = new THREE.Group();
-    scene.add(group);
-
-    /* Adaptive particle count for performance */
-    const isMobile      = window.innerWidth < 768;
-    const particleCount = isMobile ? 200 : 450;
-    const maxDist       = isMobile ? 100 : 120;
-
-    /* Generate particle positions uniformly inside a sphere */
-    const pos = [];
-    for (let i = 0; i < particleCount; i++) {
-      const r     = 500 * Math.cbrt(Math.random());
-      const theta = Math.random() * 2 * Math.PI;
-      const phi   = Math.acos(2 * Math.random() - 1);
-      pos.push(
-        r * Math.sin(phi) * Math.cos(theta),
-        r * Math.sin(phi) * Math.sin(theta),
-        r * Math.cos(phi)
-      );
-    }
-
-    /* White particle dots */
-    const pGeo = new THREE.BufferGeometry();
-    pGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    group.add(new THREE.Points(
-      pGeo,
-      new THREE.PointsMaterial({ color: 0xffffff, size: 3, transparent: true, opacity: 0.8, sizeAttenuation: true })
-    ));
-
-    /* Connecting line segments between nearby particles */
-    const linePts = [];
-    for (let i = 0; i < particleCount; i++) {
-      for (let j = i + 1; j < particleCount; j++) {
-        const ix = i * 3, jx = j * 3;
-        const dx = pos[ix]   - pos[jx];
-        const dy = pos[ix+1] - pos[jx+1];
-        const dz = pos[ix+2] - pos[jx+2];
-        if (Math.sqrt(dx*dx + dy*dy + dz*dz) < maxDist) {
-          linePts.push(pos[ix], pos[ix+1], pos[ix+2], pos[jx], pos[jx+1], pos[jx+2]);
-        }
+    function resize() {
+      width  = parentElement.clientWidth;
+      height = parentElement.clientHeight;
+      const dpr    = window.devicePixelRatio || 1;
+      canvas.width  = width  * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+      if (!mouse.active) {
+        mouse.tx = width  / 2;
+        mouse.ty = height / 2;
+        mouse.x  = mouse.tx;
+        mouse.y  = mouse.ty;
       }
     }
-    const lGeo = new THREE.BufferGeometry();
-    lGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePts, 3));
-    group.add(new THREE.LineSegments(
-      lGeo,
-      new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.15 })
-    ));
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
 
-    /* Events */
-    window.addEventListener('resize',     onResize,    { passive: true });
-    document.addEventListener('mousemove', onMouseMove, { passive: true });
-    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    /* Bind mouse / touch events to the hero section so they fire even over
+       the text-overlay (which sits above #canvas-container) */
+    const hero = parentElement.parentElement || parentElement;
 
-    animate();
-  }
-
-  function onResize() {
-    halfW = window.innerWidth  / 2;
-    halfH = window.innerHeight / 2;
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }
-
-  function onMouseMove(e) {
-    mouseX = (e.clientX - halfW) * 0.2;
-    mouseY = (e.clientY - halfH) * 0.2;
-  }
-
-  function onTouchMove(e) {
-    if (e.touches.length > 0) {
-      mouseX = (e.touches[0].clientX - halfW) * 0.3;
-      mouseY = (e.touches[0].clientY - halfH) * 0.3;
+    function updateMouse(clientX, clientY) {
+      const rect = hero.getBoundingClientRect();
+      mouse.tx     = clientX - rect.left;
+      mouse.ty     = clientY - rect.top;
+      mouse.active = true;
     }
+
+    hero.addEventListener('mousemove', e => updateMouse(e.clientX, e.clientY), { passive: true });
+    hero.addEventListener('touchmove', e => {
+      if (e.touches.length > 0) updateMouse(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+
+    function createRipple(clientX, clientY) {
+      const rect = hero.getBoundingClientRect();
+      const x    = clientX - rect.left;
+      const y    = clientY - rect.top;
+      ripples.push({ x, y, radius: 0, maxRadius: Math.max(width, height) * 0.6, alpha: 0.6 });
+      mouse.tx = x; mouse.ty = y; mouse.active = true;
+    }
+    hero.addEventListener('mousedown',  e => createRipple(e.clientX, e.clientY));
+    hero.addEventListener('touchstart', e => {
+      if (e.touches.length > 0) createRipple(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+
+    function drawWaveLayer(offsetY, phaseX, phaseY, ampX, ampY, colorStart, colorEnd, px, py) {
+      ctx.beginPath();
+      ctx.moveTo(-100, height + 100);
+      ctx.lineTo(-100, height * offsetY + Math.sin(time * 0.0004 * phaseY) * 80 + py * 0.2);
+      const t   = time * 0.0004;
+      const cp1x = width * 0.3 + Math.cos(t * phaseX) * ampX + px;
+      const cp1y = height * (offsetY + 0.1) + Math.sin(t * phaseY * 0.9) * ampY + py;
+      const cp2x = width * 0.7 + Math.cos(t * phaseX * 0.7) * ampX + px * 1.5;
+      const cp2y = height * (offsetY - 0.2) + Math.sin(t * phaseY * 1.2) * ampY + py * 1.5;
+      const endX  = width + 100;
+      const endY  = height * (offsetY - 0.4) + Math.cos(t * phaseY * 0.8) * 80 + py * 2;
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+      ctx.lineTo(width + 100, height + 100);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, height, width * 0.8, 0);
+      grad.addColorStop(0, colorStart);
+      grad.addColorStop(1, colorEnd);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = baseColor;
+      ctx.fillRect(0, 0, width, height);
+
+      mouse.x += (mouse.tx - mouse.x) * 0.05;
+      mouse.y += (mouse.ty - mouse.y) * 0.05;
+
+      const dx = (mouse.x - width  / 2) * 0.25;
+      const dy = (mouse.y - height / 2) * 0.25;
+
+      drawWaveLayer(0.8, 1.1, 0.9, 100, 100, wave1Start, wave1End, dx * 0.4, dy * 0.4);
+      drawWaveLayer(0.6, 0.8, 1.4, 120,  80, wave2Start, wave2End, dx * 0.9, dy * 0.9);
+      drawWaveLayer(0.4, 1.3, 1.1,  80, 120, wave3Start, wave3End, dx * 1.6, dy * 1.6);
+
+      if (mouse.active) {
+        const gr = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, width * 0.3);
+        gr.addColorStop(0, 'rgba(255,255,255,0.15)');
+        gr.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = gr;
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, width * 0.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.radius += (r.maxRadius - r.radius) * 0.03 + 1;
+        r.alpha  -= 0.006;
+        if (r.alpha <= 0) { ripples.splice(i, 1); continue; }
+        const rg = ctx.createRadialGradient(r.x, r.y, r.radius * 0.4, r.x, r.y, r.radius);
+        rg.addColorStop(0,   'rgba(255,255,255,0)');
+        rg.addColorStop(0.5, `rgba(200,220,255,${(r.alpha * 0.4).toFixed(3)})`);
+        rg.addColorStop(1,   'rgba(255,255,255,0)');
+        ctx.fillStyle = rg;
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      time += 16;
+      animationFrameId = requestAnimationFrame(draw);
+    }
+
+    draw();
   }
 
-  function animate() {
-    requestAnimationFrame(animate);
-    /* Slow continuous rotation */
-    group.rotation.x += 0.001;
-    group.rotation.y += 0.002;
-    /* Smooth camera parallax based on mouse/touch position */
-    camera.position.x += (mouseX  - camera.position.x) * 0.02;
-    camera.position.y += (-mouseY - camera.position.y) * 0.02;
-    camera.lookAt(scene.position);
-    renderer.render(scene, camera);
+  function init() {
+    const container = document.getElementById('canvas-container');
+    if (container) initAbstractHeroCanvas(container);
   }
 
   return { init };
@@ -485,7 +517,7 @@ const App = {
   },
 
   initModules() {
-    ThreeAnim.init();        // Hero Three.js 3D mesh (transparent over bg image)
+    HeroCanvas.init();       // Hero fluid wave canvas animation
     TypingEffect.init();     // Hero heading typing animation
     Navigation.init();       // Sticky nav + scroll-spy
     // Testimonials: now handled natively by Bootstrap 5 Carousel (data-bs-ride)

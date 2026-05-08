@@ -278,21 +278,31 @@ button { cursor: pointer; font-family: inherit; }
   overflow: hidden;
   display: flex;
   align-items: center;
-  /* Layer 1: illustration shows on the left; right side stays open for text */
-  background: url('image-1778252246167.png') left center / cover no-repeat;
+  /* Background colour shown before canvas paints */
+  background: #7585eb;
 }
 
-/* Layer 2: Three.js WebGL canvas — alpha:true keeps it transparent over the image */
+/* Canvas injected by HeroCanvas JS — fills the section, sits below the text */
 #canvas-container {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
-  pointer-events: none;   /* clicks pass through to .hero-overlay links */
+  z-index: 0;
+  pointer-events: none;   /* mouse events captured by .hero-section directly */
 }
 
-/* Layer 3: text wrapper */
+/* The <canvas> element appended by initAbstractHeroCanvas() */
+.hero-canvas-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Layer 2: text wrapper */
 .hero-overlay {
   position: relative;
   z-index: 2;
@@ -893,7 +903,7 @@ button { cursor: pointer; font-family: inherit; }
 /* Dot indicators — sit below the card, centered */
 .t-indicators {
   position: static;
-  margin: 20px 0 0;
+  margin: 20px;
   gap: 6px;
   z-index: 1;          /* arrows sit above on z-index: 2 */
 }
@@ -923,8 +933,7 @@ button { cursor: pointer; font-family: inherit; }
   border: 1.5px solid rgba(0,0,0,.13);
   box-shadow: var(--shadow-sm);
   /* position relative to the carousel wrapper */
-  bottom: 0;
-  top: auto;
+  top: -5%;
   transform: none;
   /* vertically align with the dots row */
   margin-bottom: 2px;
@@ -937,8 +946,8 @@ button { cursor: pointer; font-family: inherit; }
   justify-content: center;
   font-size: .9rem;
 }
-.t-ctrl-prev { left: calc(50% - 80px); }   /* flank the dot strip */
-.t-ctrl-next { right: calc(50% - 80px); }
+.t-ctrl-prev { left: calc(50% - 120px); }   /* flank the dot strip */
+.t-ctrl-next { right: calc(50% - 120px); }
 .t-ctrl-prev:hover,
 .t-ctrl-next:hover {
   background: var(--primary);
