@@ -1320,7 +1320,7 @@ button { cursor: pointer; font-family: inherit; }
   :root { --section-py: 56px; }
 
   /* Hero */
-  .hero-section  { background-position: center center; }
+  .hero-section  { background-position: right center; }
   .hero-overlay  { padding: 90px 0 60px; }
   .hero-heading  { font-size: 2rem; }
   .hero-text-col { padding: 24px 18px; }
