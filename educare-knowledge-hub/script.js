@@ -19,148 +19,128 @@
 'use strict';
 
 /* =============================================================================
-   1. CANVAS ANIMATION MODULE
+   1. THREE.JS 3D MESH ANIMATION (ported from index2.html ThreeAnim)
    -----------------------------------------------------------------------------
-   Creates an educational-themed particle network on the hero canvas.
-   Particles drift across a deep-blue gradient background; nearby particles are
-   connected by faint lines, suggesting a neural / knowledge-network aesthetic.
-
-   Animation loop uses requestAnimationFrame for smooth 60fps rendering.
-   Particle count is reduced on mobile for performance.
-   The canvas is automatically resized and particles are re-scattered on resize.
+   Mounts a rotating 3D interconnected knowledge-network on #canvas-container.
+   • WebGLRenderer with alpha:true — background is fully transparent so the
+     hero CSS background image (Layer 1) shows through underneath.
+   • Spherically-distributed white particles connected by semi-transparent lines.
+   • auto-rotation + smooth mouse/touch camera parallax.
    ============================================================================= */
-const CanvasAnimation = (() => {
-  let canvas, ctx;
-  let particles = [];
-  let animId    = null;
-  let W = 0, H  = 0;
+const ThreeAnim = (() => {
+  let container, scene, camera, renderer, group;
+  let mouseX = 0, mouseY = 0;
+  let halfW = window.innerWidth  / 2;
+  let halfH = window.innerHeight / 2;
 
-  /* Configuration ----------------------------------------------------------- */
-  const CFG = {
-    count:      70,           // desktop particle count
-    maxSpeed:   0.45,
-    minRadius:  1.5,
-    maxRadius:  3.5,
-    linkDist:   130,          // max distance to draw a connection line
-    colors: [
-      'rgba(255,255,255,0.75)',
-      'rgba(160,180,255,0.65)',
-      'rgba(100,210,240,0.60)',
-      'rgba(180,220,255,0.55)',
-    ],
-    lineBase: 'rgba(255,255,255,', // alpha appended dynamically
-  };
+  function init() {
+    container = document.getElementById('canvas-container');
+    if (!container || typeof THREE === 'undefined') return;
 
-  /* Particle class ---------------------------------------------------------- */
-  class Particle {
-    constructor() { this.reset(); }
+    /* Scene */
+    scene = new THREE.Scene();
 
-    /** Randomise all properties within canvas bounds */
-    reset() {
-      this.x  = Math.random() * W;
-      this.y  = Math.random() * H;
-      this.vx = (Math.random() - 0.5) * CFG.maxSpeed * 2;
-      this.vy = (Math.random() - 0.5) * CFG.maxSpeed * 2;
-      this.r  = CFG.minRadius + Math.random() * (CFG.maxRadius - CFG.minRadius);
-      this.color   = CFG.colors[Math.floor(Math.random() * CFG.colors.length)];
-      this.opacity = 0.4 + Math.random() * 0.55;
-      this.pulse      = Math.random() * Math.PI * 2;
-      this.pulseSpeed = 0.018 + Math.random() * 0.022;
+    /* Camera */
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
+    camera.position.z = 800;
+
+    /* Renderer — alpha:true keeps canvas transparent so bg image shows below */
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    /* Group that rotates each frame */
+    group = new THREE.Group();
+    scene.add(group);
+
+    /* Adaptive particle count for performance */
+    const isMobile      = window.innerWidth < 768;
+    const particleCount = isMobile ? 200 : 450;
+    const maxDist       = isMobile ? 100 : 120;
+
+    /* Generate particle positions uniformly inside a sphere */
+    const pos = [];
+    for (let i = 0; i < particleCount; i++) {
+      const r     = 500 * Math.cbrt(Math.random());
+      const theta = Math.random() * 2 * Math.PI;
+      const phi   = Math.acos(2 * Math.random() - 1);
+      pos.push(
+        r * Math.sin(phi) * Math.cos(theta),
+        r * Math.sin(phi) * Math.sin(theta),
+        r * Math.cos(phi)
+      );
     }
 
-    update() {
-      this.x    += this.vx;
-      this.y    += this.vy;
-      this.pulse += this.pulseSpeed;
+    /* White particle dots */
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    group.add(new THREE.Points(
+      pGeo,
+      new THREE.PointsMaterial({ color: 0xffffff, size: 3, transparent: true, opacity: 0.8, sizeAttenuation: true })
+    ));
 
-      /* Bounce off canvas edges */
-      if (this.x <= 0 || this.x >= W) { this.vx *= -1; this.x = Math.max(0, Math.min(W, this.x)); }
-      if (this.y <= 0 || this.y >= H) { this.vy *= -1; this.y = Math.max(0, Math.min(H, this.y)); }
-    }
-
-    draw() {
-      const pulsedR = this.r + Math.sin(this.pulse) * 0.7;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, pulsedR, 0, Math.PI * 2);
-      ctx.fillStyle  = this.color;
-      ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
-      ctx.fill();
-      ctx.globalAlpha = 1;
-    }
-  }
-
-  /* Render helpers ---------------------------------------------------------- */
-
-  /** Deep-blue → indigo → teal diagonal gradient background */
-  function drawBackground() {
-    const g = ctx.createLinearGradient(0, 0, W, H);
-    g.addColorStop(0,   '#1e1b4b');
-    g.addColorStop(0.5, '#1e3a5f');
-    g.addColorStop(1,   '#0d4a45');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, W, H);
-  }
-
-  /** Draw faint lines between particles within CFG.linkDist of each other */
-  function drawConnections() {
-    const len = particles.length;
-    for (let i = 0; i < len; i++) {
-      for (let j = i + 1; j < len; j++) {
-        const dx   = particles[i].x - particles[j].x;
-        const dy   = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < CFG.linkDist) {
-          const alpha = (1 - dist / CFG.linkDist) * 0.32;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = CFG.lineBase + alpha + ')';
-          ctx.lineWidth   = 0.7;
-          ctx.stroke();
+    /* Connecting line segments between nearby particles */
+    const linePts = [];
+    for (let i = 0; i < particleCount; i++) {
+      for (let j = i + 1; j < particleCount; j++) {
+        const ix = i * 3, jx = j * 3;
+        const dx = pos[ix]   - pos[jx];
+        const dy = pos[ix+1] - pos[jx+1];
+        const dz = pos[ix+2] - pos[jx+2];
+        if (Math.sqrt(dx*dx + dy*dy + dz*dz) < maxDist) {
+          linePts.push(pos[ix], pos[ix+1], pos[ix+2], pos[jx], pos[jx+1], pos[jx+2]);
         }
       }
     }
-  }
+    const lGeo = new THREE.BufferGeometry();
+    lGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePts, 3));
+    group.add(new THREE.LineSegments(
+      lGeo,
+      new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.15 })
+    ));
 
-  /** Main animation loop — called every frame via rAF */
-  function animate() {
-    animId = requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, W, H);
-    drawBackground();
-    particles.forEach(p => { p.update(); p.draw(); });
-    drawConnections();
-  }
-
-  /** Fit canvas to section dimensions; scatter particles on resize */
-  function resize() {
-    const section = canvas.parentElement;
-    W = canvas.width  = section.offsetWidth;
-    H = canvas.height = section.offsetHeight;
-    particles.forEach(p => p.reset());
-  }
-
-  /* Public API -------------------------------------------------------------- */
-  function init() {
-    canvas = document.getElementById('heroCanvas');
-    if (!canvas) return;
-    ctx = canvas.getContext('2d');
-    resize();
-
-    /* Fewer particles on narrow screens saves CPU/battery */
-    const count = W < 768 ? Math.floor(CFG.count * 0.55) : CFG.count;
-    particles = Array.from({ length: count }, () => new Particle());
+    /* Events */
+    window.addEventListener('resize',     onResize,    { passive: true });
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
 
     animate();
-
-    window.addEventListener('resize', resize, { passive: true });
   }
 
-  function destroy() {
-    if (animId) { cancelAnimationFrame(animId); animId = null; }
-    window.removeEventListener('resize', resize);
+  function onResize() {
+    halfW = window.innerWidth  / 2;
+    halfH = window.innerHeight / 2;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
-  return { init, destroy };
+  function onMouseMove(e) {
+    mouseX = (e.clientX - halfW) * 0.2;
+    mouseY = (e.clientY - halfH) * 0.2;
+  }
+
+  function onTouchMove(e) {
+    if (e.touches.length > 0) {
+      mouseX = (e.touches[0].clientX - halfW) * 0.3;
+      mouseY = (e.touches[0].clientY - halfH) * 0.3;
+    }
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    /* Slow continuous rotation */
+    group.rotation.x += 0.001;
+    group.rotation.y += 0.002;
+    /* Smooth camera parallax based on mouse/touch position */
+    camera.position.x += (mouseX  - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY - camera.position.y) * 0.02;
+    camera.lookAt(scene.position);
+    renderer.render(scene, camera);
+  }
+
+  return { init };
 })();
 
 
@@ -588,7 +568,7 @@ const App = {
   },
 
   initModules() {
-    CanvasAnimation.init();  // Hero canvas particle network
+    ThreeAnim.init();        // Hero Three.js 3D mesh (transparent over bg image)
     Navigation.init();       // Sticky nav + scroll-spy
     Testimonials.init();     // Auto-play carousel
     StatsCounter.init();     // Animated counter numbers
