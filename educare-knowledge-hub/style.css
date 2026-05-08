@@ -273,7 +273,7 @@ button { cursor: pointer; font-family: inherit; }
    ========================================================================== */
 .hero-section {
   position: relative;
-  height: 85vh;
+  min-height: 85vh;
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -303,7 +303,7 @@ button { cursor: pointer; font-family: inherit; }
 
 /* Frosted-glass card that holds the right-column text */
 .hero-text-col {
-  padding: 48px 44px;
+  padding: 48px 0;
 }
 
 .hero-badge {
@@ -336,6 +336,24 @@ button { cursor: pointer; font-family: inherit; }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Typing cursor — thin vertical bar that blinks during the typing animation */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: .85em;
+  background: rgba(255,255,255,.85);
+  border-radius: 2px;
+  margin-left: 3px;
+  vertical-align: -0.05em;
+  animation: cursorBlink .75s ease infinite;
+}
+.typing-cursor.hide { display: none; }
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 
 .hero-subtext {
@@ -1184,12 +1202,12 @@ button { cursor: pointer; font-family: inherit; }
    ========================================================================== */
 [data-aos] {
   opacity: 0;
-  transition: opacity .65s ease, transform .65s ease;
+  transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
 }
-[data-aos="fade-up"]    { transform: translateY(32px); }
-[data-aos="fade-right"] { transform: translateX(-32px); }
-[data-aos="fade-left"]  { transform: translateX(32px); }
-[data-aos].aos-animate  { opacity: 1; transform: translate(0); }
+[data-aos="fade-up"]    { transform: translateY(56px); }
+[data-aos="fade-right"] { transform: translateX(-52px); }
+[data-aos="fade-left"]  { transform: translateX(52px); }
+[data-aos].aos-animate  { opacity: 1; transform: translate(0, 0); }
 
 
 /* ==========================================================================
@@ -1274,12 +1292,12 @@ button { cursor: pointer; font-family: inherit; }
    15. RESPONSIVE OVERRIDES
    ========================================================================== */
 
-/* Large tablet breakpoint */
+/* ── ≤1200px: desktop-wide → 2 testimonial cards per row ── */
 @media (max-width: 1200px) {
   .testimonial-card { min-width: calc(50% - 12px); }
 }
 
-/* Tablet — text card goes full-width + centred */
+/* ── ≤992px: tablet ── */
 @media (max-width: 992px) {
   :root { --section-py: 70px; }
 
@@ -1290,47 +1308,85 @@ button { cursor: pointer; font-family: inherit; }
 
   .about-visual { margin-top: 16px; }
 
-  /* Hero text shifts to centre on tablet */
+  /* Hero text card: full-width + centred on tablet */
   .hero-text-col { text-align: center; padding: 36px 28px; }
   .hero-subtext  { margin: 0 auto 34px; }
   .hero-cta      { justify-content: center; }
   .hero-stats    { margin: 0 auto; justify-content: center; max-width: 480px; }
 }
 
-/* Mobile */
+/* ── ≤768px: mobile ── */
 @media (max-width: 768px) {
   :root { --section-py: 56px; }
 
-  .hero-overlay  { padding: 100px 0 60px; }
-  .hero-heading  { font-size: 2rem; }
-  .hero-stats    { padding: 16px 10px; }
-  .stat-number, .stat-suffix { font-size: 1.5rem; }
-  .hero-text-col { padding: 28px 20px; }
-  /* Centre the bg image on narrow screens so illustration stays visible */
+  /* Hero */
   .hero-section  { background-position: center center; }
+  .hero-overlay  { padding: 90px 0 60px; }
+  .hero-heading  { font-size: 2rem; }
+  .hero-text-col { padding: 24px 18px; }
+  .hero-stats    { padding: 14px 10px; gap: 4px 0; }
+  .stat-number, .stat-suffix { font-size: 1.45rem; }
 
-  .testimonial-card { min-width: 100%; }
+  /* Testimonials */
+  .testimonial-card { min-width: 100%; padding: 22px 18px; }
+  .t-text           { font-size: .87rem; }
 
-  .contact-form-wrap  { padding: 22px; }
-  .contact-info-panel { padding: 26px; }
+  /* Contact */
+  .contact-form-wrap  { padding: 22px 18px; }
+  .contact-info-panel { padding: 24px 20px; }
 
+  /* About */
   .about-highlights { grid-template-columns: 1fr; }
+  .float-card       { position: static; display: inline-flex; margin: 6px; animation: none; }
+  .about-visual     { text-align: center; }
 
-  .float-card   { position: static; display: inline-flex; margin: 6px; animation: none; }
-  .about-visual { text-align: center; }
+  /* Footer */
+  .site-footer          { padding-top: 44px; }
+  .footer-tagline       { max-width: 100%; }
+  .footer-bottom        { flex-direction: column; text-align: center; }
+  .footer-bottom-links  { justify-content: center; }
 
-  .footer-bottom { flex-direction: column; text-align: center; }
-  .back-to-top   { bottom: 18px; right: 18px; }
+  .back-to-top { bottom: 18px; right: 18px; }
 }
 
-/* Small mobile */
+/* ── ≤576px: small mobile ── */
+@media (max-width: 576px) {
+  /* Course group labels: allow wrapping on narrow screens */
+  .course-group-tag {
+    font-size: .71rem;
+    padding: 6px 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Footer link lists: slightly smaller text */
+  .footer-links   { font-size: .82rem; }
+  .footer-contact li { font-size: .81rem; }
+  .footer-social a    { width: 32px; height: 32px; font-size: .78rem; }
+
+  /* Testimonial controls tighter */
+  .t-ctrl { width: 38px; height: 38px; }
+}
+
+/* ── ≤480px: very small screens ── */
 @media (max-width: 480px) {
   .hero-cta { flex-direction: column; align-items: center; }
   .btn-hero-primary,
   .btn-hero-secondary { width: 100%; max-width: 280px; justify-content: center; }
 
   .hero-stats { flex-direction: column; align-items: center; }
-  .stat-item  { width: 100%; }
+  .stat-item  { width: 100%; text-align: center; }
+
+  .section-heading { font-size: clamp(1.45rem, 5.5vw, 1.9rem); }
 
   .contact-form-wrap { padding: 18px 14px; }
+
+  /* Cards slightly more compact */
+  .faculty-card     { padding: 22px 16px; }
+  .testimonial-card { padding: 18px 14px; }
+  .t-ctrl { width: 34px; height: 34px; font-size: .8rem; }
+
+  /* Footer bottom row */
+  .footer-bottom-links { gap: 12px; }
 }

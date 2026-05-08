@@ -145,6 +145,45 @@ const ThreeAnim = (() => {
 
 
 /* =============================================================================
+   1b. TYPING EFFECT MODULE
+   -----------------------------------------------------------------------------
+   Types the hero heading gradient text (#heroTyped) one character at a time
+   after a short delay, then blinks the cursor briefly and hides it.
+   Text is pre-rendered in HTML for SEO; JS clears it and re-types so the
+   feature degrades gracefully when JS is unavailable.
+   ============================================================================= */
+const TypingEffect = (() => {
+  const SPEED       = 75;   // ms per character
+  const START_DELAY = 650;  // ms before first keystroke (lets hero build first)
+
+  function init() {
+    const el     = document.getElementById('heroTyped');
+    const cursor = document.querySelector('.typing-cursor');
+    if (!el) return;
+
+    /* Capture the full text from the pre-rendered HTML, then clear for re-type */
+    const fullText = el.textContent.trim() || 'Shaping Futures.';
+    el.textContent = '';
+
+    let i = 0;
+    setTimeout(() => {
+      const timer = setInterval(() => {
+        el.textContent += fullText[i];
+        i++;
+        if (i >= fullText.length) {
+          clearInterval(timer);
+          /* Blink ~3× then vanish */
+          setTimeout(() => { cursor && cursor.classList.add('hide'); }, 2200);
+        }
+      }, SPEED);
+    }, START_DELAY);
+  }
+
+  return { init };
+})();
+
+
+/* =============================================================================
    2. NAVIGATION MODULE
    -----------------------------------------------------------------------------
    – Adds `.scrolled` class to navbar after 50px scroll (triggers box-shadow).
@@ -569,6 +608,7 @@ const App = {
 
   initModules() {
     ThreeAnim.init();        // Hero Three.js 3D mesh (transparent over bg image)
+    TypingEffect.init();     // Hero heading typing animation
     Navigation.init();       // Sticky nav + scroll-spy
     Testimonials.init();     // Auto-play carousel
     StatsCounter.init();     // Animated counter numbers
