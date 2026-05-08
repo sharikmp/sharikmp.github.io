@@ -311,6 +311,104 @@ button { cursor: pointer; font-family: inherit; }
   color: #fff;
 }
 
+/* ==========================================================================
+   6b. HERO DECORATIVE LEFT COLUMN  (large screens only — d-none d-lg-flex)
+   ========================================================================== */
+.hero-deco-left {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Concentric pulsing rings */
+.hdl-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.22);
+  animation: hdlPulse 3.5s ease-in-out infinite;
+}
+.hdl-ring-outer {
+  width: 320px;
+  height: 320px;
+  animation-delay: 0s;
+}
+.hdl-ring-inner {
+  width: 220px;
+  height: 220px;
+  animation-delay: .8s;
+}
+@keyframes hdlPulse {
+  0%, 100% { transform: scale(1);    opacity: .55; }
+  50%       { transform: scale(1.05); opacity: .25; }
+}
+
+/* Central graduation-cap disc */
+.hdl-cap {
+  position: relative;
+  z-index: 2;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 2px solid rgba(255,255,255,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.4rem;
+  color: #fff;
+  box-shadow: 0 0 42px rgba(255,255,255,.18), 0 0 80px rgba(130,147,240,.35);
+  animation: hdlCapFloat 4s ease-in-out infinite;
+}
+@keyframes hdlCapFloat {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-10px); }
+}
+
+/* Orbiting subject icons */
+.hdl-orbit-icon {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #fff;
+  animation: hdlBob 3s ease-in-out infinite;
+  box-shadow: 0 4px 18px rgba(0,0,0,.18);
+}
+
+/* Place 6 icons evenly around the outer ring (r ≈ 150px) */
+.hdl-oi-1 { top:  -5px; left: 50%; transform: translateX(-50%); animation-delay: 0s;    }
+.hdl-oi-2 { top:  20%;  right:  0px;                               animation-delay: .4s;   }
+.hdl-oi-3 { bottom: 20%; right:  0px;                              animation-delay: .8s;   }
+.hdl-oi-4 { bottom: -5px; left: 50%; transform: translateX(-50%); animation-delay: 1.2s;  }
+.hdl-oi-5 { bottom: 20%; left:  0px;                               animation-delay: 1.6s;  }
+.hdl-oi-6 { top:  20%;  left:  0px;                                animation-delay: 2s;    }
+
+@keyframes hdlBob {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-6px); }
+}
+/* keep translateX for top/bottom centred icons */
+.hdl-oi-1, .hdl-oi-4 {
+  animation-name: hdlBobCenter;
+}
+@keyframes hdlBobCenter {
+  0%, 100% { transform: translateX(-50%) translateY(0);   }
+  50%       { transform: translateX(-50%) translateY(-6px); }
+}
+
 /* Frosted-glass card that holds the right-column text */
 .hero-text-col {
   padding: 48px 0;

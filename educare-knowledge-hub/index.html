@@ -72,8 +72,30 @@
        and goes full-width (centred) on tablet/mobile -->
   <div class="hero-overlay">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6 ms-lg-auto">
+      <div class="row align-items-center">
+
+        <!-- Decorative left column — large screens only -->
+        <div class="col-lg-6 d-none d-lg-flex justify-content-center align-items-center" aria-hidden="true">
+          <div class="hero-deco-left">
+            <!-- Outer ring -->
+            <div class="hdl-ring hdl-ring-outer"></div>
+            <!-- Inner ring -->
+            <div class="hdl-ring hdl-ring-inner"></div>
+            <!-- Centre cap -->
+            <div class="hdl-cap">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <!-- Orbiting subject icons -->
+            <div class="hdl-orbit-icon hdl-oi-1"><i class="fas fa-flask"></i></div>
+            <div class="hdl-orbit-icon hdl-oi-2"><i class="fas fa-calculator"></i></div>
+            <div class="hdl-orbit-icon hdl-oi-3"><i class="fas fa-book-open"></i></div>
+            <div class="hdl-orbit-icon hdl-oi-4"><i class="fas fa-laptop"></i></div>
+            <div class="hdl-orbit-icon hdl-oi-5"><i class="fas fa-trophy"></i></div>
+            <div class="hdl-orbit-icon hdl-oi-6"><i class="fas fa-pen-nib"></i></div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
           <div class="hero-text-col">
 
             <div class="hero-badge">Premier Coaching Institute</div>
@@ -121,7 +143,8 @@
             </div>
 
           </div>
-        </div>
+        </div><!-- /col-lg-6 right -->
+
       </div>
     </div>
   </div>
