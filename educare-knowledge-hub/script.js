@@ -235,128 +235,6 @@ const Navigation = (() => {
 
 
 /* =============================================================================
-   3. TESTIMONIALS CAROUSEL MODULE
-   -----------------------------------------------------------------------------
-   Lightweight carousel — no external library needed.
-
-   Features:
-   – Responsive perView: 3 on desktop, 2 on tablet, 1 on mobile
-   – Auto-advances every 4.5 seconds
-   – Arrow buttons (prev / next)
-   – Dot indicators (clickable, animated active state)
-   – Touch / swipe support
-   – Pauses auto-play when user interacts with arrows
-   ============================================================================= */
-const Testimonials = (() => {
-  let track, cards, dotsEl;
-  let current = 0, total = 0, perView = 3;
-  let autoTimer = null;
-
-  /** How many cards fit the current viewport */
-  function calcPerView() {
-    if (window.innerWidth >= 992) return 3;
-    if (window.innerWidth >= 576) return 2;
-    return 1;
-  }
-
-  /** Rebuild dot buttons to match number of pages */
-  function buildDots() {
-    if (!dotsEl) return;
-    dotsEl.innerHTML = '';
-    const pages = Math.ceil(total / perView);
-    for (let i = 0; i < pages; i++) {
-      const btn = document.createElement('button');
-      btn.className   = 't-dot' + (i === 0 ? ' active' : '');
-      btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-label', 'Testimonial page ' + (i + 1));
-      btn.addEventListener('click', () => { stopAuto(); slideTo(i); startAuto(); });
-      dotsEl.appendChild(btn);
-    }
-  }
-
-  /** Activate the dot for the current page index */
-  function syncDots() {
-    const page = Math.floor(current / perView);
-    dotsEl && dotsEl.querySelectorAll('.t-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === page);
-    });
-  }
-
-  /**
-   * Translate the track so `pageIndex` is in view.
-   * @param {number} pageIndex - zero-based page number
-   */
-  function slideTo(pageIndex) {
-    const maxPage = Math.max(0, Math.ceil(total / perView) - 1);
-    const page    = Math.max(0, Math.min(pageIndex, maxPage));
-    /* Clamp so last group doesn't over-scroll */
-    current = Math.min(page * perView, total - perView);
-    const cardW = cards[0].offsetWidth + 24; // 24px gap matches CSS
-    track.style.transform = `translateX(${-(current * cardW)}px)`;
-    syncDots();
-  }
-
-  function next() {
-    const page    = Math.floor(current / perView);
-    const maxPage = Math.ceil(total / perView) - 1;
-    slideTo(page >= maxPage ? 0 : page + 1);
-  }
-
-  function prev() {
-    const page    = Math.floor(current / perView);
-    const maxPage = Math.ceil(total / perView) - 1;
-    slideTo(page <= 0 ? maxPage : page - 1);
-  }
-
-  function startAuto() { autoTimer = setInterval(next, 4500); }
-  function stopAuto()  { clearInterval(autoTimer); autoTimer = null; }
-
-  /** Swipe gesture recognition for touch devices */
-  function bindTouch() {
-    let startX = 0;
-    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend',   e => {
-      const delta = startX - e.changedTouches[0].clientX;
-      if (Math.abs(delta) > 50) { stopAuto(); delta > 0 ? next() : prev(); startAuto(); }
-    });
-  }
-
-  function init() {
-    track = document.getElementById('testimonialTrack');
-    if (!track) return;
-
-    cards  = Array.from(track.querySelectorAll('.testimonial-card'));
-    total  = cards.length;
-    dotsEl = document.getElementById('tDots');
-
-    const prevBtn = document.getElementById('tPrev');
-    const nextBtn = document.getElementById('tNext');
-
-    perView = calcPerView();
-    buildDots();
-    startAuto();
-    bindTouch();
-
-    prevBtn && prevBtn.addEventListener('click', () => { stopAuto(); prev(); startAuto(); });
-    nextBtn && nextBtn.addEventListener('click', () => { stopAuto(); next(); startAuto(); });
-
-    /* Rebuild layout on resize */
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        perView = calcPerView();
-        buildDots();
-        slideTo(0);
-      }, 200);
-    });
-  }
-
-  return { init };
-})();
-
-
-/* =============================================================================
    4. STATS COUNTER MODULE
    -----------------------------------------------------------------------------
    Animates `data-count` numbers from 0 → target when the hero section scrolls
@@ -610,7 +488,7 @@ const App = {
     ThreeAnim.init();        // Hero Three.js 3D mesh (transparent over bg image)
     TypingEffect.init();     // Hero heading typing animation
     Navigation.init();       // Sticky nav + scroll-spy
-    Testimonials.init();     // Auto-play carousel
+    // Testimonials: now handled natively by Bootstrap 5 Carousel (data-bs-ride)
     StatsCounter.init();     // Animated counter numbers
     ContactForm.init();      // Form validation and mock submit
     ScrollReveal.init();     // Reveal sections on scroll

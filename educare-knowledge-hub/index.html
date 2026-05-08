@@ -409,70 +409,104 @@
       <p class="section-intro">Real experiences from students who transformed their academic journey with us</p>
     </div>
 
-    <div class="testimonial-wrapper mt-5">
-      <div class="testimonial-track" id="testimonialTrack">
+    <!-- Bootstrap 5 Carousel — one card per slide, fully responsive -->
+    <div id="testimonialCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-bs-interval="4500">
 
-        <div class="testimonial-card">
-          <div class="t-quote-icon" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
-          <p class="t-text">Educare completely changed how I approach studies. The faculty here doesn't just teach — they inspire. I cleared JEE Advanced thanks to the mentoring I received.</p>
-          <div class="t-stars" aria-label="5 out of 5 stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <div class="t-author">
-            <div class="t-avatar blue"><span>RK</span></div>
-            <div><strong>Rahul Khanna</strong><span>JEE Advanced Qualifier, 2024</span></div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="t-quote-icon" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
-          <p class="t-text">The Mathematics coaching here is exceptional. Prof. Priya has a unique way of explaining complex topics. My grades went from C to A+ in one semester.</p>
-          <div class="t-stars" aria-label="5 out of 5 stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <div class="t-author">
-            <div class="t-avatar teal"><span>AS</span></div>
-            <div><strong>Anika Sharma</strong><span>Class 12 Student, Science Stream</span></div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="t-quote-icon" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
-          <p class="t-text">I struggled with English all my life. After joining Educare's English program, I not only improved academically but also gained confidence in communication.</p>
-          <div class="t-stars" aria-label="4.5 out of 5 stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-          </div>
-          <div class="t-author">
-            <div class="t-avatar purple"><span>MP</span></div>
-            <div><strong>Mohammed Patel</strong><span>Commerce Student, Class 11</span></div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="t-quote-icon" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
-          <p class="t-text">The personalised attention at Educare is unmatched. They identified my weak areas and worked specifically on them. NEET cracking felt achievable here!</p>
-          <div class="t-stars" aria-label="5 out of 5 stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <div class="t-author">
-            <div class="t-avatar orange"><span>DV</span></div>
-            <div><strong>Divya Verma</strong><span>NEET Aspirant, 2024 Batch</span></div>
-          </div>
-        </div>
-
+      <!-- Dot indicators -->
+      <div class="carousel-indicators t-indicators">
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Testimonial 1"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Testimonial 2"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Testimonial 3"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3" aria-label="Testimonial 4"></button>
       </div>
 
-      <!-- Carousel controls -->
-      <div class="t-controls">
-        <button class="t-ctrl" id="tPrev" aria-label="Previous testimonial">
-          <i class="fas fa-chevron-left" aria-hidden="true"></i>
-        </button>
-        <div class="t-dots" id="tDots" role="tablist" aria-label="Testimonial pages"></div>
-        <button class="t-ctrl" id="tNext" aria-label="Next testimonial">
-          <i class="fas fa-chevron-right" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9 col-12">
+              <div class="t-card">
+                <div class="t-quote-icon" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
+                <p class="t-text">Educare completely changed how I approach studies. The faculty here doesn't just teach — they inspire. I cleared JEE Advanced thanks to the mentoring I received.</p>
+                <div class="t-stars" aria-label="5 out of 5 stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="t-author">
+                  <div class="t-avatar blue"><span>RK</span></div>
+                  <div><strong>Rahul Khanna</strong><span>JEE Advanced Qualifier, 2024</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9 col-12">
+              <div class="t-card">
+                <div class="t-quote-icon" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
+                <p class="t-text">The Mathematics coaching here is exceptional. The faculty have a unique way of explaining complex topics. My grades went from C to A+ in one semester.</p>
+                <div class="t-stars" aria-label="5 out of 5 stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="t-author">
+                  <div class="t-avatar teal"><span>AS</span></div>
+                  <div><strong>Anika Sharma</strong><span>Class 12 Student, Science Stream</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9 col-12">
+              <div class="t-card">
+                <div class="t-quote-icon" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
+                <p class="t-text">I struggled with English all my life. After joining Educare's English program, I not only improved academically but also gained confidence in communication.</p>
+                <div class="t-stars" aria-label="4.5 out of 5 stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="t-author">
+                  <div class="t-avatar purple"><span>MP</span></div>
+                  <div><strong>Mohammed Patel</strong><span>Commerce Student, Class 11</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9 col-12">
+              <div class="t-card">
+                <div class="t-quote-icon" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
+                <p class="t-text">The personalised attention at Educare is unmatched. They identified my weak areas and worked specifically on them. NEET cracking felt achievable here!</p>
+                <div class="t-stars" aria-label="5 out of 5 stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="t-author">
+                  <div class="t-avatar orange"><span>DV</span></div>
+                  <div><strong>Divya Verma</strong><span>NEET Aspirant, 2024 Batch</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.carousel-inner -->
+
+      <!-- Arrow controls -->
+      <button class="carousel-control-prev t-ctrl-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next t-ctrl-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        <span class="visually-hidden">Next</span>
+      </button>
+
+    </div><!-- /#testimonialCarousel -->
   </div>
 </section>
 

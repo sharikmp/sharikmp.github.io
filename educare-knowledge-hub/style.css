@@ -830,63 +830,55 @@ button { cursor: pointer; font-family: inherit; }
 
 
 /* ==========================================================================
-   10. TESTIMONIALS SECTION
+   10. TESTIMONIALS SECTION  (Bootstrap 5 Carousel)
    ========================================================================== */
-.testimonial-wrapper { overflow: hidden; position: relative; }
 
-.testimonial-track {
-  display: flex;
-  gap: 24px;
-  width: 100%;               /* anchors % min-width on cards to the wrapper width */
-  transition: transform .5s cubic-bezier(.4,0,.2,1);
-  will-change: transform;
-}
-
-.testimonial-card {
-  min-width: calc(33.333% - 16px);
-  flex-shrink: 0;
+/* Card */
+.t-card {
   background: #fff;
   border-radius: var(--r-md);
-  padding: 30px;
+  padding: 40px 36px;
   border: 1px solid rgba(0,0,0,.07);
+  box-shadow: var(--shadow-sm);
   transition: var(--ease);
+  margin: 0 8px 8px;       /* side margin gives breathing room; bottom for shadow */
 }
-.testimonial-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.t-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
 
 .t-quote-icon {
-  font-size: 1.9rem;
+  font-size: 2rem;
   color: var(--primary);
-  opacity: .28;
+  opacity: .25;
   line-height: 1;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .t-text {
-  font-size: .9rem;
+  font-size: .95rem;
   color: var(--text-muted);
-  line-height: 1.8;
+  line-height: 1.85;
   font-style: italic;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .t-stars {
   color: #f59e0b;
-  font-size: .82rem;
+  font-size: .85rem;
   letter-spacing: 1px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
-.t-author { display: flex; align-items: center; gap: 12px; }
+.t-author { display: flex; align-items: center; gap: 14px; }
 
 .t-avatar {
-  width: 46px;
-  height: 46px;
-  min-width: 46px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: .82rem;
+  font-size: .84rem;
   font-weight: 700;
   color: #fff;
 }
@@ -895,46 +887,60 @@ button { cursor: pointer; font-family: inherit; }
 .t-avatar.purple { background: var(--grad-purple);  }
 .t-avatar.orange { background: var(--grad-orange);  }
 
-.t-author strong { display: block; font-size: .9rem; font-weight: 700; color: var(--text); }
-.t-author span   { font-size: .75rem; color: var(--text-muted); }
+.t-author strong { display: block; font-size: .92rem; font-weight: 700; color: var(--text); }
+.t-author span   { display: block; font-size: .77rem; color: var(--text-muted); margin-top: 2px; }
 
-/* Controls */
-.t-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 28px;
+/* Dot indicators — override Bootstrap defaults */
+.t-indicators {
+  position: static;
+  margin: 20px 0 0;
+  gap: 6px;
 }
-
-.t-ctrl {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(0,0,0,.12);
-  background: #fff;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: .88rem;
-  transition: var(--ease);
-}
-.t-ctrl:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 15px rgba(59,79,206,.3); }
-
-.t-dots { display: flex; gap: 6px; }
-
-.t-dot {
+.t-indicators [data-bs-target] {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(0,0,0,.15);
-  cursor: pointer;
-  transition: var(--ease);
+  background: rgba(59,79,206,.22);
   border: none;
-  padding: 0;
+  opacity: 1;
+  transition: var(--ease);
+  flex-shrink: 0;
 }
-.t-dot.active { background: var(--primary); width: 24px; border-radius: 4px; }
+.t-indicators .active {
+  background: var(--primary);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* Arrow controls — circular buttons; Bootstrap positions them absolute */
+.t-ctrl-prev,
+.t-ctrl-next {
+  width: 44px;
+  height: 44px;
+  background: #fff;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.13);
+  box-shadow: var(--shadow-sm);
+  top: 50%;
+  transform: translateY(-70%);
+  opacity: 1;
+  color: var(--text-muted);
+  transition: var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .9rem;
+}
+.t-ctrl-prev { left: 0; }
+.t-ctrl-next { right: 0; }
+.t-ctrl-prev:hover,
+.t-ctrl-next:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 4px 15px rgba(59,79,206,.3);
+  color: #fff;
+  opacity: 1;
+}
 
 
 /* ==========================================================================
@@ -1293,9 +1299,8 @@ button { cursor: pointer; font-family: inherit; }
    15. RESPONSIVE OVERRIDES
    ========================================================================== */
 
-/* ── ≤1200px: desktop-wide → 2 testimonial cards per row ── */
+/* ── ≤1200px: (no testimonial-card overrides needed — Bootstrap grid handles it) ── */
 @media (max-width: 1200px) {
-  .testimonial-card { min-width: calc(50% - 12px); }
 }
 
 /* ── ≤992px: tablet ── */
@@ -1304,8 +1309,6 @@ button { cursor: pointer; font-family: inherit; }
 
   .stat-divider { display: none; }
   .stat-item    { min-width: 100px; }
-
-  .testimonial-card { min-width: calc(50% - 12px); }
 
   .about-visual { margin-top: 16px; }
 
@@ -1329,8 +1332,8 @@ button { cursor: pointer; font-family: inherit; }
   .stat-number, .stat-suffix { font-size: 1.45rem; }
 
   /* Testimonials */
-  .testimonial-card { min-width: 100%; padding: 22px 18px; }
-  .t-text           { font-size: .87rem; }
+  .t-card { padding: 28px 22px; margin: 0 4px 4px; }
+  .t-text { font-size: .87rem; }
 
   /* Contact */
   .contact-form-wrap  { padding: 22px 18px; }
@@ -1367,7 +1370,7 @@ button { cursor: pointer; font-family: inherit; }
   .footer-social a    { width: 32px; height: 32px; font-size: .78rem; }
 
   /* Testimonial controls tighter */
-  .t-ctrl { width: 38px; height: 38px; }
+  .t-ctrl-prev, .t-ctrl-next { width: 38px; height: 38px; font-size: .82rem; }
 }
 
 /* ── ≤480px: very small screens ── */
@@ -1385,8 +1388,8 @@ button { cursor: pointer; font-family: inherit; }
 
   /* Cards slightly more compact */
   .faculty-card     { padding: 22px 16px; }
-  .testimonial-card { padding: 18px 14px; }
-  .t-ctrl { width: 34px; height: 34px; font-size: .8rem; }
+  .t-card { padding: 22px 16px; }
+  .t-ctrl-prev, .t-ctrl-next { width: 34px; height: 34px; font-size: .78rem; }
 
   /* Footer bottom row */
   .footer-bottom-links { gap: 12px; }
