@@ -837,6 +837,7 @@ button { cursor: pointer; font-family: inherit; }
 .testimonial-track {
   display: flex;
   gap: 24px;
+  width: 100%;               /* anchors % min-width on cards to the wrapper width */
   transition: transform .5s cubic-bezier(.4,0,.2,1);
   will-change: transform;
 }
