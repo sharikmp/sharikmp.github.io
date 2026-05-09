@@ -1,0 +1,863 @@
+{
+  "organization": {
+    "name": "The Laminars",
+    "tagline": "Where knowledge meets ambition",
+    "seoDescription": "The Laminars, Kolkata — coaching center offering tuition for Class 1-12, spoken English & Hindi classes, Python & Java programming, and career launch programs. Expert faculty · Trusted by 500+ students · 40+ years of excellence.",
+    "website": "https://www.thelaminars.com",
+    "logo": "img/logo.svg",
+    "ogImage": "https://www.thelaminars.com/img/og-cover.png",
+    "contact": {
+      "address": "Ground Floor - Golden Palace, Rameshwarpur Road, Kolkata - 700024",
+      "phone": "+91-8697908896",
+      "email": "info@thelaminars.com",
+      "geo": {
+        "latitude": "22.5355",
+        "longitude": "88.3643"
+      }
+    },
+    "socialMeta": {
+      "ogType": "website",
+      "ogLocale": "en_IN",
+      "twitterCard": "summary_large_image"
+    }
+  },
+
+  "hero": {
+    "title": "The Laminars",
+    "subheadlines": [
+      "Science",
+      "Languages",
+      "Technology"
+    ],
+    "description": "Where knowledge meets ambition - your journey to excellence in Science, Languages, Technology & beyond starts here.",
+    "trustLine": "Trusted by 500+ students · Expert Faculty · Proven Results · 40+ Years of Excellence",
+    "ctaButtons": [
+      { "label": "Explore Courses", "href": "#courses", "style": "primary" },
+      { "label": "Contact Us", "href": "#contact", "style": "outline" }
+    ]
+  },
+
+  "stats": {
+    "students": "500+",
+    "yearsOfExperience": "40+",
+    "taglines": ["Expert Faculty", "Proven Results"]
+  },
+
+  "legacyHighlights": [
+    {
+      "heading": "40+ Years of Excellence",
+      "subheading": "Decades of proven teaching mastery led by visionary leadership",
+      "points": [
+        "Over four decades of academic expertise",
+        "Consistent student success across generations",
+        "Deep understanding of learning psychology",
+        "Refined teaching methodologies"
+      ]
+    },
+    {
+      "heading": "A Teacher's Dream Project",
+      "subheading": "Built with passion to transform education in the community",
+      "points": [
+        "Vision-driven educational approach",
+        "Focus on meaningful learning outcomes",
+        "Community-first mindset",
+        "Empowering young minds with purpose"
+      ]
+    },
+    {
+      "heading": "First Coding Coaching in Garden Reach",
+      "subheading": "Pioneering modern tech education in Garden Reach",
+      "points": [
+        "Introduced structured coding education locally",
+        "Industry-relevant curriculum",
+        "Hands-on project-based learning",
+        "Bridging academics with technology"
+      ]
+    },
+    {
+      "heading": "First Python for Kids in the Area",
+      "subheading": "Building logical thinking from an early stage",
+      "points": [
+        "Python introduced from 5th standard",
+        "Focus on logic over memorization",
+        "Interactive and fun learning approach",
+        "Strong foundation for future tech skills"
+      ]
+    },
+    {
+      "heading": "Multidisciplinary Expertise",
+      "subheading": "Comprehensive education across subjects and domains",
+      "points": [
+        "Languages, sciences, and technology",
+        "Experienced subject matter experts",
+        "Holistic academic development",
+        "Balanced curriculum design"
+      ]
+    },
+    {
+      "heading": "Industry-Aligned Logic Building",
+      "subheading": "Connecting academics with real-world applications",
+      "points": [
+        "Focus on practical understanding",
+        "Real-world problem solving",
+        "Beyond rote memorization",
+        "Preparing students for future careers"
+      ]
+    }
+  ],
+
+  "whyChooseUs": {
+    "sectionTitle": "Why Choose The Laminars?",
+    "features": [
+      {
+        "title": "Expert Faculty",
+        "description": "Learn from top-tier educators with decades of experience in competitive exam preparation."
+      },
+      {
+        "title": "Performance Tracking",
+        "description": "Regular AI-driven assessments to track your progress and highlight areas for improvement."
+      },
+      {
+        "title": "Structured Material",
+        "description": "Comprehensive study guides, formula sheets, and mock papers updated with the latest syllabus."
+      }
+    ]
+  },
+
+  "programs": {
+    "sectionTitle": "Find Your Path",
+    "sectionSubtitle": "Programs We Offer",
+    "sectionDescription": "From foundational academics to career-ready tech skills — there's a program for every learner at The Laminars.",
+    "categories": [
+      {
+        "id": "academics",
+        "label": "Academics",
+        "programs": [
+          {
+            "id": "little-minds",
+            "name": "Laminars Little Minds",
+            "slug": "pages/little-minds.html",
+            "badge": "Class 1-5",
+            "tagline": "Building strong academic foundations for young learners through personalized attention and engaging methods.",
+            "overview": "The Laminars Little Minds program is designed specifically for students in Classes 1 through 5. At this crucial developmental stage, we focus on building strong academic foundations while keeping learning joyful, engaging, and effective. Every child learns differently. Our small batch sizes and individual-attention approach ensure that no child is left behind — whether they're breezing ahead or need extra support.",
+            "subjects": [
+              { "name": "Basic Science", "detail": "Curiosity-led exploration" },
+              { "name": "Mathematics", "detail": "Concepts & mental maths" },
+              { "name": "English", "detail": "Reading, writing, grammar" },
+              { "name": "Hindi", "detail": "भाषा और व्याकरण" }
+            ],
+            "features": [
+              {
+                "title": "Activity-Based Learning",
+                "description": "Games, stories, and creative exercises make every concept memorable and fun."
+              },
+              {
+                "title": "Individual Attention",
+                "description": "Small batch sizes ensure each child receives the time and focus they deserve."
+              },
+              {
+                "title": "Concept Clarity",
+                "description": "We focus on building clear understanding, not rote memorization."
+              },
+              {
+                "title": "Supportive Environment",
+                "description": "A warm, encouraging classroom where children feel safe to ask questions and make mistakes."
+              }
+            ],
+            "highlights": [
+              "Activity-based learning",
+              "Individual attention",
+              "Focus on concept clarity",
+              "Supportive learning environment"
+            ],
+            "cta": {
+              "heading": "Ready to Enroll?",
+              "description": "Give your child the foundation they deserve. Contact us to learn more about batches, schedules, and fees."
+            }
+          },
+          {
+            "id": "foundation-academy",
+            "name": "Laminars Foundation Academy",
+            "slug": "pages/foundation-academy.html",
+            "badge": "Class 6-8",
+            "tagline": "Strengthening core concepts and preparing students for higher academic levels with analytical depth.",
+            "overview": "The Laminars Foundation Academy is tailored for Classes 6 to 8 — a critical transition period in every student's academic journey. This program deepens subject knowledge, develops analytical thinking, and builds the confidence needed for the demands of Classes 9 and beyond. Regular assessments and dedicated doubt-clearing sessions ensure each student progresses steadily and confidently.",
+            "subjects": [
+              { "name": "Science", "detail": "Physics, Chemistry, Biology" },
+              { "name": "Mathematics", "detail": "Algebra, geometry, arithmetic" },
+              { "name": "English", "detail": "Grammar, reading, writing" },
+              { "name": "Hindi", "detail": "व्याकरण और साहित्य" }
+            ],
+            "features": [
+              {
+                "title": "Concept-Driven Teaching",
+                "description": "Deep understanding of 'why' and 'how' — not just memorized answers."
+              },
+              {
+                "title": "Regular Assessments",
+                "description": "Periodic tests to track progress and identify weak areas early."
+              },
+              {
+                "title": "Doubt-Clearing Sessions",
+                "description": "Dedicated time to resolve all confusions so students never fall behind."
+              },
+              {
+                "title": "Strong Academic Base",
+                "description": "Prepares students for the increased complexity of Classes 9 and 10."
+              }
+            ],
+            "highlights": [
+              "Concept-driven teaching",
+              "Regular assessments",
+              "Doubt-clearing sessions",
+              "Strong academic base building"
+            ],
+            "cta": {
+              "heading": "Ready to Enroll?",
+              "description": "Build the foundation your child needs for academic excellence. Reach out to know more about batches and schedules."
+            }
+          },
+          {
+            "id": "senior-academy",
+            "name": "Laminars Senior Academy",
+            "slug": "pages/senior-academy.html",
+            "badges": ["Class 9-12", "Board Focus"],
+            "tagline": "Result-oriented coaching for board classes with in-depth subject understanding and exam preparation.",
+            "overview": "Laminars Senior Academy is a high-performance coaching program for Classes 9-12. This is where academic rigor meets personalized mentorship. Students receive focused preparation for CBSE/Board examinations with dedicated attention to past years' question patterns and scoring strategies. Our performance-tracking approach means every student receives regular feedback, helping them improve continuously on the path to top results.",
+            "subjects": [
+              { "name": "Science", "detail": "Physics, Chemistry, Biology" },
+              { "name": "English", "detail": "Literature, grammar, writing" },
+              { "name": "Hindi", "detail": "साहित्य और लेखन कौशल" }
+            ],
+            "features": [
+              {
+                "title": "Board-Focused Preparation",
+                "description": "Curriculum aligned with board exam patterns, marking schemes, and important topics."
+              },
+              {
+                "title": "Previous Year Questions",
+                "description": "Systematic practice with PYQs builds familiarity with exam formats and boosts confidence."
+              },
+              {
+                "title": "Personalized Mentorship",
+                "description": "One-on-one guidance to help students overcome specific weaknesses and reach their potential."
+              },
+              {
+                "title": "Performance Tracking",
+                "description": "Regular mock tests and detailed feedback keep students on track throughout the year."
+              }
+            ],
+            "highlights": [
+              "Board-focused preparation",
+              "Previous year question practice",
+              "Personalized mentorship",
+              "Performance tracking"
+            ],
+            "cta": {
+              "heading": "Ready to Enroll?",
+              "description": "Board results that reflect your true potential. Talk to us about joining Laminars Senior Academy today."
+            }
+          }
+        ]
+      },
+      {
+        "id": "language-communication",
+        "label": "Language & Communication",
+        "programs": [
+          {
+            "id": "hindi-academic",
+            "name": "Hindi - Academic",
+            "slug": "pages/hindi-academic.html",
+            "badges": ["Class 9-12", "Board Focus"],
+            "tagline": "Board-oriented Hindi coaching with deep focus on grammar, literature, and answer-writing for Classes 9-12.",
+            "overview": "Hindi Academic is a focused coaching program designed for students in Classes 9-12 who want to excel in their board examinations. The course covers the full prescribed syllabus — prose, poetry, grammar, and writing — with detailed explanations and regular practice. Our experienced faculty bring clarity to complex literary texts and help students build the confidence to write structured, high-scoring answers.",
+            "topics": [
+              { "name": "Prose & Poetry", "detail": "Chapter-wise NCERT coverage" },
+              { "name": "Answer Writing", "detail": "Structure, tone & presentation" },
+              { "name": "Grammar", "detail": "Vyakaran — full syllabus" },
+              { "name": "Mock Papers", "detail": "Full board-pattern practice" }
+            ],
+            "features": [
+              {
+                "title": "Board Exam Pattern",
+                "description": "Every topic is taught with the board exam format in mind — question types, marks distribution, and expected length."
+              },
+              {
+                "title": "Answer Writing Techniques",
+                "description": "Students learn how to present answers clearly and concisely to score higher in subjective questions."
+              },
+              {
+                "title": "Grammar & Literature Clarity",
+                "description": "Complex literary passages and grammar rules are simplified for thorough understanding and retention."
+              },
+              {
+                "title": "Senior Faculty Guidance",
+                "description": "Dedicated Hindi faculty with years of board exam coaching experience and deep subject knowledge."
+              }
+            ],
+            "highlights": [
+              "Board exam pattern coverage",
+              "Answer writing techniques",
+              "Grammar and literature clarity",
+              "Expert guidance from senior faculty"
+            ],
+            "whoIsItFor": [
+              "Students in Classes 9, 10, 11, and 12 who want to strengthen their Hindi marks",
+              "Students struggling with grammar, comprehension, or answer writing in Hindi",
+              "Learners aiming for high marks in board exams with structured preparation",
+              "Anyone who wants to develop a genuine appreciation for Hindi literature"
+            ],
+            "cta": {
+              "heading": "Ready to Excel in Hindi?",
+              "description": "Join our board-focused Hindi coaching and see the difference structured learning makes."
+            }
+          },
+          {
+            "id": "hindi-basics",
+            "name": "Hindi - Basics",
+            "slug": "pages/hindi-basics.html",
+            "badge": "Any Age",
+            "tagline": "Foundational Hindi language skills for beginners of all ages — reading, writing, and spoken basics.",
+            "overview": "Hindi Basics is an introductory program open to learners of all ages who want to start learning Hindi from scratch or strengthen their foundational skills. Whether you're a child just beginning to read, an adult wanting to communicate better, or a non-Hindi speaker curious about the language — this course is for you. The program builds confidence step by step — starting from the Hindi alphabet (Varnamala), progressing through reading and writing, and then moving into basic conversational practice.",
+            "topics": [
+              { "name": "Varnamala", "detail": "Hindi alphabet, vowels & consonants" },
+              { "name": "Reading & Writing", "detail": "Words, sentences & short passages" },
+              { "name": "Basic Grammar", "detail": "Nouns, verbs, basic sentence structure" },
+              { "name": "Conversation", "detail": "Everyday phrases & spoken practice" }
+            ],
+            "features": [
+              {
+                "title": "True Beginner-Friendly",
+                "description": "Zero prior knowledge assumed. We start from the very first letters and build up at a comfortable pace."
+              },
+              {
+                "title": "Open to All Ages",
+                "description": "Children, teenagers, working adults — anyone who wants to learn Hindi is welcome."
+              },
+              {
+                "title": "Conversational Practice",
+                "description": "Beyond reading and writing, students practice speaking everyday Hindi to build real-world comfort."
+              },
+              {
+                "title": "Ideal for Non-Hindi Speakers",
+                "description": "Specially suited for learners from other language backgrounds who want to pick up Hindi naturally."
+              }
+            ],
+            "highlights": [
+              "Hindi alphabet and reading",
+              "Basic grammar and vocabulary",
+              "Conversational Hindi practice",
+              "Suitable for non-Hindi speakers"
+            ],
+            "whoIsItFor": [
+              "Young children being introduced to Hindi for the first time",
+              "Adults who never formally learned Hindi and want to start now",
+              "Non-Hindi speakers wanting to learn the language for work or personal reasons",
+              "Students who want to solidify weak Hindi basics before joining an academic course"
+            ],
+            "cta": {
+              "heading": "Start Your Hindi Journey",
+              "description": "It's never too early or too late to learn Hindi. Join our basics program and take the first step today."
+            }
+          },
+          {
+            "id": "english-academic",
+            "name": "English - Academic",
+            "slug": "pages/english-academic.html",
+            "badges": ["Class 9-12", "Board Focus"],
+            "tagline": "Literature, writing skills, and grammar coaching for Classes 9-12 with a sharp focus on board exam performance.",
+            "overview": "English Academic is a board-focused coaching program for students in Classes 9-12. The course spans the full prescribed English syllabus — literature, writing, and grammar — and is structured to maximise marks while developing genuine language skills. Students receive chapter-by-chapter literary analysis, extensive writing practice across all formats, and targeted grammar drills. Regular mock papers and question-type walkthroughs ensure students are fully prepared for the actual exam.",
+            "topics": [
+              { "name": "Literature", "detail": "Prose, poetry & readers" },
+              { "name": "Writing Skills", "detail": "Letters, articles, speeches, essays" },
+              { "name": "Grammar", "detail": "Tenses, clauses, error correction" },
+              { "name": "Mock Papers", "detail": "Board-pattern full practice tests" }
+            ],
+            "features": [
+              {
+                "title": "Chapter-Wise Literature",
+                "description": "Every lesson from Flamingo, Vistas, First Flight and Footprints explained in depth with key questions and answers."
+              },
+              {
+                "title": "Writing Format Mastery",
+                "description": "Formal and informal letters, data interpretation, notice writing, and creative formats — all covered with templates and practice."
+              },
+              {
+                "title": "Grammar Accuracy",
+                "description": "Focused sessions on grammar rules, editing, gap-filling, and sentence transformation — the topics that cost students marks."
+              },
+              {
+                "title": "Exam-Focused Practice",
+                "description": "Regular mock tests and previous-year question walkthroughs prepare students thoroughly for the actual board paper."
+              }
+            ],
+            "highlights": [
+              "Chapter-wise literature explanation",
+              "Writing skills: letters, essays, stories",
+              "Grammar and accuracy focus",
+              "Board exam mock papers practice"
+            ],
+            "whoIsItFor": [
+              "Students in Classes 9, 10, 11, and 12 preparing for CBSE or state board exams",
+              "Students who find grammar or writing formats confusing",
+              "Learners aiming to improve their English scores significantly",
+              "Anyone who wants to build a strong command of academic English"
+            ],
+            "cta": {
+              "heading": "Ready to Score Higher in English?",
+              "description": "Join our board-focused English coaching and build the skills that matter for your exams and beyond."
+            }
+          },
+          {
+            "id": "english-spoken",
+            "name": "English - Spoken",
+            "slug": "pages/english-spoken.html",
+            "badge": "All Ages",
+            "tagline": "Practical spoken English for students and adults — build confidence, fluency, and real communication skills.",
+            "overview": "English Spoken is a practical communication course designed for anyone who wants to speak English with confidence — whether you're a student, a working professional, or someone who just wants to improve day-to-day communication. Rather than focusing on rules and textbooks, this course focuses on actual speaking. Students practice real conversations, build vocabulary through use, and gradually develop the fluency to express themselves naturally and effectively in English.",
+            "topics": [
+              { "name": "Speaking Practice", "detail": "Real-life conversations & scenarios" },
+              { "name": "Vocabulary", "detail": "Contextual word-building techniques" },
+              { "name": "Presentations", "detail": "Speaking in public & group settings" },
+              { "name": "Group Discussions", "detail": "Opinion-sharing & active listening" }
+            ],
+            "features": [
+              {
+                "title": "Practice-First Approach",
+                "description": "Every session is dominated by speaking. Students talk, discuss, and engage — not just listen to theory."
+              },
+              {
+                "title": "Confidence Building",
+                "description": "A safe, encouraging environment where hesitation is addressed and every learner is motivated to speak up."
+              },
+              {
+                "title": "Vocabulary & Fluency Growth",
+                "description": "Progressive vocabulary sessions ensure students always have the right words and can express themselves clearly."
+              },
+              {
+                "title": "Interactive Group Sessions",
+                "description": "Role plays, debates, storytelling, and discussions make learning engaging and reflect real-world communication."
+              }
+            ],
+            "highlights": [
+              "Practical speaking sessions",
+              "Vocabulary and fluency building",
+              "Confidence building activities",
+              "Interactive group discussions"
+            ],
+            "whoIsItFor": [
+              "Students who can read and write English but struggle to speak confidently",
+              "Working professionals who want to communicate better at work or in interviews",
+              "Adults who want to build fluency for daily life, social situations, or travel",
+              "Anyone who feels hesitant or self-conscious about speaking in English"
+            ],
+            "cta": {
+              "heading": "Ready to Speak with Confidence?",
+              "description": "Your voice matters. Join our spoken English program and start expressing yourself freely today."
+            }
+          },
+          {
+            "id": "language-lab",
+            "name": "Laminars Language Lab",
+            "slug": "pages/language-lab.html",
+            "badge": "Language & Communication",
+            "tagline": "Three powerful language tracks under one roof — Hindi Academic, English Academic, and Spoken English — for students of all ages.",
+            "overview": "The Laminars Language Lab brings together three comprehensive language programs under one integrated offering. Students can choose one or more tracks depending on their goals: Hindi Academic for board exam preparation, English Academic for literature and grammar excellence, and Spoken English for communication confidence.",
+            "tracks": [
+              {
+                "trackNumber": 1,
+                "name": "Hindi Academic",
+                "targetAudience": "Classes 9-12",
+                "description": "Board-oriented Hindi coaching covering grammar, literature, and answer-writing techniques. Designed to help students maximise their marks and develop a genuine appreciation for the language.",
+                "highlights": [
+                  "Board-Oriented Preparation — Structured around CBSE/Board exam patterns with targeted practice.",
+                  "Answer Writing Practice — Students learn how to structure and present answers for maximum marks.",
+                  "Grammar & Literature — Comprehensive coverage of prescribed prose, poetry, and grammar rules.",
+                  "Expert Support — Dedicated Hindi faculty with in-depth subject knowledge and board experience."
+                ]
+              },
+              {
+                "trackNumber": 2,
+                "name": "English Academic",
+                "targetAudience": "Classes 9-12",
+                "description": "Comprehensive English coaching covering literature, grammar, and writing for board exam success. Students gain both marks and genuine linguistic confidence.",
+                "highlights": [
+                  "Literature Explanation — Chapter-wise explanation of prose, poetry and supplementary readers.",
+                  "Writing Skills — Letters, articles, speeches, and creative writing with structured guidance.",
+                  "Grammar Strengthening — In-depth grammar practice to eliminate common errors and improve accuracy.",
+                  "Exam-Focused Practice — Regular mock papers and question-wise practice for high scores."
+                ]
+              },
+              {
+                "trackNumber": 3,
+                "name": "Spoken English",
+                "targetAudience": "All Ages",
+                "description": "Practical communication skills for students and adults who want to speak English with confidence and clarity — in class, at work, or in everyday life.",
+                "highlights": [
+                  "Practical Speaking Sessions — Real-world scenarios, group discussions, and regular speaking practice.",
+                  "Vocabulary & Fluency — Progressive vocabulary building with fluency exercises.",
+                  "Confidence Building — Structured environment that helps learners overcome hesitation and speak freely.",
+                  "Interactive Approach — Activities, role-plays and live interactions make learning engaging and effective."
+                ]
+              }
+            ],
+            "cta": {
+              "heading": "Ready to Enroll?",
+              "description": "Language is power. Take the first step towards fluency and academic excellence today."
+            }
+          }
+        ]
+      },
+      {
+        "id": "technology-skills",
+        "label": "Technology & Skills",
+        "programs": [
+          {
+            "id": "code-juniors",
+            "name": "Laminars Code Juniors",
+            "slug": "pages/code-juniors.html",
+            "badge": "Age 10+ / Up to Class 10",
+            "tagline": "Introducing students to programming and logical thinking in a structured and engaging way.",
+            "overview": "Laminars Code Juniors is a beginner-level programming program for students aged 10 and above, up to Class 10. Students are introduced to foundational programming concepts through Python and Java, with a strong emphasis on logical thinking and problem-solving. Weekend batches make it easy to balance school and coding, while project-based learning ensures students build something real and tangible by the end of the course.",
+            "topics": [
+              { "name": "Python Basics", "detail": "Variables, loops, functions" },
+              { "name": "Java Basics", "detail": "Syntax, OOP intro" },
+              { "name": "Logic Building", "detail": "Problem-solving patterns" },
+              { "name": "Algorithms Intro", "detail": "Sorting, searching basics" }
+            ],
+            "features": [
+              {
+                "title": "Beginner-Friendly",
+                "description": "Zero prior experience needed. We start from the very basics in a supportive way."
+              },
+              {
+                "title": "Hands-On Coding",
+                "description": "Students write real code from day one — learning by doing."
+              },
+              {
+                "title": "Project-Based Learning",
+                "description": "Build mini-projects that reinforce concepts and provide a sense of achievement."
+              },
+              {
+                "title": "Weekend Batches",
+                "description": "Flexible scheduling that fits alongside school timetables."
+              }
+            ],
+            "highlights": [
+              "Beginner-friendly approach",
+              "Hands-on coding sessions",
+              "Project-based learning",
+              "Weekend batches available"
+            ],
+            "cta": {
+              "heading": "Ready to Start Coding?",
+              "description": "Give your child the digital skills of the future. Enroll in Code Juniors today."
+            }
+          },
+          {
+            "id": "tech-academy",
+            "name": "Laminars Tech Academy",
+            "slug": "pages/tech-academy.html",
+            "badge": "Advanced Learners",
+            "tagline": "Advanced training in programming and software development for learners building strong technical skills.",
+            "overview": "Laminars Tech Academy is an advanced-level program open to learners of all ages who are ready to move beyond the basics. This program focuses on practical programming with Python and Java, real-world problem-solving, and building a guided path toward software development. Whether you're a student preparing for college, a fresher building a portfolio, or someone looking to upskill — Tech Academy is built to take you forward.",
+            "courses": [
+              { "name": "Python", "detail": "Intermediate to advanced" },
+              { "name": "Java", "detail": "OOP, DSA, applications" },
+              { "name": "Core Programming", "detail": "Algorithms, data structures" },
+              { "name": "Software Dev", "detail": "Fundamentals & best practices" }
+            ],
+            "features": [
+              {
+                "title": "Practical Coding Experience",
+                "description": "Extensive hands-on practice to make concepts stick through real implementation."
+              },
+              {
+                "title": "Real-World Problem Solving",
+                "description": "Assignments inspired by actual software challenges, not just textbook exercises."
+              },
+              {
+                "title": "Guided Learning Path",
+                "description": "Structured curriculum that takes you from concept to application step by step."
+              },
+              {
+                "title": "Flexible Schedules",
+                "description": "Batch options to fit students, freshers, and working professionals."
+              }
+            ],
+            "highlights": [
+              "Practical coding experience",
+              "Real-world problem solving",
+              "Guided learning path",
+              "Flexible schedules"
+            ],
+            "cta": {
+              "heading": "Ready to Level Up?",
+              "description": "Your next step in tech starts here. Contact us to know about upcoming batches and course structure."
+            }
+          },
+          {
+            "id": "career-launchpad",
+            "name": "Laminars Career Launchpad",
+            "slug": "pages/career-launchpad.html",
+            "badges": ["Job-Ready", "Weekend Batches"],
+            "tagline": "Job-ready technical skills and preparation for opportunities in the software and technology domain.",
+            "overview": "Laminars Career Launchpad bridges the gap between education and employment. Whether you're a final-year student, a fresh graduate, or someone transitioning into tech — this program equips you with the practical skills and confidence needed to land a job in the software and technology field. With a curriculum built around real industry expectations, students work on practical projects, receive interview training, and graduate with both knowledge and job-readiness.",
+            "programIncludes": [
+              { "name": "Job-Oriented Courses", "detail": "Industry-focused curriculum" },
+              { "name": "Interview Prep", "detail": "Mock interviews & HR tips" },
+              { "name": "Practical Projects", "detail": "Portfolio-worthy builds" },
+              { "name": "Software Skills", "detail": "Tools & tech in demand" }
+            ],
+            "features": [
+              {
+                "title": "Industry-Relevant Curriculum",
+                "description": "Skills mapped to what companies actually demand in interviews and on the job."
+              },
+              {
+                "title": "Hands-On Training",
+                "description": "Learn by building — real projects that can be added to your portfolio or resume."
+              },
+              {
+                "title": "Career-Focused Guidance",
+                "description": "Mentors help you navigate career paths, job applications, and professional growth."
+              },
+              {
+                "title": "Weekend & Flexible Batches",
+                "description": "Attend without disrupting your existing studies or work schedule."
+              }
+            ],
+            "highlights": [
+              "Industry-relevant curriculum",
+              "Hands-on training",
+              "Career-focused guidance",
+              "Flexible / weekend batches"
+            ],
+            "cta": {
+              "heading": "Ready to Launch Your Career?",
+              "description": "Don't just learn — get hired. Contact us to know more about schedules, fees, and placement support."
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  "learningModes": {
+    "sectionTitle": "Learn Your Way",
+    "sectionDescription": "Flexible modes of education tailored to student comfort and geographic needs.",
+    "modes": [
+      {
+        "type": "offline",
+        "title": "Offline Classes",
+        "description": "Experience traditional, immersive learning in our well-equipped modern classrooms with direct teacher interaction.",
+        "benefits": [
+          "Interactive peer environment",
+          "Zero digital distractions",
+          "Access to physical library & labs",
+          "Immediate face-to-face doubt clearing"
+        ]
+      },
+      {
+        "type": "online",
+        "title": "Online Classes",
+        "description": "High-quality live interactive sessions from the comfort of your home, utilizing state-of-the-art educational tech.",
+        "benefits": [
+          "Learn from anywhere safely",
+          "Recorded lectures for revision",
+          "Digital whiteboards and materials",
+          "Save travel time & energy"
+        ]
+      }
+    ]
+  },
+
+  "laminarsAdvantage": {
+    "sectionLabel": "The Laminars Advantage",
+    "heading": "Empowering students to unlock their true potential.",
+    "description": "We believe that every student has the capacity to excel. Our unique methodology bridges the gap between theoretical knowledge and practical application, ensuring education is engaging and deeply understood.",
+    "supportDescription": "By fostering a supportive environment, we not only improve grades but build lifelong confidence and critical thinking skills.",
+    "keyPoints": [
+      {
+        "title": "Small Batch Sizes",
+        "description": "Ensures high teacher-to-student ratio."
+      },
+      {
+        "title": "Personalized Mentorship",
+        "description": "Custom study plans based on student pace."
+      },
+      {
+        "title": "Regular Assessments",
+        "description": "Weekly tests to track and boost performance."
+      },
+      {
+        "title": "Doubt-Solving Sessions",
+        "description": "Dedicated extra time just for clearing hurdles."
+      }
+    ]
+  },
+
+  "director": {
+    "name": "Md Shahjahan Ansari",
+    "nickname": "Hindi Sir",
+    "role": "Director & Hindi Teacher",
+    "qualifications": "M.A. (Hindi & Pol. Sci), BTC",
+    "experience": "40+ years in teaching",
+    "photo": "img/director.png",
+    "message": "शिक्षा केवल तथ्यों को सीखना नहीं है, बल्कि मन को सोचने के लिए प्रशिक्षित करना है। द लैमिनार्स में, हमारी दृष्टि एक ऐसा वातावरण बनाना है जहाँ छात्रों को प्रश्न पूछने, अवधारणाओं का पता लगाने और अपनी वास्तविक क्षमता की खोज करने के लिए प्रोत्साहित किया जाए। हम केवल सफल छात्रों को नहीं, बल्कि कल के आत्मविश्वासी नेताओं को आकार देने के लिए प्रतिबद्ध हैं।",
+    "messageTranslation": "Education is not just learning facts, but training the mind to think. At The Laminars, our vision is to create an environment where students are encouraged to ask questions, explore concepts, and discover their true potential. We are committed to shaping not just successful students, but confident leaders of tomorrow."
+  },
+
+  "faculty": [
+    {
+      "name": "Md Shahjahan Ansari",
+      "role": "Director & Hindi Teacher",
+      "photo": "img/director.png",
+      "qualifications": "M.A. (Hindi & Pol. Sci), BTC",
+      "experience": "40+ Years Experience",
+      "subjects": ["Hindi"]
+    },
+    {
+      "name": "Tamkeenat Naaz Akhtar",
+      "displayName": "Tamkeenat N.",
+      "role": "Science Teacher",
+      "photo": "img/science-faculty.jpeg",
+      "qualifications": "B.Sc. - Maths, Ex-Byju's",
+      "experience": "10+ Years Experience",
+      "subjects": ["Science", "Mathematics"]
+    },
+    {
+      "name": "Sharik M.",
+      "role": "Technology Trainer",
+      "photo": "img/tech-trainer.jpeg",
+      "qualifications": "Engineer - CS & Trainer",
+      "experience": "11+ Years Experience",
+      "subjects": ["Python", "Java", "Technology"]
+    },
+    {
+      "name": "Tanzeem Aziz",
+      "role": "Physics & Chemistry",
+      "photo": "img/phy-chem-sir.jpeg",
+      "qualifications": "B.Tech CSE",
+      "institution": "Jadavpur University",
+      "subjects": ["Physics", "Chemistry"]
+    },
+    {
+      "name": "Mrs. A. Verma",
+      "role": "English Teacher",
+      "photo": null,
+      "qualifications": "M.A. in English, CU",
+      "experience": "12+ Years Experience",
+      "subjects": ["English"]
+    }
+  ],
+
+  "testimonials": [
+    {
+      "quote": "The Science and Math concepts that used to terrify me are now my strongest subjects. The teachers at The Laminars break down complex topics so easily. The personalized attention made all the difference.",
+      "initial": "R",
+      "name": "Rohan S.",
+      "role": "Class 10 Student"
+    },
+    {
+      "quote": "I opted for their online classes, and the experience has been seamless. The interactive digital tools and the patience of the instructors have helped me excel in English and Technical subjects beyond my expectations.",
+      "initial": "A",
+      "name": "Ayesha M.",
+      "role": "Class 12 Student"
+    }
+  ],
+
+  "quotes": [
+    {
+      "text": "Dream, dream, dream. Dreams transform into thoughts and thoughts result in action.",
+      "author": "Dr. A.P.J. Abdul Kalam",
+      "placement": "after-about-section"
+    },
+    {
+      "text": "Great dreams of great dreamers are always transcended.",
+      "author": "Dr. A.P.J. Abdul Kalam",
+      "placement": "footer"
+    }
+  ],
+
+  "ctaBanner": {
+    "heading": "Start Your Learning Journey Today",
+    "description": "Join hundreds of students who have transformed their academic results with The Laminars.",
+    "buttonLabel": "Enroll Now",
+    "buttonHref": "#contact"
+  },
+
+  "enquiryForm": {
+    "fields": [
+      { "name": "name", "label": "Full Name", "type": "text", "required": true, "placeholder": "Your name" },
+      { "name": "email", "label": "Email", "type": "email", "required": false, "placeholder": "you@email.com" },
+      { "name": "phone", "label": "Phone", "type": "tel", "required": true, "placeholder": "10-digit mobile number (e.g. 9876543210)" },
+      {
+        "name": "subject",
+        "label": "Course Interest",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Laminars Little Minds",
+          "Laminars Foundation Academy",
+          "Laminars Senior Academy",
+          "Laminars Tech Academy",
+          "Laminars Code Juniors",
+          "Laminars Career Launchpad",
+          "English Academic",
+          "English Spoken",
+          "Hindi Academic",
+          "Hindi Basics",
+          "Laminars Language Lab"
+        ]
+      },
+      { "name": "message", "label": "Message", "type": "textarea", "required": false, "placeholder": "Tell us about yourself and how we can help..." }
+    ],
+    "submitLabel": "Send Enquiry",
+    "successMessage": {
+      "title": "Enquiry Sent Successfully!",
+      "body": "We'll get back to you within 24 hours."
+    },
+    "endpoint": "send-enquiry.php"
+  },
+
+  "navigation": {
+    "logo": "img/logo.svg",
+    "brandName": "THE LAMINARS",
+    "links": [
+      { "label": "About", "href": "#about" },
+      { "label": "Courses", "href": "#courses" },
+      { "label": "Admissions", "href": "#" },
+      { "label": "Student Portal", "href": "#" }
+    ]
+  },
+
+  "footer": {
+    "description": "Building strong foundations for tomorrow's leaders in engineering and medical sciences. Join us to transform your academic journey.",
+    "quickLinks": [
+      { "label": "About Us", "href": "#about" },
+      { "label": "Our Courses", "href": "#courses" },
+      { "label": "Admissions", "href": "#" },
+      { "label": "Student Portal", "href": "#" }
+    ],
+    "copyright": "© 2026 The Laminars Coaching Institute. All rights reserved."
+  },
+
+  "seo": {
+    "title": "The Laminars | Coaching Center in Kolkata - Academics, Languages & Tech",
+    "metaDescription": "The Laminars, Kolkata — coaching center offering tuition for Class 1-12, spoken English & Hindi classes, Python & Java programming, and career launch programs. Expert faculty · Trusted by 500+ students · 40+ years of excellence.",
+    "keywords": [
+      "coaching center Kolkata",
+      "tuition classes Kolkata",
+      "science coaching",
+      "board exam preparation",
+      "Class 9 10 11 12 coaching",
+      "English spoken classes",
+      "Hindi classes",
+      "Python programming Kolkata",
+      "Java coaching",
+      "tech training Kolkata"
+    ],
+    "canonicalUrl": "https://www.thelaminars.com/"
+  }
+}

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="The Laminars logo">
+  <defs>
+    <linearGradient id="lam-ring" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <linearGradient id="lam-flow" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <clipPath id="lam-clip">
+      <circle cx="24" cy="24" r="19.5"/>
+    </clipPath>
+  </defs>
+
+  <!-- Dark background -->
+  <circle cx="24" cy="24" r="23" fill="#050d1a"/>
+
+  <!-- Outer glowing ring -->
+  <circle cx="24" cy="24" r="22" stroke="url(#lam-ring)" stroke-width="1.5"/>
+
+  <!-- Three laminar-flow curves — smooth, parallel, ascending -->
+  <g clip-path="url(#lam-clip)" stroke="url(#lam-flow)" stroke-linecap="round" stroke-width="3">
+    <!-- Bottom stream -->
+    <path d="M4 30 Q13 24 24 28 Q35 32 44 27"/>
+    <!-- Middle stream -->
+    <path d="M4 23 Q13 17 24 21 Q35 25 44 20"/>
+    <!-- Top stream -->
+    <path d="M4 16 Q13 10 24 14 Q35 18 44 13"/>
+  </g>
+
+  <!-- Subtle apex spark -->
+  <circle cx="24" cy="7" r="1.8" fill="#38bdf8" opacity="0.75"/>
+</svg>
