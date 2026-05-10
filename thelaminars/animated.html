@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Laminars - Brand Identity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Placeholder for dynamic Favicon -->
+    <link id="dynamic-favicon" rel="icon" type="image/svg+xml" href="">
+</head>
+<body class="bg-gray-50 m-0 p-0 font-sans text-gray-800 overflow-x-hidden">
+
+    <!-- USE CASE 4: Page Loader -->
+    <div id="page-loader" class="fixed inset-0 z-50 bg-[#5a22bd] flex flex-col items-center justify-center transition-opacity duration-700">
+        <div id="loader-logo-container"></div>
+    </div>
+
+    <!-- USE CASE 1: Brand Logo in Navbar -->
+    <nav class="w-full bg-white shadow-sm px-6 py-4 flex items-center justify-between sticky top-0 z-40">
+        <div class="flex items-center gap-3 cursor-pointer">
+            <!-- Navbar Logo Container (Explicit Sizing for perfect horizontal scaling) -->
+            <div id="nav-logo-container" class="flex-shrink-0 w-[280px] h-[50px] md:w-[340px] md:h-[60px]"></div>
+        </div>
+        <div class="hidden md:flex gap-8 font-medium text-gray-600">
+            <a href="#" class="hover:text-[#5a22bd] transition-colors">Programs</a>
+            <a href="#" class="hover:text-[#5a22bd] transition-colors">Admissions</a>
+            <a href="#" class="hover:text-[#5a22bd] transition-colors">About</a>
+            <a href="#" class="hover:text-[#5a22bd] transition-colors">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Left Column: Copy -->
+            <div>
+                <div class="inline-block px-4 py-1.5 rounded-full bg-purple-100 text-[#5a22bd] font-semibold text-sm mb-6">
+                    Welcome to The Laminars
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+                    Achieve <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#8a52e8] to-[#5a22bd]">Laminar Flow</span> in Your Education.
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                    Experience smooth, uninterrupted learning. This page demonstrates the dynamic, reusable pure JavaScript logo implementation across multiple distinct UI elements.
+                </p>
+                <div class="flex gap-4">
+                    <button class="px-8 py-4 bg-[#5a22bd] text-white font-bold rounded-lg hover:bg-[#481b99] transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        Enroll Now
+                    </button>
+                    <button class="px-8 py-4 bg-white border-2 border-gray-200 text-gray-700 font-bold rounded-lg hover:border-[#5a22bd] hover:text-[#5a22bd] transition-colors">
+                        View Demo Code
+                    </button>
+                </div>
+            </div>
+
+            <!-- USE CASE 2: Right column in Hero Section -->
+            <div class="relative w-full aspect-video lg:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center bg-gray-100 group">
+                <!-- Hero Logo Container -->
+                <div id="hero-logo-container" class="w-[85%] h-[85%]"></div>
+            </div>
+            
+        </div>
+
+        <!-- USE CASE 3: Favicon Info -->
+        <div class="mt-24 p-8 bg-white border border-gray-100 rounded-2xl shadow-sm text-center">
+            <h3 class="text-2xl font-bold mb-4">Look up at your browser tab! ☝️</h3>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                The favicon for this page is completely dynamic. The core JavaScript function generated a tightly-cropped, static version of the graduation cap, converted it into a Data URI, and injected it into the <code>&lt;link rel="icon"&gt;</code> tag on the fly.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        /**
+         * Core Reusable Function: Generates and injects The Laminars SVG Logo
+         * @param {string} containerId - The ID of the DOM element to inject the logo into.
+         * @param {object} options - Configuration overrides.
+         * @returns {string} - Returns the generated SVG string.
+         */
+        function createLaminarsLogo(containerId, options = {}) {
+            // Default Configuration
+            const config = {
+                width: '100%',
+                height: '100%',
+                layout: 'horizontal',     // 'horizontal' (side-by-side) or 'vertical' (stacked)
+                bgColorPrimary: '#8a52e8',
+                bgColorSecondary: '#5a22bd',
+                transparentBg: false,
+                displayLogo: true,        // Show graduation cap
+                displayName: true,        // Show "THE LAMINARS"
+                displaySubtitle: true,    // Show "COACHING CENTER"
+                displayLines: true,       // Show laminar flow lines
+                customSubtitle: null,     // Override subtitle text (e.g., "LOADING...")
+                subtitleFontSize: 18,     // Configurable size for subtitle/loader text
+                subtitleY: 475,           // Vertical position for subtitle
+                animateLogoEntrance: true,
+                animateLogoFloat: true,
+                animateName: true,
+                animateLines: true,
+                repeatAnimation: false,
+                loopInterval: 10000,
+                compactViewBox: false,    // True to tightly crop around the cap (good for favicons)
+                ...options
+            };
+
+            // Calculate SVG coordinates and ViewBox based on Layout mode
+            let viewBox, capTransform, textTransform;
+            if (config.layout === 'horizontal') {
+                // Extended ViewBox to accommodate the properly sized side-by-side layout without clipping
+                viewBox = "0 0 1400 600"; 
+                // Shift cap down slightly to center vertically. Base aligns precisely at Y: 413
+                capTransform = "translate(20, 45) scale(0.8)";
+                // Scale text up significantly and precisely align its baseline to match the cap base (Y: 413)
+                textTransform = "translate(430, -154) scale(1.35)";
+            } else {
+                // Classic Stacked ViewBox
+                viewBox = config.compactViewBox ? "160 100 480 350" : "0 0 800 600";
+                capTransform = "translate(160, 10) scale(0.6)";
+                textTransform = "translate(0, 0)";
+            }
+
+            // Generate a unique ID to scope gradients, masks, and shadows safely per instance
+            const uid = Math.random().toString(36).substr(2, 9);
+            
+            // Class logic based on animations
+            const clsFloat = config.animateLogoFloat ? 'cap-float' : '';
+            const clsEntrance = config.animateLogoEntrance ? 'cap-entrance' : '';
+            const clsLetter = config.animateName ? 'letter' : '';
+            const clsReveal = config.animateName ? 'reveal-up' : ''; 
+            const clsLine = config.animateLines ? 'laminar-line' : '';
+            const clsLoop = config.repeatAnimation ? 'sequence-loop' : '';
+
+            // Inject Global Animations once to avoid DOM bloat
+            if (!document.getElementById('laminars-shared-styles')) {
+                const styleDef = document.createElement('style');
+                styleDef.id = 'laminars-shared-styles';
+                styleDef.innerHTML = `
+                    /* Cap Float and Bounce */
+                    .cap-entrance { opacity: 0; animation: capDropBounce 1.5s cubic-bezier(0.28, 0.84, 0.42, 1) forwards; }
+                    .cap-float { animation: float 6s ease-in-out infinite; }
+                    @keyframes capDropBounce {
+                        0% { transform: translateY(-200px); opacity: 0; }
+                        50% { transform: translateY(20px); opacity: 1; }
+                        75% { transform: translateY(-10px); }
+                        100% { transform: translateY(0); opacity: 1; }
+                    }
+                    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+                    
+                    /* Letters */
+                    .letter { opacity: 0; }
+                    @keyframes smoothDrop { 0% { transform: translateY(-40px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+                    
+                    .l-t  { animation: smoothDrop 0.8s 1.60s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-h  { animation: smoothDrop 0.8s 1.75s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-e  { animation: smoothDrop 0.8s 1.90s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-l  { animation: smoothDrop 0.8s 2.15s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-a1 { animation: smoothDrop 0.8s 2.30s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-m  { animation: smoothDrop 0.8s 2.45s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-i  { animation: smoothDrop 0.8s 2.60s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-n  { animation: smoothDrop 0.8s 2.75s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-a2 { animation: smoothDrop 0.8s 2.90s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-r  { animation: smoothDrop 0.8s 3.05s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .l-s  { animation: smoothDrop 0.8s 3.20s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+                    /* Subtitles & Lines */
+                    .reveal-up { opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+                    .delay-2 { animation-delay: 3.8s; }
+                    .delay-3 { animation-delay: 4.1s; }
+                    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+                    .laminar-line { stroke: #ffffff; stroke-linecap: round; animation: flowPulse 3s ease-in-out infinite; }
+                    .l-1 { stroke-width: 4; animation-delay: 0s; }
+                    .l-2 { stroke-width: 4; animation-delay: 0.6s; }
+                    .l-3 { stroke-width: 4; animation-delay: 1.2s; }
+                    @keyframes flowPulse { 0%, 100% { opacity: 0.15; transform: translateX(-6px); } 50% { opacity: 0.8; transform: translateX(6px); } }
+
+                    /* Scene Looping */
+                    .sequence-loop { animation: sequenceFade 10s forwards; }
+                    @keyframes sequenceFade { 0%, 85% { opacity: 1; } 100% { opacity: 0; } }
+                `;
+                document.head.appendChild(styleDef);
+            }
+
+            const subtitleText = config.customSubtitle !== null ? config.customSubtitle : "COACHING CENTER";
+
+            // Construct SVG String. Adding overflow="visible" ensures bounce animations don't clip off the edges!
+            let svgContent = `
+                <svg width="${config.width}" height="${config.height}" viewBox="${viewBox}" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGrad-${uid}" cx="50%" cy="50%" r="75%">
+                            <stop offset="0%" stop-color="${config.bgColorPrimary}" />
+                            <stop offset="100%" stop-color="${config.bgColorSecondary}" />
+                        </radialGradient>
+                        <filter id="cap-shadow-${uid}" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="15" stdDeviation="20" flood-color="#260959" flood-opacity="0.7"/>
+                        </filter>
+                        <mask id="cap-mask-${uid}">
+                            <rect x="-100" y="-100" width="1000" height="800" fill="white" />
+                            <path d="M 280 295 L 280 380 C 280 460, 520 460, 520 380 L 520 295 L 400 340 Z" fill="none" stroke="black" stroke-width="24" stroke-linejoin="round"/>
+                            <g>
+                                <path d="M 400 250 Q 230 260, 220 360" fill="none" stroke="black" stroke-width="32" stroke-linecap="round"/>
+                                <path d="M 210 355 L 180 480 C 175 500, 265 500, 260 480 L 230 355 Z" fill="black" stroke="black" stroke-width="20" stroke-linejoin="round"/>
+                            </g>
+                        </mask>
+                    </defs>
+            `;
+
+            // Background
+            if (!config.transparentBg) {
+                // Scaled width to cover the extended horizontal ViewBox
+                svgContent += `<rect width="1400" height="600" fill="url(#bgGrad-${uid})" />`;
+            }
+
+            // Scene Group (used for repeating the animation sequence)
+            svgContent += `<g id="scene-${uid}" class="${clsLoop}">`;
+
+            // Graduation Cap
+            if (config.displayLogo) {
+                const capShadow = config.transparentBg ? '' : `filter="url(#cap-shadow-${uid})"`;
+                const capColor = config.transparentBg ? config.bgColorPrimary : '#ffffff';
+                
+                svgContent += `
+                    <g transform="${capTransform}">
+                        <g class="${clsEntrance}">
+                            <g class="${clsFloat}" ${capShadow}>
+                                <g mask="url(#cap-mask-${uid})">
+                                    <path d="M 400 160 L 640 250 L 400 340 L 160 250 Z" fill="${capColor}" stroke="${capColor}" stroke-width="16" stroke-linejoin="round"/>
+                                    <path d="M 280 295 L 280 380 C 280 460, 520 460, 520 380 L 520 295 L 400 340 Z" fill="${capColor}"/>
+                                </g>
+                                <g>
+                                    <path d="M 400 250 Q 230 260, 220 360" fill="none" stroke="${capColor}" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M 210 355 L 180 480 C 175 490, 265 490, 260 480 L 230 355 Z" fill="${capColor}"/>
+                                </g>
+                                <circle cx="400" cy="250" r="12" fill="${capColor}"/>
+                            </g>
+                        </g>
+                    </g>
+                `;
+            }
+
+            // Typography & Thematic Elements
+            if (config.displayName || config.displaySubtitle || config.displayLines) {
+                const textColor = config.transparentBg ? config.bgColorPrimary : '#ffffff';
+                
+                // Wrap typography in the layout positioning transform
+                svgContent += `<g transform="${textTransform}">`;
+                svgContent += `<g text-anchor="middle" fill="${textColor}" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">`;
+
+                if (config.displayName) {
+                    svgContent += `
+                        <g font-size="68" font-weight="800">
+                            <text class="${clsLetter} l-t" x="145" y="420">T</text>
+                            <text class="${clsLetter} l-h" x="195" y="420">H</text>
+                            <text class="${clsLetter} l-e" x="245" y="420">E</text>
+                            <text class="${clsLetter} l-l" x="313" y="420">L</text>
+                            <text class="${clsLetter} l-a1" x="361" y="420">A</text>
+                            <text class="${clsLetter} l-m" x="419" y="420">M</text>
+                            <text class="${clsLetter} l-i" x="462" y="420">I</text>
+                            <text class="${clsLetter} l-n" x="500" y="420">N</text>
+                            <text class="${clsLetter} l-a2" x="553" y="420">A</text>
+                            <text class="${clsLetter} l-r" x="605" y="420">R</text>
+                            <text class="${clsLetter} l-s" x="655" y="420">S</text>
+                        </g>
+                    `;
+                }
+
+                if (config.displaySubtitle && subtitleText) {
+                    const subReveal = config.animateName ? `class="${clsReveal} delay-2"` : '';
+                    svgContent += `
+                        <g ${subReveal}>
+                            <text x="400" y="${config.subtitleY}" font-size="${config.subtitleFontSize}" font-weight="600" letter-spacing="8" opacity="0.85">${subtitleText}</text>
+                        </g>
+                    `;
+                }
+
+                if (config.displayLines) {
+                    const lineReveal = config.animateName ? `class="${clsReveal} delay-3"` : '';
+                    svgContent += `
+                        <g ${lineReveal}>
+                            <path class="${clsLine} l-1" stroke="${textColor}" d="M 320 515 L 480 515" />
+                            <path class="${clsLine} l-2" stroke="${textColor}" d="M 345 531 L 455 531" />
+                            <path class="${clsLine} l-3" stroke="${textColor}" d="M 370 547 L 430 547" />
+                        </g>
+                    `;
+                }
+
+                svgContent += `</g></g>`; // End typography groups
+            }
+
+            svgContent += `</g></svg>`; // End scene and svg
+
+            // Inject into DOM if a valid container ID was provided
+            if (containerId) {
+                const container = document.getElementById(containerId);
+                if (container) {
+                    container.innerHTML = svgContent;
+
+                    // Setup animation loop if requested
+                    if (config.repeatAnimation) {
+                        // Clear any existing intervals on this container to prevent memory leaks
+                        if (container.dataset.intervalId) {
+                            clearInterval(container.dataset.intervalId);
+                        }
+                        
+                        const intervalId = setInterval(() => {
+                            const sceneEl = container.querySelector(`#scene-${uid}`);
+                            if (sceneEl) {
+                                // Clone and replace triggers CSS animation reset
+                                const clone = sceneEl.cloneNode(true);
+                                sceneEl.parentNode.replaceChild(clone, sceneEl);
+                            }
+                        }, config.loopInterval);
+                        
+                        container.dataset.intervalId = intervalId;
+                    }
+                }
+            }
+
+            return svgContent;
+        }
+
+        // ==========================================
+        // INITIALIZE EXAMPLES
+        // ==========================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. Navbar Implementation: Rendered beautifully large inside the explicit container
+            createLaminarsLogo('nav-logo-container', {
+                width: '100%', 
+                height: '100%',
+                layout: 'horizontal',
+                transparentBg: true,
+                displayName: true,
+                bgColorPrimary: '#5a22bd', 
+                displaySubtitle: false,
+                displayLines: false,
+                repeatAnimation: true
+            });
+
+            // 2. Hero Section Implementation: Adapts perfectly to the container width
+            createLaminarsLogo('hero-logo-container', {
+                width: '100%',
+                height: '100%',
+                layout: 'horizontal',
+                transparentBg: false,
+                repeatAnimation: true,
+                loopInterval: 10000 
+            });
+
+            // 3. Page Loader Implementation: Vertically stacked Cap + large custom text
+            createLaminarsLogo('loader-logo-container', {
+                width: '400px', // Increased container size for the loader
+                height: '400px',
+                layout: 'vertical', 
+                transparentBg: true,
+                bgColorPrimary: '#ffffff', 
+                displayName: false,
+                displayLines: false,
+                customSubtitle: "LOADING...",
+                subtitleFontSize: 28, // Much larger font size specifically for the loader
+                subtitleY: 430,       // Shifted up to sit closer to the cap (since brand name is hidden)
+                animateName: false 
+            });
+
+            // Remove the loader gracefully after 3.5 seconds
+            setTimeout(() => {
+                const loader = document.getElementById('page-loader');
+                loader.classList.add('opacity-0');
+                setTimeout(() => loader.remove(), 700);
+            }, 3500);
+
+            // 4. Favicon Implementation
+            const faviconSvgString = createLaminarsLogo(null, {
+                layout: 'vertical',         
+                transparentBg: true,
+                bgColorPrimary: '#5a22bd',
+                displayName: false,
+                displaySubtitle: false,
+                displayLines: false,
+                animateLogoEntrance: false, 
+                animateLogoFloat: false,
+                compactViewBox: true        
+            });
+            
+            // Encode the SVG string and set it as the favicon
+            const encodedSvg = encodeURIComponent(faviconSvgString);
+            document.getElementById('dynamic-favicon').href = `data:image/svg+xml;charset=utf-8,${encodedSvg}`;
+
+        });
+    </script>
+</body>
+</html>
