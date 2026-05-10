@@ -36,7 +36,7 @@
             <a class="navbar-brand" href="#home">
                 <img src="img/logo.svg" alt="The Laminars logo" class="brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                 <span class="brand-icon" style="display:none;" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
-                <span class="brand-text">The <span class="accent-text">Laminars</span></span>
+                <span class="brand-text">The <span>Laminars</span></span>
             </a>
 
             <!-- Hamburger -->
@@ -85,7 +85,7 @@
                             <div class="hero-badge">Kolkata's Premier Coaching Institute</div>
 
                             <h1 class="hero-heading">
-                                The Laminars —<br>
+                                The Laminars -<br>
                                 <span class="hero-gradient-text" id="heroTyped">Where Knowledge Meets Ambition.</span><span class="typing-cursor" aria-hidden="true"></span>
                             </h1>
 
@@ -134,15 +134,10 @@
                         <div class="hero-deco-left">
                             <div class="hdl-ring hdl-ring-outer"></div>
                             <div class="hdl-ring hdl-ring-inner"></div>
-                            <div class="hdl-cap"><img src="img/director.png" alt="Md Shahjahan Ansari - Founder" class="hdl-founder-img" /></div>
+                            <div class="hdl-cap"><img id="hdl-center-img" src="img/course/science.jpeg" alt="Science" class="hdl-center-img" /></div>
                             <div class="hdl-top-label"><span class="hdl-label-text">Science &amp; Maths</span></div>
                             <div class="hdl-orbit-ring">
-                                <div class="hdl-orbit-icon hdl-oi-1"><i class="fas fa-flask"></i></div>
-                                <div class="hdl-orbit-icon hdl-oi-2"><i class="fas fa-code"></i></div>
-                                <div class="hdl-orbit-icon hdl-oi-3"><i class="fas fa-book-open"></i></div>
-                                <div class="hdl-orbit-icon hdl-oi-4"><i class="fas fa-laptop-code"></i></div>
-                                <div class="hdl-orbit-icon hdl-oi-5"><i class="fas fa-trophy"></i></div>
-                                <div class="hdl-orbit-icon hdl-oi-6"><i class="fas fa-language"></i></div>
+                                <!-- icons injected by JS from ORBIT_ITEMS in script.js -->
                             </div>
                         </div>
                     </div>

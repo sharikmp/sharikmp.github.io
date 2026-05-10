@@ -516,34 +516,127 @@ const BackToTop = (() => {
 
 /* =============================================================================
    10. ORBIT LABEL MODULE
-   – Cycles a gradient label above the top orbit icon in sync with the 30s
-     CSS step-rotation animation (one step = 60deg = 5 seconds).
-   – Sequence matches the clockwise rotation order: oi-1 → oi-6 → oi-5 →
-     oi-4 → oi-3 → oi-2 (then loops).
+   – ORBIT_ITEMS is the single source of truth for subject images and labels.
+   – Each orbit icon displays the course image; the center circle swaps to
+     match whichever icon is at the top position.
+   – Sequence: hold → slide label out → rotate 60° → slide label in → repeat.
    ============================================================================= */
 const OrbitLabel = (() => {
-  const SEQUENCE = [
-    'Science & Maths',  // oi-1 — flask
-    'Languages',         // oi-6 — language
-    'Excellence',        // oi-5 — trophy
-    'Tech Careers',      // oi-4 — laptop-code
-    'Literature',        // oi-3 — book-open
-    'Programming',       // oi-2 — code
+
+  /* ─────────────────────────────── DATA ──────────────────────────────────── */
+  const ORBIT_ITEMS = [
+    { img: 'img/course/science.png',     label: 'Science'     },  // pos 0 — top (0°)
+    { img: 'img/course/coding.png',      label: 'Coding'      },  // pos 1 — 60°
+    { img: 'img/course/english.png',     label: 'English'     },  // pos 2 — 120°
+    { img: 'img/course/technology.png',  label: 'Technology'  },  // pos 3 — 180°
+    { img: 'img/course/mathematics.png', label: 'Mathematics' },  // pos 4 — 240°
+    { img: 'img/course/hindi.png',       label: 'Hindi'       },  // pos 5 — 300°
   ];
 
-  function init() {
-    const label = document.querySelector('.hdl-label-text');
-    if (!label) return;
+  /* ──────────────────────────── TIMING (ms) ──────────────────────────────── */
+  const ROTATE_MS = 1100;   // duration of the 60° CSS transition
+  const SLIDE_MS  = 480;    // label slide-out time (≈ CSS transition length)
+  const HOLD_MS   = 2000;   // how long the label stays visible before sliding out
 
-    let idx = 0;
-    setInterval(() => {
-      label.classList.add('fade-out');
+  /* ──────────── Positional classes matching .hdl-oi-N CSS rules ───────────── */
+  const POS_CLASS = ['hdl-oi-1','hdl-oi-2','hdl-oi-3','hdl-oi-4','hdl-oi-5','hdl-oi-6'];
+  // Indices 0 (top) and 3 (bottom) use left:50% and need translateX(-50%)
+  const CENTERED  = new Set([0, 3]);
+  const N         = ORBIT_ITEMS.length;
+
+  /* ───────────────── Build icon DOM nodes from ORBIT_ITEMS ───────────────── */
+  function buildIcons(ring) {
+    ring.innerHTML = '';
+    ORBIT_ITEMS.forEach((item, i) => {
+      const el = document.createElement('div');
+      el.className = `hdl-orbit-icon ${POS_CLASS[i]}`;
+      el.innerHTML = `<img src="${item.img}" alt="${item.label}" class="hdl-oi-img" />`;
+      ring.appendChild(el);
+    });
+  }
+
+  /* ──────── Apply rotation to ring + counter-rotate each icon ────────── */
+  function applyAngle(ring, icons, angle, animated) {
+    const dur    = animated ? `${ROTATE_MS}ms` : '0ms';
+    const easing = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    ring.style.transition = `transform ${dur} ${easing}`;
+    ring.style.transform  = `rotate(${angle}deg)`;
+    icons.forEach((icon, i) => {
+      icon.style.transition = `transform ${dur} ${easing}`;
+      icon.style.transform  = CENTERED.has(i)
+        ? `translateX(-50%) rotate(${-angle}deg)`
+        : `rotate(${-angle}deg)`;
+    });
+  }
+
+  /* ──────────────────── Item at top for a given step ─────────────────── */
+  // When ring has rotated step×60° CW, physical pos (N-step)%N is at top.
+  function itemAt(step) { return ORBIT_ITEMS[(N - step) % N]; }
+
+  /* ──────────────────────── Label helpers ────────────────────────────── */
+  function showLabel(el, text) {
+    el.textContent = text;
+    el.offsetHeight; // force reflow so transition fires from hidden state
+    el.classList.add('visible');
+  }
+  function hideLabel(el) { el.classList.remove('visible'); }
+
+  /* ─────── Swap center circle to the subject image now at top ────────── */
+  function updateCenter(step) {
+    const centerImg = document.getElementById('hdl-center-img');
+    if (!centerImg) return;
+    const item = itemAt(step);
+    centerImg.style.opacity = '0';
+    setTimeout(() => {
+      centerImg.src = item.img;
+      centerImg.alt = item.label;
+      centerImg.style.opacity = '1';
+    }, 220);
+  }
+
+  /* ──────────────────────────── Main init ────────────────────────────── */
+  function init() {
+    const ring    = document.querySelector('.hdl-orbit-ring');
+    const labelEl = document.querySelector('.hdl-label-text');
+    if (!ring || !labelEl) return;
+
+    buildIcons(ring);
+    const icons = Array.from(ring.querySelectorAll('.hdl-orbit-icon'));
+
+    let step       = 0;
+    let totalAngle = 0;
+
+    // Place ring at 0° immediately (no animation)
+    applyAngle(ring, icons, 0, false);
+
+    // Show the first label + center image (Science — pos 0)
+    showLabel(labelEl, itemAt(0).label);
+    updateCenter(0);
+
+    function cycle() {
+      // Phase 1 — slide out current label
+      hideLabel(labelEl);
+
+      // Phase 2 — after label is gone, smoothly rotate 60°
       setTimeout(() => {
-        idx = (idx + 1) % SEQUENCE.length;
-        label.textContent = SEQUENCE[idx];
-        label.classList.remove('fade-out');
-      }, 350);
-    }, 5000);
+        step        = (step + 1) % N;
+        totalAngle += 60;
+        applyAngle(ring, icons, totalAngle, true);
+
+        // Phase 3 — after rotation lands, slide new label in + swap center
+        setTimeout(() => {
+          showLabel(labelEl, itemAt(step).label);
+          updateCenter(step);
+
+          // Phase 4 — hold, then repeat
+          setTimeout(cycle, HOLD_MS);
+        }, ROTATE_MS + 80);
+
+      }, SLIDE_MS);
+    }
+
+    // Kick off the first cycle after the initial hold
+    setTimeout(cycle, HOLD_MS);
   }
 
   return { init };

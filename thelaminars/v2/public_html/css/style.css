@@ -133,10 +133,9 @@ button { cursor: pointer; font-family: inherit; }
    5. NAVBAR
    ========================================================================== */
 #mainNav {
-  background: rgba(255,255,255,.95);
+  background: #3b4fce;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0,0,0,.06);
   padding: 14px 0;
   transition: var(--ease);
   z-index: 1000;
@@ -144,7 +143,7 @@ button { cursor: pointer; font-family: inherit; }
 
 #mainNav.scrolled {
   padding: 10px 0;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 24px rgba(59,79,206,.45);
 }
 
 .navbar-brand {
@@ -154,7 +153,7 @@ button { cursor: pointer; font-family: inherit; }
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.05rem;
-  color: var(--text) !important;
+  color: #fff !important;
 }
 
 .brand-logo {
@@ -180,7 +179,7 @@ button { cursor: pointer; font-family: inherit; }
 .nav-link {
   font-size: .9rem;
   font-weight: 500;
-  color: var(--text-muted) !important;
+  color: rgba(255,255,255,.82) !important;
   padding: 8px 14px !important;
   border-radius: 8px;
   transition: var(--ease);
@@ -188,27 +187,28 @@ button { cursor: pointer; font-family: inherit; }
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--primary) !important;
-  background: rgba(59,79,206,.08);
+  color: #fff !important;
+  background: rgba(255,255,255,.15);
 }
 
 .btn-enroll {
   display: inline-flex;
   align-items: center;
-  background: var(--grad-primary);
-  color: #fff !important;
+  background: #fff;
+  color: #3b4fce !important;
   font-size: .86rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 9px 22px;
   border-radius: 50px;
   border: none;
   transition: var(--ease);
-  box-shadow: 0 4px 15px rgba(59,79,206,.35);
+  box-shadow: 0 4px 15px rgba(0,0,0,.18);
 }
 .btn-enroll:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59,79,206,.45);
-  color: #fff !important;
+  background: #f0f3ff;
+  box-shadow: 0 8px 24px rgba(0,0,0,.22);
+  color: #2a3bb5 !important;
 }
 
 .navbar-toggler {
@@ -280,7 +280,7 @@ button { cursor: pointer; font-family: inherit; }
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 130px 0 80px;
+  padding: 90px 0 80px;
   color: #fff;
 }
 
@@ -292,6 +292,10 @@ button { cursor: pointer; font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.hero-deco-left img {
+    transform: scale(1.1);
 }
 
 .hdl-ring {
@@ -333,6 +337,21 @@ button { cursor: pointer; font-family: inherit; }
   object-position: center top;
   border-radius: 50%;
 }
+.hdl-center-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  transition: opacity 0.25s ease;
+}
+.hdl-oi-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
 @keyframes hdlCapFloat {
   0%, 100% { transform: translateY(0);     }
   50%       { transform: translateY(-10px); }
@@ -346,14 +365,12 @@ button { cursor: pointer; font-family: inherit; }
   background: rgba(255,255,255,.15);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,.28);
+  border: 2px solid rgba(255,255,255,.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
-  color: #fff;
-  animation: orbitCounter 30s steps(6, end) infinite;
-  animation-delay: 0s;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
 }
 
 .hdl-oi-1 { top:  -5px; left: 50%; transform: translateX(-50%); }
@@ -367,18 +384,15 @@ button { cursor: pointer; font-family: inherit; }
   0%, 100% { transform: translateY(0);   }
   50%       { transform: translateY(-6px); }
 }
-.hdl-oi-1, .hdl-oi-4 { animation: orbitCounterCentered 30s steps(6, end) infinite; animation-delay: 0s; }
 @keyframes hdlBobCenter {
   0%, 100% { transform: translateX(-50%) translateY(0);   }
   50%       { transform: translateX(-50%) translateY(-6px); }
 }
 
-/* ── Orbit ring: rotates all 6 icons clockwise, one step (60deg) every 5s ── */
+/* ── Orbit ring: JS-controlled rotation (OrbitLabel module) ── */
 .hdl-orbit-ring {
   position: absolute;
   inset: 0;
-  animation: orbitSpin 30s steps(6, end) infinite;
-  animation-delay: 0s;
 }
 @keyframes orbitSpin {
   from { transform: rotate(0deg); }
@@ -408,15 +422,21 @@ button { cursor: pointer; font-family: inherit; }
   font-family: var(--font-heading);
   font-size: .95rem;
   font-weight: 700;
-  letter-spacing: .04em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
   background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.65) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
-  transition: opacity .35s ease;
+  opacity: 0;
+  transform: translateY(-18px);
+  transition: transform .52s cubic-bezier(0.22, 1, 0.36, 1), opacity .42s ease;
 }
-.hdl-label-text.fade-out { opacity: 0; }
+.hdl-label-text.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
 
 .hero-text-col { padding: 48px 0; }
 
