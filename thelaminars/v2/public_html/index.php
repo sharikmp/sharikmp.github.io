@@ -90,7 +90,7 @@
                             </h1>
 
                             <p class="hero-subtext">
-                                Science · Languages · Technology &amp; beyond — your journey to excellence starts here.
+                                Science · Languages · Technology & beyond - your journey to excellence starts here.
                                 Expert faculty, proven results, trusted by 500+ students.
                             </p>
 

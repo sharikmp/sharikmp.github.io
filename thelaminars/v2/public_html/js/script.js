@@ -243,6 +243,27 @@ const Navigation = (() => {
         }
       });
     });
+
+    // Close on Enroll Now click
+    const enrollBtn = nav.querySelector('.btn-enroll');
+    if (enrollBtn) {
+      enrollBtn.addEventListener('click', () => {
+        const collapseEl = document.getElementById('navbarNav');
+        if (collapseEl && collapseEl.classList.contains('show')) {
+          const toggler = document.querySelector('.navbar-toggler');
+          toggler && toggler.click();
+        }
+      });
+    }
+
+    // Close on click outside the navbar
+    document.addEventListener('click', e => {
+      const collapseEl = document.getElementById('navbarNav');
+      if (collapseEl && collapseEl.classList.contains('show') && !nav.contains(e.target)) {
+        const toggler = document.querySelector('.navbar-toggler');
+        toggler && toggler.click();
+      }
+    });
   }
 
   return { init };

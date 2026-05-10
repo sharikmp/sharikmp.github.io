@@ -235,11 +235,12 @@ button { cursor: pointer; font-family: inherit; }
 
 @media (max-width: 991px) {
   .navbar-collapse {
-    background: #fff;
+    background: #3b4fce;
     padding: 16px;
     border-radius: var(--r-md);
     margin-top: 10px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 28px rgba(0,0,0,.25);
+    border: 1px solid rgba(255,255,255,.12);
   }
   .btn-enroll { width: 100%; justify-content: center; margin-top: 10px; }
 }
@@ -280,7 +281,7 @@ button { cursor: pointer; font-family: inherit; }
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 90px 0 80px;
+  padding: 80px 0 80px;
   color: #fff;
 }
 
@@ -587,7 +588,7 @@ button { cursor: pointer; font-family: inherit; }
 /* Scroll indicator */
 /* Hero deco column: scale down on mobile, add top spacing */
 .hero-deco-col {
-  margin-top: 40px;
+  margin-top: 120px;
 }
 @media (min-width: 992px) {
   .hero-deco-col { margin-top: 0; }
@@ -1604,7 +1605,7 @@ button { cursor: pointer; font-family: inherit; }
 
 @media (max-width: 768px) {
   :root { --section-py: 56px; }
-  .hero-overlay  { padding: 90px 0 60px; }
+  .hero-overlay  { padding: 10px 0 30px; }
   .hero-heading  { font-size: 2rem; }
   .hero-text-col { padding: 24px 18px; }
   .hero-stats    { padding: 14px 10px; gap: 4px 0; }
