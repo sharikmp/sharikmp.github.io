@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="The Laminars, Kolkata — coaching center offering tuition for Class 1-12, spoken English &amp; Hindi classes, Python &amp; Java programming, and career launch programs. Expert faculty · Trusted by 500+ students · 40+ years of excellence." />
+    <meta name="description" content="The Laminars, Kolkata - coaching center offering tuition for Class 1-12, spoken English &amp; Hindi classes, Python &amp; Java programming, and career launch programs. Expert faculty · Trusted by 500+ students · 40+ years of excellence." />
     <meta name="keywords" content="coaching center Kolkata, tuition classes Kolkata, science coaching, board exam preparation, Class 9 10 11 12 coaching, English spoken classes, Hindi classes, Python programming Kolkata, Java coaching, tech training Kolkata" />
     <title>The Laminars | Coaching Center in Kolkata - Academics, Languages &amp; Tech</title>
 
@@ -107,7 +107,7 @@
             if (t < 1) {
                 animFrame = requestAnimationFrame(fastPhase);
             } else {
-                // Plateau reached — start finish only if page already loaded
+                // Plateau reached - start finish only if page already loaded
                 if (pageLoaded) finishPhase();
                 // else: window.load listener will call finishPhase()
             }
@@ -384,7 +384,7 @@
     <!-- ============================================================
      LEGACY HIGHLIGHTS STRIP
 ============================================================ -->
-    <section class="section-padding bg-light-section" aria-label="Legacy Highlights">
+    <section class="section-padding bg-light-section legacy-section-bg" aria-label="Legacy Highlights">
         <div class="container">
             <div class="section-header text-center">
                 <div class="section-label">Our Legacy</div>
@@ -392,57 +392,97 @@
                 <p class="section-intro">Decades of teaching mastery, innovation, and commitment to student success</p>
             </div>
 
-            <div class="row g-4 mt-3">
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="0">
-                    <div class="legacy-card">
-                        <div class="legacy-icon blue-gradient"><i class="fas fa-history"></i></div>
-                        <h5>40+ Years of Excellence</h5>
-                        <p>Over four decades of academic expertise with consistent student success across generations and refined teaching methodologies.</p>
-                    </div>
+            <!-- Stats Strip -->
+            <div class="legacy-stats-strip">
+                <div class="lss-item">
+                    <div class="lss-num"><span class="lss-count" data-target="40">0</span><sup>+</sup></div>
+                    <div class="lss-label">Years of Teaching</div>
                 </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="legacy-card">
-                        <div class="legacy-icon teal-gradient"><i class="fas fa-heart"></i></div>
-                        <h5>A Teacher's Dream Project</h5>
-                        <p>Vision-driven educational approach with a community-first mindset, focused on meaningful learning outcomes that empower young minds.</p>
-                    </div>
+                <div class="lss-item">
+                    <div class="lss-num"><span class="lss-count" data-target="500+">0</span><sup>+</sup></div>
+                    <div class="lss-label">Students Guided</div>
                 </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="legacy-card">
-                        <div class="legacy-icon purple-gradient"><i class="fas fa-code"></i></div>
-                        <h5>First Coding in Garden Reach</h5>
-                        <p>Pioneered structured coding education locally with industry-relevant curriculum and hands-on, project-based learning.</p>
-                    </div>
+                <div class="lss-item">
+                    <div class="lss-num"><span class="lss-count" data-target="6">0</span></div>
+                    <div class="lss-label">Subjects Offered</div>
                 </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="0">
-                    <div class="legacy-card">
-                        <div class="legacy-icon orange-gradient"><i class="fas fa-child"></i></div>
-                        <h5>First Python for Kids</h5>
-                        <p>Introduced Python from 5th standard, building logical thinking from an early stage with an interactive and fun learning approach.</p>
-                    </div>
+                <div class="lss-item">
+                    <div class="lss-num"><span class="lss-count" data-target="1">0</span><sup>st</sup></div>
+                    <div class="lss-label">#01 Coding Center in Area</div>
                 </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="legacy-card">
-                        <div class="legacy-icon blue-gradient"><i class="fas fa-layer-group"></i></div>
-                        <h5>Multidisciplinary Expertise</h5>
-                        <p>Languages, sciences, and technology taught by seasoned subject matter experts for holistic academic development.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="legacy-card">
-                        <div class="legacy-icon teal-gradient"><i class="fas fa-lightbulb"></i></div>
-                        <h5>Industry-Aligned Logic</h5>
-                        <p>Connecting academics with real-world applications through practical understanding, problem solving, and preparing students for future careers.</p>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- Story Timeline -->
+            <div class="story-timeline" id="storyTimeline">
+                <div class="story-tl-spine" aria-hidden="true"><div class="story-tl-progress" id="storyProgress"></div></div>
+
+                <div class="story-step">
+                    <div class="story-node blue-gradient"><i class="fas fa-history"></i></div>
+                    <div class="story-card">
+                        <span class="story-ch-num">01</span>
+                        <div class="story-card-inner">
+                            <h5>40+ Years of Excellence</h5>
+                            <p>Four decades of consistent student success. Refined teaching methodologies passed down and evolved - proof that true education never goes out of style.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-step">
+                    <div class="story-node teal-gradient"><i class="fas fa-heart"></i></div>
+                    <div class="story-card">
+                        <span class="story-ch-num">02</span>
+                        <div class="story-card-inner">
+                            <h5>A Teacher's Dream Project</h5>
+                            <p>Not built for profit - built for purpose. The Laminars was born from a teacher's vision: make quality learning accessible to every child in the community.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-step">
+                    <div class="story-node purple-gradient"><i class="fas fa-code"></i></div>
+                    <div class="story-card">
+                        <span class="story-ch-num">03</span>
+                        <div class="story-card-inner">
+                            <h5>First Coding in Garden Reach</h5>
+                            <p>When others hadn't thought of it, we were already teaching it. The first structured coding curriculum in Garden Reach - built before it became mainstream.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-step">
+                    <div class="story-node orange-gradient"><i class="fas fa-child"></i></div>
+                    <div class="story-card">
+                        <span class="story-ch-num">04</span>
+                        <div class="story-card-inner">
+                            <h5>First Python for Kids</h5>
+                            <p>Python from 5th standard. Because the earlier a child thinks logically, the further they go. We introduced this before it became a national trend.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-step">
+                    <div class="story-node blue-gradient"><i class="fas fa-layer-group"></i></div>
+                    <div class="story-card">
+                        <span class="story-ch-num">05</span>
+                        <div class="story-card-inner">
+                            <h5>Multidisciplinary Expertise</h5>
+                            <p>Science, languages, and technology - all under one roof, taught by specialists. We believe a well-rounded student is a future-ready student.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-step">
+                    <div class="story-node teal-gradient"><i class="fas fa-lightbulb"></i></div>
+                    <div class="story-card">
+                        <span class="story-ch-num">06</span>
+                        <div class="story-card-inner">
+                            <h5>Industry-Aligned Logic</h5>
+                            <p>Academics don't exist in isolation. We connect what students learn in class to how the real world thinks - preparing minds, not just marks.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /story-timeline -->
         </div>
     </section>
 
@@ -455,7 +495,7 @@
             <div class="section-header text-center">
                 <div class="section-label">Find Your Path</div>
                 <h2 class="section-heading">Programs <span class="gradient-text">We Offer</span></h2>
-                <p class="section-intro">From foundational academics to career-ready tech skills — there's a program for every learner at The Laminars.</p>
+                <p class="section-intro">From foundational academics to career-ready tech skills - there's a program for every learner at The Laminars.</p>
             </div>
 
             <!-- Category Filter Tabs -->
@@ -544,7 +584,7 @@
                     <div class="course-card">
                         <div class="course-icon-wrap orange-gradient"><i class="fas fa-heading" aria-hidden="true"></i></div>
                         <span class="course-class-tag orange-tag">Class 9-12 · Board</span>
-                        <h4 class="course-title">Hindi — Academic</h4>
+                        <h4 class="course-title">Hindi - Academic</h4>
                         <p class="course-desc">Board-oriented Hindi coaching with deep focus on grammar, literature, and answer-writing for Classes 9-12.</p>
                         <div class="course-meta">
                             <span><i class="fas fa-pen-nib" aria-hidden="true"></i> Prose, Poetry, Grammar, Mock Papers</span>
@@ -561,8 +601,8 @@
                     <div class="course-card">
                         <div class="course-icon-wrap blue-gradient"><i class="fas fa-spell-check" aria-hidden="true"></i></div>
                         <span class="course-class-tag">Any Age</span>
-                        <h4 class="course-title">Hindi — Basics</h4>
-                        <p class="course-desc">Foundational Hindi language skills for beginners of all ages — reading, writing, and spoken basics from Varnamala onwards.</p>
+                        <h4 class="course-title">Hindi - Basics</h4>
+                        <p class="course-desc">Foundational Hindi language skills for beginners of all ages - reading, writing, and spoken basics from Varnamala onwards.</p>
                         <div class="course-meta">
                             <span><i class="fas fa-users" aria-hidden="true"></i> Children, Adults, Non-Hindi Speakers</span>
                         </div>
@@ -578,7 +618,7 @@
                     <div class="course-card">
                         <div class="course-icon-wrap teal-gradient"><i class="fas fa-book-open" aria-hidden="true"></i></div>
                         <span class="course-class-tag teal-tag">Class 9-12 · Board</span>
-                        <h4 class="course-title">English — Academic</h4>
+                        <h4 class="course-title">English - Academic</h4>
                         <p class="course-desc">Literature, writing skills, and grammar coaching for Classes 9-12 with a sharp focus on board exam performance.</p>
                         <div class="course-meta">
                             <span><i class="fas fa-pen-nib" aria-hidden="true"></i> Literature, Writing, Grammar, Mock Papers</span>
@@ -595,8 +635,8 @@
                     <div class="course-card">
                         <div class="course-icon-wrap purple-gradient"><i class="fas fa-comments" aria-hidden="true"></i></div>
                         <span class="course-class-tag arts-tag">All Ages</span>
-                        <h4 class="course-title">English — Spoken</h4>
-                        <p class="course-desc">Practical spoken English for students and adults — build confidence, fluency, and real communication skills through daily practice.</p>
+                        <h4 class="course-title">English - Spoken</h4>
+                        <p class="course-desc">Practical spoken English for students and adults - build confidence, fluency, and real communication skills through daily practice.</p>
                         <div class="course-meta">
                             <span><i class="fas fa-users" aria-hidden="true"></i> Students, Professionals, Adults</span>
                         </div>
@@ -758,7 +798,7 @@
                                 "Education is not merely learning facts, but training the mind to think."
                             </blockquote>
                             <p class="director-quote-en">
-                                "At The Laminars, we don't just teach — we train minds to think, question, and grow into confident leaders of tomorrow."
+                                "At The Laminars, we don't just teach - we train minds to think, question, and grow into confident leaders of tomorrow."
                             </p>
                             <div class="director-info">
                                 <strong>Md Shahjahan Ansari</strong>
@@ -996,7 +1036,7 @@
             <div class="section-header text-center">
                 <div class="section-label">Get In Touch</div>
                 <h2 class="section-heading">Start Your <span class="gradient-text">Learning Journey</span></h2>
-                <p class="section-intro">Reach out to us — our team is ready to guide you to the right program</p>
+                <p class="section-intro">Reach out to us - our team is ready to guide you to the right program</p>
             </div>
 
             <div class="row g-5 mt-2">
@@ -1038,7 +1078,7 @@
                         <div class="ci-quote">
                             <i class="fas fa-quote-left" aria-hidden="true"></i>
                             <p>"Dream, dream, dream. Dreams transform into thoughts and thoughts result in action."</p>
-                            <span>— Dr. A.P.J. Abdul Kalam</span>
+                            <span>- Dr. A.P.J. Abdul Kalam</span>
                         </div>
 
                     </div>
@@ -1154,7 +1194,7 @@
                             <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                             <span>The <strong>Laminars</strong></span>
                         </div>
-                        <p class="footer-tagline">Where knowledge meets ambition — shaping tomorrow's leaders through excellence in academics, languages, and technology since 40+ years.</p>
+                        <p class="footer-tagline">Where knowledge meets ambition - shaping tomorrow's leaders through excellence in academics, languages, and technology since 40+ years.</p>
                         <div class="footer-social">
                             <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
