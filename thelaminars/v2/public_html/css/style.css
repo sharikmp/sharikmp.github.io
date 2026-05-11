@@ -57,6 +57,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  overflow-x: clip; /* clip (not hidden) — clips horizontal overflow without making html a scroll container, so position:sticky keeps working */
 }
 
 body {
@@ -64,13 +65,13 @@ body {
   color: var(--text);
   background: var(--bg);
   line-height: 1.7;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
 html, body {
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 
