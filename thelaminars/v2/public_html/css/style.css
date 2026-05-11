@@ -1092,14 +1092,7 @@ button {
 
 @media (max-width: 575px) {
   .about-icon-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about-icon-card {
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 14px 16px;
-    gap: 14px;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
