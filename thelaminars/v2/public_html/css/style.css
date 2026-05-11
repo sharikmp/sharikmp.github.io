@@ -1527,11 +1527,11 @@ button {
 
 /* Course cards */
 .course-card {
-  background: #fff;
+  background: rgba(59, 79, 206, 0.06);
   border-radius: var(--r-md);
   padding: 28px 22px;
   height: 100%;
-  border: 1px solid rgba(0, 0, 0, .07);
+  border: 1px solid rgba(91, 111, 214, 0.18);
   transition: var(--ease);
   position: relative;
   overflow: hidden;
@@ -1554,8 +1554,9 @@ button {
 
 .course-card:hover {
   transform: translateY(-7px);
-  box-shadow: var(--shadow-lg);
-  border-color: transparent;
+  background: rgba(59, 79, 206, 0.12);
+  border-color: rgba(91, 111, 214, 0.35);
+  box-shadow: 0 12px 40px rgba(59, 79, 206, 0.18), 0 2px 12px rgba(0,0,0,0.3);
 }
 
 .course-card:hover::before {
@@ -1622,8 +1623,8 @@ button {
   display: inline-block;
   font-size: .72rem;
   font-weight: 600;
-  color: var(--primary);
-  background: rgba(59, 79, 206, .08);
+  color: #a5b4fc;
+  background: rgba(91, 111, 214, 0.15);
   padding: 3px 12px;
   border-radius: 50px;
   margin-bottom: 10px;
@@ -1631,18 +1632,18 @@ button {
 }
 
 .course-class-tag.arts-tag {
-  color: var(--purple);
-  background: rgba(139, 92, 246, .1);
+  color: #d8b4fe;
+  background: rgba(139, 92, 246, .15);
 }
 
 .course-class-tag.teal-tag {
-  color: var(--teal);
-  background: rgba(20, 184, 166, .1);
+  color: #5eead4;
+  background: rgba(20, 184, 166, .12);
 }
 
 .course-class-tag.orange-tag {
-  color: var(--orange);
-  background: rgba(249, 115, 22, .1);
+  color: #fdba74;
+  background: rgba(249, 115, 22, .12);
 }
 
 .course-title {
@@ -1691,8 +1692,9 @@ button {
 .ctag {
   font-size: .7rem;
   font-weight: 600;
-  color: var(--primary);
-  background: rgba(59, 79, 206, .07);
+  color: #a5b4fc;
+  background: rgba(91, 111, 214, 0.12);
+  border: 1px solid rgba(91, 111, 214, 0.2);
   padding: 3px 10px;
   border-radius: 50px;
   letter-spacing: .2px;
@@ -1703,8 +1705,8 @@ button {
   align-items: center;
   gap: 6px;
   background: transparent;
-  color: var(--primary);
-  border: 1.5px solid var(--primary);
+  color: #a5b4fc;
+  border: 1.5px solid rgba(91, 111, 214, 0.45);
   font-size: .83rem;
   font-weight: 600;
   padding: 7px 18px;
@@ -1716,6 +1718,7 @@ button {
 .btn-course:hover {
   background: var(--primary);
   color: #fff;
+  border-color: var(--primary);
 }
 
 .btn-course i {
@@ -1731,18 +1734,19 @@ button {
    10. LAMINARS ADVANTAGE
    ========================================================================== */
 .advantage-card {
-  background: #fff;
+  background: rgba(59, 79, 206, 0.06);
   border-radius: var(--r-md);
   padding: 22px 18px;
-  border: 1px solid rgba(0, 0, 0, .07);
+  border: 1px solid rgba(91, 111, 214, 0.18);
   height: 100%;
   transition: var(--ease);
 }
 
 .advantage-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-  border-color: transparent;
+  background: rgba(59, 79, 206, 0.12);
+  border-color: rgba(91, 111, 214, 0.35);
+  box-shadow: 0 8px 30px rgba(59, 79, 206, 0.18);
 }
 
 .adv-icon {
