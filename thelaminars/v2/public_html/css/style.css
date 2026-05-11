@@ -303,8 +303,8 @@ button {
 .legacy-section-bg {
   background:
     radial-gradient(ellipse 90% 55% at 50% 108%, rgba(59,79,206,0.22) 0%, rgba(124,58,237,0.09) 52%, transparent 72%),
-    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
-    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px) 0 0 / 52px 52px,
     #13131f;
 }
 
@@ -1319,7 +1319,9 @@ button {
 
 /* Card base */
 .story-card {
-  background: rgba(255,255,255,0.05);
+  background: rgba(19, 19, 31, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255,255,255,0.10);
   border-radius: var(--r-md);
   padding: 22px 22px;
