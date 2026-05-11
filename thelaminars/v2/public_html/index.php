@@ -260,7 +260,7 @@
                         <div class="hero-deco-left">
                             <div class="hdl-ring hdl-ring-outer"></div>
                             <div class="hdl-ring hdl-ring-inner"></div>
-                            <div class="hdl-cap"><img id="hdl-center-img" src="img/course/science.jpeg" alt="Science" class="hdl-center-img" /></div>
+                            <div class="hdl-cap"><img id="hdl-center-img" src="img/course/science.png" alt="Science" class="hdl-center-img" /></div>
                             <div class="hdl-top-label"><span class="hdl-label-text">Science &amp; Maths</span></div>
                             <div class="hdl-orbit-ring">
                                 <!-- icons injected by JS from ORBIT_ITEMS in script.js -->
