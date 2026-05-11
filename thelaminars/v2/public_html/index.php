@@ -514,7 +514,7 @@
                 </button>
             </div>
 
-            <div class="row g-4 mt-2" id="courseGrid">
+            <div class="row g-5 mt-2" id="courseGrid">
 
                 <!-- ─── ACADEMICS CATEGORY HEADER ─── -->
                 <div class="col-12 course-category-header" data-category-header="academics" data-aos="fade-up">
@@ -740,7 +740,7 @@
                 </div>
 
                 <div class="col-lg-6" data-aos="fade-left">
-                    <div class="row g-3">
+                    <div class="row g-4">
                         <div class="col-6">
                             <div class="advantage-card">
                                 <div class="adv-icon blue-gradient"><i class="fas fa-users"></i></div>
@@ -824,7 +824,7 @@
                 <p class="section-intro">Passionate educators with years of experience guiding students to academic success</p>
             </div>
 
-            <div class="row g-4 mt-2 justify-content-center">
+            <div class="row g-5 mt-2 justify-content-center">
 
                 <!-- Director -->
                 <div class="col-lg col-md-6" data-aos="fade-up" data-aos-delay="0">
