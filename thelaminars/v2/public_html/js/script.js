@@ -509,7 +509,16 @@ const ScrollReveal = (() => {
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
 
-    targets.forEach(el => observer.observe(el));
+    targets.forEach(el => {
+      // If already in viewport on load, animate immediately
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const delay = parseInt(el.dataset.aosDelay || '0', 10);
+        setTimeout(() => el.classList.add('aos-animate'), delay);
+      } else {
+        observer.observe(el);
+      }
+    });
   }
 
   return { init };
