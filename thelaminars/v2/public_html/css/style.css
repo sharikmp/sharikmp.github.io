@@ -1073,21 +1073,34 @@ button {
 
 .about-main-card {
   background:
-    radial-gradient(ellipse 90% 70% at 50% 110%, rgba(180,83,9,0.55) 0%, rgba(124,58,237,0.18) 52%, transparent 72%),
+    radial-gradient(ellipse 90% 70% at 50% 110%, rgba(59,79,206,0.55) 0%, rgba(91,111,214,0.28) 52%, transparent 72%),
     linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
     linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
     #0c0c12;
   border-radius: var(--r-lg);
   padding: 44px 28px;
   text-align: center;
-  box-shadow: var(--shadow-primary);
+  box-shadow: 0 0 60px rgba(59,79,206,0.25), var(--shadow-primary);
 }
 
 .about-icon-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 14px;
   margin-bottom: 22px;
+}
+
+@media (max-width: 575px) {
+  .about-icon-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-icon-card {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 14px 16px;
+    gap: 14px;
+  }
 }
 
 .about-icon-card {
@@ -1096,22 +1109,36 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
   color: #fff;
   font-size: .8rem;
   font-weight: 600;
-  background: rgba(255, 255, 255, .15);
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255,255,255,0.12);
   backdrop-filter: blur(8px);
   transition: var(--ease);
 }
 
 .about-icon-card:hover {
-  background: rgba(255, 255, 255, .25);
+  background: rgba(255, 255, 255, .14);
+  border-color: rgba(255,255,255,0.22);
   transform: scale(1.04);
 }
 
-.about-icon-card i {
-  font-size: 1.7rem;
+.aic-img-wrap {
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.aic-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  transform: scale(1.2);
 }
 
 .about-center-badge {
