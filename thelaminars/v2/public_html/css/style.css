@@ -760,7 +760,7 @@ button {
 
 .hero-gradient-text {
   font-size: clamp(1.3rem, 3.2vw, 2.2rem);
-  background: linear-gradient(155deg, #ffffff 0%, #c4b5fd 30%, #fb923c 75%, #fbbf24 100%);
+  background: linear-gradient(155deg, #ffffff 0%, #a9b6f7 50%, #3b4fce 70%, #5b6fd6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

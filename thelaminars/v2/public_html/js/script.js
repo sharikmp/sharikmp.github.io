@@ -38,13 +38,13 @@ const HeroCanvas = (() => {
     let mouse = { x: 0, y: 0, tx: 0, ty: 0, active: false };
     let ripples = [];
 
-    const baseColor  = '#3b4fce';
-    const wave1Start = 'rgba(90, 75, 210, 0.9)';
-    const wave1End   = 'rgba(90, 75, 210, 0.0)';
-    const wave2Start = 'rgba(124, 58, 237, 0.85)';
-    const wave2End   = 'rgba(124, 58, 237, 0.1)';
-    const wave3Start = 'rgba(67, 56, 202, 0.6)';
-    const wave3End   = 'rgba(67, 56, 202, 0.0)';
+    const baseColor  = '#0c0c12';
+    const wave1Start = 'rgba(59, 79, 206, 0.85)';    /* --primary */
+    const wave1End   = 'rgba(59, 79, 206, 0.0)';
+    const wave2Start = 'rgba(91, 111, 214, 0.70)';   /* --primary-light */
+    const wave2End   = 'rgba(91, 111, 214, 0.0)';
+    const wave3Start = 'rgba(45, 61, 184, 0.55)';    /* --primary-dark */
+    const wave3End   = 'rgba(45, 61, 184, 0.0)';
 
     function resize() {
       width  = parentElement.clientWidth;
