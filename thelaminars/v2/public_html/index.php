@@ -20,6 +20,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
     <!-- Site CSS -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -160,8 +162,7 @@
 
             <!-- Brand -->
             <a class="navbar-brand" href="#home">
-                <img src="img/logo.svg" alt="The Laminars logo" class="brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                <span class="brand-icon" style="display:none;" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
+                <span class="brand-icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
                 <span class="brand-text">The <span>Laminars</span></span>
             </a>
 
