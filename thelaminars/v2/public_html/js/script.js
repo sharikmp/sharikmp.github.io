@@ -35,6 +35,7 @@ const HeroCanvas = (() => {
 
     let width, height;
     let time = 0;
+    let lastTs = null;
     let mouse = { x: 0, y: 0, tx: 0, ty: 0, active: false };
     let ripples = [];
 
@@ -111,7 +112,11 @@ const HeroCanvas = (() => {
       ctx.fill();
     }
 
-    function draw() {
+    function draw(ts) {
+      // Clamp delta to 50 ms so returning to a hidden tab never causes a catch-up burst
+      const delta = lastTs === null ? 16 : Math.min(ts - lastTs, 50);
+      lastTs = ts;
+
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = baseColor;
       ctx.fillRect(0, 0, width, height);
@@ -151,9 +156,14 @@ const HeroCanvas = (() => {
         ctx.fill();
       }
 
-      time += 16;
+      time += delta;
       requestAnimationFrame(draw);
     }
+
+    // When the tab regains focus, reset lastTs so the next frame starts fresh
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) lastTs = null;
+    });
 
     draw();
   }
