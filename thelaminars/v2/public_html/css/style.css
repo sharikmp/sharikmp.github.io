@@ -18,11 +18,11 @@
   --red-error: #ef4444;
 
   --accent: var(--orange);
-  --bg: #ffffff;
-  --bg-light: #f8fafc;
-  --text: #1e293b;
-  --text-muted: #64748b;
-  --text-light: #94a3b8;
+  --bg: #0c0c12;
+  --bg-light: #13131f;
+  --text: rgba(255, 255, 255, 0.85);
+  --text-muted: rgba(255, 255, 255, 0.55);
+  --text-light: rgba(255, 255, 255, 0.38);
 
   --grad-primary: linear-gradient(135deg, #3b4fce 0%, #7c3aed 100%);
   --grad-teal: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
@@ -1198,47 +1198,227 @@ button {
 
 
 /* ==========================================================================
-   8. LEGACY CARDS
+   8. LEGACY STORY TIMELINE
    ========================================================================== */
-.legacy-card {
-  background: #fff;
-  border-radius: var(--r-md);
-  padding: 26px 22px;
-  border: 1px solid rgba(0, 0, 0, .07);
-  transition: var(--ease);
+
+/* Stats strip */
+.legacy-stats-strip {
+  display: flex;
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  margin: 40px 0 56px;
 }
 
-.legacy-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: transparent;
+.lss-item {
+  flex: 1;
+  text-align: center;
+  padding: 28px 16px;
+  border-right: 1px solid rgba(255,255,255,0.07);
 }
 
-.legacy-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+.lss-item:last-child { border-right: none; }
+
+.lss-num {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #a5b4fc 0%, #e879f9 50%, #fb923c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lss-num sup {
+  font-size: 55%;
+  vertical-align: super;
+}
+
+.lss-label {
+  font-size: .78rem;
+  color: rgba(255,255,255,0.48);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Timeline container */
+.story-timeline {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* Ghost spine */
+.story-tl-spine {
+  position: absolute;
+  left: 50%;
+  top: 26px;
+  bottom: 26px;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Animated fill */
+.story-tl-progress {
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #a5b4fc 0%, #e879f9 55%, #fb923c 100%);
+  transition: height 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+/* Step grid: left-card | node | right-card */
+.story-step {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  align-items: flex-start;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Node: always center column */
+.story-node {
+  grid-column: 2;
+  grid-row: 1;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   color: #fff;
-  margin-bottom: 16px;
+  justify-self: center;
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.3);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 
-.legacy-card h5 {
+.story-step.is-active .story-node {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 10px rgba(165,180,252,0.12), 0 0 32px rgba(165,180,252,0.28), 0 4px 20px rgba(0,0,0,0.4);
+}
+
+/* Card base */
+.story-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: var(--r-md);
+  padding: 22px 22px;
+  overflow: hidden;
+  position: relative;
+  transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.3s ease;
+}
+
+.story-card:hover {
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+}
+
+/* Odd: card on LEFT */
+.story-step:nth-child(odd) .story-card {
+  grid-column: 1;
+  grid-row: 1;
+  margin-right: 14px;
+  text-align: right;
+  opacity: 0;
+  transform: translateX(-28px);
+}
+
+/* Even: card on RIGHT */
+.story-step:nth-child(even) .story-card {
+  grid-column: 3;
+  grid-row: 1;
+  margin-left: 14px;
+  opacity: 0;
+  transform: translateX(28px);
+}
+
+/* Active state */
+.story-step.is-active .story-card {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Chapter watermark */
+.story-ch-num {
+  position: absolute;
+  bottom: 6px;
+  right: 12px;
   font-family: var(--font-heading);
-  font-size: .97rem;
+  font-weight: 900;
+  font-size: 4.5rem;
+  line-height: 1;
+  color: rgba(255,255,255,0.04);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -2px;
+}
+
+.story-card-inner h5 {
+  font-family: var(--font-heading);
+  font-size: .98rem;
   font-weight: 700;
-  color: var(--text);
+  color: #fff;
   margin-bottom: 8px;
 }
 
-.legacy-card p {
-  font-size: .84rem;
-  color: var(--text-muted);
-  line-height: 1.7;
+.story-card-inner p {
+  font-size: .86rem;
+  color: rgba(255,255,255,0.62);
+  line-height: 1.75;
   margin: 0;
+}
+
+/* Mobile: left-spine layout */
+@media (max-width: 767px) {
+  .story-timeline { max-width: 100%; }
+
+  .story-tl-spine { left: 25px; top: 0; bottom: 0; }
+
+  .story-step {
+    grid-template-columns: 52px 1fr;
+    column-gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .story-node {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+
+  .story-step:nth-child(odd) .story-card,
+  .story-step:nth-child(even) .story-card {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    text-align: left;
+    transform: translateX(20px);
+  }
+
+  .story-step.is-active .story-card { transform: translateX(0); }
+}
+
+/* Mobile stats: 2×2 */
+@media (max-width: 575px) {
+  .legacy-stats-strip { flex-wrap: wrap; }
+
+  .lss-item {
+    flex: 1 0 50%;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .lss-item:nth-child(2n) { border-right: none; }
+  .lss-item:nth-last-child(-n+2) { border-bottom: none; }
 }
 
 
