@@ -300,6 +300,10 @@ button {
   background: var(--bg-light);
 }
 
+.courses-section {
+  background: #0f0f1c;
+}
+
 .legacy-section-bg {
   background:
     radial-gradient(ellipse 90% 55% at 50% 108%, rgba(59,79,206,0.22) 0%, rgba(124,58,237,0.09) 52%, transparent 72%),

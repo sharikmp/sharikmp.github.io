@@ -490,7 +490,7 @@
     <!-- ============================================================
      PROGRAMS / COURSES SECTION
 ============================================================ -->
-    <section id="courses" class="section-padding" aria-label="Courses">
+    <section id="courses" class="section-padding courses-section" aria-label="Courses">
         <div class="container">
             <div class="section-header text-center">
                 <div class="section-label">Find Your Path</div>
