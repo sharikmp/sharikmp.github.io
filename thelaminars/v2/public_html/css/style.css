@@ -882,7 +882,7 @@ button { cursor: pointer; font-family: inherit; }
 @media (max-width: 767px) {
   .course-category-header {
     position: sticky;
-    top: 70px;
+    top: 0;
     z-index: 90;
     padding: 4px 0;
     background: rgba(15, 13, 30, 0.88);
