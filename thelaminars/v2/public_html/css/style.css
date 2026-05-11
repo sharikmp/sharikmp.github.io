@@ -608,6 +608,7 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 .hero-gradient-text {
+  font-size: clamp(1.3rem, 3.2vw, 2.2rem);
   background: linear-gradient(135deg, #7dd3fc 0%, #a5f3fc 50%, #6ee7b7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
