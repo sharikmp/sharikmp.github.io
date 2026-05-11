@@ -296,7 +296,7 @@
                     <div class="section-label">Who We Are</div>
                     <h2 class="section-heading">
                         40+ Years of Academic<br>
-                        <span class="gradient-text">Excellence in Kolkata</span>
+                        <span class="gradient-text">Excellence</span>
                     </h2>
                     <p class="section-desc">
                         The Laminars is a trusted coaching center in Garden Reach, Kolkata, dedicated to
@@ -334,15 +334,35 @@
                     <div class="about-visual">
                         <div class="about-main-card">
                             <div class="about-icon-grid">
-                                <div class="about-icon-card blue"><i class="fas fa-atom" aria-hidden="true"></i><span>Science</span></div>
-                                <div class="about-icon-card teal"><i class="fas fa-language" aria-hidden="true"></i><span>Languages</span></div>
-                                <div class="about-icon-card purple"><i class="fas fa-laptop-code" aria-hidden="true"></i><span>Technology</span></div>
-                                <div class="about-icon-card orange"><i class="fas fa-trophy" aria-hidden="true"></i><span>Results</span></div>
+                                <div class="about-icon-card">
+                                    <div class="aic-img-wrap"><img src="img/course/mathematics.png" alt="Mathematics" /></div>
+                                    <span>Mathematics</span>
+                                </div>
+                                <div class="about-icon-card">
+                                    <div class="aic-img-wrap"><img src="img/course/science.png" alt="Science" /></div>
+                                    <span>Science</span>
+                                </div>
+                                <div class="about-icon-card">
+                                    <div class="aic-img-wrap"><img src="img/course/hindi.png" alt="Hindi" /></div>
+                                    <span>Hindi</span>
+                                </div>
+                                <div class="about-icon-card">
+                                    <div class="aic-img-wrap"><img src="img/course/english.png" alt="English" /></div>
+                                    <span>English</span>
+                                </div>
+                                <div class="about-icon-card">
+                                    <div class="aic-img-wrap"><img src="img/course/coding.png" alt="Coding" /></div>
+                                    <span>Coding</span>
+                                </div>
+                                <div class="about-icon-card">
+                                    <div class="aic-img-wrap"><img src="img/course/technology.png" alt="Technology" /></div>
+                                    <span>Technology</span>
+                                </div>
                             </div>
                             <div class="about-center-badge">
                                 <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                                 <span>The Laminars</span>
-                                <span class="badge-sub">Kolkata · Est. 40+ yrs</span>
+                                <span class="badge-sub">40+ yrs of teaching legacy</span>
                             </div>
                         </div>
                         <div class="float-card float-card-1">
