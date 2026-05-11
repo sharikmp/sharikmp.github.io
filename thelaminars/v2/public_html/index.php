@@ -29,7 +29,7 @@
     <!-- ============================================================
      NAVIGATION
 ============================================================ -->
-    <nav class="navbar navbar-expand-lg sticky-top" id="mainNav" aria-label="Main navigation">
+    <nav class="navbar navbar-expand-lg" id="mainNav" aria-label="Main navigation">
         <div class="container">
 
             <!-- Brand -->
@@ -991,7 +991,12 @@
      FOOTER
 ============================================================ -->
     <footer class="site-footer" aria-label="Site footer">
-        <div class="container">
+        <!-- Decorative layers -->
+        <div class="brand-sig-glow" aria-hidden="true"></div>
+        <div class="brand-sig-grid" aria-hidden="true"></div>
+
+        <!-- Main content -->
+        <div class="container" style="position:relative;z-index:2;">
             <div class="row g-4">
 
                 <!-- Brand -->
@@ -1034,7 +1039,6 @@
                             <li><a href="#courses">Little Minds (Class 1-5)</a></li>
                             <li><a href="#courses">Foundation Academy (Class 6-8)</a></li>
                             <li><a href="#courses">Senior Academy (Class 9-12)</a></li>
-
                             <li><a href="#courses">Code Juniors</a></li>
                             <li><a href="#courses">Career Launchpad</a></li>
                         </ul>
@@ -1055,13 +1059,19 @@
                 </div>
 
             </div>
+        </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2026 The Laminars Coaching Institute. All rights reserved.</p>
-                <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="sitemap.xml">Sitemap</a>
-                </div>
+        <!-- Brand signature -->
+        <div class="brand-sig-inner" aria-hidden="true">
+            <div class="brand-sig-name"><em>The </em>Laminars</div>
+        </div>
+
+        <!-- Copyright bar -->
+        <div class="brand-sig-bottom" style="position:relative;z-index:2;">
+            <span>&copy; All rights reserved 2026</span>
+            <div class="brand-sig-links">
+                <a href="#">Terms and Conditions</a>
+                <a href="#">Privacy Policy</a>
             </div>
         </div>
     </footer>
