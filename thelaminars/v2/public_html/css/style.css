@@ -31,7 +31,7 @@
   --grad-green: linear-gradient(135deg, #22c55e 0%, #14b8a6 100%);
   --grad-hero: linear-gradient(135deg, #1e1b4b 0%, #1e3a5f 50%, #0d4a45 100%);
 
-  --section-py: 90px;
+  --section-py: 96px;
   --r-sm: 10px;
   --r-md: 16px;
   --r-lg: 24px;
@@ -61,6 +61,7 @@
 }
 
 html {
+  font-size: 87.5%; /* ~14px base — approximates 75% zoom feel */
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
   overflow-x: clip;
@@ -251,16 +252,16 @@ button {
   background: rgba(59, 79, 206, .09);
   padding: 5px 14px;
   border-radius: 50px;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .section-heading {
   font-family: var(--font-heading);
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
   font-weight: 700;
   line-height: 1.25;
   color: var(--text);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .gradient-text {
@@ -282,10 +283,11 @@ button {
   font-size: 1rem;
   max-width: 600px;
   margin: 0 auto;
+  line-height: 1.8;
 }
 
 .section-header {
-  margin-bottom: 20px;
+  margin-bottom: 38px;
 }
 
 
@@ -1236,13 +1238,13 @@ button {
   border-radius: var(--r-lg);
   overflow: hidden;
   background: rgba(255,255,255,0.03);
-  margin: 40px 0 56px;
+  margin: 0 0 56px;
 }
 
 .lss-item {
   flex: 1;
   text-align: center;
-  padding: 28px 16px;
+  padding: 28px 14px;
   border-right: 1px solid rgba(255,255,255,0.07);
   background: rgba(19, 19, 31, 0.82);
   backdrop-filter: blur(14px);
@@ -1310,7 +1312,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 60px 1fr;
   align-items: flex-start;
-  margin-bottom: 36px;
+  margin-bottom: 42px;
   position: relative;
   z-index: 1;
 }
@@ -1789,7 +1791,7 @@ button {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-radius: var(--r-md);
-  padding: 22px 18px;
+  padding: 24px 20px;
   border: 1px solid rgba(255, 255, 255, 0.10);
   height: 100%;
   transition: var(--ease);
@@ -2099,7 +2101,7 @@ button {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-radius: var(--r-md);
-  padding: 40px 36px;
+  padding: 32px 28px;
   border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow: 0 4px 20px rgba(0,0,0,.25);
   transition: var(--ease);
