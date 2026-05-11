@@ -866,7 +866,7 @@
                         </div>
                         <div class="faculty-info">
                             <h5>Sharik M.</h5>
-                            <span class="faculty-subject">Python, Java &amp; Technology</span>
+                            <span class="faculty-subject">Full Stack Developer & Trainer</span>
                             <div class="faculty-exp"><i class="fas fa-award" aria-hidden="true"></i> 11+ Years Experience</div>
                             <div class="faculty-qual"><span>Qualification:</span> Software Engineer &amp; Trainer, Tech Industry</div>
                             <p class="faculty-bio">Leads all coding programs from beginner Python to advanced Java and career-ready technical training with real-world industry experience.</p>
