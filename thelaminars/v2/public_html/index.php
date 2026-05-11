@@ -408,7 +408,7 @@
                 </div>
                 <div class="lss-item">
                     <div class="lss-num"><span class="lss-count" data-target="1">0</span><sup>st</sup></div>
-                    <div class="lss-label">#01 Coding Center in Area</div>
+                    <div class="lss-label">#1 Coding Center in Area</div>
                 </div>
             </div>
 
@@ -422,7 +422,7 @@
                         <span class="story-ch-num">01</span>
                         <div class="story-card-inner">
                             <h5>40+ Years of Excellence</h5>
-                            <p>Four decades of consistent student success. Refined teaching methodologies passed down and evolved - proof that true education never goes out of style.</p>
+                            <p>Four decades of consistent student success, shaped by teaching methods refined and trusted across generations. When education is built with genuine care, the results always speak for themselves.</p>
                         </div>
                     </div>
                 </div>
@@ -433,7 +433,7 @@
                         <span class="story-ch-num">02</span>
                         <div class="story-card-inner">
                             <h5>A Teacher's Dream Project</h5>
-                            <p>Not built for profit - built for purpose. The Laminars was born from a teacher's vision: make quality learning accessible to every child in the community.</p>
+                            <p>Not built for profit &#8212; built for purpose. The Laminars was born from a teacher&#8217;s lifelong vision to bring quality learning within reach of every child in the community.</p>
                         </div>
                     </div>
                 </div>
@@ -444,7 +444,7 @@
                         <span class="story-ch-num">03</span>
                         <div class="story-card-inner">
                             <h5>First Coding in Garden Reach</h5>
-                            <p>When others hadn't thought of it, we were already teaching it. The first structured coding curriculum in Garden Reach - built before it became mainstream.</p>
+                            <p>Before coding was a mainstream skill, The Laminars was already teaching it. We introduced Garden Reach&#8217;s first structured coding curriculum &#8212; years before it became part of the national conversation.</p>
                         </div>
                     </div>
                 </div>
@@ -455,7 +455,7 @@
                         <span class="story-ch-num">04</span>
                         <div class="story-card-inner">
                             <h5>First Python for Kids</h5>
-                            <p>Python from 5th standard. Because the earlier a child thinks logically, the further they go. We introduced this before it became a national trend.</p>
+                            <p>Python programming was introduced here from Class 5 onwards, because logical thinking is most powerful when it starts young. We pioneered this approach years before it became a national initiative.</p>
                         </div>
                     </div>
                 </div>
@@ -466,7 +466,7 @@
                         <span class="story-ch-num">05</span>
                         <div class="story-card-inner">
                             <h5>Multidisciplinary Expertise</h5>
-                            <p>Science, languages, and technology - all under one roof, taught by specialists. We believe a well-rounded student is a future-ready student.</p>
+                            <p>Science, languages, and technology &#8212; all under one roof, taught by dedicated specialists who know their subjects deeply. We believe that a well-rounded student is always a future-ready student.</p>
                         </div>
                     </div>
                 </div>
@@ -477,7 +477,7 @@
                         <span class="story-ch-num">06</span>
                         <div class="story-card-inner">
                             <h5>Industry-Aligned Logic</h5>
-                            <p>Academics don't exist in isolation. We connect what students learn in class to how the real world thinks - preparing minds, not just marks.</p>
+                            <p>Academics should never exist in isolation. We connect what students learn in class to how the real world thinks, preparing well-rounded minds rather than students who simply score marks.</p>
                         </div>
                     </div>
                 </div>
@@ -743,7 +743,7 @@
                     <div class="row g-3">
                         <div class="col-6">
                             <div class="advantage-card">
-                                <div class="adv-icon blue-gradient"><i class="fas fa-users-class"></i></div>
+                                <div class="adv-icon blue-gradient"><i class="fas fa-users"></i></div>
                                 <h6>Small Batch Sizes</h6>
                                 <p>Ensures high teacher-to-student ratio and meaningful attention.</p>
                             </div>
@@ -1051,7 +1051,7 @@
                             <div class="ci-item">
                                 <div class="ci-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></div>
                                 <div><strong>Address</strong>
-                                    <p>Ground Floor - Golden Palace, Rameshwarpur Road, Kolkata - 700024</p>
+                                    <p>Ground Floor - Golden Palace, <br>Rameshwarpur Road, Kolkata - 700024</p>
                                 </div>
                             </div>
                             <div class="ci-item">
@@ -1238,7 +1238,7 @@
                     <div class="footer-col">
                         <h6 class="footer-heading">Contact Info</h6>
                         <ul class="footer-contact">
-                            <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Ground Floor - Golden Palace, Rameshwarpur Road, Kolkata - 700024</li>
+                            <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Ground Floor - Golden Palace, <br>Rameshwarpur Road, Kolkata - 700024</li>
                             <li><i class="fas fa-phone-alt" aria-hidden="true"></i>+91-8697908896</li>
                             <li><i class="fas fa-envelope" aria-hidden="true"></i>info@thelaminars.com</li>
                             <li><i class="fas fa-clock" aria-hidden="true"></i>Mon-Sat: 9:00 AM - 8:00 PM</li>

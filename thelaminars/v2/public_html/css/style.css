@@ -2420,12 +2420,12 @@ button {
 .field-input {
   width: 100%;
   padding: 10px 15px;
-  border: 1.5px solid rgba(0, 0, 0, .12);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--r-sm);
   font-size: .88rem;
   font-family: var(--font-body);
   color: var(--text);
-  background: var(--bg-light);
+  background: rgba(255, 255, 255, 0.05);
   transition: var(--ease);
   outline: none;
   -webkit-appearance: none;
@@ -2434,12 +2434,12 @@ button {
 
 .field-input:focus {
   border-color: var(--primary);
-  background: rgba(59, 79, 206, 0.1);
-  box-shadow: 0 0 0 3px rgba(59, 79, 206, .15);
+  background: rgba(59, 79, 206, 0.12);
+  box-shadow: 0 0 0 3px rgba(59, 79, 206, .2);
 }
 
 .field-input::placeholder {
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .field-input.error {
