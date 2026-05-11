@@ -421,11 +421,11 @@ button { cursor: pointer; font-family: inherit; }
 }
 .hdl-label-text {
   font-family: var(--font-heading);
-  font-size: .95rem;
-  font-weight: 700;
+  font-size: 1.35rem;
+  font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.65) 100%);
+  background: linear-gradient(135deg, #a5b4fc 0%, #e879f9 50%, #fb923c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
