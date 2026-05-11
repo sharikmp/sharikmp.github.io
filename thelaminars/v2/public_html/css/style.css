@@ -411,7 +411,7 @@ button { cursor: pointer; font-family: inherit; }
 /* ── Top label: appears above the icon currently at the top position ── */
 .hdl-top-label {
   position: absolute;
-  top: -52px;
+  top: -100px;  /* increased from -52px to create visible gap below the label */
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -421,8 +421,8 @@ button { cursor: pointer; font-family: inherit; }
 }
 .hdl-label-text {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 800;
+  font-size: 2.5rem;
+  font-weight: 900;
   letter-spacing: .08em;
   text-transform: uppercase;
   background: linear-gradient(135deg, #a5b4fc 0%, #e879f9 50%, #fb923c 100%);
