@@ -27,6 +27,132 @@
 <body>
 
     <!-- ============================================================
+     PAGE LOADER
+============================================================ -->
+    <div id="page-loader" role="status" aria-label="Loading The Laminars">
+        <div class="loader-grid"  aria-hidden="true"></div>
+        <div class="loader-glow"  aria-hidden="true"></div>
+        <div class="loader-content">
+            <!-- Brand name with fill animation -->
+            <div class="loader-brand-wrap" aria-hidden="true">
+                <span class="loader-brand-base">The Laminars</span>
+                <span class="loader-brand-fill" id="loaderBrandFill">The Laminars</span>
+            </div>
+
+            <!-- Circular progress ring -->
+            <div class="loader-circle-wrap">
+                <svg class="loader-ring" viewBox="0 0 100 100" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="loaderRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"   stop-color="#c4b5fd"/>
+                            <stop offset="50%"  stop-color="#fb923c"/>
+                            <stop offset="100%" stop-color="#fbbf24"/>
+                        </linearGradient>
+                    </defs>
+                    <circle class="loader-ring-bg" cx="50" cy="50" r="42"/>
+                    <circle class="loader-ring-fg" id="loaderRingFg" cx="50" cy="50" r="42"/>
+                </svg>
+                <span class="loader-pct" id="loaderPct">0%</span>
+            </div>
+        </div>
+    </div><!-- /#page-loader -->
+
+    <script>
+    (function () {
+        // ── Timing constants (ms / %) ─────────────────────────────
+        var FAST_PHASE_MS   = 2000;  // time to reach initial plateau
+        var PLATEAU_MIN_PCT = 70;    // minimum % for plateau pause
+        var PLATEAU_MAX_PCT = 80;    // maximum % for plateau pause
+        var FINISH_TICK_MS  = 18;    // tick interval for final 0→100 fill
+        var FINISH_STEP_PCT = 2;     // % added per tick in finish phase
+        var EXIT_DELAY_MS   = 650;   // pause at 100% before hiding overlay
+        var FADE_MS         = 600;   // must match CSS transition duration
+        var SAFETY_MS       = 9000;  // force-hide after this if load never fires
+
+        // ── SVG ring circumference (2π × r=42) ───────────────────
+        var CIRC = 263.9;
+
+        // ── Element refs ─────────────────────────────────────────
+        var loader  = document.getElementById('page-loader');
+        var fillEl  = document.getElementById('loaderBrandFill');
+        var pctEl   = document.getElementById('loaderPct');
+        var ringEl  = document.getElementById('loaderRingFg');
+
+        // ── State ─────────────────────────────────────────────────
+        var currentPct  = 0;
+        var plateauPct  = PLATEAU_MIN_PCT + Math.floor(Math.random() * (PLATEAU_MAX_PCT - PLATEAU_MIN_PCT + 1));
+        var pageLoaded  = false;
+        var finishCalled = false;
+        var animFrame;
+
+        // ── Apply progress to all UI elements ────────────────────
+        function setProgress(p) {
+            p = Math.min(100, Math.max(0, Math.round(p)));
+            currentPct = p;
+            if (fillEl) fillEl.style.clipPath = 'inset(0 ' + (100 - p) + '% 0 0)';
+            if (pctEl)  pctEl.textContent     = p + '%';
+            if (ringEl) ringEl.style.strokeDashoffset = (CIRC * (1 - p / 100)).toFixed(2);
+        }
+
+        // ── Phase 1: quick 0 → plateau over FAST_PHASE_MS ────────
+        var startTime = null;
+        function fastPhase(ts) {
+            if (!startTime) startTime = ts;
+            var elapsed = ts - startTime;
+            var t       = Math.min(elapsed / FAST_PHASE_MS, 1);
+            var eased   = 1 - Math.pow(1 - t, 3);   // easeOutCubic
+            setProgress(eased * plateauPct);
+            if (t < 1) {
+                animFrame = requestAnimationFrame(fastPhase);
+            } else {
+                // Plateau reached — start finish only if page already loaded
+                if (pageLoaded) finishPhase();
+                // else: window.load listener will call finishPhase()
+            }
+        }
+        animFrame = requestAnimationFrame(fastPhase);
+
+        // ── Phase 2: plateau → 100% after page load ───────────────
+        function finishPhase() {
+            if (finishCalled) return;
+            finishCalled = true;
+            var interval = setInterval(function () {
+                var next = Math.min(currentPct + FINISH_STEP_PCT, 100);
+                setProgress(next);
+                if (next >= 100) {
+                    clearInterval(interval);
+                    setTimeout(hideLoader, EXIT_DELAY_MS);
+                }
+            }, FINISH_TICK_MS);
+        }
+
+        // ── Hide & destroy loader ─────────────────────────────────
+        function hideLoader() {
+            loader.classList.add('loader-hidden');
+            setTimeout(function () { loader.style.display = 'none'; }, FADE_MS);
+        }
+
+        // ── Window load event ─────────────────────────────────────
+        window.addEventListener('load', function () {
+            pageLoaded = true;
+            if (currentPct >= plateauPct) {
+                finishPhase();
+            }
+            // else: fastPhase() will call finishPhase() when plateau is hit
+        });
+
+        // ── Safety net: always finish within SAFETY_MS ───────────
+        setTimeout(function () {
+            if (!finishCalled) {
+                cancelAnimationFrame(animFrame);
+                pageLoaded = true;
+                finishPhase();
+            }
+        }, SAFETY_MS);
+    }());
+    </script>
+
+    <!-- ============================================================
      NAVIGATION
 ============================================================ -->
     <nav class="navbar navbar-expand-lg" id="mainNav" aria-label="Main navigation">
