@@ -199,6 +199,10 @@
         <!-- Animated canvas background -->
         <div id="canvas-container" aria-hidden="true"></div>
 
+        <!-- Loader-style grid + glow overlays -->
+        <div class="hero-grid"  aria-hidden="true"></div>
+        <div class="hero-glow"  aria-hidden="true"></div>
+
         <!-- Text overlay -->
         <div class="hero-overlay">
             <div class="container">

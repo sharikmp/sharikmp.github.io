@@ -436,7 +436,28 @@ button {
   overflow: hidden;
   display: flex;
   align-items: center;
-  background: #3b4fce;
+  background: #0c0c12;
+}
+
+/* Grid overlay — mirrors loader/footer grid */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Radial glow — mirrors loader glow, centred from bottom */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 105%, rgba(180,83,9,0.5) 0%, rgba(124,58,237,0.16) 52%, transparent 72%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 #canvas-container {
@@ -739,7 +760,7 @@ button {
 
 .hero-gradient-text {
   font-size: clamp(1.3rem, 3.2vw, 2.2rem);
-  background: linear-gradient(135deg, #7dd3fc 0%, #a5f3fc 50%, #6ee7b7 100%);
+  background: linear-gradient(155deg, #ffffff 0%, #c4b5fd 30%, #fb923c 75%, #fbbf24 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
