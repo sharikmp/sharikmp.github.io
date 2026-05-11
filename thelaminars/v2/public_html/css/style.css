@@ -1069,7 +1069,11 @@ button {
 }
 
 .about-main-card {
-  background: var(--grad-primary);
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 110%, rgba(180,83,9,0.55) 0%, rgba(124,58,237,0.18) 52%, transparent 72%),
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    #0c0c12;
   border-radius: var(--r-lg);
   padding: 44px 28px;
   text-align: center;
@@ -1965,7 +1969,11 @@ button {
    ========================================================================== */
 .cta-banner-section {
   padding: 56px 0;
-  background: var(--grad-hero);
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 110%, rgba(180,83,9,0.55) 0%, rgba(124,58,237,0.18) 52%, transparent 72%),
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    #0c0c12;
 }
 
 .cta-banner {
@@ -2015,7 +2023,11 @@ button {
    15. CONTACT SECTION
    ========================================================================== */
 .contact-info-panel {
-  background: var(--grad-primary);
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 110%, rgba(180,83,9,0.55) 0%, rgba(124,58,237,0.18) 52%, transparent 72%),
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 52px 52px,
+    #0c0c12;
   border-radius: var(--r-lg);
   padding: 36px 32px;
   color: #fff;
