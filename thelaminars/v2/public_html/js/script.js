@@ -431,20 +431,32 @@ const ContactForm = (() => {
     });
   }
 
-  function mockSubmit(form) {
+  function doSubmit(form) {
     const btn      = document.getElementById('submitBtn');
     const btnLabel = btn?.querySelector('.btn-label');
 
     if (btn)      btn.classList.add('loading');
     if (btnLabel) btnLabel.textContent = 'Sending…';
 
-    setTimeout(() => {
-      if (btn)      btn.classList.remove('loading');
-      if (btnLabel) btnLabel.textContent = 'Send Enquiry';
+    const data = new FormData(form);
 
-      document.getElementById('formSuccess')?.classList.add('show');
-      form.reset();
-    }, 1500);
+    fetch('send-enquiry.php', { method: 'POST', body: data })
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          document.getElementById('formSuccess')?.classList.add('show');
+          form.reset();
+        } else {
+          alert(json.msg || 'Something went wrong. Please try again.');
+        }
+      })
+      .catch(() => {
+        alert('Could not reach the server. Please check your connection and try again.');
+      })
+      .finally(() => {
+        if (btn)      btn.classList.remove('loading');
+        if (btnLabel) btnLabel.textContent = 'Send Enquiry';
+      });
   }
 
   function init() {
@@ -458,7 +470,7 @@ const ContactForm = (() => {
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      if (validateAll()) mockSubmit(form);
+      if (validateAll()) doSubmit(form);
     });
 
     resetBtn?.addEventListener('click', () => {
