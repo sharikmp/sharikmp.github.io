@@ -1852,9 +1852,6 @@ button {
 /* ==========================================================================
    11. DIRECTOR SECTION
    ========================================================================== */
-.director-section {
-  /* bg inherited from .section-padding */
-}
 
 .director-card {
   display: flex;
