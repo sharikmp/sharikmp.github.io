@@ -588,7 +588,8 @@ button { cursor: pointer; font-family: inherit; }
 /* Scroll indicator */
 /* Hero deco column: scale down on mobile, add top spacing */
 .hero-deco-col {
-  margin-top: 120px;
+  margin-top: 200px;
+  margin-bottom: 200px;
 }
 @media (min-width: 992px) {
   .hero-deco-col { margin-top: 0; }
