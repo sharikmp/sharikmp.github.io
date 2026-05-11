@@ -301,7 +301,11 @@ button {
 }
 
 .courses-section {
-  background: #0f0f1c;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 108%, rgba(59,79,206,0.22) 0%, rgba(124,58,237,0.09) 52%, transparent 72%),
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px) 0 0 / 52px 52px,
+    #13131f;
 }
 
 .legacy-section-bg {
@@ -1544,11 +1548,13 @@ button {
 
 /* Course cards */
 .course-card {
-  background: rgba(59, 79, 206, 0.06);
+  background: rgba(19, 19, 31, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-radius: var(--r-md);
   padding: 28px 22px;
   height: 100%;
-  border: 1px solid rgba(91, 111, 214, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   transition: var(--ease);
   position: relative;
   overflow: hidden;
@@ -1571,7 +1577,7 @@ button {
 
 .course-card:hover {
   transform: translateY(-7px);
-  background: rgba(59, 79, 206, 0.12);
+  background: rgba(255, 255, 255, 0.09);
   border-color: rgba(91, 111, 214, 0.35);
   box-shadow: 0 12px 40px rgba(59, 79, 206, 0.18), 0 2px 12px rgba(0,0,0,0.3);
 }
