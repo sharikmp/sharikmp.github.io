@@ -827,7 +827,7 @@
             <div class="row g-4 mt-2 justify-content-center">
 
                 <!-- Director -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="0">
+                <div class="col-lg col-md-6" data-aos="fade-up" data-aos-delay="0">
                     <div class="faculty-card">
                         <div class="faculty-photo-wrap">
                             <img src="img/director.png" alt="Md Shahjahan Ansari" class="faculty-photo" />
@@ -836,16 +836,14 @@
                             <h5>Md Shahjahan Ansari</h5>
                             <span class="faculty-subject">Founder &amp; Hindi Teacher</span>
                             <div class="faculty-exp"><i class="fas fa-award" aria-hidden="true"></i> 40+ Years Experience</div>
-                            <p class="faculty-bio">Founder of The Laminars with 40+ years of teaching mastery. M.A. in Hindi &amp; Political Science. A visionary educator committed to transforming students into confident leaders.</p>
-                        </div>
-                        <div class="faculty-social">
-                            <a href="mailto:info@thelaminars.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                            <div class="faculty-qual"><span>Qualification:</span> M.A. in Hindi &amp; Political Science, BTC</div>
+                            <p class="faculty-bio">A visionary educator and founder of The Laminars, committed to transforming students into confident leaders through decades of dedicated teaching.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Science Faculty -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="faculty-card">
                         <div class="faculty-photo-wrap">
                             <img src="img/science-faculty.jpeg" alt="Tamkeenat Naaz Akhtar" class="faculty-photo" />
@@ -854,16 +852,14 @@
                             <h5>Tamkeenat Naaz Akhtar</h5>
                             <span class="faculty-subject">Science &amp; Mathematics</span>
                             <div class="faculty-exp"><i class="fas fa-award" aria-hidden="true"></i> 10+ Years Experience</div>
-                            <p class="faculty-bio">B.Sc. in Mathematics, Ex-Byju's. Specialises in Science and Maths with a concept-driven approach that makes complex topics accessible and engaging for students.</p>
-                        </div>
-                        <div class="faculty-social">
-                            <a href="mailto:info@thelaminars.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                            <div class="faculty-qual"><span>Qualification:</span> B.Sc. in Mathematics; Ex-Byju&#8217;s</div>
+                            <p class="faculty-bio">Specialises in Science and Maths with a concept-driven approach that makes complex topics accessible and engaging for every student.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tech Trainer -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg col-md-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="faculty-card">
                         <div class="faculty-photo-wrap">
                             <img src="img/tech-trainer.jpeg" alt="Sharik M." class="faculty-photo" />
@@ -872,16 +868,14 @@
                             <h5>Sharik M.</h5>
                             <span class="faculty-subject">Python, Java &amp; Technology</span>
                             <div class="faculty-exp"><i class="fas fa-award" aria-hidden="true"></i> 11+ Years Experience</div>
-                            <p class="faculty-bio">Software Engineer &amp; Trainer with 11+ years in the tech industry. Leads all coding programs from beginner Python to advanced Java and career-ready technical training.</p>
-                        </div>
-                        <div class="faculty-social">
-                            <a href="mailto:info@thelaminars.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                            <div class="faculty-qual"><span>Qualification:</span> Software Engineer &amp; Trainer, Tech Industry</div>
+                            <p class="faculty-bio">Leads all coding programs from beginner Python to advanced Java and career-ready technical training with real-world industry experience.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Phy-Chem -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="0">
+                <div class="col-lg col-md-6" data-aos="fade-up" data-aos-delay="0">
                     <div class="faculty-card">
                         <div class="faculty-photo-wrap">
                             <img src="img/phy-chem-sir.jpeg" alt="Tanzeem Aziz" class="faculty-photo" />
@@ -890,26 +884,22 @@
                             <h5>Tanzeem Aziz</h5>
                             <span class="faculty-subject">Physics &amp; Chemistry</span>
                             <div class="faculty-exp"><i class="fas fa-award" aria-hidden="true"></i> Expert Faculty</div>
-                            <p class="faculty-bio">B.Tech CSE from Jadavpur University. Teaches Physics and Chemistry with a strong analytical approach, helping senior students excel in board exams and competitive preparation.</p>
-                        </div>
-                        <div class="faculty-social">
-                            <a href="mailto:info@thelaminars.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                            <div class="faculty-qual"><span>Qualification:</span> B.Tech CSE, Jadavpur University</div>
+                            <p class="faculty-bio">Teaches Physics and Chemistry with a strong analytical approach, helping senior students excel in board exams and competitive preparation.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- English Teacher -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="faculty-card">
                         <div class="faculty-avatar blue"><span>AV</span></div>
                         <div class="faculty-info">
                             <h5>Mrs. A. Verma</h5>
                             <span class="faculty-subject">English Language &amp; Literature</span>
                             <div class="faculty-exp"><i class="fas fa-award" aria-hidden="true"></i> 12+ Years Experience</div>
-                            <p class="faculty-bio">M.A. in English from Calcutta University. Specialises in academic English coaching, spoken communication, and board exam preparation for Classes 9-12.</p>
-                        </div>
-                        <div class="faculty-social">
-                            <a href="mailto:info@thelaminars.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                            <div class="faculty-qual"><span>Qualification:</span> M.A. in English, Calcutta University</div>
+                            <p class="faculty-bio">Specialises in academic English coaching, spoken communication, and board exam preparation for Classes 9&#8211;12 with a student-focused teaching style.</p>
                         </div>
                     </div>
                 </div>
