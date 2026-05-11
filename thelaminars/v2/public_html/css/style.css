@@ -305,7 +305,8 @@ button {
    5. NAVBAR
    ========================================================================== */
 #mainNav {
-  background: #3b4fce;
+  background: linear-gradient(105deg, #0a0b14 0%, #111840 45%, #2a3db0 80%, #3b4fce 100%);
+  border-bottom: 1px solid rgba(91, 111, 214, 0.25);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 14px 0;
@@ -315,7 +316,8 @@ button {
 
 #mainNav.scrolled {
   padding: 10px 0;
-  box-shadow: 0 4px 24px rgba(59, 79, 206, .45);
+  background: linear-gradient(105deg, #07080f 0%, #0e1535 45%, #243599 80%, #3547c2 100%);
+  box-shadow: 0 4px 32px rgba(0, 0, 30, .7), 0 1px 0 rgba(91, 111, 214, .3);
 }
 
 .navbar-brand {
@@ -410,12 +412,12 @@ button {
 
 @media (max-width: 991px) {
   .navbar-collapse {
-    background: #3b4fce;
+    background: linear-gradient(150deg, #0e1535 0%, #1e2d7d 60%, #3044b8 100%);
     padding: 16px;
     border-radius: var(--r-md);
     margin-top: 10px;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, .25);
-    border: 1px solid rgba(255, 255, 255, .12);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .4);
+    border: 1px solid rgba(91, 111, 214, .2);
   }
 
   .btn-enroll {
