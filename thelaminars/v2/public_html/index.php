@@ -604,13 +604,10 @@
                         </div>
                         <div class="director-content">
                             <blockquote class="director-quote-hindi">
-                                "शिक्षा केवल तथ्यों को सीखना नहीं है, बल्कि मन को सोचने के लिए प्रशिक्षित करना है।"
+                                "Education is not merely learning facts, but training the mind to think."
                             </blockquote>
                             <p class="director-quote-en">
-                                "Education is not just learning facts, but training the mind to think. At The Laminars,
-                                our vision is to create an environment where students are encouraged to ask questions,
-                                explore concepts, and discover their true potential. We are committed to shaping not
-                                just successful students, but confident leaders of tomorrow."
+                                "At The Laminars, we don't just teach — we train minds to think, question, and grow into confident leaders of tomorrow."
                             </p>
                             <div class="director-info">
                                 <strong>Md Shahjahan Ansari</strong>
