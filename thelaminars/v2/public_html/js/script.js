@@ -1,18 +1,18 @@
 /**
  * =============================================================================
- * THE LAMINARS v2 — MAIN SCRIPT
+ * THE LAMINARS v2 - MAIN SCRIPT
  * Design: Educare Knowledge Hub pattern, Laminars content
  *
  * Module structure:
- *   HeroCanvas      — Animated wave canvas background
- *   TypingEffect    — Hero heading typing animation
- *   Navigation      — Sticky nav + scroll-spy + mobile close
- *   CourseFilter    — Category filter tabs for programs section
- *   StatsCounter    — Animated count-up on hero intersection
- *   ContactForm     — Client-side validation + async submit
- *   ScrollReveal    — Lightweight scroll-based reveal (no AOS dep)
- *   BackToTop       — Floating scroll-to-top button
- *   App             — Root controller
+ *   HeroCanvas      - Animated wave canvas background
+ *   TypingEffect    - Hero heading typing animation
+ *   Navigation      - Sticky nav + scroll-spy + mobile close
+ *   CourseFilter    - Category filter tabs for programs section
+ *   StatsCounter    - Animated count-up on hero intersection
+ *   ContactForm     - Client-side validation + async submit
+ *   ScrollReveal    - Lightweight scroll-based reveal (no AOS dep)
+ *   BackToTop       - Floating scroll-to-top button
+ *   App             - Root controller
  * =============================================================================
  */
 
@@ -35,7 +35,6 @@ const HeroCanvas = (() => {
 
     let width, height;
     let time = 0;
-    let lastTs = null;
     let mouse = { x: 0, y: 0, tx: 0, ty: 0, active: false };
     let ripples = [];
 
@@ -112,11 +111,7 @@ const HeroCanvas = (() => {
       ctx.fill();
     }
 
-    function draw(ts) {
-      // Clamp delta to 50 ms so returning to a hidden tab never causes a catch-up burst
-      const delta = lastTs === null ? 16 : Math.min(ts - lastTs, 50);
-      lastTs = ts;
-
+    function draw() {
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = baseColor;
       ctx.fillRect(0, 0, width, height);
@@ -156,14 +151,9 @@ const HeroCanvas = (() => {
         ctx.fill();
       }
 
-      time += delta;
+      time += 16;
       requestAnimationFrame(draw);
     }
-
-    // When the tab regains focus, reset lastTs so the next frame starts fresh
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) lastTs = null;
-    });
 
     draw();
   }
@@ -565,12 +555,12 @@ const OrbitLabel = (() => {
 
   /* ─────────────────────────────── DATA ──────────────────────────────────── */
   const ORBIT_ITEMS = [
-    { img: 'img/course/science.png',     label: 'Science'     },  // pos 0 — top (0°)
-    { img: 'img/course/coding.png',      label: 'Coding'      },  // pos 1 — 60°
-    { img: 'img/course/english.png',     label: 'English'     },  // pos 2 — 120°
-    { img: 'img/course/technology.png',  label: 'Technology'  },  // pos 3 — 180°
-    { img: 'img/course/mathematics.png', label: 'Mathematics' },  // pos 4 — 240°
-    { img: 'img/course/hindi.png',       label: 'Hindi'       },  // pos 5 — 300°
+    { img: 'img/course/science.png',     label: 'Science'     },  // pos 0 - top (0°)
+    { img: 'img/course/coding.png',      label: 'Coding'      },  // pos 1 - 60°
+    { img: 'img/course/english.png',     label: 'English'     },  // pos 2 - 120°
+    { img: 'img/course/technology.png',  label: 'Technology'  },  // pos 3 - 180°
+    { img: 'img/course/mathematics.png', label: 'Mathematics' },  // pos 4 - 240°
+    { img: 'img/course/hindi.png',       label: 'Hindi'       },  // pos 5 - 300°
   ];
 
   /* ──────────────────────────── TIMING (ms) ──────────────────────────────── */
@@ -649,26 +639,26 @@ const OrbitLabel = (() => {
     // Place ring at 0° immediately (no animation)
     applyAngle(ring, icons, 0, false);
 
-    // Show the first label + center image (Science — pos 0)
+    // Show the first label + center image (Science - pos 0)
     showLabel(labelEl, itemAt(0).label);
     updateCenter(0);
 
     function cycle() {
-      // Phase 1 — slide out current label
+      // Phase 1 - slide out current label
       hideLabel(labelEl);
 
-      // Phase 2 — after label is gone, smoothly rotate 60°
+      // Phase 2 - after label is gone, smoothly rotate 60°
       setTimeout(() => {
         step        = (step + 1) % N;
         totalAngle += 60;
         applyAngle(ring, icons, totalAngle, true);
 
-        // Phase 3 — after rotation lands, slide new label in + swap center
+        // Phase 3 - after rotation lands, slide new label in + swap center
         setTimeout(() => {
           showLabel(labelEl, itemAt(step).label);
           updateCenter(step);
 
-          // Phase 4 — hold, then repeat
+          // Phase 4 - hold, then repeat
           setTimeout(cycle, HOLD_MS);
         }, ROTATE_MS + 80);
 
@@ -684,7 +674,64 @@ const OrbitLabel = (() => {
 
 
 /* =============================================================================
-   11. APP — ROOT CONTROLLER
+   11. LEGACY STORY TIMELINE
+   – IntersectionObserver activates each .story-step, fills the spine.
+   – .lss-count[data-target] animate count-up on enter.
+   ============================================================================= */
+const LegacyStory = (() => {
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function countUp(el) {
+    const target   = parseInt(el.dataset.target, 10);
+    const duration = 1400;
+    const start    = performance.now();
+    (function step(ts) {
+      const p = Math.min((ts - start) / duration, 1);
+      el.textContent = Math.floor(easeOut(p) * target);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    })(start);
+  }
+
+  function init() {
+    const steps    = document.querySelectorAll('.story-step');
+    const progress = document.getElementById('storyProgress');
+    const counters = document.querySelectorAll('.lss-count[data-target]');
+    const total    = steps.length;
+
+    if (steps.length) {
+      const stepObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-active');
+          if (progress) {
+            const n = document.querySelectorAll('.story-step.is-active').length;
+            progress.style.height = `${(n / total) * 100}%`;
+          }
+          stepObs.unobserve(entry.target);
+        });
+      }, { threshold: 0.3 });
+      steps.forEach(s => stepObs.observe(s));
+    }
+
+    if (counters.length) {
+      const cntObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          countUp(entry.target);
+          cntObs.unobserve(entry.target);
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(c => cntObs.observe(c));
+    }
+  }
+
+  return { init };
+})();
+
+
+/* =============================================================================
+   12. APP - ROOT CONTROLLER
    ============================================================================= */
 const App = {
   init() {
@@ -700,6 +747,7 @@ const App = {
     StatsCounter.init();
     ContactForm.init();
     OrbitLabel.init();
+    LegacyStory.init();
     ScrollReveal.init();
     BackToTop.init();
   },
