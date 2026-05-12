@@ -62,7 +62,7 @@ body {
 }
 
 /* ── CSS GALAXY GRID OVERLAY ──
-   Subtle dot-grid like the screenshot, sits above canvas, below screens */
+   Sharp dot-grid, fades toward edges */
 body::before {
   content: '';
   position: fixed;
@@ -70,13 +70,14 @@ body::before {
   z-index: 1;
   pointer-events: none;
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
-  background-size: 36px 36px;
-  mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 40%, transparent 100%);
+    radial-gradient(circle, rgba(255,255,255,0.09) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 110% 110% at 50% 50%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 110% 110% at 50% 50%, black 30%, transparent 100%);
 }
 
-/* ── NEBULA RADIAL GLOWS (CSS-only, no extra JS) ── */
+/* ── ANIMATED RADIAL GRADIENT BG SWEEP ──
+   Slow-moving colour gradient: purple → indigo → gold → blue */
 body::after {
   content: '';
   position: fixed;
@@ -84,10 +85,18 @@ body::after {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 40% at 20% 70%,  rgba(140, 60, 255, 0.13)  0%, transparent 70%),
-    radial-gradient(ellipse 50% 35% at 80% 30%,  rgba(0,  180, 255, 0.10)  0%, transparent 70%),
-    radial-gradient(ellipse 60% 30% at 50% 90%,  rgba(255, 140, 30, 0.14)  0%, transparent 70%),
-    radial-gradient(ellipse 40% 20% at 10% 10%,  rgba(180, 80, 255, 0.08)  0%, transparent 70%);
+    radial-gradient(ellipse 80% 55% at 15% 75%, rgba(130, 40, 255, 0.17) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 85% 25%, rgba(0,  160, 255, 0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 35% at 50% 95%, rgba(255, 120, 20,  0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 25% at 10% 10%, rgba(160, 60, 255,  0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 30% at 75% 85%, rgba(255, 80,  80,  0.08) 0%, transparent 65%);
+  animation: nebula-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes nebula-drift {
+  0%   { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 0%, 100% 100%; }
+  50%  { background-position: 3% 5%, 97% 3%,  52%  98%, 2% 2%,  98%  98%; }
+  100% { background-position: 6% 2%, 94% 6%,  48% 100%, 4% 1%,  96%  99%; }
 }
 
 /* Global focus ring — accessibility */
@@ -219,21 +228,46 @@ body::after {
   filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
 }
 
+/* ── HERO TITLE: MATH TRAINER (mirrors footer watermark gradient) ── */
 .hero-title {
   font-family: var(--font-mono);
-  font-size: clamp(2rem, 9vw, 4.2rem);
   font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text-primary);
-  line-height: 1;
-  margin-bottom: 6px;
+  line-height: 0.9;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.title-accent {
-  color: var(--gold);
-  text-shadow: 0 0 24px rgba(255, 215, 0, 0.55),
-               0 0 48px rgba(255, 165, 0, 0.3);
+.title-math {
+  display: block;
+  font-size: clamp(2.2rem, 10vw, 5rem);
+  letter-spacing: 0.12em;
+  /* lavender → mid-purple, matches .fwm-math */
+  background: linear-gradient(180deg, #d8cfff 0%, #b388ff 55%, #9c5fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 18px rgba(180, 120, 255, 0.45));
 }
+
+.title-trainer {
+  display: block;
+  font-size: clamp(2.6rem, 12.5vw, 6.2rem);
+  letter-spacing: -0.01em;
+  /* warm gold → orange, matches .fwm-trainer */
+  background: linear-gradient(180deg, #ffe066 0%, #ffaa1a 50%, #ff6a00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 22px rgba(255, 150, 20, 0.5));
+}
+
+/* keep legacy .title-accent unused but harmless */
+.title-accent { color: var(--gold); }
 
 .hero-subtitle {
   font-size: clamp(0.78rem, 3vw, 1rem);

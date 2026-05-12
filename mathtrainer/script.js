@@ -347,6 +347,62 @@ class BackgroundScene {
     this.scene.add(farStars);
     this.objects.push(farStars);
 
+    /* ── FLOATING 3D NUMBERS ──
+       Flat text-like quads built from PlaneGeometry + canvas texture.
+       Each quad displays a math symbol and drifts slowly across the scene. */
+    const numSymbols = ['1','2','3','4','5','6','7','8','9','0','+','−','×','÷','=','?'];
+    const numCount   = 22;
+    for (let n = 0; n < numCount; n++) {
+      // Draw symbol onto a canvas → texture
+      const size = 128;
+      const cv   = document.createElement('canvas');
+      cv.width   = size;
+      cv.height  = size;
+      const cx2  = cv.getContext('2d');
+      cx2.clearRect(0, 0, size, size);
+      const sym  = numSymbols[n % numSymbols.length];
+      // Pick colour: alternate gold / lavender / cyan
+      const colours = [
+        `rgba(255,210,80,${rng(0.25,0.55)})`,
+        `rgba(200,170,255,${rng(0.2,0.45)})`,
+        `rgba(100,220,255,${rng(0.18,0.4)})`,
+        `rgba(255,140,60,${rng(0.22,0.5)})`
+      ];
+      cx2.fillStyle = colours[n % colours.length];
+      cx2.font      = `bold ${Math.round(size * 0.72)}px 'Space Mono', monospace`;
+      cx2.textAlign    = 'center';
+      cx2.textBaseline = 'middle';
+      cx2.fillText(sym, size / 2, size / 2);
+
+      const tex = new THREE.CanvasTexture(cv);
+      const geo = new THREE.PlaneGeometry(rng(1.2, 2.8), rng(1.2, 2.8));
+      const mat = new THREE.MeshBasicMaterial({
+        map:         tex,
+        transparent: true,
+        opacity:     rng(0.45, 0.85),
+        depthWrite:  false,
+        side:        THREE.DoubleSide
+      });
+      const plane = new THREE.Mesh(geo, mat);
+      plane.position.set(
+        rng(-40, 40),
+        rng(-28, 28),
+        rng(-18, 8)
+      );
+      plane.rotation.z = rng(-0.3, 0.3);
+      plane.userData = {
+        isFloatNum:  true,
+        floatAmp:    rng(0.6, 1.6),
+        floatFreq:   rng(0.15, 0.4),
+        floatOff:    rng(0, Math.PI * 2),
+        rotSpeedY:   (Math.random() - 0.5) * 0.003,
+        baseY:       plane.position.y,
+        driftX:      (Math.random() - 0.5) * 0.0008
+      };
+      this.scene.add(plane);
+      this.objects.push(plane);
+    }
+
     /* ── NEBULA BLOBS: large transparent spheres, coloured ── */
     const nebulaDefs = [
       { color: 0x6622cc, r: 8,  x: -18, y:  8,  z: -30, op: 0.08 },  // deep purple
@@ -392,10 +448,20 @@ class BackgroundScene {
       const d = obj.userData;
 
       if (d.isNebula) {
-        // Nebula blobs: very slow breathing scale + tiny position drift
+        // Nebula blobs: very slow breathing scale
         const breath = 1 + Math.sin(time * 0.18 + d.driftOff) * 0.04;
         obj.scale.setScalar(breath);
         obj.position.y += Math.sin(time * d.driftSpeed * 120 + d.driftOff) * 0.003;
+      } else if (d.isFloatNum) {
+        // Floating number quads: sine-wave drift + slow Y rotation + parallax
+        obj.position.y  = d.baseY + Math.sin(time * d.floatFreq + d.floatOff) * d.floatAmp;
+        obj.rotation.y += d.rotSpeedY;
+        obj.position.x += d.driftX;
+        // Wrap horizontally so numbers cycle back
+        if (obj.position.x >  45) obj.position.x = -45;
+        if (obj.position.x < -45) obj.position.x =  45;
+        // Subtle parallax nudge
+        obj.position.x += (px * 0.8 - obj.position.x) * 0.004;
       } else {
         // Star fields: slow continuous rotation = galaxy spin illusion
         obj.rotation.y += d.driftSpeed;
