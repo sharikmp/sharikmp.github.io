@@ -29,6 +29,7 @@
                 <h6>Quick Links</h6>
                 <ul>
                     <li><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Play Now</a></li>
+                    <li><a href="<?= url('learn/') ?>">Learn</a></li>
                     <li><a href="<?= url('howitworks.php') ?>">How It Works</a></li>
                     <li><a href="<?= url('about/') ?>">About</a></li>
                 </ul>

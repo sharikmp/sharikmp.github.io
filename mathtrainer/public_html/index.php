@@ -115,6 +115,9 @@ $json_ld = json_encode([
                     <a href="<?= url('howitworks.php') ?>" class="btn btn-hiw" id="btn-how-it-works">
                         <i class="fas fa-circle-info"></i> How it works
                     </a>
+                    <a href="<?= url('learn/') ?>" class="btn btn-hiw">
+                        <i class="fas fa-book-open"></i> Learn
+                    </a>
                 </div>
             </div>
         </section>
