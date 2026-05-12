@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('levelup-new-level').textContent = newLevel;
         toast.style.display = 'flex';
         clearTimeout(toast._hideTimer);
-        toast._hideTimer = setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        toast._hideTimer = setTimeout(() => { toast.style.display = 'none'; }, 4500);
     }
 
     // Button Listeners
