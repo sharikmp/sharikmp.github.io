@@ -716,6 +716,34 @@ h3,
     flex-shrink: 0;
 }
 
+/* ===================== GAME SCREEN HOME BUTTON ===================== */
+.btn-game-home {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-game-home:hover,
+.btn-game-home:active {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.game-level-badge {
+    color: var(--primary-accent) !important;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    letter-spacing: 1px;
+    border-color: rgba(212, 175, 55, 0.35) !important;
+    background: rgba(212, 175, 55, 0.08) !important;
+}
+
 /* ===================== HOW IT WORKS BUTTON ===================== */
 .btn-hiw {
     background: transparent;

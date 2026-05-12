@@ -84,9 +84,11 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6">
                         
-                        <div class="d-flex justify-content-between mb-3 px-2">
-                            <div class="stat-badge"><i class="fas fa-star text-warning"></i> Score: <span id="ui-score">0</span></div>
-                            <div class="stat-badge"><i class="fas fa-fire text-danger"></i> Streak: <span id="ui-streak">0</span></div>
+                        <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+                            <button class="btn-game-home" id="btn-home-game" title="Home"><i class="fas fa-house"></i></button>
+                            <div class="stat-badge"><i class="fas fa-star text-warning"></i> <span id="ui-score">0</span></div>
+                            <div class="stat-badge game-level-badge"><span id="ui-levels">1-1-1-1</span></div>
+                            <div class="stat-badge"><i class="fas fa-fire text-danger"></i> <span id="ui-streak">0</span></div>
                         </div>
 
                         <div class="glass-panel text-center py-5 px-3">
@@ -160,7 +162,10 @@
                             <button class="btn btn-primary btn-lg" id="btn-replay" style="background: var(--primary-accent); color: black; border: none; font-weight: bold;">
                                 <i class="fas fa-rotate-right"></i> Go Again
                             </button>
-                            
+                            <button class="btn btn-outline-light btn-lg" id="btn-home-result" style="font-weight: 600;">
+                                <i class="fas fa-house"></i> Home
+                            </button>
+
                             <div class="d-flex gap-2 mt-2 justify-content-center">
                                 <button class="btn btn-outline-light flex-grow-1" id="btn-share-wa" style="font-size: 0.9rem;"><i class="fab fa-whatsapp"></i> WhatsApp</button>
                                 <button class="btn btn-outline-light flex-grow-1" id="btn-share-download" style="font-size: 0.9rem;"><i class="fas fa-download"></i> Save Card</button>

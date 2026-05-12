@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.stars = null;
             this.mouseX = 0;
             this.mouseY = 0;
+            this.enableParallax = true;
 
             this.init();
         }
@@ -68,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Mouse tracking for parallax
             document.addEventListener('mousemove', (e) => {
+                if (!this.enableParallax) return;
                 this.mouseX = (e.clientX - window.innerWidth / 2) * 0.05;
                 this.mouseY = (e.clientY - window.innerHeight / 2) * 0.05;
             });
@@ -171,9 +173,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (obj.position.y < -40) obj.position.y = 40;
             });
 
-            // Camera parallax
-            this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.05;
-            this.camera.position.y += (-this.mouseY - this.camera.position.y) * 0.05;
+            // Camera parallax — disabled during gameplay
+            if (this.enableParallax) {
+                this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.05;
+                this.camera.position.y += (-this.mouseY - this.camera.position.y) * 0.05;
+            } else {
+                this.camera.position.x += (0 - this.camera.position.x) * 0.05;
+                this.camera.position.y += (0 - this.camera.position.y) * 0.05;
+            }
             this.camera.lookAt(this.scene.position);
 
             this.renderer.render(this.scene, this.camera);
@@ -268,8 +275,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hide footer during gameplay to maximize screen space
         if (viewId === 'view-game') {
             footer.style.display = 'none';
+            bgScene.enableParallax = false;
         } else {
             footer.style.display = 'block';
+            bgScene.enableParallax = true;
         }
     }
 
@@ -536,10 +545,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderLandingStats() {
         const l = STATE.levels;
         const pb = localStorage.getItem('mathTrainerPB') || 0;
+        const levelStr = `${l.add}-${l.sub}-${l.mul}-${l.div}`;
         const elLvl = document.getElementById('landing-levels');
         const elPb = document.getElementById('landing-pb');
-        if (elLvl) elLvl.textContent = `${l.add}-${l.sub}-${l.mul}-${l.div}`;
+        const elUiLvl = document.getElementById('ui-levels');
+        if (elLvl) elLvl.textContent = levelStr;
         if (elPb) elPb.textContent = pb;
+        if (elUiLvl) elUiLvl.textContent = levelStr;
     }
 
     function showLevelUpToast(opKey, newLevel) {
@@ -564,6 +576,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     btnReplay.addEventListener('click', startGame);
+
+    document.getElementById('btn-home-game').addEventListener('click', () => {
+        STATE.isPlaying = false;
+        clearInterval(STATE.interval);
+        timerContainer.style.display = 'none';
+        document.getElementById('num-keyboard').style.display = 'none';
+        switchView('view-landing');
+        renderLandingStats();
+    });
+
+    document.getElementById('btn-home-result').addEventListener('click', () => {
+        switchView('view-landing');
+        renderLandingStats();
+    });
 
     /* =========================================
        4. SCORE HISTORY
@@ -718,24 +744,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show history on page load if available
     renderScoreHistory();
     renderLandingStats();
-
-    // Auto-start if redirected back from howitworks.html via the Start button
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('autostart') === '1') {
-        const loaderEl = document.getElementById('loader-screen');
-        if (loaderEl) {
-            const loaderWatcher = new MutationObserver(() => {
-                if (!document.getElementById('loader-screen')) {
-                    loaderWatcher.disconnect();
-                    setTimeout(() => {
-                        if (audioCtx.state === 'suspended') audioCtx.resume();
-                        startGame();
-                    }, 300);
-                }
-            });
-            loaderWatcher.observe(document.body, { childList: true });
-        } else {
-            startGame();
-        }
-    }
 });
