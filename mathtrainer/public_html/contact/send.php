@@ -58,7 +58,8 @@ if (!empty($errors)) {
 // ── Send email ───────────────────────────────────────────────
 // Using PHP's built-in mail() as a simple starting point.
 // For production, swap this block with PHPMailer / SendGrid / Mailgun.
-$to      = $_ENV['CONTACT_TO'] ?? 'hello@mathtrainer.net';
+// CONTACT_TO accepts a single address or comma-separated list of addresses.
+$to = implode(', ', array_filter(array_map('trim', explode(',', $_ENV['CONTACT_TO'] ?? 'hello@mathtrainer.net'))));
 $subject_line = '[MathTrainer Contact] ' . ucfirst($subject) . ' from ' . $name;
 
 // Compose a plain-text email body (never output $message directly in HTML without escaping)
