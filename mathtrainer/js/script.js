@@ -523,6 +523,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         else if (platform === 'whatsapp') {
+            // On mobile, use Web Share API so OS share sheet opens (WhatsApp listed there)
+            if (imageDataUrl && navigator.share) {
+                try {
+                    const res = await fetch(imageDataUrl);
+                    const blob = await res.blob();
+                    const file = new File([blob], 'mathtrainer-score.jpg', { type: 'image/jpeg' });
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({ title: 'MathTrainer Score', files: [file] });
+                        return;
+                    }
+                } catch (err) {
+                    console.log('WhatsApp share error:', err);
+                }
+            }
+            // Desktop fallback: download image + open WhatsApp web with text
             if (imageDataUrl) triggerDownload(imageDataUrl);
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('Check out my MathTrainer scorecard! 🚀')}`);
         }
