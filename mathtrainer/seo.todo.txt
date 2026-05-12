@@ -1,0 +1,24 @@
+SEO Improvements To Do When Ready
+High priority (do before launch):
+
+Google Search Console — verify ownership at search.google.com/search-console, then submit https://mathtrainer.net/sitemap.xml. This gets you indexed faster and shows crawl errors.
+
+Google Analytics (GA4) — create a property at analytics.google.com, add one <script> tag (the gtag.js snippet) to the <head> of all pages. Tells you traffic, bounce rate, session duration.
+
+Open Graph image (og-image.jpg) — the meta tags reference https://mathtrainer.net/og-image.jpg but the file doesn't exist yet. Create a 1200×630px image (screenshot of the game + MathTrainer branding) and put it at mathtrainer/og-image.jpg. Without it, link previews on WhatsApp/Twitter will be blank.
+
+Google AdSense — go to adsense.google.com, create an account, get your real pub ID, and replace pub-xxxxxxxxxxxxxxxx in ads.txt.
+
+Performance (Core Web Vitals) — Three.js is ~600KB. Consider adding loading="lazy" and deferring the Three.js script with defer or loading it only after user interaction on low-end devices. PageSpeed Insights score affects ranking for mobile searches.
+
+Medium priority:
+
+Structured data for FAQPage — add an FAQPage JSON-LD block to howitworks.html with questions like "How does scoring work?" — these can get Google rich snippets (expandable Q&A in search results).
+
+Title/description per page — all done now, but revisit once the site is live and you can see which keywords people search.
+
+Internal linking — add a visible site nav/footer to about/ and contact/ pages (not just the Play button) so Google can crawl the whole site from any entry point.
+
+HTTPS — ensure mathtrainer.net is served over HTTPS when you configure the domain. Required for Google ranking and for Web Share API / Web Audio API on mobile.
+
+lang attribute consistency — already <html lang="en"> on all pages. ✅
