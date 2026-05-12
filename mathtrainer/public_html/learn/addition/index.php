@@ -1,13 +1,13 @@
 <?php
 /**
  * public_html/learn/addition/index.php
- * Topic: Addition — Animate | Read | Practice
+ * Topic: Addition - Animate | Read | Practice
  */
 require_once __DIR__ . '/../../../config/config.php';
 define('PATH_INCLUDES', __DIR__ . '/../../../includes');
 
 $page = [
-    'title'       => 'Learn Addition — Animate, Read & Practice | MathTrainer',
+    'title'       => 'Learn Addition - Animate, Read & Practice | MathTrainer',
     'description' => 'Learn addition with animated visuals, lesson notes and unlimited graded practice with badges.',
     'canonical'   => url('learn/addition/'),
     'og_title'    => 'Learn Addition | MathTrainer',
@@ -56,6 +56,26 @@ $page = [
         .btn-gold-page { background:linear-gradient(135deg,var(--primary-accent),#b8901b); color:#000; font-family:'Space Grotesk',sans-serif; font-weight:800; border:none; border-radius:50px; padding:0.85rem 2rem; text-transform:uppercase; letter-spacing:2px; font-size:0.95rem; box-shadow:0 0 20px rgba(212,175,55,0.4); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all 0.3s; }
         .btn-gold-page:hover { transform:scale(1.04); box-shadow:0 0 30px rgba(212,175,55,0.7); color:#000; }
         .btn-outline-page { background:transparent; color:rgba(255,255,255,0.65); border:1px solid rgba(255,255,255,0.2); border-radius:50px; padding:0.85rem 2rem; text-transform:uppercase; letter-spacing:1.5px; font-size:0.9rem; font-family:'Space Grotesk',sans-serif; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:7px; transition:all 0.2s; }
+        /* ─── Addition two-column animation ─── */
+        .add-anim { display:grid; grid-template-columns:70px 1fr; gap:6px 20px; align-items:center; padding:0.4rem 0.2rem; width:100%; }
+        .add-num-cell { font-family:'Space Grotesk',sans-serif; font-size:2.8rem; font-weight:900; color:#fff; opacity:0; transform:scale(0.4); transition:opacity .3s,transform .35s; text-align:center; line-height:1.2; }
+        .add-num-cell.show { opacity:1; transform:scale(1); }
+        .add-num-cell.ans-cell { color:var(--op-color); text-shadow:0 0 22px rgba(0,255,128,0.45); font-size:3rem; }
+        .add-op-cell { font-family:'Space Grotesk',sans-serif; font-size:1.8rem; font-weight:700; color:rgba(255,255,255,0.4); opacity:0; transition:opacity .3s; text-align:center; }
+        .add-op-cell.show { opacity:1; }
+        .add-line-cell { padding:2px 0; }
+        .add-line-bar { height:3px; background:linear-gradient(90deg,rgba(0,255,128,0.55),rgba(0,255,128,0.15)); border-radius:2px; transform:scaleX(0); transform-origin:left; transition:transform .38s ease-out; }
+        .add-line-bar.show { transform:scaleX(1); }
+        .add-apple-row { display:flex; flex-wrap:wrap; gap:5px; min-height:42px; align-items:center; }
+        .add-apple-ans-row { border-top:1px solid transparent; padding-top:8px; min-height:50px; transition:border-color .3s; }
+        .add-apple-ans-row.reveal { border-color:rgba(255,255,255,0.09); }
+        .add-counter { grid-column:1/-1; text-align:center; font-family:'Space Grotesk',sans-serif; font-size:0.85rem; font-weight:600; color:rgba(255,255,255,0.4); min-height:1.4em; opacity:0; transition:opacity .3s; padding-top:4px; }
+        .add-counter.show { opacity:1; }
+        .add-apple { font-size:1.5rem; display:inline-block; opacity:0; transform:scale(0.2); transition:opacity 1s,transform 1s; }
+        .add-apple.show { opacity:1; transform:scale(1); }
+        .add-apple.going { opacity:0 !important; transform:scale(0.1) translateY(-8px) !important; transition:opacity .55s ease,transform .55s ease !important; }
+        @keyframes appleArrive { 0%{opacity:0;transform:scale(0.1) translateY(-18px);} 65%{transform:scale(1.12) translateY(2px);} 100%{opacity:1;transform:scale(1) translateY(0);} }
+        .add-apple.arriving { animation:appleArrive .7s ease both; }
     </style>
 </head>
 <body>
@@ -81,12 +101,24 @@ $page = [
 <!-- ██ ANIMATE TAB ██ -->
 <div id="tab-animate" class="learn-tab-panel active">
 <div class="page-card op-addition">
-    <div class="anim-stage" id="anim-stage">
-        <div class="anim-row" id="anim-row-a"></div>
-        <div class="anim-sep">+</div>
-        <div class="anim-row" id="anim-row-b"></div>
-        <div class="anim-sep" id="anim-eq-sep" style="opacity:0;transition:opacity .4s">=</div>
-        <div class="anim-equation" id="anim-result" style="opacity:0;transition:opacity .4s">?</div>
+    <p style="font-size:0.78rem;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:0.8rem;">Watch how two groups of 🍎 apples combine &mdash; count along as they merge into the sum.</p>
+    <div class="add-anim" id="add-anim">
+        <div class="add-num-cell" id="add-num-a"></div>
+        <div class="add-apple-row" id="add-row-a"></div>
+
+        <div class="add-op-cell" id="add-op">+</div>
+        <div></div>
+
+        <div class="add-num-cell" id="add-num-b"></div>
+        <div class="add-apple-row" id="add-row-b"></div>
+
+        <div class="add-line-cell"><div class="add-line-bar" id="add-line"></div></div>
+        <div class="add-line-cell"><div class="add-line-bar" id="add-line-r"></div></div>
+
+        <div class="add-num-cell ans-cell" id="add-ans"></div>
+        <div class="add-apple-row add-apple-ans-row" id="add-row-ans"></div>
+
+        <div class="add-counter" id="add-counter"></div>
     </div>
     <div class="anim-controls">
         <button class="anim-btn" id="btn-play"><i class="fas fa-play"></i> Play</button>
@@ -141,9 +173,9 @@ $page = [
 <div class="page-card op-addition">
     <div class="section-badge"><i class="fas fa-star"></i> Properties</div>
     <?php foreach([
-        ['Commutative','3+5=5+3 — order does not matter'],
-        ['Associative','(2+3)+4=2+(3+4) — grouping does not matter'],
-        ['Identity',   'n+0=n — adding zero changes nothing'],
+        ['Commutative','3+5=5+3 - order does not matter'],
+        ['Associative','(2+3)+4=2+(3+4) - grouping does not matter'],
+        ['Identity',   'n+0=n - adding zero changes nothing'],
     ] as [$n,$d]): ?>
     <div class="prop-row"><div class="prop-badge"><?= $n ?></div><span style="color:rgba(255,255,255,0.65);font-size:0.84rem;"><?= $d ?></span></div>
     <?php endforeach; ?>
@@ -166,52 +198,131 @@ $page = [
 initLearnTabs();
 initPractice({ op:'add', opColor:'#00ff80', containerId:'practice-addition' });
 
-/* ── Addition animation ── */
+/* ── Addition animation: two-column layout ── */
 (function(){
-    var rowA=document.getElementById('anim-row-a'),
-        rowB=document.getElementById('anim-row-b'),
-        res =document.getElementById('anim-result'),
-        sep =document.getElementById('anim-eq-sep'),
+    var numA  = document.getElementById('add-num-a'),
+        opEl  = document.getElementById('add-op'),
+        numB  = document.getElementById('add-num-b'),
+        lineL = document.getElementById('add-line'),
+        lineR = document.getElementById('add-line-r'),
+        ansEl = document.getElementById('add-ans'),
+        rowA  = document.getElementById('add-row-a'),
+        rowB  = document.getElementById('add-row-b'),
+        rowAns= document.getElementById('add-row-ans'),
+        cntEl = document.getElementById('add-counter'),
         btnPlay=document.getElementById('btn-play'),
         btnNew =document.getElementById('btn-new'),
-        a,b,timers=[];
+        a, b, timers=[];
 
     function rand(mn,mx){ return Math.floor(Math.random()*(mx-mn+1))+mn; }
     function clr(){ timers.forEach(clearTimeout); timers=[]; }
-    function mkDot(c){ var d=document.createElement('span'); d.className='anim-dot'; d.style.background=c; return d; }
+    function after(fn,ms){ var id=setTimeout(fn,ms); timers.push(id); return id; }
+    function mkApple(emoji){ var sp=document.createElement('span'); sp.className='add-apple'; sp.textContent=emoji; return sp; }
+
+    function resetDOM(){
+        numA.className='add-num-cell'; numA.textContent='';
+        opEl.className='add-op-cell';
+        numB.className='add-num-cell'; numB.textContent='';
+        lineL.className='add-line-bar';
+        lineR.className='add-line-bar';
+        ansEl.className='add-num-cell ans-cell'; ansEl.textContent='';
+        rowA.innerHTML=''; rowB.innerHTML=''; rowAns.innerHTML=''; rowAns.classList.remove('reveal');
+        cntEl.className='add-counter'; cntEl.textContent='';
+    }
 
     function reset(){
-        clr(); a=rand(3,8); b=rand(2,6);
-        rowA.innerHTML=''; rowB.innerHTML='';
-        res.style.opacity='0'; sep.style.opacity='0'; res.textContent='?';
-        btnPlay.disabled=false; btnPlay.innerHTML='<i class="fas fa-play"></i> Play';
+        clr();
+        a=rand(5,9); b=rand(5,9);
+        resetDOM();
+        btnPlay.disabled=false;
+        btnPlay.innerHTML='<i class="fas fa-play"></i> Play';
     }
 
     function play(){
-        btnPlay.disabled=true; btnPlay.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+        clr(); resetDOM();
+        btnPlay.disabled=true;
+        btnPlay.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+        var T=0;
+
+        /* 1 – number A pops in */
+        numA.textContent=a;
+        after(function(){ numA.classList.add('show'); }, T+=200);
+
+        /* 2 – A apples appear one by one */
+        T+=480;
         for(var i=0;i<a;i++){
-            (function(i){ timers.push(setTimeout(function(){
-                var d=mkDot('#00ff80'); rowA.appendChild(d);
-                setTimeout(function(){ d.classList.add('show'); },30);
-            }, i*130)); })(i);
+            (function(idx){
+                after(function(){
+                    var ap=mkApple('\uD83C\uDF4E'); rowA.appendChild(ap);
+                    setTimeout(function(){ ap.classList.add('show'); },20);
+                }, T+idx*500);
+            })(i);
         }
-        var t2=a*130+250;
+        T+=a*500+420;
+
+        /* 3 – + sign fades in */
+        after(function(){ opEl.classList.add('show'); }, T);
+        T+=380;
+
+        /* 4 – number B pops in */
+        numB.textContent=b;
+        after(function(){ numB.classList.add('show'); }, T);
+        T+=480;
+
+        /* 5 – B apples appear one by one */
         for(var j=0;j<b;j++){
-            (function(j){ timers.push(setTimeout(function(){
-                var d=mkDot('#d4af37'); rowB.appendChild(d);
-                setTimeout(function(){ d.classList.add('show'); },30);
-            }, t2+j*130)); })(j);
+            (function(idx){
+                after(function(){
+                    var ap=mkApple('\uD83C\uDF4F'); rowB.appendChild(ap);
+                    setTimeout(function(){ ap.classList.add('show'); },20);
+                }, T+idx*500);
+            })(j);
         }
-        timers.push(setTimeout(function(){
-            sep.style.opacity='1';
-            res.textContent=a+b;
-            res.style.opacity='1';
-            btnPlay.innerHTML='<i class="fas fa-check"></i> Done';
-        }, t2+b*130+350));
+        T+=b*500+500;
+
+        /* 6 – separator line sweeps in on both sides */
+        after(function(){
+            lineL.classList.add('show');
+            setTimeout(function(){ lineR.classList.add('show'); },60);
+            rowAns.classList.add('reveal');
+        }, T);
+        T+=700;
+
+        /* 7 – collect: apples migrate from rows A+B into the answer row */
+        after(function(){
+            cntEl.classList.add('show');
+            var all=[].slice.call(rowA.querySelectorAll('.add-apple'))
+                      .concat([].slice.call(rowB.querySelectorAll('.add-apple')));
+            var total=a+b, count=0;
+            cntEl.textContent='0 / '+total;
+
+            all.forEach(function(src,idx){
+                after(function(){
+                    var emoji=src.textContent;
+                    src.classList.add('going');
+                    after(function(){
+                        var ap=mkApple(emoji);
+                        ap.classList.add('arriving');
+                        rowAns.appendChild(ap);
+                        count++;
+                        cntEl.textContent=count+' / '+total;
+                        if(count===total){
+                            after(function(){
+                                ansEl.textContent=total;
+                                ansEl.classList.add('show');
+                                cntEl.textContent='\uD83C\uDF89 '+a+' + '+b+' = '+total;
+                                btnPlay.innerHTML='<i class="fas fa-redo"></i> Replay';
+                                btnPlay.disabled=false;
+                            }, 600);
+                        }
+                    }, 500);
+                }, idx*800);
+            });
+        }, T);
     }
 
-    btnPlay.addEventListener('click',play);
-    btnNew.addEventListener('click',reset);
+    btnPlay.addEventListener('click', play);
+    btnNew.addEventListener('click', function(){ reset(); play(); });
     reset();
 })();
 </script>
