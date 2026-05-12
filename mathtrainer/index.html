@@ -936,6 +936,10 @@
             if (screen) {
                 screen.classList.add('hidden');
                 setTimeout(function () {
+                    // Restore scroll and force viewport to top before revealing app
+                    window.scrollTo(0, 0);
+                    document.documentElement.style.overflow = '';
+                    document.body.style.overflow = '';
                     if (screen.parentNode) screen.parentNode.removeChild(screen);
                     var landing = document.getElementById('view-landing');
                     if (landing) landing.classList.add('active');
@@ -1024,6 +1028,10 @@
         window.addEventListener('offline', function () {
             if (!loaderDismissed) setStatus('Connection lost. Please check your network.', 'error');
         });
+
+        /* ---- Lock body scroll while loader is visible ---- */
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
 
         /* ---- Init ---- */
         function init() {
