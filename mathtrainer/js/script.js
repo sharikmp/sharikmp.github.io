@@ -192,6 +192,42 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =========================================
        3. GAME STATE & LOGIC
        ========================================= */
+
+    /* ---- Adaptive Difficulty: Level → Digit Config ---- */
+    const LEVEL_CONFIGS = [
+        null,           // index 0 unused (levels are 1-based)
+        { d1: 1, d2: 1 }, // Level 1: 1-digit op 1-digit
+        { d1: 1, d2: 2 }, // Level 2: 1-digit op 2-digit
+        { d1: 2, d2: 2 }, // Level 3: 2-digit op 2-digit
+        { d1: 1, d2: 3 }, // Level 4: 1-digit op 3-digit
+        { d1: 2, d2: 3 }, // Level 5: 2-digit op 3-digit
+        { d1: 3, d2: 3 }, // Level 6: 3-digit op 3-digit
+        // Level 7+: 3-number questions (threeNum flag)
+    ];
+
+    function getRange(d) {
+        if (d === 1) return [1, 9];
+        if (d === 2) return [10, 99];
+        return [100, 999];
+    }
+
+    function loadLevels() {
+        const def = { add: 1, sub: 1, mul: 1, div: 1 };
+        try { return Object.assign(def, JSON.parse(localStorage.getItem('mathTrainerLevels') || '{}')); }
+        catch (e) { return def; }
+    }
+
+    function loadLevelProgress() {
+        const def = { add: 0, sub: 0, mul: 0, div: 0 };
+        try { return Object.assign(def, JSON.parse(localStorage.getItem('mathTrainerLevelProgress') || '{}')); }
+        catch (e) { return def; }
+    }
+
+    function saveLevels() {
+        localStorage.setItem('mathTrainerLevels', JSON.stringify(STATE.levels));
+        localStorage.setItem('mathTrainerLevelProgress', JSON.stringify(STATE.levelProgress));
+    }
+
     const STATE = {
         score: 0,
         streak: 0,
@@ -199,8 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
         totalQuestions: 0,
         correctAnswers: 0,
         currentAnswer: 0,
+        currentOp: 'add',
         interval: null,
-        isPlaying: false
+        isPlaying: false,
+        levels: loadLevels(),
+        levelProgress: loadLevelProgress()
     };
 
     // DOM Elements
@@ -239,43 +278,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function generateProblem() {
-        // Determine operator
         const ops = ['+', '-', '×', '÷'];
-        const op = ops[getRandomInt(0, 3)];
+        const opKeys = ['add', 'sub', 'mul', 'div'];
+        const idx = getRandomInt(0, 3);
+        const op = ops[idx];
+        STATE.currentOp = opKeys[idx];
 
-        let num1, num2, answer;
+        const level = STATE.levels[STATE.currentOp];
+        const cfgIdx = Math.min(level, 6);
+        const cfg = LEVEL_CONFIGS[cfgIdx];
+        const threeNum = level >= 7;
 
-        // Requirement: At least one number MUST be double digit (10-99)
-        // We'll enforce this for each operator logically
+        let n1, n2, n3, answer;
 
         if (op === '+') {
-            // One double digit, one single/double
-            num1 = getRandomInt(10, 99);
-            num2 = getRandomInt(2, 50);
-            // random swap
-            if (Math.random() > 0.5) [num1, num2] = [num2, num1];
-            answer = num1 + num2;
+            const [r1min, r1max] = getRange(cfg.d1);
+            const [r2min, r2max] = getRange(cfg.d2);
+            n1 = getRandomInt(r1min, r1max);
+            n2 = getRandomInt(r2min, r2max);
+            if (threeNum) {
+                n3 = getRandomInt(r1min, r1max);
+                answer = n1 + n2 + n3;
+                elProblem.textContent = `${n1} + ${n2} + ${n3}`;
+            } else {
+                answer = n1 + n2;
+                elProblem.textContent = `${n1} + ${n2}`;
+            }
+
         } else if (op === '-') {
-            // num1 must be double digit, num2 smaller to avoid negatives (for casual speed mode)
-            num1 = getRandomInt(20, 99);
-            num2 = getRandomInt(2, num1 - 1); // ensures positive answer
-            answer = num1 - num2;
+            // Always keep result positive: n1 from the larger digit range
+            const dBig = Math.max(cfg.d1, cfg.d2);
+            const dSml = Math.min(cfg.d1, cfg.d2);
+            const [bigMin, bigMax] = getRange(dBig);
+            const [smlMin, smlMax] = getRange(dSml);
+            n1 = getRandomInt(bigMin, bigMax);
+            n2 = getRandomInt(smlMin, Math.min(smlMax, n1 - 1));
+            if (n2 < 1) n2 = 1;
+            if (threeNum) {
+                n3 = getRandomInt(smlMin, Math.max(smlMin, n1 - n2 - 1));
+                if (n1 - n2 - n3 < 0) n3 = Math.max(1, n1 - n2 - 1);
+                answer = n1 - n2 - n3;
+                elProblem.textContent = `${n1} - ${n2} - ${n3}`;
+            } else {
+                answer = n1 - n2;
+                elProblem.textContent = `${n1} - ${n2}`;
+            }
+
         } else if (op === '×') {
-            // Double digit * single digit (standard mental math)
-            num1 = getRandomInt(11, 20);
-            num2 = getRandomInt(2, 9);
-            if (Math.random() > 0.5) [num1, num2] = [num2, num1];
-            answer = num1 * num2;
-        } else if (op === '÷') {
-            // Answer must be clean integer. 
-            // Let's pick a double digit answer, and a single digit divisor.
-            answer = getRandomInt(11, 25); // double digit result
-            num2 = getRandomInt(2, 9);
-            num1 = answer * num2; // num1 will definitely be double/triple digit
+            const [r1min, r1max] = getRange(cfg.d1);
+            const [r2min, r2max] = getRange(cfg.d2);
+            n1 = getRandomInt(r1min, r1max);
+            n2 = getRandomInt(r2min, r2max);
+            if (threeNum) {
+                n3 = getRandomInt(2, 9); // keep 3rd factor small for mental math sanity
+                answer = n1 * n2 * n3;
+                elProblem.textContent = `${n1} × ${n2} × ${n3}`;
+            } else {
+                answer = n1 * n2;
+                elProblem.textContent = `${n1} × ${n2}`;
+            }
+
+        } else { // ÷ — always generates clean integer answers
+            // Level-specific division config: [answerDigits, divisorMin, divisorMax]
+            const divMaps = [
+                null,
+                { ad: 1, dMin: 2, dMax: 9 },    // L1: answer 1d ÷ 1d
+                { ad: 2, dMin: 2, dMax: 9 },    // L2: answer 2d ÷ 1d
+                { ad: 2, dMin: 10, dMax: 12 },  // L3: answer 2d ÷ small 2d
+                { ad: 3, dMin: 2, dMax: 9 },    // L4: answer 3d ÷ 1d
+                { ad: 3, dMin: 10, dMax: 15 },  // L5: answer 3d ÷ mid 2d
+                { ad: 3, dMin: 10, dMax: 20 },  // L6+: answer 3d ÷ 2d
+            ];
+            const dmap = divMaps[Math.min(level, 6)];
+            const [ansMin, ansMax] = getRange(dmap.ad);
+            answer = getRandomInt(Math.max(2, ansMin), ansMax);
+            n2 = getRandomInt(dmap.dMin, dmap.dMax);
+            n1 = answer * n2;
+            elProblem.textContent = `${n1} ÷ ${n2}`;
         }
 
         STATE.currentAnswer = answer;
-        elProblem.textContent = `${num1} ${op} ${num2}`;
         elInput.value = '';
         elInput.focus();
     }
@@ -412,12 +494,25 @@ document.addEventListener('DOMContentLoaded', () => {
         STATE.correctAnswers++;
         STATE.streak++;
 
-        // Score multiplier based on streak
-        const points = 10 + Math.floor(STATE.streak / 5) * 5;
+        // Level-based scoring: operationLevel × 10
+        const opKey = STATE.currentOp;
+        const points = STATE.levels[opKey] * 10;
         STATE.score += points;
 
         elScore.textContent = STATE.score;
         elStreak.textContent = STATE.streak;
+
+        // Track level progress — level up after 10 correct per op per level
+        STATE.levelProgress[opKey]++;
+        if (STATE.levelProgress[opKey] >= 10) {
+            STATE.levelProgress[opKey] = 0;
+            STATE.levels[opKey]++;
+            saveLevels();
+            showLevelUpToast(opKey, STATE.levels[opKey]);
+            renderLandingStats();
+        } else {
+            saveLevels();
+        }
 
         // Visual Feedback
         elInput.classList.add('glow-success');
@@ -438,10 +533,35 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => elInput.classList.remove('shake'), 400);
     }
 
+    function renderLandingStats() {
+        const l = STATE.levels;
+        const pb = localStorage.getItem('mathTrainerPB') || 0;
+        const elLvl = document.getElementById('landing-levels');
+        const elPb = document.getElementById('landing-pb');
+        if (elLvl) elLvl.textContent = `${l.add}-${l.sub}-${l.mul}-${l.div}`;
+        if (elPb) elPb.textContent = pb;
+    }
+
+    function showLevelUpToast(opKey, newLevel) {
+        const opNames = { add: 'Addition', sub: 'Subtraction', mul: 'Multiplication', div: 'Division' };
+        const toast = document.getElementById('levelup-toast');
+        if (!toast) return;
+        document.getElementById('levelup-op-name').textContent = opNames[opKey];
+        document.getElementById('levelup-new-level').textContent = newLevel;
+        toast.style.display = 'flex';
+        clearTimeout(toast._hideTimer);
+        toast._hideTimer = setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+
     // Button Listeners
     btnStart.addEventListener('click', () => {
         if (audioCtx.state === 'suspended') audioCtx.resume();
-        startGame();
+        const visited = localStorage.getItem('mathTrainerHowItWorksVisited');
+        if (!visited) {
+            window.location.href = 'howitworks.html?from=start';
+        } else {
+            startGame();
+        }
     });
     btnReplay.addEventListener('click', startGame);
 
@@ -597,4 +717,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Show history on page load if available
     renderScoreHistory();
+    renderLandingStats();
+
+    // Auto-start if redirected back from howitworks.html via the Start button
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('autostart') === '1') {
+        const loaderEl = document.getElementById('loader-screen');
+        if (loaderEl) {
+            const loaderWatcher = new MutationObserver(() => {
+                if (!document.getElementById('loader-screen')) {
+                    loaderWatcher.disconnect();
+                    setTimeout(() => {
+                        if (audioCtx.state === 'suspended') audioCtx.resume();
+                        startGame();
+                    }, 300);
+                }
+            });
+            loaderWatcher.observe(document.body, { childList: true });
+        } else {
+            startGame();
+        }
+    }
 });

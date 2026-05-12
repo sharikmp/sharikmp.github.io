@@ -671,3 +671,119 @@ h3,
     letter-spacing: 0.5px;
     font-size: 0.92rem;
 }
+
+/* ===================== LANDING STATS ===================== */
+.landing-stats {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 18px;
+    padding: 0.75rem 1.5rem;
+}
+
+.landing-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0 1.25rem;
+}
+
+.landing-stat-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+}
+
+.landing-stat-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary-accent);
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+    line-height: 1;
+}
+
+.landing-stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(212, 175, 55, 0.2);
+    flex-shrink: 0;
+}
+
+/* ===================== HOW IT WORKS BUTTON ===================== */
+.btn-hiw {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50px;
+    padding: 0.85rem 1.75rem;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-hiw:hover,
+.btn-hiw:focus {
+    border-color: rgba(212, 175, 55, 0.5);
+    color: var(--primary-accent);
+    background: rgba(212, 175, 55, 0.08);
+}
+
+/* ===================== LEVEL UP TOAST ===================== */
+.levelup-toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    background: rgba(10, 10, 20, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 243, 255, 0.4);
+    border-radius: 50px;
+    padding: 10px 22px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #fff;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 24px rgba(0, 243, 255, 0.2);
+    white-space: nowrap;
+    animation: toastIn 0.3s ease;
+}
+
+.levelup-toast i {
+    color: var(--neon-cyan);
+}
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@media (max-width: 480px) {
+    .landing-stats {
+        padding: 0.6rem 0.75rem;
+    }
+    .landing-stat-item {
+        padding: 0 0.75rem;
+    }
+    .landing-stat-value {
+        font-size: 1.3rem;
+    }
+    .btn-hiw {
+        font-size: 0.85rem;
+        padding: 0.75rem 1.25rem;
+    }
+}
