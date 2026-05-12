@@ -52,13 +52,42 @@ html {
 }
 
 body {
-  background: var(--bg);
+  background: #07070e;
   color: var(--text-primary);
   font-family: var(--font-ui);
   height: 100%;
   overflow: hidden;           /* lock scroll — game is full-screen */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── CSS GALAXY GRID OVERLAY ──
+   Subtle dot-grid like the screenshot, sits above canvas, below screens */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* ── NEBULA RADIAL GLOWS (CSS-only, no extra JS) ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 40% at 20% 70%,  rgba(140, 60, 255, 0.13)  0%, transparent 70%),
+    radial-gradient(ellipse 50% 35% at 80% 30%,  rgba(0,  180, 255, 0.10)  0%, transparent 70%),
+    radial-gradient(ellipse 60% 30% at 50% 90%,  rgba(255, 140, 30, 0.14)  0%, transparent 70%),
+    radial-gradient(ellipse 40% 20% at 10% 10%,  rgba(180, 80, 255, 0.08)  0%, transparent 70%);
 }
 
 /* Global focus ring — accessibility */
@@ -77,6 +106,52 @@ body {
   width: 100%;
   height: 100%;
 }
+
+/* ── FOOTER WATERMARK ── */
+#footer-wm {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;                  /* above canvas + grid, below all screens */
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.88;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.fwm-math {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(3.8rem, 18vw, 10rem);
+  letter-spacing: 0.06em;
+  /* light lavender → mid tone, like the top of 'The' in screenshot */
+  background: linear-gradient(180deg, rgba(210, 195, 255, 0.22) 0%, rgba(180, 140, 255, 0.18) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.fwm-trainer {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(4.5rem, 22vw, 12.5rem);
+  letter-spacing: -0.01em;
+  /* warm gold → orange gradient, like 'Laminars' in the screenshot */
+  background: linear-gradient(180deg, rgba(255, 210, 100, 0.28) 0%, rgba(255, 140, 20, 0.22) 60%, rgba(200, 80, 10, 0.12) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Ensure screens always sit above watermark */
+.screen { z-index: 10; }
 
 /* ── 4. SCREEN SYSTEM ── */
 .screen {

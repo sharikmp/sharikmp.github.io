@@ -203,16 +203,16 @@ class BackgroundScene {
   init() {
     if (!window.THREE) return;
 
-    /* Renderer */
+    /* Renderer — alpha:false for solid galaxy bg (better perf) */
     this.renderer = new THREE.WebGLRenderer({
       canvas:     this.canvas,
-      antialias:  false,    // off for perf on mobile
-      alpha:      true,
+      antialias:  false,
+      alpha:      false,
       powerPreference: 'low-power'
     });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0x000000, 0);
+    this.renderer.setClearColor(0x07070e, 1);  // deep space — set again here, _buildObjects overrides
 
     /* Scene */
     this.scene = new THREE.Scene();
@@ -261,76 +261,114 @@ class BackgroundScene {
     this.animate();
   }
 
-  /** Create floating numbers and geometric wireframes */
+  /**
+   * Build galaxy scene:
+   *  – Layer 1: 900 tiny white/blue stars (Points)
+   *  – Layer 2: 300 warm gold/orange stars (Points)
+   *  – Layer 3: 8 large soft nebula blob spheres
+   * The `this.objects` array holds the two Points groups for parallax.
+   */
   _buildObjects() {
-    const count    = CONFIG.THREE_OBJECT_COUNT;
-    const symbols  = ['1','2','3','4','5','6','7','8','9','×','+','−','÷','?'];
-    const W = window.innerWidth;
-    const H = window.innerHeight;
+    /* ── Renderer background: deep space black ── */
+    this.renderer.setClearColor(0x07070e, 1);
 
-    // Spread factor: wider on big screens
-    const spread = Math.max(W, H) / 30;
+    /* ── Helper: random range ── */
+    const rng = (min, max) => min + Math.random() * (max - min);
 
-    for (let i = 0; i < count; i++) {
-      let mesh;
+    /* ── STAR FIELD 1: cool white/blue — 900 particles ── */
+    const COOL_COUNT = 900;
+    const coolPos    = new Float32Array(COOL_COUNT * 3);
+    const coolSizes  = new Float32Array(COOL_COUNT);
+    for (let i = 0; i < COOL_COUNT; i++) {
+      coolPos[i * 3]     = rng(-60, 60);
+      coolPos[i * 3 + 1] = rng(-40, 40);
+      coolPos[i * 3 + 2] = rng(-50, 10);
+      coolSizes[i]        = rng(0.4, 2.2);
+    }
+    const coolGeo = new THREE.BufferGeometry();
+    coolGeo.setAttribute('position', new THREE.BufferAttribute(coolPos, 3));
+    coolGeo.setAttribute('size',     new THREE.BufferAttribute(coolSizes, 1));
+    const coolMat = new THREE.PointsMaterial({
+      color:       0xd0dcff,
+      size:        1.1,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity:     0.75,
+      depthWrite:  false
+    });
+    const coolStars = new THREE.Points(coolGeo, coolMat);
+    coolStars.userData = { parallaxFactor: 0.6, driftSpeed: 0.0003 };
+    this.scene.add(coolStars);
+    this.objects.push(coolStars);
 
-      if (i % 3 === 0) {
-        /* Wireframe tetrahedron */
-        const geo = new THREE.TetrahedronGeometry(0.6 + Math.random() * 0.7, 0);
-        const mat = new THREE.MeshBasicMaterial({
-          color:     0xffd700,
-          wireframe: true,
-          transparent: true,
-          opacity:   0.12 + Math.random() * 0.1
-        });
-        mesh = new THREE.Mesh(geo, mat);
-      } else if (i % 3 === 1) {
-        /* Wireframe icosahedron */
-        const geo = new THREE.IcosahedronGeometry(0.4 + Math.random() * 0.5, 0);
-        const mat = new THREE.MeshBasicMaterial({
-          color:     0x00e5ff,
-          wireframe: true,
-          transparent: true,
-          opacity:   0.08 + Math.random() * 0.1
-        });
-        mesh = new THREE.Mesh(geo, mat);
-      } else {
-        /* Wireframe torus knot — number-like loop */
-        const geo = new THREE.TorusGeometry(0.3 + Math.random() * 0.25, 0.08, 6, 6);
-        const mat = new THREE.MeshBasicMaterial({
-          color:     0xb06fff,
-          wireframe: true,
-          transparent: true,
-          opacity:   0.1 + Math.random() * 0.08
-        });
-        mesh = new THREE.Mesh(geo, mat);
-      }
+    /* ── STAR FIELD 2: warm gold/orange — 300 particles ── */
+    const WARM_COUNT = 300;
+    const warmPos    = new Float32Array(WARM_COUNT * 3);
+    for (let i = 0; i < WARM_COUNT; i++) {
+      warmPos[i * 3]     = rng(-55, 55);
+      warmPos[i * 3 + 1] = rng(-38, 38);
+      warmPos[i * 3 + 2] = rng(-30, 5);
+    }
+    const warmGeo = new THREE.BufferGeometry();
+    warmGeo.setAttribute('position', new THREE.BufferAttribute(warmPos, 3));
+    const warmMat = new THREE.PointsMaterial({
+      color:       0xffc47a,
+      size:        1.5,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity:     0.55,
+      depthWrite:  false
+    });
+    const warmStars = new THREE.Points(warmGeo, warmMat);
+    warmStars.userData = { parallaxFactor: 1.0, driftSpeed: 0.0002 };
+    this.scene.add(warmStars);
+    this.objects.push(warmStars);
 
-      // Random position in 3D space
-      mesh.position.set(
-        (Math.random() - 0.5) * spread * 2.0,
-        (Math.random() - 0.5) * spread * 1.4,
-        (Math.random() - 0.5) * spread * 0.5
-      );
+    /* ── STAR FIELD 3: far deep-field dim white — 1400 particles ── */
+    const FAR_COUNT = 1400;
+    const farPos    = new Float32Array(FAR_COUNT * 3);
+    for (let i = 0; i < FAR_COUNT; i++) {
+      farPos[i * 3]     = rng(-80, 80);
+      farPos[i * 3 + 1] = rng(-55, 55);
+      farPos[i * 3 + 2] = rng(-90, -20);
+    }
+    const farGeo = new THREE.BufferGeometry();
+    farGeo.setAttribute('position', new THREE.BufferAttribute(farPos, 3));
+    const farMat = new THREE.PointsMaterial({
+      color:       0x9999cc,
+      size:        0.6,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity:     0.4,
+      depthWrite:  false
+    });
+    const farStars = new THREE.Points(farGeo, farMat);
+    farStars.userData = { parallaxFactor: 0.2, driftSpeed: 0.00015 };
+    this.scene.add(farStars);
+    this.objects.push(farStars);
 
-      // Random rotation seed
-      mesh.rotation.set(
-        Math.random() * Math.PI * 2,
-        Math.random() * Math.PI * 2,
-        Math.random() * Math.PI * 2
-      );
-
-      // Store animation params
-      mesh.userData = {
-        rotSpeed: { x: (Math.random() - 0.5) * 0.004, y: (Math.random() - 0.5) * 0.006 },
-        floatAmp:  0.04 + Math.random() * 0.08,
-        floatFreq: 0.3  + Math.random() * 0.5,
-        floatOff:  Math.random() * Math.PI * 2,
-        basePos:   mesh.position.clone()
-      };
-
-      this.scene.add(mesh);
-      this.objects.push(mesh);
+    /* ── NEBULA BLOBS: large transparent spheres, coloured ── */
+    const nebulaDefs = [
+      { color: 0x6622cc, r: 8,  x: -18, y:  8,  z: -30, op: 0.08 },  // deep purple
+      { color: 0x3311aa, r: 12, x:  15, y: -5,  z: -40, op: 0.07 },  // indigo
+      { color: 0xff6600, r: 10, x:   5, y: -14, z: -25, op: 0.07 },  // warm orange
+      { color: 0x0066cc, r: 7,  x: -10, y:  12, z: -35, op: 0.06 },  // blue
+      { color: 0xaa3399, r: 9,  x:  20, y:  10, z: -45, op: 0.06 },  // magenta-purple
+      { color: 0xff4400, r: 6,  x: -22, y: -10, z: -20, op: 0.05 },  // ember
+    ];
+    for (const def of nebulaDefs) {
+      const geo  = new THREE.SphereGeometry(def.r, 10, 10);
+      const mat  = new THREE.MeshBasicMaterial({
+        color:       def.color,
+        transparent: true,
+        opacity:     def.op,
+        depthWrite:  false
+      });
+      const blob = new THREE.Mesh(geo, mat);
+      blob.position.set(def.x, def.y, def.z);
+      blob.userData = { isNebula: true, driftSpeed: rng(0.00005, 0.0001), driftOff: rng(0, Math.PI * 2) };
+      this.scene.add(blob);
+      this.objects.push(blob);
     }
   }
 
@@ -340,41 +378,55 @@ class BackgroundScene {
     const delta = this._clock.getDelta();
     const time  = this._clock.getElapsedTime();
 
-    // Determine parallax input (mouse or gyro)
+    // Parallax input: mouse on desktop, gyro on mobile
     const px = this.isMobile ? this.gyro.x : this.mouse.x;
     const py = this.isMobile ? this.gyro.y : this.mouse.y;
 
-    // Smooth camera drift toward parallax target
-    this.camera.position.x += (px * 3 - this.camera.position.x) * 0.04;
-    this.camera.position.y += (-py * 2 - this.camera.position.y) * 0.04;
+    // Gentle camera drift for parallax depth
+    this.camera.position.x += (px * 2.5 - this.camera.position.x) * 0.03;
+    this.camera.position.y += (-py * 1.8 - this.camera.position.y) * 0.03;
     this.camera.lookAt(0, 0, 0);
 
-    // Animate each object
+    // Animate galaxy objects
     for (const obj of this.objects) {
       const d = obj.userData;
-      // Gentle continuous rotation
-      obj.rotation.x += d.rotSpeed.x;
-      obj.rotation.y += d.rotSpeed.y;
-      // Sine wave floating
-      obj.position.y = d.basePos.y + Math.sin(time * d.floatFreq + d.floatOff) * d.floatAmp;
+
+      if (d.isNebula) {
+        // Nebula blobs: very slow breathing scale + tiny position drift
+        const breath = 1 + Math.sin(time * 0.18 + d.driftOff) * 0.04;
+        obj.scale.setScalar(breath);
+        obj.position.y += Math.sin(time * d.driftSpeed * 120 + d.driftOff) * 0.003;
+      } else {
+        // Star fields: slow continuous rotation = galaxy spin illusion
+        obj.rotation.y += d.driftSpeed;
+        obj.rotation.x += d.driftSpeed * 0.3;
+        // Apply parallax offset per layer
+        obj.position.x += (px * d.parallaxFactor - obj.position.x) * 0.008;
+        obj.position.y += (-py * d.parallaxFactor - obj.position.y) * 0.008;
+      }
     }
 
     this.renderer.render(this.scene, this.camera);
   }
 
-  /** Pause / slow down the scene (used for results screen) */
+  /** Pause / slow down the galaxy (used for results screen) */
   slow() {
     for (const obj of this.objects) {
-      obj.userData.rotSpeed.x *= 0.1;
-      obj.userData.rotSpeed.y *= 0.1;
+      if (!obj.userData.isNebula && obj.userData.driftSpeed !== undefined) {
+        obj.userData.driftSpeed *= 0.15;
+      }
     }
   }
 
-  /** Resume normal speed */
+  /** Resume normal galaxy speed */
   resume() {
+    const speeds = [0.0003, 0.0002, 0.00015];
+    let si = 0;
     for (const obj of this.objects) {
-      obj.userData.rotSpeed.x = (Math.random() - 0.5) * 0.004;
-      obj.userData.rotSpeed.y = (Math.random() - 0.5) * 0.006;
+      if (!obj.userData.isNebula && obj.userData.driftSpeed !== undefined) {
+        obj.userData.driftSpeed = speeds[si % speeds.length];
+        si++;
+      }
     }
   }
 
