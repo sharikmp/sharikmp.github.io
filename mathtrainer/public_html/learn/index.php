@@ -26,7 +26,6 @@ $page = [
         }
         body { margin:0; padding:0; background:radial-gradient(circle at bottom, #1a0b2e 0%, #000000 100%); color:#fff; font-family:'Inter',sans-serif; overflow-x:hidden; min-height:100vh; }
         h1,h2,h3 { font-family:'Space Grotesk',sans-serif; }
-        #bg-canvas { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:1; pointer-events:none; }
         #page-content { position:relative; z-index:10; padding:1.5rem 1rem 3rem; }
 
         /* Navbar */
@@ -55,8 +54,6 @@ $page = [
     </style>
 </head>
 <body>
-
-<canvas id="bg-canvas"></canvas>
 
 <div id="page-content">
     <div class="container" style="max-width:700px;">
@@ -146,9 +143,6 @@ $page = [
     <?php require_once PATH_INCLUDES . '/footer.php'; ?>
 </div>
 
-<?php
-$galaxy_mode = 'full';
-require_once PATH_INCLUDES . '/galaxy.php';
-?>
+
 </body>
 </html>

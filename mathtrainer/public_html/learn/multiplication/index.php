@@ -29,7 +29,6 @@ $page = [
     </style>
 </head>
 <body>
-<canvas id="bg-canvas"></canvas>
 <div id="page-content">
 <div class="container" style="max-width:660px;">
 
@@ -127,7 +126,7 @@ $page = [
 </div></div><!-- /container /page-content -->
 
 <div style="position:relative;z-index:10;"><?php require_once PATH_INCLUDES.'/footer.php'; ?></div>
-<?php $galaxy_mode='full'; require_once PATH_INCLUDES.'/galaxy.php'; ?>
+
 
 <script src="<?= asset('learn/practice.js') ?>"></script>
 <script>

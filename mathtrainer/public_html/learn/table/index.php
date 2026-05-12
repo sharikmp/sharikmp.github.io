@@ -1,18 +1,18 @@
 <?php
 /**
  * public_html/learn/table/index.php
- * Topic: Multiplication Tables 1–12
+ * Topic: Multiplication Tables 1-12
  * 3-tab layout: Animate | Read | Practice
  */
 require_once __DIR__ . '/../../../config/config.php';
 define('PATH_INCLUDES', __DIR__ . '/../../../includes');
 
 $page = [
-    'title'       => 'Multiplication Tables 1–12 | MathTrainer',
+    'title'       => 'Multiplication Tables 1-12 | MathTrainer',
     'description' => 'Learn and memorise multiplication tables from 1 to 12 with tips, patterns and a full visual times table grid.',
     'canonical'   => url('learn/table/'),
     'og_title'    => 'Multiplication Tables | MathTrainer',
-    'og_desc'     => 'Visual times table grid, memorable patterns and tips to master multiplication facts 1–12.',
+    'og_desc'     => 'Visual times table grid, memorable patterns and tips to master multiplication facts 1-12.',
 ];
 ?>
 <!DOCTYPE html>
@@ -36,7 +36,6 @@ $page = [
     </style>
 </head>
 <body>
-<canvas id="bg-canvas"></canvas>
 <div id="page-content">
 <div class="container" style="max-width:700px;">
 
@@ -62,7 +61,7 @@ $page = [
     <p style="font-size:0.78rem;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:0.8rem;">Pick a table row — watch each cell light up one by one.</p>
     <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1rem;">
         <label style="font-size:0.82rem;color:rgba(255,255,255,0.55);">Table of</label>
-        <select id="tt-select" style="background:rgba(255,255,255,0.07);border:1px solid rgba(212,175,55,0.3);color:#fff;border-radius:10px;padding:6px 12px;font-family:'Space Grotesk',sans-serif;font-size:0.95rem;font-weight:700;-webkit-appearance:none;outline:none;">
+        <select id="tt-select" style="background:rgba(255,255,255,0.07);border:1px solid rgba(212,175,55,0.3);color:#fff;border-radius:10px;padding:6px 12px;font-family:'Space Grotesk',sans-serif;font-size:0.95rem;font-weight:700;-webkit-appearance:none;appearance:none;outline:none;">
             <?php for($t=2;$t<=12;$t++) echo '<option value="'.$t.'"'.($t==7?' selected':'').'>'.$t.'</option>'; ?>
         </select>
     </div>
@@ -150,7 +149,7 @@ $page = [
 </div></div><!-- /container /page-content -->
 
 <div style="position:relative;z-index:10;"><?php require_once PATH_INCLUDES.'/footer.php'; ?></div>
-<?php $galaxy_mode='full'; require_once PATH_INCLUDES.'/galaxy.php'; ?>
+
 
 <script src="<?= asset('learn/practice.js') ?>"></script>
 <script>

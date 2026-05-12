@@ -24,7 +24,6 @@ $page = [
         :root { --op-color:#00ff80; --op-glow:rgba(0,255,128,0.22); --op-faint:rgba(0,255,128,0.07); --primary-accent:#d4af37; }
         body { margin:0; padding:0; background:radial-gradient(circle at bottom, #1a0b2e 0%, #000000 100%); color:#fff; font-family:'Inter',sans-serif; overflow-x:hidden; min-height:100vh; }
         h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
-        #bg-canvas { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:1; pointer-events:none; }
         #page-content { position:relative; z-index:10; padding:1.5rem 1rem 3rem; }
         .page-nav { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1.5rem; }
         .page-nav .brand { font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:800; color:var(--primary-accent); text-shadow:0 0 12px rgba(212,175,55,0.5); text-decoration:none; letter-spacing:2px; }
@@ -60,7 +59,6 @@ $page = [
     </style>
 </head>
 <body>
-<canvas id="bg-canvas"></canvas>
 <div id="page-content">
 <div class="container" style="max-width:660px;">
 
@@ -161,7 +159,7 @@ $page = [
 </div></div><!-- /container /page-content -->
 
 <div style="position:relative;z-index:10;"><?php require_once PATH_INCLUDES.'/footer.php'; ?></div>
-<?php $galaxy_mode='full'; require_once PATH_INCLUDES.'/galaxy.php'; ?>
+
 
 <script src="<?= asset('learn/practice.js') ?>"></script>
 <script>
