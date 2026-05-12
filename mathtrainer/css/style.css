@@ -717,6 +717,31 @@ h3,
 }
 
 /* ===================== GAME SCREEN HOME BUTTON ===================== */
+.btn-icon-round {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+}
+
+.btn-icon-round:hover,
+.btn-icon-round:active {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    transform: scale(1.08);
+}
+
+/* ===================== GAME SCREEN HOME BUTTON ===================== */
 .btn-game-home {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
