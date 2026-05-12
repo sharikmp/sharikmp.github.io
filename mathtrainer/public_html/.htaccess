@@ -1,0 +1,59 @@
+# public_html/.htaccess
+# ─────────────────────────────────────────────────────────────
+# Apache URL rewriting for MathTrainer.
+# Shared hosting compatible (requires mod_rewrite).
+# ─────────────────────────────────────────────────────────────
+
+Options -Indexes
+RewriteEngine On
+
+# ── 1. Force HTTPS (enable on real server) ───────────────────
+# Uncomment these lines once SSL is confirmed working:
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ── 2. Remove .php extension from URLs ───────────────────────
+# Allows accessing /howitworks instead of /howitworks.php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)/?$ $1.php [L]
+
+# ── 3. Redirect old .html URLs to clean/PHP equivalents ──────
+# Preserves any existing links / bookmarks pointing to .html files
+RewriteRule ^howitworks\.html$   /howitworks.php   [R=301,L]
+RewriteRule ^about/index\.html$  /about/           [R=301,L]
+RewriteRule ^contact/index\.html$ /contact/        [R=301,L]
+RewriteRule ^index\.html$        /                 [R=301,L]
+
+# ── 4. Block direct access to PHP config/include files ───────
+# (Belt-and-suspenders; these files should already be outside web root)
+<FilesMatch "^(config|env)\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── 5. Security headers ───────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Content Security Policy — tune as needed for your CDN domains
+    Header always set Content-Security-Policy "default-src 'self' https: data:; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'"
+</IfModule>
+
+# ── 6. Cache static assets ────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css              "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/svg+xml         "access plus 1 year"
+    ExpiresByType image/webp            "access plus 1 year"
+    ExpiresByType image/jpeg            "access plus 1 year"
+    ExpiresByType image/png             "access plus 1 year"
+</IfModule>
+
+# ── 7. Gzip compression ───────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/xml
+</IfModule>

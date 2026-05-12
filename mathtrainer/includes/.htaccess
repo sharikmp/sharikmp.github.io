@@ -1,0 +1,6 @@
+# includes/.htaccess
+# PHP partials must never be loaded directly via browser.
+# They are only included server-side by pages in public_html/.
+
+Order Allow,Deny
+Deny from all

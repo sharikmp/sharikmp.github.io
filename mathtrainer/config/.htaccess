@@ -1,0 +1,5 @@
+# config/.htaccess
+# Block direct web access to all PHP configuration files.
+
+Order Allow,Deny
+Deny from all

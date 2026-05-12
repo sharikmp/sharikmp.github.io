@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const visited = localStorage.getItem('mathTrainerHowItWorksVisited');
         if (!visited) {
-            window.location.href = 'howitworks.html?from=start';
+            window.location.href = 'howitworks.php?from=start';
         } else {
             startGame();
         }

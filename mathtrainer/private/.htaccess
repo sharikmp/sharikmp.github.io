@@ -1,0 +1,8 @@
+# private/.htaccess
+# Deny all web access — belt-and-suspenders protection.
+# The private/ folder should already be outside the web root,
+# but this file adds a second layer of defence on shared hosting
+# environments where that separation isn't always possible.
+
+Order Allow,Deny
+Deny from all
