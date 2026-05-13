@@ -445,16 +445,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (elOvLvl) elOvLvl.textContent = overallLvl;
 
         // Save to history & render
-        saveScoreToHistory(STATE.score, accuracy);
-        renderScoreHistory();
+        // (history tracking removed)
 
         // Personal Best Logic
         const currentPB = localStorage.getItem('mathTrainerPB') || 0;
-        const badge = document.getElementById('pb-badge');
+        const crownBadge = document.getElementById('pb-crown-badge');
 
         if (STATE.score > currentPB) {
             localStorage.setItem('mathTrainerPB', STATE.score);
-            badge.style.display = 'block';
+            if (crownBadge) crownBadge.style.display = 'inline-block';
             // Confetti!
             confetti({
                 particleCount: 150,
@@ -463,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 colors: ['#d4af37', '#00f3ff', '#ffffff']
             });
         } else {
-            badge.style.display = 'none';
+            if (crownBadge) crownBadge.style.display = 'none';
         }
 
         const allTimePB = parseInt(localStorage.getItem('mathTrainerPB') || 0);
@@ -599,43 +598,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================================
-       4. SCORE HISTORY
+       4. SCORE HISTORY  (removed)
        ========================================= */
-    function loadScoreHistory() {
-        return JSON.parse(localStorage.getItem('mathTrainerHistory') || '[]');
-    }
-
-    function saveScoreToHistory(score, accuracy) {
-        const history = loadScoreHistory();
-        history.unshift({ score, accuracy, date: new Date().toLocaleDateString() });
-        if (history.length > 5) history.length = 5;
-        localStorage.setItem('mathTrainerHistory', JSON.stringify(history));
-    }
-
-    function renderScoreHistory() {
-        const history = loadScoreHistory();
-        const section = document.getElementById('score-history-section');
-        const list = document.getElementById('score-history-list');
-        if (history.length === 0) { section.style.display = 'none'; return; }
-        section.style.display = 'block';
-
-        const scores = history.map(e => e.score);
-        const maxScore = Math.max(...scores);
-        const minScore = Math.min(...scores);
-
-        list.innerHTML = history.map((entry, i) => {
-            let cls = '';
-            let label = `#${i + 1}`;
-            if (i === 0) { cls = 'latest'; label = 'Latest'; }
-            else if (entry.score === maxScore) { cls = 'best'; label = 'Best'; }
-            else if (entry.score === minScore && entry.score < 100) { cls = 'worst'; label = 'Worst'; }
-            return `<div class="score-pill ${cls}">
-                        <span class="pill-label">${label}</span>
-                        <span class="pill-score">${entry.score}</span>
-                        <span class="pill-accuracy">${entry.accuracy}%</span>
-                    </div>`;
-        }).join('');
-    }
 
     function renderMilestoneBadges(bestPB) {
         const milestones = [
@@ -772,6 +736,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Show history on page load if available
-    renderScoreHistory();
     renderLandingStats();
 });

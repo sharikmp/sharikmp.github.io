@@ -185,12 +185,13 @@ $json_ld = json_encode([
                             <h3 class="mb-4">
                                 Final Score:
                                 <span id="final-score" class="text-glow" style="font-size:3rem;">0</span>
+                                <span id="pb-crown-badge" class="pb-crown-inline" style="display:none;" title="New Personal Best!"><i class="fas fa-crown"></i></span>
                             </h3>
 
                             <div class="row g-3 mb-4">
                                 <div class="col-4">
                                     <div class="data-tile">
-                                        <div class="small text-muted mb-1 text-uppercase">Questions</div>
+                                        <div class="small text-muted mb-1 text-uppercase">Ques</div>
                                         <div class="fs-2 fw-bold" style="color:#fff;">
                                             <span id="final-qpm">0</span>
                                             <small class="fs-6 text-muted">Q</small>
@@ -207,7 +208,7 @@ $json_ld = json_encode([
                                 </div>
                                 <div class="col-4">
                                     <div class="data-tile">
-                                        <div class="small text-muted mb-1 text-uppercase">Overall Lvl</div>
+                                        <div class="small text-muted mb-1 text-uppercase">LEVEL</div>
                                         <div class="fs-2 fw-bold" style="color:var(--primary-accent);">
                                             <span id="final-overall-lvl">1</span>
                                         </div>
@@ -217,27 +218,14 @@ $json_ld = json_encode([
 
                             <!-- Milestone Badges -->
                             <div class="milestone-badges-row mb-3" id="milestone-badges"></div>
-
-                            <!-- Score History -->
-                            <div class="score-history" id="score-history-section" style="display:none;">
-                                <div class="score-history-list" id="score-history-list"></div>
-                            </div>
-
-                            <div id="pb-badge" class="mb-4 text-center" style="display:none;">
-                                <div class="pb-badge-enhanced">
-                                    <div class="pb-badge-crown"><i class="fas fa-crown"></i></div>
-                                    <div class="pb-badge-text">NEW PERSONAL BEST!</div>
-                                </div>
-                            </div>
                         </div><!-- /results-card -->
 
                         <div class="mt-4">
                             <div class="d-flex gap-2 justify-content-center mb-3">
-                                <a href="<?= url('learn/') ?>" class="btn btn-gold btn-lg flex-grow-1">
+                                <a href="<?= url('learn/') ?>" class="btn btn-results-outline">
                                     <i class="fas fa-book-open"></i> Learn
                                 </a>
-                                <button class="btn btn-primary btn-lg flex-grow-1" id="btn-replay"
-                                        style="background:var(--primary-accent);color:black;border:none;font-weight:bold;">
+                                <button class="btn btn-results-primary" id="btn-replay">
                                     <i class="fas fa-rotate-right"></i> Go Again
                                 </button>
                             </div>
