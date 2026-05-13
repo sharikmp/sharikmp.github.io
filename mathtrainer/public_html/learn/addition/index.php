@@ -43,13 +43,6 @@ $page = [
         .strategy-num { width:32px; height:32px; border-radius:10px; background:rgba(0,255,128,0.1); color:var(--op-color); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:0.85rem; font-weight:800; flex-shrink:0; }
         .strategy-text strong { display:block; color:#fff; font-size:0.88rem; margin-bottom:3px; }
         .strategy-text span { font-size:0.82rem; color:rgba(255,255,255,0.5); line-height:1.5; }
-        .column-add { display:inline-grid; grid-template-columns:repeat(4,36px); gap:4px; font-family:'Space Grotesk',sans-serif; font-size:1rem; font-weight:700; margin:0.8rem auto; }
-        .ca-cell { height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; }
-        .ca-label { background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.4); font-size:0.7rem; font-weight:600; }
-        .ca-num { background:rgba(255,255,255,0.06); color:#fff; }
-        .ca-result { background:rgba(0,255,128,0.12); color:var(--op-color); }
-        .ca-carry { background:rgba(212,175,55,0.12); color:var(--primary-accent); font-size:0.76rem; }
-        .ca-sep { grid-column:1/-1; border-bottom:1px solid rgba(255,255,255,0.2); margin:2px 0; }
         .prop-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.85rem; }
         .prop-row:last-child { border-bottom:none; }
         .prop-badge { background:rgba(0,255,128,0.08); border:1px solid rgba(0,255,128,0.22); border-radius:8px; padding:3px 10px; font-family:'Space Grotesk',sans-serif; font-size:0.75rem; font-weight:700; color:var(--op-color); white-space:nowrap; flex-shrink:0; }
@@ -212,7 +205,7 @@ initPractice({ op:'add', opColor:'#00ff80', containerId:'practice-addition' });
         cntEl = document.getElementById('add-counter'),
         btnPlay=document.getElementById('btn-play'),
         btnNew =document.getElementById('btn-new'),
-        a, b, timers=[];
+        a, b, emojiA, emojiB, timers=[];
 
     function rand(mn,mx){ return Math.floor(Math.random()*(mx-mn+1))+mn; }
     function clr(){ timers.forEach(clearTimeout); timers=[]; }
@@ -233,6 +226,8 @@ initPractice({ op:'add', opColor:'#00ff80', containerId:'practice-addition' });
     function reset(){
         clr();
         a=rand(5,9); b=rand(5,9);
+        emojiA=Math.random()<0.5 ? '\uD83C\uDF4E' : '\uD83C\uDF4F';
+        emojiB=emojiA==='\uD83C\uDF4E' ? '\uD83C\uDF4F' : '\uD83C\uDF4E';
         resetDOM();
         btnPlay.disabled=false;
         btnPlay.innerHTML='<i class="fas fa-play"></i> Play';
@@ -253,7 +248,7 @@ initPractice({ op:'add', opColor:'#00ff80', containerId:'practice-addition' });
         for(var i=0;i<a;i++){
             (function(idx){
                 after(function(){
-                    var ap=mkApple('\uD83C\uDF4E'); rowA.appendChild(ap);
+                    var ap=mkApple(emojiA); rowA.appendChild(ap);
                     setTimeout(function(){ ap.classList.add('show'); },20);
                 }, T+idx*500);
             })(i);
@@ -273,7 +268,7 @@ initPractice({ op:'add', opColor:'#00ff80', containerId:'practice-addition' });
         for(var j=0;j<b;j++){
             (function(idx){
                 after(function(){
-                    var ap=mkApple('\uD83C\uDF4F'); rowB.appendChild(ap);
+                    var ap=mkApple(emojiB); rowB.appendChild(ap);
                     setTimeout(function(){ ap.classList.add('show'); },20);
                 }, T+idx*500);
             })(j);

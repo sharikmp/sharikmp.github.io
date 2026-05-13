@@ -22,10 +22,38 @@ $page = [
     <link rel="stylesheet" href="<?= asset('learn/learn.css') ?>">
     <style>
         :root { --op-color:#50a0ff; --op-glow:rgba(80,160,255,0.22); --op-faint:rgba(80,160,255,0.07); --primary-accent:#d4af37; }
+        /* op-color-tinted overrides for this page */
+        .section-badge { background:rgba(80,160,255,0.08); border:1px solid rgba(80,160,255,0.25); color:var(--op-color); }
+        .definition-box { background:rgba(80,160,255,0.05); border-left:3px solid var(--op-color); }
+        .strategy-num { background:rgba(80,160,255,0.1); }
+        .prop-badge { background:rgba(80,160,255,0.08); border-color:rgba(80,160,255,0.22); }
         .grid-method { display:grid; grid-template-columns:auto 80px 60px; gap:4px; margin:0.8rem auto; max-width:260px; }
         .gm-cell { border-radius:10px; padding:10px; text-align:center; font-family:'Space Grotesk',sans-serif; font-size:0.9rem; font-weight:700; }
         .gm-header { background:rgba(80,160,255,0.14); color:var(--op-color); }
         .gm-body { background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.07); }
+        /* ─── Multiplication two-column animation ─── */
+        .mul-anim { display:grid; grid-template-columns:70px 1fr; gap:6px 20px; align-items:start; padding:0.4rem 0.2rem; width:100%; }
+        .mul-num-cell { font-family:'Space Grotesk',sans-serif; font-size:2.8rem; font-weight:900; color:#fff; opacity:0; transform:scale(0.4); transition:opacity .3s,transform .35s; text-align:center; line-height:1.2; align-self:center; }
+        .mul-num-cell.show { opacity:1; transform:scale(1); }
+        .mul-num-cell.ans-cell { color:var(--op-color); text-shadow:0 0 22px rgba(80,160,255,0.45); font-size:3rem; }
+        .mul-op-cell { font-family:'Space Grotesk',sans-serif; font-size:1.8rem; font-weight:700; color:rgba(255,255,255,0.4); opacity:0; transition:opacity .3s; text-align:center; align-self:center; }
+        .mul-op-cell.show { opacity:1; }
+        .mul-line-cell { padding:2px 0; align-self:center; }
+        .mul-line-bar { height:3px; background:linear-gradient(90deg,rgba(80,160,255,0.55),rgba(80,160,255,0.15)); border-radius:2px; transform:scaleX(0); transform-origin:left; transition:transform .38s ease-out; }
+        .mul-line-bar.show { transform:scaleX(1); }
+        .mul-rows-wrap { display:flex; flex-direction:column; gap:8px; }
+        .mul-apple-row { display:flex; flex-wrap:wrap; gap:5px; min-height:36px; align-items:center; }
+        .mul-apple-row.answer-row { border-top:1px solid transparent; padding-top:8px; min-height:50px; transition:border-color .3s; }
+        .mul-apple-row.answer-row.reveal { border-color:rgba(255,255,255,0.09); }
+        .mul-row-label { font-family:'Space Grotesk',sans-serif; font-size:0.72rem; font-weight:700; color:rgba(255,255,255,0.25); margin-bottom:2px; }
+        .mul-counter { grid-column:1/-1; text-align:center; font-family:'Space Grotesk',sans-serif; font-size:0.85rem; font-weight:600; color:rgba(255,255,255,0.4); min-height:1.4em; opacity:0; transition:opacity .3s; padding-top:4px; }
+        .mul-counter.show { opacity:1; }
+        .mul-apple { font-size:1.4rem; display:inline-block; opacity:0; transform:scale(0.2); transition:opacity .4s,transform .4s; }
+        .mul-apple.show { opacity:1; transform:scale(1); }
+        .mul-apple.going { opacity:0 !important; transform:scale(0.1) translateY(-8px) !important; transition:opacity .45s ease,transform .45s ease !important; }
+        @keyframes mulArrive { 0%{opacity:0;transform:scale(0.1) translateY(-18px);} 65%{transform:scale(1.12) translateY(2px);} 100%{opacity:1;transform:scale(1) translateY(0);} }
+        .mul-apple.arriving { animation:mulArrive .65s ease both; }
+        .mul-empty-cell { min-height:36px; }
     </style>
 </head>
 <body>
@@ -51,10 +79,25 @@ $page = [
 <!-- ██ ANIMATE TAB ██ -->
 <div id="tab-animate" class="learn-tab-panel active">
 <div class="page-card op-multiply">
-    <div class="anim-stage" id="anim-stage">
-        <div id="anim-grid" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;min-height:80px;"></div>
-        <div class="anim-sep" id="anim-label" style="font-size:0.85rem;color:rgba(255,255,255,0.45);">Press Play</div>
-        <div class="anim-equation" id="anim-result" style="opacity:0;transition:opacity .4s">?</div>
+    <p style="font-size:0.78rem;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:0.8rem;">Multiplication is <em>repeated addition</em> &mdash; watch each group appear, then all apples merge into the product.</p>
+    <div class="mul-anim" id="mul-anim">
+        <!-- Row 0: numA | empty (rows will be injected here by JS) -->
+        <div class="mul-num-cell" id="mul-num-a"></div>
+        <div class="mul-rows-wrap" id="mul-rows-wrap"></div>
+
+        <div class="mul-op-cell" id="mul-op">×</div>
+        <div class="mul-empty-cell"></div>
+
+        <div class="mul-num-cell" id="mul-num-b"></div>
+        <div class="mul-empty-cell"></div>
+
+        <div class="mul-line-cell"><div class="mul-line-bar" id="mul-line"></div></div>
+        <div class="mul-line-cell"><div class="mul-line-bar" id="mul-line-r"></div></div>
+
+        <div class="mul-num-cell ans-cell" id="mul-ans"></div>
+        <div class="mul-apple-row answer-row" id="mul-row-ans"></div>
+
+        <div class="mul-counter" id="mul-counter"></div>
     </div>
     <div class="anim-controls">
         <button class="anim-btn" id="btn-play"><i class="fas fa-play"></i> Play</button>
@@ -133,50 +176,153 @@ $page = [
 initLearnTabs();
 initPractice({ op:'mul', opColor:'#50a0ff', containerId:'practice-multiplication' });
 
-/* ── Multiplication animation: grid of dots appearing row by row ── */
+/* ── Multiplication animation: repeated-addition row layout ── */
 (function(){
-    var gridEl=document.getElementById('anim-grid'),
-        lbl   =document.getElementById('anim-label'),
-        res   =document.getElementById('anim-result'),
-        btnPlay=document.getElementById('btn-play'),
-        btnNew =document.getElementById('btn-new'),
-        a,b,timers=[];
+    var numA    = document.getElementById('mul-num-a'),
+        opEl    = document.getElementById('mul-op'),
+        numB    = document.getElementById('mul-num-b'),
+        lineL   = document.getElementById('mul-line'),
+        lineR   = document.getElementById('mul-line-r'),
+        ansEl   = document.getElementById('mul-ans'),
+        rowsWrap= document.getElementById('mul-rows-wrap'),
+        rowAns  = document.getElementById('mul-row-ans'),
+        cntEl   = document.getElementById('mul-counter'),
+        btnPlay = document.getElementById('btn-play'),
+        btnNew  = document.getElementById('btn-new'),
+        a, b, emoji, timers=[];
+
+    var EMOJIS = ['\uD83C\uDF4E','\uD83C\uDF4F','\uD83C\uDF4B','\uD83C\uDF47','\uD83C\uDF53'];
 
     function rand(mn,mx){ return Math.floor(Math.random()*(mx-mn+1))+mn; }
     function clr(){ timers.forEach(clearTimeout); timers=[]; }
+    function after(fn,ms){ var id=setTimeout(fn,ms); timers.push(id); return id; }
+    function mkApple(){ var sp=document.createElement('span'); sp.className='mul-apple'; sp.textContent=emoji; return sp; }
+
+    function resetDOM(){
+        numA.className='mul-num-cell'; numA.textContent='';
+        opEl.className='mul-op-cell';
+        numB.className='mul-num-cell'; numB.textContent='';
+        lineL.className='mul-line-bar';
+        lineR.className='mul-line-bar';
+        ansEl.className='mul-num-cell ans-cell'; ansEl.textContent='';
+        rowsWrap.innerHTML='';
+        rowAns.innerHTML=''; rowAns.classList.remove('reveal');
+        cntEl.className='mul-counter'; cntEl.textContent='';
+    }
 
     function reset(){
-        clr(); a=rand(2,5); b=rand(2,5);
-        gridEl.innerHTML=''; res.style.opacity='0';
-        lbl.textContent= a +' × '+ b +' = ?';
-        btnPlay.disabled=false; btnPlay.innerHTML='<i class="fas fa-play"></i> Play';
-        gridEl.style.gridTemplateColumns='repeat('+b+', 28px)';
-        /* pre-create invisible dots */
-        for(var r=0;r<a;r++) for(var c=0;c<b;c++){
-            var d=document.createElement('span');
-            d.className='anim-dot';
-            d.style.background='#50a0ff';
-            d.dataset.row=r;
-            gridEl.appendChild(d);
-        }
+        clr();
+        a=rand(2,9); b=rand(2,4);
+        emoji=EMOJIS[rand(0,EMOJIS.length-1)];
+        resetDOM();
+        btnPlay.disabled=false;
+        btnPlay.innerHTML='<i class="fas fa-play"></i> Play';
     }
 
     function play(){
-        btnPlay.disabled=true; btnPlay.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
-        var dots=gridEl.querySelectorAll('.anim-dot');
-        dots.forEach(function(d,i){
-            timers.push(setTimeout(function(){ d.classList.add('show'); }, i*80));
-        });
-        timers.push(setTimeout(function(){
-            lbl.textContent= a +' × '+ b +' =';
-            res.textContent=a*b;
-            res.style.opacity='1';
-            btnPlay.innerHTML='<i class="fas fa-check"></i> Done';
-        }, dots.length*80+350));
+        clr(); resetDOM();
+        btnPlay.disabled=true;
+        btnPlay.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+        var T=0;
+
+        /* Step 1 — numA pops in */
+        numA.textContent=a;
+        after(function(){ numA.classList.add('show'); }, T+=200);
+        T+=400;
+
+        /* Step 2 — first row of A apples appears */
+        /* Pre-build all b rows (hidden), reveal row 0 now, rest in step 4 */
+        var rows=[];
+        for(var r=0;r<b;r++){
+            var rowDiv=document.createElement('div');
+            rowDiv.className='mul-apple-row';
+            rowDiv.style.opacity='0'; rowDiv.style.transition='opacity .35s';
+            rowsWrap.appendChild(rowDiv);
+            rows.push(rowDiv);
+        }
+
+        /* Show row 0 and fill its A apples */
+        after((function(ri){
+            return function(){
+                rows[ri].style.opacity='1';
+                for(var i=0;i<a;i++){
+                    (function(idx){
+                        after(function(){
+                            var ap=mkApple(); rows[ri].appendChild(ap);
+                            setTimeout(function(){ ap.classList.add('show'); },20);
+                        }, idx*300);
+                    })(i);
+                }
+            };
+        })(0), T);
+        T+=a*300+500;
+
+        /* Step 3 — × sign and numB pop in */
+        after(function(){ opEl.classList.add('show'); }, T);
+        T+=350;
+        numB.textContent=b;
+        after(function(){ numB.classList.add('show'); }, T);
+        T+=450;
+
+        /* Step 4 — rows 1..b-1 appear one by one, each filling A apples */
+        for(var ri=1;ri<b;ri++){
+            (function(rowIdx){
+                after(function(){
+                    rows[rowIdx].style.opacity='1';
+                    for(var i=0;i<a;i++){
+                        (function(idx){
+                            after(function(){
+                                var ap=mkApple(); rows[rowIdx].appendChild(ap);
+                                setTimeout(function(){ ap.classList.add('show'); },20);
+                            }, idx*300);
+                        })(i);
+                    }
+                }, T+(rowIdx-1)*(a*300+600));
+            })(ri);
+        }
+        T+=(b-1)*(a*300+600)+a*300+600;
+
+        /* Step 5 — separator line sweeps */
+        after(function(){
+            lineL.classList.add('show');
+            setTimeout(function(){ lineR.classList.add('show'); },60);
+            rowAns.classList.add('reveal');
+        }, T);
+        T+=700;
+
+        /* Step 6 — all apples migrate from every row into the answer row, counted */
+        after(function(){
+            cntEl.classList.add('show');
+            var total=a*b, count=0;
+            cntEl.textContent='0 / '+total;
+            var allApples=[];
+            rows.forEach(function(row){ [].forEach.call(row.querySelectorAll('.mul-apple'),function(ap){ allApples.push(ap); }); });
+
+            allApples.forEach(function(src,idx){
+                after(function(){
+                    src.classList.add('going');
+                    after(function(){
+                        var ap=mkApple(); ap.classList.add('arriving');
+                        rowAns.appendChild(ap);
+                        count++;
+                        cntEl.textContent=count+' / '+total;
+                        if(count===total){
+                            after(function(){
+                                ansEl.textContent=total;
+                                ansEl.classList.add('show');
+                                cntEl.textContent='\uD83C\uDF89 '+a+' \xD7 '+b+' = '+total;
+                                btnPlay.innerHTML='<i class="fas fa-redo"></i> Replay';
+                                btnPlay.disabled=false;
+                            }, 600);
+                        }
+                    }, 450);
+                }, idx*600);
+            });
+        }, T);
     }
 
-    btnPlay.addEventListener('click',play);
-    btnNew.addEventListener('click',reset);
+    btnPlay.addEventListener('click', play);
+    btnNew.addEventListener('click', function(){ reset(); play(); });
     reset();
 })();
 </script>
