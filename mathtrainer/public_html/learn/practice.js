@@ -52,9 +52,17 @@
             if (a === b) a += rand(1, 5);
             ans = a - b;
         } else if (op === 'mul') {
-            // keep multiplication manageable — cap at 2-digit × 2-digit max
-            a = rand(r.min1, Math.min(r.max1, 99));
-            b = rand(r.min2, Math.min(r.max2, 99));
+            // Multiplication has its own progressive ranges (shared ranges have 3-digit mins that break capping)
+            const MUL_RANGES = [
+                { min1: 2,   max1: 9,   min2: 2,  max2: 9  },  // L1: single digit × single digit
+                { min1: 2,   max1: 12,  min2: 2,  max2: 12 },  // L2: times tables up to 12
+                { min1: 10,  max1: 99,  min2: 2,  max2: 9  },  // L3: 2-digit × 1-digit
+                { min1: 10,  max1: 99,  min2: 10, max2: 99 },  // L4: 2-digit × 2-digit
+                { min1: 100, max1: 999, min2: 2,  max2: 9  },  // L5: 3-digit × 1-digit
+            ];
+            const mr = MUL_RANGES[level];
+            a = rand(mr.min1, mr.max1);
+            b = rand(mr.min2, mr.max2);
             ans = a * b;
         } else { // div
             // generate a clean division (no remainder)
