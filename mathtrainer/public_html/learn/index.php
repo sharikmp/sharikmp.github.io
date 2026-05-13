@@ -26,7 +26,7 @@ $page = [
         }
         body { margin:0; padding:0; background:radial-gradient(circle at bottom, #1a0b2e 0%, #000000 100%); color:#fff; font-family:'Inter',sans-serif; overflow-x:hidden; min-height:100vh; }
         h1,h2,h3 { font-family:'Space Grotesk',sans-serif; }
-        #page-content { position:relative; z-index:10; padding:1.5rem 1rem 3rem; }
+        #page-content { position:relative; z-index:10; padding:1.5rem 1rem 3rem; min-height:100vh; }
 
         /* Navbar */
         .page-nav { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1.5rem; }

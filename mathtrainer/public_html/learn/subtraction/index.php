@@ -24,7 +24,7 @@ $page = [
         :root { --op-color:#ff6478; --op-glow:rgba(255,100,120,0.22); --op-faint:rgba(255,100,120,0.07); --primary-accent:#d4af37; }
         body { margin:0; padding:0; background:radial-gradient(circle at bottom, #1a0b2e 0%, #000000 100%); color:#fff; font-family:'Inter',sans-serif; overflow-x:hidden; min-height:100vh; }
         h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
-        #page-content { position:relative; z-index:10; padding:1.5rem 1rem 3rem; }
+        #page-content { position:relative; z-index:10; padding:1.5rem 1rem 3rem; min-height:100vh; }
         /* ─── Two-column subtraction animation ─── */
         .sub-anim { display:grid; grid-template-columns:70px 1fr; gap:6px 20px; align-items:center; padding:0.4rem 0.2rem; width:100%; }
         .sub-num-cell { font-family:'Space Grotesk',sans-serif; font-size:2.8rem; font-weight:900; color:#fff; opacity:0; transform:scale(0.4); transition:opacity .3s,transform .35s; text-align:center; line-height:1.2; }

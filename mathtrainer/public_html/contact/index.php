@@ -35,7 +35,7 @@ $csrf = csrf_token();
         body { margin:0; padding:0; background:radial-gradient(circle at bottom, #1a0b2e 0%, #000000 100%); color:#fff; font-family:'Inter',sans-serif; overflow-x:hidden; min-height:100vh; }
         h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
         #bg-canvas { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:1; pointer-events:none; }
-        #page-content { position:relative; z-index:10; padding:1.5rem 1rem 5rem; }
+        #page-content { position:relative; z-index:10; padding:1.5rem 1rem 5rem; min-height:100vh; }
         .page-nav { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1.5rem; }
         .page-nav .brand { font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:800; color:var(--primary-accent); text-shadow:0 0 12px rgba(212,175,55,0.5); text-decoration:none; letter-spacing:2px; }
         .btn-back { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.55); border-radius:50px; padding:6px 16px; font-size:0.82rem; display:flex; align-items:center; gap:6px; text-decoration:none; transition:all 0.2s; }
