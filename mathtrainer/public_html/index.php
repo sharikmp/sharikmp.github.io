@@ -109,15 +109,15 @@ $json_ld = json_encode([
                 </div>
 
                 <div class="d-flex gap-3 justify-content-center align-items-center flex-wrap">
-                    <button class="btn btn-gold pulse" id="btn-start">
-                        <i class="fas fa-bolt"></i> Take Quiz
-                    </button>
-                    <a href="<?= url('howitworks.php') ?>" class="btn btn-hiw" id="btn-how-it-works">
-                        <i class="fas fa-circle-info"></i> How it works
-                    </a>
                     <a href="<?= url('learn/') ?>" class="btn btn-gold">
                         <i class="fas fa-book-open"></i> Learn
                     </a>
+                    <a href="<?= url('howitworks.php') ?>" class="btn btn-hiw" id="btn-how-it-works">
+                        <i class="fas fa-circle-info"></i> How it works
+                    </a>
+                    <button class="btn btn-gold pulse" id="btn-start">
+                        <i class="fas fa-bolt"></i> Play Now
+                    </button>
                 </div>
             </div>
         </section>

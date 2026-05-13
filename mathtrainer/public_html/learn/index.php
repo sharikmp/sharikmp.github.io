@@ -88,13 +88,6 @@ $page = [
                 <span class="topic-arrow">Explore →</span>
             </a>
 
-            <a href="<?= url('learn/table/') ?>" class="topic-card">
-                <div class="topic-icon ic-cyan"><i class="fas fa-table-cells"></i></div>
-                <h3>Table</h3>
-                <p>Multiplication tables 1–20</p>
-                <span class="topic-arrow">Explore →</span>
-            </a>
-
             <a href="<?= url('learn/addition/') ?>" class="topic-card">
                 <div class="topic-icon ic-green"><i class="fas fa-plus"></i></div>
                 <h3>Addition</h3>
@@ -120,6 +113,13 @@ $page = [
                 <div class="topic-icon ic-purple"><i class="fas fa-divide"></i></div>
                 <h3>Division</h3>
                 <p>Sharing equally, long division</p>
+                <span class="topic-arrow">Explore →</span>
+            </a>
+
+            <a href="<?= url('learn/table/') ?>" class="topic-card">
+                <div class="topic-icon ic-cyan"><i class="fas fa-table-cells"></i></div>
+                <h3>Table</h3>
+                <p>Multiplication tables 1–20</p>
                 <span class="topic-arrow">Explore →</span>
             </a>
 

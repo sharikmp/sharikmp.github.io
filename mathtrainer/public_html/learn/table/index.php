@@ -179,7 +179,7 @@ initPractice({ op:'mul', opColor:'#d4af37', containerId:'practice-table' });
             (function(n){
                 var row=document.createElement('div');
                 row.style.cssText='display:flex;align-items:center;gap:10px;opacity:0;transform:translateX(-12px);transition:opacity .35s,transform .35s;font-family:Space Grotesk,sans-serif;';
-                row.innerHTML='<span style="width:54px;text-align:right;font-size:0.9rem;color:rgba(255,255,255,0.45);">'+t+' × '+n+' =</span>'
+                row.innerHTML='<span style="width:150px;text-align:right;font-size:0.9rem;color:rgba(255,255,255,0.45);">'+t+' × '+n+' =</span>'
                     +'<span style="font-size:1.15rem;font-weight:800;color:var(--primary-accent);">'+t*n+'</span>';
                 rowsEl.appendChild(row);
                 timers.push(setTimeout(function(){ row.style.opacity='1'; row.style.transform='translateX(0)'; }, n*120));
