@@ -33,6 +33,10 @@ body {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 
+.x-small {
+    font-size: 0.6rem !important;
+}
+
 /* Three.js Canvas */
 #bg-canvas {
     position: fixed;

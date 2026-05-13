@@ -191,16 +191,16 @@ $json_ld = json_encode([
                             <div class="row g-3 mb-4">
                                 <div class="col-4">
                                     <div class="data-tile">
-                                        <div class="small text-muted mb-1 text-uppercase">Ques</div>
+                                        <div class="x-small text-muted mb-1 text-uppercase">Ques</div>
                                         <div class="fs-2 fw-bold" style="color:#fff;">
                                             <span id="final-qpm">0</span>
-                                            <small class="fs-6 text-muted">Q</small>
+                                            <small class="fs-6 text-muted"></small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="data-tile">
-                                        <div class="small text-muted mb-1 text-uppercase">Accuracy</div>
+                                        <div class="x-small text-muted mb-1 text-uppercase">Accuracy</div>
                                         <div class="fs-2 fw-bold" style="color:#fff;">
                                             <span id="final-accuracy">0</span>%
                                         </div>
@@ -208,7 +208,7 @@ $json_ld = json_encode([
                                 </div>
                                 <div class="col-4">
                                     <div class="data-tile">
-                                        <div class="small text-muted mb-1 text-uppercase">LEVEL</div>
+                                        <div class="x-small text-muted mb-1 text-uppercase">LEVEL</div>
                                         <div class="fs-2 fw-bold" style="color:var(--primary-accent);">
                                             <span id="final-overall-lvl">1</span>
                                         </div>
