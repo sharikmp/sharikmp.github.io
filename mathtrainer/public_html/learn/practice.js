@@ -65,10 +65,19 @@
             b = rand(mr.min2, mr.max2);
             ans = a * b;
         } else { // div
+            // Division has its own ranges to avoid the shared min2>=100 clamping bug
+            const DIV_RANGES = [
+                { maxDivisor: 9,  maxQuotient: 9   },  // L1: single digit ÷ single digit
+                { maxDivisor: 9,  maxQuotient: 12  },  // L2: up to ÷9, quotient ≤ 12
+                { maxDivisor: 12, maxQuotient: 99  },  // L3: divisor ≤ 12, 2-digit quotient
+                { maxDivisor: 20, maxQuotient: 99  },  // L4: divisor ≤ 20, 2-digit quotient
+                { maxDivisor: 20, maxQuotient: 999 },  // L5: divisor ≤ 20, 3-digit quotient
+            ];
+            const dr = DIV_RANGES[level];
             // generate a clean division (no remainder)
-            b = rand(r.min1, Math.min(r.max1, 20));   // divisor capped at 20
-            ans = rand(r.min2, Math.min(r.max2, 99)); // quotient
-            a   = b * ans;                              // dividend = divisor × quotient
+            b   = rand(2, dr.maxDivisor);               // divisor
+            ans = rand(2, dr.maxQuotient);               // quotient
+            a   = b * ans;                               // dividend = divisor × quotient
         }
         return { a, b, ans };
     }

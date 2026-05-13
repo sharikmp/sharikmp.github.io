@@ -22,9 +22,39 @@ $page = [
     <link rel="stylesheet" href="<?= asset('learn/learn.css') ?>">
     <style>
         :root { --op-color:#b464ff; --op-glow:rgba(180,100,255,0.22); --op-faint:rgba(180,100,255,0.07); --primary-accent:#d4af37; }
+        /* op-color-tinted overrides */
+        .section-badge { background:rgba(180,100,255,0.08); border:1px solid rgba(180,100,255,0.25); color:var(--op-color); }
+        .definition-box { background:rgba(180,100,255,0.05); border-left:3px solid var(--op-color); }
+        .strategy-num { background:rgba(180,100,255,0.1); }
+        .prop-badge { background:rgba(180,100,255,0.08); border-color:rgba(180,100,255,0.22); }
+        /* divisibility table */
         .divisibility-row { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.84rem; }
         .divisibility-row:last-child { border-bottom:none; }
         .div-by { width:40px; height:28px; border-radius:8px; background:rgba(180,100,255,0.1); color:var(--op-color); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:0.85rem; font-weight:700; flex-shrink:0; }
+        /* ─── Division two-column animation ─── */
+        .div-anim { display:grid; grid-template-columns:70px 1fr; gap:6px 20px; align-items:start; padding:0.4rem 0.2rem; width:100%; }
+        .div-num-cell { font-family:'Space Grotesk',sans-serif; font-size:2.8rem; font-weight:900; color:#fff; opacity:0; transform:scale(0.4); transition:opacity .3s,transform .35s; text-align:center; line-height:1.2; align-self:center; }
+        .div-num-cell.show { opacity:1; transform:scale(1); }
+        .div-num-cell.ans-cell { color:var(--op-color); text-shadow:0 0 22px rgba(180,100,255,0.45); font-size:3rem; }
+        .div-op-cell { font-family:'Space Grotesk',sans-serif; font-size:1.8rem; font-weight:700; color:rgba(255,255,255,0.4); opacity:0; transition:opacity .3s; text-align:center; align-self:center; }
+        .div-op-cell.show { opacity:1; }
+        .div-line-cell { padding:2px 0; align-self:center; }
+        .div-line-bar { height:3px; background:linear-gradient(90deg,rgba(180,100,255,0.55),rgba(180,100,255,0.15)); border-radius:2px; transform:scaleX(0); transform-origin:left; transition:transform .38s ease-out; }
+        .div-line-bar.show { transform:scaleX(1); }
+        .div-pool-row { display:flex; flex-wrap:wrap; gap:5px; min-height:36px; align-items:center; align-self:center; }
+        .div-boxes-wrap { display:flex; flex-wrap:wrap; gap:8px; min-height:60px; align-items:flex-start; padding-top:4px; }
+        .div-box { display:flex; flex-direction:column; align-items:center; gap:5px; border:2px dashed rgba(180,100,255,0.18); border-radius:14px; padding:8px 7px; min-width:46px; opacity:0; transform:scale(0.3); transition:opacity .35s,transform .4s,border-color .3s; }
+        .div-box.show { opacity:1; transform:scale(1); }
+        .div-box-apples { display:flex; flex-wrap:wrap; gap:3px; justify-content:center; min-height:26px; }
+        .div-box-count { font-family:'Space Grotesk',sans-serif; font-size:0.78rem; font-weight:700; color:var(--op-color); min-height:1.1em; }
+        .div-counter { grid-column:1/-1; text-align:center; font-family:'Space Grotesk',sans-serif; font-size:0.85rem; font-weight:600; color:rgba(255,255,255,0.4); min-height:1.4em; opacity:0; transition:opacity .3s; padding-top:4px; }
+        .div-counter.show { opacity:1; }
+        .div-apple { font-size:1.35rem; display:inline-block; opacity:0; transform:scale(0.2); transition:opacity .4s,transform .4s; }
+        .div-apple.show { opacity:1; transform:scale(1); }
+        .div-apple.going { opacity:0 !important; transform:scale(0.1) translateY(-8px) !important; transition:opacity .38s ease,transform .38s ease !important; }
+        .div-box-apple { font-size:1.2rem; display:inline-block; }
+        @keyframes divArrive { 0%{opacity:0;transform:scale(0.1) translateY(-14px);} 65%{transform:scale(1.15) translateY(2px);} 100%{opacity:1;transform:scale(1) translateY(0);} }
+        .div-box-apple.arriving { animation:divArrive .55s ease both; }
     </style>
 </head>
 <body>
@@ -50,10 +80,24 @@ $page = [
 <!-- ██ ANIMATE TAB ██ -->
 <div id="tab-animate" class="learn-tab-panel active">
 <div class="page-card op-division">
-    <div class="anim-stage" id="anim-stage">
-        <div id="anim-groups" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:flex-start;min-height:80px;"></div>
-        <div class="anim-sep" id="anim-label" style="font-size:0.85rem;color:rgba(255,255,255,0.45);">Press Play</div>
-        <div class="anim-equation" id="anim-result" style="opacity:0;transition:opacity .4s">?</div>
+    <p style="font-size:0.78rem;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:0.8rem;">Watch the apples fill the pool, then share them equally into boxes &mdash; one by one, round-robin.</p>
+    <div class="div-anim" id="div-anim">
+        <div class="div-num-cell" id="div-num-a"></div>
+        <div class="div-pool-row" id="div-pool-row"></div>
+
+        <div class="div-op-cell" id="div-op">&divide;</div>
+        <div></div>
+
+        <div class="div-num-cell" id="div-num-b"></div>
+        <div></div>
+
+        <div class="div-line-cell"><div class="div-line-bar" id="div-line"></div></div>
+        <div class="div-line-cell"><div class="div-line-bar" id="div-line-r"></div></div>
+
+        <div class="div-num-cell ans-cell" id="div-ans"></div>
+        <div class="div-boxes-wrap" id="div-boxes-wrap"></div>
+
+        <div class="div-counter" id="div-counter"></div>
     </div>
     <div class="anim-controls">
         <button class="anim-btn" id="btn-play"><i class="fas fa-play"></i> Play</button>
@@ -149,60 +193,147 @@ $page = [
 initLearnTabs();
 initPractice({ op:'div', opColor:'#b464ff', containerId:'practice-division' });
 
-/* ── Division animation: N dots split into equal groups that light up one by one ── */
+/* ── Division animation: pool → share into boxes ── */
 (function(){
-    var groupsEl=document.getElementById('anim-groups'),
-        lbl    =document.getElementById('anim-label'),
-        res    =document.getElementById('anim-result'),
-        btnPlay=document.getElementById('btn-play'),
-        btnNew =document.getElementById('btn-new'),
-        dividend,divisor,quotient,timers=[];
+    var numA    = document.getElementById('div-num-a'),
+        opEl    = document.getElementById('div-op'),
+        numB    = document.getElementById('div-num-b'),
+        lineL   = document.getElementById('div-line'),
+        lineR   = document.getElementById('div-line-r'),
+        ansEl   = document.getElementById('div-ans'),
+        poolRow = document.getElementById('div-pool-row'),
+        boxWrap = document.getElementById('div-boxes-wrap'),
+        cntEl   = document.getElementById('div-counter'),
+        btnPlay = document.getElementById('btn-play'),
+        btnNew  = document.getElementById('btn-new'),
+        dividend, divisor, quotient, emoji, timers=[];
+
+    var EMOJIS=['🍎','🍏','🍋','🍇','🍓'];
 
     function rand(mn,mx){ return Math.floor(Math.random()*(mx-mn+1))+mn; }
     function clr(){ timers.forEach(clearTimeout); timers=[]; }
+    function after(fn,ms){ var id=setTimeout(fn,ms); timers.push(id); return id; }
+
+    function resetDOM(){
+        numA.className='div-num-cell'; numA.textContent='';
+        opEl.className='div-op-cell';
+        numB.className='div-num-cell'; numB.textContent='';
+        lineL.className='div-line-bar';
+        lineR.className='div-line-bar';
+        ansEl.className='div-num-cell ans-cell'; ansEl.textContent='';
+        poolRow.innerHTML=''; boxWrap.innerHTML='';
+        cntEl.className='div-counter'; cntEl.textContent='';
+    }
 
     function reset(){
-        clr(); divisor=rand(2,4); quotient=rand(2,5); dividend=divisor*quotient;
-        groupsEl.innerHTML=''; res.style.opacity='0';
-        lbl.textContent= dividend+' ÷ '+divisor+' = ?';
-        btnPlay.disabled=false; btnPlay.innerHTML='<i class="fas fa-play"></i> Play';
-        /* pre-build all groups (invisible) */
-        for(var g=0;g<divisor;g++){
-            var grp=document.createElement('div');
-            grp.style.cssText='display:flex;flex-wrap:wrap;gap:5px;pad:6px;border-radius:10px;border:1px dashed rgba(180,100,255,0.15);padding:8px;transition:border-color .3s;';
-            grp.dataset.group=g;
-            for(var d=0;d<quotient;d++){
-                var dot=document.createElement('span');
-                dot.className='anim-dot';
-                dot.style.background='#b464ff';
-                grp.appendChild(dot);
-            }
-            groupsEl.appendChild(grp);
-        }
+        clr();
+        divisor = rand(2,5);
+        var minQ = Math.ceil(10/divisor), maxQ = Math.floor(20/divisor);
+        quotient = rand(minQ, maxQ);
+        dividend = divisor * quotient;
+        emoji = EMOJIS[rand(0, EMOJIS.length-1)];
+        resetDOM();
+        btnPlay.disabled=false;
+        btnPlay.innerHTML='<i class="fas fa-play"></i> Play';
     }
 
     function play(){
-        btnPlay.disabled=true; btnPlay.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
-        var groups=groupsEl.querySelectorAll('[data-group]');
-        groups.forEach(function(grp,gi){
-            timers.push(setTimeout(function(){
-                grp.style.borderColor='rgba(180,100,255,0.55)';
-                grp.querySelectorAll('.anim-dot').forEach(function(d,di){
-                    timers.push(setTimeout(function(){ d.classList.add('show'); }, di*80));
-                });
-            }, gi*(quotient*80+200)));
-        });
-        var total=groups.length*(quotient*80+200)+200;
-        timers.push(setTimeout(function(){
-            lbl.textContent= dividend+' ÷ '+divisor+' =';
-            res.textContent=quotient;
-            res.style.opacity='1';
-            btnPlay.innerHTML='<i class="fas fa-check"></i> Done';
-        }, total));
+        clr(); resetDOM();
+        btnPlay.disabled=true;
+        btnPlay.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+        var T=0;
+
+        /* Pre-build hidden boxes */
+        var boxes=[];
+        for(var g=0;g<divisor;g++){
+            var box=document.createElement('div');
+            box.className='div-box';
+            var apArea=document.createElement('div'); apArea.className='div-box-apples';
+            var badge=document.createElement('div');  badge.className='div-box-count';
+            box.appendChild(apArea); box.appendChild(badge);
+            boxWrap.appendChild(box);
+            boxes.push({box:box, apples:apArea, count:badge, n:0});
+        }
+
+        /* Step 1 — dividend pops in */
+        numA.textContent=dividend;
+        after(function(){ numA.classList.add('show'); }, T+=200);
+        T+=380;
+
+        /* Step 2 — fill pool one apple at a time */
+        for(var i=0;i<dividend;i++){
+            (function(idx){
+                after(function(){
+                    var ap=document.createElement('span');
+                    ap.className='div-apple'; ap.textContent=emoji;
+                    poolRow.appendChild(ap);
+                    setTimeout(function(){ ap.classList.add('show'); },20);
+                }, T+idx*180);
+            })(i);
+        }
+        T+=dividend*180+400;
+
+        /* Step 3 — ÷ sign */
+        after(function(){ opEl.classList.add('show'); }, T);
+        T+=380;
+
+        /* Step 4 — divisor pops in */
+        numB.textContent=divisor;
+        after(function(){ numB.classList.add('show'); }, T);
+        T+=480;
+
+        /* Step 5 — line sweeps */
+        after(function(){
+            lineL.classList.add('show');
+            setTimeout(function(){ lineR.classList.add('show'); },60);
+        }, T);
+        T+=700;
+
+        /* Step 6 — boxes appear one by one */
+        for(var b=0;b<divisor;b++){
+            (function(bi){
+                after(function(){ boxes[bi].box.classList.add('show'); }, T+bi*320);
+            })(b);
+        }
+        T+=divisor*320+500;
+
+        /* Step 7 — share round-robin in to boxes */
+        after(function(){
+            cntEl.classList.add('show');
+            cntEl.textContent='Sharing out…';
+            var poolApples=[].slice.call(poolRow.querySelectorAll('.div-apple'));
+
+            poolApples.forEach(function(src,idx){
+                after(function(){
+                    var bi=idx % divisor;
+                    var bx=boxes[bi];
+                    src.classList.add('going');
+                    after(function(){
+                        var ap=document.createElement('span');
+                        ap.className='div-box-apple arriving'; ap.textContent=emoji;
+                        bx.apples.appendChild(ap);
+                        bx.n++;
+                        bx.count.textContent=bx.n;
+                        bx.box.style.borderColor='rgba(180,100,255,0.75)';
+                        setTimeout(function(){ bx.box.style.borderColor='rgba(180,100,255,0.35)'; },380);
+                    }, 360);
+                }, idx*360);
+            });
+
+            /* Step 8 — reveal answer */
+            after(function(){
+                ansEl.textContent=quotient;
+                ansEl.classList.add('show');
+                cntEl.textContent='🎉 '+dividend+' ÷ '+divisor+' = '+quotient;
+                boxes.forEach(function(bx){ bx.box.style.borderColor='rgba(180,100,255,0.65)'; });
+                btnPlay.innerHTML='<i class="fas fa-redo"></i> Replay';
+                btnPlay.disabled=false;
+            }, dividend*360+700);
+        }, T);
     }
 
-    btnPlay.addEventListener('click',play);
-    btnNew.addEventListener('click',reset);
+    btnPlay.addEventListener('click', play);
+    btnNew.addEventListener('click', function(){ reset(); play(); });
     reset();
 })();
 </script>
