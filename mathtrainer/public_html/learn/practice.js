@@ -109,10 +109,10 @@
             </div>
             <div class="sum-line"></div>
             <div class="sum-answer-row">
+                <button class="sum-check">✓</button>
                 <input class="sum-input" type="number" placeholder="?" autocomplete="off"
                        style="width:${colW}px;color:${opColor};"
                        aria-label="Enter answer">
-                <button class="sum-check">✓</button>
             </div>
             <span class="sum-badge-solved">✓</span>
         `;
@@ -127,11 +127,8 @@
                 card.classList.add('solved');
                 card.classList.remove('wrong');
                 input.readOnly = true;
-            } else {
-                card.classList.add('wrong');
-                card.classList.remove('solved');
-                setTimeout(() => card.classList.remove('wrong'), 600);
             }
+            // On wrong answer: do nothing, let user fix manually
         }
 
         input.addEventListener('keydown', e => { if (e.key === 'Enter') verify(); });
@@ -198,7 +195,7 @@
         for (let l = 0; l < LEVEL_COUNT; l++) {
             const pill = document.createElement('button');
             pill.className = 'level-pill' + (l === 0 ? ' active' : '');
-            pill.textContent = `Level ${l + 1}`;
+            pill.textContent = `L${l + 1}`;
             pill.dataset.level = l;
             pill.addEventListener('click', () => switchLevel(l));
             pillsEl.appendChild(pill);

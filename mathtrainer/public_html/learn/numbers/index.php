@@ -312,7 +312,7 @@ initLearnTabs();
         '2after': 'Fill 2 numbers after',
         '2before':'Fill 2 numbers before'
     };
-    var LEVEL_NAMES=['','After','Before','2 After','2 Before','Mix'];
+    var LEVEL_NAMES=['','L1','L2','L3','L4','L5'];
 
     var curLv=1;
     var batches=[null,[],[],[],[],[]];
@@ -351,7 +351,7 @@ initLearnTabs();
             '<div class="nseq-type">'+TYPE_LABELS[q.type]+'</div>'+
             seqHTML(q)+
             '<div class="nseq-foot">'+
-            '<button class="nseq-check">Check</button>'+
+            '<button class="nseq-check">✓</button>'+
             '<span class="nseq-result"></span>'+
             '</div>';
         div.querySelectorAll('.nseq-input').forEach(function(inp){
