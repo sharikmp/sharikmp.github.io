@@ -188,16 +188,16 @@ $json_ld = json_encode([
                             </h3>
 
                             <div class="row g-3 mb-4">
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="data-tile">
-                                        <div class="small text-muted mb-1 text-uppercase">Speed</div>
+                                        <div class="small text-muted mb-1 text-uppercase">Questions</div>
                                         <div class="fs-2 fw-bold" style="color:#fff;">
                                             <span id="final-qpm">0</span>
-                                            <small class="fs-6 text-muted">QPM</small>
+                                            <small class="fs-6 text-muted">Q</small>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="data-tile">
                                         <div class="small text-muted mb-1 text-uppercase">Accuracy</div>
                                         <div class="fs-2 fw-bold" style="color:#fff;">
@@ -205,23 +205,37 @@ $json_ld = json_encode([
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-4">
+                                    <div class="data-tile">
+                                        <div class="small text-muted mb-1 text-uppercase">Overall Lvl</div>
+                                        <div class="fs-2 fw-bold" style="color:var(--primary-accent);">
+                                            <span id="final-overall-lvl">1</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+                            <!-- Milestone Badges -->
+                            <div class="milestone-badges-row mb-3" id="milestone-badges"></div>
 
                             <!-- Score History -->
                             <div class="score-history" id="score-history-section" style="display:none;">
                                 <div class="score-history-list" id="score-history-list"></div>
                             </div>
 
-                            <div id="pb-badge" class="mb-4" style="display:none;">
-                                <span class="badge bg-warning text-dark fs-6 p-2 w-100"
-                                      style="box-shadow:0 0 15px rgba(255,193,7,0.6);">
-                                    <i class="fas fa-crown"></i> NEW PERSONAL BEST!
-                                </span>
+                            <div id="pb-badge" class="mb-4 text-center" style="display:none;">
+                                <div class="pb-badge-enhanced">
+                                    <div class="pb-badge-crown"><i class="fas fa-crown"></i></div>
+                                    <div class="pb-badge-text">NEW PERSONAL BEST!</div>
+                                </div>
                             </div>
                         </div><!-- /results-card -->
 
                         <div class="mt-4">
                             <div class="d-flex gap-2 justify-content-center mb-3">
+                                <a href="<?= url('learn/') ?>" class="btn btn-gold btn-lg flex-grow-1">
+                                    <i class="fas fa-book-open"></i> Learn
+                                </a>
                                 <button class="btn btn-primary btn-lg flex-grow-1" id="btn-replay"
                                         style="background:var(--primary-accent);color:black;border:none;font-weight:bold;">
                                     <i class="fas fa-rotate-right"></i> Go Again

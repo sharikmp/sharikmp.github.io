@@ -840,3 +840,108 @@ h3,
         padding: 0.75rem 1.25rem;
     }
 }
+
+/* ===================== ENHANCED PB BADGE ===================== */
+.pb-badge-enhanced {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #1a1000 0%, #2e1e00 50%, #1a1000 100%);
+    border: 2px solid #d4af37;
+    border-radius: 20px;
+    padding: 14px 32px;
+    width: 100%;
+    animation: pb-glow 1.6s ease-in-out infinite;
+}
+
+.pb-badge-crown {
+    font-size: 2.6rem;
+    color: #d4af37;
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.9));
+    animation: crown-bob 1.2s ease-in-out infinite;
+}
+
+.pb-badge-text {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: #d4af37;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.7);
+}
+
+@keyframes pb-glow {
+    0%, 100% { box-shadow: 0 0 18px rgba(212, 175, 55, 0.35), inset 0 0 14px rgba(212, 175, 55, 0.06); }
+    50%       { box-shadow: 0 0 44px rgba(212, 175, 55, 0.7),  inset 0 0 24px rgba(212, 175, 55, 0.14); }
+}
+
+@keyframes crown-bob {
+    0%, 100% { transform: translateY(0)   rotate(-6deg); }
+    50%       { transform: translateY(-7px) rotate(6deg); }
+}
+
+/* ===================== MILESTONE SCORE BADGES ===================== */
+.milestone-badges-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.milestone-badge {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 10px 6px;
+    border-radius: 14px;
+    min-width: 62px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s;
+}
+
+.milestone-badge.locked {
+    filter: grayscale(1);
+    opacity: 0.3;
+}
+
+.milestone-badge.unlocked {
+    animation: mb-pulse 2s ease-in-out infinite;
+}
+
+.milestone-badge .mb-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.milestone-badge .mb-score {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.milestone-badge .mb-name {
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    opacity: 0.55;
+    color: #fff;
+}
+
+.milestone-badge .mb-lock {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    font-size: 0.5rem;
+    opacity: 0.5;
+    color: #fff;
+}
+
+@keyframes mb-pulse {
+    0%, 100% { box-shadow: 0 0 8px  rgba(255, 215, 0, 0.25); }
+    50%       { box-shadow: 0 0 20px rgba(255, 215, 0, 0.55); }
+}

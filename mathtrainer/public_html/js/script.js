@@ -440,6 +440,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('final-qpm').textContent = qpm;
         document.getElementById('final-accuracy').textContent = accuracy;
 
+        const overallLvl = Math.max(STATE.levels.add, STATE.levels.sub, STATE.levels.mul, STATE.levels.div);
+        const elOvLvl = document.getElementById('final-overall-lvl');
+        if (elOvLvl) elOvLvl.textContent = overallLvl;
+
         // Save to history & render
         saveScoreToHistory(STATE.score, accuracy);
         renderScoreHistory();
@@ -461,6 +465,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             badge.style.display = 'none';
         }
+
+        const allTimePB = parseInt(localStorage.getItem('mathTrainerPB') || 0);
+        renderMilestoneBadges(allTimePB);
 
         switchView('view-results');
     }
@@ -626,6 +633,29 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="pill-label">${label}</span>
                         <span class="pill-score">${entry.score}</span>
                         <span class="pill-accuracy">${entry.accuracy}%</span>
+                    </div>`;
+        }).join('');
+    }
+
+    function renderMilestoneBadges(bestPB) {
+        const milestones = [
+            { score: 100,  icon: 'fa-medal',  name: 'Bronze',  color: '#cd7f32' },
+            { score: 200,  icon: 'fa-medal',  name: 'Silver',  color: '#c0c0c0' },
+            { score: 500,  icon: 'fa-trophy', name: 'Gold',    color: '#ffd700' },
+            { score: 1000, icon: 'fa-gem',    name: 'Diamond', color: '#00f3ff' },
+        ];
+        const container = document.getElementById('milestone-badges');
+        if (!container) return;
+        container.innerHTML = milestones.map(m => {
+            const unlocked = bestPB >= m.score;
+            const borderStyle = unlocked ? `border:1px solid ${m.color};` : '';
+            const glowStyle   = unlocked ? `box-shadow:0 0 14px ${m.color}66;` : '';
+            const iconStyle   = unlocked ? `color:${m.color};filter:drop-shadow(0 0 6px ${m.color});` : '';
+            return `<div class="milestone-badge ${unlocked ? 'unlocked' : 'locked'}" style="${borderStyle}${glowStyle}">
+                        <div class="mb-icon" style="${iconStyle}"><i class="fas ${m.icon}"></i></div>
+                        <div class="mb-score">${m.score}</div>
+                        <div class="mb-name">${m.name}</div>
+                        ${!unlocked ? '<div class="mb-lock"><i class="fas fa-lock"></i></div>' : ''}
                     </div>`;
         }).join('');
     }
