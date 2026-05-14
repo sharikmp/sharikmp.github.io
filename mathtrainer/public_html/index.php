@@ -145,6 +145,19 @@ $json_ld = json_encode([
                             </div>
                         </div>
 
+                        <!-- Per-Operation & Total Questions Stats -->
+                        <div class="game-stats-panel mb-3 px-2" id="game-stats-panel">
+                            <div class="game-stats-row">
+                                <span class="game-stat-label">Total: <span id="ui-total-questions">0</span></span>
+                                <span class="game-ops-progress">
+                                    <span class="op-stat" id="op-stat-add">+: <span class="op-count">0</span></span>
+                                    <span class="op-stat" id="op-stat-sub">−: <span class="op-count">0</span></span>
+                                    <span class="op-stat" id="op-stat-mul">×: <span class="op-count">0</span></span>
+                                    <span class="op-stat" id="op-stat-div">÷: <span class="op-count">0</span></span>
+                                </span>
+                            </div>
+                        </div>
+
                         <div class="glass-panel text-center py-5 px-3">
                             <div id="math-problem" class="math-font text-white">0 + 0</div>
                             <input type="number" id="math-input" inputmode="none"

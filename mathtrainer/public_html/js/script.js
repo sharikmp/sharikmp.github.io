@@ -288,7 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
         interval: null,
         isPlaying: false,
         levels: loadLevels(),
-        levelProgress: loadLevelProgress()
+        levelProgress: loadLevelProgress(),
+        questionsPerOp: { add: 0, sub: 0, mul: 0, div: 0 }
     };
 
     // DOM Elements
@@ -306,6 +307,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const elStreak = document.getElementById('ui-streak');
     const timerContainer = document.getElementById('timer-container');
     const timerBar = document.getElementById('timer-bar');
+
+    // Per-Operation Stats Elements
+    const elTotalQuestions = document.getElementById('ui-total-questions');
+    const elOpStats = {
+        add: document.getElementById('op-stat-add'),
+        sub: document.getElementById('op-stat-sub'),
+        mul: document.getElementById('op-stat-mul'),
+        div: document.getElementById('op-stat-div')
+    };
 
     // View Transition Logic
     function switchView(viewId) {
@@ -411,6 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
         STATE.timeLeft = GAME_DURATION_SECONDS;
         STATE.totalQuestions = 0;
         STATE.correctAnswers = 0;
+        STATE.questionsPerOp = { add: 0, sub: 0, mul: 0, div: 0 };
         STATE.isPlaying = true;
 
         // Update UI
@@ -435,6 +446,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start Timer
         clearInterval(STATE.interval);
         STATE.interval = setInterval(gameTick, 1000);
+    }
+
+    function updateGameStats() {
+        // Update total questions
+        elTotalQuestions.textContent = STATE.totalQuestions;
+        
+        // Update per-operation counts
+        const ops = ['add', 'sub', 'mul', 'div'];
+        ops.forEach(op => {
+            const el = elOpStats[op];
+            if (el) {
+                const countSpan = el.querySelector('.op-count');
+                if (countSpan) {
+                    countSpan.textContent = STATE.questionsPerOp[op];
+                }
+            }
+        });
     }
 
     function gameTick() {
@@ -542,6 +570,9 @@ document.addEventListener('DOMContentLoaded', () => {
         STATE.correctAnswers++;
         STATE.streak++;
 
+        // Track questions per operation
+        STATE.questionsPerOp[STATE.currentOp]++;
+
         // Level-based scoring: operationLevel × 10
         const opKey = STATE.currentOp;
         const points = STATE.levels[opKey] * 10;
@@ -566,12 +597,14 @@ document.addEventListener('DOMContentLoaded', () => {
         elInput.classList.add('glow-success');
         setTimeout(() => elInput.classList.remove('glow-success'), 200);
 
+        updateGameStats();
         generateProblem();
     }
 
     function handleIncorrect() {
         playSound('incorrect');
         STATE.totalQuestions++;
+        STATE.questionsPerOp[STATE.currentOp]++;
         STATE.streak = 0;
         elStreak.textContent = STATE.streak;
 
@@ -579,6 +612,8 @@ document.addEventListener('DOMContentLoaded', () => {
         elInput.classList.add('shake');
         elInput.value = ''; // clear field
         setTimeout(() => elInput.classList.remove('shake'), 400);
+
+        updateGameStats();
     }
 
     function renderLandingStats() {
