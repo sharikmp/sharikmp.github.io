@@ -763,7 +763,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show history on page load if available
     renderLandingStats();
 
-    if (window.__MT_START_FROM_HIW === true) {
-        startGame();
-    }
 });

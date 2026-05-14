@@ -42,13 +42,6 @@ $page = [
             color: var(--primary-accent); text-shadow: 0 0 12px rgba(212,175,55,0.5);
             text-decoration: none; letter-spacing: 2px;
         }
-        .btn-close-hiw {
-            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255,255,255,0.55); border-radius: 50%; width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none; transition: all 0.2s; font-size: 0.9rem;
-        }
-        .btn-close-hiw:hover { background: rgba(255,255,255,0.12); color: #fff; }
         .hiw-card {
             background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.1rem;
@@ -117,7 +110,7 @@ $page = [
         <!-- Nav -->
         <nav class="hiw-nav">
             <a href="<?= url() ?>" class="brand"><i class="fas fa-bolt"></i> MATH TRAINER</a>
-            <a href="<?= url() ?>" class="btn-close-hiw" title="Back"><i class="fas fa-xmark"></i></a>
+            <a href="<?= url() ?>" class="btn-outline-hiw"><i class="fas fa-house"></i> Home</a>
         </nav>
 
         <!-- Hero -->
@@ -220,18 +213,13 @@ $page = [
 
         <!-- CTA -->
         <div class="text-center mt-4 pb-2 d-flex gap-3 justify-content-center flex-wrap">
-            <a href="<?= url() ?>" class="btn-gold-hiw" id="btn-hiw-start"><i class="fas fa-play"></i> Start Game</a>
-            <a href="<?= url() ?>" class="btn-outline-hiw"><i class="fas fa-house"></i> Home</a>
+            <a href="<?= url() ?>" class="btn-gold-hiw"><i class="fas fa-house"></i> Home</a>
         </div>
 
     </div>
 </div>
 
 <script>
-    document.getElementById('btn-hiw-start').addEventListener('click', function () {
-        document.cookie = 'mt_start_game_next_load=1; path=/; SameSite=Lax';
-    });
-
     // Level demo animation (no Three.js dependency)
     (function () {
         const demos = ['1-1-1-1', '2-1-1-1', '2-2-1-1', '3-2-2-1', '3-2-2-2', '4-3-3-2'];
