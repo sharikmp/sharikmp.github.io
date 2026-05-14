@@ -229,7 +229,7 @@ $page = [
 
 <script>
     document.getElementById('btn-hiw-start').addEventListener('click', function () {
-        sessionStorage.setItem('mt_start_game_next_load', '1');
+        document.cookie = 'mt_start_game_next_load=1; path=/; SameSite=Lax';
     });
 
     // Level demo animation (no Three.js dependency)

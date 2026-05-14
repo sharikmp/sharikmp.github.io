@@ -235,8 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('mathTrainerLevelProgress', JSON.stringify(STATE.levelProgress));
     }
 
-    const START_GAME_FLAG = 'mt_start_game_next_load';
-
     const GAME_DURATION_SECONDS = 60;
 
     const STATE = {
@@ -376,6 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startGame() {
+        document.documentElement.classList.remove('start-game-from-hiw');
+
         // Reset State
         STATE.score = 0;
         STATE.streak = 0;
@@ -763,8 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show history on page load if available
     renderLandingStats();
 
-    if (sessionStorage.getItem(START_GAME_FLAG) === '1') {
-        sessionStorage.removeItem(START_GAME_FLAG);
+    if (window.__MT_START_FROM_HIW === true) {
         startGame();
     }
 });

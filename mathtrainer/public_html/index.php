@@ -10,6 +10,11 @@ require_once __DIR__ . '/../config/config.php';
 // Constant for this file's depth so includes know where they live
 define('PATH_INCLUDES', __DIR__ . '/../includes');
 
+$startFromHiw = isset($_COOKIE['mt_start_game_next_load']) && $_COOKIE['mt_start_game_next_load'] === '1';
+if ($startFromHiw) {
+    setcookie('mt_start_game_next_load', '', time() - 3600, '/');
+}
+
 // ── Page-specific meta ───────────────────────────────────────
 $page = [
     'title'       => 'MathTrainer &mdash; Free Adaptive Mental Math Game | Train Speed &amp; Precision',
@@ -47,9 +52,13 @@ $json_ld = json_encode([
 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="<?= $startFromHiw ? 'start-game-from-hiw' : '' ?>">
 <head>
     <?php require_once PATH_INCLUDES . '/head.php'; ?>
+
+    <script>
+        window.__MT_START_FROM_HIW = <?= $startFromHiw ? 'true' : 'false' ?>;
+    </script>
 
     <!-- Structured Data (home page only) -->
     <script type="application/ld+json"><?= $json_ld ?></script>
