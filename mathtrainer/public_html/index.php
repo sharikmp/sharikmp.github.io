@@ -266,7 +266,7 @@ $json_ld = json_encode([
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="<?= asset('js/loader.js') ?>"></script>
-    <script src="<?= asset('js/script.js') ?>"></script>
+    <script src="<?= asset('js/script.js') ?>?v=<?= filemtime(__DIR__ . '/js/script.js') ?>"></script>
 
 </body>
 </html>
