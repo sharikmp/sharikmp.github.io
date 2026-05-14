@@ -235,10 +235,12 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('mathTrainerLevelProgress', JSON.stringify(STATE.levelProgress));
     }
 
+    const GAME_DURATION_SECONDS = 10;
+
     const STATE = {
         score: 0,
         streak: 0,
-        timeLeft: 60,
+        timeLeft: GAME_DURATION_SECONDS,
         totalQuestions: 0,
         correctAnswers: 0,
         currentAnswer: 0,
@@ -375,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset State
         STATE.score = 0;
         STATE.streak = 0;
-        STATE.timeLeft = 60;
+        STATE.timeLeft = GAME_DURATION_SECONDS;
         STATE.totalQuestions = 0;
         STATE.correctAnswers = 0;
         STATE.isPlaying = true;
@@ -408,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!STATE.isPlaying) return;
 
         STATE.timeLeft--;
-        const percentage = (STATE.timeLeft / 60) * 100;
+        const percentage = (STATE.timeLeft / GAME_DURATION_SECONDS) * 100;
         timerBar.style.width = `${percentage}%`;
 
         // Color coding timer
