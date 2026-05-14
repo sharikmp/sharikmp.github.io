@@ -200,22 +200,62 @@ document.addEventListener('DOMContentLoaded', () => {
        3. GAME STATE & LOGIC
        ========================================= */
 
-    /* ---- Adaptive Difficulty: Level → Digit Config ---- */
-    const LEVEL_CONFIGS = [
-        null,           // index 0 unused (levels are 1-based)
-        { d1: 1, d2: 1 }, // Level 1: 1-digit op 1-digit
-        { d1: 1, d2: 2 }, // Level 2: 1-digit op 2-digit
-        { d1: 2, d2: 2 }, // Level 3: 2-digit op 2-digit
-        { d1: 1, d2: 3 }, // Level 4: 1-digit op 3-digit
-        { d1: 2, d2: 3 }, // Level 5: 2-digit op 3-digit
-        { d1: 3, d2: 3 }, // Level 6: 3-digit op 3-digit
-        // Level 7+: 3-number questions (threeNum flag)
-    ];
+        const LEVEL_UP_CORRECT_ANSWERS = 10;
+        const THREE_NUMBER_START_LEVEL = 7;
+        const MAX_DIGITS_PER_OPERAND = 7;
+        const THIRD_MULTIPLIER_MAX = 9;
 
-    function getRange(d) {
-        if (d === 1) return [1, 9];
-        if (d === 2) return [10, 99];
-        return [100, 999];
+        /* ---- Adaptive Difficulty: Level → Digit Config ---- */
+        const BASE_LEVEL_CONFIGS = [
+            null,             // index 0 unused (levels are 1-based)
+            { d1: 1, d2: 1 }, // Level 1: 1-digit op 1-digit
+            { d1: 1, d2: 2 }, // Level 2: 1-digit op 2-digit
+            { d1: 2, d2: 2 }, // Level 3: 2-digit op 2-digit
+            { d1: 1, d2: 3 }, // Level 4: 1-digit op 3-digit
+            { d1: 2, d2: 3 }, // Level 5: 2-digit op 3-digit
+            { d1: 3, d2: 3 }, // Level 6: 3-digit op 3-digit
+        ];
+
+        const BASE_DIVISION_LEVEL_CONFIGS = [
+            null,
+            { ad: 1, dd: 1 }, // Level 1: 1-digit answer, 1-digit divisor
+            { ad: 2, dd: 1 }, // Level 2: 2-digit answer, 1-digit divisor
+            { ad: 2, dd: 2 }, // Level 3: 2-digit answer, 2-digit divisor
+            { ad: 3, dd: 1 }, // Level 4: 3-digit answer, 1-digit divisor
+            { ad: 3, dd: 2 }, // Level 5: 3-digit answer, 2-digit divisor
+            { ad: 3, dd: 2 }, // Level 6: 3-digit answer, 2-digit divisor
+        ];
+
+        function getRange(digits) {
+            if (digits <= 1) return [1, 9];
+            const min = Math.pow(10, digits - 1);
+            const max = Math.pow(10, digits) - 1;
+            return [min, max];
+        }
+
+        function getLevelDigitConfig(level) {
+            if (level < BASE_LEVEL_CONFIGS.length) {
+                return BASE_LEVEL_CONFIGS[level];
+            }
+
+            const extraLevels = level - (BASE_LEVEL_CONFIGS.length - 1);
+            const d1 = Math.min(MAX_DIGITS_PER_OPERAND, 3 + Math.floor(extraLevels / 2));
+            const d2 = Math.min(MAX_DIGITS_PER_OPERAND, 3 + Math.ceil(extraLevels / 2));
+            return { d1, d2 };
+        }
+
+        function getDivisionLevelConfig(level) {
+            if (level < BASE_DIVISION_LEVEL_CONFIGS.length) {
+                const baseConfig = BASE_DIVISION_LEVEL_CONFIGS[level];
+                const [dMin, dMax] = getRange(baseConfig.dd);
+                return { ad: baseConfig.ad, dMin, dMax };
+            }
+
+            const digitConfig = getLevelDigitConfig(level);
+            const answerDigits = digitConfig.d2;
+            const divisorDigits = Math.max(1, digitConfig.d1 - 1);
+            const [dMin, dMax] = getRange(divisorDigits);
+            return { ad: answerDigits, dMin, dMax };
     }
 
     function loadLevels() {
@@ -296,9 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
         STATE.currentOp = opKeys[idx];
 
         const level = STATE.levels[STATE.currentOp];
-        const cfgIdx = Math.min(level, 6);
-        const cfg = LEVEL_CONFIGS[cfgIdx];
-        const threeNum = level >= 7;
+        const cfg = getLevelDigitConfig(level);
+        const threeNum = level >= THREE_NUMBER_START_LEVEL;
 
         let n1, n2, n3, answer;
 
@@ -341,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
             n1 = getRandomInt(r1min, r1max);
             n2 = getRandomInt(r2min, r2max);
             if (threeNum) {
-                n3 = getRandomInt(2, 9); // keep 3rd factor small for mental math sanity
+                n3 = getRandomInt(2, THIRD_MULTIPLIER_MAX); // keep 3rd factor small for mental math sanity
                 answer = n1 * n2 * n3;
                 elProblem.textContent = `${n1} × ${n2} × ${n3}`;
             } else {
@@ -350,17 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
         } else { // ÷ — always generates clean integer answers
-            // Level-specific division config: [answerDigits, divisorMin, divisorMax]
-            const divMaps = [
-                null,
-                { ad: 1, dMin: 2, dMax: 9 },    // L1: answer 1d ÷ 1d
-                { ad: 2, dMin: 2, dMax: 9 },    // L2: answer 2d ÷ 1d
-                { ad: 2, dMin: 10, dMax: 12 },  // L3: answer 2d ÷ small 2d
-                { ad: 3, dMin: 2, dMax: 9 },    // L4: answer 3d ÷ 1d
-                { ad: 3, dMin: 10, dMax: 15 },  // L5: answer 3d ÷ mid 2d
-                { ad: 3, dMin: 10, dMax: 20 },  // L6+: answer 3d ÷ 2d
-            ];
-            const dmap = divMaps[Math.min(level, 6)];
+            const dmap = getDivisionLevelConfig(level);
             const [ansMin, ansMax] = getRange(dmap.ad);
             answer = getRandomInt(Math.max(2, ansMin), ansMax);
             n2 = getRandomInt(dmap.dMin, dmap.dMax);
@@ -521,9 +550,9 @@ document.addEventListener('DOMContentLoaded', () => {
         elScore.textContent = STATE.score;
         elStreak.textContent = STATE.streak;
 
-        // Track level progress — level up after 10 correct per op per level
+        // Track level progress per operation and promote after the configured threshold.
         STATE.levelProgress[opKey]++;
-        if (STATE.levelProgress[opKey] >= 10) {
+        if (STATE.levelProgress[opKey] >= LEVEL_UP_CORRECT_ANSWERS) {
             STATE.levelProgress[opKey] = 0;
             STATE.levels[opKey]++;
             saveLevels();
