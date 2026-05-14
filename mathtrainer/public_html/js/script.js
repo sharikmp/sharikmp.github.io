@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('mathTrainerLevelProgress', JSON.stringify(STATE.levelProgress));
     }
 
-    const GAME_DURATION_SECONDS = 10;
+    const GAME_DURATION_SECONDS = 60;
 
     const STATE = {
         score: 0,
@@ -576,12 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Button Listeners
     btnStart.addEventListener('click', () => {
         if (audioCtx.state === 'suspended') audioCtx.resume();
-        const visited = localStorage.getItem('mathTrainerHowItWorksVisited');
-        if (!visited) {
-            window.location.href = 'howitworks.php?from=start';
-        } else {
-            startGame();
-        }
+        startGame();
     });
     btnReplay.addEventListener('click', startGame);
 
@@ -765,4 +760,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Show history on page load if available
     renderLandingStats();
+
+    if (new URLSearchParams(window.location.search).get('autostart') === '1') {
+        startGame();
+    }
 });

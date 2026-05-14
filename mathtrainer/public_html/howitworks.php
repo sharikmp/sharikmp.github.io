@@ -220,7 +220,7 @@ $page = [
 
         <!-- CTA -->
         <div class="text-center mt-4 pb-2 d-flex gap-3 justify-content-center flex-wrap">
-            <a href="<?= url() ?>" class="btn-gold-hiw"><i class="fas fa-play"></i> Start Game</a>
+            <a href="<?= url('?autostart=1') ?>" class="btn-gold-hiw"><i class="fas fa-play"></i> Start Game</a>
             <a href="<?= url() ?>" class="btn-outline-hiw"><i class="fas fa-house"></i> Home</a>
         </div>
 
@@ -228,9 +228,6 @@ $page = [
 </div>
 
 <script>
-    // Mark page as visited so index.php won't redirect here again
-    localStorage.setItem('mathTrainerHowItWorksVisited', 'true');
-
     // Level demo animation (no Three.js dependency)
     (function () {
         const demos = ['1-1-1-1', '2-1-1-1', '2-2-1-1', '3-2-2-1', '3-2-2-2', '4-3-3-2'];
