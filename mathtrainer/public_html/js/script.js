@@ -643,44 +643,70 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function buildShareMessage() {
+        const score = document.getElementById('final-score')?.textContent?.trim() || String(STATE.score || 0);
+        const qpm = document.getElementById('final-qpm')?.textContent?.trim() || String(STATE.totalQuestions || 0);
+        const accuracy = document.getElementById('final-accuracy')?.textContent?.trim() || '0';
+        return `I scored ${score} on MathTrainer. ${qpm} questions, ${accuracy}% accuracy. Can you beat my score? Play now: ${window.location.origin}`;
+    }
+
+    async function shareWithWebApi({ title, text, imageDataUrl }) {
+        if (!navigator.share) return false;
+
+        try {
+            if (imageDataUrl) {
+                const res = await fetch(imageDataUrl);
+                const blob = await res.blob();
+                const file = new File([blob], 'mathtrainer-score.jpg', { type: 'image/jpeg' });
+
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({ title, text, files: [file] });
+                    return true;
+                }
+            }
+
+            await navigator.share({ title, text });
+            return true;
+        } catch (err) {
+            console.log('Share failed:', err);
+            return false;
+        }
+    }
+
+    async function copyShareText(text) {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+                return true;
+            }
+        } catch (err) {
+            console.log('Clipboard copy failed:', err);
+        }
+        return false;
+    }
+
     async function shareScore(platform) {
         const imageDataUrl = await generateShareImage();
+        const shareText = buildShareMessage();
+        const shareTitle = 'MathTrainer Score';
 
-        if (platform === 'native' && navigator.share) {
-            try {
-                if (imageDataUrl) {
-                    const res = await fetch(imageDataUrl);
-                    const blob = await res.blob();
-                    const file = new File([blob], 'mathtrainer-score.jpg', { type: 'image/jpeg' });
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        await navigator.share({ title: 'MathTrainer Score', files: [file] });
-                        return;
-                    }
-                }
-                if (imageDataUrl) triggerDownload(imageDataUrl);
-            } catch (err) {
-                console.log('Error sharing:', err);
-            }
+        if (platform === 'whatsapp') {
+            const shared = await shareWithWebApi({ title: shareTitle, text: shareText, imageDataUrl });
+            if (shared) return;
+
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer');
+            return;
         }
-        else if (platform === 'whatsapp') {
-            // On mobile, use Web Share API so OS share sheet opens (WhatsApp listed there)
-            if (imageDataUrl && navigator.share) {
-                try {
-                    const res = await fetch(imageDataUrl);
-                    const blob = await res.blob();
-                    const file = new File([blob], 'mathtrainer-score.jpg', { type: 'image/jpeg' });
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        await navigator.share({ title: 'MathTrainer Score', files: [file] });
-                        return;
-                    }
-                } catch (err) {
-                    console.log('WhatsApp share error:', err);
-                }
-            }
-            // Desktop fallback: download image + open WhatsApp web with text
+
+        if (platform === 'native') {
+            const shared = await shareWithWebApi({ title: shareTitle, text: shareText, imageDataUrl });
+            if (shared) return;
+
+            if (await copyShareText(shareText)) return;
             if (imageDataUrl) triggerDownload(imageDataUrl);
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('Check out my MathTrainer scorecard! 🚀')}`);
+            return;
         }
+
         else if (platform === 'download') {
             if (imageDataUrl) triggerDownload(imageDataUrl);
         }
