@@ -441,6 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         switchView('view-game');
+        updateGameStats();
         generateProblem();
 
         // Start Timer
