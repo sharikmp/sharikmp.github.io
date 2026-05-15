@@ -303,17 +303,265 @@ h3,
 
 .op-stat {
     display: inline-flex;
-    gap: 4px;
+    gap: 6px;
     align-items: center;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.88);
     font-size: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 999px;
+    padding: 3px 8px 3px 3px;
+    background: rgba(9, 16, 38, 0.55);
 }
 
 .op-stat .op-count {
     color: #00f3ff;
     font-weight: 600;
-    min-width: 20px;
+    min-width: 44px;
     text-align: center;
+    letter-spacing: 0.2px;
+}
+
+.op-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.5rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.op-icon.op-add {
+    background: linear-gradient(140deg, #00b784, #0f7f64);
+    box-shadow: 0 0 10px rgba(0, 183, 132, 0.42);
+}
+
+.op-icon.op-sub {
+    background: linear-gradient(140deg, #ff5f5f, #cc3f3f);
+    box-shadow: 0 0 10px rgba(255, 95, 95, 0.38);
+}
+
+.op-icon.op-mul {
+    background: linear-gradient(140deg, #9b5bff, #6a36c9);
+    box-shadow: 0 0 10px rgba(155, 91, 255, 0.42);
+}
+
+.op-icon.op-div {
+    background: linear-gradient(140deg, #2da7ff, #1d78d2);
+    box-shadow: 0 0 10px rgba(45, 167, 255, 0.42);
+}
+
+/* Pre-Game Popup */
+.pregame-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    pointer-events: auto;
+    background: rgba(4, 4, 12, 0.78);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.pregame-card {
+    width: min(680px, 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.32);
+    background: linear-gradient(160deg, rgba(15, 15, 30, 0.94), rgba(10, 10, 20, 0.9));
+    box-shadow: 0 18px 70px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 243, 255, 0.09) inset;
+    padding: 1rem;
+}
+
+.pregame-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.pregame-head h2 {
+    margin: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary-accent);
+}
+
+.pregame-close {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+}
+
+.pregame-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.pregame-block {
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.85rem;
+}
+
+.pregame-block-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.4rem;
+}
+
+.pregame-overall {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+}
+
+.pregame-overall span {
+    color: var(--primary-accent);
+}
+
+.pregame-overall.small {
+    font-size: 0.86rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.pregame-overall-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+}
+.pregame-overall-row .pregame-overall {
+    margin-bottom: 0;
+}
+
+.pregame-op-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem 0.75rem;
+}
+
+.pregame-op-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 0.38rem 0.55rem;
+    font-size: 0.86rem;
+}
+
+.pregame-op-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.4px;
+}
+
+.pregame-autostart-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.pregame-ring-wrap {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pregame-ring-svg {
+    position: absolute;
+    inset: 0;
+    transform: rotate(-90deg);
+}
+
+.pregame-ring-track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.12);
+    stroke-width: 10;
+}
+
+.pregame-ring-progress {
+    fill: none;
+    stroke: var(--neon-cyan);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 314.159;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.35s linear;
+}
+
+.pregame-ring-number {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.pregame-autostart-text {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.92rem;
+    letter-spacing: 0.3px;
+}
+
+.pregame-actions {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.alltime-solved-tile {
+    border: 1px solid rgba(0, 243, 255, 0.32);
+    background: rgba(0, 243, 255, 0.08);
+    border-radius: 16px;
+    padding: 0.85rem 1rem;
+}
+
+.alltime-solved-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.alltime-solved-value {
+    color: var(--neon-cyan);
+    font-size: 1.65rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.milestone-title {
+    margin: 0.45rem 0 0.7rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1.15px;
+    color: rgba(255, 255, 255, 0.58);
 }
 
 /* Footer Styling */
@@ -888,6 +1136,53 @@ h3,
     .btn-hiw {
         font-size: 0.85rem;
         padding: 0.75rem 1.25rem;
+    }
+
+    .pregame-card {
+        padding: 0.75rem;
+    }
+
+    .pregame-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pregame-op-list {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .pregame-autostart-wrap {
+        gap: 0.6rem;
+    }
+
+    .pregame-autostart-text {
+        font-size: 0.84rem;
+    }
+
+    .game-stats-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .game-ops-progress {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+
+    .op-stat {
+        padding: 3px 7px 3px 3px;
+    }
+
+    .op-stat .op-count {
+        min-width: 38px;
+        font-size: 0.74rem;
+    }
+
+    .op-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 0.5rem;
     }
 }
 

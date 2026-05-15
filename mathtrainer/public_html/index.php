@@ -122,6 +122,89 @@ $json_ld = json_encode([
             </div>
         </section>
 
+        <!-- ── Pre-Game Ready Popup ─────────────────────────── -->
+        <div id="pregame-modal" class="pregame-modal interactive-layer" style="display:none;" aria-hidden="true">
+            <div class="pregame-card" role="dialog" aria-modal="true" aria-labelledby="pregame-title">
+                <div class="pregame-head">
+                    <h2 id="pregame-title">Ready to Play?</h2>
+                    <button class="pregame-close" id="btn-pregame-close" title="Close">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="pregame-grid">
+                    <div class="pregame-block">
+                        <div class="pregame-block-title">Levels</div>
+                        <div class="pregame-overall">Overall: <span id="pregame-overall-level">1</span></div>
+                        <div class="pregame-op-list">
+                            <div class="pregame-op-row">
+                                <span class="op-icon op-add"><i class="fas fa-plus"></i></span>
+                                <span class="pregame-op-value" id="pregame-level-add">1</span>
+                            </div>
+                            <div class="pregame-op-row">
+                                <span class="op-icon op-sub"><i class="fas fa-minus"></i></span>
+                                <span class="pregame-op-value" id="pregame-level-sub">1</span>
+                            </div>
+                            <div class="pregame-op-row">
+                                <span class="op-icon op-mul"><i class="fas fa-xmark"></i></span>
+                                <span class="pregame-op-value" id="pregame-level-mul">1</span>
+                            </div>
+                            <div class="pregame-op-row">
+                                <span class="op-icon op-div"><i class="fas fa-divide"></i></span>
+                                <span class="pregame-op-value" id="pregame-level-div">1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pregame-block">
+                        <div class="pregame-block-title">Solved So Far</div>
+                        <div class="pregame-overall-row">
+                            <div class="pregame-overall small">Total: <span id="pregame-total-solved">0</span></div>
+                            <div class="pregame-overall small">Answered: <span id="pregame-total-answered">0</span></div>
+                        </div>
+                        <div class="pregame-op-list">
+                            <div class="pregame-op-row">
+                                <span class="op-icon op-add"><i class="fas fa-plus"></i></span>
+                                <span class="pregame-op-value" id="pregame-solved-add">0</span>
+                            </div>
+                            <div class="pregame-op-row">
+                                <span class="op-icon op-sub"><i class="fas fa-minus"></i></span>
+                                <span class="pregame-op-value" id="pregame-solved-sub">0</span>
+                            </div>
+                            <div class="pregame-op-row">
+                                <span class="op-icon op-mul"><i class="fas fa-xmark"></i></span>
+                                <span class="pregame-op-value" id="pregame-solved-mul">0</span>
+                            </div>
+                            <div class="pregame-op-row">
+                                <span class="op-icon op-div"><i class="fas fa-divide"></i></span>
+                                <span class="pregame-op-value" id="pregame-solved-div">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregame-autostart-wrap">
+                    <div class="pregame-ring-wrap">
+                        <svg class="pregame-ring-svg" viewBox="0 0 120 120">
+                            <circle class="pregame-ring-track" cx="60" cy="60" r="50"></circle>
+                            <circle class="pregame-ring-progress" id="pregame-ring-progress" cx="60" cy="60" r="50"></circle>
+                        </svg>
+                        <span class="pregame-ring-number" id="pregame-seconds-left">15</span>
+                    </div>
+                    <div class="pregame-autostart-text" id="pregame-autostart-text">Auto start in 15 sec</div>
+                </div>
+
+                <div class="pregame-actions">
+                    <button class="btn btn-gold" id="btn-pregame-start">
+                        <i class="fas fa-bolt"></i> Start Now
+                    </button>
+                    <button class="btn btn-hiw" id="btn-pregame-cancel">
+                        <i class="fas fa-circle-xmark"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- ── View 2: Active Gameplay ────────────────────────── -->
         <section id="view-game" class="view-section interactive-layer">
             <div class="container">
@@ -132,6 +215,10 @@ $json_ld = json_encode([
                             <button class="btn-game-home" id="btn-home-game" title="Home">
                                 <i class="fas fa-house"></i>
                             </button>
+                            <div class="stat-badge">
+                                <i class="fa-solid fa-circle-check text-warning"></i>
+                                <span id="ui-total-questions">0</span>
+                            </div>
                             <div class="stat-badge">
                                 <i class="fas fa-star text-warning"></i>
                                 <span id="ui-score">0</span>
@@ -148,12 +235,24 @@ $json_ld = json_encode([
                         <!-- Per-Operation & Total Questions Stats -->
                         <div class="game-stats-panel mb-3 px-2" id="game-stats-panel">
                             <div class="game-stats-row">
-                                <span class="game-stat-label">Total: <span id="ui-total-questions">0</span></span>
+                                <!-- <span class="game-stat-label">Total: <span id="ui-total-questions">0</span></span> -->
                                 <span class="game-ops-progress">
-                                    <span class="op-stat" id="op-stat-add">+: <span class="op-count">0</span></span>
-                                    <span class="op-stat" id="op-stat-sub">−: <span class="op-count">0</span></span>
-                                    <span class="op-stat" id="op-stat-mul">×: <span class="op-count">0</span></span>
-                                    <span class="op-stat" id="op-stat-div">÷: <span class="op-count">0</span></span>
+                                    <span class="op-stat" id="op-stat-add">
+                                        <span class="op-icon op-add"><i class="fas fa-plus"></i></span>
+                                        <span class="op-count">0</span>
+                                    </span>
+                                    <span class="op-stat" id="op-stat-sub">
+                                        <span class="op-icon op-sub"><i class="fas fa-minus"></i></span>
+                                        <span class="op-count">0</span>
+                                    </span>
+                                    <span class="op-stat" id="op-stat-mul">
+                                        <span class="op-icon op-mul"><i class="fas fa-xmark"></i></span>
+                                        <span class="op-count">0</span>
+                                    </span>
+                                    <span class="op-stat" id="op-stat-div">
+                                        <span class="op-icon op-div"><i class="fas fa-divide"></i></span>
+                                        <span class="op-count">0</span>
+                                    </span>
                                 </span>
                             </div>
                         </div>
@@ -229,8 +328,17 @@ $json_ld = json_encode([
                                 </div>
                             </div>
 
+                            <div class="alltime-solved-tile mb-4">
+                                <div class="alltime-solved-label">Total Solved So Far</div>
+                                <div class="alltime-solved-value" id="final-total-solved">0</div>
+                            </div>
+
                             <!-- Milestone Badges -->
+                            <div class="milestone-title">Score Milestones</div>
                             <div class="milestone-badges-row mb-3" id="milestone-badges"></div>
+
+                            <div class="milestone-title">Solved Milestones</div>
+                            <div class="milestone-badges-row mb-3" id="solved-milestone-badges"></div>
                         </div><!-- /results-card -->
 
                         <div class="mt-4">

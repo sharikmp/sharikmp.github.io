@@ -204,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const THREE_NUMBER_START_LEVEL = 7;
         const MAX_DIGITS_PER_OPERAND = 7;
         const THIRD_MULTIPLIER_MAX = 9;
+        const PRE_GAME_AUTO_START_SECONDS = 15;
 
         /* ---- Adaptive Difficulty: Level → Digit Config ---- */
         const BASE_LEVEL_CONFIGS = [
@@ -270,9 +271,33 @@ document.addEventListener('DOMContentLoaded', () => {
         catch (e) { return def; }
     }
 
+    function loadLifetimeStats() {
+        const def = {
+            answered: 0,
+            solved: 0,
+            answeredPerOp: { add: 0, sub: 0, mul: 0, div: 0 },
+            solvedPerOp: { add: 0, sub: 0, mul: 0, div: 0 }
+        };
+        try {
+            const raw = JSON.parse(localStorage.getItem('mathTrainerLifetimeStats') || '{}');
+            return {
+                answered: Number(raw.answered) || 0,
+                solved: Number(raw.solved) || 0,
+                answeredPerOp: Object.assign({ add: 0, sub: 0, mul: 0, div: 0 }, raw.answeredPerOp || {}),
+                solvedPerOp: Object.assign({ add: 0, sub: 0, mul: 0, div: 0 }, raw.solvedPerOp || {})
+            };
+        } catch (e) {
+            return def;
+        }
+    }
+
     function saveLevels() {
         localStorage.setItem('mathTrainerLevels', JSON.stringify(STATE.levels));
         localStorage.setItem('mathTrainerLevelProgress', JSON.stringify(STATE.levelProgress));
+    }
+
+    function saveLifetimeStats() {
+        localStorage.setItem('mathTrainerLifetimeStats', JSON.stringify(STATE.lifetimeStats));
     }
 
     const GAME_DURATION_SECONDS = 60;
@@ -286,10 +311,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentAnswer: 0,
         currentOp: 'add',
         interval: null,
+        pregameTimer: null,
         isPlaying: false,
         levels: loadLevels(),
         levelProgress: loadLevelProgress(),
-        questionsPerOp: { add: 0, sub: 0, mul: 0, div: 0 }
+        questionsPerOp: { add: 0, sub: 0, mul: 0, div: 0 },
+        lifetimeStats: loadLifetimeStats()
     };
 
     // DOM Elements
@@ -307,6 +334,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const elStreak = document.getElementById('ui-streak');
     const timerContainer = document.getElementById('timer-container');
     const timerBar = document.getElementById('timer-bar');
+    const pregameModal = document.getElementById('pregame-modal');
+    const pregameRingProgress = document.getElementById('pregame-ring-progress');
+    const pregameSecondsLeft = document.getElementById('pregame-seconds-left');
+    const pregameAutostartText = document.getElementById('pregame-autostart-text');
 
     // Per-Operation Stats Elements
     const elTotalQuestions = document.getElementById('ui-total-questions');
@@ -316,6 +347,81 @@ document.addEventListener('DOMContentLoaded', () => {
         mul: document.getElementById('op-stat-mul'),
         div: document.getElementById('op-stat-div')
     };
+
+    const elPregameLevels = {
+        add: document.getElementById('pregame-level-add'),
+        sub: document.getElementById('pregame-level-sub'),
+        mul: document.getElementById('pregame-level-mul'),
+        div: document.getElementById('pregame-level-div')
+    };
+
+    const elPregameSolvedPerOp = {
+        add: document.getElementById('pregame-solved-add'),
+        sub: document.getElementById('pregame-solved-sub'),
+        mul: document.getElementById('pregame-solved-mul'),
+        div: document.getElementById('pregame-solved-div')
+    };
+
+    function getOverallLevel() {
+        return Math.max(STATE.levels.add, STATE.levels.sub, STATE.levels.mul, STATE.levels.div);
+    }
+
+    function hidePregameModal() {
+        if (STATE.pregameTimer) {
+            clearInterval(STATE.pregameTimer);
+            STATE.pregameTimer = null;
+        }
+        pregameModal.style.display = 'none';
+        pregameModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function updatePregameCountdownUI(secondsLeft) {
+        const clamped = Math.max(0, Math.min(PRE_GAME_AUTO_START_SECONDS, secondsLeft));
+        const radius = 50;
+        const circumference = 2 * Math.PI * radius;
+        const progress = clamped / PRE_GAME_AUTO_START_SECONDS;
+        const dashOffset = circumference * (1 - progress);
+
+        pregameRingProgress.style.strokeDasharray = `${circumference}`;
+        pregameRingProgress.style.strokeDashoffset = `${dashOffset}`;
+        pregameSecondsLeft.textContent = String(clamped);
+        pregameAutostartText.textContent = `Auto start in ${clamped} sec`;
+    }
+
+    function fillPregameSummary() {
+        document.getElementById('pregame-overall-level').textContent = getOverallLevel();
+        document.getElementById('pregame-total-solved').textContent = STATE.lifetimeStats.solved;
+        document.getElementById('pregame-total-answered').textContent = STATE.lifetimeStats.answered;
+
+        ['add', 'sub', 'mul', 'div'].forEach(op => {
+            if (elPregameLevels[op]) elPregameLevels[op].textContent = STATE.levels[op];
+            if (elPregameSolvedPerOp[op]) elPregameSolvedPerOp[op].textContent = STATE.lifetimeStats.solvedPerOp[op];
+        });
+    }
+
+    function openPregameModal() {
+        fillPregameSummary();
+        pregameModal.style.display = 'flex';
+        pregameModal.setAttribute('aria-hidden', 'false');
+
+        let secondsLeft = PRE_GAME_AUTO_START_SECONDS;
+        updatePregameCountdownUI(secondsLeft);
+
+        if (STATE.pregameTimer) clearInterval(STATE.pregameTimer);
+        STATE.pregameTimer = setInterval(() => {
+            secondsLeft--;
+            updatePregameCountdownUI(secondsLeft);
+            if (secondsLeft <= 0) {
+                hidePregameModal();
+                startGame();
+            }
+        }, 1000);
+    }
+
+    function updateResultLifetimeStats() {
+        const elFinalTotalSolved = document.getElementById('final-total-solved');
+        if (elFinalTotalSolved) elFinalTotalSolved.textContent = STATE.lifetimeStats.solved;
+    }
 
     // View Transition Logic
     function switchView(viewId) {
@@ -413,6 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startGame() {
+        hidePregameModal();
         document.documentElement.classList.remove('start-game-from-hiw');
 
         // Reset State
@@ -453,14 +560,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update total questions
         elTotalQuestions.textContent = STATE.totalQuestions;
         
-        // Update per-operation counts
+        // Update per-operation progress in current level
         const ops = ['add', 'sub', 'mul', 'div'];
         ops.forEach(op => {
             const el = elOpStats[op];
             if (el) {
                 const countSpan = el.querySelector('.op-count');
                 if (countSpan) {
-                    countSpan.textContent = STATE.questionsPerOp[op];
+                    countSpan.textContent = `${STATE.levelProgress[op]}/${LEVEL_UP_CORRECT_ANSWERS}`;
                 }
             }
         });
@@ -502,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('final-qpm').textContent = qpm;
         document.getElementById('final-accuracy').textContent = accuracy;
 
-        const overallLvl = Math.max(STATE.levels.add, STATE.levels.sub, STATE.levels.mul, STATE.levels.div);
+        const overallLvl = getOverallLevel();
         const elOvLvl = document.getElementById('final-overall-lvl');
         if (elOvLvl) elOvLvl.textContent = overallLvl;
 
@@ -529,6 +636,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const allTimePB = parseInt(localStorage.getItem('mathTrainerPB') || 0);
         renderMilestoneBadges(allTimePB);
+        renderSolvedMilestoneBadges(STATE.lifetimeStats.solved);
+        updateResultLifetimeStats();
 
         switchView('view-results');
     }
@@ -574,6 +683,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Track questions per operation
         STATE.questionsPerOp[STATE.currentOp]++;
 
+        // Track lifetime totals
+        STATE.lifetimeStats.answered++;
+        STATE.lifetimeStats.solved++;
+        STATE.lifetimeStats.answeredPerOp[STATE.currentOp]++;
+        STATE.lifetimeStats.solvedPerOp[STATE.currentOp]++;
+        saveLifetimeStats();
+
         // Level-based scoring: operationLevel × 10
         const opKey = STATE.currentOp;
         const points = STATE.levels[opKey] * 10;
@@ -606,6 +722,9 @@ document.addEventListener('DOMContentLoaded', () => {
         playSound('incorrect');
         STATE.totalQuestions++;
         STATE.questionsPerOp[STATE.currentOp]++;
+        STATE.lifetimeStats.answered++;
+        STATE.lifetimeStats.answeredPerOp[STATE.currentOp]++;
+        saveLifetimeStats();
         STATE.streak = 0;
         elStreak.textContent = STATE.streak;
 
@@ -643,11 +762,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Button Listeners
     btnStart.addEventListener('click', () => {
         if (audioCtx.state === 'suspended') audioCtx.resume();
+        openPregameModal();
+    });
+    btnReplay.addEventListener('click', () => {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        openPregameModal();
+    });
+
+    document.getElementById('btn-pregame-start').addEventListener('click', () => {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        hidePregameModal();
         startGame();
     });
-    btnReplay.addEventListener('click', startGame);
+
+    document.getElementById('btn-pregame-close').addEventListener('click', hidePregameModal);
+    document.getElementById('btn-pregame-cancel').addEventListener('click', hidePregameModal);
 
     document.getElementById('btn-home-game').addEventListener('click', () => {
+        hidePregameModal();
         STATE.isPlaying = false;
         clearInterval(STATE.interval);
         timerContainer.style.display = 'none';
@@ -657,6 +789,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('btn-home-result').addEventListener('click', () => {
+        hidePregameModal();
         switchView('view-landing');
         renderLandingStats();
     });
@@ -679,6 +812,31 @@ document.addEventListener('DOMContentLoaded', () => {
             const borderStyle = unlocked ? `border:1px solid ${m.color};` : '';
             const glowStyle   = unlocked ? `box-shadow:0 0 14px ${m.color}66;` : '';
             const iconStyle   = unlocked ? `color:${m.color};filter:drop-shadow(0 0 6px ${m.color});` : '';
+            return `<div class="milestone-badge ${unlocked ? 'unlocked' : 'locked'}" style="${borderStyle}${glowStyle}">
+                        <div class="mb-icon" style="${iconStyle}"><i class="fas ${m.icon}"></i></div>
+                        <div class="mb-score">${m.score}</div>
+                        <div class="mb-name">${m.name}</div>
+                        ${!unlocked ? '<div class="mb-lock"><i class="fas fa-lock"></i></div>' : ''}
+                    </div>`;
+        }).join('');
+    }
+
+    function renderSolvedMilestoneBadges(totalSolved) {
+        const milestones = [
+            { score: 100,  icon: 'fa-seedling', name: 'Starter', color: '#8bc34a' },
+            { score: 200,  icon: 'fa-rocket',   name: 'Rising',  color: '#4cafef' },
+            { score: 500,  icon: 'fa-bolt',     name: 'Swift',   color: '#f4c542' },
+            { score: 1000, icon: 'fa-crown',    name: 'Master',  color: '#ff8a65' },
+        ];
+
+        const container = document.getElementById('solved-milestone-badges');
+        if (!container) return;
+
+        container.innerHTML = milestones.map(m => {
+            const unlocked = totalSolved >= m.score;
+            const borderStyle = unlocked ? `border:1px solid ${m.color};` : '';
+            const glowStyle = unlocked ? `box-shadow:0 0 14px ${m.color}66;` : '';
+            const iconStyle = unlocked ? `color:${m.color};filter:drop-shadow(0 0 6px ${m.color});` : '';
             return `<div class="milestone-badge ${unlocked ? 'unlocked' : 'locked'}" style="${borderStyle}${glowStyle}">
                         <div class="mb-icon" style="${iconStyle}"><i class="fas ${m.icon}"></i></div>
                         <div class="mb-score">${m.score}</div>
@@ -827,5 +985,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Show history on page load if available
     renderLandingStats();
+    renderSolvedMilestoneBadges(STATE.lifetimeStats.solved);
+    updateResultLifetimeStats();
 
 });
