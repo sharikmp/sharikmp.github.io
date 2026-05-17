@@ -1,7 +1,7 @@
 <?php
 /**
  * public_html/index.php
- * Main game page — the landing screen, gameplay and results.
+ * Main game page - the landing screen, gameplay and results.
  * Path to config from here:
  *   public_html/ → up one level → config/config.php
  */
@@ -12,11 +12,11 @@ define('PATH_INCLUDES', __DIR__ . '/../includes');
 
 // ── Page-specific meta ───────────────────────────────────────
 $page = [
-    'title'       => 'MathTrainer &mdash; Free Adaptive Mental Math Game | Train Speed &amp; Precision',
-    'description' => 'MathTrainer is a free adaptive mental math game. Practice addition, subtraction, multiplication and division at speed. Level up as you improve — no download, no sign-up needed.',
+    'title'       => 'MathTrainer & Free Adaptive Mental Math Game | Train Speed &amp; Precision',
+    'description' => 'MathTrainer is your 60-second mental gym: adults stay sharp, students build exam speed, and parents get guilt-free, non-toxic screen time that builds real math skill.',
     'canonical'   => url(),
-    'og_title'    => 'MathTrainer — Free Adaptive Mental Math Game',
-    'og_desc'     => 'Practice mental math at speed. Adaptive difficulty levels, 4 operations, and instant scoring. Free to play, no sign-up needed.',
+    'og_title'    => 'MathTrainer - Free Adaptive Mental Math Game',
+    'og_desc'     => 'A 60-second mental gym for adults and students, plus guilt-free screen time for kids. Build real speed and precision in math.',
     // Inline CSS lives only on this page (game-specific vars already in style.css)
     'extra_css'   => '',
 ];
@@ -27,7 +27,7 @@ $json_ld = json_encode([
     '@type'               => 'WebApplication',
     'name'                => 'MathTrainer',
     'url'                 => BASE_URL,
-    'description'         => 'Free adaptive mental math game for kids and adults.',
+    'description'         => 'A 60-second mental gym that keeps adults sharp, helps students build exam speed, and gives parents non-toxic screen time that builds real math skill.',
     'applicationCategory' => 'EducationalApplication',
     'genre'               => 'Educational Game',
     'operatingSystem'     => 'Web Browser',
@@ -37,7 +37,7 @@ $json_ld = json_encode([
     'offers'              => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
     'creator'             => ['@type' => 'Organization', 'name' => 'MathTrainer', 'url' => BASE_URL],
     'featureList'         => [
-        'Adaptive difficulty — 7 levels per operation',
+        'Adaptive difficulty - 7 levels per operation',
         '4 mathematical operations',
         'Independent level progression',
         '60-second speed rounds',
@@ -91,9 +91,51 @@ $json_ld = json_encode([
 
         <!-- ── View 1: Hero / Landing ─────────────────────────── -->
         <section id="view-landing" class="view-section interactive-layer">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-transparent landing-navbar">
+                <div class="container">
+                    <a class="navbar-brand" href="<?= url() ?>" aria-label="Math Trainer home">
+                        <h1 class="landing-brand-h1">
+                            <img src="<?= asset('favicon.svg') ?>" alt="Math Trainer logo" class="brand-logo">
+                            <span>MATH TRAINER</span>
+                        </h1>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#landingNav" aria-controls="landingNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="landingNav">
+                        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= url('howitworks.php') ?>">How it works</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= url('about/') ?>">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= url('contact/') ?>">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
             <div class="container text-center">
-                <h1 class="display-1 text-glow mb-2" style="font-weight:800;">MATH TRAINER</h1>
-                <p class="lead text-light mb-4 fs-4">Train Speed. Sharpen Precision.</p>
+
+                <section class="landing-why-wrap mb-4" aria-label="Why Math Trainer">
+                    <h1 class="landing-why-title">Why Math Trainer?</h1>
+                    <p class="lead text-light mb-4 fs-4">Train Speed. Sharpen Precision.</p>
+                    <p class="landing-why-subtitle"></p>
+
+                    <div class="landing-marketing-points" aria-label="Why Math Trainer points">
+                    <div class="landing-marketing-point">
+                        <i class="fas fa-brain"></i>
+                        <span><strong>Mental Gym:</strong> Built for adults to stay sharp and students to ace speed-focused competitive exams.</span>
+                    </div>
+                    <div class="landing-marketing-point">
+                        <i class="fas fa-leaf"></i>
+                        <span><strong>Non-Toxic Screen Time:</strong> A guilt-free 60-second digital habit for parents who want screen time that builds real skill.</span>
+                    </div>
+                    </div>
+                </section>
 
                 <!-- Level & Best Score display -->
                 <div class="landing-stats mb-4">
@@ -111,9 +153,6 @@ $json_ld = json_encode([
                 <div class="d-flex gap-3 justify-content-center align-items-center flex-wrap">
                     <a href="<?= url('learn/') ?>" class="btn btn-gold">
                         <i class="fas fa-book-open"></i> Learn
-                    </a>
-                    <a href="<?= url('howitworks.php') ?>" class="btn btn-hiw" id="btn-how-it-works">
-                        <i class="fas fa-circle-info"></i> How it works
                     </a>
                     <button class="btn btn-gold pulse" id="btn-start">
                         <i class="fas fa-bolt"></i> Play Now
@@ -383,6 +422,7 @@ $json_ld = json_encode([
     </div><!-- /ui-layer -->
 
     <!-- ── Scripts ──────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * includes/footer.php
  * ─────────────────────────────────────────────────────────────
@@ -13,7 +14,7 @@
         <div class="row">
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="footer-brand">
-                    <i class="fas fa-bolt"></i> MATH TRAINER
+                    <img src="<?= asset('favicon.svg') ?>" alt="Math Trainer logo" class="footer-brand-logo"> MATH TRAINER
                 </div>
                 <p class="mb-4 pe-lg-4 text-muted">
                     Train Speed. Sharpen Precision. The ultimate mental math galaxy experience.
@@ -43,9 +44,31 @@
             </div>
         </div>
 
+        <!-- Developer details -->
+        <div class="row mt-4">
+            <div class="col-12 col-lg-6">
+                <div class="footer-dev-card" aria-label="Developer details">
+                    <div class="footer-dev-avatar">SM</div>
+                    <div class="footer-dev-info">
+                        <h6>Sharik Madhyapradeshi</h6>
+                        <div class="footer-dev-role">Full-Stack Developer &amp; UX Designer</div>
+                        <p class="footer-dev-bio">
+                            Passionate about building educational tools that make learning feel like play.
+                            MathTrainer was born from a simple belief: math is not boring when presented the right way.
+                        </p>
+                        <div class="footer-dev-socials">
+                            <a href="https://sharikmp.github.io/" class="footer-dev-social-link" aria-label="Developer GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/sharikmp/" class="footer-dev-social-link" aria-label="Developer LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row mt-4">
             <div class="col-12 footer-brand-gradient-wrap">
                 <div class="huge-brand-text">MATH<br>TRAINER</div>
+                <div class="footer-brand-glow-strip"></div>
                 <div class="footer-brand-glow-strip"></div>
             </div>
         </div>

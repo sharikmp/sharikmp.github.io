@@ -10,10 +10,10 @@ define('PATH_INCLUDES', __DIR__ . '/../../includes');
 
 $page = [
     'title'       => 'About MathTrainer | Free Adaptive Mental Math Game',
-    'description' => 'Learn about MathTrainer — a free adaptive mental math game built to make math learning super easy, animated, and fun for growing kids and adults who want to sharpen their mental speed.',
+    'description' => 'Learn about MathTrainer - a free adaptive mental math game built to make math learning super easy, animated, and fun for growing kids and adults who want to sharpen their mental speed.',
     'canonical'   => url('about/'),
     'og_title'    => 'About MathTrainer',
-    'og_desc'     => 'MathTrainer is built to make math learning easy, animated, and addictive — for kids and adults alike.',
+    'og_desc'     => 'MathTrainer is built to make math learning easy, animated, and addictive - for kids and adults alike.',
 ];
 ?>
 <!DOCTYPE html>
@@ -91,13 +91,13 @@ $page = [
             <div class="section-badge"><i class="fas fa-bullseye"></i> Our Mission</div>
             <p style="font-size:0.95rem; color:rgba(255,255,255,0.8); line-height:1.7; margin:0;">
                 To make math learning <strong style="color:#fff;">super easy</strong> through beautiful animation,
-                adaptive challenges, and game-based experiences — for
+                adaptive challenges, and game-based experiences - for
                 <strong style="color:#fff;">growing kids</strong> who are building their foundation, and
                 <strong style="color:#fff;">anyone</strong> who wants to sharpen their mental math speed.
             </p>
             <p style="font-size:0.88rem; color:rgba(255,255,255,0.5); line-height:1.65; margin-top:1rem; margin-bottom:0;">
                 Right now MathTrainer starts with a speed game. But the bigger vision is a full animated
-                learning platform — with guided lessons, interactive content, topic-specific drills, and
+                learning platform - with guided lessons, interactive content, topic-specific drills, and
                 challenges that make even the trickiest math feel like play.
             </p>
         </div>
@@ -123,15 +123,15 @@ $page = [
             <div class="roadmap-item">
                 <div class="roadmap-icon" style="background:rgba(212,175,55,0.1);color:var(--primary-accent);"><i class="fas fa-film"></i></div>
                 <div class="roadmap-text">
-                    <strong>Animated Learning Content <span class="soon-badge">Soon</span></strong>
+                    <strong>Animated Learning Content <span class="soon-badge">Live</span></strong>
                     <span>Step-by-step animated lessons for kids covering core math topics</span>
                 </div>
             </div>
             <div class="roadmap-item">
                 <div class="roadmap-icon" style="background:rgba(0,243,255,0.1);color:var(--neon-cyan);"><i class="fas fa-bullseye"></i></div>
                 <div class="roadmap-text">
-                    <strong>Topic-Specific Training</strong>
-                    <span>Fractions, percentages, algebra — focused drill modes</span>
+                    <strong>Topic-Specific Training<span class="soon-badge">Soon</span></strong>
+                    <span>Fractions, percentages, algebra - focused drill modes</span>
                 </div>
             </div>
             <div class="roadmap-item">
@@ -161,19 +161,18 @@ $page = [
         <div class="page-card">
             <div class="section-badge"><i class="fas fa-code"></i> Built By</div>
             <div class="dev-card">
-                <div class="dev-avatar">J</div>
+                <div class="dev-avatar">SM</div>
                 <div class="dev-info">
-                    <h4>Jordan Blake</h4>
-                    <div class="dev-role">Full-Stack Developer &amp; UX Designer &bull; Remote</div>
+                    <h4>Sharik Madhyapradeshi</h4>
+                    <div class="dev-role">Full-Stack Developer & UX Designer &bull; Remote</div>
                     <p class="dev-bio">
                         Passionate about building educational tools that make learning feel like play.
-                        MathTrainer was born from a simple belief — math isn't boring, it just needs
+                        MathTrainer was born from a simple belief - math isn't boring, it just needs
                         to be presented the right way.
                     </p>
                     <div class="dev-socials">
-                        <a href="#" class="dev-social-link" title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="#" class="dev-social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="dev-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://sharikmp.github.io/" class="dev-social-link" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/sharikmp/" class="dev-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
