@@ -90,7 +90,7 @@ $json_ld = json_encode([
         </div>
 
         <!-- ── View 1: Hero / Landing ─────────────────────────── -->
-        <section id="view-landing" class="view-section interactive-layer">
+        <section id="view-landing" class="view-section interactive-layer active">
             <nav class="navbar navbar-expand-lg navbar-dark bg-transparent landing-navbar">
                 <div class="container">
                     <a class="navbar-brand" href="<?= url() ?>" aria-label="Math Trainer home">
@@ -118,46 +118,51 @@ $json_ld = json_encode([
                 </div>
             </nav>
 
-            <div class="container text-center">
+            <div class="container landing-hero-shell">
+                <section class="landing-hero-grid" aria-label="Why Math Trainer">
+                    <div class="landing-copy-col">
+                        <!-- <div class="landing-kicker">60-Second Mental Gym</div> -->
+                        <h1 class="landing-why-title">Train Speed. Sharpen Precision.</h1>
+                        <!-- <p class="landing-tagline">Train Speed. Sharpen Precision.</p> -->
+                        <p class="landing-why-subtitle">
+                            A practical daily habit that trains speed, focus, and real math confidence.
+                        </p>
 
-                <section class="landing-why-wrap mb-4" aria-label="Why Math Trainer">
-                    <h1 class="landing-why-title">Why Math Trainer?</h1>
-                    <p class="lead text-light mb-4 fs-4">Train Speed. Sharpen Precision.</p>
-                    <p class="landing-why-subtitle"></p>
+                        <div class="landing-marketing-points" aria-label="Why Math Trainer points">
+                            <div class="landing-marketing-point">
+                                <i class="fas fa-brain"></i>
+                                <span><strong>Mental Gym:</strong> Built for adults to stay sharp and students to ace speed-focused competitive exams.</span>
+                            </div>
+                            <div class="landing-marketing-point">
+                                <i class="fas fa-leaf"></i>
+                                <span><strong>Non-Toxic Screen Time:</strong> A guilt-free 60-second digital habit for parents who want screen time that builds real skill.</span>
+                            </div>
+                        </div>
 
-                    <div class="landing-marketing-points" aria-label="Why Math Trainer points">
-                    <div class="landing-marketing-point">
-                        <i class="fas fa-brain"></i>
-                        <span><strong>Mental Gym:</strong> Built for adults to stay sharp and students to ace speed-focused competitive exams.</span>
+                        <div class="landing-cta-row d-flex gap-3 justify-content-start align-items-center flex-wrap">
+                            <a href="<?= url('learn/') ?>" class="btn btn-gold">
+                                <i class="fas fa-book-open"></i> Learn
+                            </a>
+                            <button class="btn btn-gold pulse" id="btn-start">
+                                <i class="fas fa-bolt"></i> Play Now
+                            </button>
+                        </div>
                     </div>
-                    <div class="landing-marketing-point">
-                        <i class="fas fa-leaf"></i>
-                        <span><strong>Non-Toxic Screen Time:</strong> A guilt-free 60-second digital habit for parents who want screen time that builds real skill.</span>
-                    </div>
+
+                    <div class="landing-character-col" aria-hidden="true">
+                        <div class="landing-character-wrap">
+                            <div class="landing-character-orbit"></div>
+                            <img src="<?= asset('assets/math-trainer-character.png') ?>" alt="" class="landing-character-img" loading="eager" decoding="async">
+
+                            <div class="landing-character-levels" id="landing-character-levels">
+                                <span class="landing-level-label">Level -</span>
+                                <span class="landing-level-pills" id="landing-level-pills"></span>
+                                <span class="landing-level-best-label">Best:</span>
+                                <span class="landing-level-pill landing-level-pill-best is-active" id="landing-pb">0</span>
+                            </div>
+                        </div>
                     </div>
                 </section>
-
-                <!-- Level & Best Score display -->
-                <div class="landing-stats mb-4">
-                    <div class="landing-stat-item">
-                        <span class="landing-stat-label">Levels (+&minus;&times;&divide;)</span>
-                        <span class="landing-stat-value" id="landing-levels">1-1-1-1</span>
-                    </div>
-                    <div class="landing-stat-divider"></div>
-                    <div class="landing-stat-item">
-                        <span class="landing-stat-label">Best Score</span>
-                        <span class="landing-stat-value" id="landing-pb">0</span>
-                    </div>
-                </div>
-
-                <div class="d-flex gap-3 justify-content-center align-items-center flex-wrap">
-                    <a href="<?= url('learn/') ?>" class="btn btn-gold">
-                        <i class="fas fa-book-open"></i> Learn
-                    </a>
-                    <button class="btn btn-gold pulse" id="btn-start">
-                        <i class="fas fa-bolt"></i> Play Now
-                    </button>
-                </div>
             </div>
         </section>
 

@@ -85,8 +85,6 @@
                 document.documentElement.style.overflow = '';
                 document.body.style.overflow = '';
                 if (screen.parentNode) screen.parentNode.removeChild(screen);
-                var landing = document.getElementById('view-landing');
-                if (landing) landing.classList.add('active');
             }, 680);
         }
     }

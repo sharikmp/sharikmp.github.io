@@ -740,12 +740,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const l = STATE.levels;
         const pb = localStorage.getItem('mathTrainerPB') || 0;
         const levelStr = `${l.add}-${l.sub}-${l.mul}-${l.div}`;
-        const elLvl = document.getElementById('landing-levels');
+        const overallLevel = getOverallLevel();
+        const visualLevel = Math.min(7, Math.max(1, overallLevel));
+        const characterScale = 0.94 + ((visualLevel - 1) * 0.04);
         const elPb = document.getElementById('landing-pb');
         const elUiLvl = document.getElementById('ui-levels');
-        if (elLvl) elLvl.textContent = levelStr;
+        const charWrap = document.querySelector('.landing-character-wrap');
+        const levelPillsWrap = document.getElementById('landing-level-pills');
         if (elPb) elPb.textContent = pb;
         if (elUiLvl) elUiLvl.textContent = levelStr;
+
+        if (charWrap) {
+            charWrap.style.setProperty('--character-scale', characterScale.toFixed(2));
+        }
+
+        if (levelPillsWrap) {
+            const levelsToShow = [];
+            const maxLevel = 7;
+            for (let lv = visualLevel; lv <= Math.min(maxLevel, visualLevel + 2); lv++) {
+                levelsToShow.push(lv);
+            }
+
+            levelPillsWrap.innerHTML = levelsToShow
+                .map(lv => `<span class="landing-level-pill ${lv === visualLevel ? 'is-active' : ''}" data-level="${lv}">${lv}</span>`)
+                .join('');
+        }
     }
 
     function showLevelUpToast(opKey, newLevel) {
