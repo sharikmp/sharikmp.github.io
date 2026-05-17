@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('mathTrainerLifetimeStats', JSON.stringify(STATE.lifetimeStats));
     }
 
-    const GAME_DURATION_SECONDS = 60;
+    const GAME_DURATION_SECONDS = 5;
 
     const STATE = {
         score: 0,
@@ -1004,27 +1004,43 @@ document.addEventListener('DOMContentLoaded', () => {
        ========================================= */
 
     async function renderShareCanvas() {
+        const resultsSection = document.getElementById('view-results');
         const resultsCard = document.getElementById('results-card');
-        if (!resultsCard) return null;
+        if (!resultsSection || !resultsCard) return null;
 
         let clone = null;
         try {
-            // Clone full card off-screen for robust full-height capture.
-            clone = resultsCard.cloneNode(true);
+            // Clone the full results hierarchy so ancestor styles stay intact in the screenshot.
+            clone = resultsSection.cloneNode(true);
             clone.style.position = 'absolute';
             clone.style.top = '-9999px';
             clone.style.left = '-9999px';
+            clone.style.width = resultsSection.offsetWidth + 'px';
             clone.style.height = 'auto';
+            clone.style.maxHeight = 'none';
             clone.style.overflow = 'visible';
+            clone.style.overflowY = 'visible';
             clone.style.border = 'none';
-            clone.style.width = resultsCard.offsetWidth + 'px';
+            clone.style.minHeight = 'auto';
+            clone.style.display = 'block';
+
+            const cloneCard = clone.querySelector('#results-card');
+            if (cloneCard) {
+                cloneCard.style.maxHeight = 'none';
+                cloneCard.style.height = 'auto';
+                cloneCard.style.overflow = 'visible';
+                cloneCard.style.overflowY = 'visible';
+            }
+
             document.body.appendChild(clone);
 
-            return await html2canvas(clone, {
+            const captureTarget = clone.querySelector('#results-card') || clone;
+
+            return await html2canvas(captureTarget, {
                 backgroundColor: '#1a0b2e',
                 scale: 2,
                 useCORS: true,
-                windowHeight: clone.scrollHeight
+                windowHeight: captureTarget.scrollHeight
             });
         } catch (err) {
             console.error('Error rendering share canvas:', err);

@@ -1907,6 +1907,123 @@ h3,
 }
 
 /* ===================== RESULTS SCREEN BUTTONS ===================== */
+#view-results .container {
+    max-width: 100%;
+}
+
+#view-results .row.justify-content-center {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#view-results .row.justify-content-center > [class*="col-"] {
+    flex: 0 1 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#results-card {
+    width: 100%;
+    min-height: 80svh;
+    max-height: 80svh;
+    padding: clamp(1.1rem, 2vw, 2rem) !important;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 992px) {
+    #results-card {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+#results-card h3 {
+    font-size: clamp(1.25rem, 2vw, 1.8rem);
+    margin-bottom: clamp(0.9rem, 1.8vw, 1.4rem) !important;
+}
+
+#results-card #final-score {
+    font-size: clamp(2.2rem, 5vw, 4.1rem) !important;
+}
+
+#results-card #pb-crown-badge {
+    font-size: clamp(1.15rem, 2.5vw, 1.7rem);
+    margin-left: clamp(0.35rem, 0.9vw, 0.65rem);
+}
+
+#results-card .row.g-3.mb-4 {
+    --bs-gutter-y: clamp(0.65rem, 1.2vw, 1rem);
+    margin-bottom: clamp(0.85rem, 1.8vw, 1.35rem) !important;
+}
+
+#results-card .data-tile {
+    padding: clamp(0.8rem, 1.5vw, 1.2rem) 0.8rem;
+    border-radius: 14px;
+}
+
+#results-card .data-tile .x-small {
+    font-size: clamp(0.54rem, 0.9vw, 0.7rem) !important;
+    margin-bottom: clamp(0.2rem, 0.5vw, 0.35rem) !important;
+}
+
+#results-card .data-tile .fs-2 {
+    font-size: clamp(1.15rem, 2.5vw, 1.95rem) !important;
+}
+
+#results-card .alltime-solved-tile {
+    padding: clamp(0.7rem, 1.4vw, 1rem) 0.85rem;
+    margin-bottom: clamp(0.85rem, 1.8vw, 1.3rem) !important;
+}
+
+#results-card .alltime-solved-label {
+    font-size: clamp(0.62rem, 0.95vw, 0.78rem);
+    letter-spacing: 1px;
+}
+
+#results-card .alltime-solved-value {
+    font-size: clamp(1.35rem, 3vw, 2.15rem);
+}
+
+#results-card .milestone-title {
+    font-size: clamp(0.62rem, 0.95vw, 0.78rem);
+    margin: 0.35rem 0 0.55rem;
+}
+
+#results-card .milestone-badges-row {
+    gap: clamp(8px, 1.2vw, 12px);
+    flex-wrap: wrap;
+}
+
+#results-card .milestone-badge {
+    min-width: clamp(56px, 6vw, 76px);
+    padding: clamp(0.55rem, 1vw, 0.85rem) clamp(0.35rem, 0.75vw, 0.5rem);
+    border-radius: 12px;
+}
+
+#results-card .milestone-badge .mb-icon {
+    font-size: clamp(1.35rem, 2.3vw, 2rem);
+}
+
+#results-card .milestone-badge .mb-score {
+    font-size: clamp(0.64rem, 0.9vw, 0.8rem);
+}
+
+#results-card .milestone-badge .mb-name {
+    font-size: clamp(0.52rem, 0.75vw, 0.62rem);
+}
+
+#results-card .milestone-badge .mb-lock {
+    top: 4px;
+    right: 5px;
+    font-size: 0.48rem;
+}
+
 .btn-results-outline,
 .btn-results-primary {
     border-radius: 50px;
