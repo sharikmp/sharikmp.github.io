@@ -102,12 +102,23 @@ if (is_dev()) {
  * asset($path)
  * Returns the full URL to a public asset.
  * Usage:
- *   asset('css/style.css')        → https://mathtrainer.net/css/style.css
- *   asset('js/script.js')         → https://mathtrainer.net/js/script.js
- *   asset('favicon.svg')          → https://mathtrainer.net/favicon.svg
+ *   asset('css/style.css')        → https://mathtrainer.net/css/style.css?v=1716037281
+ *   asset('js/script.js')         → https://mathtrainer.net/js/script.js?v=1716037304
+ *   asset('favicon.svg')          → https://mathtrainer.net/favicon.svg?v=1716037200
  */
 function asset(string $path): string {
-    return ASSETS_URL . '/' . ltrim($path, '/');
+    $relativePath = ltrim($path, '/');
+    $url = ASSETS_URL . '/' . $relativePath;
+    $filePath = PUBLIC_PATH . '/' . $relativePath;
+
+    if (!is_file($filePath)) {
+        return $url;
+    }
+
+    $version = (string) filemtime($filePath);
+    $separator = str_contains($url, '?') ? '&' : '?';
+
+    return $url . $separator . 'v=' . $version;
 }
 
 /**

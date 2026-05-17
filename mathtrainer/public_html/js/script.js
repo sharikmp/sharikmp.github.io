@@ -78,6 +78,22 @@ document.addEventListener('DOMContentLoaded', () => {
             this.animate();
         }
 
+        createStarTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 32;
+            canvas.height = 32;
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            gradient.addColorStop(0.45, 'rgba(255, 255, 255, 0.95)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(16, 16, 16, 0, Math.PI * 2);
+            ctx.fill();
+            return new THREE.CanvasTexture(canvas);
+        }
+
         createStars() {
             const geometry = new THREE.BufferGeometry();
             const vertices = [];
@@ -90,7 +106,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
             }
             geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-            const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5, transparent: true, opacity: 0.8 });
+            const material = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 2,
+                sizeAttenuation: false,
+                map: this.createStarTexture(),
+                transparent: true,
+                opacity: 0.7,
+                alphaTest: 0.02,
+                depthWrite: false
+            });
             this.stars = new THREE.Points(geometry, material);
             this.scene.add(this.stars);
         }
@@ -978,19 +1003,52 @@ document.addEventListener('DOMContentLoaded', () => {
        5. SHARING FUNCTIONALITY (html2canvas)
        ========================================= */
 
-    async function generateShareImage() {
+    async function renderShareCanvas() {
         const resultsCard = document.getElementById('results-card');
+        if (!resultsCard) return null;
+
+        let clone = null;
         try {
-            const canvas = await html2canvas(resultsCard, {
+            // Clone full card off-screen for robust full-height capture.
+            clone = resultsCard.cloneNode(true);
+            clone.style.position = 'absolute';
+            clone.style.top = '-9999px';
+            clone.style.left = '-9999px';
+            clone.style.height = 'auto';
+            clone.style.overflow = 'visible';
+            clone.style.border = 'none';
+            clone.style.width = resultsCard.offsetWidth + 'px';
+            document.body.appendChild(clone);
+
+            return await html2canvas(clone, {
                 backgroundColor: '#1a0b2e',
                 scale: 2,
-                useCORS: true
+                useCORS: true,
+                windowHeight: clone.scrollHeight
             });
-            return canvas.toDataURL('image/jpeg', 0.92);
         } catch (err) {
-            console.error("Error generating image:", err);
+            console.error('Error rendering share canvas:', err);
             return null;
+        } finally {
+            if (clone && document.body.contains(clone)) {
+                document.body.removeChild(clone);
+            }
         }
+    }
+
+    async function generateShareImage() {
+        const canvas = await renderShareCanvas();
+        if (!canvas) return null;
+        return canvas.toDataURL('image/jpeg', 0.92);
+    }
+
+    async function generateShareBlob() {
+        const canvas = await renderShareCanvas();
+        if (!canvas) return null;
+
+        return await new Promise((resolve) => {
+            canvas.toBlob((blob) => resolve(blob || null), 'image/png');
+        });
     }
 
     function buildShareMessage() {
@@ -1000,27 +1058,29 @@ document.addEventListener('DOMContentLoaded', () => {
         return `I scored ${score} on MathTrainer. ${qpm} questions, ${accuracy}% accuracy. Can you beat my score? Play now: ${window.location.origin}`;
     }
 
-    async function shareWithWebApi({ title, text, imageDataUrl }) {
-        if (!navigator.share) return false;
+    async function shareWithWebApi({ title, text, imageBlob }) {
+        if (!navigator.share) return 'failed';
 
         try {
-            if (imageDataUrl) {
-                const res = await fetch(imageDataUrl);
-                const blob = await res.blob();
-                const file = new File([blob], 'mathtrainer-score.jpg', { type: 'image/jpeg' });
-
+            if (imageBlob) {
+                const file = new File([imageBlob], `MathTrainer_Score_${Date.now()}.png`, { type: 'image/png' });
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({ title, text, files: [file] });
-                    return true;
+                    return 'shared';
                 }
             }
 
             await navigator.share({ title, text });
-            return true;
+            return 'shared';
         } catch (err) {
+            if (err && err.name === 'AbortError') return 'cancelled';
             console.log('Share failed:', err);
-            return false;
+            return 'failed';
         }
+    }
+
+    function fallbackWhatsAppText(text) {
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
     }
 
     async function copyShareText(text) {
@@ -1036,28 +1096,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function shareScore(platform) {
-        const imageDataUrl = await generateShareImage();
         const shareText = buildShareMessage();
         const shareTitle = 'MathTrainer Score';
 
         if (platform === 'whatsapp') {
-            const shared = await shareWithWebApi({ title: shareTitle, text: shareText, imageDataUrl });
-            if (shared) return;
-
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer');
+            const imageBlob = await generateShareBlob();
+            const shareState = await shareWithWebApi({ title: shareTitle, text: shareText, imageBlob });
+            if (shareState === 'shared' || shareState === 'cancelled') return;
+            fallbackWhatsAppText(shareText);
             return;
         }
 
         if (platform === 'native') {
-            const shared = await shareWithWebApi({ title: shareTitle, text: shareText, imageDataUrl });
-            if (shared) return;
+            const imageBlob = await generateShareBlob();
+            const shareState = await shareWithWebApi({ title: shareTitle, text: shareText, imageBlob });
+            if (shareState === 'shared' || shareState === 'cancelled') return;
 
             if (await copyShareText(shareText)) return;
+            const imageDataUrl = await generateShareImage();
             if (imageDataUrl) triggerDownload(imageDataUrl);
             return;
         }
 
         else if (platform === 'download') {
+            const imageDataUrl = await generateShareImage();
             if (imageDataUrl) triggerDownload(imageDataUrl);
         }
     }
