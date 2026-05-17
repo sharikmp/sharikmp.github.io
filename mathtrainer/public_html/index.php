@@ -130,14 +130,14 @@ $json_ld = json_encode([
 
                         <div class="landing-marketing-points" aria-label="Why Math Trainer points">
                             <div class="landing-marketing-point">
-                                <img src="<?= asset('assets/brain-image-bg-less.png') ?>" alt="Brain lifting weight" class="landing-point-img" loading="lazy" decoding="async">
+                                <img src="<?= asset('assets/brain-image-bg-less.png') ?>" alt="Brain lifting weight" class="landing-point-img img-skeleton" loading="eager" decoding="async" onload="this.classList.remove('img-skeleton')">
                                 <div class="landing-point-copy">
                                     <h3>Mental Gym</h3>
                                     <p>Stay sharp daily and build mental math speed and confidence with Math Trainer.</p>
                                 </div>
                             </div>
                             <div class="landing-marketing-point">
-                                <img src="<?= asset('assets/guilt-free-screen-time-bg-less.png') ?>" alt="Phone with hourglass and check mark" class="landing-point-img" loading="lazy" decoding="async">
+                                <img src="<?= asset('assets/guilt-free-screen-time-bg-less.png') ?>" alt="Phone with hourglass and check mark" class="landing-point-img img-skeleton" loading="eager" decoding="async" onload="this.classList.remove('img-skeleton')">
                                 <div class="landing-point-copy">
                                     <h3>Guilt-Free Screen Time</h3>
                                     <p>Give kids digital time that teaches a real skill instead of endless scrolling.</p>
@@ -158,6 +158,7 @@ $json_ld = json_encode([
                     <div class="landing-character-col" aria-hidden="true">
                         <div class="landing-character-wrap">
                             <div class="landing-character-orbit"></div>
+                            <div class="mathie-speech" id="mathie-speech" aria-live="polite"></div>
                             <img src="<?= asset('assets/math-trainer-character.png') ?>" alt="" class="landing-character-img" loading="eager" decoding="async">
 
                             <div class="landing-character-levels" id="landing-character-levels">
@@ -165,6 +166,9 @@ $json_ld = json_encode([
                                 <span class="landing-level-pills" id="landing-level-pills"></span>
                                 <span class="landing-level-best-label">Best:</span>
                                 <span class="landing-level-pill landing-level-pill-best is-active" id="landing-pb">0</span>
+                            </div>
+                            <div class="pill-tap-hint" id="pill-tap-hint">
+                                <span class="pill-tap-hint-icon">&#128070;</span> Tap a level to watch me grow!
                             </div>
                         </div>
                     </div>

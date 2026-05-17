@@ -85,6 +85,8 @@
                 document.documentElement.style.overflow = '';
                 document.body.style.overflow = '';
                 if (screen.parentNode) screen.parentNode.removeChild(screen);
+                // Signal app that the loader is gone and landing is fully visible
+                document.dispatchEvent(new CustomEvent('mathtrainer:ready'));
             }, 680);
         }
     }

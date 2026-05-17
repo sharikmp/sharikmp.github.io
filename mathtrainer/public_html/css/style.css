@@ -1157,7 +1157,7 @@ h3,
     --character-scale: 0.94;
     width: min(420px, 100%);
     padding: 1rem;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .landing-character-orbit {
@@ -1184,6 +1184,60 @@ h3,
     transform: scale(var(--character-scale));
     transform-origin: center bottom;
     transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), filter 420ms ease;
+}
+
+/* ─── Mathie Speech Bubble ─── */
+.mathie-speech {
+    position: relative;
+    z-index: 5;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 0.8rem;
+    margin: 0 auto;
+    width: 100%;
+    background: rgba(8, 8, 20, 0.92);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.48;
+    color: rgba(255, 255, 255, 0.93);
+    text-align: center;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 rgba(212, 175, 55, 0);
+    transition:
+        max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.38s ease,
+        padding 0.38s ease,
+        margin 0.38s ease,
+        box-shadow 0.38s ease;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+.mathie-speech.is-visible {
+    max-height: 160px;
+    opacity: 1;
+    padding: 0.6rem 0.85rem;
+    margin: 0 auto 0.8rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 18px rgba(212, 175, 55, 0.22);
+}
+
+.speech-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.85em;
+    background: var(--primary-accent);
+    vertical-align: text-bottom;
+    margin-left: 1px;
+    animation: speech-cursor-blink 0.72s steps(1) infinite;
+}
+
+@keyframes speech-cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
 }
 
 .landing-character-levels {
@@ -1238,6 +1292,69 @@ h3,
     background: var(--primary-accent);
     border-color: rgba(212, 175, 55, 0.9);
     box-shadow: 0 0 14px rgba(212, 175, 55, 0.55);
+}
+
+/* Clickable preview pills */
+.landing-level-pill:not(.landing-level-pill-best) {
+    cursor: pointer;
+}
+
+.landing-level-pill:not(.is-active):not(.landing-level-pill-best):hover {
+    border-color: rgba(212, 175, 55, 0.55);
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(212, 175, 55, 0.12);
+    transform: scale(1.25);
+}
+
+/* Preview pulse: briefly flashes when previewing */
+.landing-character-wrap.is-previewing .landing-character-img {
+    filter: drop-shadow(0 0 32px rgba(212, 175, 55, 0.7));
+}
+
+/* Attention pulse on pills — draws eye to clickability */
+@keyframes pill-attention {
+    0%          { transform: scale(1);    box-shadow: 0 0 0 rgba(212,175,55,0); }
+    30%         { transform: scale(1.35); box-shadow: 0 0 10px rgba(212,175,55,0.65); }
+    60%         { transform: scale(0.92); box-shadow: 0 0 4px rgba(212,175,55,0.3); }
+    100%        { transform: scale(1);    box-shadow: 0 0 0 rgba(212,175,55,0); }
+}
+
+.landing-level-pill.pill-hint {
+    animation: pill-attention 0.6s ease-in-out 3;
+}
+
+/* Stagger each pill slightly */
+.landing-level-pill.pill-hint:nth-child(2) { animation-delay: 0.12s; }
+.landing-level-pill.pill-hint:nth-child(3) { animation-delay: 0.24s; }
+
+/* Floating tap hint label below the level strip */
+.pill-tap-hint {
+    margin-top: 0.42rem;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(212, 175, 55, 0.82);
+    letter-spacing: 0.3px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.pill-tap-hint.is-hidden {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+
+.pill-tap-hint-icon {
+    display: inline-block;
+    animation: tap-hint-bob 1.1s ease-in-out infinite;
+}
+
+@keyframes tap-hint-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
 }
 
 .landing-level-best-label {
@@ -1348,6 +1465,28 @@ h3,
     height: auto;
     margin-inline: auto;
     filter: drop-shadow(0 0 14px rgba(212, 175, 55, 0.28));
+    transition: opacity 0.35s ease;
+}
+
+/* Skeleton shimmer while image is loading */
+.landing-point-img.img-skeleton {
+    opacity: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 25%,
+        rgba(212, 175, 55, 0.10) 50%,
+        rgba(255, 255, 255, 0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: img-shimmer 1.4s ease-in-out infinite;
+    border-radius: 8px;
+    min-height: 80px;
+    filter: none;
+}
+
+@keyframes img-shimmer {
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
 }
 
 .landing-point-copy h3 {

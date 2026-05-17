@@ -767,6 +767,115 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /* ─── Mathie Speech Bubble ─────────────────────────────────────
+       Shows a typed or instant message in the .mathie-speech bubble
+       above the character, then auto-hides after `duration` ms.
+    ──────────────────────────────────────────────────────────────── */
+    /* ─── Mathie Speech Bubble ─────────────────────────────────────
+       opts.typing    : true = char-by-char typewriter effect
+       opts.persistent: true = message stays visible until replaced
+       opts.duration  : ms to keep visible when not persistent (default 3500)
+    ──────────────────────────────────────────────────────────────── */
+    function showMathieSpeech(msg, opts) {
+        opts = Object.assign({ duration: 3500, typing: true, persistent: false }, opts || {});
+        var el = document.getElementById('mathie-speech');
+        if (!el) return;
+
+        // Cancel any in-progress timers
+        if (el._speakTimer)  clearTimeout(el._speakTimer);
+        if (el._typeTimer)   clearTimeout(el._typeTimer);
+        el._speakTimer = null;
+        el._typeTimer  = null;
+
+        el.innerHTML = '';
+        el.classList.add('is-visible');
+
+        if (opts.typing) {
+            var cursor = document.createElement('span');
+            cursor.className = 'speech-cursor';
+            el.appendChild(cursor);
+
+            var i = 0;
+            function typeChar() {
+                if (i < msg.length) {
+                    var ch = msg[i];
+                    el.insertBefore(document.createTextNode(ch), cursor);
+                    i++;
+                    // Pause after spaces (inter-word gap) and punctuation
+                    var delay;
+                    if (ch === ' ') {
+                        delay = 160 + Math.random() * 80;  // word pause
+                    } else if (ch === ',' || ch === ';') {
+                        delay = 220 + Math.random() * 60;
+                    } else if (ch === '!' || ch === '?' || ch === '.') {
+                        delay = 300 + Math.random() * 80;
+                    } else {
+                        delay = 68 + Math.random() * 38;   // per-char base speed
+                    }
+                    el._typeTimer = setTimeout(typeChar, delay);
+                } else {
+                    // Typing done: remove cursor, then optionally hide
+                    setTimeout(function () { cursor.remove(); }, 480);
+                    if (!opts.persistent) {
+                        el._speakTimer = setTimeout(function () {
+                            el.classList.remove('is-visible');
+                        }, opts.duration);
+                    }
+                }
+            }
+            typeChar();
+        } else {
+            el.textContent = msg;
+            if (!opts.persistent) {
+                el._speakTimer = setTimeout(function () {
+                    el.classList.remove('is-visible');
+                }, opts.duration);
+            }
+        }
+    }
+
+    /* ─── Preview a level by clicking its pill ─────────────────────
+       Temporarily scales the character to the target level,
+       shows a motivational tip, then reverts to actual level
+       and restores the persistent intro speech.
+    ──────────────────────────────────────────────────────────────── */
+    function previewCharacterLevel(lv) {
+        var charWrap = document.querySelector('.landing-character-wrap');
+        if (!charWrap) return;
+
+        var actualLevel = Math.min(7, Math.max(1, getOverallLevel()));
+        var previewScale = (0.94 + (lv - 1) * 0.04).toFixed(2);
+
+        charWrap.style.setProperty('--character-scale', previewScale);
+        charWrap.classList.add('is-previewing');
+
+        var msg;
+        if (lv === actualLevel) {
+            msg = "You're at Level " + lv + "! Keep solving to grow Mathie bigger! \u2B50";
+        } else if (lv > actualLevel) {
+            var diff = lv - actualLevel;
+            msg = "Level " + lv + " Mathie! Crush " + diff + " more level" + (diff > 1 ? 's' : '') + " to make Mathie grow this big! \uD83D\uDE80";
+        } else {
+            msg = "Mathie was Level " + lv + " once. Look how far you've come! \uD83C\uDFC6";
+        }
+
+        // Show preview (non-persistent, instant)
+        showMathieSpeech(msg, { duration: 99999, typing: false, persistent: false });
+
+        // Revert scale AND restore persistent intro speech after preview
+        if (charWrap._previewTimer) clearTimeout(charWrap._previewTimer);
+        charWrap._previewTimer = setTimeout(function () {
+            var actualScale = (0.94 + (actualLevel - 1) * 0.04).toFixed(2);
+            charWrap.style.setProperty('--character-scale', actualScale);
+            charWrap.classList.remove('is-previewing');
+            // Restore the persistent intro message (instant, no typing)
+            showMathieSpeech(
+                "Hey There! Can you solve some maths to help me level up and grow? \uD83E\uDDE0",
+                { typing: false, persistent: true }
+            );
+        }, 2600);
+    }
+
     function showLevelUpToast(opKey, newLevel) {
         const opNames = { add: 'Addition', sub: 'Subtraction', mul: 'Multiplication', div: 'Division' };
         const toast = document.getElementById('levelup-toast');
@@ -1006,5 +1115,48 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLandingStats();
     renderSolvedMilestoneBadges(STATE.lifetimeStats.solved);
     updateResultLifetimeStats();
+
+    // ── Level-pill click delegation (preview character at any level) ──
+    var levelsDiv = document.getElementById('landing-character-levels');
+    if (levelsDiv) {
+        levelsDiv.addEventListener('click', function (ev) {
+            var pill = ev.target.closest('.landing-level-pill:not(.landing-level-pill-best)');
+            if (!pill) return;
+            var lv = parseInt(pill.dataset.level, 10);
+            if (!lv) return;
+            previewCharacterLevel(lv);
+        });
+    }
+
+    // ── Mathie intro greeting (fires once after loader is dismissed) ─
+    document.addEventListener('mathtrainer:ready', function onMathieReady() {
+        document.removeEventListener('mathtrainer:ready', onMathieReady);
+        setTimeout(function () {
+            showMathieSpeech(
+                "Hey There! Can you solve some maths to help me level up and grow? \uD83E\uDDE0",
+                { typing: true, persistent: true }
+            );
+
+            // After typing finishes, pulse the non-active pills once
+            var approxTypingMs = "Hey There! Can you solve some maths to help me level up and grow? \uD83E\uDDE0".length * 110 + 500;
+            setTimeout(function () {
+                var pills = document.querySelectorAll('#landing-level-pills .landing-level-pill:not(.is-active)');
+                pills.forEach(function (p) { p.classList.add('pill-hint'); });
+                setTimeout(function () {
+                    pills.forEach(function (p) { p.classList.remove('pill-hint'); });
+                }, 2200);
+            }, approxTypingMs);
+        }, 350);
+    });
+
+    // Dismiss tap hint on first pill click
+    var levelsDiv2 = document.getElementById('landing-character-levels');
+    if (levelsDiv2) {
+        levelsDiv2.addEventListener('click', function dismissHint() {
+            var hint = document.getElementById('pill-tap-hint');
+            if (hint) hint.classList.add('is-hidden');
+            levelsDiv2.removeEventListener('click', dismissHint);
+        }, { capture: true });
+    }
 
 });
