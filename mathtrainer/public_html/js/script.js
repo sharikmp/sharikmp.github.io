@@ -1221,4 +1221,74 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { capture: true });
     }
 
+    // Reveal landing character panel on scroll for mobile/tablet layout.
+    var landingCharacterCol = document.querySelector('.landing-character-col');
+    var landingRevealObserver = null;
+
+    function setupLandingCharacterReveal() {
+        if (!landingCharacterCol) return;
+
+        var mobileLayout = window.matchMedia('(max-width: 991.98px)').matches;
+
+        if (!mobileLayout) {
+            if (landingRevealObserver) {
+                landingRevealObserver.disconnect();
+                landingRevealObserver = null;
+            }
+            landingCharacterCol.classList.add('is-revealed');
+            return;
+        }
+
+        landingCharacterCol.classList.remove('is-revealed');
+
+        if (landingRevealObserver) landingRevealObserver.disconnect();
+        landingRevealObserver = new IntersectionObserver(function (entries, obs) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                landingCharacterCol.classList.add('is-revealed');
+                obs.unobserve(entry.target);
+            });
+        }, { threshold: 0.24, rootMargin: '0px 0px -8% 0px' });
+
+        landingRevealObserver.observe(landingCharacterCol);
+    }
+
+    setupLandingCharacterReveal();
+    window.addEventListener('resize', setupLandingCharacterReveal);
+
+    // Hide bottom mobile flash when footer crosses into viewport.
+    var mobileScrollFlash = document.getElementById('mobile-scroll-flash');
+    var siteFooter = document.querySelector('#ui-layer footer');
+    var footerFlashObserver = null;
+
+    function setupFooterFlashOverlapGuard() {
+        if (!mobileScrollFlash || !siteFooter) return;
+
+        var mobileLayout = window.matchMedia('(max-width: 991.98px)').matches;
+        if (!mobileLayout) {
+            mobileScrollFlash.classList.remove('is-hidden-near-footer');
+            if (footerFlashObserver) {
+                footerFlashObserver.disconnect();
+                footerFlashObserver = null;
+            }
+            return;
+        }
+
+        if (footerFlashObserver) footerFlashObserver.disconnect();
+        footerFlashObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    mobileScrollFlash.classList.add('is-hidden-near-footer');
+                } else {
+                    mobileScrollFlash.classList.remove('is-hidden-near-footer');
+                }
+            });
+        }, { threshold: 0.01 });
+
+        footerFlashObserver.observe(siteFooter);
+    }
+
+    setupFooterFlashOverlapGuard();
+    window.addEventListener('resize', setupFooterFlashOverlapGuard);
+
 });

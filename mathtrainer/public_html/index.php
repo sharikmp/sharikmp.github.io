@@ -176,6 +176,11 @@ $json_ld = json_encode([
             </div>
         </section>
 
+        <div class="mobile-scroll-flash" id="mobile-scroll-flash" aria-hidden="true">
+            <span class="mobile-scroll-flash-icon"><i class="fas fa-angle-double-down"></i></span>
+            <!-- <span>Scroll below</span> -->
+        </div>
+
         <!-- ── Pre-Game Ready Popup ─────────────────────────── -->
         <div id="pregame-modal" class="pregame-modal interactive-layer" style="display:none;" aria-hidden="true">
             <div class="pregame-card" role="dialog" aria-modal="true" aria-labelledby="pregame-title">
