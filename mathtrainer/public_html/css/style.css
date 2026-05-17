@@ -1008,34 +1008,34 @@ h3,
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.5rem;
+    gap: 1.5rem;
     padding: 2rem;
 }
 
-/* Brand fluid fill */
+/* Mascot fluid fill */
 .loader-brand-wrap {
     position: relative;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(3rem, 12vw, 8rem);
-    font-weight: 800;
-    text-align: center;
-    line-height: 1.05;
-    letter-spacing: 4px;
+    width: clamp(180px, 34vw, 340px);
 }
 
 .loader-brand-bg {
-    color: transparent;
-    -webkit-text-stroke: 2px rgba(212, 175, 55, 0.18);
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: brightness(0.22) saturate(0.7) blur(0.2px);
     user-select: none;
+    -webkit-user-drag: none;
 }
 
 .loader-brand-fill {
     position: absolute;
     inset: 0;
-    color: var(--primary-accent);
-    text-shadow: 0 0 50px rgba(212, 175, 55, 0.55), 0 0 100px rgba(212, 175, 55, 0.25);
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 18px rgba(212, 175, 55, 0.65));
     clip-path: inset(100% 0 0 0);
     user-select: none;
+    -webkit-user-drag: none;
     will-change: clip-path;
 }
 

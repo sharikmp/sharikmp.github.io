@@ -64,8 +64,8 @@ $json_ld = json_encode([
         <canvas id="loader-star-canvas"></canvas>
         <div id="loader-content">
             <div class="loader-brand-wrap" aria-label="MATH TRAINER">
-                <div class="loader-brand-bg">MATH<br>TRAINER</div>
-                <div class="loader-brand-fill" id="loader-brand-fill">MATH<br>TRAINER</div>
+                <img class="loader-brand-bg" src="<?= asset('assets/math-trainer-character.png') ?>" alt="Math Trainer mascot" loading="eager" decoding="async">
+                <img class="loader-brand-fill" id="loader-brand-fill" src="<?= asset('assets/math-trainer-character.png') ?>" alt="" aria-hidden="true" loading="eager" decoding="async">
             </div>
             <div class="loader-ring-wrap">
                 <svg class="loader-ring-svg" viewBox="0 0 120 120">
