@@ -327,6 +327,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const GAME_DURATION_SECONDS = 5;
 
+    const LEADERBOARD_MAX_ROWS = 10;
+    const LEADERBOARD = {
+        activeTab: 'global',
+        player: null,
+        displayName: 'Me',
+        countryCode: 'ZZ'
+    };
+
     const STATE = {
         score: 0,
         streak: 0,
@@ -665,6 +673,251 @@ document.addEventListener('DOMContentLoaded', () => {
         updateResultLifetimeStats();
 
         switchView('view-results');
+        submitAndRefreshLeaderboard();
+    }
+
+    function getLeaderboardApiUrl(key) {
+        if (window.MathTrainerApi && typeof window.MathTrainerApi[key] === 'string') {
+            return window.MathTrainerApi[key];
+        }
+        return null;
+    }
+
+    function getCurrentWeekKeyUtc() {
+        const now = new Date();
+        const day = now.getUTCDay() || 7;
+        const monday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+        monday.setUTCDate(monday.getUTCDate() - (day - 1));
+        return monday.toISOString().slice(0, 10);
+    }
+
+    function createAnonymousProfile() {
+        const rand = Math.random().toString(36).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
+        return {
+            anonId: `ANON-${rand}`
+        };
+    }
+
+    function getOrCreateWeeklyAnonymousProfile() {
+        const storageKey = 'mathTrainerAnonProfile';
+        const weekKey = getCurrentWeekKeyUtc();
+
+        try {
+            const existing = JSON.parse(localStorage.getItem(storageKey) || 'null');
+            if (existing && existing.weekKey === weekKey && existing.anonId) {
+                return existing;
+            }
+        } catch (e) {
+            // Ignore malformed localStorage and regenerate profile.
+        }
+
+        const generated = createAnonymousProfile();
+        const profile = {
+            anonId: generated.anonId,
+            weekKey
+        };
+        localStorage.setItem(storageKey, JSON.stringify(profile));
+        return profile;
+    }
+
+    function inferCountryHintFromLocale() {
+        const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+        for (let i = 0; i < langs.length; i++) {
+            const lang = String(langs[i] || '').trim();
+            const match = lang.match(/-([A-Za-z]{2})$/);
+            if (match) return match[1].toUpperCase();
+        }
+        return 'ZZ';
+    }
+
+    function leaderboardStatus(text, isError) {
+        const el = document.getElementById('leaderboard-status');
+        if (!el) return;
+        el.textContent = text;
+        el.classList.toggle('is-error', Boolean(isError));
+    }
+
+    function setMeConnectionState(isConnected) {
+        const label = document.getElementById('leaderboard-player-label');
+        if (!label) return;
+        label.classList.toggle('is-connected', Boolean(isConnected));
+    }
+
+    function showLeaderboardTab(tab) {
+        LEADERBOARD.activeTab = tab === 'country' ? 'country' : 'global';
+
+        document.querySelectorAll('[data-leaderboard-tab]').forEach(btn => {
+            const active = btn.getAttribute('data-leaderboard-tab') === LEADERBOARD.activeTab;
+            btn.classList.toggle('is-active', active);
+            btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        document.querySelectorAll('[data-leaderboard-list]').forEach(list => {
+            const active = list.getAttribute('data-leaderboard-list') === LEADERBOARD.activeTab;
+            list.classList.toggle('is-active', active);
+        });
+    }
+
+    function escapeHtml(value) {
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function renderLeaderboardRows(rows, listKey) {
+        const listEl = document.querySelector(`[data-leaderboard-list="${listKey}"]`);
+        if (!listEl) return;
+
+        if (!Array.isArray(rows) || rows.length === 0) {
+            listEl.innerHTML = '<div class="leaderboard-empty">No scores yet this week.</div>';
+            return;
+        }
+
+        const currentAnonId = LEADERBOARD.player ? LEADERBOARD.player.anonId : '';
+
+        listEl.innerHTML = rows.map((row, index) => {
+            const rank = index + 1;
+            const isMe = currentAnonId && String(row.anon_id || '') === currentAnonId;
+            const mineClass = isMe ? ' is-me' : '';
+            const countryCode = String(row.country_code || '').slice(0, 2).toUpperCase();
+            const country = countryCode ? `<span class="leaderboard-country">${escapeHtml(countryCode)}</span>` : '';
+            const safeName = escapeHtml(String(row.display_name || 'Anonymous').slice(0, 24));
+            const safeScore = Number(row.score || 0);
+            const safeAcc = Number(row.accuracy || 0);
+            const safeQ = Number(row.questions || 0);
+
+            return `<div class="leaderboard-row${mineClass}">
+                        <div class="leaderboard-rank">#${rank}</div>
+                        <div class="leaderboard-name-wrap">
+                            <div class="leaderboard-name">${safeName}</div>
+                            <div class="leaderboard-metrics">${safeQ} ques • ${safeAcc}% acc ${country}</div>
+                        </div>
+                        <div class="leaderboard-score">${safeScore}</div>
+                    </div>`;
+        }).join('');
+    }
+
+    async function submitLeaderboardScore(profile) {
+        const submitUrl = getLeaderboardApiUrl('submitLeaderboardUrl');
+        if (!submitUrl) {
+            setMeConnectionState(false);
+            return { ok: false, message: 'Leaderboard submit endpoint is not configured.' };
+        }
+
+        const payload = {
+            anon_id: profile.anonId,
+            score: STATE.score,
+            questions: STATE.totalQuestions,
+            accuracy: STATE.totalQuestions > 0 ? Math.round((STATE.correctAnswers / STATE.totalQuestions) * 100) : 0,
+            overall_level: getOverallLevel(),
+            country_hint: inferCountryHintFromLocale()
+        };
+
+        try {
+            const res = await fetch(submitUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.success) {
+                setMeConnectionState(false);
+                return {
+                    ok: false,
+                    message: String(data.message || 'Could not save score to leaderboard.')
+                };
+            }
+            if (data.display_name) {
+                LEADERBOARD.displayName = String(data.display_name).slice(0, 24);
+            }
+            LEADERBOARD.countryCode = String(data.country_code || 'ZZ').toUpperCase();
+            setMeConnectionState(true);
+            return { ok: true, message: '' };
+        } catch (err) {
+            setMeConnectionState(false);
+            return { ok: false, message: 'Could not reach leaderboard submit API.' };
+        }
+    }
+
+    async function loadLeaderboard(countryCode) {
+        const listUrl = getLeaderboardApiUrl('listLeaderboardUrl');
+        if (!listUrl) {
+            leaderboardStatus('Leaderboard endpoint is not configured.', true);
+            setMeConnectionState(false);
+            return;
+        }
+
+        const params = new URLSearchParams({ limit: String(LEADERBOARD_MAX_ROWS) });
+        if (countryCode && /^[A-Z]{2}$/.test(countryCode)) {
+            params.set('country_code', countryCode);
+        }
+
+        try {
+            const res = await fetch(`${listUrl}?${params.toString()}`);
+            const data = await res.json().catch(() => ({}));
+
+            if (!res.ok || !data.success) {
+                leaderboardStatus('Leaderboard unavailable right now.', true);
+                setMeConnectionState(false);
+                return;
+            }
+
+            setMeConnectionState(true);
+
+            const resolvedCountry = String(data.country_code || countryCode || 'ZZ').toUpperCase();
+            LEADERBOARD.countryCode = resolvedCountry;
+
+            renderLeaderboardRows(data.global || [], 'global');
+            renderLeaderboardRows(data.country || [], 'country');
+
+            if (resolvedCountry === 'ZZ') {
+                document.getElementById('leaderboard-tab-country')?.setAttribute('disabled', 'disabled');
+                leaderboardStatus('Showing global weekly leaderboard.', false);
+                showLeaderboardTab('global');
+            } else {
+                document.getElementById('leaderboard-tab-country')?.removeAttribute('disabled');
+                leaderboardStatus(`Showing weekly scores for ${resolvedCountry} and Global.`, false);
+            }
+        } catch (err) {
+            leaderboardStatus('Could not load leaderboard.', true);
+            setMeConnectionState(false);
+        }
+    }
+
+    async function submitAndRefreshLeaderboard() {
+        const profile = getOrCreateWeeklyAnonymousProfile();
+        LEADERBOARD.player = profile;
+
+        const label = document.getElementById('leaderboard-player-label');
+        if (label) {
+            label.textContent = 'Me';
+        }
+        setMeConnectionState(false);
+
+        leaderboardStatus('Submitting your score...', false);
+        const submitResult = await submitLeaderboardScore(profile);
+        if (!submitResult.ok) {
+            leaderboardStatus(submitResult.message || 'Score not saved, but leaderboard is still available.', true);
+        }
+        await loadLeaderboard(LEADERBOARD.countryCode);
+    }
+
+    async function initializeLeaderboard() {
+        const profile = getOrCreateWeeklyAnonymousProfile();
+        LEADERBOARD.player = profile;
+
+        const label = document.getElementById('leaderboard-player-label');
+        if (label) {
+            label.textContent = 'Me';
+        }
+        setMeConnectionState(false);
+
+        leaderboardStatus('Loading leaderboard...', false);
+        await loadLeaderboard(LEADERBOARD.countryCode || inferCountryHintFromLocale());
     }
 
     // Input Handling (Real-time evaluation)
@@ -1151,6 +1404,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-share-download').addEventListener('click', () => shareScore('download'));
     document.getElementById('btn-share-native').addEventListener('click', () => shareScore('native'));
 
+    document.querySelectorAll('[data-leaderboard-tab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tab = btn.getAttribute('data-leaderboard-tab') || 'global';
+            showLeaderboardTab(tab);
+        });
+    });
+
     // Prevent zoom on double tap (mobile)
     document.addEventListener('dblclick', function (event) {
         event.preventDefault();
@@ -1193,6 +1453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLandingStats();
     renderSolvedMilestoneBadges(STATE.lifetimeStats.solved);
     updateResultLifetimeStats();
+    initializeLeaderboard();
 
     // ── Level-pill click delegation (preview character at any level) ──
     var levelsDiv = document.getElementById('landing-character-levels');

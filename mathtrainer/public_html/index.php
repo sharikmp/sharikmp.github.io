@@ -173,6 +173,31 @@ $json_ld = json_encode([
                         </div>
                     </div>
                 </section>
+
+                <section class="landing-leaderboard-shell" aria-label="Leaderboard">
+                    <div class="leaderboard-wrap" id="leaderboard-wrap">
+                        <div class="leaderboard-head">
+                            <div class="leaderboard-title">Weekly Leaderboard</div>
+                            <div class="leaderboard-subtitle" id="leaderboard-player-label">Anonymous</div>
+                        </div>
+
+                        <div class="leaderboard-tabs" role="tablist" aria-label="Leaderboard views">
+                            <button class="leaderboard-tab is-active" id="leaderboard-tab-global" data-leaderboard-tab="global" role="tab" aria-selected="true">
+                                Global
+                            </button>
+                            <button class="leaderboard-tab" id="leaderboard-tab-country" data-leaderboard-tab="country" role="tab" aria-selected="false">
+                                Country
+                            </button>
+                        </div>
+
+                        <div class="leaderboard-status" id="leaderboard-status">Loading leaderboard...</div>
+
+                        <div class="leaderboard-list-wrap">
+                            <div class="leaderboard-list is-active" id="leaderboard-list-global" data-leaderboard-list="global"></div>
+                            <div class="leaderboard-list" id="leaderboard-list-country" data-leaderboard-list="country"></div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </section>
 
@@ -398,6 +423,7 @@ $json_ld = json_encode([
 
                             <div class="milestone-title">Solved Milestones</div>
                             <div class="milestone-badges-row mb-3" id="solved-milestone-badges"></div>
+
                         </div><!-- /results-card -->
 
                         <div class="mt-4">
@@ -446,6 +472,12 @@ $json_ld = json_encode([
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        window.MathTrainerApi = {
+            submitLeaderboardUrl: <?= json_encode(url('api/leaderboard_submit.php')) ?>,
+            listLeaderboardUrl: <?= json_encode(url('api/leaderboard_list.php')) ?>
+        };
+    </script>
     <script src="<?= asset('js/loader.js') ?>"></script>
     <script src="<?= asset('js/script.js') ?>"></script>
 

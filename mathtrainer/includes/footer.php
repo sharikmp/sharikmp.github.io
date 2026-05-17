@@ -66,13 +66,12 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-12 footer-brand-gradient-wrap">
-                <div class="huge-brand-text">MATH<br>TRAINER</div>
-                <div class="footer-brand-glow-strip"></div>
-                <div class="footer-brand-glow-strip"></div>
-            </div>
         </div>
 
+            <div class="col-12 footer-brand-gradient-wrap">
+                <div class="huge-brand-text">MATH <strong>TRAINER</strong></div>
+                <div class="footer-brand-glow-strip"></div>
+            </div>
         <div class="footer-bottom mt-2">
             <div>&copy; <?= date('Y') ?> <?= APP_NAME ?>. All rights reserved.</div>
             <div class="d-flex gap-3 align-items-center mt-3 mt-md-0">
