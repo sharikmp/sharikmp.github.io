@@ -130,12 +130,18 @@ $json_ld = json_encode([
 
                         <div class="landing-marketing-points" aria-label="Why Math Trainer points">
                             <div class="landing-marketing-point">
-                                <i class="fas fa-brain"></i>
-                                <span><strong>Mental Gym:</strong> Built for adults to stay sharp and students to ace speed-focused competitive exams.</span>
+                                <img src="<?= asset('assets/brain-image-bg-less.png') ?>" alt="Brain lifting weight" class="landing-point-img" loading="lazy" decoding="async">
+                                <div class="landing-point-copy">
+                                    <h3>Mental Gym</h3>
+                                    <p>Stay sharp daily and build mental math speed and confidence with Math Trainer.</p>
+                                </div>
                             </div>
                             <div class="landing-marketing-point">
-                                <i class="fas fa-leaf"></i>
-                                <span><strong>Non-Toxic Screen Time:</strong> A guilt-free 60-second digital habit for parents who want screen time that builds real skill.</span>
+                                <img src="<?= asset('assets/guilt-free-screen-time-bg-less.png') ?>" alt="Phone with hourglass and check mark" class="landing-point-img" loading="lazy" decoding="async">
+                                <div class="landing-point-copy">
+                                    <h3>Guilt-Free Screen Time</h3>
+                                    <p>Give kids digital time that teaches a real skill instead of endless scrolling.</p>
+                                </div>
                             </div>
                         </div>
 
