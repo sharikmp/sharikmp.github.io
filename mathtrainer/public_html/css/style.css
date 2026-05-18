@@ -2351,3 +2351,84 @@ h3,
     0%, 100% { box-shadow: 0 0 8px  rgba(255, 215, 0, 0.25); }
     50%       { box-shadow: 0 0 20px rgba(255, 215, 0, 0.55); }
 }
+
+.leaderboard-identity-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.leaderboard-identity-dialog {
+    width: min(430px, 96vw);
+    background: rgba(10, 14, 26, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.5);
+    padding: 16px;
+}
+
+.leaderboard-identity-title {
+    margin: 0;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.leaderboard-identity-note {
+    margin: 6px 0 12px;
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.leaderboard-identity-label {
+    display: block;
+    margin: 8px 0 6px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.leaderboard-identity-input {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    padding: 10px 12px;
+    outline: none;
+}
+
+.leaderboard-identity-input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 0 2px rgba(0, 243, 255, 0.15);
+}
+
+.leaderboard-identity-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.leaderboard-identity-btn {
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+.leaderboard-identity-btn.is-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.leaderboard-identity-btn.is-primary {
+    background: var(--primary-accent);
+    color: #111;
+    font-weight: 700;
+}

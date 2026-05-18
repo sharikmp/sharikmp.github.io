@@ -87,10 +87,116 @@ function generateSequentialAnonymousName(PDO $pdo): string {
     $pdo->exec('INSERT INTO leaderboard_alias_counter () VALUES ()');
     $nextId = (int) $pdo->lastInsertId();
 
-    return 'User' . str_pad((string) $nextId, 6, '0', STR_PAD_LEFT);
+    return 'Anonymous' . str_pad((string) $nextId, 6, '0', STR_PAD_LEFT);
 }
 
 api_require_method('POST');
+
+function api_sanitize_leaderboard_name(string $name): string {
+    $name = trim($name);
+    if ($name === '') {
+        return '';
+    }
+
+    $name = preg_replace('/\s+/', ' ', $name);
+    $name = preg_replace('/[^A-Za-z0-9 _.-]/', '', $name ?? '');
+    $name = trim((string) $name);
+
+    if (strlen($name) < 3) {
+        return '';
+    }
+
+    return substr($name, 0, 24);
+}
+
+/**
+ * Send notification via Telegram Bot.
+ * Returns status details for diagnostics.
+ */
+function sendTelegramNotification(string $displayName, int $score, int $questions, int $accuracy, string $countryName): array {
+    $botToken = trim((string) ($_ENV['TELEGRAM_BOT_TOKEN'] ?? ''));
+    $chatId = trim((string) ($_ENV['TELEGRAM_CHAT_ID'] ?? ''));
+    
+    if (empty($botToken) || empty($chatId)) {
+        return [
+            'attempted' => false,
+            'success' => false,
+            'http_code' => 0,
+            'error' => 'Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID',
+        ];
+    }
+    
+    $appName = $_ENV['APP_NAME'] ?? 'MathTrainer';
+    
+    // Format message with emojis
+    $message = <<<TEXT
+🎉 <b>New {$appName} Score!</b>
+
+👤 <b>Player:</b> {$displayName}
+🎯 <b>Score:</b> <b>{$score} points</b>
+❓ <b>Questions:</b> {$questions}
+✅ <b>Accuracy:</b> {$accuracy}%
+🌍 <b>Country:</b> {$countryName}
+TEXT;
+    
+    $url = "https://api.telegram.org/bot{$botToken}/sendMessage";
+    
+    $data = [
+        'chat_id' => $chatId,
+        'text' => $message,
+        'parse_mode' => 'HTML',
+    ];
+    
+    $options = [
+        'http' => [
+            'method' => 'POST',
+            'header' => 'Content-Type: application/x-www-form-urlencoded',
+            'content' => http_build_query($data),
+            'timeout' => 5,
+            'ignore_errors' => true,
+        ],
+    ];
+    
+    $context = stream_context_create($options);
+    $response = @file_get_contents($url, false, $context);
+
+    $httpCode = 0;
+    if (isset($http_response_header) && is_array($http_response_header)) {
+        foreach ($http_response_header as $headerLine) {
+            if (preg_match('/^HTTP\/\S+\s+(\d{3})/', $headerLine, $m)) {
+                $httpCode = (int) $m[1];
+                break;
+            }
+        }
+    }
+
+    $decoded = is_string($response) ? json_decode($response, true) : null;
+    $ok = ($httpCode >= 200 && $httpCode < 300)
+        && is_array($decoded)
+        && !empty($decoded['ok']);
+
+    if ($ok) {
+        return [
+            'attempted' => true,
+            'success' => true,
+            'http_code' => $httpCode,
+            'error' => '',
+        ];
+    }
+
+    $apiDescription = '';
+    if (is_array($decoded) && isset($decoded['description'])) {
+        $apiDescription = (string) $decoded['description'];
+    }
+
+    return [
+        'attempted' => true,
+        'success' => false,
+        'http_code' => $httpCode,
+        'error' => $apiDescription !== '' ? $apiDescription : 'Telegram API call failed',
+    ];
+}
+
 $body = api_read_json_body();
 
 $anonId = strtoupper(trim((string) ($body['anon_id'] ?? '')));
@@ -99,6 +205,7 @@ $questions = (int) ($body['questions'] ?? 0);
 $accuracy = (int) ($body['accuracy'] ?? 0);
 $overallLevel = (int) ($body['overall_level'] ?? 1);
 $countryHint = strtoupper(trim((string) ($body['country_hint'] ?? '')));
+$preferredDisplayName = api_sanitize_leaderboard_name((string) ($body['preferred_display_name'] ?? ''));
 
 if (!preg_match('/^ANON-[A-Z0-9]{6,20}$/', $anonId)) {
     api_json(422, ['success' => false, 'message' => 'Invalid anonymous ID.']);
@@ -146,7 +253,13 @@ try {
         ':week_start' => $weekStart,
     ]);
     $existingName = trim((string) ($nameStmt->fetch()['display_name'] ?? ''));
-    $displayName = $existingName !== '' ? $existingName : generateSequentialAnonymousName($pdo);
+    if ($existingName !== '') {
+        $displayName = $existingName;
+    } elseif ($preferredDisplayName !== '') {
+        $displayName = $preferredDisplayName;
+    } else {
+        $displayName = generateSequentialAnonymousName($pdo);
+    }
 
     // Basic spam guard: max 25 submissions per IP hash per hour.
     $guardStmt = $pdo->prepare(
@@ -185,8 +298,11 @@ try {
         ':user_agent_hash' => $uaHash,
     ]);
 
-    // Send email notification to contact recipients
-    sendLeaderboardNotificationEmail($displayName, $score, $questions, $accuracy, $country['country_name']);
+    // ── Email notification (DISABLED) ──
+    // sendLeaderboardNotificationEmail($displayName, $score, $questions, $accuracy, $country['country_name']);
+    
+    // ── Telegram Bot notification ──
+    $telegramResult = sendTelegramNotification($displayName, $score, $questions, $accuracy, $country['country_name']);
 
     // Opportunistic cleanup to avoid stale anonymous data buildup.
     if (random_int(1, 25) === 1) {
@@ -203,6 +319,7 @@ try {
         'display_name' => $displayName,
         'country_code' => $country['country_code'],
         'country_name' => $country['country_name'],
+        'telegram' => $telegramResult,
     ]);
 } catch (Throwable $e) {
     if (is_dev()) {

@@ -332,7 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
         activeTab: 'global',
         player: null,
         displayName: 'Me',
-        countryCode: 'ZZ'
+        countryCode: 'ZZ',
+        identity: null
     };
 
     const STATE = {
@@ -730,6 +731,220 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'ZZ';
     }
 
+    const LEADERBOARD_IDENTITY_STORAGE_KEY = 'mathTrainerLeaderboardIdentity';
+    const LEADERBOARD_NAME_COUNTER_STORAGE_KEY = 'mathTrainerLeaderboardNameCounter';
+    const LEADERBOARD_COUNTRY_CODES = [
+        'US', 'IN', 'GB', 'CA', 'AU', 'DE', 'FR', 'ES', 'IT', 'NL',
+        'SE', 'NO', 'DK', 'FI', 'PL', 'PT', 'IE', 'CH', 'AT', 'BE',
+        'AE', 'SA', 'QA', 'SG', 'MY', 'TH', 'VN', 'PH', 'ID', 'JP',
+        'KR', 'CN', 'TW', 'HK', 'NZ', 'ZA', 'NG', 'KE', 'EG', 'BR',
+        'AR', 'CL', 'MX', 'CO', 'PE', 'TR', 'GR', 'CZ', 'HU', 'RO',
+        'ZZ'
+    ];
+
+    function normalizeLeaderboardName(value) {
+        return String(value || '')
+            .replace(/\s+/g, ' ')
+            .replace(/[^A-Za-z0-9 _.-]/g, '')
+            .trim()
+            .slice(0, 24);
+    }
+
+    function createDefaultLeaderboardName() {
+        const current = parseInt(localStorage.getItem(LEADERBOARD_NAME_COUNTER_STORAGE_KEY) || '1', 10);
+        const safeCurrent = Number.isFinite(current) && current > 0 ? current : 1;
+        return `Anonymous${String(safeCurrent).padStart(6, '0')}`;
+    }
+
+    function advanceLeaderboardNameCounter() {
+        const current = parseInt(localStorage.getItem(LEADERBOARD_NAME_COUNTER_STORAGE_KEY) || '1', 10);
+        const safeCurrent = Number.isFinite(current) && current > 0 ? current : 1;
+        localStorage.setItem(LEADERBOARD_NAME_COUNTER_STORAGE_KEY, String(safeCurrent + 1));
+    }
+
+    function resolvePreferredCountryCode() {
+        const inferred = inferCountryHintFromLocale();
+        if (/^[A-Z]{2}$/.test(inferred) && inferred !== 'ZZ') {
+            return inferred;
+        }
+
+        const resolved = String(LEADERBOARD.countryCode || '').toUpperCase();
+        if (/^[A-Z]{2}$/.test(resolved) && resolved !== 'ZZ') {
+            return resolved;
+        }
+
+        return 'ZZ';
+    }
+
+    async function fetchReservedAnonymousAlias() {
+        const nextAliasUrl = getLeaderboardApiUrl('nextAliasUrl');
+        if (!nextAliasUrl) {
+            return '';
+        }
+
+        try {
+            const res = await fetch(nextAliasUrl);
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.success) {
+                return '';
+            }
+
+            const alias = String(data.alias || '').trim();
+            return /^Anonymous\d{6}$/.test(alias) ? alias : '';
+        } catch (e) {
+            return '';
+        }
+    }
+
+    function getCachedLeaderboardIdentity(profile) {
+        const fallbackCountry = resolvePreferredCountryCode();
+        const fallbackName = createDefaultLeaderboardName();
+
+        try {
+            const parsed = JSON.parse(localStorage.getItem(LEADERBOARD_IDENTITY_STORAGE_KEY) || 'null');
+            if (!parsed || typeof parsed !== 'object') {
+                return {
+                    displayName: fallbackName,
+                    countryCode: fallbackCountry,
+                    saved: false
+                };
+            }
+
+            const displayName = normalizeLeaderboardName(parsed.displayName || fallbackName) || fallbackName;
+            const countryCode = /^[A-Z]{2}$/.test(String(parsed.countryCode || ''))
+                ? String(parsed.countryCode).toUpperCase()
+                : fallbackCountry;
+
+            return {
+                displayName,
+                countryCode,
+                saved: Boolean(parsed.saved)
+            };
+        } catch (e) {
+            return {
+                displayName: fallbackName,
+                countryCode: fallbackCountry,
+                saved: false
+            };
+        }
+    }
+
+    function saveCachedLeaderboardIdentity(identity) {
+        localStorage.setItem(LEADERBOARD_IDENTITY_STORAGE_KEY, JSON.stringify({
+            displayName: normalizeLeaderboardName(identity.displayName),
+            countryCode: String(identity.countryCode || 'ZZ').toUpperCase(),
+            saved: true
+        }));
+        advanceLeaderboardNameCounter();
+    }
+
+    function countryDisplayName(code) {
+        try {
+            if (typeof Intl !== 'undefined' && typeof Intl.DisplayNames === 'function') {
+                const names = new Intl.DisplayNames(['en'], { type: 'region' });
+                return names.of(code) || code;
+            }
+        } catch (e) {
+            // Ignore and use fallback.
+        }
+        return code;
+    }
+
+    function buildLeaderboardCountryOptions(selectedCode) {
+        const selected = /^[A-Z]{2}$/.test(String(selectedCode || '')) ? String(selectedCode).toUpperCase() : 'ZZ';
+        const codes = Array.from(new Set([selected, ...LEADERBOARD_COUNTRY_CODES]));
+        return codes
+            .map(code => {
+                const label = countryDisplayName(code);
+                const isSelected = code === selected ? ' selected' : '';
+                return `<option value="${escapeHtml(code)}"${isSelected}>${escapeHtml(label)} (${escapeHtml(code)})</option>`;
+            })
+            .join('');
+    }
+
+    function openLeaderboardIdentityPopup(prefill) {
+        const existing = document.getElementById('leaderboard-identity-modal');
+        if (existing) {
+            existing.remove();
+        }
+
+        return new Promise(resolve => {
+            const modal = document.createElement('div');
+            modal.id = 'leaderboard-identity-modal';
+            modal.className = 'leaderboard-identity-modal';
+            modal.innerHTML = `
+                <div class="leaderboard-identity-dialog" role="dialog" aria-modal="true" aria-label="Save leaderboard profile">
+                    <h3 class="leaderboard-identity-title">Save your leaderboard profile</h3>
+                    <p class="leaderboard-identity-note">This name will be displayed in the leaderboard.</p>
+                    <label class="leaderboard-identity-label" for="leaderboard-name-input">Name</label>
+                    <input id="leaderboard-name-input" class="leaderboard-identity-input" maxlength="24" value="${escapeHtml(prefill.displayName)}" />
+                    <label class="leaderboard-identity-label" for="leaderboard-country-input">Country</label>
+                    <select id="leaderboard-country-input" class="leaderboard-identity-input">
+                        ${buildLeaderboardCountryOptions(prefill.countryCode)}
+                    </select>
+                    <div class="leaderboard-identity-actions">
+                        <button type="button" class="leaderboard-identity-btn is-secondary" data-action="skip">Skip</button>
+                        <button type="button" class="leaderboard-identity-btn is-primary" data-action="save">Save</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            const nameInput = modal.querySelector('#leaderboard-name-input');
+            const countryInput = modal.querySelector('#leaderboard-country-input');
+            const saveBtn = modal.querySelector('[data-action="save"]');
+            const skipBtn = modal.querySelector('[data-action="skip"]');
+
+            const finish = (result) => {
+                modal.remove();
+                resolve(result);
+            };
+
+            saveBtn.addEventListener('click', () => {
+                const cleaned = normalizeLeaderboardName(nameInput.value) || prefill.displayName;
+                finish({
+                    displayName: cleaned,
+                    countryCode: /^[A-Z]{2}$/.test(countryInput.value) ? countryInput.value.toUpperCase() : prefill.countryCode,
+                    saved: true
+                });
+            });
+
+            skipBtn.addEventListener('click', () => {
+                finish({
+                    displayName: prefill.displayName,
+                    countryCode: prefill.countryCode,
+                    saved: true
+                });
+            });
+
+            nameInput.focus();
+            nameInput.select();
+        });
+    }
+
+    async function ensureLeaderboardIdentity(profile) {
+        const cached = getCachedLeaderboardIdentity(profile);
+        if (cached.saved) {
+            return cached;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        const reservedAlias = await fetchReservedAnonymousAlias();
+        const prefill = {
+            displayName: reservedAlias || cached.displayName,
+            countryCode: cached.countryCode,
+            saved: false
+        };
+
+        const picked = await openLeaderboardIdentityPopup(prefill);
+        if (picked && picked.saved) {
+            saveCachedLeaderboardIdentity(picked);
+        }
+        return picked || prefill;
+    }
+
     function leaderboardStatus(text, isError) {
         const el = document.getElementById('leaderboard-status');
         if (!el) return;
@@ -799,12 +1014,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    async function submitLeaderboardScore(profile) {
+    async function submitLeaderboardScore(profile, identity) {
         const submitUrl = getLeaderboardApiUrl('submitLeaderboardUrl');
         if (!submitUrl) {
             setMeConnectionState(false);
             return { ok: false, message: 'Leaderboard submit endpoint is not configured.' };
         }
+
+        const normalizedIdentity = identity || {
+            displayName: createDefaultLeaderboardName(),
+            countryCode: resolvePreferredCountryCode()
+        };
 
         const payload = {
             anon_id: profile.anonId,
@@ -812,7 +1032,8 @@ document.addEventListener('DOMContentLoaded', () => {
             questions: STATE.totalQuestions,
             accuracy: STATE.totalQuestions > 0 ? Math.round((STATE.correctAnswers / STATE.totalQuestions) * 100) : 0,
             overall_level: getOverallLevel(),
-            country_hint: inferCountryHintFromLocale()
+            country_hint: normalizedIdentity.countryCode || inferCountryHintFromLocale(),
+            preferred_display_name: normalizeLeaderboardName(normalizedIdentity.displayName)
         };
 
         try {
@@ -833,6 +1054,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.display_name) {
                 LEADERBOARD.displayName = String(data.display_name).slice(0, 24);
             }
+
+            if (data.telegram) {
+                const tg = data.telegram;
+                if (tg.success) {
+                    console.log('[Leaderboard][Telegram] success', {
+                        attempted: tg.attempted,
+                        httpCode: tg.http_code
+                    });
+                } else {
+                    console.error('[Leaderboard][Telegram] failure', {
+                        attempted: tg.attempted,
+                        httpCode: tg.http_code,
+                        error: tg.error
+                    });
+                }
+            }
+
             LEADERBOARD.countryCode = String(data.country_code || 'ZZ').toUpperCase();
             setMeConnectionState(true);
             return { ok: true, message: '' };
@@ -851,7 +1089,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const params = new URLSearchParams({ limit: String(LEADERBOARD_MAX_ROWS) });
-        if (countryCode && /^[A-Z]{2}$/.test(countryCode)) {
+        if (countryCode && /^[A-Z]{2}$/.test(countryCode) && countryCode !== 'ZZ') {
             params.set('country_code', countryCode);
         }
 
@@ -890,6 +1128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function submitAndRefreshLeaderboard() {
         const profile = getOrCreateWeeklyAnonymousProfile();
         LEADERBOARD.player = profile;
+        LEADERBOARD.identity = await ensureLeaderboardIdentity(profile);
 
         const label = document.getElementById('leaderboard-player-label');
         if (label) {
@@ -898,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setMeConnectionState(false);
 
         leaderboardStatus('Submitting your score...', false);
-        const submitResult = await submitLeaderboardScore(profile);
+        const submitResult = await submitLeaderboardScore(profile, LEADERBOARD.identity);
         if (!submitResult.ok) {
             leaderboardStatus(submitResult.message || 'Score not saved, but leaderboard is still available.', true);
         }

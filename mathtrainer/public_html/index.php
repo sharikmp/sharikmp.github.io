@@ -475,7 +475,8 @@ $json_ld = json_encode([
     <script>
         window.MathTrainerApi = {
             submitLeaderboardUrl: <?= json_encode(url('api/leaderboard_submit.php')) ?>,
-            listLeaderboardUrl: <?= json_encode(url('api/leaderboard_list.php')) ?>
+            listLeaderboardUrl: <?= json_encode(url('api/leaderboard_list.php')) ?>,
+            nextAliasUrl: <?= json_encode(url('api/leaderboard_next_alias.php')) ?>
         };
     </script>
     <script src="<?= asset('js/loader.js') ?>"></script>
