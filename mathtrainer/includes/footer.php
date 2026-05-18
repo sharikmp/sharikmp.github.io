@@ -33,6 +33,8 @@
                     <li><a href="<?= url('learn/') ?>">Learn</a></li>
                     <li><a href="<?= url('howitworks.php') ?>">How It Works</a></li>
                     <li><a href="<?= url('about/') ?>">About</a></li>
+                    <li><a href="<?= url('blog/') ?>">Blog</a></li>
+                    <li><a href="<?= url('faq/') ?>">FAQ</a></li>
                 </ul>
             </div>
 
