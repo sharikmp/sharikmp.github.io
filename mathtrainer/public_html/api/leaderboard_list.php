@@ -42,6 +42,7 @@ try {
     $globalStmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $globalStmt->execute();
     $globalRows = $globalStmt->fetchAll();
+    $globalRows = array_map(fn($row) => [...$row, 'country_flag' => api_country_flag_emoji($row['country_code'] ?? 'ZZ')], $globalRows);
 
     $countryRows = [];
     $resolvedCountryCode = $countryCode;
@@ -75,6 +76,7 @@ try {
         $countryStmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $countryStmt->execute();
         $countryRows = $countryStmt->fetchAll();
+        $countryRows = array_map(fn($row) => [...$row, 'country_flag' => api_country_flag_emoji($row['country_code'] ?? 'ZZ')], $countryRows);
     }
 
     api_json(200, [

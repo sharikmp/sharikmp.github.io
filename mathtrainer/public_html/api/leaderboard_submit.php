@@ -6,6 +6,75 @@
 
 require_once __DIR__ . '/_bootstrap.php';
 
+function sendLeaderboardNotificationEmail(string $displayName, int $score, int $questions, int $accuracy, string $countryName): void {
+    $contactTo = trim((string) ($_ENV['CONTACT_TO'] ?? ''));
+    if (empty($contactTo)) {
+        return;
+    }
+
+    $appName = $_ENV['APP_NAME'] ?? 'MathTrainer';
+    $fromEmail = $_ENV['SMTP_USER'] ?? 'noreply@mathtrainer.net';
+    
+    $subject = "[{$appName}] New Score Submitted: {$displayName} - {$score}pts";
+    
+    $emailBody = <<<HTML
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+        .score-card { background: #f9f9f9; padding: 15px; margin: 15px 0; border-left: 4px solid #667eea; }
+        .stat-row { display: flex; justify-content: space-between; padding: 8px 0; }
+        .stat-label { font-weight: bold; color: #667eea; }
+        .footer { margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>🎉 New {$appName} Score!</h2>
+        </div>
+        
+        <div class="score-card">
+            <div class="stat-row">
+                <span class="stat-label">Player:</span>
+                <span>{$displayName}</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Score:</span>
+                <span><strong>{$score} points</strong></span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Questions Solved:</span>
+                <span>{$questions}</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Accuracy:</span>
+                <span>{$accuracy}%</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Country:</span>
+                <span>{$countryName}</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated notification from {$appName} leaderboard.</p>
+        </div>
+    </div>
+</body>
+</html>
+HTML;
+
+    $headers = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "From: {$fromEmail}\r\n";
+    $headers .= "Reply-To: {$fromEmail}\r\n";
+
+    @mail($contactTo, $subject, $emailBody, $headers);
+}
+
 function generateSequentialAnonymousName(PDO $pdo): string {
     $pdo->exec(
         'CREATE TABLE IF NOT EXISTS leaderboard_alias_counter (
@@ -18,7 +87,7 @@ function generateSequentialAnonymousName(PDO $pdo): string {
     $pdo->exec('INSERT INTO leaderboard_alias_counter () VALUES ()');
     $nextId = (int) $pdo->lastInsertId();
 
-    return 'Anonymous' . str_pad((string) $nextId, 6, '0', STR_PAD_LEFT);
+    return 'User' . str_pad((string) $nextId, 6, '0', STR_PAD_LEFT);
 }
 
 api_require_method('POST');
@@ -116,6 +185,9 @@ try {
         ':user_agent_hash' => $uaHash,
     ]);
 
+    // Send email notification to contact recipients
+    sendLeaderboardNotificationEmail($displayName, $score, $questions, $accuracy, $country['country_name']);
+
     // Opportunistic cleanup to avoid stale anonymous data buildup.
     if (random_int(1, 25) === 1) {
         $cleanup = $pdo->prepare(
@@ -139,7 +211,7 @@ try {
     api_json(200, [
         'success' => false,
         'message' => 'Leaderboard storage is temporarily unavailable.',
-        'display_name' => 'Anonymous000000',
+        'display_name' => 'User000000',
         'country_code' => $country['country_code'] ?? 'ZZ',
         'country_name' => $country['country_name'] ?? 'Unknown',
     ]);

@@ -745,6 +745,13 @@ h3,
     color: rgba(255, 255, 255, 0.62);
 }
 
+.leaderboard-flag {
+    font-size: 1.8em;
+    margin-right: 0.35em;
+    display: inline-block;
+    line-height: 1;
+}
+
 .leaderboard-country {
     color: var(--neon-cyan);
 }

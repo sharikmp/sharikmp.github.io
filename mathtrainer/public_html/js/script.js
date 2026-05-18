@@ -782,8 +782,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const rank = index + 1;
             const isMe = currentAnonId && String(row.anon_id || '') === currentAnonId;
             const mineClass = isMe ? ' is-me' : '';
-            const countryCode = String(row.country_code || '').slice(0, 2).toUpperCase();
-            const country = countryCode ? `<span class="leaderboard-country">${escapeHtml(countryCode)}</span>` : '';
+            const countryFlag = String(row.country_flag || '🌍');
             const safeName = escapeHtml(String(row.display_name || 'Anonymous').slice(0, 24));
             const safeScore = Number(row.score || 0);
             const safeAcc = Number(row.accuracy || 0);
@@ -792,8 +791,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return `<div class="leaderboard-row${mineClass}">
                         <div class="leaderboard-rank">#${rank}</div>
                         <div class="leaderboard-name-wrap">
-                            <div class="leaderboard-name">${safeName}</div>
-                            <div class="leaderboard-metrics">${safeQ} ques • ${safeAcc}% acc ${country}</div>
+                            <div class="leaderboard-name"><span class="leaderboard-flag">${countryFlag}</span> ${safeName}</div>
+                            <div class="leaderboard-metrics">${safeQ} ques • ${safeAcc}% acc</div>
                         </div>
                         <div class="leaderboard-score">${safeScore}</div>
                     </div>`;

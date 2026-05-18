@@ -140,3 +140,36 @@ function api_resolve_country(string $ip): array {
 
     return ['country_code' => $code, 'country_name' => $name];
 }
+
+/**
+ * Encode Unicode code point as UTF-8 bytes
+ */
+function api_codepoint_to_utf8(int $codePoint): string {
+    if ($codePoint <= 0x7F) {
+        return chr($codePoint);
+    } elseif ($codePoint <= 0x7FF) {
+        return chr(0xC0 | ($codePoint >> 6)) . chr(0x80 | ($codePoint & 0x3F));
+    } elseif ($codePoint <= 0xFFFF) {
+        return chr(0xE0 | ($codePoint >> 12)) . chr(0x80 | (($codePoint >> 6) & 0x3F)) . chr(0x80 | ($codePoint & 0x3F));
+    } else {
+        return chr(0xF0 | ($codePoint >> 18)) . chr(0x80 | (($codePoint >> 12) & 0x3F)) . chr(0x80 | (($codePoint >> 6) & 0x3F)) . chr(0x80 | ($codePoint & 0x3F));
+    }
+}
+
+/**
+ * Convert country code to flag emoji (e.g., 'US' → '🇺🇸', 'IN' → '🇮🇳')
+ */
+function api_country_flag_emoji(string $countryCode): string {
+    $code = strtoupper(trim((string) $countryCode));
+    
+    if (!preg_match('/^[A-Z]{2}$/', $code)) {
+        return '🌍'; // world emoji for unknown countries
+    }
+    
+    // Regional indicator symbols start at U+1F1E6 (127462)
+    $firstChar = 0x1F1E6 + (ord($code[0]) - ord('A'));
+    $secondChar = 0x1F1E6 + (ord($code[1]) - ord('A'));
+    
+    // Encode both code points as UTF-8 and concatenate
+    return api_codepoint_to_utf8($firstChar) . api_codepoint_to_utf8($secondChar);
+}
