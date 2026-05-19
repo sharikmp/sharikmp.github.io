@@ -360,7 +360,7 @@
                         } else if (type === "table") {
                             return `<div class="slide-block"><h4 class="heading">${heading}</h4>${getTable(content.headers, content.rows)}</div>`;
                         } else if (type === "code") {
-                            return `<div class="slide-block"><h4 class="heading">${heading}</h4><pre><code class="vscode" style="color: black;">${content.code}</code></pre></div>`;
+                            return `<div class="slide-block"><h4 class="heading">${heading}</h4><pre><code class="vscode" style="color: black;">${formatCode(content.code, content.language)}</code></pre></div>`;
                         }
 
                         return "";
@@ -412,6 +412,88 @@
             logoElements.forEach((el) => {
                 el.style.display = hideLogoRadio.checked ? 'none' : 'block';
             });
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
+        function wrapToken(text, color, extraStyle = "") {
+            return `<span style="color: ${color}; ${extraStyle}">${text}</span>`;
+        }
+
+        function highlightPythonCode(line) {
+            const stringMatches = [];
+            let highlighted = line.replace(/('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")/g, (match) => {
+                const placeholder = `@@STRING_${stringMatches.length}@@`;
+                stringMatches.push(wrapToken(match, '#b3541e'));
+                return placeholder;
+            });
+
+            const tokenRegex = /\b(False|None|True|and|as|assert|async|await|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield|any|all|bool|dict|enumerate|filter|float|int|len|list|map|max|min|print|range|set|sorted|str|sum|tuple|zip)\b|\b\d+(?:\.\d+)?\b/g;
+
+            highlighted = highlighted.replace(tokenRegex, (match) => {
+                if (/^(False|None|True)$/.test(match)) {
+                    return wrapToken(match, '#7b1fa2', 'font-weight: 700;');
+                }
+
+                if (/^(and|as|assert|async|await|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield)$/.test(match)) {
+                    return wrapToken(match, '#0d47a1', 'font-weight: 700;');
+                }
+
+                if (/^(any|all|bool|dict|enumerate|filter|float|int|len|list|map|max|min|print|range|set|sorted|str|sum|tuple|zip)$/.test(match)) {
+                    return wrapToken(match, '#6a1b9a');
+                }
+
+                return wrapToken(match, '#c62828');
+            });
+
+            stringMatches.forEach((stringToken, index) => {
+                highlighted = highlighted.replace(`@@STRING_${index}@@`, stringToken);
+            });
+
+            return highlighted;
+        }
+
+        function highlightCommentLine(line, language = '') {
+            const trimmed = line.trimStart();
+            const isPython = language === 'python';
+            const isJsLike = language === 'javascript' || language === 'js' || language === 'typescript' || language === 'ts';
+
+            if ((isPython || !language) && trimmed.startsWith('#')) {
+                return `<span style="color: #2e8b57; font-style: italic;">${line}</span>`;
+            }
+
+            if ((isJsLike || !language) && trimmed.startsWith('//')) {
+                return `<span style="color: #2e8b57; font-style: italic;">${line}</span>`;
+            }
+
+            const commentMarker = isPython ? '#' : isJsLike ? '//' : null;
+
+            if (!commentMarker) {
+                return language === 'python' ? highlightPythonCode(line) : line;
+            }
+
+            const commentIndex = line.indexOf(commentMarker);
+            const codePart = commentIndex >= 0 ? line.slice(0, commentIndex) : line;
+            const commentPart = commentIndex >= 0 ? line.slice(commentIndex) : '';
+            const formattedCodePart = language === 'python' ? highlightPythonCode(codePart) : codePart;
+
+            if (!commentPart) {
+                return formattedCodePart;
+            }
+
+            return `${formattedCodePart}<span style="color: #2e8b57; font-style: italic;">${commentPart}</span>`;
+        }
+
+        function formatCode(code, language = '') {
+            return escapeHtml(code)
+                .split('\n')
+                .map(line => highlightCommentLine(line, (language || '').toLowerCase()))
+                .join('\n');
         }
 
         function getBulletList(points) {
