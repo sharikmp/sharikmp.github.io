@@ -1,0 +1,5234 @@
+[
+  {
+    "title": "Core Coding Problems",
+    "session": "Core coding problems (30)",
+    "course": "AI Evaluation Freelance Coding Prep",
+    "slides": [
+      {
+        "number": 1,
+        "topic": "Reverse String",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Reverse the given string efficiently.",
+              "Input is a string like 'python' and output should be 'nohtyp'.",
+              "Tests Python slicing knowledge and basic string handling."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: s is a string, for example 'python'\nrev = s[::-1]  # Output: reversed string\nprint(rev)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Negative slicing reverses sequence.",
+              "Works for strings, lists, and tuples as well.",
+              "Common quick syntax question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "topic": "Palindrome Check",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Check whether string reads same forward and backward.",
+              "Input is usually a single word or cleaned string.",
+              "Expected output is True or False."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: s is a string, for example 'madam'\nis_pal = s == s[::-1]  # Output: True if palindrome, else False\nprint(is_pal)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Compare original and reversed string.",
+              "For sentences, remove spaces/punctuation first if required.",
+              "Very frequent beginner logic task."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "topic": "Largest Number",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Find largest value manually without max().",
+              "Input is a non-empty list of numbers.",
+              "Tests loop logic and comparisons."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: nums is a non-empty list, for example [4, 9, 2]\nlargest = nums[0]\nfor n in nums:\n    if n > largest:\n        largest = n\nprint(largest)  # Output: 9"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Initialize from first element.",
+              "Update variable during iteration.",
+              "Avoid starting with 0 if list may contain all negative numbers.",
+              "Classic traversal question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "topic": "Count Vowels",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Count vowels present inside string.",
+              "Input is a string and output is the total vowel count.",
+              "Usually checks membership testing and concise looping."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: s is a string, for example 'Education'\ncount = sum(1 for ch in s if ch in 'aeiouAEIOU')  # Output: vowel count\nprint(count)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Generator expressions are compact.",
+              "Membership checking is common.",
+              "Convert to lowercase first if you want a shorter vowel set."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "topic": "Capitalize Words",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Convert first letter of every word to uppercase.",
+              "Input is a sentence string.",
+              "Output should return a title-cased version of that string."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: s is a sentence, for example 'hello world'\nresult = s.title()  # Output: 'Hello World'\nprint(result)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Know common built-in string methods.",
+              "Python offers many shortcuts.",
+              "title() is convenient, but be careful with apostrophes in real text."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "topic": "Word Counter",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Count occurrences of each word in sentence.",
+              "Input is a string sentence, output is a dictionary of word counts.",
+              "Useful for text processing and frequency-based problems."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: s is a sentence, for example 'hi hi hello'\nfreq = {}\nfor w in s.split():\n    freq[w] = freq.get(w, 0) + 1\nprint(freq)  # Output: {'hi': 2, 'hello': 1}"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "split() converts sentence to list.",
+              "Useful NLP-style practice question.",
+              "Punctuation handling may be needed in real-world inputs."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "topic": "Character Frequency",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Given a string, count how many times each character appears.",
+              "Input is a string and output is a dictionary mapping each character to its count.",
+              "Very common AI evaluation and dictionary problem."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: s is a string, for example 'apple'\nfreq = {}\nfor ch in s:\n    freq[ch] = freq.get(ch, 0) + 1\nprint(freq)  # Output: {'a': 1, 'p': 2, 'l': 1, 'e': 1}"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Use dictionary frequency counting.",
+              "dict.get(key,0) avoids key errors.",
+              "This same pattern works for numbers and words too.",
+              "Frequently appears in debugging tasks."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 8,
+        "topic": "Most Frequent Element",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Find element occurring maximum times.",
+              "Input is a list of values and output is the value with highest frequency.",
+              "Usually solved with a frequency dictionary."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: nums is a list, for example [1, 2, 2, 3, 2]\nfreq = {}\nfor n in nums:\n    freq[n] = freq.get(n, 0) + 1\nprint(max(freq, key=freq.get))  # Output: 2"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Frequency dictionary pattern.",
+              "max(key=dict.get) is common.",
+              "If ties matter, clarify expected behavior before solving."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 9,
+        "topic": "First Non-Repeating Character",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Find first character appearing only once.",
+              "Input is a string and output is the first unique character.",
+              "This is commonly asked to test both correctness and efficiency."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: s is a string, for example 'swiss'\nfor ch in s:\n    if s.count(ch) == 1:\n        print(ch)  # Output: first non-repeating character\n        break"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Frequency-based problem.",
+              "Dictionary approach is faster for long strings.",
+              "This direct count() approach is simple but can be O(n^2)."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 10,
+        "topic": "Group by Length",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Group words based on their character length.",
+              "Input is a list of words and output is a dictionary keyed by word length.",
+              "Useful for grouping and bucket-style problems."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: words is a list, for example ['hi', 'cat', 'go']\nd = {}\nfor w in words:\n    d.setdefault(len(w), []).append(w)\nprint(d)  # Output: {2: ['hi', 'go'], 3: ['cat']}"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "setdefault avoids manual initialization.",
+              "Grouping logic appears often.",
+              "defaultdict(list) is another common alternative."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 11,
+        "topic": "Remove Duplicates",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Remove repeated items while keeping original order.",
+              "Input is a list and output is a new list without repeated values.",
+              "Order preservation is the main requirement here."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: nums is a list, for example [1, 2, 2, 3, 1]\nresult = []\nfor n in nums:\n    if n not in result:\n        result.append(n)\nprint(result)  # Output: [1, 2, 3]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Set removes duplicates but loses order.",
+              "Order-preserving logic is important.",
+              "This simple version is easy to explain but not optimal for large lists."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "topic": "Detect Duplicate",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Check whether list contains repeated values.",
+              "Input is a list and output is True if any item appears more than once.",
+              "This is a fast screening question for set knowledge."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: nums is a list, for example [1, 2, 3, 2]\nhas_dup = len(nums) != len(set(nums))  # Output: True if duplicates exist\nprint(has_dup)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Set automatically removes duplicates.",
+              "Length comparison gives quick solution.",
+              "Very common optimization over nested-loop solutions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "topic": "Common Elements",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Find shared values between two arrays.",
+              "Input is two lists and output is the values present in both.",
+              "Order is usually not guaranteed when sets are used."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: a and b are lists, for example [1, 2, 3] and [2, 3, 4]\ncommon = list(set(a) & set(b))  # Output: shared unique values\nprint(common)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Set intersection is efficient.",
+              "Important Python syntax shortcut.",
+              "Convert back to sorted(common) if consistent ordering is required."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 14,
+        "topic": "Array Intersection",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Find shared elements between two arrays.",
+              "This is logically the same family as common elements questions.",
+              "Input is two arrays and output is their unique overlap."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: a and b are arrays, for example [1, 2, 2] and [2, 3]\nresult = list(set(a) & set(b))  # Output: [2]\nprint(result)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Intersection operator '&' is useful.",
+              "Set operations are very common.",
+              "If duplicates must be preserved, this exact approach will not be enough."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 15,
+        "topic": "Missing Number",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Array contains 1 to n with one missing value.",
+              "Find missing number efficiently.",
+              "Input is a list with one missing value from a full sequence."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: nums contains numbers from 1 to n with one value missing\nn = len(nums) + 1\nmissing = n * (n + 1) // 2 - sum(nums)  # Output: missing number\nprint(missing)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Use arithmetic sum formula.",
+              "Avoid unnecessary nested loops.",
+              "Works best when the sequence rules are clearly defined."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 16,
+        "topic": "Anagram Check",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Check whether two strings contain same characters.",
+              "Character order does not matter.",
+              "Output should be True or False."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: a and b are strings, for example 'listen' and 'silent'\nis_anagram = sorted(a) == sorted(b)  # Output: True if both contain same letters\nprint(is_anagram)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Sorting normalizes character order.",
+              "Dictionary counting is another approach.",
+              "Consider lowercasing and removing spaces if problem statement requires it."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 17,
+        "topic": "Longest Word",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Return word with maximum length from sentence.",
+              "Input is a sentence and output is the longest token.",
+              "Useful for practicing split() and key-based comparisons."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: s is a sentence, for example 'I love automation testing'\nlongest = max(s.split(), key=len)  # Output: longest word\nprint(longest)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "key=len customizes comparison.",
+              "split() converts sentence into words.",
+              "If ties exist, max() returns the first longest word it sees."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 18,
+        "topic": "Merge Sorted Arrays",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Combine two sorted arrays into one sorted result.",
+              "Input is two already sorted arrays.",
+              "Output should remain sorted after merging."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: a and b are sorted arrays, for example [1, 3] and [2, 4]\nresult = sorted(a + b)  # Output: [1, 2, 3, 4]\nprint(result)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Simple readable solution acceptable.",
+              "For interviews, also know the two-pointer merge approach.",
+              "Outlier values clarity over optimization."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 19,
+        "topic": "Move Zeroes",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Move all zeroes to end while keeping order.",
+              "Input is a list containing zero and non-zero values.",
+              "Relative order of non-zero values must stay unchanged."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: nums is a list, for example [0, 1, 0, 3, 12]\nnon = [x for x in nums if x != 0]\nzeros = [0] * nums.count(0)\nresult = non + zeros  # Output: [1, 3, 12, 0, 0]\nprint(result)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "List comprehension filters values.",
+              "Preserving order is important.",
+              "There is also an in-place two-pointer version for interviews."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 20,
+        "topic": "Rotate List",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Rotate array right by k positions.",
+              "Input is a list and a rotation count k.",
+              "Elements shifted off the end wrap back to the front."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "# Input: nums is a list and k is the number of right rotations\nk = k % len(nums)  # Usage: handles k larger than list length\nnums = nums[-k:] + nums[:-k]  # Output: rotated list\nprint(nums)  # Usage example"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Modulo prevents index overflow.",
+              "Array slicing is efficient.",
+              "Always handle k greater than the array size."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 21,
+        "topic": "Second Largest Number",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Find second highest unique value."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "nums=list(set(nums))\nnums.sort()\nprint(nums[-2])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Remove duplicates before sorting.",
+              "Unique values matter here."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 22,
+        "topic": "Two Sum",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Find two numbers adding up to target value."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "seen={}\nfor i,n in enumerate(nums):\n if target-n in seen:\n  return [seen[target-n],i]\n seen[n]=i"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Hashmap reduces nested loops.",
+              "One of most repeated coding patterns."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 23,
+        "topic": "Balanced Parentheses",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Validate whether brackets are properly balanced."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "stack=[]\nfor ch in s:\n if ch=='(': stack.append(ch)\n elif ch==')':\n  if not stack:return False\n  stack.pop()"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Stack handles opening brackets.",
+              "Classic data structure interview problem."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 24,
+        "topic": "String Compression",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Compress repeated characters with counts."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Answer",
+            "language": "python",
+            "code": "res=''\ncount=1\nfor i in range(len(s)-1):\n if s[i]==s[i+1]: count+=1\n else:\n  res+=s[i]+str(count)\n  count=1"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Track consecutive duplicates carefully.",
+              "Index handling mistakes are common."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 25,
+        "topic": "Debug Remove Bug",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Find issue in list removal during iteration."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Fix",
+            "language": "python",
+            "code": "nums=[]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Avoid modifying list while looping.",
+              "Indexes shift after removal."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 26,
+        "topic": "Mutable List Reference",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Understand list reference and mutability behavior."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "x=[1,2,3]\ny=x\ny.append(4)\nprint(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Variables share same list object.",
+              "Use copy() for separate memory."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 27,
+        "topic": "Infinite Loop Fix",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Fix loop running forever due to missing update."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Fix",
+            "language": "python",
+            "code": "i=0\nwhile i<5:\n print(i)\n i+=1"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Loop variable must change.",
+              "Very common debugging question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 28,
+        "topic": "Optimize Duplicate Check",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Improve slow duplicate detection solution."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Optimized",
+            "language": "python",
+            "code": "def has_dup(nums):\n return len(nums)!=len(set(nums))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Set lookup is near O(1).",
+              "Optimization questions are common."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 29,
+        "topic": "Explain Function Logic",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Understand what function does and analyze complexity."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Function removes duplicates from list.",
+              "Original order remains preserved.",
+              "Time complexity becomes O(n²)."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Explain code clearly during assessments.",
+              "Readable reasoning matters a lot."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 30,
+        "topic": "Time Complexity",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question Explained",
+            "points": [
+              "Analyze efficiency of nested loops."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Outer loop runs n times.",
+              "Inner loop also runs n times.",
+              "Total complexity becomes O(n²)."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Pattern / Remember",
+            "points": [
+              "Nested loops usually mean quadratic complexity.",
+              "Complexity analysis appears frequently."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Exception and Debugging Scenarios",
+    "session": "Exception and debugging scenarios (20)",
+    "course": "Python Runtime Error Detection",
+    "slides": [
+      {
+        "number": 1,
+        "topic": "Division by Zero",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Question",
+            "points": [
+              "Will this code throw an exception?"
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=10\ny=0\nprint(x/y)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, ZeroDivisionError occurs.",
+              "Division by zero is invalid in Python."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "topic": "List Index Error",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[1,2,3]\nprint(nums[5])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, IndexError occurs.",
+              "Index 5 does not exist."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "topic": "Dictionary Key Error",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={'a':1}\nprint(d['b'])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, KeyError occurs.",
+              "Key 'b' is missing."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "topic": "String Integer Addition",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x='5'\nprint(x+2)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, TypeError occurs.",
+              "Cannot add string and integer."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "topic": "Invalid int Conversion",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x='hello'\nprint(int(x))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, ValueError occurs.",
+              "Non-numeric string cannot convert to int."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "topic": "Undefined Variable",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "print(name)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, NameError occurs.",
+              "Variable was never defined."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "topic": "Wrong Function Arguments",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "def add(a,b):\n return a+b\n\nadd(1)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, TypeError occurs.",
+              "Missing required argument."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 8,
+        "topic": "Pop Empty List",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[]\nnums.pop()"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, IndexError occurs.",
+              "Cannot pop from empty list."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 9,
+        "topic": "Delete Missing Key",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={'a':1}\ndel d['b']"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, KeyError occurs.",
+              "Cannot delete missing key."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 10,
+        "topic": "File Not Found",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "f=open('abc.txt')"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, FileNotFoundError occurs.",
+              "File does not exist."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 11,
+        "topic": "Tuple Modification",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "t=(1,2,3)\nt[0]=5"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, TypeError occurs.",
+              "Tuples are immutable."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "topic": "Set Indexing",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "s={1,2,3}\nprint(s[0])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, TypeError occurs.",
+              "Sets are unordered and not indexable."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "topic": "String Method on List",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[1,2,3]\nprint(x.upper())"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, AttributeError occurs.",
+              "Lists do not support upper()."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 14,
+        "topic": "Attribute Error",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=10\nx.append(5)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, AttributeError occurs.",
+              "Integers do not have append()."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 15,
+        "topic": "NoneType Error",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=None\nprint(len(x))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, TypeError occurs.",
+              "None has no length."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 16,
+        "topic": "Import Error",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "import abcxyz"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, ModuleNotFoundError occurs.",
+              "Module does not exist."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 17,
+        "topic": "Wrong Indentation",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "if True:\nprint('hello')"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, IndentationError occurs.",
+              "Python requires proper indentation."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 18,
+        "topic": "Infinite Recursion",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "def f():\n f()\n\nf()"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "Yes, RecursionError occurs.",
+              "No stopping condition provided."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 19,
+        "topic": "Slice Safety",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[1,2,3]\nprint(nums[0:10])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "No exception occurs.",
+              "Slicing safely stops at end."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 20,
+        "topic": "Correct Try Except",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "try:\n x=10/0\nexcept ZeroDivisionError:\n print('Error')"
+          },
+          {
+            "type": "bullets",
+            "heading": "Answer",
+            "points": [
+              "No crash occurs.",
+              "Exception handled properly."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Output Prediction and Python Behavior",
+    "session": "Output prediction and Python behavior (15)",
+    "course": "Outlier AI Assessment Prep",
+    "slides": [
+      {
+        "number": 1,
+        "topic": "String Multiplication",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x='ab'\nprint(x*3)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "ababab"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "String multiplication repeats content.",
+              "Useful shorthand syntax."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "topic": "Negative Index",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[10,20,30,40]\nprint(x[-1])\nprint(x[-2])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "40",
+              "30"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "Negative index starts from end.",
+              "-1 means last element."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "topic": "Range Object",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=range(5)\nprint(list(x))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "[0,1,2,3,4]"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "range excludes upper limit.",
+              "list() converts iterator to list."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "topic": "Sorted vs sort",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[3,1,2]\ny=sorted(x)\nprint(x)\nprint(y)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "[3,1,2]",
+              "[1,2,3]"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "sorted() returns new list.",
+              "Original list remains unchanged."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "topic": "Break in Loop",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "for i in range(5):\n if i==3:\n  break\n print(i)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "0",
+              "1",
+              "2"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "break immediately exits loop.",
+              "Code after break condition not executed."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "topic": "Continue in Loop",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "for i in range(5):\n if i==2:\n  continue\n print(i)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "0",
+              "1",
+              "3",
+              "4"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "continue skips current iteration only.",
+              "Loop continues normally afterward."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "topic": "Loop Variable Scope",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "for i in range(3):\n pass\nprint(i)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "2"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "Loop variable remains accessible after loop.",
+              "Final assigned value persists."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 8,
+        "topic": "is vs ==",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a=[1,2]\nb=[1,2]\nprint(a==b)\nprint(a is b)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "True",
+              "False"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "== compares values.",
+              "is compares memory identity."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 9,
+        "topic": "String Immutability",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x='hello'\nx.replace('h','H')\nprint(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "hello"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "replace() returns new string.",
+              "Original string unchanged."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 10,
+        "topic": "Boolean Arithmetic",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "print(True+True)\nprint(False+1)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "2",
+              "1"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "True behaves like 1.",
+              "False behaves like 0."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 11,
+        "topic": "List Copy Difference",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[1,2,3]\ny=x.copy()\ny.append(4)\nprint(x)\nprint(y)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "[1,2,3]",
+              "[1,2,3,4]"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "copy() creates separate list object.",
+              "Changes in y do not affect x."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "topic": "Mutable List Reference",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[1,2,3]\ny=x\ny.append(4)\nprint(x)\nprint(y)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "[1,2,3,4]",
+              "[1,2,3,4]"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "Both variables reference same list object.",
+              "append() changes original list in memory."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "topic": "Tuple Modification Illusion",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=(1,2,[3,4])\nx[2].append(5)\nprint(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "(1,2,[3,4,5])"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "Tuple immutable, but inner list mutable.",
+              "Nested mutability is important concept."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 14,
+        "topic": "List Multiplication Reference",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[[0]]*3\nx[0][0]=5\nprint(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "[[5],[5],[5]]"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "All inner lists reference same object.",
+              "Nested mutable references are tricky."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 15,
+        "topic": "Default Mutable Argument",
+        "contents": [
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "def add(x=[]):\n x.append(1)\n print(x)\n\nadd()\nadd()"
+          },
+          {
+            "type": "bullets",
+            "heading": "Output",
+            "points": [
+              "[1]",
+              "[1,1]"
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Explanation",
+            "points": [
+              "Default mutable arguments persist between calls.",
+              "Common Python interview trap."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Python Keywords and Language Fundamentals",
+    "session": "Python keywords and language fundamentals (30)",
+    "course": "Outlier AI Python Assessment Prep",
+    "slides": [
+      {
+        "number": 1,
+        "topic": "def",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Used to define a function in Python."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Functions organize reusable logic.",
+              "Improves readability and modularity."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "def add(a,b):\n return a+b"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "topic": "return",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Sends value back from a function."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Ends function execution.",
+              "Returns result to caller."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "def square(x):\n return x*x"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "topic": "if",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Conditional statement for decision making."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Executes block when condition is True."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "if x>0:\n print('Positive')"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "topic": "elif",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Checks another condition after if."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Used for multiple conditions."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "elif x==0:\n print('Zero')"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "topic": "else",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Executes when all previous conditions fail."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Provides default execution path."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "else:\n print('Negative')"
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "topic": "for",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Loop used for iteration."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Iterates through sequence items."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "for i in range(5):\n print(i)"
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "topic": "while",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Repeats block while condition is True."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Useful when iterations unknown."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "while x<5:\n x+=1"
+          }
+        ]
+      },
+      {
+        "number": 8,
+        "topic": "break",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Stops loop execution immediately."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Used for early loop exit."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "if x==5:\n break"
+          }
+        ]
+      },
+      {
+        "number": 9,
+        "topic": "continue",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Skips current loop iteration."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Loop continues with next iteration."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "if x==2:\n continue"
+          }
+        ]
+      },
+      {
+        "number": 10,
+        "topic": "pass",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Placeholder statement doing nothing."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Prevents syntax errors in empty blocks."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "def test():\n pass"
+          }
+        ]
+      },
+      {
+        "number": 11,
+        "topic": "import",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Loads external modules."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Provides reusable functionality."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "import math"
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "topic": "class",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Defines blueprint for objects."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Supports object-oriented programming."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "class Person:\n pass"
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "topic": "in",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Checks membership inside collection."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Works with strings, lists, sets, dictionaries."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "print('a' in 'apple')"
+          }
+        ]
+      },
+      {
+        "number": 14,
+        "topic": "not",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Logical negation operator."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Reverses boolean value."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "print(not True)"
+          }
+        ]
+      },
+      {
+        "number": 15,
+        "topic": "and",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Logical operator requiring all conditions True."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Combines multiple conditions."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "print(5>2 and 10>5)"
+          }
+        ]
+      },
+      {
+        "number": 16,
+        "topic": "or",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Logical operator requiring one True condition."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Useful in conditional branching."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "print(5<2 or 10>5)"
+          }
+        ]
+      },
+      {
+        "number": 17,
+        "topic": "is",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Checks memory identity of objects."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Different from == operator.",
+              "Frequently asked tricky concept."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "a=[]\nb=[]\nprint(a is b)"
+          }
+        ]
+      },
+      {
+        "number": 18,
+        "topic": "try",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Starts exception handling block."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Wraps risky code."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "try:\n x=10/0"
+          }
+        ]
+      },
+      {
+        "number": 19,
+        "topic": "except",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Handles exceptions from try block."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Prevents program crash."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "except ZeroDivisionError:\n print('Error')"
+          }
+        ]
+      },
+      {
+        "number": 20,
+        "topic": "finally",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Executes regardless of exception."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Commonly used for cleanup."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "finally:\n print('Done')"
+          }
+        ]
+      },
+      {
+        "number": 21,
+        "topic": "raise",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Manually throws exception."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Useful for validation and custom errors."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "raise ValueError('Invalid')"
+          }
+        ]
+      },
+      {
+        "number": 22,
+        "topic": "assert",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Checks condition and raises error if False."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Common in debugging and testing."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "x=5\nassert x>0"
+          }
+        ]
+      },
+      {
+        "number": 23,
+        "topic": "with",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Simplifies resource management."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Automatically closes files/resources.",
+              "Avoids manual cleanup."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "with open('a.txt') as f:\n print(f.read())"
+          }
+        ]
+      },
+      {
+        "number": 24,
+        "topic": "del",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Deletes variable or collection item."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Can remove list elements or variables."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "nums=[1,2,3]\ndel nums[1]"
+          }
+        ]
+      },
+      {
+        "number": 25,
+        "topic": "global",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Allows modifying global variable inside function."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Without global, assignment creates local variable."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "x=10\n\ndef test():\n global x\n x=20"
+          }
+        ]
+      },
+      {
+        "number": 26,
+        "topic": "nonlocal",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Modifies variable from enclosing function scope."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Used in nested functions.",
+              "Different from global keyword."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "def outer():\n x=10\n def inner():\n  nonlocal x\n  x=20"
+          }
+        ]
+      },
+      {
+        "number": 27,
+        "topic": "lambda",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Creates anonymous one-line functions."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Common in sorting, map(), filter().",
+              "Useful for short temporary functions."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "square=lambda x:x*x\nprint(square(5))"
+          }
+        ]
+      },
+      {
+        "number": 28,
+        "topic": "yield",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Returns value from generator without ending function."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Used for memory-efficient iteration.",
+              "Generator resumes from previous state."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "def gen():\n yield 1\n yield 2"
+          }
+        ]
+      },
+      {
+        "number": 29,
+        "topic": "async",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Defines asynchronous coroutine function."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Used in concurrent programming.",
+              "Common in APIs and Playwright."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "async def test():\n pass"
+          }
+        ]
+      },
+      {
+        "number": 30,
+        "topic": "await",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Definition",
+            "points": [
+              "Pauses async function until task completes."
+            ]
+          },
+          {
+            "type": "bullets",
+            "heading": "Usage",
+            "points": [
+              "Works only inside async functions.",
+              "Important modern Python concept."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Example",
+            "language": "python",
+            "code": "await fetch_data()"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Problem-solving concepts and advanced patterns (100)",
+    "session": "Problem-solving concepts and advanced patterns (100)",
+    "course": "Outlier AI Assessment Preparation",
+    "slides": [
+      {
+        "number": 1,
+        "topic": "Slicing",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Slicing extracts parts of sequences like lists and strings.",
+              "Format: sequence[start:end:step]"
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x='python'\nprint(x[1:4])\nprint(x[::-1])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "End index excluded.",
+              "Negative step reverses sequence.",
+              "Very common in output questions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "topic": "Negative Slicing",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Negative indexes access elements from the end."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[10,20,30,40]\nprint(x[-2:])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "-1 means last element.",
+              "Very common slicing question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "topic": "Step Slicing",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Step controls jump size during slicing."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[1,2,3,4,5,6]\nprint(x[::2])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Step 2 skips alternate elements.",
+              "Useful in array transformations."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "topic": "String Reversal Trick",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Reverse strings using slicing."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "rev=s[::-1]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Negative step reverses sequence.",
+              "Extremely common shortcut."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "topic": "Palindrome Pattern",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Compare original and reversed values."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "print(s==s[::-1])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Simple yet important interview logic.",
+              "Works for strings and lists."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "topic": "List Comprehension",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Compact way to create lists using loops."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "squares=[x*x for x in range(5)]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Cleaner than traditional loops.",
+              "Frequently asked in assessments.",
+              "Supports conditions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "topic": "Conditional Comprehension",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Comprehensions support inline filtering."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "evens=[x for x in range(10) if x%2==0]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Condition placed at end.",
+              "Cleaner than manual loops."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 8,
+        "topic": "Nested List Comprehension",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "List comprehensions can contain multiple loops."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "matrix=[[1,2],[3,4]]\nflat=[x for row in matrix for x in row]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Loops execute left to right.",
+              "Useful for flattening lists."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 9,
+        "topic": "Set Comprehension",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Creates sets using comprehension syntax."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "s={x*x for x in range(5)}"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Automatically removes duplicates.",
+              "Uses curly braces."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 10,
+        "topic": "Dictionary Comprehension",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Compact syntax for creating dictionaries."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={x:x*x for x in range(5)}"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Efficient dictionary creation.",
+              "Useful in frequency problems."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 11,
+        "topic": "Dictionary Comprehension",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Compact syntax for dictionary creation."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={x:x*x for x in range(3)}"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Very useful in transformations.",
+              "Cleaner than manual loops."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "topic": "Generator Expressions",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Generate values lazily instead of storing all."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "gen=(x*x for x in range(5))\nprint(next(gen))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Memory efficient.",
+              "Uses parentheses instead of brackets.",
+              "Returns iterator."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "topic": "map Function",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Applies function to every iterable item."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[1,2,3]\nprint(list(map(str,nums)))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Returns iterator in Python 3.",
+              "Often combined with lambda."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 14,
+        "topic": "filter Function",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Filters items based on condition."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[1,2,3,4]\nprint(list(filter(lambda x:x%2==0,nums)))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Condition must return True/False.",
+              "Returns iterator."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 15,
+        "topic": "Filter Truthiness",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "filter() keeps items where condition becomes True."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[0,1,2]\nprint(list(filter(bool,nums)))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Falsy values removed.",
+              "Useful compact filtering trick."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 16,
+        "topic": "any Function",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Returns True if any element is True."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[0,0,1]\nprint(any(nums))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Stops early after first True.",
+              "Useful in validations."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 17,
+        "topic": "all Function",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Returns True only if all values are True."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[1,2,3]\nprint(all(nums))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Stops early after first False.",
+              "Useful in condition checking."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 18,
+        "topic": "enumerate",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Provides index and value together during iteration."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "for i,v in enumerate(['a','b']):\n print(i,v)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Avoid manual index tracking.",
+              "Very useful in loops."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 19,
+        "topic": "Enumerate Start Index",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "enumerate() supports custom starting index."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "for i,v in enumerate(['a','b'],start=1):\n print(i,v)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Default index starts at 0.",
+              "Useful in numbered outputs."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 20,
+        "topic": "zip Function",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Combines multiple iterables element-wise."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a=[1,2]\nb=['x','y']\nprint(list(zip(a,b)))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Stops at shortest iterable.",
+              "Useful in parallel iteration."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 21,
+        "topic": "Zip Unpacking",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "zip(*) can unzip grouped tuples."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "pairs=[(1,'a'),(2,'b')]\nnums,chars=zip(*pairs)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "* unpacks iterable items.",
+              "Advanced but common trick."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 22,
+        "topic": "Unpacking",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Extract multiple values from collections."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a,b,c=[1,2,3]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Counts must match.",
+              "Very common syntax trick."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 23,
+        "topic": "Star Unpacking",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Captures remaining values during unpacking."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a,*b=[1,2,3,4]\nprint(a,b)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "* collects remaining items into list.",
+              "Useful in flexible unpacking."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 24,
+        "topic": "Variable Packing",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Multiple values packed into tuple automatically."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=1,2,3\nprint(type(x))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Comma creates tuple.",
+              "Parentheses optional."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 25,
+        "topic": "Tuple Swapping",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Swap variables without temporary variable."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a,b=b,a"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Uses tuple packing/unpacking internally.",
+              "Very Pythonic syntax."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 26,
+        "topic": "Multiple Assignment",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Assign multiple variables in one line."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a=b=c=10"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "All variables reference same value.",
+              "Useful initialization shortcut."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 27,
+        "topic": "Ternary Operator",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Compact inline if-else expression."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "result='Even' if x%2==0 else 'Odd'"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Improves readability for short conditions.",
+              "Frequently appears in tricky questions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 28,
+        "topic": "Chained Comparisons",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Python supports combining comparisons naturally."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "print(1<5<10)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Equivalent to multiple AND conditions.",
+              "Cleaner comparison syntax."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 29,
+        "topic": "sorted with key",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Custom sorting using key function."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "words=['aaa','b','cc']\nprint(sorted(words,key=len))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "key defines comparison logic.",
+              "Very common interview concept."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 30,
+        "topic": "Sorting Tuples",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Tuples sort lexicographically by default."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[(2,1),(1,5)]\nprint(sorted(x))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "First element compared first.",
+              "Important sorting behavior."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 31,
+        "topic": "String split()",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Splits string into list using separator."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "text='a,b,c'\nprint(text.split(','))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Default separator is whitespace.",
+              "Very common in parsing problems."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 32,
+        "topic": "String join()",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Combines iterable items into single string."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "words=['a','b','c']\nprint('-'.join(words))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "More efficient than repeated concatenation.",
+              "Items must be strings."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 33,
+        "topic": "strip()",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Removes spaces or characters from edges."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x='  hello  '\nprint(x.strip())"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Only removes from start/end.",
+              "Useful for input cleanup."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 34,
+        "topic": "startswith & endswith",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Checks prefix or suffix of strings."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x='python'\nprint(x.startswith('py'))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Cleaner than slicing checks.",
+              "Common in filtering tasks."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 35,
+        "topic": "f-Strings",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Modern string formatting syntax."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "name='Sam'\nprint(f'Hello {name}')"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Cleaner than concatenation.",
+              "Supports inline expressions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 36,
+        "topic": "Walrus Operator",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Assigns value inside expression."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "if (n:=len('python'))>5:\n print(n)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Introduced in Python 3.8.",
+              "Useful in compact conditions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 37,
+        "topic": "List vs Tuple",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Lists are mutable, tuples are immutable."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a=[1,2]\nb=(1,2)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Tuples are hashable if contents immutable.",
+              "Lists consume more memory."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 38,
+        "topic": "Mutable vs Immutable",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Mutable objects can change after creation.",
+              "Immutable objects cannot."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[1,2]\nx.append(3)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Lists mutable, tuples immutable.",
+              "Important for debugging output questions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 39,
+        "topic": "String Immutability",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Strings cannot change after creation."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x='abc'\nx.replace('a','z')\nprint(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "replace() returns new string.",
+              "Original string unchanged."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 40,
+        "topic": "Dictionary Membership",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "in operator checks dictionary keys by default."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={'a':1}\nprint('a' in d)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Checks keys, not values.",
+              "Common interview confusion."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 41,
+        "topic": "Dictionary get()",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Safely access dictionary keys."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={'a':1}\nprint(d.get('b',0))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Avoids KeyError.",
+              "Very common in frequency counting."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 42,
+        "topic": "setdefault",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Adds key with default value if missing."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={}\nd.setdefault('a',[]).append(1)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Useful for grouping problems.",
+              "Avoids repeated initialization checks."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 43,
+        "topic": "Counter Class",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Counts frequency automatically."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "from collections import Counter\nprint(Counter('apple'))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Simplifies frequency problems.",
+              "Commonly used in coding assessments."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 44,
+        "topic": "defaultdict",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Automatically creates default values."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "from collections import defaultdict\nd=defaultdict(list)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Avoids missing-key checks.",
+              "Great for grouping tasks."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 45,
+        "topic": "Dictionary Iteration",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Iterate keys and values together efficiently."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={'a':1,'b':2}\nfor k,v in d.items():\n print(k,v)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "items() returns key-value pairs.",
+              "Very common interview syntax."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 46,
+        "topic": "Dictionary Merge",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Python can merge dictionaries using unpacking."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a={'x':1}\nb={'y':2}\nmerged={**a,**b}"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Later keys overwrite earlier keys.",
+              "Useful in configuration merging."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 47,
+        "topic": "Tuple Hashability",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Immutable tuples can be dictionary keys."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={(1,2):'value'}"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Lists cannot be dictionary keys.",
+              "Hashability important concept."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 48,
+        "topic": "Frequency Counting Pattern",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Count occurrences using dictionary."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "freq={}\nfor x in nums:\n freq[x]=freq.get(x,0)+1"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Most important coding assessment pattern.",
+              "Useful in arrays and strings."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 49,
+        "topic": "Set Lookup Optimization",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Sets provide near O(1) membership checking."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "seen=set()\nif x in seen:\n print('Found')"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Much faster than list lookup.",
+              "Very common optimization trick."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 50,
+        "topic": "Two Pointer Technique",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Uses two indexes moving through data."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "left,right=0,len(nums)-1"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Efficient for sorted arrays.",
+              "Common in pair-sum problems."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 51,
+        "topic": "Sliding Window",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Processes subarrays efficiently using moving window."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "window_sum=sum(nums[:k])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Avoids repeated recalculation.",
+              "Common optimization pattern."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 52,
+        "topic": "Prefix Sum",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Stores cumulative sums for fast range queries."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "prefix=[0]\nfor n in nums:\n prefix.append(prefix[-1]+n)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Useful in subarray calculations.",
+              "Optimization-heavy interview topic."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 53,
+        "topic": "Binary Search Pattern",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Search sorted data using divide-and-conquer."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "mid=(left+right)//2"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Requires sorted input.",
+              "Time complexity O(log n)."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 54,
+        "topic": "Stack Pattern",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "LIFO structure useful for nested logic."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "stack=[]\nstack.append(1)\nstack.pop()"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Useful in parentheses problems.",
+              "append/pop from end are efficient."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 55,
+        "topic": "Queue Pattern",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "FIFO structure for sequential processing."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "from collections import deque\nq=deque()\nq.append(1)\nq.popleft()"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "deque better than list for queues.",
+              "Used in BFS traversal."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 56,
+        "topic": "Deque",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Efficient double-ended queue structure."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "from collections import deque\nq=deque([1,2])\nq.appendleft(0)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Faster than list for queue operations.",
+              "Useful in BFS problems."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 57,
+        "topic": "Heap Queue",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Implements priority queue using heap."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "import heapq\nnums=[3,1,2]\nheapq.heapify(nums)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Smallest element stays at top.",
+              "Useful for top-k problems."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 58,
+        "topic": "Transpose Matrix",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Swap rows and columns in matrix."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "matrix=[[1,2],[3,4]]\nprint(list(zip(*matrix)))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "* unpacks rows into zip.",
+              "Popular tricky syntax question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 59,
+        "topic": "Flatten Nested List",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Convert nested lists into single list."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "flat=[x for row in matrix for x in row]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Nested comprehension pattern.",
+              "Very common transformation question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 60,
+        "topic": "List append vs extend",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "append adds single item, extend adds iterable items."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[1,2]\nx.append([3,4])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "append creates nested list.",
+              "extend flattens iterable items."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 61,
+        "topic": "List Sorting In-Place",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "sort() modifies original list directly."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[3,1,2]\nnums.sort()\nprint(nums)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Returns None.",
+              "Different from sorted()."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 62,
+        "topic": "Truthiness",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Some values automatically behave as False."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "print(bool([]))\nprint(bool(0))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Empty collections are False.",
+              "Important in condition questions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 63,
+        "topic": "Boolean Evaluation",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Python automatically converts values to boolean."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "print(bool(''))\nprint(bool([1]))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Empty collections become False.",
+              "Non-empty values become True."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 64,
+        "topic": "Short Circuiting",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Logical operators stop evaluation early."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "print(True or 1/0)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Second condition may never execute.",
+              "Common tricky output question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 65,
+        "topic": "Range Laziness",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "range() generates values lazily."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=range(1000000)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Efficient memory usage.",
+              "Does not create full list immediately."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 66,
+        "topic": "Map Object Laziness",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "map() returns lazy iterator in Python 3."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=map(str,[1,2])\nprint(list(x))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Iterator consumed after iteration.",
+              "Need list() for display."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 67,
+        "topic": "Generator Memory Efficiency",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Generators avoid storing all values in memory."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "gen=(x*x for x in range(1000000))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Ideal for large datasets.",
+              "Computed only when needed."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 68,
+        "topic": "Iterator Protocol",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Iterators produce values one at a time."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=iter([1,2,3])\nprint(next(nums))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "next() gets next value.",
+              "Raises StopIteration when finished."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 69,
+        "topic": "Iterator Exhaustion",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Iterators can only be consumed once."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=iter([1,2])\nprint(list(nums))\nprint(list(nums))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Second iteration becomes empty.",
+              "Very tricky output prediction concept."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 70,
+        "topic": "Generator Exhaustion",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Generators can only be iterated once."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "g=(x for x in range(3))\nprint(list(g))\nprint(list(g))"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Second iteration becomes empty.",
+              "Important iterator behavior."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 71,
+        "topic": "Reverse Iteration",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Iterate collection from end to beginning."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "nums=[1,2,3]\nfor x in reversed(nums):\n print(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "reversed() returns iterator.",
+              "Different from nums.reverse()."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 72,
+        "topic": "List Slicing Copy",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Slicing creates shallow copy of list."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a=[1,2,3]\nb=a[:]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Outer list copied separately.",
+              "Nested objects still shared."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 73,
+        "topic": "List Aliasing",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Multiple variables referencing same list."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a=[1,2]\nb=a\nb.append(3)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Changes affect both variables.",
+              "Important output prediction concept."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 74,
+        "topic": "Mutable Nested Objects",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Nested mutable objects share references unexpectedly."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=[[0]]*3\nx[0][0]=1\nprint(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "All rows reference same object.",
+              "Very tricky output question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 75,
+        "topic": "Chained Assignment Trap",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Mutable objects shared in chained assignments."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a=b=[]\na.append(1)\nprint(b)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Both variables reference same list.",
+              "Frequent debugging confusion."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 76,
+        "topic": "Shallow Copy",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Copies outer object but shares nested objects."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "import copy\nx=[[1]]\ny=copy.copy(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Nested mutable objects still shared.",
+              "Common tricky interview topic."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 77,
+        "topic": "Deep Copy",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Creates completely independent copy."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "import copy\nx=[[1]]\ny=copy.deepcopy(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Nested objects copied separately.",
+              "Avoids shared reference issues."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 78,
+        "topic": "Identity vs Equality",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "== compares values, is compares memory identity."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a=[1]\nb=[1]\nprint(a==b)\nprint(a is b)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Very common Python confusion.",
+              "Lists with same values can have different memory."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 79,
+        "topic": "String Interning",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Python may reuse memory for small immutable objects."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a='hi'\nb='hi'\nprint(a is b)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "May return True due to optimization.",
+              "Common tricky output question."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 80,
+        "topic": "Args and Kwargs",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "*args captures positional arguments.",
+              "**kwargs captures keyword arguments."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "def test(*args,**kwargs):\n print(args)\n print(kwargs)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Useful for flexible functions.",
+              "Common in frameworks and APIs."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 81,
+        "topic": "Variable Shadowing",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Local variable hides outer variable."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "x=10\ndef test():\n x=5\n print(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Local scope takes priority.",
+              "global keyword changes behavior."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 82,
+        "topic": "Closures",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Inner function remembers outer variables."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "def outer(x):\n def inner():\n  return x\n return inner"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Used in decorators and callbacks.",
+              "Frequently asked advanced concept."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 83,
+        "topic": "Late Binding Closure",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Closures capture variable reference, not value."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "funcs=[]\nfor i in range(3):\n funcs.append(lambda:i)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "All lambdas may return same final value.",
+              "Advanced interview concept."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 84,
+        "topic": "Decorators",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Functions modifying other functions."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "@decorator\ndef test():\n pass"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Common in frameworks.",
+              "Uses closure internally."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 85,
+        "topic": "Property Decorator",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Allows method access like attribute."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "class Test:\n @property\n def name(self):\n  return 'Sam'"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Improves encapsulation.",
+              "Useful in OOP interviews."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 86,
+        "topic": "Method Types",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Python supports instance, class and static methods."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "@classmethod\n@staticmethod"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "classmethod uses cls.",
+              "staticmethod has no self/cls."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 87,
+        "topic": "Nested Dictionary Access",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Access deeply nested dictionary values."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "d={'a':{'b':10}}\nprint(d['a']['b'])"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Missing keys raise KeyError.",
+              "Use get() for safer access."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 88,
+        "topic": "Context Managers",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Automatically manage resources."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "with open('a.txt') as f:\n print(f.read())"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "File automatically closes.",
+              "Safer than manual handling."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 89,
+        "topic": "Exception Hierarchy",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Specific exceptions should be handled first."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "try:\n x=10/0\nexcept ZeroDivisionError:\n print('Math Error')"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Avoid broad except unless necessary.",
+              "Specific handling improves debugging."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 90,
+        "topic": "Exception Specificity",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Catch precise exceptions whenever possible."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "except ValueError:\n print('Invalid')"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Improves debugging quality.",
+              "Broad except hides real issues."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 91,
+        "topic": "Recursion Base Case",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Recursion must include stopping condition."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "def fact(n):\n if n==0:\n  return 1\n return n*fact(n-1)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Missing base case causes RecursionError.",
+              "Very common recursive mistake."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 92,
+        "topic": "Memoization",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Stores previous computation results for reuse."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "from functools import lru_cache\n@lru_cache(None)\ndef fib(n):\n return n if n<2 else fib(n-1)+fib(n-2)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Improves recursive performance.",
+              "Important optimization technique."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 93,
+        "topic": "Memoized Fibonacci",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Caching avoids repeated recursive computation."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "memo={}\ndef fib(n):\n if n in memo:return memo[n]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Optimization pattern.",
+              "Improves exponential recursion."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 94,
+        "topic": "Time Complexity Awareness",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Always analyze loop nesting and lookups."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "for i in nums:\n for j in nums:\n  print(i,j)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Nested loops usually mean O(n²).",
+              "Optimization questions are common."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 95,
+        "topic": "yield Keyword",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "yield creates generator functions."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "def gen():\n yield 1\n yield 2"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Function pauses and resumes.",
+              "Useful for large datasets."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 96,
+        "topic": "Set Operations",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Sets support union, intersection and difference."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "a={1,2,3}\nb={2,3,4}\nprint(a&b)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Fast duplicate removal.",
+              "Intersection uses '&'."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 97,
+        "topic": "Lambda Functions",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Anonymous one-line functions."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "square=lambda x:x*x"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Useful with sorted(), map(), filter().",
+              "Short temporary functions."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 98,
+        "topic": "Mutable Default Arguments",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Default mutable values persist across calls."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "def add(x=[]):\n x.append(1)\n print(x)"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Very famous Python interview trap.",
+              "Use None instead of mutable defaults."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 99,
+        "topic": "finally Block",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "finally always executes after try/except."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "try:\n x=1\nfinally:\n print('Done')"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Useful for cleanup operations.",
+              "Runs even if exception occurs."
+            ]
+          }
+        ]
+      },
+      {
+        "number": 100,
+        "topic": "Nested Comprehension Order",
+        "contents": [
+          {
+            "type": "bullets",
+            "heading": "Concept",
+            "points": [
+              "Nested comprehensions follow loop order carefully."
+            ]
+          },
+          {
+            "type": "code",
+            "heading": "Code",
+            "language": "python",
+            "code": "pairs=[(i,j) for i in range(2) for j in range(2)]"
+          },
+          {
+            "type": "bullets",
+            "heading": "Points to Remember",
+            "points": [
+              "Outer loop written first.",
+              "Common output prediction topic."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
