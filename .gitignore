@@ -11,3 +11,6 @@ thelaminars/config.php
 
 # MathTrainer — private credentials (SMTP, DB, secret token)
 mathtrainer/private/env.php
+
+# Hangout Hub Cafe (local development)
+hangouthubcafe/
