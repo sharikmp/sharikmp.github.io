@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Preview – ATSApply</title>
+  <meta name="robots" content="noindex">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #2563EB;
+      --bg:      #F1F5F9;
+      --card:    #FFFFFF;
+      --border:  #E2E8F0;
+      --text:    #0F172A;
+      --muted:   #64748B;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Toolbar */
+    .preview-toolbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: .6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .brand .accent { color: var(--primary); }
+
+    .toolbar-actions { display: flex; align-items: center; gap: .5rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .35rem;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      font-weight: 600; font-size: .82rem;
+      padding: .35rem .75rem;
+      cursor: pointer;
+      transition: all .15s ease;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .btn-primary:hover { background: #1D4ED8; }
+    .btn-ghost   { color: var(--muted); }
+    .btn-ghost:hover { background: var(--bg); color: var(--text); }
+
+    .zoom-controls { display: flex; align-items: center; gap: .3rem; }
+    .zoom-val { font-size: .78rem; font-weight: 700; min-width: 40px; text-align: center; }
+
+    /* Resume selection sidebar */
+    #resume-selector {
+      padding: .5rem 1rem;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      overflow-x: auto;
+    }
+
+    #resume-selector label { font-size: .78rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+
+    #resume-selector select {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: .82rem;
+      padding: .3rem .6rem;
+      color: var(--text);
+      max-width: 260px;
+      background: #fff;
+    }
+
+    /* Canvas area */
+    .preview-scroll {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .resume-canvas {
+      background: #fff;
+      width: 794px;
+      min-height: 1123px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.12);
+      transform-origin: top center;
+      transition: transform .2s ease;
+      flex-shrink: 0;
+    }
+
+    /* Empty state */
+    .empty-wrap {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--muted);
+    }
+
+    .empty-wrap .icon {
+      font-size: 3rem;
+      color: #CBD5E1;
+      margin-bottom: 1rem;
+    }
+
+    /* Template CSS */
+    .tpl-classic { font-family: Arial, sans-serif; font-size: 11pt; color: #1a1a1a; padding: 36px 48px; line-height: 1.45; }
+    .tpl-classic .res-name { font-size: 22pt; font-weight: 700; margin-bottom: 2px; }
+    .tpl-classic .res-title { font-size: 11.5pt; color: #374151; margin-bottom: 6px; }
+    .tpl-classic .res-contact { font-size: 9.5pt; color: #4B5563; display: block; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #1a1a1a; }
+    .tpl-classic .res-contact > span { display: block; line-height: 1.8; }
+    .tpl-classic .sec-title { font-size: 11pt; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; margin: 14px 0 4px; padding-bottom: 2px; border-bottom: 1px solid #9CA3AF; color: #111827; }
+    .tpl-classic .exp-header { display: flex; justify-content: space-between; align-items: baseline; }
+    .tpl-classic .exp-company { font-weight: 700; font-size: 10.5pt; }
+    .tpl-classic .exp-dates { font-size: 9.5pt; color: #6B7280; }
+    .tpl-classic .exp-role { font-size: 10pt; color: #374151; font-style: italic; }
+    .tpl-classic .exp-bullets { margin: 3px 0 0 12px; padding-left: 14px; }
+    .tpl-classic .exp-bullets li { font-size: 10pt; margin-bottom: 2px; }
+    .tpl-classic .edu-entry { margin-bottom: 6px; }
+    .tpl-classic .edu-header { display: flex; justify-content: space-between; align-items: baseline; }
+    .tpl-classic .edu-school { font-weight: 700; font-size: 10.5pt; }
+    .tpl-classic .edu-years { font-size: 9.5pt; color: #6B7280; }
+    .tpl-classic .edu-degree { font-size: 10pt; color: #374151; }
+    .tpl-classic .skills-text { font-size: 10pt; line-height: 1.6; }
+    .tpl-classic .proj-entry { margin-bottom: 5px; }
+    .tpl-classic .proj-name { font-weight: 700; font-size: 10.5pt; }
+    .tpl-classic .proj-tech { font-size: 9.5pt; color: #6B7280; font-style: italic; }
+    .tpl-classic .proj-desc { font-size: 10pt; }
+    .tpl-classic .cert-entry { margin-bottom: 4px; font-size: 10pt; }
+    .tpl-classic .cert-name { font-weight: 700; }
+    .tpl-classic .cert-org { color: #6B7280; }
+    .tpl-classic .achiev-list { padding-left: 16px; font-size: 10pt; }
+    .tpl-classic .achiev-list li { margin-bottom: 2px; }
+    .tpl-classic .lang-list { font-size: 10pt; }
+    .tpl-classic .contact-label { font-weight: 700; color: #111827; }
+
+    .tpl-professional { font-family: Georgia, serif; font-size: 11pt; color: #111827; padding: 40px 52px; line-height: 1.5; }
+    .tpl-professional .res-name { font-size: 24pt; font-weight: 700; color: #1E3A5F; margin-bottom: 2px; }
+    .tpl-professional .res-title { font-size: 12pt; color: #4B5563; margin-bottom: 8px; }
+    .tpl-professional .res-contact { font-size: 9.5pt; color: #6B7280; display: block; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2.5px solid #1E3A5F; }
+    .tpl-professional .res-contact > span { display: block; line-height: 1.8; }
+    .tpl-professional .sec-title { font-size: 10.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin: 16px 0 5px; color: #1E3A5F; padding-bottom: 3px; border-bottom: 1px solid #CBD5E1; }
+    .tpl-professional .exp-header { display: flex; justify-content: space-between; align-items: baseline; }
+    .tpl-professional .exp-company { font-weight: 700; font-size: 10.5pt; color: #1E3A5F; }
+    .tpl-professional .exp-dates { font-size: 9.5pt; color: #9CA3AF; }
+    .tpl-professional .exp-role { font-size: 10pt; color: #374151; }
+    .tpl-professional .exp-bullets { margin: 3px 0 0 14px; padding-left: 14px; }
+    .tpl-professional .exp-bullets li { font-size: 10pt; margin-bottom: 2px; }
+    .tpl-professional .edu-header { display: flex; justify-content: space-between; align-items: baseline; }
+    .tpl-professional .edu-school { font-weight: 700; font-size: 10.5pt; color: #1E3A5F; }
+    .tpl-professional .edu-years { font-size: 9.5pt; color: #9CA3AF; }
+    .tpl-professional .edu-degree { font-size: 10pt; color: #374151; }
+    .tpl-professional .skills-text { font-size: 10pt; }
+    .tpl-professional .proj-entry { margin-bottom: 6px; }
+    .tpl-professional .proj-name { font-weight: 700; color: #1E3A5F; font-size: 10.5pt; }
+    .tpl-professional .proj-tech { font-size: 9.5pt; color: #9CA3AF; font-style: italic; }
+    .tpl-professional .proj-desc { font-size: 10pt; }
+    .tpl-professional .cert-entry { margin-bottom: 4px; font-size: 10pt; }
+    .tpl-professional .achiev-list { padding-left: 16px; font-size: 10pt; }
+    .tpl-professional .lang-list { font-size: 10pt; }
+    .tpl-professional .contact-label { font-weight: 700; color: #1E3A5F; }
+
+    .tpl-minimal { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10pt; color: #1a1a1a; padding: 30px 42px; line-height: 1.4; }
+    .tpl-minimal .res-name { font-size: 18pt; font-weight: 700; margin-bottom: 1px; }
+    .tpl-minimal .res-title { font-size: 10.5pt; color: #555; margin-bottom: 5px; }
+    .tpl-minimal .res-contact { font-size: 9pt; color: #666; display: block; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1.5px solid #ccc; }
+    .tpl-minimal .res-contact > span { display: block; line-height: 1.75; }
+    .tpl-minimal .sec-title { font-size: 9.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 11px 0 3px; color: #333; }
+    .tpl-minimal .exp-header { display: flex; justify-content: space-between; align-items: baseline; }
+    .tpl-minimal .exp-company { font-weight: 700; font-size: 10pt; }
+    .tpl-minimal .exp-dates { font-size: 9pt; color: #999; }
+    .tpl-minimal .exp-role { font-size: 9.5pt; color: #555; }
+    .tpl-minimal .exp-bullets { margin: 2px 0 0 12px; padding-left: 14px; }
+    .tpl-minimal .exp-bullets li { font-size: 9.5pt; margin-bottom: 1.5px; }
+    .tpl-minimal .edu-header { display: flex; justify-content: space-between; align-items: baseline; }
+    .tpl-minimal .edu-school { font-weight: 700; font-size: 10pt; }
+    .tpl-minimal .edu-years { font-size: 9pt; color: #999; }
+    .tpl-minimal .edu-degree { font-size: 9.5pt; color: #555; }
+    .tpl-minimal .skills-text { font-size: 9.5pt; }
+    .tpl-minimal .proj-entry { margin-bottom: 4px; }
+    .tpl-minimal .proj-name { font-weight: 700; font-size: 10pt; }
+    .tpl-minimal .proj-tech { font-size: 9pt; color: #999; font-style: italic; }
+    .tpl-minimal .proj-desc { font-size: 9.5pt; }
+    .tpl-minimal .cert-entry { margin-bottom: 3px; font-size: 9.5pt; }
+    .tpl-minimal .achiev-list { padding-left: 14px; font-size: 9.5pt; }
+    .tpl-minimal .lang-list { font-size: 9.5pt; }
+    .tpl-minimal .contact-label { font-weight: 700; color: #333; }
+
+    .exp-entry, .edu-entry, .proj-entry, .cert-entry { margin-bottom: 8px; }
+    .sec-content { font-size: 10pt; margin: 0; }
+
+    @page { margin-top: 15mm; margin-bottom: 15mm; }
+
+    @media print {
+      .preview-toolbar, #resume-selector { display: none !important; }
+      body { background: #fff; }
+      .preview-scroll { padding: 0; }
+      .resume-canvas { transform: none !important; gap: 0; }
+      .resume-page { box-shadow: none; width: 100% !important; min-height: 0; }
+      .resume-page:not(:last-child) { page-break-after: always; break-after: page; }
+      .tpl-classic, .tpl-professional, .tpl-minimal { padding-top: 0 !important; padding-bottom: 0 !important; }
+    }
+
+    @media (max-width: 860px) {
+      .resume-canvas { width: 340px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toolbar -->
+  <div class="preview-toolbar">
+    <a href="../index.html" class="brand">
+      <i class="fa-solid fa-arrow-left" style="font-size:.85rem;color:var(--muted)"></i>
+      <i class="fa-solid fa-file-lines" style="color:var(--primary)"></i>
+      <span><span class="accent">ATS</span>Apply</span>
+    </a>
+    <div class="toolbar-actions">
+      <div class="zoom-controls">
+        <button class="btn btn-ghost" id="btn-zoom-out"   aria-label="Zoom out"><i class="fa-solid fa-minus"></i></button>
+        <span class="zoom-val" id="zoom-val">100%</span>
+        <button class="btn btn-ghost" id="btn-zoom-in"    aria-label="Zoom in"><i class="fa-solid fa-plus"></i></button>
+        <button class="btn btn-ghost" id="btn-zoom-reset" aria-label="Reset zoom" style="font-size:.72rem">Reset</button>
+      </div>
+      <button class="btn btn-primary" id="btn-print" aria-label="Print / Save as PDF">
+        <i class="fa-solid fa-print"></i> Print / PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- Resume selector -->
+  <div id="resume-selector">
+    <label for="select-resume">Resume:</label>
+    <select id="select-resume">
+      <option value="">Loading resumes…</option>
+    </select>
+  </div>
+
+  <!-- Canvas -->
+  <div class="preview-scroll">
+    <div class="resume-canvas" id="resume-canvas">
+      <div class="empty-wrap">
+        <div class="icon"><i class="fa-regular fa-file-lines"></i></div>
+        <p>Loading your resume…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared bundle (no ES modules — works on file://) -->
+  <script src="../assets/js/app.bundle.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await StorageService.ready();
+
+      const canvas   = document.getElementById('resume-canvas');
+      const selector = document.getElementById('select-resume');
+      const zoomEl   = document.getElementById('zoom-val');
+      let zoom       = 1.0;
+      let resumes    = [];
+
+      const setZoom = z => {
+        zoom = Helpers.clamp(z, 0.4, 1.4);
+        canvas.style.transform = `scale(${zoom})`;
+        zoomEl.textContent = Math.round(zoom * 100) + '%';
+      };
+
+      const render = resume => {
+        if (!resume) {
+          canvas.innerHTML = '<div class="empty-wrap"><div class="icon"><i class="fa-regular fa-file-lines"></i></div><p>No resume found. <a href="../index.html">Go back</a> to create one.</p></div>';
+          return;
+        }
+        canvas.innerHTML = ResumeTemplates.render(resume);
+      };
+
+      resumes = await StorageService.getAllResumes();
+      resumes.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+
+      if (!resumes.length) {
+        selector.innerHTML = '<option value="">No resumes found</option>';
+        canvas.innerHTML   = '<div class="empty-wrap"><div class="icon"><i class="fa-regular fa-file-lines"></i></div><p>No resumes yet. <a href="../index.html">Create one →</a></p></div>';
+      } else {
+        selector.innerHTML = resumes.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
+        render(resumes[0]);
+      }
+
+      selector.addEventListener('change', () => {
+        render(resumes.find(r => r.id === selector.value) || null);
+      });
+
+      document.getElementById('btn-zoom-in')?.addEventListener('click',    () => setZoom(zoom + 0.1));
+      document.getElementById('btn-zoom-out')?.addEventListener('click',   () => setZoom(zoom - 0.1));
+      document.getElementById('btn-zoom-reset')?.addEventListener('click', () => setZoom(1.0));
+
+      document.getElementById('btn-print')?.addEventListener('click', async () => {
+        const resume = resumes.find(r => r.id === selector.value) || resumes[0];
+        if (resume) await PDFGenerator.generate(resume);
+      });
+    });
+  </script>
+
+</body>
+</html>

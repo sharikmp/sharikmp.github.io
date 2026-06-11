@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- SEO -->
+  <title>ATSApply - Free ATS Resume Builder</title>
+  <meta name="description" content="Build ATS-optimised resumes for free. Live preview, ATS score, keyword suggestions, and PDF download. No sign-up required.">
+  <meta name="keywords" content="ATS resume builder, free resume builder, ATS-friendly resume, resume maker, CV builder, job application resume">
+  <meta name="author" content="ATSApply">
+  <link rel="canonical" href="https://atsapply.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://atsapply.com/">
+  <meta property="og:title"       content="ATSApply - Free ATS Resume Builder">
+  <meta property="og:description" content="Build ATS-optimised resumes for free. Live preview, ATS score, keyword suggestions, and one-click PDF.">
+  <meta property="og:image"       content="https://atsapply.com/assets/img/og-cover.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="ATSApply - Free ATS Resume Builder">
+  <meta name="twitter:description" content="Build ATS-optimised resumes for free. Live preview, ATS score, PDF download.">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ATSApply",
+    "url": "https://atsapply.com",
+    "description": "Free ATS-compliant resume builder with live preview and ATS scoring.",
+    "applicationCategory": "BusinessApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════════════════════ -->
+  <nav class="app-navbar" role="banner">
+    <div class="container-fluid px-3">
+      <div class="d-flex align-items-center justify-content-between position-relative">
+
+        <!-- Brand -->
+        <a href="/" class="navbar-brand" aria-label="ATSApply Home">
+          <i class="fa-solid fa-file-lines" style="color:var(--primary);font-size:1.3rem"></i>
+          <span><span class="accent">ATS</span>Apply</span>
+        </a>
+
+        <!-- Center: resume name (builder only) -->
+        <h5 id="builder-resume-name" class="navbar-resume-name d-none" contenteditable="true" spellcheck="false" aria-label="Resume name (editable)">My Resume</h5>
+
+        <!-- Nav actions -->
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-ghost btn-sm d-none" id="btn-back-dashboard" aria-label="Back to dashboard">
+            <i class="fa-solid fa-arrow-left"></i> Dashboard
+          </button>
+          <div id="autosave-indicator" class="autosave-indicator" aria-live="polite" aria-label="Save status">
+            <span class="dot"></span>
+            <span class="label"></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════
+       PAGE: DASHBOARD
+  ══════════════════════════════════════════════════════════ -->
+  <div id="page-dashboard" class="app-page">
+    <div class="container py-4">
+
+      <div class="dashboard-header d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <h1 class="mb-1">My Resumes</h1>
+          <p class="text-muted mb-0">Your ATS-optimised resume library</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-primary btn-sm" id="btn-import-dash" aria-label="Import resume">
+            <i class="fa-solid fa-file-import"></i> Import
+          </button>
+        </div>
+      </div>
+
+      <!-- Resume Grid -->
+      <div id="resume-grid" class="resume-grid" role="list" aria-label="Resume list">
+        <!-- Populated by App.js -->
+        <div class="skeleton" style="height:220px;border-radius:16px"></div>
+        <div class="skeleton" style="height:220px;border-radius:16px;opacity:.6"></div>
+        <div class="skeleton" style="height:220px;border-radius:16px;opacity:.3"></div>
+      </div>
+
+      <!-- Sample Resumes Section -->
+      <div id="sample-resumes-section" class="mt-5">
+        <!-- Populated by App.js -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       PAGE: BUILDER
+  ══════════════════════════════════════════════════════════ -->
+  <div id="page-builder" class="app-page" style="display:none">
+
+    <!-- Builder top bar — hidden, reserved for ad placement -->
+    <div class="builder-topbar" style="display:none" aria-hidden="true"></div>
+
+    <!-- Builder body: Form | Preview | ATS -->
+    <div class="builder-body">
+
+      <!-- ── Left: Form Panel ─────────────────────────────── -->
+      <div class="form-panel" role="main" aria-label="Resume editor">
+        <div class="form-panel-inner">
+
+          <!-- ── Section: Personal Info ──────────────────── -->
+          <div class="section-card open">
+            <div class="section-header" role="button" aria-expanded="true" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-user"></i></div>
+              <h6>Personal Information</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body personal-fields">
+              <div class="pf-row">
+                <label class="pf-label" for="f-fullName">Full Name <span class="text-danger">*</span></label>
+                <input type="text" class="pf-input" id="f-fullName" placeholder="John Doe" autocomplete="name" required>
+              </div>
+              <div class="pf-row">
+                <label class="pf-label" for="f-title">Professional Title</label>
+                <input type="text" class="pf-input" id="f-title" placeholder="Software Engineer" autocomplete="organization-title">
+              </div>
+              <div class="pf-row">
+                <label class="pf-label" for="f-email">Email <span class="text-danger">*</span></label>
+                <input type="email" class="pf-input" id="f-email" placeholder="john@example.com" autocomplete="email" required>
+              </div>
+              <div class="pf-row">
+                <label class="pf-label" for="f-phone">Phone</label>
+                <input type="tel" class="pf-input" id="f-phone" placeholder="+91 98765 43210" autocomplete="tel">
+              </div>
+              <div class="pf-row">
+                <label class="pf-label" for="f-city">City</label>
+                <input type="text" class="pf-input" id="f-city" placeholder="Bengaluru" autocomplete="address-level2">
+              </div>
+              <div class="pf-row">
+                <label class="pf-label" for="f-country">Country</label>
+                <input type="text" class="pf-input" id="f-country" placeholder="India" autocomplete="country-name">
+              </div>
+              <div class="pf-row">
+                <label class="pf-label" for="f-linkedin">LinkedIn</label>
+                <input type="url" class="pf-input" id="f-linkedin" placeholder="linkedin.com/in/johndoe" autocomplete="url">
+              </div>
+              <div class="pf-row">
+                <label class="pf-label" for="f-github">GitHub</label>
+                <input type="url" class="pf-input" id="f-github" placeholder="github.com/johndoe" autocomplete="url">
+              </div>
+              <div class="pf-row">
+                <label class="pf-label" for="f-portfolio">Portfolio</label>
+                <input type="url" class="pf-input" id="f-portfolio" placeholder="johndoe.dev" autocomplete="url">
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Section: Summary ────────────────────────── -->
+          <div class="section-card">
+            <div class="section-header" role="button" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-align-left"></i></div>
+              <h6>Professional Summary</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body">
+              <label class="form-label" for="f-summary">Summary</label>
+              <textarea class="form-control" id="f-summary" rows="6" maxlength="500" placeholder="Results-driven Software Engineer with 3+ years of experience building scalable web applications…" aria-describedby="summary-char-count"></textarea>
+              <div id="summary-char-count" class="char-count" aria-live="polite">0 / 500</div>
+            </div>
+          </div>
+
+          <!-- ── Section: Skills ─────────────────────────── -->
+          <div class="section-card">
+            <div class="section-header" role="button" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-code"></i></div>
+              <h6>Skills</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body">
+              <label class="form-label">Skills <span class="text-muted fw-normal">(type and press Enter or comma)</span></label>
+              <div class="skills-container" id="skills-container" role="group" aria-label="Skills tags">
+                <input type="text" class="skills-input" placeholder="Add skill…" aria-label="Add skill" autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Section: Work Experience ────────────────── -->
+          <div class="section-card">
+            <div class="section-header" role="button" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-briefcase"></i></div>
+              <h6>Work Experience</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body">
+              <div class="entry-list" id="experience-list" role="list" aria-label="Work experience entries"></div>
+              <button class="btn btn-outline-primary btn-sm w-100 mt-2" id="btn-add-exp" aria-label="Add work experience">
+                <i class="fa-solid fa-plus"></i> Add Experience
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Section: Education ──────────────────────── -->
+          <div class="section-card">
+            <div class="section-header" role="button" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <h6>Education</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body">
+              <div class="entry-list" id="education-list" role="list" aria-label="Education entries"></div>
+              <button class="btn btn-outline-primary btn-sm w-100 mt-2" id="btn-add-edu" aria-label="Add education">
+                <i class="fa-solid fa-plus"></i> Add Education
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Section: Projects ───────────────────────── -->
+          <div class="section-card">
+            <div class="section-header" role="button" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-diagram-project"></i></div>
+              <h6>Projects</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body">
+              <div class="entry-list" id="projects-list" role="list" aria-label="Project entries"></div>
+              <button class="btn btn-outline-primary btn-sm w-100 mt-2" id="btn-add-proj" aria-label="Add project">
+                <i class="fa-solid fa-plus"></i> Add Project
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Section: Certifications ─────────────────── -->
+          <div class="section-card">
+            <div class="section-header" role="button" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-certificate"></i></div>
+              <h6>Certifications</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body">
+              <div class="entry-list" id="certifications-list" role="list" aria-label="Certification entries"></div>
+              <button class="btn btn-outline-primary btn-sm w-100 mt-2" id="btn-add-cert" aria-label="Add certification">
+                <i class="fa-solid fa-plus"></i> Add Certification
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Section: Achievements ───────────────────── -->
+          <div class="section-card">
+            <div class="section-header" role="button" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-trophy"></i></div>
+              <h6>Achievements</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body">
+              <div id="achievements-list" role="list" aria-label="Achievement entries"></div>
+              <button class="btn btn-outline-primary btn-sm w-100 mt-2" id="btn-add-achievement" aria-label="Add achievement">
+                <i class="fa-solid fa-plus"></i> Add Achievement
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Section: Languages ──────────────────────── -->
+          <div class="section-card">
+            <div class="section-header" role="button" tabindex="0">
+              <div class="section-header-icon"><i class="fa-solid fa-language"></i></div>
+              <h6>Languages</h6>
+              <i class="fa-solid fa-chevron-down section-toggle-icon"></i>
+            </div>
+            <div class="section-body">
+              <div id="languages-list" role="list" aria-label="Language entries"></div>
+              <button class="btn btn-outline-primary btn-sm w-100 mt-2" id="btn-add-language" aria-label="Add language">
+                <i class="fa-solid fa-plus"></i> Add Language
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /form-panel-inner -->
+      </div><!-- /form-panel -->
+
+      <!-- ── Centre: Preview Panel ──────────────────────── -->
+      <div class="preview-panel" role="region" aria-label="Resume preview">
+
+        <!-- Tab toolbar: Live Preview / ATS Score + zoom + Import/Export -->
+        <div class="preview-toolbar">
+          <div class="preview-tabs">
+            <button class="preview-tab active" id="tab-live-preview" aria-label="Live Preview">
+              <i class="fa-solid fa-eye"></i> Live Preview
+            </button>
+            <button class="preview-tab" id="tab-ats-score" aria-label="ATS Score">
+              <i class="fa-solid fa-chart-bar"></i> ATS Analysis
+              <span class="ats-score-badge" id="ats-score-badge" aria-label="ATS score">0</span>
+            </button>
+          </div>
+          <div class="zoom-controls">
+            <button class="btn btn-ghost btn-xs" id="btn-zoom-out" aria-label="Zoom out"><i class="fa-solid fa-minus"></i></button>
+            <span class="zoom-val" id="zoom-val" aria-label="Zoom level">65%</span>
+            <button class="btn btn-ghost btn-xs" id="btn-zoom-in"  aria-label="Zoom in"><i class="fa-solid fa-plus"></i></button>
+            <button class="btn btn-ghost btn-xs" id="btn-zoom-reset" aria-label="Reset zoom" style="font-size:.7rem">Reset</button>
+            <button class="btn btn-ghost btn-xs" id="btn-import" aria-label="Import resume JSON"><i class="fa-solid fa-file-import"></i>Import</button>
+            <button class="btn btn-ghost btn-xs" id="btn-export-json" aria-label="Export as JSON"><i class="fa-solid fa-file-export"></i>Export</button>
+          </div>
+        </div>
+
+        <!-- Actions toolbar: Color dots | Template chips | Preview + Download -->
+        <div class="preview-toolbar preview-actions-bar">
+          <div class="toolbar-col toolbar-col-left">
+            <div class="color-theme-dots" aria-label="Color theme">
+              <button class="theme-dot active" data-theme="default"  style="background:#374151" title="Default (black/grey)" aria-label="Default theme"></button>
+              <button class="theme-dot"        data-theme="blue"     style="background:#1E3A8A" title="Blue"    aria-label="Blue theme"></button>
+              <button class="theme-dot"        data-theme="purple"   style="background:#5B21B6" title="Purple"  aria-label="Purple theme"></button>
+              <button class="theme-dot"        data-theme="green"    style="background:#065F46" title="Green"   aria-label="Green theme"></button>
+              <button class="theme-dot"        data-theme="red"      style="background:#B91C1C" title="Red"     aria-label="Red theme"></button>
+              <button class="theme-dot"        data-theme="saffron"  style="background:#D97706" title="Saffron" aria-label="Saffron theme"></button>
+            </div>
+          </div>
+          <div class="toolbar-col toolbar-col-center">
+            <div class="template-selector">
+              <div class="tpl-thumb active" data-tpl="classic" role="button" tabindex="0" aria-label="Classic ATS template">
+                <span class="tpl-dot" style="background:#1a1a1a"></span> Classic
+              </div>
+              <div class="tpl-thumb" data-tpl="professional" role="button" tabindex="0" aria-label="Professional ATS template">
+                <span class="tpl-dot" style="background:#1E3A5F"></span> Professional
+              </div>
+              <div class="tpl-thumb" data-tpl="minimal" role="button" tabindex="0" aria-label="Minimal ATS template">
+                <span class="tpl-dot" style="background:#555"></span> Minimal
+              </div>
+            </div>
+          </div>
+          <div class="toolbar-col toolbar-col-right">
+            <a href="preview/index.html" target="_blank" class="btn btn-ghost btn-xs" id="btn-open-preview" aria-label="Open full preview">
+              <i class="fa-solid fa-up-right-from-square"></i>
+              Preview
+            </a>
+            <button class="btn btn-primary btn-xs" id="btn-download-pdf" aria-label="Download PDF">
+              <i class="fa-solid fa-download"></i>
+              PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="preview-scroll">
+          <div class="resume-canvas" id="resume-canvas" role="document" aria-label="Resume document">
+            <!-- Rendered by PreviewRenderer -->
+          </div>
+        </div>
+
+        <!-- ATS panel — shown in place of preview-scroll when ATS tab is active -->
+        <div class="ats-panel" id="ats-panel" role="complementary" aria-label="ATS analysis">
+
+        <h6 class="fw-700 mb-2"><i class="fa-solid fa-chart-bar me-2" style="color:var(--primary)"></i>ATS Analysis</h6>
+
+        <!-- Target Role -->
+        <div class="ats-role-row">
+          <label class="ats-role-label" for="f-targetRole">Target Role</label>
+          <select class="form-select form-select-sm" id="f-targetRole" style="flex:1">
+            <option value="">— Select a role —</option>
+          </select>
+        </div>
+
+        <!-- Score ring -->
+        <div class="score-ring-wrap">
+          <div class="score-ring">
+            <svg viewBox="0 0 100 100" width="120" height="120" aria-hidden="true">
+              <circle class="track" cx="50" cy="50" r="45" fill="none" stroke="#E2E8F0" stroke-width="8"/>
+              <circle class="fill"  cx="50" cy="50" r="45" fill="none" stroke="#2563EB" stroke-width="8"
+                stroke-dasharray="0 283" stroke-linecap="round"/>
+            </svg>
+            <div class="score-text">
+              <span class="score-num fw-800" style="color:var(--primary)">0</span>
+              <span class="score-label score-grade text-muted">Poor</span>
+            </div>
+          </div>
+          <p class="text-muted text-center" style="font-size:.78rem;margin-top:.5rem">ATS Compatibility Score</p>
+        </div>
+
+        <!-- Criteria breakdown -->
+        <div class="ats-criteria" aria-label="Score breakdown"></div>
+
+        <!-- Keyword suggestions -->
+        <div class="mb-3">
+          <div class="fw-600" style="font-size:.8rem;margin-bottom:.4rem">
+            Role Keywords <span class="text-muted fw-normal">(click missing ones to add)</span>
+          </div>
+          <div class="keyword-chips" aria-label="Keyword suggestions"></div>
+        </div>
+
+        <!-- Suggestions & warnings -->
+        <div class="fw-600 mb-1" style="font-size:.8rem">Suggestions</div>
+        <div class="ats-suggestions" aria-live="polite" aria-label="ATS suggestions"></div>
+
+      </div><!-- /ats-panel -->
+
+      </div><!-- /preview-panel -->
+
+    </div><!-- /builder-body -->
+  </div><!-- /page-builder -->
+
+  <!-- ══════════════════════════════════════════════════════════
+       MODAL: New Resume
+  ══════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-new-resume" role="dialog" aria-modal="true" aria-labelledby="modal-new-resume-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h5 id="modal-new-resume-title"><i class="fa-solid fa-file-circle-plus me-2" style="color:var(--primary)"></i>Create New Resume</h5>
+        <button class="modal-close" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-new-resume" novalidate>
+        <div class="mb-3">
+          <label class="form-label" for="new-resume-name">Resume Name</label>
+          <input type="text" class="form-control" id="new-resume-name" placeholder="e.g. Frontend Resume - Google" value="My Resume" required autofocus>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="new-resume-role">Target Role <span class="text-muted fw-normal">(optional)</span></label>
+          <select class="form-select" id="new-resume-role">
+            <option value="">— Select a role (optional) —</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="new-resume-template">Template</label>
+          <select class="form-select" id="new-resume-template">
+            <option value="classic">Classic ATS - Clean &amp; timeless</option>
+            <option value="professional">Professional ATS - Premium typography</option>
+            <option value="minimal">Minimal ATS - Ultra compact</option>
+          </select>
+        </div>
+        <div class="modal-footer" style="margin-top:1rem">
+          <button type="button" class="btn btn-ghost" id="btn-cancel-new">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-arrow-right"></i> Start Building
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       MODAL: Confirm Delete
+  ══════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-confirm-delete" role="alertdialog" aria-modal="true" aria-labelledby="modal-delete-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h5 id="modal-delete-title" style="color:var(--danger)">
+          <i class="fa-solid fa-trash me-2"></i>Delete Resume?
+        </h5>
+        <button class="modal-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p class="text-muted" style="font-size:.9rem">
+        Are you sure you want to delete <strong id="delete-resume-name"></strong>?
+        This action can be undone immediately after.
+      </p>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="btn-cancel-delete">Cancel</button>
+        <button class="btn btn-danger" id="btn-confirm-delete">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       TOAST CONTAINER
+  ══════════════════════════════════════════════════════════ -->
+  <div id="toast-container" aria-live="polite" aria-atomic="false" role="status"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- App bundle — single file, no ES modules, works on file:// -->
+  <script src="assets/js/app.bundle.js"></script>
+
+  <!-- Extra inline wiring -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Show builder back in navbar only when on builder page
+      const observer = new MutationObserver(() => {
+        const builderVisible = document.getElementById('page-builder')?.style.display !== 'none';
+        document.getElementById('btn-back-dashboard')?.classList.toggle('d-none', !builderVisible);
+        document.getElementById('btn-open-preview')?.classList.toggle('d-none', !builderVisible);
+      });
+      const builder = document.getElementById('page-builder');
+      if (builder) observer.observe(builder, { attributes: true, attributeFilter: ['style'] });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangout Hub Cafe | Premium Hero</title>
+    
+    <!-- Premium Fonts: Playfair Display for elegance, Montserrat for modern clean text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* ---------------------------------------------------------
+           CSS DESIGN & THEME VARIABLES 
+           --------------------------------------------------------- */
+        :root {
+            --bg-black: #080808;
+            --bg-black-gradient: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            --bg-card: #121212;
+            --gold: #d4af37;
+            --gold-hover: #f1cd55;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-gold { color: var(--gold) !important; }
+        .bg-gold { background-color: var(--gold) !important; }
+        .border-gold { border-color: var(--gold) !important; }
+        .text-muted { color: var(--text-muted) !important; } /* Override Bootstrap default */
+
+        /* ---------------------------------------------------------
+           NAVIGATION 
+           --------------------------------------------------------- */
+        .navbar {
+            transition: all 0.4s ease;
+            padding: 1.5rem 0;
+            background: transparent;
+        }
+        .navbar.scrolled {
+            background: rgba(8, 8, 8, 0.95) !important;
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold) !important;
+            letter-spacing: 1px;
+        }
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: var(--gold) !important; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: var(--gold);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        
+        .cart-icon-container {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+        .cart-icon-container:hover { color: var(--gold); }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: var(--gold);
+            color: var(--bg-black);
+            border-radius: 50%;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* ---------------------------------------------------------
+           HERO SECTION 
+           --------------------------------------------------------- */
+        #hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(to bottom, rgba(8, 8, 8, 0.75), rgba(8, 8, 8, 0.95)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=1600&q=80') center/cover no-repeat;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #hero-section canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 7vw, 6rem);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+            margin-bottom: 1rem;
+        }
+        .hero-tagline {
+            font-size: clamp(0.75rem, 2vw, 1.2rem);
+            font-weight: 300;
+            letter-spacing: 6px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        /* ---------------------------------------------------------
+           BUTTONS 
+           --------------------------------------------------------- */
+        .btn-gold {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 0.8rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-gold:hover, .btn-gold.active {
+            background: var(--gold);
+            color: var(--bg-black);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+        .btn-gold-solid {
+            background: var(--gold);
+            color: var(--bg-black);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-gold-solid:hover {
+            background: var(--gold-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--gold-glow);
+        }
+
+        /* ---------------------------------------------------------
+           SECTIONS & CARDS 
+           --------------------------------------------------------- */
+        .section-padding { padding: 100px 0; }
+        .section-title {
+            color: var(--gold);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 15px auto 0;
+        }
+
+        /* Menu Grid & Cards */
+        .menu-filter {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        .menu-filter button {
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.8rem;
+        }
+        .menu-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-color: var(--gold);
+        }
+        .menu-img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 66.66%; /* 3:2 Aspect Ratio */
+            overflow: hidden;
+        }
+        .menu-img-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .menu-card:hover .menu-img-wrapper img {
+            transform: scale(1.1);
+        }
+        .menu-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--bg-black);
+            color: var(--gold);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+            border-radius: 20px;
+            border: 1px solid var(--gold);
+            font-weight: 600;
+        }
+        .menu-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .menu-price { color: var(--gold); font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+        
+        /* ---------------------------------------------------------
+           CART & CHECKOUT PAGES
+           --------------------------------------------------------- */
+        .page-header {
+            background: linear-gradient(rgba(8,8,8,0.8), rgba(8,8,8,0.9)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1600&q=80') center/cover;
+            padding: 150px 0 80px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        .cart-item:hover { border-color: var(--gold); }
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-black);
+            border-radius: 20px;
+            padding: 0.2rem 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+        .qty-btn {
+            background: transparent;
+            color: var(--gold);
+            border: none;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .qty-btn:hover { background: rgba(212, 175, 55, 0.2); }
+        .summary-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            position: sticky;
+            top: 100px;
+        }
+        
+        /* Forms */
+        .form-control, .form-select {
+            background-color: var(--bg-black);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.8rem 1rem;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: var(--bg-card);
+            border-color: var(--gold);
+            color: var(--text-light);
+            box-shadow: 0 0 5px var(--gold-glow);
+        }
+        .form-label { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ---------------------------------------------------------
+           ANIMATIONS 
+           --------------------------------------------------------- */
+        .page-view { display: none; opacity: 0; transition: opacity 0.4s ease; }
+        .page-view.active { display: block; opacity: 1; }
+        
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s forwards;
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2.5rem;
+            color: var(--bg-black);
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        /* ---------------------------------------------------------
+           FOOTER 
+           --------------------------------------------------------- */
+        footer {
+            background: #050505;
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+        .footer-socials a {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: color 0.3s;
+        }
+        .footer-socials a:hover { color: var(--gold); }
+
+        /* ---------------------------------------------------------
+           MOBILE RESPONSIVENESS MEDIA QUERIES
+           --------------------------------------------------------- */
+        @media (max-width: 768px) {
+            .section-padding { padding: 60px 0; }
+            .section-title { font-size: 2rem; }
+            
+            /* Cart Items Stacking on Mobile */
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+                padding: 1.5rem;
+            }
+            .cart-item img {
+                margin: 0 auto;
+                width: 120px;
+                height: 120px;
+            }
+            .cart-item > div {
+                width: 100%;
+            }
+            .qty-controls {
+                justify-content: center;
+                width: fit-content;
+                margin: 0 auto;
+            }
+            .cart-item .text-end {
+                text-align: center !important;
+                width: 100% !important;
+            }
+            .cart-item .ms-3 {
+                margin-left: 0 !important;
+                margin-top: 10px;
+            }
+            
+            /* Checkout & General Padding */
+            .summary-card {
+                padding: 1.5rem;
+            }
+            
+            .navbar-collapse {
+                background: rgba(8, 8, 8, 0.95);
+                padding: 1rem;
+                border-radius: 8px;
+                margin-top: 10px;
+                border: 1px solid var(--border-color);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="app.navigate('home')">Hangout Hub</a>
+            
+            <div class="d-flex align-items-center order-lg-last ms-auto me-3 me-lg-0">
+                <div class="cart-icon-container" onclick="app.navigate('cart')">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </div>
+            </div>
+
+            <button class="navbar-toggler border-0 shadow-none text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars text-gold fs-4"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto text-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="app.navigate('home', '#hero-section')">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="app.navigate('home', '#about')">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="app.navigate('home', '#menu')">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="app.navigate('home', '#contact')">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN APP CONTAINER (SPA Logic) -->
+    <main id="app-root">
+
+        <!-- ==============================================
+             VIEW: HOME 
+             ============================================== -->
+        <div id="view-home" class="page-view active">
+            
+            <!-- Hero Section -->
+            <section id="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title text-light" id="heroTitle">The Hangout Hub Cafe</h1>
+                    <p class="hero-tagline" id="heroSubline">GOOD FOOD • GOOD MOOD • GOOD TIMES</p>
+                    <button class="btn btn-gold mt-4" onclick="app.navigate('home', '#menu')">Explore Menu</button>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="section-padding">
+                <div class="container">
+                    <div class="row align-items-center g-5">
+                        <div class="col-lg-6">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80" alt="Cafe Interior" class="img-fluid rounded" style="border: 1px solid var(--border-color);">
+                                <div class="position-absolute border border-gold" style="top: -20px; left: -20px; right: 20px; bottom: 20px; z-index: -1; border-radius: 8px;"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="section-title text-start ms-0">Our Story</h2>
+                            <p class="lead text-gold font-serif">A place where flavors meet passion, and every bite tells a story.</p>
+                            <p class="text-muted mb-4">Welcome to The Hangout Hub Cafe, your premium destination for culinary excellence. We believe that good food is the foundation of genuine happiness. Our chefs meticulously craft every dish using the finest ingredients to ensure a symphony of flavors that elevate your mood.</p>
+                            <p class="text-muted mb-4">Whether you're craving a classic pizza, a hearty burger, or an elegant pasta, we promise an unforgettable experience filled with good times.</p>
+                            <div class="d-flex gap-4 mt-4">
+                                <div><h3 class="text-gold mb-0">50+</h3><small class="text-muted text-uppercase">Dishes</small></div>
+                                <div><h3 class="text-gold mb-0">100%</h3><small class="text-muted text-uppercase">Quality</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Menu Section -->
+            <section id="menu" class="section-padding" style="background-color: #0c0c0c;">
+                <div class="container">
+                    <h2 class="section-title">Our Premium Menu</h2>
+                    
+                    <!-- Filters -->
+                    <div class="menu-filter" id="menuFilters">
+                        <!-- Rendered by JS -->
+                    </div>
+
+                    <!-- Items Grid -->
+                    <div class="row g-4" id="menuGrid">
+                        <!-- Rendered by JS Engine -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="section-padding">
+                <div class="container">
+                    <h2 class="section-title">Get in Touch</h2>
+                    <div class="row g-5 justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card bg-card border-color h-100 p-4" style="background: var(--bg-card); border: 1px solid var(--border-color);">
+                                <h4 class="font-serif text-gold mb-4">Contact Details</h4>
+                                <ul class="list-unstyled text-muted lh-lg">
+                                    <li class="mb-3"><i class="fas fa-map-marker-alt text-gold me-3"></i> Premium Avenue, City Center, India</li>
+                                    <li class="mb-3"><i class="fas fa-phone text-gold me-3"></i> <span id="contactPhone">+91 XXXXXXXXXX</span></li>
+                                    <li class="mb-3"><i class="fas fa-envelope text-gold me-3"></i> <span id="contactEmail">email@example.com</span></li>
+                                    <li class="mb-3"><i class="fas fa-clock text-gold me-3"></i> Open Daily: 11:00 AM - 11:00 PM</li>
+                                </ul>
+                                <div class="mt-4 p-3 border border-gold rounded text-center">
+                                    <small class="text-light">Developer / Contact: <br><strong class="text-gold" id="contactDev">Name</strong></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <form class="p-4" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" placeholder="Your Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" placeholder="Your Email">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Message</label>
+                                        <textarea class="form-control" rows="4" placeholder="How can we help?"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="button" class="btn btn-gold-solid w-100 mt-2">Send Message</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==============================================
+             VIEW: CART 
+             ============================================== -->
+        <div id="view-cart" class="page-view">
+            <header class="page-header">
+                <div class="container">
+                    <h1 class="font-serif">Your Cart</h1>
+                    <p class="text-gold text-uppercase tracking-widest">Review your selection</p>
+                </div>
+            </header>
+
+            <section class="section-padding">
+                <div class="container">
+                    <button class="btn btn-gold mb-4" onclick="app.navigate('home', '#menu')">
+                        <i class="fas fa-arrow-left me-2"></i> Continue Shopping
+                    </button>
+
+                    <div class="row g-5" id="cartContent">
+                        <!-- Dynamic Cart Layout -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==============================================
+             VIEW: CHECKOUT 
+             ============================================== -->
+        <div id="view-checkout" class="page-view">
+            <header class="page-header">
+                <div class="container">
+                    <h1 class="font-serif">Checkout</h1>
+                    <p class="text-gold text-uppercase tracking-widest">Secure your order</p>
+                </div>
+            </header>
+
+            <section class="section-padding">
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-7">
+                            <div class="summary-card" style="position: relative; top: 0;">
+                                <h3 class="font-serif mb-4">Delivery Details (India)</h3>
+                                <form id="checkoutForm" onsubmit="event.preventDefault(); app.placeOrder();">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Full Name *</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone Number *</label>
+                                            <input type="tel" class="form-control" pattern="[0-9]{10}" title="10 digit mobile number" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Email Address *</label>
+                                            <input type="email" class="form-control" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Delivery Address *</label>
+                                            <textarea class="form-control" rows="2" required></textarea>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">City *</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">State *</label>
+                                            <select class="form-select" required>
+                                                <option value="">Select State</option>
+                                                <option>West Bengal</option>
+                                                <option>Maharashtra</option>
+                                                <option>Delhi</option>
+                                                <option>Karnataka</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Pincode *</label>
+                                            <input type="text" class="form-control" pattern="[0-9]{6}" required>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="font-serif mt-5 mb-3 border-bottom border-color pb-2">Payment Method</h4>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="payment" id="payCOD" checked>
+                                        <label class="form-check-label" for="payCOD">Cash on Delivery (COD)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment" id="payUPI">
+                                        <label class="form-check-label" for="payUPI">UPI / Online Payment</label>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-gold-solid w-100 mt-5 py-3 fs-5">Place Order</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="summary-card" id="checkoutSummary">
+                                <!-- Rendered by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==============================================
+             VIEW: ORDER SUCCESS
+             ============================================== -->
+        <div id="view-order" class="page-view">
+            <section class="section-padding text-center min-vh-100 d-flex align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="summary-card p-5">
+                                <div class="success-checkmark">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <h1 class="font-serif text-gold mb-3">Order Received!</h1>
+                                <p class="lead text-muted mb-2">We've accepted your money... err, order. Prepare your tastebuds.</p>
+                                
+                                <div class="alert alert-warning bg-transparent border-gold text-light mt-4 mb-4" role="alert">
+                                    <i class="fas fa-exclamation-triangle text-gold me-2"></i>
+                                    <strong>Please ensure your contact details are correct as the restaurant will call you to confirm your order.</strong>
+                                </div>
+
+                                <h4 class="mb-4">Order ID: <span class="text-gold" id="finalOrderId">#123456</span></h4>
+                                
+                                <div id="finalOrderDetails" class="text-start mb-5 border border-color rounded p-4 bg-black">
+                                    <!-- Rendered by JS -->
+                                </div>
+
+                                <button class="btn btn-gold" onclick="app.navigate('home')">Back to Home</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-4">
+                    <h3 class="font-serif text-gold mb-3" id="footerTitle">Hangout Hub</h3>
+                    <p class="text-muted small pe-4" id="footerSub">GOOD FOOD • GOOD MOOD • GOOD TIMES</p>
+                    <div class="footer-socials mt-3">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-light mb-3">Quick Links</h5>
+                    <ul class="list-unstyled text-muted small lh-lg">
+                        <li><a href="#" class="text-decoration-none text-muted" onclick="app.navigate('home', '#about')">About Us</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted" onclick="app.navigate('home', '#menu')">Menu</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted" onclick="app.navigate('home', '#contact')">Contact</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted" onclick="app.navigate('cart')">View Cart</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-light mb-3">Newsletter</h5>
+                    <p class="text-muted small">Subscribe for premium offers and updates.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control bg-black border-color text-light" placeholder="Email Address">
+                        <button class="btn btn-gold-solid" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top border-color pt-3 text-center text-muted small">
+                <p class="mb-0">&copy; 2026 <span id="copyName">Hangout Hub</span>. Designed with elegance. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        /**
+         * System Architecture:
+         * 1. Data Layer: Configuration and Raw Data mapping.
+         * 2. UI/Logic Layer: Functions to render filters and cards, State Management.
+         * 3. Animation Engine: Asynchronous sequential rendering for visual appeal.
+         */
+
+        // --- Data Layer --- //
+
+        const CONFIG = {
+            cafeName: "The Hangout Hub Cafe",
+            cafeSubline: "GOOD FOOD • GOOD MOOD • GOOD TIMES",
+            enableTax: true, // Switched to true to show cart functionality properly
+            taxRate: 0.05, // 5% GST
+            enablePrint: false
+        };
+
+        const DEV = {
+            name: "Sharik M.",
+            email: "sharik.madhyapradeshi@gmail.com",
+            phone: "8697908896",
+            siteName: `${CONFIG.cafeName} - Web UI`
+        };
+
+        const rawMenu = [   
+            ["item_1","Chicken Chow","Chow Attack",60], ["item_2","Egg Chow","Chow Attack",30], ["item_3","Mix Chow","Chow Attack",50], ["item_4","Veg Chow","Chow Attack",30],
+            ["item_5","Chicken Maggie","Maggie Fever",70], ["item_6","Egg Maggie","Maggie Fever",60], ["item_7","Veg Maggie","Maggie Fever",40], ["item_8","Corn Maggie","Maggie Fever",50], ["item_9","Masala Corn","Maggie Fever",50],
+            ["item_10","Chicken White Sauce Pasta","Pasta Vibes",80], ["item_11","Chicken Mix Sauce Pasta","Pasta Vibes",80], ["item_12","Chicken Cheese White Sauce Pasta","Pasta Vibes",100], ["item_13","Chicken Cheese Mix Sauce Pasta","Pasta Vibes",100], ["item_14","Chicken Red Sauce Pasta","Pasta Vibes",60], ["item_15","Egg Red Sauce Pasta","Pasta Vibes",50], ["item_16","Veg Red Sauce Pasta","Pasta Vibes",40], ["item_17","Veg White Sauce Pasta","Pasta Vibes",60], ["item_18","Veg Mix Sauce Pasta","Pasta Vibes",60],
+            ["item_19","Chicken Burger","Burger Cravings",60], ["item_20","Double Chicken Burger","Burger Cravings",90], ["item_21","Chicken And Aloo Tikki Burger","Burger Cravings",80], ["item_22","Aloo Tikki Burger","Burger Cravings",40],
+            ["item_23","Classic Chicken Pizza","Pizza Obsession",130], ["item_24","BBQ Chicken Pizza","Pizza Obsession",140], ["item_25","Chicken Popcorn Pizza","Pizza Obsession",150], ["item_26","Mix Chicken Pizza","Pizza Obsession",160], ["item_27","Chicken Momo Pizza","Pizza Obsession",160], ["item_28","Half Corn And Half Chicken Pizza","Pizza Obsession",160], ["item_29","Golden Corn Pizza","Pizza Obsession",100], ["item_30","Margarita Pizza","Pizza Obsession",100], ["item_31","Mix Veg Pizza","Pizza Obsession",120], ["item_32","Extra Cheese Burst","Pizza Obsession",30],
+            ["item_33","Chicken And Corn Sandwich","Savage Sandwiches",70], ["item_34","Chicken And Aloo Tikki Sandwich","Savage Sandwiches",80], ["item_35","Club Chicken Sandwich","Savage Sandwiches",100], ["item_36","Chicken Pizza Sandwich","Savage Sandwiches",100], ["item_37","Corn Sandwich","Savage Sandwiches",50], ["item_38","Corn And Aloo Tikki Sandwich","Savage Sandwiches",70], ["item_39","Egg Sandwich","Savage Sandwiches",60],
+            ["item_40","Steam Momo","Momo Mania",100], ["item_41","Fry Momo","Momo Mania",110], ["item_42","Pan Fried Momo","Momo Mania",150], ["item_43","Baked Momo","Momo Mania",180], ["item_44","Kurkure Momo","Momo Mania",150],
+            ["item_45","Egg Roll","Roll Goals",40], ["item_46","Double Egg Roll","Roll Goals",50], ["item_47","Chicken Roll","Roll Goals",60], ["item_48","Egg Chicken Roll","Roll Goals",70], ["item_49","Egg Aloo Tikki Roll","Roll Goals",50],
+            ["item_50","Salted Fries","Fries Fix",60], ["item_51","Peri Peri Fries","Fries Fix",80], ["item_52","Chilli Fries","Fries Fix",100], ["item_53","Cheesy Fries","Fries Fix",100], ["item_54","Potato Smiley","Fries Fix",80],
+            ["item_55","Chicken Popcorn","Fried Frenzy",60], ["item_56","Chicken Finger","Fried Frenzy",60], ["item_57","Chicken Nuggets","Fried Frenzy",60], ["item_58","Chicken Wings","Fried Frenzy",80], ["item_59","BBQ Chicken Wings","Fried Frenzy",100], ["item_60","Chilli Chicken","Fried Frenzy",60], ["item_61","Chicken Cutlet","Fried Frenzy",60], ["item_62","Chicken Samosa","Fried Frenzy",20], ["item_63","Chicken 65","Fried Frenzy",60], ["item_64","Chicken Double Down","Fried Frenzy",150], ["item_65","Chicken Chizza","Fried Frenzy",150], ["item_66","Chicken Half And Corn Dog","Fried Frenzy",100], ["item_67","Fish Finger","Fried Frenzy",60], ["item_68","Fish Cutlet","Fried Frenzy",60]
+        ];
+
+        // Map Raw to Objects, assign a premium food placeholder
+        const MENU_DB = rawMenu.map(item => ({
+            id: item[0],
+            name: item[1],
+            category: item[2],
+            price: item[3],
+            // Randomly picking from premium food placeholder images
+            image: `https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop&q=80&sig=${item[0]}` 
+        }));
+
+        const CATEGORIES = [...new Set(MENU_DB.map(i => i.category))];
+
+        // --- Application State & Logic Layer --- //
+
+        const app = {
+            state: {
+                cart: [],
+                currentCategory: 'All',
+                view: 'home'
+            },
+            
+            init() {
+                this.populateStaticData();
+                this.renderMenuFilters();
+                this.renderMenu('All');
+                this.setupNavbarScroll();
+            },
+
+            populateStaticData() {
+                document.getElementById('heroTitle').innerText = CONFIG.cafeName;
+                document.getElementById('heroSubline').innerText = CONFIG.cafeSubline;
+                document.getElementById('contactPhone').innerText = DEV.phone;
+                document.getElementById('contactEmail').innerText = DEV.email;
+                document.getElementById('contactDev').innerText = DEV.name;
+                document.getElementById('footerTitle').innerText = CONFIG.cafeName;
+                document.getElementById('footerSub').innerText = CONFIG.cafeSubline;
+                document.getElementById('copyName').innerText = CONFIG.cafeName;
+            },
+
+            setupNavbarScroll() {
+                const nav = document.getElementById('mainNav');
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        nav.classList.add('scrolled');
+                    } else {
+                        nav.classList.remove('scrolled');
+                    }
+                });
+            },
+
+            // --- Navigation (SPA Router) --- //
+            navigate(view, anchor = null) {
+                // Hide all
+                document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+                
+                // Show target
+                const targetView = document.getElementById(`view-${view}`);
+                if(targetView) {
+                    targetView.classList.add('active');
+                    this.state.view = view;
+                    window.scrollTo(0,0);
+                }
+
+                // Render logic specific to views
+                if(view === 'cart') this.renderCart();
+                if(view === 'checkout') this.renderCheckout();
+
+                // Handle anchor scrolling (if back to home)
+                if (anchor && view === 'home') {
+                    setTimeout(() => {
+                        const section = document.querySelector(anchor);
+                        if(section) {
+                            const offset = 80; // Navbar height
+                            const bodyRect = document.body.getBoundingClientRect().top;
+                            const elementRect = section.getBoundingClientRect().top;
+                            const elementPosition = elementRect - bodyRect;
+                            const offsetPosition = elementPosition - offset;
+
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 100);
+                }
+            },
+
+            // --- Menu Logic --- //
+            renderMenuFilters() {
+                const container = document.getElementById('menuFilters');
+                let html = `<button class="btn btn-gold active" onclick="app.filterMenu('All', this)">All Items</button>`;
+                CATEGORIES.forEach(cat => {
+                    html += `<button class="btn btn-gold" onclick="app.filterMenu('${cat}', this)">${cat}</button>`;
+                });
+                container.innerHTML = html;
+            },
+
+            filterMenu(category, btnElement) {
+                document.querySelectorAll('#menuFilters .btn').forEach(b => b.classList.remove('active'));
+                btnElement.classList.add('active');
+                this.renderMenu(category, true);
+            },
+
+            renderMenu(category, animate = true) {
+                const grid = document.getElementById('menuGrid');
+                grid.innerHTML = ''; // Clear
+
+                let items = category === 'All' ? MENU_DB : MENU_DB.filter(i => i.category === category);
+
+                // Animation Engine: Asynchronous sequential rendering
+                items.forEach((item, index) => {
+                    const cartItem = this.state.cart.find(c => c.id === item.id);
+                    const isInCart = !!cartItem;
+
+                    const col = document.createElement('div');
+                    col.className = animate ? `col-md-6 col-lg-4 stagger-item` : `col-md-6 col-lg-4`;
+                    if (animate) col.style.animationDelay = `${index * 0.05}s`;
+
+                    let btnHTML;
+                    if (isInCart) {
+                        btnHTML = `
+                            <div class="d-flex align-items-center justify-content-between mt-auto bg-black border border-gold rounded" style="padding: 0.3rem 0.5rem;">
+                                <button class="btn btn-sm text-gold" onclick="app.updateQty('${item.id}', -1)" style="font-size: 1.2rem;"><i class="fas fa-minus"></i></button>
+                                <span class="text-light fw-bold fs-5">${cartItem.qty}</span>
+                                <button class="btn btn-sm text-gold" onclick="app.updateQty('${item.id}', 1)" style="font-size: 1.2rem;"><i class="fas fa-plus"></i></button>
+                            </div>
+                        `;
+                    } else {
+                        btnHTML = `
+                            <button class="btn btn-gold w-100 mt-auto" onclick="app.addToCart('${item.id}')">
+                                <i class="fas fa-shopping-bag me-1"></i> Add to Cart
+                            </button>
+                        `;
+                    }
+
+                    col.innerHTML = `
+                        <div class="menu-card">
+                            <div class="menu-img-wrapper">
+                                <img src="${item.image}" alt="${item.name}" loading="lazy">
+                                <span class="menu-badge">${item.category}</span>
+                            </div>
+                            <div class="menu-body">
+                                <h3 class="menu-title">${item.name}</h3>
+                                <div class="menu-price">₹${item.price}</div>
+                                ${btnHTML}
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(col);
+                });
+            },
+
+            // --- Cart Logic --- //
+            addToCart(id) {
+                const existingItemIndex = this.state.cart.findIndex(i => i.id === id);
+                
+                if (existingItemIndex > -1) {
+                    // Item exists, increment quantity instead of duplicate
+                    this.updateQty(id, 1);
+                } else {
+                    // Item does not exist, add it
+                    const item = MENU_DB.find(i => i.id === id);
+                    if (item) {
+                        this.state.cart.push({ ...item, qty: 1 });
+                        this.updateCartBadge();
+                        
+                        // Re-render menu to show the qty controls in place of add button
+                        if(this.state.view === 'home') {
+                            const activeCatBtn = document.querySelector('#menuFilters .btn.active');
+                            const cat = activeCatBtn ? activeCatBtn.innerText === 'All Items' ? 'All' : activeCatBtn.innerText : 'All';
+                            this.renderMenu(cat, false); // false prevents re-animating the whole grid
+                        }
+                    }
+                }
+            },
+
+            updateQty(id, change) {
+                const index = this.state.cart.findIndex(i => i.id === id);
+                if (index > -1) {
+                    this.state.cart[index].qty += change;
+                    if (this.state.cart[index].qty <= 0) {
+                        this.state.cart.splice(index, 1);
+                    }
+                }
+                this.updateCartBadge();
+                
+                if (this.state.view === 'cart') this.renderCart();
+                if (this.state.view === 'checkout') this.renderCheckout();
+                if (this.state.view === 'home') {
+                     const activeCatBtn = document.querySelector('#menuFilters .btn.active');
+                     const cat = activeCatBtn ? activeCatBtn.innerText === 'All Items' ? 'All' : activeCatBtn.innerText : 'All';
+                     this.renderMenu(cat, false); // false prevents re-animating the whole grid
+                }
+            },
+
+            updateCartBadge() {
+                const totalQty = this.state.cart.reduce((sum, item) => sum + item.qty, 0);
+                document.getElementById('cartBadge').innerText = totalQty;
+            },
+
+            getCartTotals() {
+                const subtotal = this.state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                const tax = CONFIG.enableTax ? subtotal * CONFIG.taxRate : 0;
+                const total = subtotal + tax;
+                return { subtotal, tax, total };
+            },
+
+            renderCart() {
+                const container = document.getElementById('cartContent');
+                if (this.state.cart.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-12 text-center py-5">
+                            <i class="fas fa-shopping-cart text-muted mb-3" style="font-size: 4rem;"></i>
+                            <h3 class="text-light">Your cart is empty</h3>
+                            <p class="text-muted">Looks like you haven't added any premium dishes yet.</p>
+                            <button class="btn btn-gold mt-3" onclick="app.navigate('home', '#menu')">Explore Menu</button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let itemsHTML = '<div class="col-lg-8"><div class="d-flex flex-column gap-3">';
+                this.state.cart.forEach(item => {
+                    itemsHTML += `
+                        <div class="cart-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1 text-light">${item.name}</h5>
+                                <p class="text-gold mb-0 fw-bold">₹${item.price}</p>
+                            </div>
+                            <div class="qty-controls mx-3">
+                                <button class="qty-btn" onclick="app.updateQty('${item.id}', -1)"><i class="fas fa-minus"></i></button>
+                                <span class="px-2 text-light">${item.qty}</span>
+                                <button class="qty-btn" onclick="app.updateQty('${item.id}', 1)"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <div class="text-end" style="width: 80px;">
+                                <h6 class="mb-0 text-light">₹${item.price * item.qty}</h6>
+                            </div>
+                            <button class="btn text-danger ms-3" onclick="app.updateQty('${item.id}', -${item.qty})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                });
+                itemsHTML += '</div></div>';
+
+                const totals = this.getCartTotals();
+                let summaryHTML = `
+                    <div class="col-lg-4">
+                        <div class="summary-card">
+                            <h4 class="font-serif border-bottom border-color pb-3 mb-4">Order Summary</h4>
+                            <div class="d-flex justify-content-between mb-3 text-muted">
+                                <span>Subtotal</span>
+                                <span>₹${totals.subtotal.toFixed(2)}</span>
+                            </div>
+                            ${CONFIG.enableTax ? `
+                            <div class="d-flex justify-content-between mb-3 text-muted">
+                                <span>Taxes (5%)</span>
+                                <span>₹${totals.tax.toFixed(2)}</span>
+                            </div>` : ''}
+                            <hr class="border-color">
+                            <div class="d-flex justify-content-between mb-4 mt-3 text-light fs-5 fw-bold">
+                                <span>Total</span>
+                                <span class="text-gold">₹${totals.total.toFixed(2)}</span>
+                            </div>
+                            <button class="btn btn-gold-solid w-100 py-3" onclick="app.navigate('checkout')">Proceed to Checkout</button>
+                        </div>
+                    </div>
+                `;
+
+                container.innerHTML = itemsHTML + summaryHTML;
+            },
+
+            renderCheckout() {
+                if (this.state.cart.length === 0) {
+                    this.navigate('cart');
+                    return;
+                }
+
+                const summaryContainer = document.getElementById('checkoutSummary');
+                const totals = this.getCartTotals();
+
+                let summaryItems = '';
+                this.state.cart.forEach(item => {
+                    summaryItems += `
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="text-light">
+                                <span class="me-2 text-muted">${item.qty}x</span> ${item.name}
+                            </div>
+                            <div class="text-gold">₹${(item.price * item.qty)}</div>
+                        </div>
+                    `;
+                });
+
+                summaryContainer.innerHTML = `
+                    <h3 class="font-serif mb-4">Order Overview</h3>
+                    <div class="border-bottom border-color pb-3 mb-3">
+                        ${summaryItems}
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-muted">
+                        <span>Subtotal</span>
+                        <span>₹${totals.subtotal.toFixed(2)}</span>
+                    </div>
+                    ${CONFIG.enableTax ? `
+                    <div class="d-flex justify-content-between mb-3 text-muted">
+                        <span>Taxes (5%)</span>
+                        <span>₹${totals.tax.toFixed(2)}</span>
+                    </div>` : ''}
+                    <hr class="border-color">
+                    <div class="d-flex justify-content-between mt-3 text-light fs-4 fw-bold">
+                        <span>Total</span>
+                        <span class="text-gold">₹${totals.total.toFixed(2)}</span>
+                    </div>
+                `;
+            },
+
+            placeOrder() {
+                // Generate Mock Order ID
+                const orderId = 'ORD-' + Math.floor(Math.random() * 1000000);
+                
+                // Construct Order Details HTML
+                let orderItemsHTML = '<ul class="list-unstyled mb-0">';
+                this.state.cart.forEach(item => {
+                    orderItemsHTML += `<li class="mb-2"><strong class="text-gold">${item.qty}x</strong> <span class="text-light">${item.name}</span></li>`;
+                });
+                orderItemsHTML += '</ul>';
+
+                const totals = this.getCartTotals();
+                const paymentMethod = document.getElementById('payCOD').checked ? "Cash on Delivery" : "Online / UPI";
+
+                const detailsHTML = `
+                    <div class="row">
+                        <div class="col-md-6 border-end border-color">
+                            <h5 class="text-muted mb-3 text-uppercase fs-6 tracking-widest">Items Ordered</h5>
+                            ${orderItemsHTML}
+                        </div>
+                        <div class="col-md-6 ps-md-4 mt-4 mt-md-0">
+                            <h5 class="text-muted mb-3 text-uppercase fs-6 tracking-widest">Summary</h5>
+                            <p class="mb-1 text-light">Total Paid: <strong class="text-gold fs-5">₹${totals.total.toFixed(2)}</strong></p>
+                            <p class="mb-0 text-muted small">Payment Method: ${paymentMethod}</p>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('finalOrderId').innerText = orderId;
+                document.getElementById('finalOrderDetails').innerHTML = detailsHTML;
+
+                // Clear cart and go to success
+                this.state.cart = [];
+                this.updateCartBadge();
+                this.navigate('order');
+            }
+        };
+
+
+        /**
+         * ---------------------------------------------------------
+         * CANVAS GENERATOR (From existing code)
+         * ---------------------------------------------------------
+         */
+        class CanvasAnimationStrategy {
+            constructor(width, height, isMobile) {
+                this.width = width; this.height = height; this.isMobile = isMobile;
+            }
+            resize(w, h, m) { this.width = w; this.height = h; this.isMobile = m; }
+            update() {} draw(ctx) {}
+        }
+
+        class GoldParticlesAnimation extends CanvasAnimationStrategy {
+            constructor(w, h, m) { super(w, h, m); this.initParticles(); }
+            initParticles() {
+                this.particles = [];
+                const area = this.width * this.height;
+                const density = this.isMobile ? 25000 : 15000; 
+                const count = Math.min(Math.floor(area / density), this.isMobile ? 50 : 120);
+                for (let i = 0; i < count; i++) this.particles.push(this.createParticle());
+            }
+            createParticle() {
+                return {
+                    x: Math.random() * this.width, y: Math.random() * this.height,
+                    radius: Math.random() * 2 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 - 0.2,
+                    baseAlpha: Math.random() * 0.5 + 0.1, pulseSpeed: Math.random() * 0.02 + 0.01,
+                    pulsePhase: Math.random() * Math.PI * 2
+                };
+            }
+            resize(w, h, m) { super.resize(w, h, m); this.initParticles(); }
+            update() {
+                this.particles.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.pulsePhase += p.pulseSpeed;
+                    if (p.x < 0) p.x = this.width; if (p.x > this.width) p.x = 0;
+                    if (p.y < 0) p.y = this.height; if (p.y > this.height) p.y = 0;
+                });
+            }
+            draw(ctx) {
+                ctx.lineWidth = 0.5;
+                const distCap = this.isMobile ? 100 : 150;
+                for (let i = 0; i < this.particles.length; i++) {
+                    for (let j = i + 1; j < this.particles.length; j++) {
+                        const dx = this.particles[i].x - this.particles[j].x;
+                        const dy = this.particles[i].y - this.particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < distCap) {
+                            ctx.strokeStyle = `rgba(212, 175, 55, ${(1 - dist / distCap) * 0.2})`;
+                            ctx.beginPath(); ctx.moveTo(this.particles[i].x, this.particles[i].y);
+                            ctx.lineTo(this.particles[j].x, this.particles[j].y); ctx.stroke();
+                        }
+                    }
+                }
+                this.particles.forEach(p => {
+                    ctx.fillStyle = `rgba(212, 175, 55, ${Math.max(0, p.baseAlpha + Math.sin(p.pulsePhase) * 0.2)})`;
+                    ctx.shadowBlur = 5; ctx.shadowColor = '#d4af37';
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+                    ctx.shadowBlur = 0;
+                });
+            }
+        }
+
+        class CanvasHeroGenerator {
+            constructor(id, config = {}) {
+                this.container = document.getElementById(id);
+                if (!this.container) return;
+                this.config = { fpsLimit: 60, ...config };
+                this.canvas = document.createElement('canvas');
+                this.ctx = this.canvas.getContext('2d', { alpha: true });
+                this.container.appendChild(this.canvas);
+                this.registry = new Map(); this.active = null; this.isRunning = false; this.lastTime = 0;
+                this.init();
+                window.addEventListener('resize', () => { clearTimeout(this.timeout); this.timeout = setTimeout(() => this.resize(), 150); });
+                new IntersectionObserver(e => e.forEach(entry => entry.isIntersecting ? this.start() : this.stop()), {threshold:0}).observe(this.container);
+            }
+            register(name, Cls) { this.registry.set(name, Cls); return this; }
+            use(name) { this.active = new (this.registry.get(name))(this.w, this.h, window.innerWidth <= 768); }
+            init() {
+                const r = this.container.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+                this.w = r.width; this.h = r.height;
+                this.canvas.width = this.w * d; this.canvas.height = this.h * d;
+                this.canvas.style.width = `${this.w}px`; this.canvas.style.height = `${this.h}px`;
+                this.ctx.scale(d, d);
+            }
+            resize() { this.init(); if(this.active) this.active.resize(this.w, this.h, window.innerWidth <= 768); }
+            start() { if(!this.isRunning){ this.isRunning = true; this.loop(); } }
+            stop() { this.isRunning = false; cancelAnimationFrame(this.frameId); }
+            loop(ts) {
+                if(!this.isRunning) return;
+                const el = ts - this.lastTime, inv = 1000/this.config.fpsLimit;
+                if(el > inv) {
+                    this.lastTime = ts - (el % inv);
+                    this.ctx.clearRect(0, 0, this.w, this.h);
+                    if(this.active){ this.active.update(); this.active.draw(this.ctx); }
+                }
+                this.frameId = requestAnimationFrame(t => this.loop(t));
+            }
+        }
+
+        // --- Initialization --- //
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init Web App SPA
+            app.init();
+
+            // Init Canvas Hero
+            const heroCanvas = new CanvasHeroGenerator('hero-section', { fpsLimit: 60 });
+            if(heroCanvas.container) {
+                heroCanvas.register('goldParticles', GoldParticlesAnimation).use('goldParticles');
+            }
+        });
+    </script>
+</body>
+</html>
