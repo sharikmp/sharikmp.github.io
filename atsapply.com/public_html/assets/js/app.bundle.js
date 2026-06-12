@@ -1943,6 +1943,15 @@ const App = (() => {
   async function init() {
     await StorageService.ready();
     registerShortcuts();
+
+    // If landing page passed a sampleRole URL param, auto-load that sample
+    const params = new URLSearchParams(window.location.search);
+    const sampleRole = params.get('sampleRole');
+    if (sampleRole && SAMPLE_RESUMES[sampleRole]) {
+      await loadSampleResume(sampleRole);
+      return;
+    }
+
     showPage('dashboard');
     await renderDashboard();
   }

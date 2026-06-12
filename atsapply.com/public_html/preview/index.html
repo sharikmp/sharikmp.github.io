@@ -246,9 +246,9 @@
 
   <!-- Toolbar -->
   <div class="preview-toolbar">
-    <a href="../index.html" class="brand">
+    <a href="../builder/" class="brand">
       <i class="fa-solid fa-arrow-left" style="font-size:.85rem;color:var(--muted)"></i>
-      <i class="fa-solid fa-file-lines" style="color:var(--primary)"></i>
+      <img src="../assets/img/logo.svg" width="22" height="22" alt="ATSApply" style="border-radius:5px">
       <span><span class="accent">ATS</span>Apply</span>
     </a>
     <div class="toolbar-actions">
@@ -303,7 +303,7 @@
 
       const render = resume => {
         if (!resume) {
-          canvas.innerHTML = '<div class="empty-wrap"><div class="icon"><i class="fa-regular fa-file-lines"></i></div><p>No resume found. <a href="../index.html">Go back</a> to create one.</p></div>';
+          canvas.innerHTML = '<div class="empty-wrap"><div class="icon"><i class="fa-regular fa-file-lines"></i></div><p>No resume found. <a href="../builder/">Go back</a> to create one.</p></div>';
           return;
         }
         canvas.innerHTML = ResumeTemplates.render(resume);
@@ -314,7 +314,7 @@
 
       if (!resumes.length) {
         selector.innerHTML = '<option value="">No resumes found</option>';
-        canvas.innerHTML   = '<div class="empty-wrap"><div class="icon"><i class="fa-regular fa-file-lines"></i></div><p>No resumes yet. <a href="../index.html">Create one →</a></p></div>';
+        canvas.innerHTML   = '<div class="empty-wrap"><div class="icon"><i class="fa-regular fa-file-lines"></i></div><p>No resumes yet. <a href="../builder/">Create one →</a></p></div>';
       } else {
         selector.innerHTML = resumes.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
         render(resumes[0]);
