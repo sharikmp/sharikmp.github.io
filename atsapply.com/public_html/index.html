@@ -509,7 +509,7 @@ window.addEventListener('scroll', () => {
   const data = SAMPLE_RESUMES[role];
   if (!data) return;
 
-  frame.innerHTML = `<div class="resume-page" style="min-height:1040px">${ResumeTemplates.render(data)}</div>`;
+  frame.innerHTML = `<div class="resume-page">${ResumeTemplates.render(data)}</div>`;
 
   // Sync floating keyword chips with actual skills from this resume
   const skills = (data.skills || []).slice(0, 3);
@@ -534,11 +534,11 @@ window.addEventListener('scroll', () => {
 
   let activeRole = ROLES[0];
 
-  // Build chips from ROLES + SAMPLE_ROLE_META
-  ROLES.forEach((role, i) => {
+  // Build chips from ROLES + SAMPLE_ROLE_META (active class set by renderSample)
+  ROLES.forEach((role) => {
     const meta  = SAMPLE_ROLE_META[role] || { icon: 'fa-file-lines', color: '#2563EB' };
     const chip  = document.createElement('button');
-    chip.className = 'role-chip' + (i === 0 ? ' active' : '');
+    chip.className = 'role-chip';
     chip.dataset.role = role;
     chip.innerHTML = `<i class="fa-solid ${meta.icon}"></i> ${role}`;
     chip.addEventListener('click', () => renderSample(role));
@@ -558,7 +558,7 @@ window.addEventListener('scroll', () => {
     // Render resume HTML using same engine
     const html = ResumeTemplates.render(data);
     if (frameInner) {
-      frameInner.innerHTML = `<div class="resume-page" style="min-height:1040px">${html}</div>`;
+      frameInner.innerHTML = `<div class="resume-page">${html}</div>`;
     }
 
     // Update info panel
@@ -595,8 +595,12 @@ window.addEventListener('scroll', () => {
     }
   }
 
-  // Init with first role
-  renderSample(ROLES[0]);
+  // Init: honour ?role= param if valid, otherwise random
+  const qRole = new URLSearchParams(window.location.search).get('role');
+  const initRole = (qRole && ROLES.includes(qRole))
+    ? qRole
+    : ROLES[Math.floor(Math.random() * ROLES.length)];
+  renderSample(initRole);
 })();
 </script>
 

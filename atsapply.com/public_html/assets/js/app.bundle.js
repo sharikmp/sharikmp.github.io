@@ -327,17 +327,18 @@ const ResumeTemplates = (() => {
   const FMY = Helpers.formatMonthYear;
 
   function contact(p) {
-    const items = [
-      p.email     && { label: 'Email',     value: p.email },
-      p.phone     && { label: 'Phone',     value: p.phone },
-      (p.city || p.country) && { label: 'Address',  value: [p.city, p.country].filter(Boolean).join(', ') },
-      p.linkedin  && { label: 'LinkedIn',  value: p.linkedin },
-      p.github    && { label: 'GitHub',    value: p.github },
-      p.portfolio && { label: 'Portfolio', value: p.portfolio },
-    ].filter(Boolean);
-    return items.map(({ label, value }) =>
-      `<span><span class="contact-label">${label}:</span> ${S(value)}</span>`
-    ).join('');
+    const addr = [p.city, p.country].filter(Boolean).join(', ');
+    const row1 = [p.phone || '', p.email || '', addr || ''];
+    const row2 = [p.linkedin || '', p.github || '', p.portfolio || ''];
+    const hasRow1 = row1.some(Boolean);
+    const hasRow2 = row2.some(Boolean);
+    const renderRow = items => items.map((v, i) => {
+      const pipe = i < 2
+        ? `<span class="rc-pipe"${items[i + 1] ? '' : ' style="visibility:hidden"'}>|</span>`
+        : '';
+      return `<span class="rc-item">${S(v)}</span>${pipe}`;
+    }).join('');
+    return (hasRow1 ? renderRow(row1) : '') + (hasRow2 ? renderRow(row2) : '');
   }
 
   function summary(s)   { return s?.trim() ? `<div class="sec-title">Professional Summary</div><p class="sec-content">${S(s)}</p>` : ''; }
@@ -572,7 +573,8 @@ const PDFGenerator = (() => {
     .tpl-classic{font-family:Arial,sans-serif;font-size:11pt;color:#1a1a1a;padding:0 48px;line-height:1.45}
     .tpl-classic .res-name{font-size:22pt;font-weight:700;margin-bottom:2px}
     .tpl-classic .res-title{font-size:11.5pt;color:#374151;margin-bottom:6px}
-    .tpl-classic .res-contact{font-size:9.5pt;color:#4B5563;display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1a1a1a}
+    .res-contact{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;column-gap:6px;row-gap:4px}.rc-item{text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rc-pipe{color:#9CA3AF;text-align:center;padding:0 2px}
+    .tpl-classic .res-contact{font-size:9.5pt;color:#4B5563;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1a1a1a}
     .tpl-classic .sec-title{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin:14px 0 4px;padding-bottom:2px;border-bottom:1px solid #9CA3AF;color:#111827}
     .tpl-classic .exp-header{display:flex;justify-content:space-between;align-items:baseline}
     .tpl-classic .exp-company{font-weight:700;font-size:10.5pt}.tpl-classic .exp-dates{font-size:9.5pt;color:#6B7280}
@@ -588,7 +590,7 @@ const PDFGenerator = (() => {
     .tpl-professional{font-family:Georgia,serif;font-size:11pt;color:#111827;padding:0 52px;line-height:1.5}
     .tpl-professional .res-name{font-size:24pt;font-weight:700;color:#1E3A5F;margin-bottom:2px}
     .tpl-professional .res-title{font-size:12pt;color:#4B5563;margin-bottom:8px}
-    .tpl-professional .res-contact{font-size:9.5pt;color:#6B7280;display:flex;flex-wrap:wrap;gap:5px 16px;margin-bottom:14px;padding-bottom:10px;border-bottom:2.5px solid #1E3A5F}
+    .tpl-professional .res-contact{font-size:9.5pt;color:#6B7280;margin-bottom:14px;padding-bottom:10px;border-bottom:2.5px solid #1E3A5F}
     .tpl-professional .sec-title{font-size:10.5pt;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin:16px 0 5px;color:#1E3A5F;padding-bottom:3px;border-bottom:1px solid #CBD5E1}
     .tpl-professional .exp-header{display:flex;justify-content:space-between;align-items:baseline}
     .tpl-professional .exp-company{font-weight:700;font-size:10.5pt;color:#1E3A5F}.tpl-professional .exp-dates{font-size:9.5pt;color:#9CA3AF}
@@ -602,7 +604,7 @@ const PDFGenerator = (() => {
     .tpl-professional .cert-entry{margin-bottom:4px;font-size:10pt}.tpl-professional .achiev-list{padding-left:16px;font-size:10pt}.tpl-professional .lang-list{font-size:10pt}
     .tpl-minimal{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10pt;color:#1a1a1a;padding:0 42px;line-height:1.4}
     .tpl-minimal .res-name{font-size:18pt;font-weight:700;margin-bottom:1px}.tpl-minimal .res-title{font-size:10.5pt;color:#555;margin-bottom:5px}
-    .tpl-minimal .res-contact{font-size:9pt;color:#666;display:flex;flex-wrap:wrap;gap:4px 14px;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid #ccc}
+    .tpl-minimal .res-contact{font-size:9pt;color:#666;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid #ccc}
     .tpl-minimal .sec-title{font-size:9.5pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin:11px 0 3px;color:#333}
     .tpl-minimal .exp-header{display:flex;justify-content:space-between;align-items:baseline}
     .tpl-minimal .exp-company{font-weight:700;font-size:10pt}.tpl-minimal .exp-dates{font-size:9pt;color:#999}
@@ -614,15 +616,9 @@ const PDFGenerator = (() => {
     .tpl-minimal .proj-entry{margin-bottom:4px}.tpl-minimal .proj-name{font-weight:700;font-size:10pt}
     .tpl-minimal .proj-tech{font-size:9pt;color:#999;font-style:italic}.tpl-minimal .proj-desc{font-size:9.5pt}
     .tpl-minimal .cert-entry{margin-bottom:3px;font-size:9.5pt}.tpl-minimal .achiev-list{padding-left:14px;font-size:9.5pt}.tpl-minimal .lang-list{font-size:9.5pt}
-    .tpl-classic .res-contact{display:block;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1a1a1a}
-    .tpl-classic .res-contact>span{display:block;line-height:1.8}
-    .tpl-classic .contact-label{font-weight:700;color:#111827}
-    .tpl-professional .res-contact{display:block;margin-bottom:14px;padding-bottom:10px;border-bottom:2.5px solid #1E3A5F}
-    .tpl-professional .res-contact>span{display:block;line-height:1.8}
-    .tpl-professional .contact-label{font-weight:700;color:#1E3A5F}
-    .tpl-minimal .res-contact{display:block;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid #ccc}
-    .tpl-minimal .res-contact>span{display:block;line-height:1.75}
-    .tpl-minimal .contact-label{font-weight:700;color:#333}
+    .tpl-classic .rc-pipe{color:#9CA3AF}
+    .tpl-professional .rc-pipe{color:#CBD5E1}
+    .tpl-minimal .rc-pipe{color:#bbb}
     .exp-entry,.edu-entry,.proj-entry,.cert-entry{margin-bottom:8px;break-inside:avoid;page-break-inside:avoid}.sec-content{font-size:10pt;margin:0}`;
 
   function generate(resume) {

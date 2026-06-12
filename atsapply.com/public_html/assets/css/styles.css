@@ -1182,24 +1182,32 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   margin-bottom: 6px;
 }
 
+.res-contact {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  column-gap: 6px;
+  row-gap: 4px;
+}
+.rc-item {
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rc-pipe {
+  color: #9CA3AF;
+  text-align: center;
+  padding: 0 2px;
+}
+
 .tpl-classic .res-contact {
   font-size: 9.5pt;
   color: #4B5563;
-  display: block;
   margin-bottom: 12px;
   padding-bottom: 8px;
   border-bottom: 2px solid #1a1a1a;
 }
-
-.tpl-classic .res-contact > span {
-  display: block;
-  line-height: 1.8;
-}
-
-.tpl-classic .contact-label {
-  font-weight: 700;
-  color: #111827;
-}
+.tpl-classic .rc-pipe { color: #9CA3AF; }
 
 .tpl-classic .sec-title {
   font-size: 11pt;
@@ -1267,21 +1275,11 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 .tpl-professional .res-contact {
   font-size: 9.5pt;
   color: #6B7280;
-  display: block;
   margin-bottom: 14px;
   padding-bottom: 10px;
   border-bottom: 2.5px solid #1E3A5F;
 }
-
-.tpl-professional .res-contact > span {
-  display: block;
-  line-height: 1.8;
-}
-
-.tpl-professional .contact-label {
-  font-weight: 700;
-  color: #1E3A5F;
-}
+.tpl-professional .rc-pipe { color: #CBD5E1; }
 
 .tpl-professional .sec-title {
   font-size: 10.5pt;
@@ -1331,21 +1329,11 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 .tpl-minimal .res-contact {
   font-size: 9pt;
   color: #666;
-  display: block;
   margin-bottom: 10px;
   padding-bottom: 6px;
   border-bottom: 1.5px solid #ccc;
 }
-
-.tpl-minimal .res-contact > span {
-  display: block;
-  line-height: 1.75;
-}
-
-.tpl-minimal .contact-label {
-  font-weight: 700;
-  color: #333;
-}
+.tpl-minimal .rc-pipe { color: #bbb; }
 
 .tpl-minimal .sec-title {
   font-size: 9.5pt;

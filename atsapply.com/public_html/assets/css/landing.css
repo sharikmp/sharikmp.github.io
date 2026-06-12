@@ -603,7 +603,7 @@ body.lp-body { background: var(--lp-dark); }
 /* The scaled resume frame */
 .sample-frame {
   position:relative;
-  width:400px; height:530px;
+  width:400px; height:566px;
   border-radius:10px;
   overflow:hidden;
   box-shadow:0 20px 60px rgba(0,0,0,.14), 0 0 0 1px var(--border);
@@ -616,6 +616,12 @@ body.lp-body { background: var(--lp-dark); }
   transform-origin: top left;
   pointer-events:none;
   background:#fff;
+}
+/* Pin .resume-page to exactly one A4 page inside the sample frame */
+.sample-frame-inner .resume-page {
+  min-height: unset;
+  height: 1123px;
+  overflow: hidden;
 }
 
 /* Info panel */
