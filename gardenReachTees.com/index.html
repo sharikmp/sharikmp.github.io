@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GardenReachTees | Modern Online T-Shirt Store</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        accent: {
+                            purple: '#7C3AED',
+                            cyan: '#06B6D4'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.05)',
+                        'glow': '0 0 40px -10px rgba(79, 70, 229, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <style>
+        /* Base & Resets */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Glassmorphism Navbar */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero SVG Animation */
+        .svg-tee-path {
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            animation: drawTee 3s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .svg-tee-detail {
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawTee 2s cubic-bezier(0.645, 0.045, 0.355, 1) 1.5s forwards;
+            stroke-linecap: round;
+        }
+
+        @keyframes drawTee {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .floating-tee {
+            animation: float 6s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .hero-glow {
+            background: radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
+        }
+
+        .hero-section-enhanced {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(168,85,247,0.22) 0%, rgba(168,85,247,0.08) 24%, transparent 45%),
+                radial-gradient(circle at 90% 10%, rgba(16,185,129,0.18) 0%, rgba(16,185,129,0.05) 28%, transparent 45%),
+                radial-gradient(circle at 50% 100%, rgba(249,115,22,0.16) 0%, rgba(249,115,22,0.04) 32%, transparent 48%),
+                linear-gradient(135deg, #fff7ed 0%, #f8fbff 34%, #eef2ff 100%);
+        }
+
+        .hero-bg-grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(99,102,241,0.10) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,0.10) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), transparent 90%);
+            -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), transparent 90%);
+        }
+
+        .hero-section-enhanced:hover .hero-bg-grid {
+            opacity: 1;
+        }
+
+        .hero-bg-grid::after {
+            content: '';
+            position: absolute;
+            inset: -20%;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.45) 35%, transparent 65%);
+            transform: translateX(-120%) rotate(12deg);
+            opacity: 0;
+        }
+
+        .hero-section-enhanced:hover .hero-bg-grid::after {
+            opacity: 1;
+            animation: sweepGrid 2.8s linear infinite;
+        }
+
+        @keyframes sweepGrid {
+            to { transform: translateX(120%) rotate(12deg); }
+        }
+
+        .hero-image-visual::before {
+            content: '';
+            position: absolute;
+            inset: -8%;
+            background: radial-gradient(circle, rgba(99,102,241,0.28) 0%, rgba(6,182,212,0.16) 28%, transparent 70%);
+            filter: blur(24px);
+            z-index: -1;
+            transform: scale(1.05);
+        }
+
+        .page-surface {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(168,85,247,0.18), transparent 24%),
+                radial-gradient(circle at 90% 10%, rgba(16,185,129,0.16), transparent 24%),
+                radial-gradient(circle at 50% 100%, rgba(249,115,22,0.14), transparent 26%),
+                linear-gradient(135deg, #fff7ed 0%, #f8fbff 34%, #eef2ff 100%);
+        }
+
+        .page-surface::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), transparent 92%);
+            -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), transparent 92%);
+            pointer-events: none;
+        }
+
+        .section-shell {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.16);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            box-shadow: none;
+            border: none;
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Image Placeholder Gradients */
+        .img-placeholder-1 { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); }
+        .img-placeholder-2 { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+        .img-placeholder-3 { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
+        .img-placeholder-4 { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); }
+
+        /* Card Hover FX */
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+        .product-card:hover .quick-view-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-white text-slate-800">
+    <div class="page-surface">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5 bg-white/50 backdrop-blur-md border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-bold font-heading tracking-tighter flex items-center gap-2">
+                <i class="fa-solid fa-shirt text-brand-600"></i>
+                <span>Garden<span class="text-brand-600">ReachTees</span></span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+                <a href="#" class="text-brand-600 transition-colors">Home</a>
+                <a href="#shop" class="hover:text-brand-600 transition-colors">Shop</a>
+                <a href="#collections" class="hover:text-brand-600 transition-colors">Collections</a>
+                <a href="#about" class="hover:text-brand-600 transition-colors">About</a>
+            </div>
+
+            <!-- Icons -->
+            <div class="flex items-center space-x-5 text-slate-600">
+                <button class="hover:text-brand-600 transition-colors" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="hover:text-brand-600 transition-colors hidden sm:block" aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                <button class="hover:text-brand-600 transition-colors relative" aria-label="Cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="absolute -top-2 -right-2 bg-brand-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+                </button>
+                <button class="hover:text-brand-600 transition-colors hidden sm:block" aria-label="Profile"><i class="fa-regular fa-user"></i></button>
+                
+                <!-- Mobile Toggle -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-800 text-xl ml-2">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 flex flex-col pt-24 px-6 md:hidden">
+        <div class="flex flex-col space-y-6 text-2xl font-heading font-semibold text-slate-800">
+            <a href="#" class="mobile-link text-brand-600">Home</a>
+            <a href="#shop" class="mobile-link hover:text-brand-600">Shop</a>
+            <a href="#collections" class="mobile-link hover:text-brand-600">Collections</a>
+            <a href="#about" class="mobile-link hover:text-brand-600">About</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center pt-20 overflow-hidden hero-section-enhanced">
+        <div class="hero-bg-grid"></div>
+
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-white/90 via-white/40 to-transparent pointer-events-none"></div>
+            <div class="absolute top-20 left-10 w-72 h-72 bg-brand-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"></div>
+            <div class="absolute top-40 right-10 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-10 left-1/3 w-48 h-48 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-pulse" style="animation-delay: 1.2s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <!-- Text Content -->
+            <div class="order-2 lg:order-1 flex flex-col justify-center text-center lg:text-left pt-10 lg:pt-0">
+                <!-- <div class="inline-block px-4 py-1.5 rounded-full bg-slate-100 text-sm font-medium text-slate-600 mb-6 w-max mx-auto lg:mx-0 border border-slate-200 shadow-sm reveal">
+                    🚀 New Drop: The Minimalist Core
+                </div> -->
+                
+                <h1 class="text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 reveal delay-100">
+                    Wear Your <br />
+                    <span id="typewriter" class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-accent-purple relative">
+                        <!-- JS typing effect will go here -->
+                        <span class="opacity-0">Story.</span>
+                    </span>
+                    <span class="inline-block w-1 h-[0.9em] bg-brand-600 ml-1 animate-pulse align-middle"></span>
+                </h1>
+                
+                <p class="text-lg text-slate-500 mb-10 max-w-lg mx-auto lg:mx-0 reveal delay-200">
+                    Discover premium quality, consciously crafted essentials designed to elevate your everyday wardrobe. Minimal threads, maximum impact.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 reveal delay-300">
+                    <a href="#shop" class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white rounded-full font-semibold hover:bg-brand-600 transition-colors shadow-lg hover:shadow-glow flex items-center justify-center gap-2 group">
+                        Shop Collection
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#about" class="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 text-slate-700 rounded-full font-semibold hover:border-slate-800 hover:text-slate-900 transition-all flex items-center justify-center">
+                        Explore Brand
+                    </a>
+                </div>
+
+                <div class="mt-12 flex items-center justify-center lg:justify-start gap-6 reveal delay-300">
+                    <!-- <div class="flex -space-x-3">
+                        <img class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://i.pravatar.cc/100?img=1" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://i.pravatar.cc/100?img=2" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://i.pravatar.cc/100?img=3" alt="User">
+                    </div> -->
+                    <div class="text-sm">
+                        <div class="flex text-yellow-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="font-medium">10,000+</span> Happy Customers
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image Artwork -->
+            <div id="hero-artwork" class="order-1 lg:order-2 relative h-[430px] sm:h-[520px] lg:h-[680px] flex items-center justify-center">
+                <div class="absolute inset-0 hero-glow"></div>
+                <div id="tee-svg" class="relative w-full max-w-2xl floating-tee hero-image-visual">
+                    <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-brand-500/25 via-transparent to-cyan-400/20 blur-3xl scale-110"></div>
+                    <img src="img/hero-image.png" alt="GardenReachTees hero product" class="relative w-full h-auto object-contain drop-shadow-[0_25px_70px_rgba(15,23,42,0.18)]" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="relative z-10">
+    <!-- Featured Categories -->
+    <section id="collections" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 section-shell p-8 md:p-10 lg:p-12">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Shop by Category</h2>
+                <p class="text-slate-500">Explore our curated collections designed for every vibe.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="category-grid">
+                <!-- Categories rendered via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Collection -->
+    <section class="py-24 relative z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 section-shell p-8 md:p-10 lg:p-12">
+            <div class="flex justify-between items-end mb-12 reveal">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Trending Now</h2>
+                    <p class="text-slate-500">The styles everyone is talking about.</p>
+                </div>
+                <a href="#shop" class="hidden md:inline-flex items-center gap-2 font-medium text-brand-600 hover:text-brand-700">
+                    View All <i class="fa-solid fa-arrow-right-long"></i>
+                </a>
+            </div>
+
+            <!-- Horizontal Scroll Container -->
+            <div class="flex overflow-x-auto pb-10 -mx-6 px-6 gap-6 snap-x snap-mandatory hide-scroll" id="trending-slider">
+                <!-- Trending products rendered via JS -->
+            </div>
+            
+            <div class="mt-6 text-center md:hidden">
+                 <a href="#shop" class="inline-flex items-center gap-2 font-medium text-brand-600">
+                    View All <i class="fa-solid fa-arrow-right-long"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="about" class="py-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="section-shell bg-slate-900/95 text-white p-8 md:p-10 lg:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+                
+                <div class="reveal delay-100 flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-2xl mb-6 text-brand-400">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Premium Fabric</h3>
+                    <p class="text-slate-400 text-sm">100% organic, ring-spun cotton for unmatched softness.</p>
+                </div>
+
+                <div class="reveal delay-200 flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-2xl mb-6 text-accent-cyan">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Fast Shipping</h3>
+                    <p class="text-slate-400 text-sm">Free express delivery on all orders over $50.</p>
+                </div>
+
+                <div class="reveal delay-300 flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-2xl mb-6 text-accent-purple">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Easy Returns</h3>
+                    <p class="text-slate-400 text-sm">30-day hassle-free return policy, no questions asked.</p>
+                </div>
+
+                <div class="reveal delay-400 flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-2xl mb-6 text-emerald-400">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Secure Payments</h3>
+                    <p class="text-slate-400 text-sm">Encrypted checkout to ensure your data is safe.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Featured Products Grid -->
+    <section id="shop" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 section-shell p-8 md:p-10 lg:p-12">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">New Arrivals</h2>
+                <p class="text-slate-500">Fresh off the press. Upgrade your rotation.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12" id="products-grid">
+                <!-- Products rendered via JS -->
+            </div>
+            
+            <div class="mt-16 text-center reveal">
+                <button class="px-8 py-3 border-2 border-slate-900 text-slate-900 rounded-full font-semibold hover:bg-slate-900 hover:text-white transition-colors">
+                    Load More
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="py-24 relative z-10 overflow-hidden">
+        <!-- Decor -->
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-200 rounded-full mix-blend-multiply opacity-50 blur-2xl"></div>
+        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-accent-purple rounded-full mix-blend-multiply opacity-20 blur-2xl"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 section-shell p-8 md:p-10 lg:p-12">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Don't Just Take Our Word</h2>
+                <p class="text-slate-500">Hear from our community of over 10,000 happy customers.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="reviews-grid">
+                <!-- Reviews rendered via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-24 relative z-10">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="section-shell bg-slate-900 p-10 md:p-16 text-center shadow-2xl relative overflow-hidden reveal">
+                <!-- Subtle graphic -->
+                <i class="fa-solid fa-envelope-open-text absolute -right-10 -bottom-10 text-9xl text-white opacity-5 transform -rotate-12"></i>
+                
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 relative z-10">Stay Ahead of Every Drop</h2>
+                <p class="text-slate-400 mb-10 relative z-10 max-w-lg mx-auto">Subscribe to get insider access to exclusive releases, special offers, and styling tips.</p>
+                
+                <form id="newsletter-form" class="relative z-10 flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Enter your email address" required class="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
+                    <button type="submit" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-full font-semibold transition-colors shadow-glow whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+                <p id="form-msg" class="text-emerald-400 text-sm mt-4 hidden relative z-10"><i class="fa-solid fa-check-circle mr-1"></i> You're on the list!</p>
+            </div>
+        </div>
+    </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-transparent pt-20 pb-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+                <!-- Brand -->
+                <div class="lg:col-span-2">
+                    <a href="#" class="text-2xl font-bold font-heading tracking-tighter flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-shirt text-brand-600"></i>
+                        <span>Garden<span class="text-brand-600">ReachTees</span></span>
+                    </a>
+                    <p class="text-slate-500 mb-6 max-w-xs">
+                        Redefining everyday essentials with premium fabrics, modern fits, and a commitment to quality.
+                    </p>
+                    <div class="flex space-x-4 text-slate-400">
+                        <a href="#" class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-6">Shop</h4>
+                    <ul class="space-y-4 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">All Products</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Best Sellers</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Accessories</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-6">Support</h4>
+                    <ul class="space-y-4 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Track Order</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Returns & Exchanges</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-6">Policies</h4>
+                    <ul class="space-y-4 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Shipping Info</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-slate-400">© 2024 GardenReachTees. All rights reserved.</p>
+                <div class="flex items-center gap-3 text-2xl text-slate-300">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Logic -->
+    <script>
+        const App = {
+            // Mock Data
+            data: {
+                categories: [
+                    { title: "Oversized Fit", icon: "fa-solid fa-compress", gradient: "from-brand-50 to-brand-100", color: "text-brand-600" },
+                    { title: "Graphic Tees", icon: "fa-solid fa-palette", gradient: "from-purple-50 to-purple-100", color: "text-purple-600" },
+                    { title: "Minimal Core", icon: "fa-solid fa-cube", gradient: "from-slate-50 to-slate-100", color: "text-slate-600" },
+                    { title: "Premium Cotton", icon: "fa-solid fa-seedling", gradient: "from-emerald-50 to-emerald-100", color: "text-emerald-600" },
+                    { title: "Anime Line", icon: "fa-solid fa-bolt", gradient: "from-yellow-50 to-yellow-100", color: "text-yellow-600" },
+                    { title: "Custom Prints", icon: "fa-solid fa-print", gradient: "from-cyan-50 to-cyan-100", color: "text-cyan-600" },
+                ],
+                trending: [
+                    { name: "Heavyweight Boxy Tee", price: "$35", rating: 4.9, image: "img/DSC03280-1024x1536.jpg" },
+                    { name: "Vintage Wash Outline", price: "$42", rating: 4.8, image: "img/DSC03229-1024x1536.jpg" },
+                    { name: "Essential Drop Shoulder", price: "$28", rating: 4.7, image: "img/DSC03234-1024x1536.jpg", badge: "Hot" },
+                    { name: "Embroidered Logo Tee", price: "$38", rating: 4.9, image: "img/DSC03247-1024x1536.jpg" },
+                    { name: "Organic Pima Crew", price: "$45", rating: 5.0, image: "img/DSC03272-1024x1536.jpg" },
+                ],
+                products: [
+                    { name: "Classic Core Tee", price: "$25", colors: ["#0f172a", "#f8fafc", "#64748b"], image: "img/DSC03120-scaled-300x451.jpg" },
+                    { name: "Oversized Graphic - Tokyo", price: "$40", colors: ["#000000"], image: "img/DSC03262-scaled-300x450.jpg", badge: "New" },
+                    { name: "Textured Knit Tee", price: "$55", colors: ["#d1d5db", "#4b5563"], image: "img/DSC03183-scaled-300x450.jpg" },
+                    { name: "Acid Wash Relaxed", price: "$42", colors: ["#3f3f46", "#7e22ce"], image: "img/DSC03304-scaled-300x450.jpg" },
+                    { name: "Sport Tech Active Tee", price: "$35", colors: ["#0ea5e9", "#ef4444"], image: "img/DSC03331-scaled-300x450.jpg" },
+                    { name: "Minimalist Pocket Tee", price: "$28", colors: ["#fef3c7", "#ffffff"], image: "img/DSC03162-scaled-300x450.jpg" },
+                    { name: "Heavyweight Long Sleeve", price: "$45", colors: ["#1e293b", "#064e3b"], image: "img/DSC03280-scaled-300x450.jpg" },
+                    { name: "Signature Blend V-Neck", price: "$30", colors: ["#ffffff", "#000000"], image: "img/DSC03229-scaled-300x450.jpg", badge: "Restocked" },
+                ],
+                reviews: [
+                    { name: "Alex Johnson", text: "The fit on the oversized tees is absolutely perfect. Not too boxy, just the right drape. Material feels incredibly premium.", rating: 5 },
+                    { name: "Sarah Chen", text: "Finally found a brand that does minimal graphics right. The packaging was beautiful and shipping was crazy fast.", rating: 5 },
+                    { name: "Marcus Wright", text: "Replaced all my basic tees with GardenReachTees. They hold up amazingly well after multiple washes. No shrinking or fading.", rating: 4.5 },
+                ]
+            },
+
+            init() {
+                this.renderCategories();
+                this.renderTrending();
+                this.renderProducts();
+                this.renderReviews();
+                
+                this.initNavbar();
+                this.initHeroParallax();
+                this.initTypewriter();
+                this.initScrollReveal();
+                this.initNewsletter();
+            },
+
+            // --- RENDER FUNCTIONS ---
+
+            renderCategories() {
+                const container = document.getElementById('category-grid');
+                this.data.categories.forEach((cat, idx) => {
+                    const delay = (idx % 3) * 100;
+                    container.innerHTML += `
+                        <a href="#shop" class="group block reveal delay-${delay}">
+                            <div class="bg-gradient-to-br ${cat.gradient} p-8 rounded-2xl flex items-center gap-6 transition-all duration-300 transform group-hover:-translate-y-2 group-hover:shadow-soft">
+                                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm ${cat.color} transition-transform group-hover:scale-110">
+                                    <i class="${cat.icon}"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-1">${cat.title}</h3>
+                                    <span class="text-sm font-medium text-slate-500 group-hover:text-brand-600 transition-colors">Explore <i class="fa-solid fa-angle-right text-xs ml-1"></i></span>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+            },
+
+            renderTrending() {
+                const container = document.getElementById('trending-slider');
+                this.data.trending.forEach(item => {
+                    const badgeHtml = item.badge ? `<span class="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-sm">${item.badge}</span>` : '';
+                    container.innerHTML += `
+                        <div class="min-w-[280px] md:min-w-[320px] snap-center group cursor-pointer product-card">
+                            <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-4 bg-slate-100">
+                                ${badgeHtml}
+                                <img src="${item.image}" alt="${item.name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 product-img" loading="lazy">
+                                <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 quick-view-btn transform translate-y-4">
+                                    <button class="w-full bg-white/90 backdrop-blur-sm text-slate-900 font-semibold py-3 rounded-xl shadow-lg hover:bg-white transition-colors">
+                                        Quick Add
+                                    </button>
+                                </div>
+                                <button class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-brand-600 shadow-sm transition-colors z-10">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="font-semibold text-lg text-slate-800 group-hover:text-brand-600 transition-colors">${item.name}</h3>
+                                    <span class="font-bold text-slate-900">${item.price}</span>
+                                </div>
+                                <div class="flex items-center text-sm text-slate-500">
+                                    <i class="fa-solid fa-star text-yellow-400 text-xs mr-1"></i> ${item.rating}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            },
+
+            renderProducts() {
+                const container = document.getElementById('products-grid');
+                this.data.products.forEach((item, idx) => {
+                    const delay = (idx % 4) * 100;
+                    const badgeHtml = item.badge ? `<span class="absolute top-4 left-4 bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10">${item.badge}</span>` : '';
+                    
+                    let colorsHtml = item.colors.map(color => 
+                        `<div class="w-4 h-4 rounded-full border border-slate-200 cursor-pointer hover:scale-125 transition-transform" style="background-color: ${color}"></div>`
+                    ).join('');
+
+                    container.innerHTML += `
+                        <div class="group product-card reveal delay-${delay}">
+                            <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-4 bg-slate-100">
+                                ${badgeHtml}
+                                <img src="${item.image}" alt="${item.name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 product-img" loading="lazy">
+                                <button class="absolute top-4 right-4 text-slate-600 hover:text-brand-600 transition-colors z-10 text-xl bg-white/80 backdrop-blur-sm w-9 h-9 rounded-full flex items-center justify-center shadow-sm">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate-800 mb-1 cursor-pointer group-hover:text-brand-600 transition-colors">${item.name}</h3>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-slate-900">${item.price}</span>
+                                    <div class="flex gap-1">
+                                        ${colorsHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            },
+
+            renderReviews() {
+                const container = document.getElementById('reviews-grid');
+                this.data.reviews.forEach((review, idx) => {
+                    const delay = idx * 100;
+                    let starsHtml = Array(Math.floor(review.rating)).fill('<i class="fa-solid fa-star"></i>').join('');
+                    if (review.rating % 1 !== 0) starsHtml += '<i class="fa-solid fa-star-half-stroke"></i>';
+                    
+                    container.innerHTML += `
+                        <div class="bg-white p-8 rounded-2xl shadow-soft reveal delay-${delay} flex flex-col h-full relative">
+                            <i class="fa-solid fa-quote-right absolute top-8 right-8 text-4xl text-brand-50"></i>
+                            <div class="flex text-yellow-400 text-sm mb-4">
+                                ${starsHtml}
+                            </div>
+                            <p class="text-slate-600 mb-8 flex-grow relative z-10">"${review.text}"</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-100 to-brand-300 flex items-center justify-center font-bold text-brand-700">
+                                    ${review.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800">${review.name}</h4>
+                                    <span class="text-xs text-slate-500 flex items-center gap-1"><i class="fa-solid fa-circle-check text-brand-500"></i> Verified Buyer</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            },
+
+            // --- INTERACTIVITY ---
+
+            initNavbar() {
+                const navbar = document.getElementById('navbar');
+                const mobileBtn = document.getElementById('mobile-menu-btn');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileLinks = document.querySelectorAll('.mobile-link');
+                let isMenuOpen = false;
+
+                // Scroll effect
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 20) {
+                        navbar.classList.add('glass-nav', 'shadow-sm', 'py-4');
+                        navbar.classList.remove('py-5', 'bg-white/50');
+                    } else {
+                        navbar.classList.remove('glass-nav', 'shadow-sm', 'py-4');
+                        navbar.classList.add('py-5', 'bg-white/50');
+                    }
+                });
+
+                // Mobile Menu Toggle
+                const toggleMenu = () => {
+                    isMenuOpen = !isMenuOpen;
+                    if(isMenuOpen) {
+                        mobileMenu.classList.remove('translate-x-full');
+                        mobileBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        mobileMenu.classList.add('translate-x-full');
+                        mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                        document.body.style.overflow = '';
+                    }
+                };
+
+                mobileBtn.addEventListener('click', toggleMenu);
+                mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+            },
+
+            initHeroParallax() {
+                const hero = document.getElementById('hero-artwork');
+                const svg = document.getElementById('tee-svg');
+                
+                // Only on desktop
+                if(window.innerWidth > 1024) {
+                    hero.addEventListener('mousemove', (e) => {
+                        const x = (e.clientX - window.innerWidth / 2) / 30;
+                        const y = (e.clientY - window.innerHeight / 2) / 30;
+                        svg.style.transform = `translate(${x}px, ${y}px)`;
+                    });
+                    
+                    hero.addEventListener('mouseleave', () => {
+                        svg.style.transform = 'translate(0px, 0px)';
+                    });
+                }
+            },
+
+            initTypewriter() {
+                const words = ["Story.", "Vibe.", "Identity.", "Self."];
+                let i = 0;
+                let j = 0;
+                let isDeleting = false;
+                const el = document.getElementById('typewriter');
+                
+                // Initial wait for load animation
+                setTimeout(() => {
+                    el.innerHTML = '';
+                    type();
+                }, 1000);
+
+                function type() {
+                    const currentWord = words[i];
+                    
+                    if (isDeleting) {
+                        el.textContent = currentWord.substring(0, j - 1);
+                        j--;
+                    } else {
+                        el.textContent = currentWord.substring(0, j + 1);
+                        j++;
+                    }
+
+                    let typeSpeed = isDeleting ? 50 : 150;
+
+                    if (!isDeleting && j === currentWord.length) {
+                        typeSpeed = 2000; // Pause at end of word
+                        isDeleting = true;
+                    } else if (isDeleting && j === 0) {
+                        isDeleting = false;
+                        i = (i + 1) % words.length;
+                        typeSpeed = 500; // Pause before new word
+                    }
+
+                    setTimeout(type, typeSpeed);
+                }
+            },
+
+            initScrollReveal() {
+                const reveals = document.querySelectorAll('.reveal');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            // Optional: Unobserve after reveal
+                            // observer.unobserve(entry.target); 
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+                reveals.forEach(reveal => observer.observe(reveal));
+            },
+
+            initNewsletter() {
+                const form = document.getElementById('newsletter-form');
+                const msg = document.getElementById('form-msg');
+                
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const input = form.querySelector('input');
+                    if(input.value) {
+                        const btn = form.querySelector('button');
+                        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                        btn.disabled = true;
+                        
+                        // Mock API call
+                        setTimeout(() => {
+                            form.style.display = 'none';
+                            msg.classList.remove('hidden');
+                        }, 1000);
+                    }
+                });
+            }
+        };
+
+        // Initialize App when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => App.init());
+
+        // Polyfill array fill map logic for reviews if needed (handled in logic manually above to avoid errors)
+        Array.prototype.fillHtml = function(html) {
+            let res = [];
+            for(let i=0; i<this.length; i++) res.push(html);
+            return res;
+        }
+        
+    </script>
+    </div>
+</body>
+</html>
